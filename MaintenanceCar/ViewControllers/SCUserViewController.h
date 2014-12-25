@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SCUserViewController : UIViewController
+@interface SCUserViewController : UITableViewController
 
 @end

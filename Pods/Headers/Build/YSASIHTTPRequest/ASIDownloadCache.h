@@ -1,1 +1,0 @@
-../../../YSASIHTTPRequest/Classes/ASIDownloadCache.h

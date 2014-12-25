@@ -1,2 +1,6 @@
-platform :ios, '6.0'
-pod 'YSASIHTTPRequest', '~> 2.0.1'
+platform :ios, '7.0'
+
+#pod 'YSASIHTTPRequest', '~> 2.0.1'
+pod 'AFNetworking', '~> 2.5.0'
+pod 'JSONModel', '~> 1.0.1'
+pod 'MBProgressHUD', '~> 0.9'

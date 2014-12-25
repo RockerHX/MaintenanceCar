@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SCMerchantViewController : UITableViewController
+@interface SCMerchantViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
