@@ -7,12 +7,11 @@
 //
 
 #import "SCAPIRequest.h"
-
-static SCAPIRequest *apiRequest = nil;
+#import "API.h"
 
 @interface SCAPIRequest ()
 
-@property (nonatomic, strong)   NSURL *requstURL;
+@property (nonatomic, strong)   NSURL *requstURL;       // 完整的API请求URL(不带参数)
 
 @end
 
@@ -20,29 +19,20 @@ static SCAPIRequest *apiRequest = nil;
 
 #pragma mark - Init Methods
 #pragma mark -
-+ (instancetype)shareRequest
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        apiRequest = [[SCAPIRequest alloc] init];
-        apiRequest.doMain = DoMain;
-        apiRequest.path = APIPath;
-    });
-    return apiRequest;
-}
-
 - (instancetype)initWithURL:(NSString *)url
 {
     self = [super init];
     if (self)
     {
         NSURL *requestURL = [NSURL URLWithString:url];
-        self.doMain = [[requestURL.scheme stringByAppendingString:@"://"] stringByAppendingString:requestURL.host];
+        self.doMain = [[requestURL.scheme stringByAppendingString:@"://"] stringByAppendingString:requestURL.host];     // 获取URL域
         
+        // 异常捕获，传入的url可能有出错，在获取api路径的时候可能会出现访问数组数据溢出
         @try {
-            self.path = [requestURL.pathComponents[0] stringByAppendingString:requestURL.pathComponents[1]];
-            self.api = [requestURL.path stringByReplacingOccurrencesOfString:self.path withString:@""];
+            self.path = [requestURL.pathComponents[0] stringByAppendingString:requestURL.pathComponents[1]];            // 通过url参数获取到api路径
+            self.api = [requestURL.path stringByReplacingOccurrencesOfString:self.path withString:@""];                 // 通过url参数获取到api
         }
+        // 异常捕获成功，打印导致异常原因，path和api属性置nil
         @catch (NSException *exception) {
             NSLog(@"Set Path And API Error:%@", exception.reason);
             self.path = nil;
@@ -70,39 +60,47 @@ static SCAPIRequest *apiRequest = nil;
 
 #pragma mark - Private Methods
 #pragma mark -
+/**
+ *  通过导入工程的cer秘钥文件设置安全策略
+ *
+ *  @return AFSecurityPolicy实例
+ */
 - (AFSecurityPolicy *)customSecurityPolicy
 {
     /**** SSL Pinning ****/
-    NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"bundle" ofType:@"cer"];
+    NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"cer"];                    // 获取cer秘钥文件路径
     NSData *certData = [NSData dataWithContentsOfFile:cerPath];
     AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
-    securityPolicy.allowInvalidCertificates = NO;
+    securityPolicy.allowInvalidCertificates = NO;                                                           // 不允许使用无效证书
     securityPolicy.pinnedCertificates = @[certData];
     /**** SSL Pinning ****/
     return securityPolicy;
 }
 
-- (NSDictionary *)requestGETMethodsWithAPI:(NSString *)api parameters:(NSDictionary *)parameters
+/**
+ *  通用的GET请求方法
+ *
+ *  @param api        完整的API请求链接
+ *  @param parameters 请求的参数集合
+ *  @param uccess     请求成功的block
+ *  @param failure    请求失败的block
+ */
+- (void)requestGETMethodsWithAPI:(NSString *)api
+                      parameters:(NSDictionary *)parameters
+                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-    manger.securityPolicy = [self customSecurityPolicy];
-    [manger GET:api parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSError *error = nil;
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:&error];
-        NSLog(@"Parse Josn error:%@", error);
-        NSLog(@"Json:%@", dic);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Rquest error:%@", error);
-    }];
-    return @{@"a": @"a"};
+    self.securityPolicy = [self customSecurityPolicy];
+    [self GET:api parameters:parameters success:success failure:failure];
 }
 
 #pragma mark - Public Methods
 #pragma mark -
-- (NSDictionary *)startWearthAPIRequest
+- (void)startWearthAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     NSDictionary *parameters = @{@"location": @"深圳"};
-    return [self requestGETMethodsWithAPI:WearthAPIURL parameters:parameters];
+    [self requestGETMethodsWithAPI:WearthAPIURL parameters:parameters success:success failure:failure];
 }
 
 @end
