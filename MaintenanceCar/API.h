@@ -15,7 +15,9 @@
 #define APIURL              [DoMain stringByAppendingString:APIPath]
 
 #define WearthAPI           @"/Weather"
+#define SearchAPI           @"/company_search"
 
 #define WearthAPIURL        [APIURL stringByAppendingString:WearthAPI]
+#define SearchAPIURL        [APIURL stringByAppendingString:SearchAPI]
 
 #endif

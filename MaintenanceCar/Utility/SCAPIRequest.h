@@ -48,4 +48,15 @@
 - (void)startWearthAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+/**
+ *  商户列表接口请求方法(API:/company_search)
+ *
+ *  @param parameters   请求参数集合
+ *  @param uccess       请求成功的block
+ *  @param failure      请求失败的block
+ */
+- (void)startMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
+                                          Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 @end

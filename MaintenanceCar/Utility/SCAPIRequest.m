@@ -103,4 +103,11 @@
     [self requestGETMethodsWithAPI:WearthAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
+                                          Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:SearchAPIURL parameters:parameters success:success failure:failure];
+}
+
 @end
