@@ -7,6 +7,7 @@
 //
 
 #import "SCMerchantViewController.h"
+#import <UMengAnalytics/MobClick.h>
 
 @interface SCMerchantViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -16,6 +17,18 @@
 
 #pragma mark - View Controller Life Cycle
 #pragma mark -
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"[商户] - 商户列表"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"[商户] - 商户列表"];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -9,5 +9,6 @@
 #ifndef MaintenanceCar_MicroCommon_h
 #define MaintenanceCar_MicroCommon_h
 
+#define UMengAPPKEY             @"54995e36fd98c5b910000cc6"
 
 #endif

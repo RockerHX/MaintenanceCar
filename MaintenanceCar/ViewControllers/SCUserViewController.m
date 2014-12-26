@@ -7,6 +7,7 @@
 //
 
 #import "SCUserViewController.h"
+#import <UMengAnalytics/MobClick.h>
 
 @interface SCUserViewController ()
 
@@ -16,6 +17,17 @@
 
 #pragma mark - View Controller Life Cycle
 #pragma mark -
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"[我] - 个人中心"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"[我] - 个人中心"];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -7,6 +7,7 @@
 //
 
 #import "SCHomePageViewController.h"
+#import <UMengAnalytics/MobClick.h>
 
 @interface SCHomePageViewController ()
 
@@ -16,6 +17,18 @@
 
 #pragma mark - View Controller Life Cycle
 #pragma mark -
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"[首页] - 首页"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"[首页] - 首页"];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

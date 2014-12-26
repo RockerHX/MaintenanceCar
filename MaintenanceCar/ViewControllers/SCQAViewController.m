@@ -7,6 +7,7 @@
 //
 
 #import "SCQAViewController.h"
+#import <UMengAnalytics/MobClick.h>
 
 @interface SCQAViewController ()
 
@@ -16,6 +17,18 @@
 
 #pragma mark - View Controller Life Cycle
 #pragma mark -
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"[问答] - 问答列表"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"[问答] - 问答列表"];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

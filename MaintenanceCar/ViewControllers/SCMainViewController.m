@@ -7,9 +7,8 @@
 //
 
 #import "SCMainViewController.h"
-#import "SCAPIRequest.h"
-#import <AFNetworking/AFNetworking.h>
 #import <MBProgressHUD/MBProgressHUD.h>
+#import "SCAPIRequest.h"
 #import "SCWeather.h"
 
 @interface SCMainViewController ()
@@ -24,25 +23,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [self.viewControllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        UINavigationController *controller = obj;
-        NSLog(@"%@", controller.topViewController.title);
-    }];
-    
-    NSDictionary *parameters = @{@"location": @"深圳"};
-    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-    manger.securityPolicy = [self customSecurityPolicy];
-    [manger GET:WearthAPIURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSError *error = nil;
-        SCWeather *weather = [[SCWeather alloc] initWithDictionary:responseObject error:&error];
-        NSLog(@"%@", weather.title);
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    }];
+//    [self startWeatherReuqest];
 }
 
 - (void)didReceiveMemoryWarning
@@ -53,16 +34,17 @@
 
 #pragma mark - Private Methods
 #pragma mark -
-- (AFSecurityPolicy*)customSecurityPolicy
+- (void)startWeatherReuqest
 {
-    /**** SSL Pinning ****/
-    NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"bundle" ofType:@"cer"];
-    NSData *certData = [NSData dataWithContentsOfFile:cerPath];
-    AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
-    securityPolicy.allowInvalidCertificates = NO;
-    securityPolicy.pinnedCertificates = @[certData];
-    /**** SSL Pinning ****/
-    return securityPolicy;
+    [[SCAPIRequest manager] startWearthAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", responseObject);
+        NSError *error = nil;
+        SCWeather *weather = [[SCWeather alloc] initWithDictionary:responseObject error:&error];
+        NSLog(@"weather model parse error:%@", error);
+        NSLog(@"title:%@", weather.title);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+    }];
 }
 
 #pragma mark - Public Methods
