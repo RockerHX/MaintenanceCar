@@ -15,7 +15,7 @@
 		482B57E71A43CB7700E47962 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 482B57E61A43CB7700E47962 /* Images.xcassets */; };
 		482B57EA1A43CB7700E47962 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 482B57E81A43CB7700E47962 /* LaunchScreen.xib */; };
 		482B57F61A43CB7700E47962 /* MaintenanceCarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 482B57F51A43CB7700E47962 /* MaintenanceCarTests.m */; };
-		483BA1401A4C09D2004D8A4C /* bundle.cer in Resources */ = {isa = PBXBuildFile; fileRef = 483BA13F1A4C09D2004D8A4C /* bundle.cer */; };
+		48934F5D1A4CFE1700F29745 /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = 48934F5C1A4CFE1700F29745 /* server.cer */; };
 		48EC70551A442B13003CE3FD /* SCMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48EC70541A442B13003CE3FD /* SCMainViewController.m */; };
 		48EC70581A442BBF003CE3FD /* SCHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48EC70571A442BBF003CE3FD /* SCHomePageViewController.m */; };
 		48EC705B1A442BE1003CE3FD /* SCMerchantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48EC705A1A442BE1003CE3FD /* SCMerchantViewController.m */; };
@@ -51,7 +51,7 @@
 		482B57EF1A43CB7700E47962 /* MaintenanceCarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaintenanceCarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		482B57F41A43CB7700E47962 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		482B57F51A43CB7700E47962 /* MaintenanceCarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaintenanceCarTests.m; sourceTree = "<group>"; };
-		483BA13F1A4C09D2004D8A4C /* bundle.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bundle.cer; sourceTree = "<group>"; };
+		48934F5C1A4CFE1700F29745 /* server.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = server.cer; sourceTree = "<group>"; };
 		48EC70531A442B13003CE3FD /* SCMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMainViewController.h; sourceTree = "<group>"; };
 		48EC70541A442B13003CE3FD /* SCMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMainViewController.m; sourceTree = "<group>"; };
 		48EC70561A442BBF003CE3FD /* SCHomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCHomePageViewController.h; sourceTree = "<group>"; };
@@ -171,12 +171,12 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		483BA13C1A4C05EC004D8A4C /* Cer */ = {
+		48934F5B1A4CFE1700F29745 /* ssl */ = {
 			isa = PBXGroup;
 			children = (
-				483BA13F1A4C09D2004D8A4C /* bundle.cer */,
+				48934F5C1A4CFE1700F29745 /* server.cer */,
 			);
-			path = Cer;
+			path = ssl;
 			sourceTree = "<group>";
 		};
 		48EC70501A442ACB003CE3FD /* Models */ = {
@@ -225,7 +225,7 @@
 		48F8055B1A4AC06700BD2379 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				483BA13C1A4C05EC004D8A4C /* Cer */,
+				48934F5B1A4CFE1700F29745 /* ssl */,
 				482B57E31A43CB7700E47962 /* Main.storyboard */,
 				482B57E61A43CB7700E47962 /* Images.xcassets */,
 				482B57E81A43CB7700E47962 /* LaunchScreen.xib */,
@@ -327,7 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				482B57E51A43CB7700E47962 /* Main.storyboard in Resources */,
-				483BA1401A4C09D2004D8A4C /* bundle.cer in Resources */,
+				48934F5D1A4CFE1700F29745 /* server.cer in Resources */,
 				482B57EA1A43CB7700E47962 /* LaunchScreen.xib in Resources */,
 				482B57E71A43CB7700E47962 /* Images.xcassets in Resources */,
 			);
