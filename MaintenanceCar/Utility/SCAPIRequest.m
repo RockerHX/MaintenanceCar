@@ -39,10 +39,9 @@
             self.api = nil;
         }
         @finally {
+            self.url = url;
+            self.requstURL = [NSURL URLWithString:url];
         }
-        
-        self.url = url;
-        self.requstURL = [NSURL URLWithString:url];
     }
     
     return self;

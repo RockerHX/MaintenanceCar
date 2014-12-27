@@ -21,6 +21,8 @@
 {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[首页] - 首页"];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
