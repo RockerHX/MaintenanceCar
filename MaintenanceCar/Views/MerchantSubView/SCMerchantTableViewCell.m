@@ -7,6 +7,7 @@
 //
 
 #import "SCMerchantTableViewCell.h"
+#import "MicroCommon.h"
 
 @implementation SCMerchantTableViewCell
 
@@ -18,6 +19,12 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (IBAction)reservationButtonPressed:(UIButton *)sender
+{
+    // 当[预约]按钮被点击，发送消息通知SCMerchantViewController获取index
+    [NS_NOTIFICATION_CENTER postNotificationName:kMerchantListReservationNotification object:@(sender.tag)];
 }
 
 @end

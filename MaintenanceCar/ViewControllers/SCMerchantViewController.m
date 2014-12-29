@@ -15,11 +15,15 @@
 #import "SCMerchant.h"
 #import "SCMerchantTableViewCell.h"
 #import "SCLocationInfo.h"
-#import "SCMerchantList.h"
+#import "SCReservationViewController.h"
 
 #define MerchantCellReuseIdentifier     @"MerchantCellReuseIdentifier"
 
-@interface SCMerchantViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface SCMerchantViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
+{
+    NSInteger _reservationButtonIndex;
+    NSMutableArray *_merchantList;
+}
 
 @property (nonatomic, assign) NSInteger      offset;        // 商户列表请求偏移量，用户上拉刷新的分页请求操作
 
@@ -66,7 +70,7 @@
 #pragma mark -
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [SCMerchantList shareList].items.count;
+    return _merchantList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -74,9 +78,10 @@
     SCMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MerchantCellReuseIdentifier forIndexPath:indexPath];
     
     // 刷新商户列表
-    SCMerchant *merchant = [SCMerchantList shareList].items[indexPath.row];
+    SCMerchant *merchant = _merchantList[indexPath.row];
     cell.merchantNameLabel.text = merchant.detail.name;
     cell.distanceLabel.text = merchant.distance;
+    cell.reservationButton.tag = indexPath.row;
     
     return cell;
 }
@@ -95,10 +100,33 @@
  */
 - (void)initConfig
 {
-    _offset               = 0;          // 第一次进入商户列表列表请求偏移量必须为0
+    _offset               = 0;              // 第一次进入商户列表列表请求偏移量必须为0
 
+    // 设置tableview的代理和数据源
     _tableView.delegate   = self;
     _tableView.dataSource = self;
+    
+    _merchantList = [@[] mutableCopy];      // 商户列表容器初始化
+    
+    // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
+    [NS_NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed:) name:kMerchantListReservationNotification object:nil];
+}
+
+/**
+ *  商户列表预约按钮点击触发事件通知方法
+ *
+ *  @param notification 接受传递的参数
+ */
+- (void)reservationButtonPressed:(NSNotification *)notification
+{
+    _reservationButtonIndex = [notification.object integerValue];       // 设置index，用于在_merchantList里取出SCMerchant对象设置到SCReservationViewController
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"预约"
+                                                        message:@"请选择您预约的项目"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"1元洗车", @"2元贴膜", @"3元打蜡", @"其他项目", nil];
+    [alertView show];
 }
 
 /**
@@ -119,25 +147,33 @@
         [_tableView footerEndRefreshing];
         SCLog(@"%@", responseObject);
         NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
-        NSMutableArray *merchantList = [NSMutableArray arrayWithArray:[SCMerchantList shareList].items];
         
         // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
         [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             NSError *error       = nil;
             SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj error:&error];
             SCError(@"weather model parse error:%@", error);
-            [merchantList addObject:merchant];
+            [_merchantList addObject:merchant];
         }];
         
-        [SCMerchantList shareList].items = merchantList;                    // 商户列表数据全局设置，方便不同页面经行筛选，搜索，读取商户数据等操作
         [MBProgressHUD hideHUDForView:self.view animated:YES];              // 请求完成，移除响应式控件
         
-        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:_offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];      // 数据配置完成，刷新商户列表
+        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:_offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                   // 数据配置完成，刷新商户列表
         _offset += MerchantListLimit;                                       // 偏移量请求参数递增
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         SCError(@"%@", error);
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
+}
+
+#pragma mark - Alert View Delegate Methods
+#pragma mark -
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    // 跳转到预约页面
+    SCReservationViewController *reservationViewController = [MAIN_STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCReservationViewController"];
+    reservationViewController.merchant = _merchantList[_reservationButtonIndex];
+    [self.navigationController pushViewController:reservationViewController animated:YES];
 }
 
 @end
