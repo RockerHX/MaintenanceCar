@@ -10,6 +10,7 @@
 #import <UMengAnalytics/MobClick.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "MicroCommon.h"
+#import "MJRefresh.h"
 #import "SCAPIRequest.h"
 #import "SCMerchant.h"
 #import "SCMerchantTableViewCell.h"
@@ -48,6 +49,11 @@
     
     [self initConfig];
     [self startMerchantListRequest];
+    
+    // 添加上拉刷新控件
+    [_tableView addFooterWithCallback:^{
+        [self startMerchantListRequest];
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -110,6 +116,7 @@
                                      @"latitude"    : locationInfo.latitude};
     
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [_tableView footerEndRefreshing];
         SCLog(@"%@", responseObject);
         NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
         NSMutableArray *merchantList = [NSMutableArray arrayWithArray:[SCMerchantList shareList].items];
@@ -122,9 +129,11 @@
             [merchantList addObject:merchant];
         }];
         
-        [SCMerchantList shareList].items = merchantList;            // 商户列表数据全局设置，方便不同页面经行筛选，搜索，读取商户数据等操作
-        [MBProgressHUD hideHUDForView:self.view animated:YES];      // 请求完成，移除响应式控件
-        [_tableView reloadData];                                    // 数据配置完成，刷新商户列表
+        [SCMerchantList shareList].items = merchantList;                    // 商户列表数据全局设置，方便不同页面经行筛选，搜索，读取商户数据等操作
+        [MBProgressHUD hideHUDForView:self.view animated:YES];              // 请求完成，移除响应式控件
+        
+        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:_offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];      // 数据配置完成，刷新商户列表
+        _offset += MerchantListLimit;                                       // 偏移量请求参数递增
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         SCError(@"%@", error);
         [MBProgressHUD hideHUDForView:self.view animated:YES];

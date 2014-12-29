@@ -79,7 +79,7 @@
 {
     //locations数组里边存放的是CLLocation对象，一个CLLocation对象就代表着一个位置
     CLLocation *loction = [locations firstObject];
-//    [SCLocationInfo shareLocationInfo].location = loction;
+    [SCLocationInfo shareLocationInfo].location = loction;
     
     //维度：loction.coordinate.latitude
     //经度：loction.coordinate.longitude
