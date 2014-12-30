@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFNetworking.h>
+#import "API.h"
 
 @interface SCAPIRequest : AFHTTPRequestOperationManager
 
@@ -58,5 +59,38 @@
 - (void)startMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
                                           Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  验证码获取请求方法(API:/Verification)
+ *
+ *  @param parameters   请求参数集合
+ *  @param uccess       请求成功的block
+ *  @param failure      请求失败的block
+ */
+- (void)startGetVerificationCodeAPIRequestWithParameters:(NSDictionary *)parameters
+                                                 Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  用户注册接口请求方法(API:/User)
+ *
+ *  @param parameters   请求参数集合
+ *  @param uccess       请求成功的block
+ *  @param failure      请求失败的block
+ */
+- (void)startRegisterAPIRequestWithParameters:(NSDictionary *)parameters
+                                      Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  用户登陆接口请求方法(API:/User)
+ *
+ *  @param parameters   请求参数集合
+ *  @param uccess       请求成功的block
+ *  @param failure      请求失败的block
+ */
+- (void)startLoginAPIRequestWithParameters:(NSDictionary *)parameters
+                                   Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 @end

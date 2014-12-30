@@ -20,7 +20,7 @@
 @property (nonatomic, strong) NSDictionary               *variableValue;
 
 // 以下是建议调用的属性
-@property (nonatomic, strong) SCMerchantDetail<Optional> *detail;           // 商户的详细信息
-@property (nonatomic, copy)   NSString<Optional>         *distance;         // 手机当前位置与商户的距离
+@property (nonatomic, strong) SCMerchantDetail<Ignore>   *detail;           // 商户的详细信息
+@property (nonatomic, copy)   NSString<Ignore>           *distance;         // 手机当前位置与商户的距离
 
 @end

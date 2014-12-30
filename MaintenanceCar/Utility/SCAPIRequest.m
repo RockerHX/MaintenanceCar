@@ -7,7 +7,6 @@
 //
 
 #import "SCAPIRequest.h"
-#import "API.h"
 
 @interface SCAPIRequest ()
 
@@ -93,6 +92,23 @@
     [self GET:api parameters:parameters success:success failure:failure];
 }
 
+/**
+ *  通用的POST请求方法
+ *
+ *  @param api        完整的API请求链接
+ *  @param parameters 请求的参数集合
+ *  @param uccess     请求成功的block
+ *  @param failure    请求失败的block
+ */
+- (void)requestPOSTMethodsWithAPI:(NSString *)api
+                      parameters:(NSDictionary *)parameters
+                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    self.securityPolicy = [self customSecurityPolicy];
+    [self POST:api parameters:parameters success:success failure:failure];
+}
+
 #pragma mark - Public Methods
 #pragma mark -
 - (void)startWearthAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -107,6 +123,27 @@
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:SearchAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startGetVerificationCodeAPIRequestWithParameters:(NSDictionary *)parameters
+                                                 Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:VerificationCodeAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startRegisterAPIRequestWithParameters:(NSDictionary *)parameters
+                                      Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+{
+    [self requestPOSTMethodsWithAPI:RegisterAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startLoginAPIRequestWithParameters:(NSDictionary *)parameters
+                                   Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:LoginAPIURL parameters:parameters success:success failure:failure];
 }
 
 @end
