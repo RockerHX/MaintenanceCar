@@ -16,8 +16,11 @@
 		482B57E71A43CB7700E47962 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 482B57E61A43CB7700E47962 /* Images.xcassets */; };
 		482B57EA1A43CB7700E47962 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 482B57E81A43CB7700E47962 /* LaunchScreen.xib */; };
 		482B57F61A43CB7700E47962 /* MaintenanceCarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 482B57F51A43CB7700E47962 /* MaintenanceCarTests.m */; };
+		4884A8B01A52B4E50067DF78 /* SCVerificationCodeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4884A8AF1A52B4E50067DF78 /* SCVerificationCodeButton.m */; };
 		4884CD291A4D4E050018ED09 /* SCMaintenanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4884CD281A4D4E050018ED09 /* SCMaintenanceViewController.m */; };
 		48934F5D1A4CFE1700F29745 /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = 48934F5C1A4CFE1700F29745 /* server.cer */; };
+		48AB35DC1A517CAB00BFBC77 /* SCUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 48AB35DB1A517CAB00BFBC77 /* SCUserInfo.m */; };
+		48AB35E01A5183B400BFBC77 /* SCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48AB35DF1A5183B400BFBC77 /* SCLoginViewController.m */; };
 		48AE95C21A50F52700A8A4B3 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 48AE95B21A50F52700A8A4B3 /* MJRefresh.bundle */; };
 		48AE95C31A50F52700A8A4B3 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48AE95B51A50F52700A8A4B3 /* MJRefreshBaseView.m */; };
 		48AE95C41A50F52700A8A4B3 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 48AE95B71A50F52700A8A4B3 /* MJRefreshConst.m */; };
@@ -70,9 +73,15 @@
 		482B57EF1A43CB7700E47962 /* MaintenanceCarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaintenanceCarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		482B57F41A43CB7700E47962 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		482B57F51A43CB7700E47962 /* MaintenanceCarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaintenanceCarTests.m; sourceTree = "<group>"; };
+		4884A8AE1A52B4E50067DF78 /* SCVerificationCodeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCVerificationCodeButton.h; sourceTree = "<group>"; };
+		4884A8AF1A52B4E50067DF78 /* SCVerificationCodeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCVerificationCodeButton.m; sourceTree = "<group>"; };
 		4884CD271A4D4E050018ED09 /* SCMaintenanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMaintenanceViewController.h; sourceTree = "<group>"; };
 		4884CD281A4D4E050018ED09 /* SCMaintenanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMaintenanceViewController.m; sourceTree = "<group>"; };
 		48934F5C1A4CFE1700F29745 /* server.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = server.cer; sourceTree = "<group>"; };
+		48AB35DA1A517CAB00BFBC77 /* SCUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCUserInfo.h; sourceTree = "<group>"; };
+		48AB35DB1A517CAB00BFBC77 /* SCUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCUserInfo.m; sourceTree = "<group>"; };
+		48AB35DE1A5183B400BFBC77 /* SCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLoginViewController.h; sourceTree = "<group>"; };
+		48AB35DF1A5183B400BFBC77 /* SCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLoginViewController.m; sourceTree = "<group>"; };
 		48AE95B21A50F52700A8A4B3 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
 		48AE95B31A50F52700A8A4B3 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
 		48AE95B41A50F52700A8A4B3 /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
@@ -232,6 +241,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		4884A8AD1A52B4B10067DF78 /* UserSubView */ = {
+			isa = PBXGroup;
+			children = (
+				4884A8AE1A52B4E50067DF78 /* SCVerificationCodeButton.h */,
+				4884A8AF1A52B4E50067DF78 /* SCVerificationCodeButton.m */,
+			);
+			path = UserSubView;
+			sourceTree = "<group>";
+		};
 		4884CD261A4D4DE30018ED09 /* HomePageSubViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +265,15 @@
 				48934F5C1A4CFE1700F29745 /* server.cer */,
 			);
 			path = ssl;
+			sourceTree = "<group>";
+		};
+		48AB35DD1A51839100BFBC77 /* UserSubViewController */ = {
+			isa = PBXGroup;
+			children = (
+				48AB35DE1A5183B400BFBC77 /* SCLoginViewController.h */,
+				48AB35DF1A5183B400BFBC77 /* SCLoginViewController.m */,
+			);
+			path = UserSubViewController;
 			sourceTree = "<group>";
 		};
 		48AE95B01A50F52700A8A4B3 /* ThirdLibrary */ = {
@@ -293,6 +320,8 @@
 				48DA960A1A4E8A0C009CCC50 /* SCLocationInfo.m */,
 				48DA960C1A4EBBE0009CCC50 /* SCMerchantList.h */,
 				48DA960D1A4EBBE0009CCC50 /* SCMerchantList.m */,
+				48AB35DA1A517CAB00BFBC77 /* SCUserInfo.h */,
+				48AB35DB1A517CAB00BFBC77 /* SCUserInfo.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -302,6 +331,7 @@
 			children = (
 				4884CD261A4D4DE30018ED09 /* HomePageSubViewController */,
 				48FE1ED41A4D61CC0083C9DF /* MerchantSubViewController */,
+				48AB35DD1A51839100BFBC77 /* UserSubViewController */,
 				48EC70531A442B13003CE3FD /* SCMainViewController.h */,
 				48EC70541A442B13003CE3FD /* SCMainViewController.m */,
 				48EC70561A442BBF003CE3FD /* SCHomePageViewController.h */,
@@ -321,6 +351,7 @@
 			children = (
 				48F0812B1A45503C00531426 /* SCTabbar */,
 				481939941A4D983C00F1015E /* MerchantSubView */,
+				4884A8AD1A52B4B10067DF78 /* UserSubView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -509,6 +540,7 @@
 				482B57DF1A43CB7700E47962 /* MaintenanceCar.xcdatamodeld in Sources */,
 				48AE95C61A50F52700A8A4B3 /* MJRefreshHeaderView.m in Sources */,
 				48DA960B1A4E8A0C009CCC50 /* SCLocationInfo.m in Sources */,
+				48AB35E01A5183B400BFBC77 /* SCLoginViewController.m in Sources */,
 				48F0812E1A45505400531426 /* SCTabbar.m in Sources */,
 				48AE95C41A50F52700A8A4B3 /* MJRefreshConst.m in Sources */,
 				48EC705B1A442BE1003CE3FD /* SCMerchantViewController.m in Sources */,
@@ -519,6 +551,7 @@
 				48AE95CC1A51050D00A8A4B3 /* SCReservationViewController.m in Sources */,
 				48FE1ED31A4D614F0083C9DF /* SCMerchant.m in Sources */,
 				48EC705E1A442C45003CE3FD /* SCQAViewController.m in Sources */,
+				48AB35DC1A517CAB00BFBC77 /* SCUserInfo.m in Sources */,
 				48FE1EDA1A4D6A270083C9DF /* SCMerchantDetail.m in Sources */,
 				482335351A4BA78700B60921 /* SCAPIRequest.m in Sources */,
 				482B57D91A43CB7700E47962 /* main.m in Sources */,
@@ -527,6 +560,7 @@
 				48DA960E1A4EBBE0009CCC50 /* SCMerchantList.m in Sources */,
 				48EC70611A442C56003CE3FD /* SCUserViewController.m in Sources */,
 				48EC70551A442B13003CE3FD /* SCMainViewController.m in Sources */,
+				4884A8B01A52B4E50067DF78 /* SCVerificationCodeButton.m in Sources */,
 				48AE95C81A50F52700A8A4B3 /* UIScrollView+MJRefresh.m in Sources */,
 				48FE1ED71A4D61E30083C9DF /* SCMerchantDetailViewController.m in Sources */,
 				48EC70581A442BBF003CE3FD /* SCHomePageViewController.m in Sources */,

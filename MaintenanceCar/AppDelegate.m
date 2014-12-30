@@ -20,12 +20,23 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 
+    // 设置导航条和电池条颜色
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UINavigationBar appearance] setBarTintColor:UIColorWithRGBA(38.0f, 123.0f, 187.0f, 1.0f)];
+    
+    // 设置导航条字体颜色
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: UIColorWithRGBA(245.0f, 245.0f, 245.0f, 1.0f),
+                                                           NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0f]}];
+    
 #pragma mark UMeng Analytics SDK
     // 启动[友盟统计]，采用启动发送的方式 - BATCH
     [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:@"测试"];
     // 设置版本号
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [MobClick setAppVersion:version];
+    
+    [MobClick checkUpdate];         // 集成友盟更新
     
     return YES;
 }

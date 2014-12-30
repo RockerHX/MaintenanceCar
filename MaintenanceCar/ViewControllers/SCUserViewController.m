@@ -8,6 +8,9 @@
 
 #import "SCUserViewController.h"
 #import <UMengAnalytics/MobClick.h>
+#import "MicroCommon.h"
+#import "SCUserInfo.h"
+#import "SCLoginViewController.h"
 
 @interface SCUserViewController ()
 
@@ -38,6 +41,32 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Table View Delegate Methods
+#pragma mark -
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - Button Action Methods
+#pragma mark -
+- (IBAction)loginButtonPressed:(UIButton *)sender
+{
+    @try {
+        if ([[SCUserInfo share] loginStatus] == SCLoginStatusLogout)
+        {
+            SCLoginViewController *loginViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCLoginViewController"];
+            loginViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+            [self presentViewController:loginViewController animated:YES completion:nil];
+        }
+    }
+    @catch (NSException *exception) {
+        SCException(@"Go to the SCLoginViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
 }
 
 @end

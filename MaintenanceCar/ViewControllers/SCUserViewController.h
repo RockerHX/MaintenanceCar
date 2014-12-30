@@ -10,4 +10,11 @@
 
 @interface SCUserViewController : UITableViewController
 
+/**
+ *  登陆按钮点击事件
+ *
+ *  @param sender UIButton实例
+ */
+- (IBAction)loginButtonPressed:(UIButton *)sender;
+
 @end
