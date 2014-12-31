@@ -57,9 +57,9 @@
     @try {
         if ([[SCUserInfo share] loginStatus] == SCLoginStatusLogout)
         {
-            SCLoginViewController *loginViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCLoginViewController"];
-            loginViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-            [self presentViewController:loginViewController animated:YES completion:nil];
+            UINavigationController *loginViewNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCLoginViewNavigationController"];
+            loginViewNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+            [self.navigationController.tabBarController presentViewController:loginViewNavigationController animated:YES completion:nil];
         }
     }
     @catch (NSException *exception) {

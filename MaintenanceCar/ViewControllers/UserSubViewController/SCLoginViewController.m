@@ -100,7 +100,7 @@ typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
 {
     [_phoneNumberTextField resignFirstResponder];
     [_verificationCodeTextField resignFirstResponder];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)weiboLoginButtonPressed:(UIButton *)sender
