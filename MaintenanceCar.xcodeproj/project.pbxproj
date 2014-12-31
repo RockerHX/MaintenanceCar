@@ -30,6 +30,7 @@
 		48AE95C81A50F52700A8A4B3 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 48AE95BF1A50F52700A8A4B3 /* UIScrollView+MJRefresh.m */; };
 		48AE95C91A50F52700A8A4B3 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 48AE95C11A50F52700A8A4B3 /* UIView+MJExtension.m */; };
 		48AE95CC1A51050D00A8A4B3 /* SCReservationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48AE95CB1A51050D00A8A4B3 /* SCReservationViewController.m */; };
+		48B6699C1A53E75C00A753B2 /* SCVerificationCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B6699B1A53E75C00A753B2 /* SCVerificationCodeView.m */; };
 		48D4D2D51A4E575200E516CF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48D4D2D31A4E573800E516CF /* CoreLocation.framework */; };
 		48DA960B1A4E8A0C009CCC50 /* SCLocationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DA960A1A4E8A0C009CCC50 /* SCLocationInfo.m */; };
 		48DA960E1A4EBBE0009CCC50 /* SCMerchantList.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DA960D1A4EBBE0009CCC50 /* SCMerchantList.m */; };
@@ -100,6 +101,8 @@
 		48AE95C11A50F52700A8A4B3 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
 		48AE95CA1A51050D00A8A4B3 /* SCReservationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCReservationViewController.h; sourceTree = "<group>"; };
 		48AE95CB1A51050D00A8A4B3 /* SCReservationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCReservationViewController.m; sourceTree = "<group>"; };
+		48B6699A1A53E75C00A753B2 /* SCVerificationCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCVerificationCodeView.h; sourceTree = "<group>"; };
+		48B6699B1A53E75C00A753B2 /* SCVerificationCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCVerificationCodeView.m; sourceTree = "<group>"; };
 		48D4D2D31A4E573800E516CF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		48DA96091A4E8A0C009CCC50 /* SCLocationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLocationInfo.h; sourceTree = "<group>"; };
 		48DA960A1A4E8A0C009CCC50 /* SCLocationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLocationInfo.m; sourceTree = "<group>"; };
@@ -246,6 +249,8 @@
 			children = (
 				4884A8AE1A52B4E50067DF78 /* SCVerificationCodeButton.h */,
 				4884A8AF1A52B4E50067DF78 /* SCVerificationCodeButton.m */,
+				48B6699A1A53E75C00A753B2 /* SCVerificationCodeView.h */,
+				48B6699B1A53E75C00A753B2 /* SCVerificationCodeView.m */,
 			);
 			path = UserSubView;
 			sourceTree = "<group>";
@@ -536,6 +541,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48B6699C1A53E75C00A753B2 /* SCVerificationCodeView.m in Sources */,
 				482B57DC1A43CB7700E47962 /* AppDelegate.m in Sources */,
 				482B57DF1A43CB7700E47962 /* MaintenanceCar.xcdatamodeld in Sources */,
 				48AE95C61A50F52700A8A4B3 /* MJRefreshHeaderView.m in Sources */,
