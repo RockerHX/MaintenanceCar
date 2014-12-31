@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class SCVerificationCodeView;
+
 @interface SCLoginViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UITextField *phoneNumberTextField;
-@property (weak, nonatomic) IBOutlet UITextField *verificationCodeTextField;
+@property (weak, nonatomic) IBOutlet UITextField            *phoneNumberTextField;          // 手机号码输入框
+@property (weak, nonatomic) IBOutlet UITextField            *verificationCodeTextField;     // 验证码输入框
+@property (weak, nonatomic) IBOutlet SCVerificationCodeView *verificationCodeView;          // 获取验证码视图
 
-- (IBAction)verificationCodeButtonPressed:(UIButton *)sender;
 - (IBAction)loginButtonPressed:(UIButton *)sender;
 - (IBAction)cancelButtonPressed:(UIButton *)sender;
 - (IBAction)weiboLoginButtonPressed:(UIButton *)sender;
