@@ -10,6 +10,7 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "MicroCommon.h"
 #import "SCAPIRequest.h"
+#import "SCUserInfo.h"
 #import "SCVerificationCodeView.h"
 
 typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
@@ -17,7 +18,13 @@ typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
     SCVerificationCodeModeCall                  // 语音验证模式
 };
 
-@interface SCLoginViewController () <UITextFieldDelegate>
+typedef NS_ENUM(NSInteger, SCHUDMode) {
+    SCHUDModeDefault = 1,
+    SCHUDModeRegister,
+    SCHUDModeLogin
+};
+
+@interface SCLoginViewController () <UITextFieldDelegate, MBProgressHUDDelegate>
 
 @property (nonatomic, copy)   NSString *verificationCode;         // 请求给用户所发送验证码，由客户端随机生成
 
@@ -54,7 +61,7 @@ typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
         }
         else
         {
-            [self showPromptHUDWithText:@"请输入手机号" delay:2.0f];
+            [self showPromptHUDWithText:@"请输入手机号" delay:2.0f mode:SCHUDModeDefault delegate:nil];
             return NO;
         }
     }];
@@ -63,13 +70,15 @@ typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
 /**
  *  用户提示方法
  *
- *  @param text  提示内容
- *  @param delay 提示消失时间
+ *  @param text     提示内容
+ *  @param delay    提示消失时间
+ *  @param delegate 代理对象
  */
-- (void)showPromptHUDWithText:(NSString *)text delay:(NSTimeInterval)delay
+- (void)showPromptHUDWithText:(NSString *)text delay:(NSTimeInterval)delay mode:(SCHUDMode)mode delegate:(id<MBProgressHUDDelegate>)delegate
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
+    hud.tag = mode;
+    hud.delegate = delegate;
     hud.mode = MBProgressHUDModeText;
     hud.yOffset = SCREEN_HEIGHT/2 - 100.0f;
     hud.margin = 10.f;
@@ -91,15 +100,15 @@ typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
     [[SCAPIRequest manager] startGetVerificationCodeAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            [self showPromptHUDWithText:@"短信已发送" delay:2.0f];
+            [self showPromptHUDWithText:@"短信已发送" delay:2.0f mode:SCHUDModeDefault delegate:nil];
         }
         else
         {
-            [self showPromptHUDWithText:@"获取出错，请重新获取" delay:2.0f];
+            [self showPromptHUDWithText:@"获取出错，请重新获取" delay:2.0f mode:SCHUDModeDefault delegate:nil];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         SCError(@"Get verification code request error:%@", error);
-        [self showPromptHUDWithText:@"获取出错，请重新获取" delay:2.0f];
+        [self showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
     }];
 }
 
@@ -112,11 +121,44 @@ typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
     [[SCAPIRequest manager] startRegisterAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            ;
+            [[SCUserInfo share] loginSuccessWithUserID:responseObject];
+            [self showPromptHUDWithText:@"注册成功" delay:1.0f mode:SCHUDModeRegister delegate:self];
+        }
+        else
+        {
+            [self showPromptHUDWithText:@"注册出错，请联系远景车联" delay:2.0f mode:SCHUDModeDefault delegate:nil];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        SCError(@"Get verification code request error:%@", error);
+        [self showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
     }];
+}
+
+- (void)startLoginRequest
+{
+    NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text};
+    [[SCAPIRequest manager] startLoginAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        {
+            [[SCUserInfo share] loginSuccessWithUserID:responseObject];
+            [self showPromptHUDWithText:@"登陆成功" delay:1.0f mode:SCHUDModeLogin delegate:self];
+        }
+        else
+        {
+            [self showPromptHUDWithText:@"注册出错，请联系远景车联" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        SCError(@"Get verification code request error:%@", error);
+        [self showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+    }];
+}
+
+- (void)dismissController
+{
+    // 取消按钮点击之后关闭所有键盘，并返回到[个人中心]页面
+    [_phoneNumberTextField resignFirstResponder];
+    [_verificationCodeTextField resignFirstResponder];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Getter Methods
@@ -131,14 +173,16 @@ typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
 #pragma mark -
 - (IBAction)loginButtonPressed:(UIButton *)sender
 {
+    if ([_verificationCodeTextField.text isEqualToString:_verificationCode])
+    {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [self startRegisterRequest];
+    }
 }
 
 - (IBAction)cancelButtonPressed:(UIButton *)sender
 {
-    // 取消按钮点击之后关闭所有键盘，并返回到[个人中心]页面
-    [_phoneNumberTextField resignFirstResponder];
-    [_verificationCodeTextField resignFirstResponder];
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self dismissController];
 }
 
 - (IBAction)weiboLoginButtonPressed:(UIButton *)sender
@@ -149,6 +193,13 @@ typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
 {
 }
 
+#pragma mark - Touch Event Methods
+#pragma makr -
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
 #pragma mark - Text Field Delegate Methods
 #pragma mark -
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -156,6 +207,29 @@ typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
     // 关闭键盘
     [textField resignFirstResponder];
     return YES;
+}
+
+#pragma mark - MBProgressHUDDelegate Methods
+#pragma mark -
+- (void)hudWasHidden:(MBProgressHUD *)hud
+{
+    switch (hud.tag)
+    {
+        case SCHUDModeRegister:
+        {
+            [self startLoginRequest];
+        }
+            break;
+        case SCHUDModeLogin:
+        {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self dismissController];
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

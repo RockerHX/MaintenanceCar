@@ -44,6 +44,10 @@
 #define kMerchantListReservationNotification        @"kMerchantListReservationNotification"     // 商户列表内[预约]按钮点击触发的通知 - 用于传递tag，得到所点击按钮是位于列表内的index
 
 
+#pragma mark - Define Methods
+#pragma mark -
+#define ShowPromptHUDWithText(text, delay)          ({MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];hud.mode = MBProgressHUDModeText;hud.yOffset = SCREEN_HEIGHT/2 - 100.0f;hud.margin = 10.f;hud.labelText = text;hud.removeFromSuperViewOnHide = YES;[hud hide:YES afterDelay:delay];})
+
 #pragma mark - Debug Define
 #pragma mark -
 #ifdef DEBUG

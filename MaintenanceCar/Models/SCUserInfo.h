@@ -16,6 +16,7 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
 @interface SCUserInfo : NSObject
 
 @property (nonatomic, copy, readonly)   NSString      *userID;          // 用户ID
+@property (nonatomic, copy, readonly)   NSString      *phoneNmber;      // 用户手机号
 @property (nonatomic, assign, readonly) SCLoginStatus loginStatus;      // 登陆状态
 
 /**
@@ -26,11 +27,11 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
 + (instancetype)share;
 
 /**
- *  登陆成功，设置userID
+ *  登陆成功，设置userID，phoneNmber
  *
- *  @param userID 用户ID[userID]
+ *  @param userData 服务返回的用户数据
  */
-- (void)loginSuccessWithUserID:(NSString *)userID;
+- (void)loginSuccessWithUserID:(NSDictionary *)userData;
 
 /**
  *  用户注销

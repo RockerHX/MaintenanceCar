@@ -177,16 +177,19 @@
 #pragma mark -
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    // 跳转到预约页面
-    @try {
-        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCReservationViewController"];
-        reservationViewController.merchant = _merchantList[_reservationButtonIndex];
-        [self.navigationController pushViewController:reservationViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        SCException(@"Go to the SCReservationViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
+    if (buttonIndex != alertView.cancelButtonIndex)
+    {
+        // 跳转到预约页面
+        @try {
+            SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCReservationViewController"];
+            reservationViewController.merchant = _merchantList[_reservationButtonIndex];
+            [self.navigationController pushViewController:reservationViewController animated:YES];
+        }
+        @catch (NSException *exception) {
+            SCException(@"Go to the SCReservationViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
     }
 }
 
