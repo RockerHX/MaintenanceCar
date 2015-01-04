@@ -48,6 +48,7 @@
 #pragma mark -
 #define ShowPromptHUDWithText(text, delay)          ({MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];hud.mode = MBProgressHUDModeText;hud.yOffset = SCREEN_HEIGHT/2 - 100.0f;hud.margin = 10.f;hud.labelText = text;hud.removeFromSuperViewOnHide = YES;[hud hide:YES afterDelay:delay];})
 
+
 #pragma mark - Debug Define
 #pragma mark -
 #ifdef DEBUG

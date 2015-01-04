@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		480C01C31A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C01C21A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.m */; };
+		480C01C61A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C01C51A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.m */; };
+		480C01CA1A58EC7000A08F44 /* SCMerchantBaseInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C01C81A58EC7000A08F44 /* SCMerchantBaseInfoTableViewCell.m */; };
 		481939971A4D985B00F1015E /* SCMerchantTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 481939961A4D985B00F1015E /* SCMerchantTableViewCell.m */; };
 		482335351A4BA78700B60921 /* SCAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 482335341A4BA78700B60921 /* SCAPIRequest.m */; };
 		482B57D91A43CB7700E47962 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 482B57D81A43CB7700E47962 /* main.m */; };
@@ -58,6 +61,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		480C01C11A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMerchantDetialInfoTableViewCell.h; sourceTree = "<group>"; };
+		480C01C21A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMerchantDetialInfoTableViewCell.m; sourceTree = "<group>"; };
+		480C01C41A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMerchantPurchaseTableViewCell.h; sourceTree = "<group>"; };
+		480C01C51A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMerchantPurchaseTableViewCell.m; sourceTree = "<group>"; };
+		480C01C71A58EC7000A08F44 /* SCMerchantBaseInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMerchantBaseInfoTableViewCell.h; sourceTree = "<group>"; };
+		480C01C81A58EC7000A08F44 /* SCMerchantBaseInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMerchantBaseInfoTableViewCell.m; sourceTree = "<group>"; };
 		481939951A4D985B00F1015E /* SCMerchantTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMerchantTableViewCell.h; sourceTree = "<group>"; };
 		481939961A4D985B00F1015E /* SCMerchantTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMerchantTableViewCell.m; sourceTree = "<group>"; };
 		482335331A4BA78700B60921 /* SCAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAPIRequest.h; sourceTree = "<group>"; };
@@ -169,6 +178,12 @@
 			children = (
 				481939951A4D985B00F1015E /* SCMerchantTableViewCell.h */,
 				481939961A4D985B00F1015E /* SCMerchantTableViewCell.m */,
+				480C01C71A58EC7000A08F44 /* SCMerchantBaseInfoTableViewCell.h */,
+				480C01C81A58EC7000A08F44 /* SCMerchantBaseInfoTableViewCell.m */,
+				480C01C41A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.h */,
+				480C01C51A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.m */,
+				480C01C11A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.h */,
+				480C01C21A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.m */,
 			);
 			path = MerchantSubView;
 			sourceTree = "<group>";
@@ -541,11 +556,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				480C01C31A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.m in Sources */,
 				48B6699C1A53E75C00A753B2 /* SCVerificationCodeView.m in Sources */,
 				482B57DC1A43CB7700E47962 /* AppDelegate.m in Sources */,
 				482B57DF1A43CB7700E47962 /* MaintenanceCar.xcdatamodeld in Sources */,
 				48AE95C61A50F52700A8A4B3 /* MJRefreshHeaderView.m in Sources */,
 				48DA960B1A4E8A0C009CCC50 /* SCLocationInfo.m in Sources */,
+				480C01C61A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.m in Sources */,
 				48AB35E01A5183B400BFBC77 /* SCLoginViewController.m in Sources */,
 				48F0812E1A45505400531426 /* SCTabbar.m in Sources */,
 				48AE95C41A50F52700A8A4B3 /* MJRefreshConst.m in Sources */,
@@ -567,6 +584,7 @@
 				48EC70611A442C56003CE3FD /* SCUserViewController.m in Sources */,
 				48EC70551A442B13003CE3FD /* SCMainViewController.m in Sources */,
 				4884A8B01A52B4E50067DF78 /* SCVerificationCodeButton.m in Sources */,
+				480C01CA1A58EC7000A08F44 /* SCMerchantBaseInfoTableViewCell.m in Sources */,
 				48AE95C81A50F52700A8A4B3 /* UIScrollView+MJRefresh.m in Sources */,
 				48FE1ED71A4D61E30083C9DF /* SCMerchantDetailViewController.m in Sources */,
 				48EC70581A442BBF003CE3FD /* SCHomePageViewController.m in Sources */,

@@ -125,6 +125,13 @@
     [self requestGETMethodsWithAPI:SearchAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startMerchantDetailAPIRequestWithParameters:(NSDictionary *)parameters
+                                            Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MerchantDetailAPIURL parameters:parameters success:success failure:failure];
+}
+
 - (void)startGetVerificationCodeAPIRequestWithParameters:(NSDictionary *)parameters
                                                  Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure

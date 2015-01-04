@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class SCMerchant;
+
 @interface SCMerchantDetailViewController : UITableViewController
+
+@property (nonatomic, strong) SCMerchant *merchantInfo;
 
 @end

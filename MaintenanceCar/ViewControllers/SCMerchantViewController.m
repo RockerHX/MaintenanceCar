@@ -16,6 +16,7 @@
 #import "SCMerchantTableViewCell.h"
 #import "SCLocationInfo.h"
 #import "SCReservationViewController.h"
+#import "SCMerchantDetailViewController.h"
 
 #define MerchantCellReuseIdentifier     @"MerchantCellReuseIdentifier"
 
@@ -90,6 +91,7 @@
 #pragma mark -
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    _merchantInfo = _merchantList[indexPath.row];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
