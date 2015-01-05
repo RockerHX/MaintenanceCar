@@ -17,4 +17,9 @@
  */
 - (void)verificationCodeShouldSend:(BOOL(^)())block;
 
+/**
+ *  停止计时，用于网络信号不好等时候无法获取验证码的时候，重新获取验证码
+ */
+- (void)stop;
+
 @end

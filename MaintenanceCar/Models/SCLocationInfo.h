@@ -25,4 +25,14 @@
  */
 + (instancetype)shareLocationInfo;
 
+/**
+ *  计算一个经纬度到当前位置的距离
+ *
+ *  @param latitude  纬度
+ *  @param longitude 经度
+ *
+ *  @return 距离
+ */
+- (NSString *)distanceWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude;
+
 @end

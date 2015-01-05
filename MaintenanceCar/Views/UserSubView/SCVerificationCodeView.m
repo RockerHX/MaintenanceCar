@@ -64,10 +64,7 @@ typedef BOOL(^BLOCK)(void);
     
     if(_timeout < TIME_OUT_FLAG)
     {
-        [_countDownTimer invalidate];
-        
-        self.text = TEXT_PROMPT;
-        self.userInteractionEnabled = YES;
+        [self stop];
     }
 }
 
@@ -76,6 +73,14 @@ typedef BOOL(^BLOCK)(void);
 - (void)verificationCodeShouldSend:(BOOL(^)())block
 {
     _block = block;
+}
+
+- (void)stop
+{
+    [_countDownTimer invalidate];
+    
+    self.text = TEXT_PROMPT;
+    self.userInteractionEnabled = YES;
 }
 
 #pragma mark - Delloc Methods

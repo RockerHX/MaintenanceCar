@@ -7,12 +7,11 @@
 //
 
 #import "SCMainViewController.h"
-#import "MicroCommon.h"
 #import <CoreLocation/CoreLocation.h>
-#import <MBProgressHUD/MBProgressHUD.h>
-#import "SCAPIRequest.h"
-#import "SCWeather.h"
+#import "MicroCommon.h"
 #import "SCLocationInfo.h"
+#import "SCAPIRequest.h"
+#import "SCUserInfo.h"
 
 @interface SCMainViewController () <CLLocationManagerDelegate>
 
@@ -28,8 +27,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    [self startWeatherReuqest];
     
+    [self initConfig];
     [self startLocation];
 }
 
@@ -41,6 +40,9 @@
 
 #pragma mark - Location Methods
 #pragma mark -
+/**
+ *  开启定位
+ */
 - (void)startLocation
 {
     if (!_locationManager)
@@ -97,17 +99,58 @@
 
 #pragma mark - Private Methods
 #pragma mark -
-- (void)startWeatherReuqest
+- (void)initConfig
 {
-    [[SCAPIRequest manager] startWearthAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
-        NSError *error = nil;
-        SCWeather *weather = [[SCWeather alloc] initWithDictionary:responseObject error:&error];
-        NSLog(@"weather model parse error:%@", error);
-        NSLog(@"title:%@", weather.title);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
-    }];
+    [self userLog];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(shouldLogin) name:kUserNeedLoginNotification object:nil];
+}
+
+/**
+ *  记录用户数据 - 如果有用户登陆，获取数据返回给服务器，没有用户登陆则不管
+ */
+- (void)userLog
+{
+    SCUserInfo *userInfo = [SCUserInfo share];
+    if (userInfo.loginStatus)
+    {
+        SCLog(@"登陆成功");
+        SCLog(@"userID:%@", userInfo.userID);
+        SCLog(@"phoneNmber:%@", userInfo.phoneNmber);
+        
+        NSString *os = [UIDevice currentDevice].systemName;
+        NSString *osVersion = [UIDevice currentDevice].systemVersion;
+        NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+        NSDictionary *paramters = @{@"user_id": userInfo.userID,
+                                    @"os": os,
+                                    @"version": appVersion,
+                                    @"os_version": osVersion};
+        [[SCAPIRequest manager] startUserLogAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+            {
+                SCLog(@"log_id:%@", responseObject[@"log_id"]);
+            }
+            else
+            {
+                SCLog(@"log error:%@", responseObject);
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            SCLog(@"log error:%@", error);
+        }];
+    }
+}
+
+- (void)shouldLogin
+{
+    @try {
+        UINavigationController *loginViewNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCLoginViewNavigationController"];
+        loginViewNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        [self presentViewController:loginViewNavigationController animated:YES completion:nil];
+    }
+    @catch (NSException *exception) {
+        SCException(@"Go to the SCLoginViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
 }
 
 #pragma mark - Public Methods

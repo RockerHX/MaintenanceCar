@@ -8,6 +8,8 @@
 
 #import "SCHomePageViewController.h"
 #import <UMengAnalytics/MobClick.h>
+#import "SCAPIRequest.h"
+#import "SCWeather.h"
 
 @interface SCHomePageViewController ()
 
@@ -41,6 +43,19 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)startWeatherReuqest
+{
+    [[SCAPIRequest manager] startWearthAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", responseObject);
+        NSError *error = nil;
+        SCWeather *weather = [[SCWeather alloc] initWithDictionary:responseObject error:&error];
+        NSLog(@"weather model parse error:%@", error);
+        NSLog(@"title:%@", weather.title);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+    }];
 }
 
 @end

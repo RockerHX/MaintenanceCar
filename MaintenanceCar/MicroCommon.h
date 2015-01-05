@@ -28,6 +28,8 @@
 
 #define Zero                            0
 
+#define MerchantCellReuseIdentifier     @"MerchantCellReuseIdentifier"
+
 #define SCREEN_WIDTH                    ([UIScreen mainScreen].bounds.size.width)       // 获取屏幕宽度
 #define SCREEN_HEIGHT                   ([UIScreen mainScreen].bounds.size.height)      // 获取屏幕高度
 
@@ -41,12 +43,13 @@
 
 #pragma mark - Notification Name Define
 #pragma mark -
+#define kUserNeedLoginNotification                  @"kUserNeedLoginNotification"               // 需要用户的通知，收到此通知，会跳转到登陆页面
 #define kMerchantListReservationNotification        @"kMerchantListReservationNotification"     // 商户列表内[预约]按钮点击触发的通知 - 用于传递tag，得到所点击按钮是位于列表内的index
 
 
 #pragma mark - Define Methods
 #pragma mark -
-#define ShowPromptHUDWithText(text, delay)          ({MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];hud.mode = MBProgressHUDModeText;hud.yOffset = SCREEN_HEIGHT/2 - 100.0f;hud.margin = 10.f;hud.labelText = text;hud.removeFromSuperViewOnHide = YES;[hud hide:YES afterDelay:delay];})
+#define ShowPromptHUDWithText(view, text, delay)          ({MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];hud.mode = MBProgressHUDModeText;hud.yOffset = SCREEN_HEIGHT/2 - 100.0f;hud.margin = 10.f;hud.labelText = text;hud.removeFromSuperViewOnHide = YES;[hud hide:YES afterDelay:delay];})
 
 
 #pragma mark - Debug Define

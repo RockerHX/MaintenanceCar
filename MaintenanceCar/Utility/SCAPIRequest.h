@@ -41,7 +41,7 @@
                            api:(NSString *)api;
 
 /**
- *  天气接口请求方法(API:/Weather)
+ *  天气接口请求方法(API:/Weather - GET)
  *
  *  @param uccess  请求成功的block
  *  @param failure 请求失败的block
@@ -50,7 +50,7 @@
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  商户列表接口请求方法(API:/company_search)
+ *  商户列表接口请求方法(API:/company_search - GET)
  *
  *  @param parameters   请求参数集合
  *  @param uccess       请求成功的block
@@ -61,7 +61,7 @@
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  商户详情接口请求方法(API:/Carshop)
+ *  商户详情接口请求方法(API:/Carshop - GET)
  *
  *  @param parameters   请求参数集合
  *  @param uccess       请求成功的block
@@ -72,7 +72,51 @@
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  验证码获取请求方法(API:/Verification)
+ *  商户收藏接口请求方法(API:/Collection - POST)
+ *
+ *  @param parameters   请求参数集合
+ *  @param uccess       请求成功的block
+ *  @param failure      请求失败的block
+ */
+- (void)startMerchantCollectionAPIRequestWithParameters:(NSDictionary *)parameters
+                                                Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  获取商户收藏状态接口请求方法(API:/Collection - GET)
+ *
+ *  @param parameters   请求参数集合
+ *  @param uccess       请求成功的block
+ *  @param failure      请求失败的block
+ */
+- (void)startGetCollectionMerchantAPIRequestWithParameters:(NSDictionary *)parameters
+                                                   Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  取消收藏商户接口请求方法(API:/Collection/delete - GET)
+ *
+ *  @param parameters   请求参数集合
+ *  @param uccess       请求成功的block
+ *  @param failure      请求失败的block
+ */
+- (void)startMerchantUnCollectionAPIRequestWithParameters:(NSDictionary *)parameters
+                                                  Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  检查商户是否收藏接口请求方法(API:/Collection/user - GET)
+ *
+ *  @param parameters   请求参数集合
+ *  @param uccess       请求成功的block
+ *  @param failure      请求失败的block
+ */
+- (void)startCheckMerchantCollectionStutasAPIRequestWithParameters:(NSDictionary *)parameters
+                                                           Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  验证码获取请求方法(API:/Verification - POST)
  *
  *  @param parameters   请求参数集合
  *  @param uccess       请求成功的block
@@ -83,7 +127,7 @@
                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  用户注册接口请求方法(API:/User)
+ *  用户注册接口请求方法(API:/User - POST)
  *
  *  @param parameters   请求参数集合
  *  @param uccess       请求成功的block
@@ -94,7 +138,7 @@
                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  用户登陆接口请求方法(API:/User)
+ *  用户登陆接口请求方法(API:/User - GET)
  *
  *  @param parameters   请求参数集合
  *  @param uccess       请求成功的block
@@ -103,5 +147,16 @@
 - (void)startLoginAPIRequestWithParameters:(NSDictionary *)parameters
                                    Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  用户日志记录接口请求方法(API:/Userlog - POST)
+ *
+ *  @param parameters   请求参数集合
+ *  @param uccess       请求成功的block
+ *  @param failure      请求失败的block
+ */
+- (void)startUserLogAPIRequestWithParameters:(NSDictionary *)parameters
+                                     Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 @end

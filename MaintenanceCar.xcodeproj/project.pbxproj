@@ -24,6 +24,8 @@
 		48934F5D1A4CFE1700F29745 /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = 48934F5C1A4CFE1700F29745 /* server.cer */; };
 		48AB35DC1A517CAB00BFBC77 /* SCUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 48AB35DB1A517CAB00BFBC77 /* SCUserInfo.m */; };
 		48AB35E01A5183B400BFBC77 /* SCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48AB35DF1A5183B400BFBC77 /* SCLoginViewController.m */; };
+		48ADC8421A5A6FD80036AD6E /* SCMyFavoriteTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48ADC8411A5A6FD80036AD6E /* SCMyFavoriteTableViewController.m */; };
+		48ADC8451A5A7D130036AD6E /* SCCollectionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 48ADC8441A5A7D130036AD6E /* SCCollectionItem.m */; };
 		48AE95C21A50F52700A8A4B3 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 48AE95B21A50F52700A8A4B3 /* MJRefresh.bundle */; };
 		48AE95C31A50F52700A8A4B3 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48AE95B51A50F52700A8A4B3 /* MJRefreshBaseView.m */; };
 		48AE95C41A50F52700A8A4B3 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 48AE95B71A50F52700A8A4B3 /* MJRefreshConst.m */; };
@@ -92,6 +94,10 @@
 		48AB35DB1A517CAB00BFBC77 /* SCUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCUserInfo.m; sourceTree = "<group>"; };
 		48AB35DE1A5183B400BFBC77 /* SCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLoginViewController.h; sourceTree = "<group>"; };
 		48AB35DF1A5183B400BFBC77 /* SCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLoginViewController.m; sourceTree = "<group>"; };
+		48ADC8401A5A6FD80036AD6E /* SCMyFavoriteTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMyFavoriteTableViewController.h; sourceTree = "<group>"; };
+		48ADC8411A5A6FD80036AD6E /* SCMyFavoriteTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMyFavoriteTableViewController.m; sourceTree = "<group>"; };
+		48ADC8431A5A7D130036AD6E /* SCCollectionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCollectionItem.h; sourceTree = "<group>"; };
+		48ADC8441A5A7D130036AD6E /* SCCollectionItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCollectionItem.m; sourceTree = "<group>"; };
 		48AE95B21A50F52700A8A4B3 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
 		48AE95B31A50F52700A8A4B3 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
 		48AE95B41A50F52700A8A4B3 /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
@@ -184,6 +190,8 @@
 				480C01C51A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.m */,
 				480C01C11A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.h */,
 				480C01C21A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.m */,
+				48ADC8431A5A7D130036AD6E /* SCCollectionItem.h */,
+				48ADC8441A5A7D130036AD6E /* SCCollectionItem.m */,
 			);
 			path = MerchantSubView;
 			sourceTree = "<group>";
@@ -292,6 +300,8 @@
 			children = (
 				48AB35DE1A5183B400BFBC77 /* SCLoginViewController.h */,
 				48AB35DF1A5183B400BFBC77 /* SCLoginViewController.m */,
+				48ADC8401A5A6FD80036AD6E /* SCMyFavoriteTableViewController.h */,
+				48ADC8411A5A6FD80036AD6E /* SCMyFavoriteTableViewController.m */,
 			);
 			path = UserSubViewController;
 			sourceTree = "<group>";
@@ -571,6 +581,7 @@
 				48AE95C51A50F52700A8A4B3 /* MJRefreshFooterView.m in Sources */,
 				4884CD291A4D4E050018ED09 /* SCMaintenanceViewController.m in Sources */,
 				48AE95C31A50F52700A8A4B3 /* MJRefreshBaseView.m in Sources */,
+				48ADC8451A5A7D130036AD6E /* SCCollectionItem.m in Sources */,
 				48AE95CC1A51050D00A8A4B3 /* SCReservationViewController.m in Sources */,
 				48FE1ED31A4D614F0083C9DF /* SCMerchant.m in Sources */,
 				48EC705E1A442C45003CE3FD /* SCQAViewController.m in Sources */,
@@ -589,6 +600,7 @@
 				48FE1ED71A4D61E30083C9DF /* SCMerchantDetailViewController.m in Sources */,
 				48EC70581A442BBF003CE3FD /* SCHomePageViewController.m in Sources */,
 				481939971A4D985B00F1015E /* SCMerchantTableViewCell.m in Sources */,
+				48ADC8421A5A6FD80036AD6E /* SCMyFavoriteTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -32,22 +32,22 @@ static SCUserInfo *userInfo = nil;
 #pragma mark -
 - (NSString *)userID
 {
-    return self.isLogin ? [USER_DEFAULT objectForKey:kUserIDKey] : nil;
+    return self.loginStatus ? [USER_DEFAULT objectForKey:kUserIDKey] : @"";
 }
 
 - (NSString *)phoneNmber
 {
-    return self.isLogin ? [USER_DEFAULT objectForKey:kPhoneNumberKey] : nil;
+    return self.loginStatus ? [USER_DEFAULT objectForKey:kPhoneNumberKey] : nil;
 }
 
-- (SCLoginStatus)isLogin
+- (SCLoginStatus)loginStatus
 {
     return ([[USER_DEFAULT objectForKey:kLoginKey] boolValue] && [USER_DEFAULT objectForKey:kUserIDKey]) ? SCLoginStatusLogin : SCLoginStatusLogout;
 }
 
 #pragma mark - Public Methods
 #pragma mark -
-- (void)loginSuccessWithUserID:(NSDictionary *)userData
++ (void)loginSuccessWithUserID:(NSDictionary *)userData
 {
     [USER_DEFAULT setObject:@(YES) forKey:kLoginKey];
     [USER_DEFAULT setObject:userData[@"user_id"] forKey:kUserIDKey];
@@ -55,7 +55,7 @@ static SCUserInfo *userInfo = nil;
     [USER_DEFAULT synchronize];
 }
 
-- (void)logout
++ (void)logout
 {
     [USER_DEFAULT setObject:@(NO) forKey:kLoginKey];
     [USER_DEFAULT removeObjectForKey:kUserIDKey];

@@ -7,20 +7,16 @@
 //
 
 #import "JSONModel.h"
-#import "SCMerchantDetail.h"
 
 // 商户Model
 @interface SCMerchant : JSONModel
 
-// 以下属性供Model解析，不建议调用
-@property (nonatomic, strong) NSArray                    *attribute;
-@property (nonatomic, strong) SCMerchantDetail           *fields;
-@property (nonatomic, strong) NSArray                    *property;
-@property (nonatomic, strong) NSArray                    *sortExprValues;
-@property (nonatomic, strong) NSDictionary               *variableValue;
+@property (nonatomic, copy)           NSString <Optional>*name;                 // 商户名称
+@property (nonatomic, copy)           NSString <Optional>*company_id;           // 商户ID
+@property (nonatomic, copy)           NSString <Optional>*region3;              // 区
+@property (nonatomic, copy)           NSString <Optional>*latitude;             // 商户地理位置 - 纬度
+@property (nonatomic, copy)           NSString <Optional>*longtitude;           // 商户地理位置 - 经度
 
-// 以下是建议调用的属性
-@property (nonatomic, strong) SCMerchantDetail<Ignore>   *detail;           // 商户的详细信息
-@property (nonatomic, copy)   NSString<Ignore>           *distance;         // 手机当前位置与商户的距离
+@property (nonatomic, copy, readonly) NSString <Ignore>*distance;     // 手机当前位置与商户的距离
 
 @end

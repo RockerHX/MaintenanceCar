@@ -34,7 +34,7 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // 设置商户名称显示
-    _merchantNameLabel.text = _merchant.detail.name;
+    _merchantNameLabel.text = _merchant.name;
 }
 
 - (void)didReceiveMemoryWarning

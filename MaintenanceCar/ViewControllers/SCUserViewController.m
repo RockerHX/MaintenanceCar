@@ -11,8 +11,9 @@
 #import "MicroCommon.h"
 #import "SCUserInfo.h"
 #import "SCLoginViewController.h"
+#import "SCMyFavoriteTableViewController.h"
 
-@interface SCUserViewController ()
+@interface SCUserViewController () <UIAlertViewDelegate>
 
 @end
 
@@ -35,6 +36,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,24 +50,66 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (![SCUserInfo share].loginStatus)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登陆"
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                                  otherButtonTitles:@"登陆", nil];
+        [alertView show];
+    }
+    else
+    {
+        switch (indexPath.row)
+        {
+            case 2:
+            {
+                SCMyFavoriteTableViewController *myFavoriteTableViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyFavoriteTableViewController"];
+                [self pushToSubViewControllerWithController:myFavoriteTableViewController];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
 }
 
 #pragma mark - Button Action Methods
 #pragma mark -
 - (IBAction)loginButtonPressed:(UIButton *)sender
 {
-    @try {
-        if ([[SCUserInfo share] loginStatus] == SCLoginStatusLogout)
-        {
-            UINavigationController *loginViewNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCLoginViewNavigationController"];
-            loginViewNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-            [self.navigationController.tabBarController presentViewController:loginViewNavigationController animated:YES completion:nil];
-        }
+    [self checkShouldLogin];
+}
+
+#pragma mark - Private Methods
+#pragma mark -
+- (void)viewConfig
+{
+}
+
+- (void)pushToSubViewControllerWithController:(UIViewController *)viewController
+{
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
+- (void)checkShouldLogin
+{
+    if (![SCUserInfo share].loginStatus)
+    {
+        [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
     }
-    @catch (NSException *exception) {
-        SCException(@"Go to the SCLoginViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
+}
+
+#pragma mark - Alert View Delegate Methods
+#pragma mark -
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != alertView.cancelButtonIndex)
+    {
+        [self checkShouldLogin];
     }
 }
 

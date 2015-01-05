@@ -31,11 +31,11 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
  *
  *  @param userData 服务返回的用户数据
  */
-- (void)loginSuccessWithUserID:(NSDictionary *)userData;
++ (void)loginSuccessWithUserID:(NSDictionary *)userData;
 
 /**
  *  用户注销
  */
-- (void)logout;
++ (void)logout;
 
 @end

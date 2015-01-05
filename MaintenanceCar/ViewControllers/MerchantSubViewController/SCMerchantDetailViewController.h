@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@class SCMerchant;
+@class SCMerchantDetail;
+@class SCCollectionItem;
 
 @interface SCMerchantDetailViewController : UITableViewController
 
-@property (nonatomic, strong) SCMerchant *merchantInfo;
+@property (nonatomic, copy)                  NSString *companyID;
+@property (nonatomic, strong)        SCMerchantDetail *merchantDetail;
+@property (weak, nonatomic) IBOutlet SCCollectionItem *favoriteItem;
+
+- (IBAction)favoriteItemPressed:(SCCollectionItem *)sender;
 
 @end

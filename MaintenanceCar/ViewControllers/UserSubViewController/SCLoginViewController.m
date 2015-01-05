@@ -20,11 +20,12 @@ typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
 
 typedef NS_ENUM(NSInteger, SCHUDMode) {
     SCHUDModeDefault = 1,
+    SCHUDModeSendVerificationCode,
     SCHUDModeRegister,
     SCHUDModeLogin
 };
 
-@interface SCLoginViewController () <UITextFieldDelegate, MBProgressHUDDelegate>
+@interface SCLoginViewController () <MBProgressHUDDelegate>
 
 @property (nonatomic, copy)   NSString *verificationCode;         // 请求给用户所发送验证码，由客户端随机生成
 
@@ -93,6 +94,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
  */
 - (void)startGetVerificationCodeReuqestWithMode:(SCVerificationCodeMode)mode
 {
+    __weak typeof(self) weakSelf = self;
     NSDictionary *parameters = @{@"phone"      : _phoneNumberTextField.text,
                                  @"code"       : self.verificationCode,
                                  @"time_expire": @(VerificationCodeTimeExpire),
@@ -100,15 +102,23 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
     [[SCAPIRequest manager] startGetVerificationCodeAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            [self showPromptHUDWithText:@"短信已发送" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+            if ([[responseObject objectForKey:@"msg"] isEqualToString:@"OK"])
+            {
+                [weakSelf showPromptHUDWithText:@"验证码已发送,请注意查收" delay:2.0f mode:SCHUDModeSendVerificationCode delegate:weakSelf];
+            }
+            else
+            {
+                [weakSelf showPromptHUDWithText:@"验证码发送失败，请重新获取验证码" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+                [_verificationCodeView stop];
+            }
         }
         else
         {
-            [self showPromptHUDWithText:@"获取出错，请重新获取" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+            [weakSelf showPromptHUDWithText:@"获取出错，请重新获取" delay:2.0f mode:SCHUDModeDefault delegate:nil];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         SCError(@"Get verification code request error:%@", error);
-        [self showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+        [weakSelf showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
     }];
 }
 
@@ -117,47 +127,60 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
  */
 - (void)startRegisterRequest
 {
+    __weak typeof(self) weakSelf = self;
     NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text};
     [[SCAPIRequest manager] startRegisterAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            [[SCUserInfo share] loginSuccessWithUserID:responseObject];
-            [self showPromptHUDWithText:@"注册成功" delay:1.0f mode:SCHUDModeRegister delegate:self];
+            [weakSelf startLoginRequest];
+        }
+        else if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+        {
+            [SCUserInfo loginSuccessWithUserID:responseObject];
+            [weakSelf showPromptHUDWithText:@"注册成功" delay:1.0f mode:SCHUDModeRegister delegate:weakSelf];
         }
         else
         {
-            [self showPromptHUDWithText:@"注册出错，请联系远景车联" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+            [weakSelf showPromptHUDWithText:@"注册出错，请联系远景车联" delay:2.0f mode:SCHUDModeDefault delegate:nil];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         SCError(@"Get verification code request error:%@", error);
-        [self showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
+        [weakSelf showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
     }];
 }
 
 - (void)startLoginRequest
 {
+    __weak typeof(self) weakSelf = self;
     NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text};
     [[SCAPIRequest manager] startLoginAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            [[SCUserInfo share] loginSuccessWithUserID:responseObject];
-            [self showPromptHUDWithText:@"登陆成功" delay:1.0f mode:SCHUDModeLogin delegate:self];
+            [SCUserInfo loginSuccessWithUserID:responseObject];
+            [weakSelf showPromptHUDWithText:@"登陆成功" delay:1.0f mode:SCHUDModeLogin delegate:weakSelf];
         }
         else
         {
-            [self showPromptHUDWithText:@"注册出错，请联系远景车联" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+            [weakSelf showPromptHUDWithText:@"注册出错，请联系远景车联" delay:2.0f mode:SCHUDModeDefault delegate:nil];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         SCError(@"Get verification code request error:%@", error);
-        [self showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
+        [weakSelf showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
     }];
 }
 
-- (void)dismissController
+- (void)resignKeyBoard
 {
     // 取消按钮点击之后关闭所有键盘，并返回到[个人中心]页面
     [_phoneNumberTextField resignFirstResponder];
     [_verificationCodeTextField resignFirstResponder];
+}
+
+- (void)dismissController
+{
+    [self resignKeyBoard];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -166,13 +189,15 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 - (NSString *)verificationCode
 {
     // 客户端生成四位数字随机验证码
-    return [NSString stringWithFormat:@"%d", (arc4random() % 9000) + 1000];
+    _verificationCode = [NSString stringWithFormat:@"%d", (arc4random() % 9000) + 1000];
+    return _verificationCode;
 }
 
 #pragma mark - Button Action Methods
 #pragma mark -
 - (IBAction)loginButtonPressed:(UIButton *)sender
 {
+    [self resignKeyBoard];
     if ([_verificationCodeTextField.text isEqualToString:_verificationCode])
     {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -200,24 +225,21 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
     [self.view endEditing:YES];
 }
 
-#pragma mark - Text Field Delegate Methods
-#pragma mark -
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    // 关闭键盘
-    [textField resignFirstResponder];
-    return YES;
-}
-
 #pragma mark - MBProgressHUDDelegate Methods
 #pragma mark -
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
     switch (hud.tag)
     {
+        case SCHUDModeSendVerificationCode:
+        {
+            [_verificationCodeTextField becomeFirstResponder];
+        }
+            break;
         case SCHUDModeRegister:
         {
-            [self startLoginRequest];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self dismissController];
         }
             break;
         case SCHUDModeLogin:

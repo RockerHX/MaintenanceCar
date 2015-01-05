@@ -18,8 +18,6 @@
 #import "SCReservationViewController.h"
 #import "SCMerchantDetailViewController.h"
 
-#define MerchantCellReuseIdentifier     @"MerchantCellReuseIdentifier"
-
 @interface SCMerchantViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 {
     NSInteger _reservationButtonIndex;
@@ -55,9 +53,10 @@
     [self initConfig];
     [self startMerchantListRequest];
     
+    __weak typeof(self) weakSelf = self;
     // 添加上拉刷新控件
     [_tableView addFooterWithCallback:^{
-        [self startMerchantListRequest];
+        [weakSelf startMerchantListRequest];
     }];
 }
 
@@ -80,7 +79,7 @@
     
     // 刷新商户列表
     SCMerchant *merchant = _merchantList[indexPath.row];
-    cell.merchantNameLabel.text = merchant.detail.name;
+    cell.merchantNameLabel.text = merchant.name;
     cell.distanceLabel.text = merchant.distance;
     cell.reservationButton.tag = indexPath.row;
     
@@ -136,14 +135,13 @@
  */
 - (void)startMerchantListRequest
 {
+    __weak typeof(self) weakSelf = self;
     // 配置请求参数
     SCLocationInfo *locationInfo = [SCLocationInfo shareLocationInfo];
     NSDictionary *parameters     = @{@"word"      : locationInfo.city,
                                      @"limit"     : @(MerchantListLimit),
                                      @"offset"    : @(_offset),
-                                     @"radius"    : @(MerchantListRadius),
-                                     @"longtitude": locationInfo.longitude,
-                                     @"latitude"  : locationInfo.latitude};
+                                     @"radius"    : @(MerchantListRadius)};
     
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [_tableView footerEndRefreshing];
@@ -155,12 +153,12 @@
             // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
             [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 NSError *error       = nil;
-                SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj error:&error];
+                SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:&error];
                 SCError(@"weather model parse error:%@", error);
                 [_merchantList addObject:merchant];
             }];
             
-            [MBProgressHUD hideHUDForView:self.view animated:YES];              // 请求完成，移除响应式控件
+            [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];              // 请求完成，移除响应式控件
             
             [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:_offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                   // 数据配置完成，刷新商户列表
             _offset += MerchantListLimit;                                       // 偏移量请求参数递增
@@ -171,7 +169,7 @@
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         SCError(@"Get merchant list request error:%@", error);
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
     }];
 }
 

@@ -132,6 +132,34 @@
     [self requestGETMethodsWithAPI:MerchantDetailAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startMerchantCollectionAPIRequestWithParameters:(NSDictionary *)parameters
+                                                Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:MerchantCollectionAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startGetCollectionMerchantAPIRequestWithParameters:(NSDictionary *)parameters
+                                                   Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MerchantCollectionAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startMerchantUnCollectionAPIRequestWithParameters:(NSDictionary *)parameters
+                                                  Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:MerchantUnCollectionAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startCheckMerchantCollectionStutasAPIRequestWithParameters:(NSDictionary *)parameters
+                                                           Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:CheckMerchantCollectionAPIURL parameters:parameters success:success failure:failure];
+}
+
 - (void)startGetVerificationCodeAPIRequestWithParameters:(NSDictionary *)parameters
                                                  Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
@@ -151,6 +179,13 @@
                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:LoginAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startUserLogAPIRequestWithParameters:(NSDictionary *)parameters
+                                     Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:UserLogAPIURL parameters:parameters success:success failure:failure];
 }
 
 @end
