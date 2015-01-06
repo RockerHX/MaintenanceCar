@@ -120,14 +120,13 @@
 
 - (void)deleteFailureWithIndex:(NSInteger)index
 {
-    [self changeListEditStatus];
-    
+    self.tableView.editing = NO;
     [_merchantList insertObject:_deleteMerchant atIndex:index];
     [self.tableView reloadData];
 }
 
 /**
- *  收藏列表数据请求方法
+ *  收藏列表数据请求方法，需要参数：user_id，limit，offset
  */
 - (void)startMerchantCollectionListRequest
 {
@@ -159,14 +158,14 @@
         else
         {
             SCError(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"只有这么多了亲！", 1.0f);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         SCError(@"Get merchant list request error:%@", error);
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];
         [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
-        
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"只有这么多了亲！", 1.0f);
+        ShowPromptHUDWithText(weakSelf.navigationController.view, @"网络错误，请重试！", 1.0f);
     }];
 }
 

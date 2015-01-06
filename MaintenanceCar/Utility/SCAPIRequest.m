@@ -8,6 +8,9 @@
 
 #import "SCAPIRequest.h"
 
+#define CustomRequestHeaderKey        @"X-API-KEY"
+#define CustomRequestHeaderValue      @"s72NLtU98NR58sMuPhKP"
+
 @interface SCAPIRequest ()
 
 @property (nonatomic, strong)   NSURL *requstURL;       // 完整的API请求URL(不带参数)
@@ -63,7 +66,7 @@
  *
  *  @return AFSecurityPolicy实例
  */
-- (AFSecurityPolicy *)customSecurityPolicy
+- (void)customSecurityPolicy
 {
     /**** SSL Pinning ****/
     NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"cer"];                    // 获取cer秘钥文件路径
@@ -72,7 +75,15 @@
     securityPolicy.allowInvalidCertificates = NO;                                                           // 不允许使用无效证书
     securityPolicy.pinnedCertificates = @[certData];
     /**** SSL Pinning ****/
-    return securityPolicy;
+    self.securityPolicy = securityPolicy;
+}
+
+/**
+ *  为请求添加自定义的KEY
+ */
+- (void)addHeader
+{
+    [self.requestSerializer setValue:CustomRequestHeaderValue forHTTPHeaderField:CustomRequestHeaderKey];
 }
 
 /**
@@ -88,7 +99,8 @@
                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    self.securityPolicy = [self customSecurityPolicy];
+    [self addHeader];
+    [self customSecurityPolicy];
     [self GET:api parameters:parameters success:success failure:failure];
 }
 
@@ -105,7 +117,8 @@
                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    self.securityPolicy = [self customSecurityPolicy];
+    [self addHeader];
+    [self customSecurityPolicy];
     [self POST:api parameters:parameters success:success failure:failure];
 }
 

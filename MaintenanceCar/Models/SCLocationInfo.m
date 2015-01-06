@@ -7,6 +7,7 @@
 //
 
 #import "SCLocationInfo.h"
+#import "transform.h"
 
 static SCLocationInfo *locationInfo = nil;
 
@@ -44,13 +45,26 @@ static SCLocationInfo *locationInfo = nil;
 - (NSString *)displayDistance:(CLLocationDistance)distance
 {
     NSString *displayDistance = @"";
-    if (distance < 1000.f)
+    if (distance < 500.f)
     {
-        displayDistance = [NSString stringWithFormat:@"%ldm", (long)distance];
+        displayDistance = @"500米以内";
+    }
+    else if (distance < 1000.f)
+    {
+        displayDistance = @"1千米以内";
     }
     else
     {
-        displayDistance = [NSString stringWithFormat:@"%.1fkm", distance/1000.0f];
+        NSInteger remainder = (NSInteger)distance % 1000;
+        NSInteger integer   = (NSInteger)distance / 1000;
+        if (remainder > 500)
+        {
+            displayDistance = [NSString stringWithFormat:@"%ldkm", integer +1 ];
+        }
+        else
+        {
+            displayDistance = [NSString stringWithFormat:@"%ldkm", integer];
+        }
     }
     return displayDistance;
 }
@@ -76,6 +90,20 @@ static SCLocationInfo *locationInfo = nil;
         longitude = @"";
     }
     return longitude;
+}
+
+- (void)setLocation:(CLLocation *)location
+{
+    CLLocationDegrees wgsLat = location.coordinate.latitude;
+    CLLocationDegrees wgsLng = location.coordinate.longitude;
+    CLLocationDegrees gcjLat, gcjLng;
+    CLLocationDegrees bdLat, bdLng;
+    
+    wgs2gcj(wgsLat, wgsLng, &gcjLat, &gcjLng);
+    bd_encrypt(gcjLat, gcjLng, &bdLat, &bdLng);
+    
+    CLLocation *baiduLocation = [[CLLocation alloc] initWithLatitude:bdLat longitude:bdLng];
+    _location = baiduLocation;
 }
 
 #pragma mark - Public Methods

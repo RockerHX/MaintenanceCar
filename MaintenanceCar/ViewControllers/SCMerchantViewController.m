@@ -141,7 +141,9 @@
     NSDictionary *parameters     = @{@"word"      : locationInfo.city,
                                      @"limit"     : @(MerchantListLimit),
                                      @"offset"    : @(_offset),
-                                     @"radius"    : @(MerchantListRadius)};
+                                     @"radius"    : @(MerchantListRadius),
+                                     @"longtitude": locationInfo.longitude,
+                                     @"latitude"  : locationInfo.latitude};
     
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [_tableView footerEndRefreshing];

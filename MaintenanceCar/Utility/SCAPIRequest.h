@@ -83,7 +83,7 @@
                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  获取商户收藏状态接口请求方法(API:/Collection - GET)
+ *  获取收藏商户接口请求方法(API:/Collection - GET)
  *
  *  @param parameters   请求参数集合
  *  @param uccess       请求成功的block
