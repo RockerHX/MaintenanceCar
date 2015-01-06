@@ -9,13 +9,15 @@
 #import "SCMainViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "MicroCommon.h"
+#import "BMapKit.h"
 #import "SCLocationInfo.h"
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
 
-@interface SCMainViewController () <CLLocationManagerDelegate>
-
-@property (nonatomic, strong)   CLLocationManager *locationManager;
+@interface SCMainViewController () <BMKLocationServiceDelegate>
+{
+    BMKLocationService *_locationService;
+}
 
 @end
 
@@ -45,56 +47,42 @@
  */
 - (void)startLocation
 {
-    if (!_locationManager)
+    if (!_locationService)
     {
-        _locationManager = [[CLLocationManager alloc] init];
-        _locationManager.delegate = self;
-        //每隔多少米定位一次（这里的设置为任何的移动）
-        _locationManager.distanceFilter = 50.0f;                                    // 设置移动位置50米更新一次
-        //设置定位的精准度，一般精准度越高，越耗电（这里设置为精准度最高的，适用于导航应用）
-        _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;     // 精准度设置为10米
+        //设置定位精确度，默认：kCLLocationAccuracyBest
+        [BMKLocationService setLocationDesiredAccuracy:kCLLocationAccuracyNearestTenMeters];
+        //指定最小距离更新(米)，默认：kCLDistanceFilterNone
+        [BMKLocationService setLocationDistanceFilter:100.f];
+        
+        //初始化BMKLocationService
+        _locationService = [[BMKLocationService alloc]init];
+        _locationService.delegate = self;
+
     }
-    
-    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
-    {
-        [self.locationManager requestWhenInUseAuthorization];
-    }
-    //判断用户定位服务是否开启
-    if ([CLLocationManager locationServicesEnabled])
-    {
-        [_locationManager startUpdatingLocation];                                   // 开始定位用户的位置
-    }
-    else
-    {
-        //不能定位用户的位置
-        //1.提醒用户检查当前的网络状况
-        //2.提醒用户打开定位开关
-    }
+    //启动LocationService
+    [_locationService startUserLocationService];
 }
 
-#pragma mark - CoreLocation Delegate Methods
+#pragma mark - BMKLocationService Delegate Methods
 #pragma mark -
-/**
- *  当定位到用户的位置时，就会调用（调用的频率比较频繁）
- */
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+// 当定位到用户的位置时，就会调用（调用的频率比较频繁）
+// 实现相关delegate 处理位置信息更新
+// 处理方向变更信息
+- (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
 {
-    //locations数组里边存放的是CLLocation对象，一个CLLocation对象就代表着一个位置
-    CLLocation *loction = [locations firstObject];
-    [SCLocationInfo shareLocationInfo].location = loction;
-    
-    //维度：loction.coordinate.latitude
-    //经度：loction.coordinate.longitude
-    SCLog(@"latitude=%f，longitude=%f", loction.coordinate.latitude, loction.coordinate.longitude);
-    
-    //停止更新位置（如果定位服务不需要实时更新的话，那么应该停止位置的更新）
-    [manager stopUpdatingLocation];
+    [SCLocationInfo shareLocationInfo].userLocation = userLocation;
 }
 
-- (void)locationManager:(CLLocationManager *)manager
-       didFailWithError:(NSError *)error
+//处理位置坐标更新
+- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
-    SCError(@"Location error:%@", error);
+    SCLog(@"didUpdateUserLocation lat %f,long %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+    [SCLocationInfo shareLocationInfo].userLocation = userLocation;
+}
+
+- (void)didFailToLocateUserWithError:(NSError *)error
+{
+    SCFailure(@"Location error:%@", error);
 }
 
 #pragma mark - Private Methods

@@ -94,6 +94,15 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+#pragma mark - Action Methods
+#pragma mark -
+- (IBAction)mapItemPressed:(UIBarButtonItem *)sender
+{
+    UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
+    mapNavigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:mapNavigationController animated:YES completion:nil];
+}
+
 #pragma mark - Private Methods
 #pragma mark -
 /**
@@ -156,7 +165,7 @@
             [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 NSError *error       = nil;
                 SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:&error];
-                SCError(@"weather model parse error:%@", error);
+                SCFailure(@"weather model parse error:%@", error);
                 [_merchantList addObject:merchant];
             }];
             
@@ -167,10 +176,10 @@
         }
         else
         {
-            SCError(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
+            SCFailure(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        SCError(@"Get merchant list request error:%@", error);
+        SCFailure(@"Get merchant list request error:%@", error);
         [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
     }];
 }

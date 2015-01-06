@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RPR-Ec-YZ2">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -783,11 +782,31 @@
             </objects>
             <point key="canvasLocation" x="2860.5" y="944.25"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="6o6-fa-AZn">
+            <objects>
+                <navigationController storyboardIdentifier="SCMapViewNavigationController" id="Ur8-sy-k3h" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="OSd-rq-CKV">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="pMn-ho-wdd">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="TMn-nT-psn" kind="relationship" relationship="rootViewController" id="Zxm-y2-97I"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KFT-ms-zP7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3672" y="235.5"/>
+        </scene>
         <!--我的收藏-->
         <scene sceneID="Zzi-Tn-EVc">
             <objects>
                 <tableViewController storyboardIdentifier="SCMyFavoriteTableViewController" id="6XV-A7-Zj9" customClass="SCMyFavoriteTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" id="eGY-Yb-o9b">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -852,14 +871,14 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="s5t-PL-WPC"/>
                                                     <exclude reference="FOM-fm-bop"/>
+                                                    <exclude reference="s5t-PL-WPC"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="constraints">
-                                                    <include reference="s5t-PL-WPC"/>
                                                     <include reference="FOM-fm-bop"/>
+                                                    <include reference="s5t-PL-WPC"/>
                                                 </mask>
                                             </variation>
                                         </imageView>
@@ -966,30 +985,30 @@
                                             <exclude reference="OF6-0a-31c"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <exclude reference="HLg-X3-E4K"/>
-                                            <exclude reference="g8d-xb-lHR"/>
                                             <exclude reference="2EJ-D3-umz"/>
+                                            <exclude reference="3W2-UZ-4tf"/>
                                             <exclude reference="6UY-T4-hBN"/>
                                             <exclude reference="wDq-u3-Wjl"/>
-                                            <exclude reference="3W2-UZ-4tf"/>
+                                            <exclude reference="HLg-X3-E4K"/>
+                                            <exclude reference="g8d-xb-lHR"/>
                                             <exclude reference="7dI-sM-X3j"/>
-                                            <exclude reference="gjO-fY-X8v"/>
                                             <exclude reference="Y6v-N9-8ed"/>
+                                            <exclude reference="gjO-fY-X8v"/>
+                                            <exclude reference="FXY-Ej-S6s"/>
                                             <exclude reference="TUE-iQ-uCL"/>
                                             <exclude reference="ibL-Hh-ASq"/>
-                                            <exclude reference="FXY-Ej-S6s"/>
                                             <exclude reference="GRa-3Z-FV0"/>
-                                            <exclude reference="hKT-RE-6sz"/>
-                                            <exclude reference="Ssv-mZ-WIP"/>
                                             <exclude reference="8Oy-Su-jUy"/>
+                                            <exclude reference="Ssv-mZ-WIP"/>
+                                            <exclude reference="hKT-RE-6sz"/>
                                             <exclude reference="hQW-vl-bsw"/>
                                             <exclude reference="oRj-S9-iaw"/>
                                             <exclude reference="vCk-PV-UUO"/>
                                             <exclude reference="Ew3-r7-DrF"/>
                                             <exclude reference="w7e-St-BRH"/>
                                             <exclude reference="wgn-Rs-GgZ"/>
-                                            <exclude reference="yYg-m4-F1k"/>
                                             <exclude reference="xis-D5-QZF"/>
+                                            <exclude reference="yYg-m4-F1k"/>
                                             <exclude reference="b6G-tB-MVU"/>
                                         </mask>
                                     </variation>
@@ -1001,30 +1020,30 @@
                                             <include reference="OF6-0a-31c"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <include reference="HLg-X3-E4K"/>
-                                            <include reference="g8d-xb-lHR"/>
                                             <include reference="2EJ-D3-umz"/>
+                                            <include reference="3W2-UZ-4tf"/>
                                             <include reference="6UY-T4-hBN"/>
                                             <include reference="wDq-u3-Wjl"/>
-                                            <include reference="3W2-UZ-4tf"/>
+                                            <include reference="HLg-X3-E4K"/>
+                                            <include reference="g8d-xb-lHR"/>
                                             <include reference="7dI-sM-X3j"/>
-                                            <include reference="gjO-fY-X8v"/>
                                             <include reference="Y6v-N9-8ed"/>
+                                            <include reference="gjO-fY-X8v"/>
+                                            <include reference="FXY-Ej-S6s"/>
                                             <include reference="TUE-iQ-uCL"/>
                                             <include reference="ibL-Hh-ASq"/>
-                                            <include reference="FXY-Ej-S6s"/>
                                             <include reference="GRa-3Z-FV0"/>
-                                            <include reference="hKT-RE-6sz"/>
-                                            <include reference="Ssv-mZ-WIP"/>
                                             <include reference="8Oy-Su-jUy"/>
+                                            <include reference="Ssv-mZ-WIP"/>
+                                            <include reference="hKT-RE-6sz"/>
                                             <include reference="hQW-vl-bsw"/>
                                             <include reference="oRj-S9-iaw"/>
                                             <include reference="vCk-PV-UUO"/>
                                             <include reference="Ew3-r7-DrF"/>
                                             <include reference="w7e-St-BRH"/>
                                             <include reference="wgn-Rs-GgZ"/>
-                                            <include reference="yYg-m4-F1k"/>
                                             <include reference="xis-D5-QZF"/>
+                                            <include reference="yYg-m4-F1k"/>
                                             <include reference="b6G-tB-MVU"/>
                                         </mask>
                                     </variation>
@@ -1995,7 +2014,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="商户列表" id="GPy-oH-Ucf">
-                        <barButtonItem key="leftBarButtonItem" title="地图" id="O66-qs-aiK"/>
+                        <barButtonItem key="leftBarButtonItem" title="地图" id="O66-qs-aiK">
+                            <connections>
+                                <action selector="mapItemPressed:" destination="bZY-wt-C59" id="flX-xW-MS6"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="YpU-Ir-3ee"/>
                     </navigationItem>
                     <connections>
@@ -2453,12 +2476,12 @@
                                             <exclude reference="C3s-Bm-PKF"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <exclude reference="rtH-E4-UOy"/>
                                             <exclude reference="TLs-wL-BWc"/>
                                             <exclude reference="Wfz-rh-dlG"/>
                                             <exclude reference="aGp-lM-GSB"/>
                                             <exclude reference="k4z-kV-c1X"/>
                                             <exclude reference="zAI-VO-ih4"/>
+                                            <exclude reference="rtH-E4-UOy"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
@@ -2467,12 +2490,12 @@
                                             <include reference="C3s-Bm-PKF"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <include reference="rtH-E4-UOy"/>
                                             <include reference="TLs-wL-BWc"/>
                                             <include reference="Wfz-rh-dlG"/>
                                             <include reference="aGp-lM-GSB"/>
                                             <include reference="k4z-kV-c1X"/>
                                             <include reference="zAI-VO-ih4"/>
+                                            <include reference="rtH-E4-UOy"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
@@ -2762,6 +2785,54 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Frj-5y-CwQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2034" y="235.5"/>
+        </scene>
+        <!--商户地图-->
+        <scene sceneID="4P2-iO-ZEH">
+            <objects>
+                <viewController id="TMn-nT-psn" customClass="SCMapViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hR9-BR-BFQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="D46-rA-o1C"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="J3I-58-G74">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jac-v9-0xA" customClass="BMKMapView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
+                                </variation>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="jac-v9-0xA"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="jac-v9-0xA"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="商户地图" id="5iH-PN-oHg">
+                        <barButtonItem key="leftBarButtonItem" title="列表" id="el6-hN-7pS">
+                            <connections>
+                                <action selector="listItemPressed:" destination="TMn-nT-psn" id="NVL-HP-28u"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="q99-YI-ubW"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="jac-v9-0xA" id="nCh-0B-Qbb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J89-re-26E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4426.5" y="235.5"/>
         </scene>
         <!--预约-->
         <scene sceneID="n6z-TN-x4d">

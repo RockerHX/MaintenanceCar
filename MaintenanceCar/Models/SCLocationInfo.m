@@ -74,7 +74,7 @@ static SCLocationInfo *locationInfo = nil;
 // 重构经纬度getter方法，处理经纬度数据
 - (NSString *)latitude
 {
-    NSString *latitude = _location ? [@(_location.coordinate.latitude) stringValue] : nil;
+    NSString *latitude = _userLocation ? [@(_userLocation.location.coordinate.latitude) stringValue] : nil;
     if (!latitude)
     {
         latitude = @"";
@@ -84,7 +84,7 @@ static SCLocationInfo *locationInfo = nil;
 
 - (NSString *)longitude
 {
-    NSString *longitude = _location ? [@(_location.coordinate.longitude) stringValue] : nil;
+    NSString *longitude = _userLocation ? [@(_userLocation.location.coordinate.longitude) stringValue] : nil;
     if (!longitude)
     {
         longitude = @"";
@@ -92,26 +92,12 @@ static SCLocationInfo *locationInfo = nil;
     return longitude;
 }
 
-- (void)setLocation:(CLLocation *)location
-{
-    CLLocationDegrees wgsLat = location.coordinate.latitude;
-    CLLocationDegrees wgsLng = location.coordinate.longitude;
-    CLLocationDegrees gcjLat, gcjLng;
-    CLLocationDegrees bdLat, bdLng;
-    
-    wgs2gcj(wgsLat, wgsLng, &gcjLat, &gcjLng);
-    bd_encrypt(gcjLat, gcjLng, &bdLat, &bdLng);
-    
-    CLLocation *baiduLocation = [[CLLocation alloc] initWithLatitude:bdLat longitude:bdLng];
-    _location = baiduLocation;
-}
-
 #pragma mark - Public Methods
 #pragma mark -
 - (NSString *)distanceWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude
 {
     CLLocation *merchantLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-    CLLocationDistance distance = [_location distanceFromLocation:merchantLocation];
+    CLLocationDistance distance = [_userLocation.location distanceFromLocation:merchantLocation];
     return [self displayDistance:distance];
 }
 

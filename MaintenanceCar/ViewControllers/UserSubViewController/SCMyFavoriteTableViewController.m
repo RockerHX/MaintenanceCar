@@ -15,13 +15,19 @@
 #import "SCMerchant.h"
 #import "SCMerchantTableViewCell.h"
 
+typedef NS_ENUM(NSInteger, SCFavoriteListRequestType) {
+    SCFavoriteListRequestTypeUp = 100,
+    SCFavoriteListRequestTypeDown = 101
+};
+
 @interface SCMyFavoriteTableViewController ()
 {
     SCMerchant        *_deleteMerchant;    // 删除数据的缓存
     NSMutableArray    *_merchantList;      // 收藏的商户数据缓存
 }
 
-@property (nonatomic, assign) NSInteger      offset;        // 商户列表请求偏移量，用户上拉刷新的分页请求操作
+@property (nonatomic, assign) NSInteger                 offset;         // 商户列表请求偏移量，用户上拉刷新的分页请求操作
+@property (nonatomic, assign) SCFavoriteListRequestType requestType;    // 请求类型，是上拉刷新还是下拉刷新
 
 @end
 
@@ -42,11 +48,12 @@
     // 添加下拉刷新控件
     [self.tableView addHeaderWithCallback:^{
         weakSelf.offset = 0;
-        [weakSelf clearList];
+        weakSelf.requestType = SCFavoriteListRequestTypeDown;
         [weakSelf startMerchantCollectionListRequest];
     }];
     // 添加上拉刷新控件
     [self.tableView addFooterWithCallback:^{
+        weakSelf.requestType = SCFavoriteListRequestTypeUp;
         [weakSelf startMerchantCollectionListRequest];
     }];
 }
@@ -126,7 +133,7 @@
 }
 
 /**
- *  收藏列表数据请求方法，需要参数：user_id，limit，offset
+ *  收藏列表数据请求方法，必选参数：user_id，limit，offset
  */
 - (void)startMerchantCollectionListRequest
 {
@@ -137,16 +144,23 @@
                                  @"offset" : @(_offset)};
     
     [[SCAPIRequest manager] startGetCollectionMerchantAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // 关闭上拉刷新或者下拉刷新
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
+            // 如果是下拉刷新数据，先清空列表，在做数据处理
+            if (weakSelf.requestType == SCFavoriteListRequestTypeDown)
+            {
+                [weakSelf clearList];
+            }
+            
             SCLog(@"Collection Merchent List Request Data:%@", responseObject);
             // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
             [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 NSError *error       = nil;
                 SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj error:&error];
-                SCError(@"weather model parse error:%@", error);
+                SCFailure(@"weather model parse error:%@", error);
                 [_merchantList addObject:merchant];
             }];
             
@@ -157,11 +171,12 @@
         }
         else
         {
-            SCError(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
+            SCFailure(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
             ShowPromptHUDWithText(weakSelf.navigationController.view, @"只有这么多了亲！", 1.0f);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        SCError(@"Get merchant list request error:%@", error);
+        SCFailure(@"Get merchant list request error:%@", error);
+        // 关闭上拉刷新或者下拉刷新
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];
         [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
@@ -170,14 +185,15 @@
 }
 
 /**
- *  取消收藏商户，需要参数：company_id，user_id
+ *  取消收藏商户，必选参数：company_id，user_id
  */
 - (void)startUnCollectionMerchantRequestWithIndex:(NSInteger)index
 {
     __weak typeof(self) weakSelf = self;
     NSDictionary *paramters = @{@"company_id": _deleteMerchant.company_id,
-                                @"user_id": [SCUserInfo share].userID};
+                                   @"user_id": [SCUserInfo share].userID};
     [[SCAPIRequest manager] startMerchantUnCollectionAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // 根据返回结果进行相应提示
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             ShowPromptHUDWithText(weakSelf.navigationController.view, @"删除成功", 1.0f);

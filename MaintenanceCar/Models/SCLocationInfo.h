@@ -7,16 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreLocation/CLLocation.h>
+#import "BMapKit.h"
 
 // 用户位置信息Model - 单例，全局使用
 @interface SCLocationInfo : NSObject
 
-@property (nonatomic, copy  ) NSString   *city;         // 当前所在城市
-@property (nonatomic, copy  ) NSString   *latitude;     // 当前位置 - 纬度
-@property (nonatomic, copy  ) NSString   *longitude;    // 当前位置 - 经度
+@property (nonatomic, copy  )        NSString *city;         // 当前所在城市
+@property (nonatomic, copy  )        NSString *latitude;     // 当前位置 - 纬度
+@property (nonatomic, copy  )        NSString *longitude;    // 当前位置 - 经度
 
-@property (nonatomic, strong) CLLocation *location;     // 当前地理位置信息
+@property (nonatomic, strong) BMKUserLocation *userLocation; // 当前地理位置信息(百度坐标)
 
 /**
  *  用户位置信息Model初始化方法 - 单例

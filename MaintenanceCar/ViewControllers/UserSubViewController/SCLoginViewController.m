@@ -117,7 +117,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
             [weakSelf showPromptHUDWithText:@"获取出错，请重新获取" delay:2.0f mode:SCHUDModeDefault delegate:nil];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        SCError(@"Get verification code request error:%@", error);
+        SCFailure(@"Get verification code request error:%@", error);
         [weakSelf showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
     }];
 }
@@ -144,7 +144,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
             [weakSelf showPromptHUDWithText:@"注册出错，请联系远景车联" delay:2.0f mode:SCHUDModeDefault delegate:nil];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        SCError(@"Get verification code request error:%@", error);
+        SCFailure(@"Get verification code request error:%@", error);
         [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
         [weakSelf showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
     }];
@@ -165,7 +165,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
             [weakSelf showPromptHUDWithText:@"注册出错，请联系远景车联" delay:2.0f mode:SCHUDModeDefault delegate:nil];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        SCError(@"Get verification code request error:%@", error);
+        SCFailure(@"Get verification code request error:%@", error);
         [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
         [weakSelf showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
     }];
