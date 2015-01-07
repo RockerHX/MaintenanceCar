@@ -17,6 +17,7 @@
 #import "SCLocationInfo.h"
 #import "SCReservationViewController.h"
 #import "SCMerchantDetailViewController.h"
+#import "SCMapViewController.h"
 
 @interface SCMerchantViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 {
@@ -51,13 +52,21 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];      // 加载响应式控件
     
     [self initConfig];
-    [self startMerchantListRequest];
     
     __weak typeof(self) weakSelf = self;
     // 添加上拉刷新控件
     [_tableView addFooterWithCallback:^{
         [weakSelf startMerchantListRequest];
     }];
+    
+    if ([SCLocationInfo shareLocationInfo].userLocation)
+    {
+        [self startMerchantListRequest];
+    }
+    else if ([SCLocationInfo shareLocationInfo].locationFailure)
+    {
+        [self startMerchantListRequest];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,8 +108,27 @@
 - (IBAction)mapItemPressed:(UIBarButtonItem *)sender
 {
     UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
+    SCMapViewController *mapViewController = (SCMapViewController *)mapNavigationController.topViewController;
+    mapViewController.merchants = _merchantList;
     mapNavigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:mapNavigationController animated:YES completion:nil];
+}
+
+#pragma mark - KVO Methods
+#pragma makr -
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"userLocation"])
+    {
+        if ([SCLocationInfo shareLocationInfo].userLocation && change[NSKeyValueChangeNewKey])
+        {
+            [self startMerchantListRequest];
+        }
+        else if ([SCLocationInfo shareLocationInfo].locationFailure)
+        {
+            [self startMerchantListRequest];
+        }
+    }
 }
 
 #pragma mark - Private Methods
@@ -115,11 +143,14 @@
     // 设置tableview的代理和数据源
     _tableView.delegate   = self;
     _tableView.dataSource = self;
+    _tableView.tableFooterView = [[UIView alloc] init];
     
     _merchantList = [@[] mutableCopy];      // 商户列表容器初始化
     
     // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
     [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed:) name:kMerchantListReservationNotification object:nil];
+    
+    [[SCLocationInfo shareLocationInfo] addObserver:self forKeyPath:@"userLocation" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 /**

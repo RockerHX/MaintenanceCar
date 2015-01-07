@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) BMKUserLocation *userLocation; // 当前地理位置信息(百度坐标)
 
+@property (nonatomic, assign)            BOOL locationFailure;
+
 /**
  *  用户位置信息Model初始化方法 - 单例
  *

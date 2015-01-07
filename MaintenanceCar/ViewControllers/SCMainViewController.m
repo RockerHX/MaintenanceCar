@@ -70,19 +70,22 @@
 // 处理方向变更信息
 - (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
 {
-    [SCLocationInfo shareLocationInfo].userLocation = userLocation;
+    SCLog(@"didUpdateUserHeading lat %f,long %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
 }
 
 //处理位置坐标更新
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
     SCLog(@"didUpdateUserLocation lat %f,long %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+    
     [SCLocationInfo shareLocationInfo].userLocation = userLocation;
 }
 
 - (void)didFailToLocateUserWithError:(NSError *)error
 {
     SCFailure(@"Location error:%@", error);
+    [SCLocationInfo shareLocationInfo].userLocation = nil;
+    [SCLocationInfo shareLocationInfo].locationFailure = YES;
 }
 
 #pragma mark - Private Methods

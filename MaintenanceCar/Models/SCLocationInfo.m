@@ -7,7 +7,6 @@
 //
 
 #import "SCLocationInfo.h"
-#import "transform.h"
 
 static SCLocationInfo *locationInfo = nil;
 
@@ -59,11 +58,11 @@ static SCLocationInfo *locationInfo = nil;
         NSInteger integer   = (NSInteger)distance / 1000;
         if (remainder > 500)
         {
-            displayDistance = [NSString stringWithFormat:@"%ldkm", integer +1 ];
+            displayDistance = [NSString stringWithFormat:@"%ldkm", (long)(integer +1)];
         }
         else
         {
-            displayDistance = [NSString stringWithFormat:@"%ldkm", integer];
+            displayDistance = [NSString stringWithFormat:@"%ldkm", (long)integer];
         }
     }
     return displayDistance;
