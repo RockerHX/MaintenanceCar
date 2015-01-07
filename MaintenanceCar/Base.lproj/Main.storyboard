@@ -805,7 +805,7 @@
         <!--我的收藏-->
         <scene sceneID="Zzi-Tn-EVc">
             <objects>
-                <tableViewController storyboardIdentifier="SCMyFavoriteTableViewController" id="6XV-A7-Zj9" customClass="SCMyFavoriteTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SCMyFavoriteTableViewController" hidesBottomBarWhenPushed="YES" id="6XV-A7-Zj9" customClass="SCMyFavoriteTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" id="eGY-Yb-o9b">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2032,9 +2032,9 @@
         <!--商户详情-->
         <scene sceneID="ZO7-Kc-njE">
             <objects>
-                <tableViewController storyboardIdentifier="SCMerchantDetailViewController" id="hpj-tS-aRE" customClass="SCMerchantDetailViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SCMerchantDetailViewController" hidesBottomBarWhenPushed="YES" id="hpj-tS-aRE" customClass="SCMerchantDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Fhv-62-MZd">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="XSU-Hp-wAm">
@@ -2818,7 +2818,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="nlN-hz-9La" firstAttribute="top" secondItem="kde-WW-IV7" secondAttribute="top" constant="19" id="560-HV-4ZG"/>
                                             <constraint firstAttribute="height" constant="61" id="Mxm-lp-8tE">
@@ -3010,7 +3010,7 @@
                                         </variation>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.60999999999999999" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="fFk-K2-9Vv" firstAttribute="top" secondItem="mmO-lK-xr4" secondAttribute="top" constant="8" id="1S3-bp-Wg7"/>
                                     <constraint firstItem="blA-Z0-Maz" firstAttribute="centerY" secondItem="by2-VH-fGY" secondAttribute="centerY" constant="-0.5" id="47k-CJ-Bkt">
@@ -3039,7 +3039,9 @@
                                     </constraint>
                                     <constraint firstItem="fFk-K2-9Vv" firstAttribute="leading" secondItem="wJ4-oE-oM0" secondAttribute="trailing" constant="8" id="e2Q-1N-EFX"/>
                                     <constraint firstItem="80n-EL-udv" firstAttribute="centerY" secondItem="mGD-YW-iwh" secondAttribute="centerY" constant="0.5" id="hOA-WW-wHb"/>
-                                    <constraint firstAttribute="bottom" secondItem="Tru-R8-agW" secondAttribute="bottom" constant="20" id="kLz-MS-hvJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="Tru-R8-agW" secondAttribute="bottom" constant="20" id="kLz-MS-hvJ">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                                    </constraint>
                                     <constraint firstItem="mGD-YW-iwh" firstAttribute="top" secondItem="by2-VH-fGY" secondAttribute="bottom" constant="8" id="snX-s3-0aq"/>
                                     <constraint firstItem="blA-Z0-Maz" firstAttribute="leading" secondItem="by2-VH-fGY" secondAttribute="trailing" constant="2" id="tuJ-ew-8BB"/>
                                     <constraint firstItem="16J-2o-9St" firstAttribute="centerY" secondItem="3Pd-q7-yjD" secondAttribute="centerY" id="ukL-B4-cPk"/>
@@ -3158,13 +3160,13 @@
                                 <exclude reference="mmO-lK-xr4"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="IMN-3m-78R"/>
                                 <exclude reference="8zu-ig-LJm"/>
                                 <exclude reference="psm-1O-L7M"/>
                                 <exclude reference="zWr-gx-PJQ"/>
                                 <exclude reference="9tI-wE-LYz"/>
                                 <exclude reference="eMN-99-7XM"/>
                                 <exclude reference="zDh-KL-Y2V"/>
-                                <exclude reference="IMN-3m-78R"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -3173,13 +3175,13 @@
                                 <include reference="mmO-lK-xr4"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="IMN-3m-78R"/>
                                 <include reference="8zu-ig-LJm"/>
                                 <include reference="psm-1O-L7M"/>
                                 <include reference="zWr-gx-PJQ"/>
                                 <include reference="9tI-wE-LYz"/>
                                 <include reference="eMN-99-7XM"/>
                                 <include reference="zDh-KL-Y2V"/>
-                                <include reference="IMN-3m-78R"/>
                             </mask>
                         </variation>
                     </view>

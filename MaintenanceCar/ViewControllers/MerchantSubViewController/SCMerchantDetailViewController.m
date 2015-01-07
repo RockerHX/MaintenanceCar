@@ -389,19 +389,21 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             break;
         case SCAlertTypeReservating:
         {
-            // 跳转到预约页面
-            @try {
-                
-                SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-                reservationViewController.merchant = [[SCMerchant alloc] initWithMerchantName:_merchantDetail.name companyID:_merchantDetail.company_id];
-                [self.navigationController pushViewController:reservationViewController animated:YES];
+            if (buttonIndex != alertView.cancelButtonIndex)
+            {
+                // 跳转到预约页面
+                @try {
+                    
+                    SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
+                    reservationViewController.merchant = [[SCMerchant alloc] initWithMerchantName:_merchantDetail.name companyID:_merchantDetail.company_id];
+                    [self.navigationController pushViewController:reservationViewController animated:YES];
+                }
+                @catch (NSException *exception) {
+                    SCException(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+                }
+                @finally {
+                }
             }
-            @catch (NSException *exception) {
-                SCException(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
-            }
-            @finally {
-            }
-
         }
             break;
             
