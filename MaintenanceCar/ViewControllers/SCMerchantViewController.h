@@ -13,7 +13,6 @@
 @interface SCMerchantViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong)        SCMerchant  *merchantInfo;
 
 - (IBAction)mapItemPressed:(UIBarButtonItem *)sender;
 

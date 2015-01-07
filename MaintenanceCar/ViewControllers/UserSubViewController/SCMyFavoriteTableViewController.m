@@ -14,6 +14,8 @@
 #import "SCUserInfo.h"
 #import "SCMerchant.h"
 #import "SCMerchantTableViewCell.h"
+#import "SCMerchantDetailViewController.h"
+#import "SCLocationInfo.h"
 
 typedef NS_ENUM(NSInteger, SCFavoriteListRequestType) {
     SCFavoriteListRequestTypeUp = 100,
@@ -42,7 +44,11 @@ typedef NS_ENUM(NSInteger, SCFavoriteListRequestType) {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];      // 加载响应式控件
     
     [self initConfig];
-    [self startMerchantCollectionListRequest];
+    
+    if ([SCLocationInfo shareLocationInfo].userLocation)
+    {
+        [self startMerchantCollectionListRequest];
+    }
 
     __weak typeof(self) weakSelf = self;
     // 添加下拉刷新控件
@@ -100,11 +106,45 @@ typedef NS_ENUM(NSInteger, SCFavoriteListRequestType) {
     }
 }
 
+#pragma mark - Table View Delegate Methods
+#pragma mark -
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // 跳转到预约页面
+    @try {
+        SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
+        merchantDetialViewControler.companyID = ((SCMerchant *)_merchantList[indexPath.row]).company_id;
+        [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
+    }
+    @catch (NSException *exception) {
+        SCException(@"SCMyFavoriteTableViewController Go to the SCMerchantDetailViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
+}
+
 #pragma mark - Action Methods
 #pragma mark -
 - (IBAction)deleteFavoriteMerchant:(UIBarButtonItem *)sender
 {
     [self changeListEditStatus];
+}
+
+#pragma mark - KVO Methods
+#pragma makr -
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"userLocation"])
+    {
+        if ([SCLocationInfo shareLocationInfo].userLocation && change[NSKeyValueChangeNewKey])
+        {
+            [self startMerchantCollectionListRequest];
+        }
+        else if ([SCLocationInfo shareLocationInfo].locationFailure)
+        {
+            [self startMerchantCollectionListRequest];
+        }
+    }
 }
 
 #pragma mark - Private Methods
@@ -113,6 +153,9 @@ typedef NS_ENUM(NSInteger, SCFavoriteListRequestType) {
 {
     _merchantList = [@[] mutableCopy];
     self.tableView.tableFooterView = [[UIView alloc] init];
+    
+    // 监听SCLocationInfo单例的userLocation属性，观察定位是否成功
+    [[SCLocationInfo shareLocationInfo] addObserver:self forKeyPath:@"userLocation" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)clearList

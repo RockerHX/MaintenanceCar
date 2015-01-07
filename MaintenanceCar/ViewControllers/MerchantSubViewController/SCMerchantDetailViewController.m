@@ -10,15 +10,15 @@
 #import <UMengAnalytics/MobClick.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "MicroCommon.h"
-#import "SCMerchantViewController.h"
-#import "SCMerchant.h"
 #import "SCMerchantDetail.h"
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
+#import "SCMerchant.h"
 #import "SCMerchantTableViewCell.h"
 #import "SCMerchantPurchaseTableViewCell.h"
 #import "SCMerchantDetialInfoTableViewCell.h"
 #import "SCCollectionItem.h"
+#import "SCReservationViewController.h"
 
 typedef NS_ENUM(NSInteger, SCMerchantDetailCellSection) {
     SCMerchantDetailCellSectionMerchantBaseInfo = 0,
@@ -32,8 +32,9 @@ typedef NS_ENUM(NSInteger, SCMerchantDetailCellRow) {
     SCMerchantDetailCellRowIntroduce
 };
 typedef NS_ENUM(NSInteger, SCAlertType) {
-    SCAlertTypeNeedLogin = 100,
-    SCAlertTypeReuqestError = 101
+    SCAlertTypeNeedLogin    = 100,
+    SCAlertTypeReuqestError = 101,
+    SCAlertTypeReservating  = 102
 };
 
 @interface SCMerchantDetailViewController () <UIAlertViewDelegate>
@@ -111,7 +112,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     {
         case SCMerchantDetailCellSectionMerchantBaseInfo:
         {
-            SCMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MerchantCellReuseIdentifier"];
+            SCMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MerchantCellReuseIdentifier];
             cell.merchantNameLabel.text = _merchantDetail.name;
             cell.distanceLabel.text = _merchantDetail.distance;
             return cell;
@@ -199,19 +200,31 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark -
 - (void)initConfig
 {
-    @try {
-        _companyID = ((SCMerchantViewController *)self.navigationController.viewControllers[0]).merchantInfo.company_id;
-    }
-    @catch (NSException *exception) {
-        SCException(@"Get SCMerchantViewController merchantInfo error:%@", exception.reason);
-    }
-    @finally {
-        // 开启cell高度预估，自动适配cell高度
-        self.tableView.estimatedRowHeight = 44.0f;
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
-    }
+    // 开启cell高度预估，自动适配cell高度
+    self.tableView.estimatedRowHeight = 44.0f;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self startMerchantDetailRequestWithParameters];
+    
+    // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed) name:kMerchantDtailReservationNotification object:nil];
+}
+
+/**
+ *  商户列表预约按钮点击触发事件通知方法
+ *
+ *  @param notification 接受传递的参数
+ */
+- (void)reservationButtonPressed
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"预约"
+                                                        message:@"请选择您预约的项目"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"1元洗车", @"2元贴膜", @"3元打蜡", @"其他项目", nil];
+    alertView.tag = SCAlertTypeReservating;
+    [alertView show];
 }
 
 - (void)displayMerchantDetail
@@ -374,10 +387,30 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             }
         }
             break;
+        case SCAlertTypeReservating:
+        {
+            // 跳转到预约页面
+            @try {
+                
+                SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
+                reservationViewController.merchant = [[SCMerchant alloc] initWithMerchantName:_merchantDetail.name companyID:_merchantDetail.company_id];
+                [self.navigationController pushViewController:reservationViewController animated:YES];
+            }
+            @catch (NSException *exception) {
+                SCException(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+            }
+            @finally {
+            }
+
+        }
+            break;
             
         default:
             break;
     }
 }
+
+#pragma mark - Alert View Controller
+#pragma mark -
 
 @end

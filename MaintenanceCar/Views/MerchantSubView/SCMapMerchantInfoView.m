@@ -23,6 +23,23 @@
     _specialLabel.layer.cornerRadius = 2.0f;
     _specialLabel.layer.borderWidth = 1.0f;
     _specialLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
+    // 添加点击手势
+    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer)]];
+}
+
+#pragma mark - Action Methods
+#pragma mark -
+- (IBAction)reservationButtonPressed:(UIBarButtonItem *)sender
+{
+    [_delegate shouldShowReservationList];
+}
+
+#pragma mark - Private Methods
+#pragma mark - 
+- (void)tapGestureRecognizer
+{
+    [_delegate shouldShowMerchantDetail];
 }
 
 @end

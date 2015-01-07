@@ -11,8 +11,18 @@
 
 @implementation SCMerchant
 
-#pragma mark - Private Methods
+#pragma mark - Public Methods
 #pragma mark -
+- (id)initWithMerchantName:(NSString *)merchantName companyID:(NSString *)companyID
+{
+    self = [super init];
+    if (self)
+    {
+        _name       = merchantName;
+        _company_id = companyID;
+    }
+    return self;
+}
 
 #pragma mark - Getter Methods
 #pragma mark -

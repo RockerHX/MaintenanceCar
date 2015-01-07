@@ -19,4 +19,14 @@
 
 @property (nonatomic, copy, readonly) NSString <Ignore>*distance;     // 手机当前位置与商户的距离
 
+/**
+ *  自定义初始化方法(不通过JSON数据自动解析)
+ *
+ *  @param merchantName 商户名称
+ *  @param companyID    商户ID
+ *
+ *  @return 商户Model实例
+ */
+- (id)initWithMerchantName:(NSString *)merchantName companyID:(NSString *)companyID;
+
 @end

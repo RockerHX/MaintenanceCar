@@ -11,10 +11,13 @@
 #import "SCMerchant.h"
 #import "MicroCommon.h"
 #import "SCMapMerchantInfoView.h"
+#import "SCMerchantDetailViewController.h"
+#import "SCReservationViewController.h"
 
-@interface SCMapViewController () <BMKMapViewDelegate>
+@interface SCMapViewController () <BMKMapViewDelegate, SCMapMerchantInfoViewDelegate, UIAlertViewDelegate>
 {
     NSMutableArray *_annotations;       // 商户图钉数据集合
+    SCMerchant     *_merchant;          // 当前点击商户的数据缓存
 }
 
 @end
@@ -86,16 +89,16 @@
     @try {
         [_mapView selectAnnotation:_annotations[0] animated:YES];
         
-        SCMerchant *merchant = _merchants[0];
-        _mapMerchantInfoView.merchantNameLabel.text = merchant.name;
-        _mapMerchantInfoView.distanceLabel.text = merchant.distance;
+        _merchant = _merchants[0];
+        _mapMerchantInfoView.merchantNameLabel.text = _merchant.name;
+        _mapMerchantInfoView.distanceLabel.text = _merchant.distance;
     }
     @catch (NSException *exception) {
         SCException(@"Select Annotation Error:%@", exception.reason);
         _mapMerchantInfoView.hidden = YES;
     }
     @finally {
-        
+        _mapMerchantInfoView.delegate = self;
     }
 }
 
@@ -110,10 +113,57 @@
         {
             _mapMerchantInfoView.merchantNameLabel.text = merchant.name;
             _mapMerchantInfoView.distanceLabel.text = merchant.distance;
+            _merchant = merchant;
+            break;
         }
     }
-    
-    ;
+}
+
+#pragma mark - SCMapMerchantInfoViewDelegate Methods
+#pragma mark -
+- (void)shouldShowMerchantDetail
+{
+    // 跳转到预约页面
+    @try {
+        SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
+        merchantDetialViewControler.companyID = _merchant.company_id;
+        [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
+    }
+    @catch (NSException *exception) {
+        SCException(@"SCMapViewController Go to the SCMerchantDetailViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
+}
+
+- (void)shouldShowReservationList
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"预约"
+                                                        message:@"请选择您预约的项目"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"1元洗车", @"2元贴膜", @"3元打蜡", @"其他项目", nil];
+    [alertView show];
+}
+
+#pragma mark - Alert View Delegate Methods
+#pragma mark -
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != alertView.cancelButtonIndex)
+    {
+        // 跳转到预约页面
+        @try {
+            SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
+            reservationViewController.merchant = _merchant;
+            [self.navigationController pushViewController:reservationViewController animated:YES];
+        }
+        @catch (NSException *exception) {
+            SCException(@"SCMapViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
+    }
 }
 
 @end

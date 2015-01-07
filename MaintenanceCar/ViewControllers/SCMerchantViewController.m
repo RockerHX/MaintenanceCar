@@ -99,8 +99,11 @@
 #pragma mark -
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    _merchantInfo = _merchantList[indexPath.row];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
+    merchantDetialViewControler.companyID = ((SCMerchant *)_merchantList[indexPath.row]).company_id;
+    [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
 }
 
 #pragma mark - Action Methods
@@ -150,6 +153,7 @@
     // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
     [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed:) name:kMerchantListReservationNotification object:nil];
     
+    // 监听SCLocationInfo单例的userLocation属性，观察定位是否成功
     [[SCLocationInfo shareLocationInfo] addObserver:self forKeyPath:@"userLocation" options:NSKeyValueObservingOptionNew context:nil];
 }
 
@@ -223,12 +227,12 @@
     {
         // 跳转到预约页面
         @try {
-            SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCReservationViewController"];
+            SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
             reservationViewController.merchant = _merchantList[_reservationButtonIndex];
             [self.navigationController pushViewController:reservationViewController animated:YES];
         }
         @catch (NSException *exception) {
-            SCException(@"Go to the SCReservationViewController exception reasion:%@", exception.reason);
+            SCException(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
         }
         @finally {
         }
