@@ -18,8 +18,9 @@
 #import "SCReservationViewController.h"
 #import "SCMerchantDetailViewController.h"
 #import "SCMapViewController.h"
+#import "SCMerchantFilterView.h"
 
-@interface SCMerchantViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
+@interface SCMerchantViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, SCMerchantFilterViewDelegate>
 {
     NSInteger _reservationButtonIndex;
     NSMutableArray *_merchantList;
@@ -141,14 +142,15 @@
  */
 - (void)initConfig
 {
-    _offset               = 0;              // 第一次进入商户列表列表请求偏移量必须为0
+    _offset                      = 0;// 第一次进入商户列表列表请求偏移量必须为0
 
+    _merchantFilterView.delegate = self;
     // 设置tableview的代理和数据源
-    _tableView.delegate   = self;
-    _tableView.dataSource = self;
-    _tableView.tableFooterView = [[UIView alloc] init];
-    
-    _merchantList = [@[] mutableCopy];      // 商户列表容器初始化
+    _tableView.delegate          = self;
+    _tableView.dataSource        = self;
+    _tableView.tableFooterView   = [[UIView alloc] init];
+
+    _merchantList                = [@[] mutableCopy];// 商户列表容器初始化
     
     // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
     [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed:) name:kMerchantListReservationNotification object:nil];
@@ -236,6 +238,29 @@
         }
         @finally {
         }
+    }
+}
+
+#pragma mark - SCMerchantFilterViewDelegate Methods
+#pragma mark -
+- (void)filterButtonPressedWithType:(SCFilterButtonType)type
+{
+    switch (type) {
+        case SCFilterButtonTypeDistanceButton:
+        {
+        }
+            break;
+        case SCFilterButtonTypeRepairTypeButton:
+        {
+        }
+            break;
+        case SCFilterButtonTypeOtherFilterButton:
+        {
+        }
+            break;
+            
+        default:
+            break;
     }
 }
 

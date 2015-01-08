@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @class SCMerchant;
+@class SCMerchantFilterView;
 
 @interface SCMerchantViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet SCMerchantFilterView *merchantFilterView;
+@property (weak, nonatomic) IBOutlet UITableView          *tableView;
 
 - (IBAction)mapItemPressed:(UIBarButtonItem *)sender;
 

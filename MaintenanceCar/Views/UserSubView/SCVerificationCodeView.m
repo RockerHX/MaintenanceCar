@@ -87,7 +87,7 @@ typedef BOOL(^BLOCK)(void);
 #pragma mark -
 - (void)dealloc
 {
-    // 如果视图被移除，定时器需要废除掉
+    // 如果View被移除，定时器需要废除掉
     [_countDownTimer invalidate];
 }
 

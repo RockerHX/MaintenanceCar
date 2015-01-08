@@ -53,7 +53,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 #pragma mark -
 - (void)initConfig
 {
-    // 获取验证码视图被点击之后的回调，判断是否输入手机号进行返回和执行获取验证码请求
+    // 获取验证码View被点击之后的回调，判断是否输入手机号进行返回和执行获取验证码请求
     [_verificationCodeView verificationCodeShouldSend:^BOOL{
         if ([_phoneNumberTextField.text length])
         {
