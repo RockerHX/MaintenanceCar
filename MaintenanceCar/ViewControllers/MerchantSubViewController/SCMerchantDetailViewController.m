@@ -19,6 +19,7 @@
 #import "SCMerchantDetialInfoTableViewCell.h"
 #import "SCCollectionItem.h"
 #import "SCReservationViewController.h"
+#import "SCReservatAlertView.h"
 
 typedef NS_ENUM(NSInteger, SCMerchantDetailCellSection) {
     SCMerchantDetailCellSectionMerchantBaseInfo = 0,
@@ -33,11 +34,10 @@ typedef NS_ENUM(NSInteger, SCMerchantDetailCellRow) {
 };
 typedef NS_ENUM(NSInteger, SCAlertType) {
     SCAlertTypeNeedLogin    = 100,
-    SCAlertTypeReuqestError = 101,
-    SCAlertTypeReservating  = 102
+    SCAlertTypeReuqestError = 101
 };
 
-@interface SCMerchantDetailViewController () <UIAlertViewDelegate>
+@interface SCMerchantDetailViewController () <UIAlertViewDelegate, SCReservatAlertViewDelegate>
 {
     BOOL _needChecked;
 }
@@ -218,13 +218,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
  */
 - (void)reservationButtonPressed
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"预约"
-                                                        message:@"请选择您预约的项目"
-                                                       delegate:self
-                                              cancelButtonTitle:@"取消"
-                                              otherButtonTitles:@"1元洗车", @"2元贴膜", @"3元打蜡", @"其他项目", nil];
-    alertView.tag = SCAlertTypeReservating;
-    [alertView show];
+    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self];
+    [reservatAlertView show];
 }
 
 - (void)displayMerchantDetail
@@ -387,32 +382,29 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             }
         }
             break;
-        case SCAlertTypeReservating:
-        {
-            if (buttonIndex != alertView.cancelButtonIndex)
-            {
-                // 跳转到预约页面
-                @try {
-                    
-                    SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-                    reservationViewController.merchant = [[SCMerchant alloc] initWithMerchantName:_merchantDetail.name companyID:_merchantDetail.company_id];
-                    [self.navigationController pushViewController:reservationViewController animated:YES];
-                }
-                @catch (NSException *exception) {
-                    SCException(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
-                }
-                @finally {
-                }
-            }
-        }
-            break;
             
         default:
             break;
     }
 }
 
-#pragma mark - Alert View Controller
+
+
+#pragma mark - SCReservatAlertViewDelegate Methods
 #pragma mark -
+- (void)selectedAtButton:(SCAlertItemType)type
+{
+    // 跳转到预约页面
+    @try {
+        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
+        reservationViewController.merchant = [[SCMerchant alloc] initWithMerchantName:_merchantDetail.name companyID:_merchantDetail.company_id];
+        [self.navigationController pushViewController:reservationViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        SCException(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
+}
 
 @end

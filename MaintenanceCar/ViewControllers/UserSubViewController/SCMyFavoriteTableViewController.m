@@ -215,7 +215,7 @@ typedef NS_ENUM(NSInteger, SCFavoriteListRequestType) {
         else
         {
             SCFailure(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"只有这么多了亲！", 1.0f);
+            ShowPromptHUDWithText(weakSelf.navigationController.view, responseObject[@"error"], 1.0f);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         SCFailure(@"Get merchant list request error:%@", error);

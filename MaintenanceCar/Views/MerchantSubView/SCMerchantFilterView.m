@@ -13,7 +13,20 @@
 #define MerchantFilterViewUnPopHeight   60.0f
 #define MerchantFilterViewPopHeight     SCREEN_HEIGHT - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT - TAB_TAB_HEIGHT
 
+#define FilterConditionsResourceName    @"FilterConditions"
+#define FilterConditionsResourceType    @"plist"
+
+#define DistanceConditionKey            @"DistanceCondition"
+#define RepariConditionKey              @"RepariCondition"
+#define OtherConditionKey               @"OtherCondition"
+
+#define DisplayNameKey                  @"DisplayName"
+#define RequestValueKey                 @"RequestValue"
+
 @interface SCMerchantFilterView () <SCFilterPopViewDelegate>
+{
+    NSDictionary *_filterConditions;
+}
 
 @end
 
@@ -23,7 +36,8 @@
 #pragma mark -
 - (void)awakeFromNib
 {
-    _filterPopView.delegate = self;
+    [self initConfig];
+    [self viewConfig];
 }
 
 #pragma mark - Action Methods
@@ -51,6 +65,26 @@
 
 #pragma mark - Private Methods
 #pragma mark -
+- (void)initConfig
+{
+    _filterPopView.delegate = self;
+    _filterConditions = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:FilterConditionsResourceName ofType:FilterConditionsResourceType]];
+}
+
+- (void)viewConfig
+{
+    @try {
+        [_distanceButton setTitle:_filterConditions[DistanceConditionKey][0][DisplayNameKey] forState:UIControlStateNormal];
+        [_repairTypeButton setTitle:_filterConditions[RepariConditionKey][0][DisplayNameKey] forState:UIControlStateNormal];
+        [_otherFilterButton setTitle:_filterConditions[OtherConditionKey][0][DisplayNameKey] forState:UIControlStateNormal];
+    }
+    @catch (NSException *exception) {
+        SCException(@"Read Filter Condition Error:%@", exception.reason);
+    }
+    @finally {
+    }
+}
+
 // 弹出筛选条件View给用户展示，用户才能操作 - 带动画
 - (void)popFilterView
 {
@@ -66,8 +100,13 @@
     [UIView animateWithDuration:0.3f animations:^{
         [_filterPopView.contentView layoutIfNeeded];
     } completion:^(BOOL finished) {
-        _filterPopView.contentViewBottomConstraint.constant = DOT_COORDINATE;
-        _heightConstraint.constant = MerchantFilterViewUnPopHeight;
+        [UIView animateWithDuration:0.2f animations:^{
+            _filterPopView.alpha = DOT_COORDINATE;
+        } completion:^(BOOL finished) {
+            _filterPopView.contentViewBottomConstraint.constant = DOT_COORDINATE;
+            _heightConstraint.constant = MerchantFilterViewUnPopHeight;
+            _filterPopView.alpha = 1.0f;
+        }];
     }];
 }
 

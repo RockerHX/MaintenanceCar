@@ -13,8 +13,9 @@
 #import "SCMapMerchantInfoView.h"
 #import "SCMerchantDetailViewController.h"
 #import "SCReservationViewController.h"
+#import "SCReservatAlertView.h"
 
-@interface SCMapViewController () <BMKMapViewDelegate, SCMapMerchantInfoViewDelegate, UIAlertViewDelegate>
+@interface SCMapViewController () <BMKMapViewDelegate, SCMapMerchantInfoViewDelegate, SCReservatAlertViewDelegate>
 {
     NSMutableArray *_annotations;       // 商户图钉数据集合
     SCMerchant     *_merchant;          // 当前点击商户的数据缓存
@@ -138,31 +139,24 @@
 
 - (void)shouldShowReservationList
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"预约"
-                                                        message:@"请选择您预约的项目"
-                                                       delegate:self
-                                              cancelButtonTitle:@"取消"
-                                              otherButtonTitles:@"1元洗车", @"2元贴膜", @"3元打蜡", @"其他项目", nil];
-    [alertView show];
+    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self];
+    [reservatAlertView show];
 }
 
-#pragma mark - Alert View Delegate Methods
+#pragma mark - SCReservatAlertViewDelegate Methods
 #pragma mark -
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)selectedAtButton:(SCAlertItemType)type
 {
-    if (buttonIndex != alertView.cancelButtonIndex)
-    {
-        // 跳转到预约页面
-        @try {
-            SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-            reservationViewController.merchant = _merchant;
-            [self.navigationController pushViewController:reservationViewController animated:YES];
-        }
-        @catch (NSException *exception) {
-            SCException(@"SCMapViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
+    // 跳转到预约页面
+    @try {
+        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
+        reservationViewController.merchant = _merchant;
+        [self.navigationController pushViewController:reservationViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        SCException(@"SCMapViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
     }
 }
 
