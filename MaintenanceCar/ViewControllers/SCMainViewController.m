@@ -79,6 +79,7 @@
     SCLog(@"didUpdateUserLocation lat %f,long %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
     
     [SCLocationInfo shareLocationInfo].userLocation = userLocation;
+    [_locationService stopUserLocationService];
 }
 
 - (void)didFailToLocateUserWithError:(NSError *)error

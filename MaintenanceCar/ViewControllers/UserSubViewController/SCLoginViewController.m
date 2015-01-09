@@ -180,6 +180,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 
 - (void)dismissController
 {
+    [_verificationCodeView stop];
     [self resignKeyBoard];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }

@@ -32,6 +32,9 @@
 #define ReservationViewControllerStoryBoardID       @"SCReservationViewController"
 #define MerchantCellReuseIdentifier                 @"MerchantCellReuseIdentifier"
 
+#define DisplayNameKey                  @"DisplayName"
+#define RequestValueKey                 @"RequestValue"
+
 #define SCREEN_WIDTH                    ([UIScreen mainScreen].bounds.size.width)       // 获取屏幕宽度
 #define SCREEN_HEIGHT                   ([UIScreen mainScreen].bounds.size.height)      // 获取屏幕高度
 

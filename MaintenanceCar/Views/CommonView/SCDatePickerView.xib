@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SCDatePickerView">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2z1-aA-UzL">
+                    <rect key="frame" x="0.0" y="600" width="600" height="180"/>
+                    <subviews>
+                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="2Ra-vA-NNf">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="180"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="180" id="EVh-9E-Z3U"/>
+                            </constraints>
+                            <date key="date" timeIntervalSinceReferenceDate="442471154.51512098">
+                                <!--2015-01-09 04:39:14 +0000-->
+                            </date>
+                            <date key="minimumDate" timeIntervalSinceReferenceDate="441802800">
+                                <!--2015-01-01 11:00:00 +0000-->
+                            </date>
+                            <date key="maximumDate" timeIntervalSinceReferenceDate="1167562800">
+                                <!--2037-12-31 11:00:00 +0000-->
+                            </date>
+                        </datePicker>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="2Ra-vA-NNf" firstAttribute="leading" secondItem="2z1-aA-UzL" secondAttribute="leading" id="8HW-Rh-oAG"/>
+                        <constraint firstAttribute="bottom" secondItem="2Ra-vA-NNf" secondAttribute="bottom" id="XqD-Wz-3ba"/>
+                        <constraint firstAttribute="trailing" secondItem="2Ra-vA-NNf" secondAttribute="trailing" id="d8n-QN-k90"/>
+                        <constraint firstItem="2Ra-vA-NNf" firstAttribute="top" secondItem="2z1-aA-UzL" secondAttribute="top" id="v2Q-Px-1Z7"/>
+                        <constraint firstAttribute="height" constant="180" id="zu8-RQ-XD7"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="2z1-aA-UzL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ia8-Yw-NO4"/>
+                <constraint firstAttribute="bottom" secondItem="2z1-aA-UzL" secondAttribute="bottom" constant="-180" id="NTN-0Q-62e"/>
+                <constraint firstAttribute="trailing" secondItem="2z1-aA-UzL" secondAttribute="trailing" id="aWc-H6-9eO"/>
+            </constraints>
+            <connections>
+                <outlet property="bottomConstraint" destination="NTN-0Q-62e" id="32E-8X-9um"/>
+                <outlet property="containerView" destination="2z1-aA-UzL" id="7VE-fd-2fF"/>
+                <outlet property="datePicker" destination="2Ra-vA-NNf" id="Yex-Lw-e9B"/>
+            </connections>
+            <point key="canvasLocation" x="366" y="394"/>
+        </view>
+    </objects>
+</document>

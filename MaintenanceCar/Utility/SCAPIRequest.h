@@ -116,6 +116,17 @@
                                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
+ *  商户预约接口请求方法(API:/Reservation - POST)
+ *
+ *  @param parameters   请求参数集合
+ *  @param uccess       请求成功的block
+ *  @param failure      请求失败的block
+ */
+- (void)startMerchantReservationAPIRequestWithParameters:(NSDictionary *)parameters
+                                                 Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
  *  验证码获取请求方法(API:/Verification - POST)
  *
  *  @param parameters   请求参数集合

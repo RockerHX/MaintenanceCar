@@ -15,6 +15,12 @@ typedef NS_ENUM(NSInteger, SCAlertItemType) {
     SCAlertItemTypeOhter
 };
 
+typedef NS_ENUM(NSInteger, SCAlertAnimation) {
+    SCAlertAnimationDefault = 0,
+    SCAlertAnimationEnlarge,
+    SCAlertAnimationMove
+};
+
 @protocol SCReservatAlertViewDelegate <NSObject>
 
 @optional
@@ -26,7 +32,12 @@ typedef NS_ENUM(NSInteger, SCAlertItemType) {
 
 @property (nonatomic, weak) id<SCReservatAlertViewDelegate>delegate;
 
-- (id)initWithDelegate:(id<SCReservatAlertViewDelegate>)delegate;
+@property (weak, nonatomic) IBOutlet UIButton *buttonOne;
+@property (weak, nonatomic) IBOutlet UIButton *buttonTwo;
+@property (weak, nonatomic) IBOutlet UIButton *buttonThree;
+@property (weak, nonatomic) IBOutlet UIButton *buttonOther;
+
+- (id)initWithDelegate:(id<SCReservatAlertViewDelegate>)delegate animation:(SCAlertAnimation)anmation;
 
 /**
  *  显示预约项目页面

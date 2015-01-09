@@ -139,7 +139,7 @@
 
 - (void)shouldShowReservationList
 {
-    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self];
+    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
     [reservatAlertView show];
 }
 

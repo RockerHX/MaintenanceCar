@@ -20,9 +20,6 @@
 #define RepariConditionKey              @"RepariCondition"
 #define OtherConditionKey               @"OtherCondition"
 
-#define DisplayNameKey                  @"DisplayName"
-#define RequestValueKey                 @"RequestValue"
-
 @interface SCMerchantFilterView () <SCFilterPopViewDelegate>
 {
     NSDictionary *_filterConditions;

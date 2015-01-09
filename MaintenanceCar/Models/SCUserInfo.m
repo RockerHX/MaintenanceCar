@@ -63,4 +63,9 @@ static SCUserInfo *userInfo = nil;
     [USER_DEFAULT synchronize];
 }
 
+- (void)addCar
+{
+    
+}
+
 @end

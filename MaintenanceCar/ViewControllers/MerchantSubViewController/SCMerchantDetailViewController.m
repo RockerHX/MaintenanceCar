@@ -218,7 +218,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
  */
 - (void)reservationButtonPressed
 {
-    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self];
+    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
     [reservatAlertView show];
 }
 
