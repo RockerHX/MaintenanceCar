@@ -236,4 +236,27 @@
 
 }
 
+#pragma mark - SCMerchantFilterViewDelegate Methods
+#pragma mark -
+- (void)filterButtonPressedWithType:(SCFilterButtonType)type
+{
+    switch (type) {
+        case SCFilterButtonTypeDistanceButton:
+        {
+        }
+            break;
+        case SCFilterButtonTypeRepairTypeButton:
+        {
+        }
+            break;
+        case SCFilterButtonTypeOtherFilterButton:
+        {
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
 @end
