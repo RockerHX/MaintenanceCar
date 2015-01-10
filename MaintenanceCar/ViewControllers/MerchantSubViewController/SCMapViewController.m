@@ -26,7 +26,6 @@
 @implementation SCMapViewController
 
 #pragma mark - View Controller Life Cycle
-#pragma mark -
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -42,14 +41,12 @@
 }
 
 #pragma mark - Action Methods
-#pragma mark -
 - (IBAction)listItemPressed:(UIBarButtonItem *)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Setter Methods
-#pragma mark -
 - (void)setMerchants:(NSArray *)merchants
 {
     if (!_annotations)
@@ -72,7 +69,6 @@
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 - (void)viewConfig
 {
     // 配置百度地图
@@ -104,7 +100,6 @@
 }
 
 #pragma mark - BMKMapView Delegate Methods
-#pragma mark -
 - (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
 {
     // 刷新商户数据
@@ -121,7 +116,6 @@
 }
 
 #pragma mark - SCMapMerchantInfoViewDelegate Methods
-#pragma mark -
 - (void)shouldShowMerchantDetail
 {
     // 跳转到预约页面
@@ -144,7 +138,6 @@
 }
 
 #pragma mark - SCReservatAlertViewDelegate Methods
-#pragma mark -
 - (void)selectedAtButton:(SCAlertItemType)type
 {
     // 跳转到预约页面

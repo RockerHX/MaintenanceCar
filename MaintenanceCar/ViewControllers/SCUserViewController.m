@@ -12,6 +12,15 @@
 #import "SCUserInfo.h"
 #import "SCLoginViewController.h"
 #import "SCMyFavoriteTableViewController.h"
+#import "SCMyReservationTableViewController.h"
+
+typedef NS_ENUM(NSInteger, SCUserCenterRow) {
+    SCUserCenterRowMyOrder = 0,
+    SCUserCenterRowMyCustomers,
+    SCUserCenterRowMyReservation,
+    SCUserCenterRowMyCollection,
+    SCUserCenterRowComplaintsBusinesses
+};
 
 @interface SCUserViewController () <UIAlertViewDelegate>
 
@@ -20,7 +29,6 @@
 @implementation SCUserViewController
 
 #pragma mark - View Controller Life Cycle
-#pragma mark -
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -46,7 +54,6 @@
 }
 
 #pragma mark - Table View Delegate Methods
-#pragma mark -
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -62,30 +69,41 @@
     }
     else
     {
-        switch (indexPath.row)
-        {
-            case 2:
+        @try {
+            switch (indexPath.row)
             {
-                SCMyFavoriteTableViewController *myFavoriteTableViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyFavoriteTableViewController"];
-                [self pushToSubViewControllerWithController:myFavoriteTableViewController];
+                case SCUserCenterRowMyReservation:
+                {
+                    SCMyReservationTableViewController *myReservationTableViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyReservationTableViewController"];
+                    [self pushToSubViewControllerWithController:myReservationTableViewController];
+                }
+                    break;
+                case SCUserCenterRowMyCollection:
+                {
+                    SCMyFavoriteTableViewController *myFavoriteTableViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyFavoriteTableViewController"];
+                    [self pushToSubViewControllerWithController:myFavoriteTableViewController];
+                }
+                    break;
+                    
+                default:
+                    break;
             }
-                break;
-                
-            default:
-                break;
+        }
+        @catch (NSException *exception) {
+            SCException(@"User Center Push Controller Error:%@", exception.reason);
+        }
+        @finally {
         }
     }
 }
 
 #pragma mark - Button Action Methods
-#pragma mark -
 - (IBAction)loginButtonPressed:(UIButton *)sender
 {
     [self checkShouldLogin];
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 - (void)viewConfig
 {
 }
@@ -104,7 +122,6 @@
 }
 
 #pragma mark - Alert View Delegate Methods
-#pragma mark -
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != alertView.cancelButtonIndex)

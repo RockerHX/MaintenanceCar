@@ -4,6 +4,7 @@ platform :ios, '7.0'
 pod 'AFNetworking', '~> 2.5.0'
 pod 'JSONModel', '~> 1.0.1'
 pod 'MBProgressHUD', '~> 0.9'
+pod 'FXBlurView', '~> 1.6.3'
 
 # ********************** 第三方SDK **********************
 # 友盟统计SDK

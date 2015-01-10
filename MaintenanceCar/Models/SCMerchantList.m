@@ -13,7 +13,6 @@ static SCMerchantList *merchantList = nil;
 @implementation SCMerchantList
 
 #pragma mark - Init Methods
-#pragma mark -
 + (instancetype)shareList
 {
     static dispatch_once_t onceToken;

@@ -8,8 +8,8 @@
 
 #import "SCAPIRequest.h"
 
-#define CustomRequestHeaderKey        @"X-API-KEY"
-#define CustomRequestHeaderValue      @"s72NLtU98NR58sMuPhKP"
+#define CustomRequestHeaderKey        @"X-API-KEY"                  // 请求加密Key
+#define CustomRequestHeaderValue      @"SlwX20U65YMTuNRDe3fZ"       // 请求加密Value
 
 @interface SCAPIRequest ()
 
@@ -20,7 +20,6 @@
 @implementation SCAPIRequest
 
 #pragma mark - Init Methods
-#pragma mark -
 - (instancetype)initWithURL:(NSString *)url
 {
     self = [super init];
@@ -60,7 +59,6 @@
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 /**
  *  通过导入工程的cer秘钥文件设置安全策略
  *
@@ -122,8 +120,6 @@
     [self POST:api parameters:parameters success:success failure:failure];
 }
 
-#pragma mark - Public Methods
-#pragma mark -
 - (void)startWearthAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
@@ -131,6 +127,7 @@
     [self requestGETMethodsWithAPI:WearthAPIURL parameters:parameters success:success failure:failure];
 }
 
+#pragma mark - Merchant API
 - (void)startMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
                                           Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
@@ -159,11 +156,11 @@
     [self requestGETMethodsWithAPI:MerchantCollectionAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startMerchantUnCollectionAPIRequestWithParameters:(NSDictionary *)parameters
-                                                  Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startCancelCollectionAPIRequestWithParameters:(NSDictionary *)parameters
+                                              Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestPOSTMethodsWithAPI:MerchantUnCollectionAPIURL parameters:parameters success:success failure:failure];
+    [self requestPOSTMethodsWithAPI:CancelCollectionAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startCheckMerchantCollectionStutasAPIRequestWithParameters:(NSDictionary *)parameters
@@ -173,13 +170,7 @@
     [self requestGETMethodsWithAPI:CheckMerchantCollectionAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startMerchantReservationAPIRequestWithParameters:(NSDictionary *)parameters
-                                                 Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    [self requestPOSTMethodsWithAPI:MerchantReservationAPIURL parameters:parameters success:success failure:failure];
-}
-
+#pragma mark - User Center API
 - (void)startGetVerificationCodeAPIRequestWithParameters:(NSDictionary *)parameters
                                                  Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
@@ -206,6 +197,28 @@
                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestPOSTMethodsWithAPI:UserLogAPIURL parameters:parameters success:success failure:failure];
+}
+
+#pragma mark - Reservation Reuqest
+- (void)startMerchantReservationAPIRequestWithParameters:(NSDictionary *)parameters
+                                                 Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:MerchantReservationAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startGetMyReservationAPIRequestWithParameters:(NSDictionary *)parameters
+                                              Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MyReservationAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startUpdateReservationAPIRequestWithParameters:(NSDictionary *)parameters
+                                               Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:UpdateReservationAPIURL parameters:parameters success:success failure:failure];
 }
 
 @end

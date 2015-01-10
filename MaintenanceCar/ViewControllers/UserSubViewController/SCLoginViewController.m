@@ -34,7 +34,6 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 @implementation SCLoginViewController
 
 #pragma mark - View Controller Life Cycle
-#pragma mark -
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -50,7 +49,6 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 - (void)initConfig
 {
     // 获取验证码View被点击之后的回调，判断是否输入手机号进行返回和执行获取验证码请求
@@ -186,7 +184,6 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 }
 
 #pragma mark - Getter Methods
-#pragma mark -
 - (NSString *)verificationCode
 {
     // 客户端生成四位数字随机验证码
@@ -195,7 +192,6 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 }
 
 #pragma mark - Button Action Methods
-#pragma mark -
 - (IBAction)loginButtonPressed:(UIButton *)sender
 {
     [self resignKeyBoard];
@@ -220,14 +216,12 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 }
 
 #pragma mark - Touch Event Methods
-#pragma makr -
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
 }
 
 #pragma mark - MBProgressHUDDelegate Methods
-#pragma mark -
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
     switch (hud.tag)

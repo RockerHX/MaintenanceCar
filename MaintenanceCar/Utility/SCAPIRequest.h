@@ -40,6 +40,7 @@
                           path:(NSString *)path
                            api:(NSString *)api;
 
+#pragma mark - Merchant API
 /**
  *  天气接口请求方法(API:/Weather - GET)
  *
@@ -53,8 +54,6 @@
  *  商户列表接口请求方法(API:/company_search - GET)
  *
  *  @param parameters   请求参数集合
- *  @param uccess       请求成功的block
- *  @param failure      请求失败的block
  */
 - (void)startMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
                                           Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -64,8 +63,6 @@
  *  商户详情接口请求方法(API:/Carshop - GET)
  *
  *  @param parameters   请求参数集合
- *  @param uccess       请求成功的block
- *  @param failure      请求失败的block
  */
 - (void)startMerchantDetailAPIRequestWithParameters:(NSDictionary *)parameters
                                             Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -75,8 +72,6 @@
  *  商户收藏接口请求方法(API:/Collection - POST)
  *
  *  @param parameters   请求参数集合
- *  @param uccess       请求成功的block
- *  @param failure      请求失败的block
  */
 - (void)startMerchantCollectionAPIRequestWithParameters:(NSDictionary *)parameters
                                                 Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -86,8 +81,6 @@
  *  获取收藏商户接口请求方法(API:/Collection - GET)
  *
  *  @param parameters   请求参数集合
- *  @param uccess       请求成功的block
- *  @param failure      请求失败的block
  */
 - (void)startGetCollectionMerchantAPIRequestWithParameters:(NSDictionary *)parameters
                                                    Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -97,41 +90,25 @@
  *  取消收藏商户接口请求方法(API:/Collection/delete - GET)
  *
  *  @param parameters   请求参数集合
- *  @param uccess       请求成功的block
- *  @param failure      请求失败的block
  */
-- (void)startMerchantUnCollectionAPIRequestWithParameters:(NSDictionary *)parameters
-                                                  Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startCancelCollectionAPIRequestWithParameters:(NSDictionary *)parameters
+                                              Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  检查商户是否收藏接口请求方法(API:/Collection/user - GET)
  *
  *  @param parameters   请求参数集合
- *  @param uccess       请求成功的block
- *  @param failure      请求失败的block
  */
 - (void)startCheckMerchantCollectionStutasAPIRequestWithParameters:(NSDictionary *)parameters
                                                            Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
-/**
- *  商户预约接口请求方法(API:/Reservation - POST)
- *
- *  @param parameters   请求参数集合
- *  @param uccess       请求成功的block
- *  @param failure      请求失败的block
- */
-- (void)startMerchantReservationAPIRequestWithParameters:(NSDictionary *)parameters
-                                                 Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
+#pragma mark - User Center API
 /**
  *  验证码获取请求方法(API:/Verification - POST)
  *
  *  @param parameters   请求参数集合
- *  @param uccess       请求成功的block
- *  @param failure      请求失败的block
  */
 - (void)startGetVerificationCodeAPIRequestWithParameters:(NSDictionary *)parameters
                                                  Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -141,8 +118,6 @@
  *  用户注册接口请求方法(API:/User - POST)
  *
  *  @param parameters   请求参数集合
- *  @param uccess       请求成功的block
- *  @param failure      请求失败的block
  */
 - (void)startRegisterAPIRequestWithParameters:(NSDictionary *)parameters
                                       Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -152,8 +127,6 @@
  *  用户登陆接口请求方法(API:/User - GET)
  *
  *  @param parameters   请求参数集合
- *  @param uccess       请求成功的block
- *  @param failure      请求失败的block
  */
 - (void)startLoginAPIRequestWithParameters:(NSDictionary *)parameters
                                    Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -163,11 +136,37 @@
  *  用户日志记录接口请求方法(API:/Userlog - POST)
  *
  *  @param parameters   请求参数集合
- *  @param uccess       请求成功的block
- *  @param failure      请求失败的block
  */
 - (void)startUserLogAPIRequestWithParameters:(NSDictionary *)parameters
                                      Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark - Reservation Reuqest
+/**
+ *  商户预约接口请求方法(API:/Reservation - POST)
+ *
+ *  @param parameters   请求参数集合
+ */
+- (void)startMerchantReservationAPIRequestWithParameters:(NSDictionary *)parameters
+                                                 Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  我的预约接口请求方法(API:/Reservation/all - GET)
+ *
+ *  @param parameters   请求参数集合
+ */
+- (void)startGetMyReservationAPIRequestWithParameters:(NSDictionary *)parameters
+                                              Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  更新预约接口请求方法(API:/Reservation/update - POST)
+ *
+ *  @param parameters   请求参数集合
+ */
+- (void)startUpdateReservationAPIRequestWithParameters:(NSDictionary *)parameters
+                                               Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 @end

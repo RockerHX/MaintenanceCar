@@ -12,7 +12,6 @@
 @implementation SCMerchant
 
 #pragma mark - Public Methods
-#pragma mark -
 - (id)initWithMerchantName:(NSString *)merchantName companyID:(NSString *)companyID
 {
     self = [super init];
@@ -25,7 +24,6 @@
 }
 
 #pragma mark - Getter Methods
-#pragma mark -
 - (NSString *)distance
 {
     return [[SCLocationInfo shareLocationInfo] distanceWithLatitude:[_latitude doubleValue] longitude:[_longtitude doubleValue]];

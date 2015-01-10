@@ -11,7 +11,6 @@
 @implementation SCCollectionItem
 
 #pragma mark - Public Methods
-#pragma mark -
 - (void)setFavorited:(BOOL)favorited
 {
     _favorited = favorited;

@@ -18,7 +18,6 @@ static SCUserInfo *userInfo = nil;
 @implementation SCUserInfo
 
 #pragma mark - Init Methods
-#pragma mark -
 + (instancetype)share
 {
     static dispatch_once_t onceToken;
@@ -29,7 +28,6 @@ static SCUserInfo *userInfo = nil;
 }
 
 #pragma mark - Getter Methods
-#pragma mark -
 - (NSString *)userID
 {
     return self.loginStatus ? [USER_DEFAULT objectForKey:kUserIDKey] : @"";
@@ -46,7 +44,6 @@ static SCUserInfo *userInfo = nil;
 }
 
 #pragma mark - Public Methods
-#pragma mark -
 + (void)loginSuccessWithUserID:(NSDictionary *)userData
 {
     [USER_DEFAULT setObject:@(YES) forKey:kLoginKey];

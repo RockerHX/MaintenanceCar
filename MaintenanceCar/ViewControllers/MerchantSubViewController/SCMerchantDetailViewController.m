@@ -47,7 +47,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 @implementation SCMerchantDetailViewController
 
 #pragma mark - View Controller Life Cycle
-#pragma mark -
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -79,7 +78,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 #pragma mark - Table View Data Source Methods
-#pragma mark -
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 3;
@@ -170,7 +168,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 #pragma mark - Action Methods
-#pragma mark -
 - (IBAction)favoriteItemPressed:(SCCollectionItem *)sender
 {
     if ([SCUserInfo share].loginStatus)
@@ -197,7 +194,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 - (void)initConfig
 {
     // 开启cell高度预估，自动适配cell高度
@@ -304,7 +300,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     __weak typeof(self) weakSelf = self;
     NSDictionary *paramters = @{@"company_id": _merchantDetail.company_id,
                                 @"user_id": [SCUserInfo share].userID};
-    [[SCAPIRequest manager] startMerchantUnCollectionAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startCancelCollectionAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消收藏成功", 1.0f);
@@ -357,7 +353,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 #pragma mark - Alert View Delegate Methods
-#pragma mark -
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (alertView.tag) {
@@ -391,7 +386,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 
 #pragma mark - SCReservatAlertViewDelegate Methods
-#pragma mark -
 - (void)selectedAtButton:(SCAlertItemType)type
 {
     // 跳转到预约页面

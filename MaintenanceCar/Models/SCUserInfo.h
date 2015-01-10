@@ -13,6 +13,7 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
     SCLoginStatusLogout = NO
 };
 
+// 用户数据Model
 @interface SCUserInfo : NSObject
 
 @property (nonatomic, copy, readonly)   NSString      *userID;          // 用户ID

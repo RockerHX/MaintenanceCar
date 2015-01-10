@@ -34,7 +34,6 @@
 @implementation SCMerchantViewController
 
 #pragma mark - View Controller Life Cycle
-#pragma mark -
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -78,7 +77,6 @@
 }
 
 #pragma mark - Table View Data Source Methods
-#pragma mark -
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _merchantList.count;
@@ -98,7 +96,6 @@
 }
 
 #pragma mark - Table View Delegate Methods
-#pragma mark -
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -109,7 +106,6 @@
 }
 
 #pragma mark - Action Methods
-#pragma mark -
 - (IBAction)mapItemPressed:(UIBarButtonItem *)sender
 {
     UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
@@ -120,7 +116,6 @@
 }
 
 #pragma mark - KVO Methods
-#pragma makr -
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"userLocation"])
@@ -137,7 +132,6 @@
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 /**
  *  初始化配置，列表设置，全局变量初始化都放在这里
  */
@@ -219,7 +213,6 @@
 }
 
 #pragma mark - SCReservatAlertViewDelegate Methods
-#pragma mark -
 - (void)selectedAtButton:(SCAlertItemType)type
 {
     // 跳转到预约页面
@@ -237,7 +230,6 @@
 }
 
 #pragma mark - SCMerchantFilterViewDelegate Methods
-#pragma mark -
 - (void)filterButtonPressedWithType:(SCFilterButtonType)type
 {
     switch (type) {

@@ -29,7 +29,6 @@
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 - (void)viewConfig
 {
     [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addGestureRecognizer)]];
@@ -58,7 +57,6 @@
 }
 
 #pragma mark - Public Methods
-#pragma mark -
 - (void)show
 {
     __weak typeof(self) weakSelf = self;

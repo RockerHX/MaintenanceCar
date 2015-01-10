@@ -30,7 +30,6 @@
 @implementation SCMerchantFilterView
 
 #pragma mark - Init Methods
-#pragma mark -
 - (void)awakeFromNib
 {
     [self initConfig];
@@ -38,7 +37,6 @@
 }
 
 #pragma mark - Action Methods
-#pragma mark -
 - (IBAction)distanceButtonPressed:(UIButton *)sender
 {
     [self popFilterView];
@@ -58,10 +56,8 @@
 }
 
 #pragma mark - Setter And Getter Methods
-#pragma mark -
 
 #pragma mark - Private Methods
-#pragma mark -
 - (void)initConfig
 {
     _filterPopView.delegate = self;
@@ -108,7 +104,6 @@
 }
 
 #pragma mark - SCFilterPopViewDelegate Methods
-#pragma mark -
 - (void)shouldClosePopView
 {
     [self closeFilterView];

@@ -36,7 +36,6 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
 @implementation SCReservationViewController
 
 #pragma mark - View Controller Life Cycle
-#pragma mark -
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -57,7 +56,6 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
 }
 
 #pragma mark - Table View Delegate Methods
-#pragma mark -
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [_ownerNameTextField resignFirstResponder];
@@ -111,7 +109,6 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 /**
  *  商户预约请求方法，参数：user_id, company_id, type, reserve_name, reserve_phone, content, time, user_car_id
  *  user_id: 用户 ID
@@ -137,10 +134,7 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            if ([responseObject[@"notification"][@"ret"] isEqualToString:@"SUCCESS"])
-            {
-                [self showPromptHUDWithText:@"恭喜您，已经预约成功!" delay:1.5f delegate:self];
-            }
+            [self showPromptHUDWithText:@"恭喜您，已经预约成功!" delay:1.5f delegate:self];
         }
         else
         {
@@ -213,7 +207,7 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
 - (NSString *)dateWhichPeriodWithDate:(NSDate *)date
 {
     NSInteger index;
-    for (index = [self getCurrentHourWithDate:date]; index < 24; index++)
+    for (index = [[self getCurrentHourWithDate:date] integerValue]; index < 24; index++)
     {
         NSInteger from = index;
         NSInteger to = index + 1;
@@ -226,11 +220,11 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     return [NSString stringWithFormat:@"%ld:00 -- %ld:00", index, index+1];
 }
 
-- (NSInteger)getCurrentHourWithDate:(NSDate *)date
+- (NSString *)getCurrentHourWithDate:(NSDate *)date
 {
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
     [fmt setDateFormat:@"HH"];
-    return [[fmt stringFromDate:date] integerValue];
+    return [fmt stringFromDate:date];
 }
 
 /**
@@ -313,7 +307,6 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
 }
 
 #pragma mark - Alert View Delegate Methods
-#pragma mark -
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != alertView.cancelButtonIndex)
@@ -323,7 +316,6 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
 }
 
 #pragma mark - Text Field Delegate Methods
-#pragma mark -
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     // 在车主姓名栏点击[下一项]跳到车主电话栏，车主电话栏和备注栏点击[完成]收起键盘
@@ -340,14 +332,12 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
 }
 
 #pragma mark - MBProgressHUDDelegate Methods
-#pragma mark -
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - SCDatePickerViewDelegate Methods
-#pragma mark -
 - (void)datePickerSelectedFinish:(NSDate *)date mode:(UIDatePickerMode)mode
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -362,8 +352,7 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
             break;
         case UIDatePickerModeTime:
         {
-            [formatter setDateFormat:@"HH:MM:SS"];
-            _reservationTime = [formatter stringFromDate:date];
+            _reservationTime = [NSString stringWithFormat:@" %@:00:00", [self getCurrentHourWithDate:date]];
             [self displayTimeItemWithDate:date];
         }
             break;
@@ -374,7 +363,6 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
 }
 
 #pragma mark - SCPickerViewDelegate Methods
-#pragma mark -
 - (void)pickerViewSelectedFinish:(NSString *)item displayName:(NSString *)name
 {
     _reservationType = item;

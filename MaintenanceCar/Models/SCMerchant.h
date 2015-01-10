@@ -8,7 +8,7 @@
 
 #import "JSONModel.h"
 
-// 商户Model
+// 商户数据Model
 @interface SCMerchant : JSONModel
 
 @property (nonatomic, copy)           NSString <Optional>*name;                 // 商户名称

@@ -28,7 +28,6 @@ typedef BOOL(^BLOCK)(void);
 @implementation SCVerificationCodeView
 
 #pragma mark - Init Methods
-#pragma mark -
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
@@ -42,7 +41,6 @@ typedef BOOL(^BLOCK)(void);
 
 
 #pragma mark - Private Methods
-#pragma mark -
 - (void)startCountDown
 {
     // 如果回调获得的返回值为YES，执行倒计时
@@ -69,7 +67,6 @@ typedef BOOL(^BLOCK)(void);
 }
 
 #pragma mark - Public Methods
-#pragma mark -
 - (void)verificationCodeShouldSend:(BOOL(^)())block
 {
     _block = block;
@@ -84,7 +81,6 @@ typedef BOOL(^BLOCK)(void);
 }
 
 #pragma mark - Delloc Methods
-#pragma mark -
 - (void)dealloc
 {
     // 如果View被移除，定时器需要废除掉

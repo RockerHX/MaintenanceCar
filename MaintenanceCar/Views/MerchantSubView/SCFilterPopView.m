@@ -13,21 +13,18 @@
 @implementation SCFilterPopView
 
 #pragma mark - Init Methods
-#pragma mark -
 - (void)awakeFromNib
 {
     [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closePopView)]];
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 - (void)closePopView
 {
     [_delegate shouldClosePopView];
 }
 
 #pragma mark - Public Methods
-#pragma mark -
 - (void)showContentView
 {
     _contentViewBottomConstraint.constant = ShowContentViewBottomConstraint;

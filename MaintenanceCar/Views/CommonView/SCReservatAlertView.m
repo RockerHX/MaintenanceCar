@@ -40,7 +40,6 @@
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 - (void)viewConfig
 {
     NSArray *array = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:ReservationItemsResourceName ofType:ReservationItemsResourceType]];
@@ -97,7 +96,6 @@
 }
 
 #pragma mark - Action Methods
-#pragma mark -
 - (IBAction)cancelButtonPressed:(UIButton *)sender
 {
     [self removeAlertView];
@@ -110,7 +108,6 @@
 }
 
 #pragma mark - Public Methods
-#pragma mark -
 - (void)show
 {
     __weak typeof(self) weakSelf = self;

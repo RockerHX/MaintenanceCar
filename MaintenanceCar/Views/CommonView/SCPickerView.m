@@ -39,7 +39,6 @@
 }
 
 #pragma mark - Picker View Data Source Methods
-#pragma mark -
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
@@ -51,7 +50,6 @@
 }
 
 #pragma mark - Picker View Delegate Methods
-#pragma mark -
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     return _pickerItmes[row][DisplayNameKey];
@@ -70,7 +68,6 @@
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 - (void)viewConfig
 {
     [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addGestureRecognizer)]];
@@ -102,7 +99,6 @@
 }
 
 #pragma mark - Public Methods
-#pragma mark -
 - (void)show
 {
     __weak typeof(self) weakSelf = self;

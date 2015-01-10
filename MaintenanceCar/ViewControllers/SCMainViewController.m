@@ -24,7 +24,6 @@
 @implementation SCMainViewController
 
 #pragma mark - View Controller Life Cycle
-#pragma mark -
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -41,7 +40,6 @@
 }
 
 #pragma mark - Location Methods
-#pragma mark -
 /**
  *  开启定位
  */
@@ -64,7 +62,6 @@
 }
 
 #pragma mark - BMKLocationService Delegate Methods
-#pragma mark -
 // 当定位到用户的位置时，就会调用（调用的频率比较频繁）
 // 实现相关delegate 处理位置信息更新
 // 处理方向变更信息
@@ -90,7 +87,6 @@
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 - (void)initConfig
 {
     [self userLog];
@@ -146,6 +142,5 @@
 }
 
 #pragma mark - Public Methods
-#pragma mark -
 
 @end

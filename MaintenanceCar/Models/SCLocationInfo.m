@@ -13,7 +13,6 @@ static SCLocationInfo *locationInfo = nil;
 @implementation SCLocationInfo
 
 #pragma mark - Init Methods
-#pragma mark -
 - (id)init
 {
     self = [super init];
@@ -33,7 +32,6 @@ static SCLocationInfo *locationInfo = nil;
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 /**
  *  得到用于APP上显示的实际距离（实际距离小于1000米时显示单位为米M，精确度为10米；大于1000米是显示单位为千米KM）
  *
@@ -69,7 +67,6 @@ static SCLocationInfo *locationInfo = nil;
 }
 
 #pragma mark - Getter Methods
-#pragma mark -
 // 重构经纬度getter方法，处理经纬度数据
 - (NSString *)latitude
 {
@@ -92,7 +89,6 @@ static SCLocationInfo *locationInfo = nil;
 }
 
 #pragma mark - Public Methods
-#pragma mark -
 - (NSString *)distanceWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude
 {
     CLLocation *merchantLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];

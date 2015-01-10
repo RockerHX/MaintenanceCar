@@ -36,7 +36,6 @@
 }
 
 #pragma mark - KVO Methods
-#pragma mark -
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:kObserverKeyPath])
@@ -52,7 +51,6 @@
 }
 
 #pragma mark - Private Methods
-#pragma mark -
 -(void)timeFireMethod
 {
     _timeout--;
