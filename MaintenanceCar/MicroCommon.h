@@ -45,7 +45,6 @@
 #define NAVIGATION_BAR_HEIGHT           44.0f       // 导航条(NavigationBar)固定高度
 #define TAB_TAB_HEIGHT                  49.0f       // Tabbar固定高度
 
-
 // 通过十六进制的rgb值来返回一个UIColor实例
 #define UIColorFromRGB(rgbHexValue)     [UIColor colorWithRed:((float)((rgbHexValue & 0xFF0000) >> 16))/255.0f green:((float)((rgbHexValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbHexValue & 0xFF))/255.0f alpha:1.0f]
 // 通过R,G,B,A四个原生值来返回一个UIColor实例

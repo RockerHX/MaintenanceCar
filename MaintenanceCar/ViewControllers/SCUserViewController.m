@@ -84,6 +84,19 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
                     [self pushToSubViewControllerWithController:myFavoriteTableViewController];
                 }
                     break;
+                case SCUserCenterRowComplaintsBusinesses:
+                {
+                    @try {
+                        UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
+                        [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
+                    }
+                    @catch (NSException *exception) {
+                        SCException(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
+                    }
+                    @finally {
+                    }
+                }
+                    break;
                     
                 default:
                     break;

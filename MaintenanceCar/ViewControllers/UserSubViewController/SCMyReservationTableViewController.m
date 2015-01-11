@@ -67,6 +67,20 @@
     }
 }
 
+#pragma mark - Table View Delegate Methods
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    @try {
+        UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
+        [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
+    }
+    @catch (NSException *exception) {
+        SCException(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
+}
+
 #pragma mark - Private Methods
 - (void)startDownRefreshReuqest
 {
@@ -77,14 +91,25 @@
     [self startReservationListRequest];
 }
 
+- (void)startUpRefreshRequest
+{
+    [super startUpRefreshRequest];
+    
+    self.requestType = SCFavoriteListRequestTypeUp;
+    [self startReservationListRequest];
+}
+
+#pragma mark - Private Methods
 /**
- *  预约列表数据请求方法，必选参数：user_id
+ *  预约列表数据请求方法，必选参数：user_id，limit，offset
  */
 - (void)startReservationListRequest
 {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
-    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID};
+    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                                 @"limit"  : @(MerchantListLimit),
+                                 @"offset" : @(self.offset)};
     [[SCAPIRequest manager] startGetMyReservationAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // 关闭上拉刷新或者下拉刷新
         [weakSelf.tableView headerEndRefreshing];

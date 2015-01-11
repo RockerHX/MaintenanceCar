@@ -217,7 +217,7 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
             break;
         }
     }
-    return [NSString stringWithFormat:@"%ld:00 -- %ld:00", index, index+1];
+    return [NSString stringWithFormat:@"%@:00 -- %@:00", @(index), @(index+1)];
 }
 
 - (NSString *)getCurrentHourWithDate:(NSDate *)date
