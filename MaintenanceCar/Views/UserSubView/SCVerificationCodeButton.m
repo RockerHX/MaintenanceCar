@@ -29,7 +29,6 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        
         [self addObserver:self forKeyPath:kObserverKeyPath options:NSKeyValueObservingOptionNew context:nil];
     }
     return self;
@@ -54,7 +53,7 @@
 -(void)timeFireMethod
 {
     _timeout--;
-    [self setTitle:[NSString stringWithFormat:@"%lus", (unsigned long)_timeout] forState:UIControlStateNormal];
+    [self setTitle:[NSString stringWithFormat:@"%@", @(_timeout)] forState:UIControlStateNormal];
     
     if(_timeout < TIME_OUT_FLAG)
     {

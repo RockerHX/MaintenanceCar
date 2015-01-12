@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self initConfig];
+    [self viewConfig];
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,18 +49,27 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 }
 
 #pragma mark - Private Methods
-- (void)initConfig
+- (void)viewConfig
 {
+    _phoneNumberTextField.leftViewMode = UITextFieldViewModeAlways;
+    _phoneNumberTextField.leftView = [[UILabel alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 10.0f, 1.0f)];
+    _verificationCodeTextField.leftViewMode = UITextFieldViewModeAlways;
+    _verificationCodeTextField.leftView = [[UILabel alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 10.0f, 1.0f)];
+    
+    _loginButton.layer.cornerRadius = 5.0f;
+    _cancelButton.layer.cornerRadius = 5.0f;
+    
     // 获取验证码View被点击之后的回调，判断是否输入手机号进行返回和执行获取验证码请求
+    __weak typeof(self) weakSelf = self;
     [_verificationCodeView verificationCodeShouldSend:^BOOL{
-        if ([_phoneNumberTextField.text length])
+        if ([weakSelf.phoneNumberTextField.text length])
         {
-            [self startGetVerificationCodeReuqestWithMode:SCVerificationCodeModeMessage];
+            [weakSelf startGetVerificationCodeReuqestWithMode:SCVerificationCodeModeMessage];
             return YES;
         }
         else
         {
-            [self showPromptHUDWithText:@"请输入手机号" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+            [weakSelf showPromptHUDWithText:@"请输入手机号" delay:2.0f mode:SCHUDModeDefault delegate:nil];
             return NO;
         }
     }];

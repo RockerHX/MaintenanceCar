@@ -55,7 +55,6 @@
         //初始化BMKLocationService
         _locationService = [[BMKLocationService alloc]init];
         _locationService.delegate = self;
-
     }
     //启动LocationService
     [_locationService startUserLocationService];

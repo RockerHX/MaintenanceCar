@@ -28,17 +28,11 @@ typedef BOOL(^BLOCK)(void);
 @implementation SCVerificationCodeView
 
 #pragma mark - Init Methods
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (void)awakeFromNib
 {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        
-        // 加入一个单击手势，事件触发关联到startCountDown方法
-        [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startCountDown)]];
-    }
-    return self;
+    // 加入一个单击手势，事件触发关联到startCountDown方法
+    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startCountDown)]];
 }
-
 
 #pragma mark - Private Methods
 - (void)startCountDown
@@ -58,7 +52,7 @@ typedef BOOL(^BLOCK)(void);
 -(void)timeFireMethod
 {
     _timeout--;
-    self.text = [NSString stringWithFormat:@"%lus", (unsigned long)_timeout];
+    self.text = [NSString stringWithFormat:@"%@s", @(_timeout)];
     
     if(_timeout < TIME_OUT_FLAG)
     {
