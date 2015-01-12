@@ -8,6 +8,14 @@
 
 #import "SCCarBrandView.h"
 #import "MicroCommon.h"
+#import "SCCollectionReusableView.h"
+
+@interface SCCarBrandView ()
+{
+    NSArray *_titles;
+}
+
+@end
 
 @implementation SCCarBrandView
 
@@ -16,6 +24,7 @@
 {
     [super awakeFromNib];
     
+    _titles = @[@"~", @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K"];
     [self performSelector:@selector(initConfig) withObject:nil afterDelay:0.5f];
 }
 
@@ -29,17 +38,29 @@
 
 - (void)viewConfig
 {
+    _collectionView.allowsSelection = NO;
+    _collectionView.allowsMultipleSelection = NO;
 }
 
 #pragma mark - Collection Data Source Methods
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 1;
+    return 12;
+}
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    SCCollectionReusableView *reusableview = nil;
+    
+    if (kind == UICollectionElementKindSectionHeader) {
+        reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"CarBrandCollectionHeaderViewReuseIdentifier" forIndexPath:indexPath];
+    }
+    reusableview.titleLabel.text = _titles[indexPath.section];
+    return reusableview;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 100;
+    return 20;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
