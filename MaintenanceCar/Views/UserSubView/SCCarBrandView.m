@@ -9,10 +9,11 @@
 #import "SCCarBrandView.h"
 #import "MicroCommon.h"
 #import "SCCollectionReusableView.h"
+#import "SCCarBrandCollectionViewCell.h"
+#import "SCCar.h"
 
 @interface SCCarBrandView ()
 {
-    NSArray *_titles;
 }
 
 @end
@@ -24,7 +25,6 @@
 {
     [super awakeFromNib];
     
-    _titles = @[@"~", @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K"];
     [self performSelector:@selector(initConfig) withObject:nil afterDelay:0.5f];
 }
 
@@ -45,31 +45,40 @@
 #pragma mark - Collection Data Source Methods
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 12;
+    return _carBrands.allKeys.count;
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     SCCollectionReusableView *reusableview = nil;
     
-    if (kind == UICollectionElementKindSectionHeader) {
+    if (kind == UICollectionElementKindSectionHeader)
+    {
         reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"CarBrandCollectionHeaderViewReuseIdentifier" forIndexPath:indexPath];
     }
-    reusableview.titleLabel.text = _titles[indexPath.section];
+    reusableview.titleLabel.text = _indexTitles[indexPath.section];
     return reusableview;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 20;
+    return ((NSArray *)_carBrands[_indexTitles[section]]).count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CarBrandCellReuseIdentifier" forIndexPath:indexPath];
+    SCCarBrandCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CarBrandCellReuseIdentifier" forIndexPath:indexPath];
     
     // Configure the cell...
+    SCCar *car = ((NSArray *)_carBrands[_indexTitles[indexPath.section]])[indexPath.row];
+    cell.carTitleLabel.text = car.brand_name;
     
     return cell;
+}
+
+#pragma mark - Collection Delegate Methods
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"%@", indexPath);
 }
 
 @end

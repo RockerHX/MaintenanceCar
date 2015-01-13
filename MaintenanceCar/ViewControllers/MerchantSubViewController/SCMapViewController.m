@@ -17,8 +17,9 @@
 
 @interface SCMapViewController () <BMKMapViewDelegate, SCMapMerchantInfoViewDelegate, SCReservatAlertViewDelegate>
 {
-    NSMutableArray *_annotations;       // 商户图钉数据集合
-    SCMerchant     *_merchant;          // 当前点击商户的数据缓存
+    NSMutableArray    *_annotations;            // 商户图钉数据集合
+    SCMerchant        *_merchant;               // 当前点击商户的数据缓存
+    BMKAnnotationView *_preAnnotationView;      // 地图图钉缓存
 }
 
 @end
@@ -102,6 +103,9 @@
 #pragma mark - BMKMapView Delegate Methods
 - (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
 {
+    [mapView selectAnnotation:view.annotation animated:YES];
+    _preAnnotationView.image = [UIImage imageNamed:@"pin-red"];
+    view.image = [UIImage imageNamed:@"pin-blue"];
     // 刷新商户数据
     for (SCMerchant *merchant in _merchants)
     {
@@ -113,6 +117,7 @@
             break;
         }
     }
+    _preAnnotationView = view;
 }
 
 #pragma mark - SCMapMerchantInfoViewDelegate Methods

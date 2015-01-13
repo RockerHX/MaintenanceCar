@@ -19,6 +19,9 @@ typedef NS_ENUM(BOOL, SCAddCarStatus) {
 };
 
 @interface SCAddCarViewController ()
+{
+    NSArray *_indexTitles;
+}
 
 @property (nonatomic, weak) IBOutlet SCCollectionIndexView *indexView;
 
@@ -30,6 +33,7 @@ typedef NS_ENUM(BOOL, SCAddCarStatus) {
 {
     [super viewDidLoad];
     
+    [self initConfig];
     [self viewConfig];
 }
 
@@ -53,22 +57,35 @@ typedef NS_ENUM(BOOL, SCAddCarStatus) {
 #pragma mark - Private Methods
 - (void)initConfig
 {
-    
+    // 获取可显示的汽车品牌数据首字母，进行升序
+    _indexTitles = [[[SCCarBrandDisplayModel share].displayData allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2 options:NSNumericSearch];
+    }];
 }
 
 - (void)viewConfig
 {
     _carBrandView.canSelected = YES;
+    _carBrandView.indexTitles = _indexTitles;
+    _carBrandView.carBrands = [SCCarBrandDisplayModel share].displayData;
+    
     _carModelView.canSelected = YES;
     
+    _indexView.indexTitles = _indexTitles;
     [_indexView addTarget:self action:@selector(indexWasTapped:) forControlEvents:UIControlEventTouchUpInside];
-    SCCarBrandDisplayModel *model = [SCCarBrandDisplayModel share];
 }
 
 - (void)indexWasTapped:(SCCollectionIndexView *)indexView
 {
-    [_carBrandView.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:indexView.selectedIndex]
-                                         atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+    @try {
+        [_carBrandView.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexView.selectedIndex]
+                                             atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+    }
+    @catch (NSException *exception) {
+        SCException(@"Collection View Scroll To Item Error:%@", exception.reason);
+    }
+    @finally {
+    }
 }
 
 - (void)dismissWithStatus:(SCAddCarStatus)status

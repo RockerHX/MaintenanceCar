@@ -13,4 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
+@property (nonatomic, strong) NSArray      *indexTitles;
+@property (nonatomic, strong) NSDictionary *carBrands;
+
 @end
