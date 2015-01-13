@@ -29,6 +29,7 @@ typedef NS_ENUM(BOOL, SCAddCarStatus) {
 
 @implementation SCAddCarViewController
 
+#pragma mark - View Controller Life Cycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -39,6 +39,7 @@
 #pragma mark - Public Methods
 - (void)save
 {
+    _img_name = [NSString stringWithFormat:@"%@.png", _brand_id];
     if (![self hasObject:self])
     {
         SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];

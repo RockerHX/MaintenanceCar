@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MicroCommon.h"
 #import <UMengAnalytics/MobClick.h>
+#import "UMFeedback.h"
 #import "BMapKit.h"
 
 @interface AppDelegate ()
@@ -35,6 +36,8 @@
 #pragma mark UMeng Analytics SDK
     // 启动[友盟统计]，采用启动发送的方式 - BATCH
     [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:@"测试"];
+    // 启用[友盟反馈]
+    [UMFeedback setAppkey:UMengAPPKEY];
     // 设置版本号
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [MobClick setAppVersion:version];

@@ -17,10 +17,12 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 };
 
 #define DoMain              @"https://api.yjclw.com"                        // 接口域名
+#define ImageDoMain         @"http://static.yjclw.com"                      // 图片资源域名
 
 #define APIPath             @"/v1"                                          // 接口路径
 #define APIURL              [DoMain stringByAppendingString:APIPath]        // 接口链接
-
+#define ImagePath           @"/brand/brand_"                                // 图片资源路径
+#define ImageURL            [ImageDoMain stringByAppendingString:ImagePath] // 图片资源链接
 
 #define WearthAPI                   @"/Weather"                             // 天气API
 #define SearchAPI                   @"/company_search"                      // 商户搜索API

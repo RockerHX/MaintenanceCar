@@ -7,7 +7,9 @@
 //
 
 #import "SCCarBrandView.h"
+#import <UIImageView+AFNetworking.h>
 #import "MicroCommon.h"
+#import "API.h"
 #import "SCCollectionReusableView.h"
 #import "SCCarBrandCollectionViewCell.h"
 #import "SCCar.h"
@@ -70,6 +72,7 @@
     
     // Configure the cell...
     SCCar *car = ((NSArray *)_carBrands[_indexTitles[indexPath.section]])[indexPath.row];
+    [cell.carIcon setImageWithURL:[NSURL URLWithString:[ImageURL stringByAppendingString:car.img_name]]];
     cell.carTitleLabel.text = car.brand_name;
     
     return cell;
