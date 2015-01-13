@@ -11,6 +11,7 @@
 #import "SCCarBrandView.h"
 #import "SCCarModelView.h"
 #import "SCCollectionIndexView.h"
+#import "SCCarBrandDisplayModel.h"
 
 typedef NS_ENUM(BOOL, SCAddCarStatus) {
     SCAddCarStatusSelected = YES,
@@ -60,8 +61,8 @@ typedef NS_ENUM(BOOL, SCAddCarStatus) {
     _carBrandView.canSelected = YES;
     _carModelView.canSelected = YES;
     
-    _indexView.indexTitles = @[@"~", @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K"];
     [_indexView addTarget:self action:@selector(indexWasTapped:) forControlEvents:UIControlEventTouchUpInside];
+    SCCarBrandDisplayModel *model = [SCCarBrandDisplayModel share];
 }
 
 - (void)indexWasTapped:(SCCollectionIndexView *)indexView

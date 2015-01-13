@@ -169,4 +169,13 @@
                                                Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+/**
+ *  更新汽车品牌接口请求方法(API:/Car_brand - GET)
+ *
+ *  @param parameters   请求参数集合
+ */
+- (void)startUpdateCarBrandAPIRequestWithParameters:(NSDictionary *)parameters
+                                            Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 @end

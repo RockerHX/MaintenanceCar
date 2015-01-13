@@ -38,6 +38,8 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define MyReservationAPI            @"/Reservation/all"                     // 我的预约接口
 #define UpdateReservationAPI        @"/Reservation/update"                  // 更新预约接口
 
+#define CarBrandAPI                 @"/Car_brand"                           // 汽车品牌接口
+
 
 #define WearthAPIURL                    [APIURL stringByAppendingString:WearthAPI]                  // 天气接口URL - 用于主页模块获取天气信息
 #define SearchAPIURL                    [APIURL stringByAppendingString:SearchAPI]                  // 商户搜索接口URL - 用于商户搜索和筛选
@@ -54,5 +56,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define MyReservationAPIURL             [APIURL stringByAppendingString:MyReservationAPI]           // 商户预约接口URL - 用于商户预约项目
 #define UpdateReservationAPIURL         [APIURL stringByAppendingString:UpdateReservationAPI]       // 更新预约接口URL - 用于用户取消预约项目
+
+#define CarBrandAPIURL                  [APIURL stringByAppendingString:CarBrandAPI]                // 汽车品牌接口URL - 用于更新汽车品牌
 
 #endif

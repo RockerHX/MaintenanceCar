@@ -21,4 +21,6 @@
 @property (nonatomic, copy) NSString <Optional>*status;
 @property (nonatomic, copy) NSString <Optional>*create_time;
 
+- (void)save;
+
 @end
