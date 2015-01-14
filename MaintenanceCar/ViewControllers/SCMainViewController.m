@@ -146,16 +146,16 @@
 - (void)startUpdateCarBrandReuqest
 {
     SCCarBrandDisplayModel *displayModel = [SCCarBrandDisplayModel share];
-//    [displayModel loadLocalData];
     [[SCAPIRequest manager] startUpdateCarBrandAPIRequestWithParameters:nil Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             for (NSDictionary *carData in responseObject)
             {
                 SCCar *car = [[SCCar alloc] initWithDictionary:carData error:nil];
-                [car save];
-                [displayModel addObject:car];
+                if ([car save])
+                    [displayModel addObject:car];
             }
+            [displayModel addFinish];
         }
         else
         {

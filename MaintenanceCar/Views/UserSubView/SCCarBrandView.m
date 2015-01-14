@@ -47,7 +47,7 @@
 #pragma mark - Collection Data Source Methods
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return _carBrands.allKeys.count;
+    return _indexTitles.count;
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
@@ -82,6 +82,18 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"%@", indexPath);
+}
+
+#pragma mark - Scroll View Delegate Methods
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    [_delegate carBrandViewScrollEnd];
+}
+
+#pragma mark - Public Methods
+- (void)refresh
+{
+    [_collectionView reloadData];
 }
 
 @end

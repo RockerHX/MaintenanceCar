@@ -7,6 +7,7 @@
 //
 
 #import "SCAddCarViewController.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 #import "MicroCommon.h"
 #import "SCCarBrandView.h"
 #import "SCCarModelView.h"
@@ -18,10 +19,7 @@ typedef NS_ENUM(BOOL, SCAddCarStatus) {
     SCAddCarStatusCancel   = NO
 };
 
-@interface SCAddCarViewController ()
-{
-    NSArray *_indexTitles;
-}
+@interface SCAddCarViewController () <SCCarBrandViewDelegate>
 
 @property (nonatomic, weak) IBOutlet SCCollectionIndexView *indexView;
 
@@ -55,25 +53,48 @@ typedef NS_ENUM(BOOL, SCAddCarStatus) {
     [self dismissWithStatus:SCAddCarStatusSelected];
 }
 
+#pragma mark - KVO Methods
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"loadFinish"])
+    {
+        if (change[NSKeyValueChangeNewKey])
+        {
+            [self loadData];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        }
+    }
+}
+
 #pragma mark - Private Methods
 - (void)initConfig
 {
-    // 获取可显示的汽车品牌数据首字母，进行升序
-    _indexTitles = [[[SCCarBrandDisplayModel share].displayData allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        return [obj1 compare:obj2 options:NSNumericSearch];
-    }];
+    _carBrandView.delegate = self;
+    [_indexView addTarget:self action:@selector(indexWasTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [[SCCarBrandDisplayModel share] addObserver:self forKeyPath:@"loadFinish" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewConfig
 {
-    _carBrandView.canSelected = YES;
-    _carBrandView.indexTitles = _indexTitles;
-    _carBrandView.carBrands = [SCCarBrandDisplayModel share].displayData;
+    BOOL loadFinish = [SCCarBrandDisplayModel share].loadFinish;
+    if (!loadFinish)
+    {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
+    else
+    {
+        [self loadData];
+    }
+}
+
+- (void)loadData
+{
+    SCCarBrandDisplayModel *model = [SCCarBrandDisplayModel share];
+    _carBrandView.indexTitles = model.indexTitles;
+    _carBrandView.carBrands   = model.displayData;
+    [_carBrandView refresh];
     
-    _carModelView.canSelected = YES;
-    
-    _indexView.indexTitles = _indexTitles;
-    [_indexView addTarget:self action:@selector(indexWasTapped:) forControlEvents:UIControlEventTouchUpInside];
+    _indexView.indexTitles    = model.indexTitles;
 }
 
 - (void)indexWasTapped:(SCCollectionIndexView *)indexView
@@ -100,6 +121,18 @@ typedef NS_ENUM(BOOL, SCAddCarStatus) {
         
     }
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - SCCarBrandView Delegate Methods
+- (void)carBrandViewScrollEnd
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self.view.window addSubview:hud];
+    hud.mode = MBProgressHUDModeCustomView;
+    hud.yOffset = SCREEN_HEIGHT/2 - 100.0f;
+    hud.labelText = [_indexView selectedIndexTitle];
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.5f];
 }
 
 @end

@@ -62,7 +62,15 @@
 
 #pragma mark - Define Methods
 #pragma mark -
-#define ShowPromptHUDWithText(view, text, delay)          ({MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];hud.mode = MBProgressHUDModeText;hud.yOffset = SCREEN_HEIGHT/2 - 100.0f;hud.margin = 10.f;hud.labelText = text;hud.removeFromSuperViewOnHide = YES;[hud hide:YES afterDelay:delay];})
+#define ShowPromptHUDWithText(view, text, delay)          ({\
+MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];\
+hud.mode = MBProgressHUDModeText;\
+hud.yOffset = SCREEN_HEIGHT/2 - 100.0f;\
+hud.margin = 10.f;\
+hud.labelText = text;\
+hud.removeFromSuperViewOnHide = YES;\
+[hud hide:YES afterDelay:delay];\
+})
 
 
 #pragma mark - Debug Define

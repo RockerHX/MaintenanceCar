@@ -9,11 +9,23 @@
 #import <UIKit/UIKit.h>
 #import "SCSelectedView.h"
 
+@class SCCarBrandView;
+
+@protocol SCCarBrandViewDelegate <NSObject>
+
+@optional
+- (void)carBrandViewScrollEnd;
+
+@end
+
 @interface SCCarBrandView : SCSelectedView <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
+@property (nonatomic, weak)   id           <SCCarBrandViewDelegate>delegate;
 @property (nonatomic, strong) NSArray      *indexTitles;
 @property (nonatomic, strong) NSDictionary *carBrands;
+
+- (void)refresh;
 
 @end

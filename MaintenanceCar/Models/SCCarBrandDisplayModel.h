@@ -11,11 +11,13 @@
 @interface SCCarBrandDisplayModel : NSObject
 
 @property (nonatomic, assign, readonly) BOOL         loadFinish;
+@property (nonatomic, strong, readonly) NSArray      *indexTitles;
 @property (nonatomic, strong, readonly) NSDictionary *displayData;
 
 + (instancetype)share;
 
 - (void)addObject:(id)object;
 - (void)loadLocalData;
+- (void)addFinish;
 
 @end

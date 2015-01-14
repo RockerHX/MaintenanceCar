@@ -21,6 +21,7 @@ typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
 typedef NS_ENUM(NSInteger, SCHUDMode) {
     SCHUDModeDefault = 1,
     SCHUDModeSendVerificationCode,
+    SCHUDModeCompareVerificationCode,
     SCHUDModeRegister,
     SCHUDModeLogin
 };
@@ -87,9 +88,9 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.tag = mode;
     hud.delegate = delegate;
-    hud.mode = MBProgressHUDModeText;
-    hud.yOffset = SCREEN_HEIGHT/2 - 100.0f;
-    hud.margin = 10.f;
+    hud.mode = (mode == SCHUDModeCompareVerificationCode) ? MBProgressHUDModeIndeterminate : MBProgressHUDModeText;
+    hud.yOffset = (mode == SCHUDModeCompareVerificationCode) ? DOT_COORDINATE : (SCREEN_HEIGHT/2 - 100.0f);
+    hud.margin = (mode == SCHUDModeCompareVerificationCode) ? hud.margin : 10.0f;
     hud.labelText = text;
     hud.removeFromSuperViewOnHide = YES;
     
@@ -111,21 +112,21 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
         {
             if ([[responseObject objectForKey:@"msg"] isEqualToString:@"OK"])
             {
-                [weakSelf showPromptHUDWithText:@"验证码已发送,请注意查收" delay:2.0f mode:SCHUDModeSendVerificationCode delegate:weakSelf];
+                [weakSelf showPromptHUDWithText:@"验证码已发送,请注意查收" delay:1.0f mode:SCHUDModeSendVerificationCode delegate:weakSelf];
             }
             else
             {
-                [weakSelf showPromptHUDWithText:@"验证码发送失败，请重新获取验证码" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+                [weakSelf showPromptHUDWithText:@"验证码发送失败，请重新获取验证码" delay:1.0f mode:SCHUDModeDefault delegate:nil];
                 [_verificationCodeView stop];
             }
         }
         else
         {
-            [weakSelf showPromptHUDWithText:@"获取出错，请重新获取" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+            [weakSelf showPromptHUDWithText:@"获取出错，请重新获取" delay:1.0f mode:SCHUDModeDefault delegate:nil];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         SCFailure(@"Get verification code request error:%@", error);
-        [weakSelf showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+        [weakSelf showPromptHUDWithText:@"网络错误，请检查网络" delay:1.0f mode:SCHUDModeDefault delegate:nil];
     }];
 }
 
@@ -204,10 +205,25 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 - (IBAction)loginButtonPressed:(UIButton *)sender
 {
     [self resignKeyBoard];
-    if ([_verificationCodeTextField.text isEqualToString:_verificationCode])
+    
+    if (![_phoneNumberTextField.text length])
     {
+        ShowPromptHUDWithText(self.view, @"请输入手机号噢亲！", 1.0f);
+    }
+    else if (![_verificationCodeTextField.text length])
+    {
+        ShowPromptHUDWithText(self.view, @"请输入验证码噢亲！", 1.0f);
+    }
+    else if ([_verificationCodeTextField.text isEqualToString:_verificationCode])
+    {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [self startRegisterRequest];
+    }
+    else
+    {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        [self showPromptHUDWithText:@"" delay:1.0f mode:SCHUDModeCompareVerificationCode delegate:self];
     }
 }
 
@@ -233,11 +249,17 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 #pragma mark - MBProgressHUDDelegate Methods
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     switch (hud.tag)
     {
         case SCHUDModeSendVerificationCode:
         {
             [_verificationCodeTextField becomeFirstResponder];
+        }
+            break;
+        case SCHUDModeCompareVerificationCode:
+        {
+            ShowPromptHUDWithText(self.view, @"验证码不对噢亲，请仔细检查下手机短信！", 1.0f);
         }
             break;
         case SCHUDModeRegister:

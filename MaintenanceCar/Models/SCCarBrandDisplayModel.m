@@ -17,6 +17,7 @@ static SCCarBrandDisplayModel *displayModel = nil;
 @interface SCCarBrandDisplayModel ()
 
 @property (nonatomic, strong) NSMutableArray      *localData;
+@property (nonatomic, strong) NSMutableArray      *serverData;
 @property (nonatomic, strong) NSMutableDictionary *data;
 
 @property (nonatomic, strong) NSMutableArray      *zipTop;
@@ -52,78 +53,122 @@ static SCCarBrandDisplayModel *displayModel = nil;
 @implementation SCCarBrandDisplayModel
 
 #pragma mark - Init Methods
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _loadFinish = NO;
+        _localData  = [@[] mutableCopy];
+        _serverData = [@[] mutableCopy];
+        _data       = [@{} mutableCopy];
+        _zipTop     = [@[] mutableCopy];
+        _zipA       = [@[] mutableCopy];
+        _zipB       = [@[] mutableCopy];
+        _zipC       = [@[] mutableCopy];
+        _zipD       = [@[] mutableCopy];
+        _zipE       = [@[] mutableCopy];
+        _zipF       = [@[] mutableCopy];
+        _zipG       = [@[] mutableCopy];
+        _zipH       = [@[] mutableCopy];
+        _zipI       = [@[] mutableCopy];
+        _zipJ       = [@[] mutableCopy];
+        _zipK       = [@[] mutableCopy];
+        _zipL       = [@[] mutableCopy];
+        _zipM       = [@[] mutableCopy];
+        _zipN       = [@[] mutableCopy];
+        _zipO       = [@[] mutableCopy];
+        _zipP       = [@[] mutableCopy];
+        _zipQ       = [@[] mutableCopy];
+        _zipR       = [@[] mutableCopy];
+        _zipS       = [@[] mutableCopy];
+        _zipT       = [@[] mutableCopy];
+        _zipU       = [@[] mutableCopy];
+        _zipV       = [@[] mutableCopy];
+        _zipW       = [@[] mutableCopy];
+        _zipX       = [@[] mutableCopy];
+        _zipY       = [@[] mutableCopy];
+        _zipZ       = [@[] mutableCopy];
+    }
+    return self;
+}
+
 + (instancetype)share
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        displayModel           = [[SCCarBrandDisplayModel alloc] init];
-        displayModel.localData = [@[] mutableCopy];
-        displayModel.data      = [@{} mutableCopy];
-        displayModel.zipTop    = [@[] mutableCopy];
-        displayModel.zipA      = [@[] mutableCopy];
-        displayModel.zipB      = [@[] mutableCopy];
-        displayModel.zipC      = [@[] mutableCopy];
-        displayModel.zipD      = [@[] mutableCopy];
-        displayModel.zipE      = [@[] mutableCopy];
-        displayModel.zipF      = [@[] mutableCopy];
-        displayModel.zipG      = [@[] mutableCopy];
-        displayModel.zipH      = [@[] mutableCopy];
-        displayModel.zipI      = [@[] mutableCopy];
-        displayModel.zipJ      = [@[] mutableCopy];
-        displayModel.zipK      = [@[] mutableCopy];
-        displayModel.zipL      = [@[] mutableCopy];
-        displayModel.zipM      = [@[] mutableCopy];
-        displayModel.zipN      = [@[] mutableCopy];
-        displayModel.zipO      = [@[] mutableCopy];
-        displayModel.zipP      = [@[] mutableCopy];
-        displayModel.zipQ      = [@[] mutableCopy];
-        displayModel.zipR      = [@[] mutableCopy];
-        displayModel.zipS      = [@[] mutableCopy];
-        displayModel.zipT      = [@[] mutableCopy];
-        displayModel.zipU      = [@[] mutableCopy];
-        displayModel.zipV      = [@[] mutableCopy];
-        displayModel.zipW      = [@[] mutableCopy];
-        displayModel.zipX      = [@[] mutableCopy];
-        displayModel.zipY      = [@[] mutableCopy];
-        displayModel.zipZ      = [@[] mutableCopy];
+        displayModel = [[SCCarBrandDisplayModel alloc] init];
+        [displayModel loadLocalData];
     });
     return displayModel;
 }
 
 #pragma mark - Private Methods
-- (void)handleDisplayDataWith:(SCCar *)car
+- (void)handleDisplayData:(NSArray *)data
 {
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_group_t group = dispatch_group_create();
+    
     __weak typeof(self) weakSelf = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        @try {
-            NSString *key = car.brand_init;
-            NSString *propertyName = [NSString stringWithFormat:@"zip%@", key];
-            NSMutableArray *zip = (NSMutableArray *)[weakSelf valueForKey:propertyName];
-            [zip addObject:car];
-            if (![weakSelf.data valueForKey:key])
-            {
-                [weakSelf.data setObject:zip forKey:key];
-            }
-            SCLog(@"%@", propertyName);
-        }
-        @catch (NSException *exception) {
-            SCException(@"SCCarBrandDisplayModel Set Zip Data Error:%@", exception.reason);
-        }
-        @finally {
-        }
+    for (SCCar *car in data)
+    {
+        dispatch_group_async(group, queue, ^{
+            [weakSelf handelDataWithCar:car];
+        });
+        dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+    }
+    
+    dispatch_group_notify(group, queue, ^{
+        SCLog(@"finish");
+        _loadFinish = YES;
+        [weakSelf handleIndexTitles];
     });
+}
+
+- (void)handleIndexTitles
+{
+    @try {
+        // 获取可显示的汽车品牌数据首字母，进行升序
+        _indexTitles = _loadFinish ? [[_data allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            return [obj1 compare:obj2 options:NSNumericSearch];
+        }] : nil;
+    }
+    @catch (NSException *exception) {
+        SCException(@"%@", exception.reason);
+    }
+    @finally {
+    }
+}
+
+- (void)handelDataWithCar:(SCCar *)car
+{
+    @try {
+        NSString *key = car.brand_init;
+        NSString *propertyName = [NSString stringWithFormat:@"zip%@", key];
+        NSMutableArray *zip = (NSMutableArray *)[self valueForKey:propertyName];
+        [zip addObject:car];
+        if (![_data valueForKey:key])
+        {
+            [_data setObject:zip forKey:key];
+        }
+        SCLog(@"%@", propertyName);
+    }
+    @catch (NSException *exception) {
+        SCException(@"SCCarBrandDisplayModel Set Zip Data Error:%@", exception.reason);
+    }
+    @finally {
+    }
 }
 
 #pragma mark - Getter And Setter Methods
 - (NSDictionary *)displayData
 {
-    return _data;
+    return _loadFinish ? _data : nil;
 }
 
 #pragma mark - Public Methods
 - (void)addObject:(id)object
 {
-    [self handleDisplayDataWith:object];
+    [_serverData addObject:object];
 }
 
 - (void)loadLocalData
@@ -148,12 +193,12 @@ static SCCarBrandDisplayModel *displayModel = nil;
         car.create_time = object.createTime;
         [_localData addObject:car];
     }
-    
-    for (SCCar *car in _localData)
-    {
-        [self addObject:car];
-    }
-    
+    [self handleDisplayData:_localData];
+}
+
+- (void)addFinish
+{
+    [self handleDisplayData:_serverData];
 }
 
 @end

@@ -34,7 +34,6 @@
     
     if (indexPath.section == 1 && indexPath.row == 0)
     {
-//        [self.navigationController pushViewController:[UMFeedback feedbackViewController] animated:YES];
         [self presentViewController:[UMFeedback feedbackModalViewController] animated:YES completion:nil];
     }
 }

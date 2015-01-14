@@ -37,7 +37,7 @@
 }
 
 #pragma mark - Public Methods
-- (void)save
+- (BOOL)save
 {
     _img_name = [NSString stringWithFormat:@"%@.png", _brand_id];
     if (![self hasObject:self])
@@ -61,7 +61,9 @@
         {
             NSLog(@"Whoops, brand id %@ couldn't save: %@", self.brand_id, [error localizedDescription]);
         }
+        return YES;
     }
+    return NO;
 }
 
 @end
