@@ -20,16 +20,16 @@
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated
 {
+    // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"[首页] - 首页"];
-    
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [MobClick beginLogPageView:@"[我] - 个人中心"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"[首页] - 首页"];
+    [MobClick endLogPageView:@"[我] - 个人中心"];
 }
 
 - (void)viewDidLoad

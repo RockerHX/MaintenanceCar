@@ -13,6 +13,7 @@
 #import "SCLoginViewController.h"
 #import "SCMyFavoriteTableViewController.h"
 #import "SCMyReservationTableViewController.h"
+#import "SCAddCarViewController.h"
 
 typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     SCUserCenterRowMyOrder = 0,
@@ -21,7 +22,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     SCUserCenterRowMyCollection
 };
 
-@interface SCUserViewController () <UIAlertViewDelegate>
+@interface SCUserViewController () <UIAlertViewDelegate, SCAddCarViewControllerDelegate>
 
 @end
 
@@ -30,20 +31,22 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated
 {
+    // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[我] - 个人中心"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[我] - 个人中心"];
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -144,6 +147,8 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     {
         @try {
             UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
+            SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
+            addCarViewController.delegate = self;
             [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
         }
         @catch (NSException *exception) {
@@ -152,6 +157,12 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
         @finally {
         }
     }
+}
+
+#pragma mark - SCAddCarViewController Delegate Methods
+- (void)addCarSuccessWith:(NSString *)userCarID
+{
+    NSLog(@"%@", userCarID);
 }
 
 @end

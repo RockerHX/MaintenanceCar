@@ -9,18 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "SCSelectedView.h"
 
+@class SCCar;
 @class SCCarBrand;
 
 @protocol SCCarModelViewDelegate <NSObject>
 
 @optional
 - (void)carModelViewTitleTaped;
+- (void)carModelViewDidSelectedCar:(SCCar *)car;
 
 @end
 
 @interface SCCarModelView : SCSelectedView <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView      *titleView;
+@property (weak, nonatomic) IBOutlet UILabel     *carModelLabel;
 @property (weak, nonatomic) IBOutlet UITableView *leftTableView;
 @property (weak, nonatomic) IBOutlet UITableView *rightTableView;
 

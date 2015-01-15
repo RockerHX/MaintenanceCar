@@ -18,14 +18,16 @@
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated
 {
+    // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"[问答] - 问答列表"];
+    [MobClick beginLogPageView:@"[我] - 个人中心"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"[问答] - 问答列表"];
+    [MobClick endLogPageView:@"[我] - 个人中心"];
 }
 
 - (void)viewDidLoad

@@ -36,14 +36,16 @@
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated
 {
+    // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"[商户] - 商户列表"];
+    [MobClick beginLogPageView:@"[我] - 个人中心"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"[商户] - 商户列表"];
+    [MobClick endLogPageView:@"[我] - 个人中心"];
 }
 
 - (void)viewDidLoad
@@ -175,7 +177,7 @@
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
     SCLocationInfo *locationInfo = [SCLocationInfo shareLocationInfo];
-    NSDictionary *parameters     = @{@"word"      : locationInfo.city,
+    NSDictionary *parameters     = @{@"query"     : @"default:'深圳'",
                                      @"limit"     : @(MerchantListLimit),
                                      @"offset"    : @(_offset),
                                      @"radius"    : @(MerchantListRadius),

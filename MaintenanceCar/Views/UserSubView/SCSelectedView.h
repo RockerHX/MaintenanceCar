@@ -15,6 +15,10 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomHeightConstraint;
 
+@property (weak, nonatomic) IBOutlet UIImageView *arrowIcon;
+
 - (void)selected;
+
+- (void)updateArrowIcon;
 
 @end

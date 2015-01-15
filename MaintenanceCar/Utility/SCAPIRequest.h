@@ -179,7 +179,7 @@
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  更新汽车品牌接口请求方法(API:/Car_model - GET)
+ *  更新汽车型号接口请求方法(API:/Car_model - GET)
  *
  *  @param parameters   请求参数集合
  */
@@ -188,11 +188,20 @@
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  更新汽车品牌接口请求方法(API:/Cars - GET)
+ *  更新汽车款式接口请求方法(API:/Cars - GET)
  *
  *  @param parameters   请求参数集合
  */
 - (void)startUpdateCarsAPIRequestWithParameters:(NSDictionary *)parameters
+                                        Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  用户添加车辆接口请求方法(API:/Usercar - POST)
+ *
+ *  @param parameters   请求参数集合
+ */
+- (void)startAddCarAPIRequestWithParameters:(NSDictionary *)parameters
                                         Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 

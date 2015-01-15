@@ -14,6 +14,10 @@
 #import "SCCarBrandCollectionViewCell.h"
 #import "SCCarBrand.h"
 
+@interface SCCarBrandView ()
+
+@end
+
 @implementation SCCarBrandView
 
 #pragma mark - Init Methods
@@ -29,9 +33,7 @@
 - (void)titleColumnTaped
 {
     if (self.canSelected)
-    {
         [_delegate carBrandViewTitleTaped];
-    }
 }
 
 #pragma mark - Private Methods
@@ -84,6 +86,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     SCCarBrand *carBrand = ((NSArray *)_carBrands[_indexTitles[indexPath.section]])[indexPath.row];
+    _carBrandLabel.text = carBrand.brand_name;
     [_delegate carBrandViewDidSelectedCar:carBrand];
 }
 

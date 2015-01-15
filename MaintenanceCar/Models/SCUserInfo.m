@@ -15,6 +15,13 @@
 
 static SCUserInfo *userInfo = nil;
 
+@interface SCUserInfo ()
+{
+    NSArray *_carIDs;
+}
+
+@end
+
 @implementation SCUserInfo
 
 #pragma mark - Init Methods
@@ -43,6 +50,11 @@ static SCUserInfo *userInfo = nil;
     return ([[USER_DEFAULT objectForKey:kLoginKey] boolValue] && [USER_DEFAULT objectForKey:kUserIDKey]) ? SCLoginStatusLogin : SCLoginStatusLogout;
 }
 
+- (NSArray *)userCarIDs
+{
+    return _carIDs;
+}
+
 #pragma mark - Public Methods
 + (void)loginSuccessWithUserID:(NSDictionary *)userData
 {
@@ -60,9 +72,9 @@ static SCUserInfo *userInfo = nil;
     [USER_DEFAULT synchronize];
 }
 
-- (void)addCar
+- (void)updateCarIDs:(NSArray *)carIDs
 {
-    
+    _carIDs = carIDs;
 }
 
 @end

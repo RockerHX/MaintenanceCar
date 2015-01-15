@@ -42,9 +42,7 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
 - (void)titleColumnTaped
 {
     if (self.canSelected)
-    {
         [_delegate carModelViewTitleTaped];
-    }
 }
 
 #pragma mark - Public Methods
@@ -147,6 +145,10 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     NSDictionary *parameters = @{@"model": carModel.model_id};
     [[SCAPIRequest manager] startUpdateCarsAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess) {
+            NSDictionary *defaultCarData = @{@"car_id": @"", @"model_id": carModel.model_id, @"brand_id": carModel.brand_id, @"car_full_model": @"我不清楚"};
+            SCCar *defaultCar = [[SCCar alloc] initWithDictionary:defaultCarData error:nil];
+            [_cars addObject:defaultCar];
+            
             for (NSDictionary *data in responseObject)
             {
                 SCCar *car = [[SCCar alloc] initWithDictionary:data error:nil];
@@ -203,7 +205,9 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     }
     else
     {
-        
+        SCCar *car = _cars[indexPath.row];
+        _carModelLabel.text = car.car_full_model;
+        [_delegate carModelViewDidSelectedCar:car];
     }
 }
 

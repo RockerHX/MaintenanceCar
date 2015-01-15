@@ -43,6 +43,6 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
 /**
  *  添加私家车
  */
-- (void)addCar;
+- (void)updateCarIDs:(NSArray *)carIDs;
 
 @end

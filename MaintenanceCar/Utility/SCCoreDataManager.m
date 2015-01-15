@@ -10,6 +10,7 @@
 
 @implementation SCCoreDataManager
 
+// 合成属性Setter，Getter方法
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
@@ -63,7 +64,6 @@ static SCCoreDataManager *coreDataManagerInstance = nil;
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-    
     return _persistentStoreCoordinator;
 }
 

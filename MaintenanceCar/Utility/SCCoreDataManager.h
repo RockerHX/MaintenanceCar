@@ -11,19 +11,35 @@
 
 @interface SCCoreDataManager : NSObject
 
-@property (nonatomic, copy)             NSString                     *entityName;
-@property (nonatomic, copy)             NSString                     *momdName;
-@property (nonatomic, copy)             NSString                     *sqliteName;
+@property (nonatomic, copy)             NSString                     *entityName;                   // CoreData实体名
+@property (nonatomic, copy)             NSString                     *momdName;                     // CoreData数据文件名
+@property (nonatomic, copy)             NSString                     *sqliteName;                   // SQLite数据库文件名
 
-@property (readonly, strong, nonatomic) NSArray                      *fetchedObjects;
+@property (readonly, strong, nonatomic) NSArray                      *fetchedObjects;               // 查询数据集合
 
-@property (readonly, strong, nonatomic) NSManagedObjectContext       *managedObjectContext;
-@property (readonly, strong, nonatomic) NSManagedObjectModel         *managedObjectModel;
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (readonly, strong, nonatomic) NSManagedObjectContext       *managedObjectContext;         // CoreData管理上下文
+@property (readonly, strong, nonatomic) NSManagedObjectModel         *managedObjectModel;           // CoreData管理模型
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;   // CoreData数据协调对象
 
+/**
+ *  SCCoreDataManager单例方法
+ *
+ *  @return SCCoreDataManager实例
+ */
 + (SCCoreDataManager *)shareManager;
 
+/**
+ *  数据保存
+ *
+ *  @return 是否成功
+ */
 - (BOOL)saveContextSuccess;
+
+/**
+ *  获取沙盒路径
+ *
+ *  @return 沙盒路径
+ */
 - (NSURL *)applicationDocumentsDirectory;
 
 @end

@@ -29,6 +29,16 @@
     [UIView animateWithDuration:0.2f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [weakSelf layoutIfNeeded];
     } completion:nil];
+    
+    [self updateArrowIcon];
+}
+
+- (void)updateArrowIcon
+{
+    if (_canSelected)
+        _arrowIcon.image = [UIImage imageNamed:@"arrowheadGrayIcon"];
+    else
+        _arrowIcon.image = [UIImage imageNamed:@"arrowheadBlueIcon"];
 }
 
 @end
