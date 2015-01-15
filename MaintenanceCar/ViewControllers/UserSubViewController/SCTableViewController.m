@@ -23,6 +23,7 @@
 {
     [super viewDidLoad];
     
+    // 初始化设置
     [self initConfig];
     [self viewConfig];
 }
@@ -53,6 +54,7 @@
 #pragma mark - Private Methods
 - (void)changeListEditStatus
 {
+    // 改变列表编辑状态
     self.tableView.editing = !self.tableView.editing;
 }
 
@@ -105,7 +107,7 @@
 
 - (void)hiddenHUD
 {
-    [MBProgressHUD hideHUDForView:_hudView animated:YES];               // 隐藏响应式控件
+    [MBProgressHUD hideHUDForView:_hudView animated:YES];           // 隐藏响应式控件
 }
 
 - (void)clearListData

@@ -10,6 +10,6 @@
 
 @interface SCCollectionReusableView : UICollectionReusableView
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;   // 车辆品牌分栏标题栏
 
 @end

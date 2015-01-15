@@ -8,6 +8,7 @@
 
 #import <CoreData/CoreData.h>
 
+// 车辆车型对应CoreData数据Model，属性对应SCCarModel模型
 @interface SCCarModelManagedObject : NSManagedObject
 
 @property (nonatomic, copy) NSString *modelID;

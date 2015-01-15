@@ -15,6 +15,7 @@
 #pragma mark - Init Methods
 - (void)awakeFromNib
 {
+    // 添加单击手势
     [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closePopView)]];
 }
 

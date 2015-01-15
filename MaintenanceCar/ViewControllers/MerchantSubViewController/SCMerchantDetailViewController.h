@@ -13,10 +13,14 @@
 
 @interface SCMerchantDetailViewController : UITableViewController
 
-@property (nonatomic, copy)                  NSString *companyID;
-@property (nonatomic, strong)        SCMerchantDetail *merchantDetail;
-@property (weak, nonatomic) IBOutlet SCCollectionItem *favoriteItem;
+@property (nonatomic, copy)                  NSString *companyID;       // 商户ID
+@property (nonatomic, strong)        SCMerchantDetail *merchantDetail;  // 商户详情数据模型
 
+@property (weak, nonatomic) IBOutlet SCCollectionItem *favoriteItem;    // 收藏按钮
+
+/**
+ *  [收藏]按钮触发事件
+ */
 - (IBAction)favoriteItemPressed:(SCCollectionItem *)sender;
 
 @end

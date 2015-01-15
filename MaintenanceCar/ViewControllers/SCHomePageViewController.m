@@ -22,14 +22,14 @@
 {
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"[我] - 个人中心"];
+    [MobClick beginLogPageView:@"[首页]"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"[我] - 个人中心"];
+    [MobClick endLogPageView:@"[首页]"];
 }
 
 - (void)viewDidLoad

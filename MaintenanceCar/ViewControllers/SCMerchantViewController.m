@@ -38,14 +38,14 @@
 {
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"[我] - 个人中心"];
+    [MobClick beginLogPageView:@"[商户] - 列表"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"[我] - 个人中心"];
+    [MobClick endLogPageView:@"[商户] - 列表"];
 }
 
 - (void)viewDidLoad
@@ -62,6 +62,7 @@
         [weakSelf startMerchantListRequest];
     }];
     
+    // 根据定位数据经行列表请求操作
     if ([SCLocationInfo shareLocationInfo].userLocation)
     {
         [self startMerchantListRequest];
@@ -100,8 +101,10 @@
 #pragma mark - Table View Delegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // 列表栏被点击，执行取消选中动画
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    // 根据选中的商户，取到其商户ID，跳转到商户页面进行详情展示
     SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
     merchantDetialViewControler.companyID = ((SCMerchant *)_merchantList[indexPath.row]).company_id;
     [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
@@ -110,6 +113,7 @@
 #pragma mark - Action Methods
 - (IBAction)mapItemPressed:(UIBarButtonItem *)sender
 {
+    // 地图按钮被点击，跳转到地图页面
     UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
     SCMapViewController *mapViewController = (SCMapViewController *)mapNavigationController.topViewController;
     mapViewController.merchants = _merchantList;
@@ -120,6 +124,7 @@
 #pragma mark - KVO Methods
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    // 监听SCLocationInfo的userLocation，来确定商户列表刷新逻辑
     if ([keyPath isEqualToString:@"userLocation"])
     {
         if ([SCLocationInfo shareLocationInfo].userLocation && change[NSKeyValueChangeNewKey])
@@ -145,9 +150,9 @@
     // 设置tableview的代理和数据源
     _tableView.delegate          = self;
     _tableView.dataSource        = self;
-    _tableView.tableFooterView   = [[UIView alloc] init];
+    _tableView.tableFooterView   = [[UIView alloc] init];       // 设置footer视图，防止数据不够，显示多余的列表栏
 
-    _merchantList                = [@[] mutableCopy];// 商户列表容器初始化
+    _merchantList                = [@[] mutableCopy];           // 商户列表容器初始化
     
     // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
     [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed:) name:kMerchantListReservationNotification object:nil];
@@ -165,12 +170,13 @@
 {
     _reservationButtonIndex = [notification.object integerValue];       // 设置index，用于在_merchantList里取出SCMerchant对象设置到SCReservationViewController
     
+    // 显示预约框
     SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
     [reservatAlertView show];
 }
 
 /**
- *  商户列表数据请求方法
+ *  商户列表数据请求方法，参数：query, limit, offset, radius, longtitude, latitude
  */
 - (void)startMerchantListRequest
 {
@@ -234,6 +240,7 @@
 #pragma mark - SCMerchantFilterViewDelegate Methods
 - (void)filterButtonPressedWithType:(SCFilterButtonType)type
 {
+    // 筛选条件，选择之后触发请求
     switch (type) {
         case SCFilterButtonTypeDistanceButton:
         {

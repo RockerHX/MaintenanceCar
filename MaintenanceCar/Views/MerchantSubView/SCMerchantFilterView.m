@@ -32,6 +32,7 @@
 #pragma mark - Init Methods
 - (void)awakeFromNib
 {
+    // 加载视图之后初始化相关数据
     [self initConfig];
     [self viewConfig];
 }
@@ -60,12 +61,15 @@
 #pragma mark - Private Methods
 - (void)initConfig
 {
+    // 设置弹出视图代理，以便回调方法触发
     _filterPopView.delegate = self;
+    // 加载本地筛选条件显示数据
     _filterConditions = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:FilterConditionsResourceName ofType:FilterConditionsResourceType]];
 }
 
 - (void)viewConfig
 {
+    // 从本地加载筛选条件数据
     @try {
         [_distanceButton setTitle:_filterConditions[DistanceConditionKey][0][DisplayNameKey] forState:UIControlStateNormal];
         [_repairTypeButton setTitle:_filterConditions[RepariConditionKey][0][DisplayNameKey] forState:UIControlStateNormal];

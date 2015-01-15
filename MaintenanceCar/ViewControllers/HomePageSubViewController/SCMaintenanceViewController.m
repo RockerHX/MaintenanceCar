@@ -7,6 +7,7 @@
 //
 
 #import "SCMaintenanceViewController.h"
+#import <UMengAnalytics/MobClick.h>
 
 #define MaintenanceCellReuseIdentifier   @"MaintenanceCellReuseIdentifier"
 
@@ -16,16 +17,35 @@
 
 @implementation SCMaintenanceViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+#pragma mark - View Controller Life Cycle
+- (void)viewWillAppear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"[首页] - 保养"];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+    // 进入保养页面的时候显示导航栏
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"[首页] - 保养"];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    // 由于首页无导航栏设计，退出保养页面的时候隐藏导航栏
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
 }
 
 - (void)didReceiveMemoryWarning {

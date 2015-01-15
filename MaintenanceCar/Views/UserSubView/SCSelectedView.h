@@ -10,15 +10,21 @@
 
 @interface SCSelectedView : UIView
 
-@property (nonatomic, assign) BOOL canSelected;
+@property (nonatomic, assign)        BOOL               canSelected;                // View是否能被选中
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeightConstraint;       // 到父视图上边距约束条件
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomHeightConstraint;    // 到父视图下边距约束条件
 
-@property (weak, nonatomic) IBOutlet UIImageView *arrowIcon;
+@property (weak, nonatomic) IBOutlet UIImageView        *arrowIcon;                 // 箭头图标
 
+/**
+ *  需要显示视图，执行此方法
+ */
 - (void)selected;
 
+/**
+ *  刷新箭头图标
+ */
 - (void)updateArrowIcon;
 
 @end

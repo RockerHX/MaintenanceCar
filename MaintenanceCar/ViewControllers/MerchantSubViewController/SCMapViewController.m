@@ -7,6 +7,7 @@
 //
 
 #import "SCMapViewController.h"
+#import <UMengAnalytics/MobClick.h>
 #import "SCLocationInfo.h"
 #import "SCMerchant.h"
 #import "MicroCommon.h"
@@ -27,6 +28,20 @@
 @implementation SCMapViewController
 
 #pragma mark - View Controller Life Cycle
+- (void)viewWillAppear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"[商户] - 地图"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"[商户] - 地图"];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -138,6 +153,7 @@
 
 - (void)shouldShowReservationList
 {
+    // 显示预约提示框
     SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
     [reservatAlertView show];
 }

@@ -14,6 +14,7 @@
 #pragma mark - Getter Methods
 - (NSString *)distance
 {
+    // 本地处理位置距离
     return [[SCLocationInfo shareLocationInfo] distanceWithLatitude:[_latitude doubleValue] longitude:[_longtitude doubleValue]];
 }
 

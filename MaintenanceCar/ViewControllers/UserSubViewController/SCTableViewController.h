@@ -10,6 +10,7 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "MJRefresh.h"
 
+// 刷新操作的请求类型
 typedef NS_ENUM(NSInteger, SCFavoriteListRequestType) {
     SCFavoriteListRequestTypeUp = 1000,
     SCFavoriteListRequestTypeDown

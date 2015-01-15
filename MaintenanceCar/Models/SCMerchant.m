@@ -17,6 +17,7 @@
     self = [super init];
     if (self)
     {
+        // 通过自定义方法初始化方法
         _name       = merchantName;
         _company_id = companyID;
     }
@@ -26,6 +27,7 @@
 #pragma mark - Getter Methods
 - (NSString *)distance
 {
+    // 本地处理位置距离
     return [[SCLocationInfo shareLocationInfo] distanceWithLatitude:[_latitude doubleValue] longitude:[_longtitude doubleValue]];
 }
 

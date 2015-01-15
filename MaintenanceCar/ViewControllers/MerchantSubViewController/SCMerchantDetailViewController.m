@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 @interface SCMerchantDetailViewController () <UIAlertViewDelegate, SCReservatAlertViewDelegate>
 {
-    BOOL _needChecked;
+    BOOL _needChecked;      // 检查收藏标识
 }
 
 @end
@@ -52,10 +52,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[商户] - 商户详情"];
     
+    // 从登陆页面登陆成功后返回到当前页面并请求登陆用户的当前商户收藏状态
     if ([SCUserInfo share].loginStatus && _needChecked)
-    {
         [self startCheckMerchantCollectionStutasRequest];
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -68,6 +67,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     [super viewDidLoad];
     
+    // 页面数据初始化
     [self initConfig];
 }
 
@@ -105,6 +105,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // 根据不同的条件显示刷新不同的栏目
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MerchantCellReuseIdentifier"];
     switch (indexPath.section)
     {
@@ -170,16 +171,13 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - Action Methods
 - (IBAction)favoriteItemPressed:(SCCollectionItem *)sender
 {
+    // 是否需要用户登陆，已登陆经行收藏请求或者取消收藏请求，否则弹出警告提示框
     if ([SCUserInfo share].loginStatus)
     {
         if (sender.favorited)
-        {
             [self startUnCollectionMerchantRequest];
-        }
         else
-        {
             [self startCollectionMerchantRequest];
-        }
         sender.favorited = !sender.favorited;
     }
     else
@@ -200,6 +198,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     self.tableView.estimatedRowHeight = 44.0f;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
+    // 加载提示框，并开始数据请求
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self startMerchantDetailRequestWithParameters];
     
@@ -328,7 +327,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
  */
 - (void)showAlertWithTitle:(NSString *)title
                    message:(NSString *)message
-                  delegate:(id /*<UIAlertViewDelegate>*/)delegate
+                  delegate:(id)delegate
                       type:(SCAlertType)type
          cancelButtonTitle:(NSString *)cancelButtonTitle
           otherButtonTitle:(NSString *)otherButtonTitle;
@@ -342,6 +341,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [alertView show];
 }
 
+/**
+ *  显示错误警告框
+ */
 - (void)showRequestErrorAlert
 {
     [self showAlertWithTitle:@"商户详情获取失败"
@@ -355,6 +357,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - Alert View Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    // 根据提示框的类型判断，用户需要登陆进行页面跳转，数据请求失败提示刷新，取消则返回
     switch (alertView.tag) {
         case SCAlertTypeNeedLogin:
         {
@@ -368,17 +371,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         case SCAlertTypeReuqestError:
         {
             if (buttonIndex != alertView.cancelButtonIndex)
-            {
                 [self.navigationController popViewControllerAnimated:YES];
-            }
             else
-            {
                 [self startMerchantDetailRequestWithParameters];
-            }
         }
-            break;
-            
-        default:
             break;
     }
 }

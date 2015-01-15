@@ -7,6 +7,7 @@
 //
 
 #import "SCMyReservationTableViewController.h"
+#import <UMengAnalytics/MobClick.h>
 #import "MicroCommon.h"
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
@@ -20,6 +21,20 @@
 @implementation SCMyReservationTableViewController
 
 #pragma mark - View Controller Life Cycle
+- (void)viewWillAppear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"[个人中心] - 我的预约"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"[个人中心] - 我的预约"];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -58,18 +73,20 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // 如果用户经行删除或者滑动删除操作，设置数据缓存，并进行相关删除操作请求，同步服务器数据
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        _deleteDataCache = _dataList[indexPath.row];
-        [_dataList removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [self startCancelReservationRequestWithIndex:indexPath.row];
+        _deleteDataCache = _dataList[indexPath.row];        // 设置数据缓存
+        [_dataList removeObjectAtIndex:indexPath.row];      // 清楚数据
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];   // 列表中删除相关数据行
+        [self startCancelReservationRequestWithIndex:indexPath.row];                             // 同步服务器
     }
 }
 
 #pragma mark - Table View Delegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // 列表被点击跳转到商户详情
     @try {
         UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
         [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
@@ -81,20 +98,28 @@
     }
 }
 
-#pragma mark - Private Methods
+#pragma mark - Public Methods
+/**
+ *  下拉刷新，请求最新数据
+ */
 - (void)startDownRefreshReuqest
 {
     [super startDownRefreshReuqest];
     
+    // 刷新前把数据偏移量offset设置为0，设置刷新类型，以便请求最新数据
     self.offset = Zero;
     self.requestType = SCFavoriteListRequestTypeDown;
     [self startReservationListRequest];
 }
 
+/**
+ *  上拉刷新，加载更多数据
+ */
 - (void)startUpRefreshRequest
 {
     [super startUpRefreshRequest];
     
+    // 设置刷新类型
     self.requestType = SCFavoriteListRequestTypeUp;
     [self startReservationListRequest];
 }

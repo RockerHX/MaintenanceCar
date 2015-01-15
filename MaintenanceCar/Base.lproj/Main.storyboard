@@ -1122,19 +1122,15 @@
                                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CarBrandCollectionHeaderViewReuseIdentifier" id="JXK-ct-05c" customClass="SCCollectionReusableView">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h34-bg-rQh">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="    " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h34-bg-rQh">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="8" y="8" width="304" height="24"/>
-                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="h34-bg-rQh" secondAttribute="trailing" id="La0-cO-KgY"/>
                                                 <constraint firstItem="h34-bg-rQh" firstAttribute="top" secondItem="JXK-ct-05c" secondAttribute="topMargin" id="PN5-VX-3mM"/>
                                                 <constraint firstItem="h34-bg-rQh" firstAttribute="bottom" secondItem="JXK-ct-05c" secondAttribute="bottomMargin" id="PR8-Hx-uLs"/>
                                                 <constraint firstItem="h34-bg-rQh" firstAttribute="leading" secondItem="JXK-ct-05c" secondAttribute="leadingMargin" id="tBT-lB-NGG"/>
@@ -1144,7 +1140,6 @@
                                                     <exclude reference="h34-bg-rQh"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="La0-cO-KgY"/>
                                                     <exclude reference="PN5-VX-3mM"/>
                                                     <exclude reference="PR8-Hx-uLs"/>
                                                     <exclude reference="tBT-lB-NGG"/>
@@ -1155,7 +1150,6 @@
                                                     <include reference="h34-bg-rQh"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="La0-cO-KgY"/>
                                                     <include reference="PN5-VX-3mM"/>
                                                     <include reference="PR8-Hx-uLs"/>
                                                     <include reference="tBT-lB-NGG"/>

@@ -8,6 +8,7 @@
 
 #import <CoreData/CoreData.h>
 
+// 车辆品牌对应CoreData数据Model，属性对应SCCarBrand模型
 @interface SCCarBrandManagedObject : NSManagedObject
 
 @property (nonatomic, copy) NSString *brandID;

@@ -19,9 +19,16 @@
 @property (weak, nonatomic) IBOutlet UIButton               *loginButton;                   // 登陆按钮
 @property (weak, nonatomic) IBOutlet UIButton               *cancelButton;                  // 取消按钮
 
+// [登陆]按钮触发事件
 - (IBAction)loginButtonPressed:(UIButton *)sender;
+
+// [取消]按钮触发事件
 - (IBAction)cancelButtonPressed:(UIButton *)sender;
+
+// [新浪微博]登陆触发事件
 - (IBAction)weiboLoginButtonPressed:(UIButton *)sender;
+
+// [微信]登陆触发事件
 - (IBAction)weixinLoginButtonPressed:(UIButton *)sender;
 
 @end

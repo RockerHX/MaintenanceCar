@@ -7,6 +7,7 @@
 //
 
 #import "SCAddCarViewController.h"
+#import <UMengAnalytics/MobClick.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "MicroCommon.h"
 #import "SCCarBrandView.h"
@@ -17,11 +18,13 @@
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
 
+// 添加车辆返回操作类型
 typedef NS_ENUM(BOOL, SCAddCarStatus) {
     SCAddCarStatusSelected = YES,
     SCAddCarStatusCancel   = NO
 };
 
+// View切换类型
 typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
     SCContentViewSwitchCarBrandView = 300,
     SCContentViewSwitchCarModelView
@@ -29,7 +32,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 
 @interface SCAddCarViewController () <SCCarBrandViewDelegate, SCCarModelViewDelegate, MBProgressHUDDelegate>
 {
-    SCCar *_car;
+    SCCar *_car;        // 车辆数据缓存
 }
 
 @property (nonatomic, weak) IBOutlet SCCollectionIndexView *indexView;
@@ -39,10 +42,25 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 @implementation SCAddCarViewController
 
 #pragma mark - View Controller Life Cycle
+- (void)viewWillAppear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"[个人中心] - 添加车辆"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"[个人中心] - 添加车辆"];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    // 页面相关数据初始化
     [self initConfig];
     [self viewConfig];
 }
@@ -67,6 +85,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 #pragma mark - KVO Methods
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    // 监听车辆数据同步是否完成，再经行相关数据加载操作
     if ([keyPath isEqualToString:@"loadFinish"])
     {
         if (change[NSKeyValueChangeNewKey])
@@ -80,9 +99,13 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 #pragma mark - Private Methods
 - (void)initConfig
 {
+    // 设置相关页面代理，以便回调方法触发
     _carBrandView.delegate = self;
     _carModelView.delegate = self;
+    
+    // 为索引控件添加相应事件
     [_indexView addTarget:self action:@selector(indexWasTapped:) forControlEvents:UIControlEventTouchUpInside];
+    // 监听车辆数据同步模型是否加载完成
     [[SCCarBrandDisplayModel share] addObserver:self forKeyPath:@"loadFinish" options:NSKeyValueObservingOptionNew context:nil];
 }
 
@@ -90,27 +113,25 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 {
     BOOL loadFinish = [SCCarBrandDisplayModel share].loadFinish;
     if (!loadFinish)
-    {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    }
     else
-    {
         [self loadData];
-    }
 }
 
 - (void)loadData
 {
+    // 加载车辆品牌数据，以及索引数据
     SCCarBrandDisplayModel *model = [SCCarBrandDisplayModel share];
-    _carBrandView.indexTitles = model.indexTitles;
-    _carBrandView.carBrands   = model.displayData;
+    _carBrandView.indexTitles     = model.indexTitles;
+    _carBrandView.carBrands       = model.displayData;
     [_carBrandView refresh];
-    
-    _indexView.indexTitles    = model.indexTitles;
+
+    _indexView.indexTitles        = model.indexTitles;
 }
 
 - (void)indexWasTapped:(SCCollectionIndexView *)indexView
 {
+    // 索引栏被点击触发事件，根据索引信息滚动到相关位置
     @try {
         [_carBrandView.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexView.selectedIndex]
                                              atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
@@ -124,6 +145,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 
 - (void)dismissWithStatus:(SCAddCarStatus)status
 {
+    // 顶栏[添加]被点击弹出提示框，[取消]被点击这返回个人中心
     if (status)
         [self showAlert:_car];
     else
@@ -134,6 +156,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 {
     switch (swtichView)
     {
+        // 切换到车辆品牌View
         case SCContentViewSwitchCarBrandView:
         {
             _carBrandView.canSelected = NO;
@@ -145,6 +168,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
             [_indexView showWithAnimation:YES];
         }
             break;
+        // 切换到车辆车型View
         case SCContentViewSwitchCarModelView:
         {
             _carModelView.canSelected = NO;
@@ -158,6 +182,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
     }
 }
 
+// 添加车辆确认提示
 - (void)showAlert:(SCCar *)car
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"您选中的是%@ %@", car.car_full_model, car.up_time]
@@ -168,6 +193,9 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
     [alertView show];
 }
 
+/**
+ *  为用户添加车辆的数据请求，参数：user_id, car_id, model_id
+ */
 - (void)startAddCarRequest
 {
     __weak typeof(self) weakSelf = self;
@@ -222,11 +250,13 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 
 - (void)carBrandViewTitleTaped
 {
+    // 车辆品牌栏被点击，切换到车辆品牌View
     [self switchContentView:SCContentViewSwitchCarBrandView];
 }
 
 - (void)carBrandViewDidSelectedCar:(SCCarBrand *)carBrand
 {
+    // 某车辆品牌被点击，切换到车辆车型View，并开始进行数据刷新
     [self switchContentView:SCContentViewSwitchCarModelView];
     [_carModelView showWithCarBrand:carBrand];
 }
@@ -238,12 +268,14 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 
 - (void)carModelViewDidSelectedCar:(SCCar *)car
 {
+    // 车辆型号被点击，添加车辆数据缓存
     _car = car;
 }
 
 #pragma mark - Alert View Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    // 当用户选择提示框的[添加]遍开始为用户添加车辆的请求
     if (buttonIndex != alertView.cancelButtonIndex)
     {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -254,6 +286,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 #pragma mark - MBProgressHUDDelegate Methods
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
+    // HUD提示框的回调方法，在用户请求添加车辆之后才会触发，成功之后返回到个人中心
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }

@@ -7,17 +7,20 @@
 //
 
 #import "SCLoginViewController.h"
+#import <UMengAnalytics/MobClick.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "MicroCommon.h"
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
 #import "SCVerificationCodeView.h"
 
+// 登陆验证模式
 typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
     SCVerificationCodeModeMessage = 1,          // 短信验证模式
     SCVerificationCodeModeCall                  // 语音验证模式
 };
 
+// HUD提示框类型
 typedef NS_ENUM(NSInteger, SCHUDMode) {
     SCHUDModeDefault = 1,
     SCHUDModeSendVerificationCode,
@@ -35,6 +38,20 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 @implementation SCLoginViewController
 
 #pragma mark - View Controller Life Cycle
+- (void)viewWillAppear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"[个人中心] - 注册登录"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"[个人中心] - 注册登录"];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -52,16 +69,19 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 #pragma mark - Private Methods
 - (void)viewConfig
 {
+    // 配置手机输入框和短信验证码输入框，输入光标向右偏移10个像素，避免光标贴到输入框边缘造成视觉影响
     _phoneNumberTextField.leftViewMode = UITextFieldViewModeAlways;
     _phoneNumberTextField.leftView = [[UILabel alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 10.0f, 1.0f)];
     _verificationCodeTextField.leftViewMode = UITextFieldViewModeAlways;
     _verificationCodeTextField.leftView = [[UILabel alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 10.0f, 1.0f)];
     
+    // 配置登陆和取消按钮，设置圆角
     _loginButton.layer.cornerRadius = 5.0f;
     _cancelButton.layer.cornerRadius = 5.0f;
     
-    // 获取验证码View被点击之后的回调，判断是否输入手机号进行返回和执行获取验证码请求
+    // self弱引用，防止block使用出现循环引用，造成内存泄露
     __weak typeof(self) weakSelf = self;
+    // 获取验证码View被点击之后的回调，判断是否输入手机号进行返回和执行获取验证码请求
     [_verificationCodeView verificationCodeShouldSend:^BOOL{
         if ([weakSelf.phoneNumberTextField.text length])
         {
@@ -162,6 +182,9 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
     }];
 }
 
+/**
+ *  登陆请求方法，参数：phone
+ */
 - (void)startLoginRequest
 {
     __weak typeof(self) weakSelf = self;
@@ -183,21 +206,27 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
     }];
 }
 
+// 取消按钮点击之后关闭所有键盘，并返回到[个人中心]页面
 - (void)resignKeyBoard
 {
-    // 取消按钮点击之后关闭所有键盘，并返回到[个人中心]页面
     [_phoneNumberTextField resignFirstResponder];
     [_verificationCodeTextField resignFirstResponder];
 }
 
+// 返回进入[注册登陆]页面之前的页面
 - (void)dismissController
 {
-    [_verificationCodeView stop];
+    [_verificationCodeView stop];           // 退出之前要记得关掉验证码倒计时，防止内存释放引起crash
     [self resignKeyBoard];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Getter Methods
+/**
+ *  生成验证码
+ *
+ *  @return 生成的验证码
+ */
 - (NSString *)verificationCode
 {
     // 客户端生成四位数字随机验证码
@@ -208,6 +237,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 #pragma mark - Button Action Methods
 - (IBAction)loginButtonPressed:(UIButton *)sender
 {
+    // 登陆按钮点击之后分别经行是否输入手机号，是否输入验证码，验证码是否正确的判断操作，前面这些都正确以后才进行注册登陆操作
     [self resignKeyBoard];
     
     if (![_phoneNumberTextField.text length])
@@ -226,6 +256,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
     }
     else
     {
+        // 验证码错误，模拟请求，造成用户错觉
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         [self showPromptHUDWithText:@"" delay:1.0f mode:SCHUDModeCompareVerificationCode delegate:self];
     }
@@ -245,6 +276,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 }
 
 #pragma mark - Touch Event Methods
+// 点击页面上不能相应事件的位置，收起键盘
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
@@ -253,6 +285,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 #pragma mark - MBProgressHUDDelegate Methods
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
+    // 根据注册登陆逻辑，进行相应的注册登陆流程并执行相应方法
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     switch (hud.tag)
     {
@@ -277,9 +310,6 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [self dismissController];
         }
-            break;
-            
-        default:
             break;
     }
 }

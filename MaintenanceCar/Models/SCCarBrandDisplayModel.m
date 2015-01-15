@@ -98,16 +98,20 @@ static SCCarBrandDisplayModel *displayModel = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         displayModel = [[SCCarBrandDisplayModel alloc] init];
+        
+        // 车辆品牌显示模型初始化完毕之后先加载本地数据，在进行服务器数据同步操作
         [displayModel loadLocalData];
         [[SCAPIRequest manager] startUpdateCarBrandAPIRequestWithParameters:nil Success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
             {
+                // 遍历从服务器同步到的数据，异步检查数据是否存在以及更新
                 for (NSDictionary *carData in responseObject)
                 {
                     SCCarBrand *carBrand = [[SCCarBrand alloc] initWithDictionary:carData error:nil];
                     if ([carBrand save])
                         [displayModel addObject:carBrand];
                 }
+                // 检查并添加完毕之后进行通知
                 [displayModel addFinish];
             }
         } failure:nil];
@@ -118,18 +122,22 @@ static SCCarBrandDisplayModel *displayModel = nil;
 #pragma mark - Private Methods
 - (void)handleDisplayData:(NSArray *)data
 {
+    // 获取一个全局队列并且创建一个用于异步处理数据的组
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_group_t group = dispatch_group_create();
     
+    // 遍历所有数据
     __weak typeof(self) weakSelf = self;
     for (SCCarBrand *carBrand in data)
     {
+        // 异步处理数据，将数据添加到对应数据结构中
         dispatch_group_async(group, queue, ^{
             [weakSelf handelDataWithCar:carBrand];
         });
-        dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+        dispatch_group_wait(group, DISPATCH_TIME_FOREVER);      // 异步等待，防止异步线程冲突
     }
     
+    // 所有异步操作完毕的回调，进行最后的数据处理，设置数据加载结束标识并且处理索引标题集合
     dispatch_group_notify(group, queue, ^{
         SCLog(@"finish");
         _loadFinish = YES;
@@ -154,6 +162,7 @@ static SCCarBrandDisplayModel *displayModel = nil;
 
 - (void)handelDataWithCar:(SCCarBrand *)carBrand
 {
+    // 用于页面显示的数据结构转换
     @try {
         NSString *key = carBrand.brand_init;
         NSString *propertyName = [NSString stringWithFormat:@"zip%@", key];
@@ -186,6 +195,7 @@ static SCCarBrandDisplayModel *displayModel = nil;
 
 - (void)loadLocalData
 {
+    // 加载车辆品牌本地数据
     SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
     coreDataManager.entityName         = @"CarBrand";
     coreDataManager.momdName           = @"MaintenanceCar";
@@ -206,11 +216,13 @@ static SCCarBrandDisplayModel *displayModel = nil;
         carBrand.create_time = object.createTime;
         [_localData addObject:carBrand];
     }
+    // 加载完毕进行数据结构转换
     [self handleDisplayData:_localData];
 }
 
 - (void)addFinish
 {
+    // 服务器数据添加完毕进行数据结构转换
     [self handleDisplayData:_serverData];
 }
 

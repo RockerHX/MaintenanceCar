@@ -18,6 +18,7 @@
 #pragma mark - Public Methods
 - (void)selected
 {
+    // 当视图被选择之后，执行动画
     CGFloat minConstant = 40.0f;
     CGFloat maxConstant = SCREEN_HEIGHT - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT - minConstant - 4.0f;
     

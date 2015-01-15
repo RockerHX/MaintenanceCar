@@ -91,6 +91,7 @@ static SCLocationInfo *locationInfo = nil;
 #pragma mark - Public Methods
 - (NSString *)distanceWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude
 {
+    // 本地处理位置距离
     CLLocation *merchantLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
     CLLocationDistance distance = [_userLocation.location distanceFromLocation:merchantLocation];
     return [self displayDistance:distance];

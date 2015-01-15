@@ -60,16 +60,8 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (![SCUserInfo share].loginStatus)
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登陆"
-                                                            message:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:@"取消"
-                                                  otherButtonTitles:@"登陆", nil];
-        [alertView show];
-    }
-    else
+    // 检查用户是否登陆，在进行相应页面跳转
+    if ([SCUserInfo share].loginStatus)
     {
         @try {
             switch (indexPath.row)
@@ -97,6 +89,8 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
         @finally {
         }
     }
+    else
+        [self showShoulLoginAlert];
 }
 
 #pragma mark - Button Action Methods
@@ -110,11 +104,19 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 {
 }
 
+/**
+ *  Push到一个页面，带动画
+ *
+ *  @param viewController 需要Push到的页面
+ */
 - (void)pushToSubViewControllerWithController:(UIViewController *)viewController
 {
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
+/**
+ *  检查用户是否需要登陆，需要则跳转到登陆页面
+ */
 - (void)checkShouldLogin
 {
     if (![SCUserInfo share].loginStatus)
@@ -123,27 +125,33 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     }
 }
 
+/**
+ *  提示用户登陆的警告框
+ */
+- (void)showShoulLoginAlert
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登陆"
+                                                        message:nil
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"登陆", nil];
+    [alertView show];
+}
+
 #pragma mark - Alert View Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    // 用户选择是否登陆
     if (buttonIndex != alertView.cancelButtonIndex)
     {
         [self checkShouldLogin];
     }
 }
 
+// [添加车辆]按钮被点击，跳转到添加车辆页面
 - (IBAction)addCarItemPressed:(UIBarButtonItem *)sender
 {
-    if (![SCUserInfo share].loginStatus)
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登陆"
-                                                            message:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:@"取消"
-                                                  otherButtonTitles:@"登陆", nil];
-        [alertView show];
-    }
-    else
+    if ([SCUserInfo share].loginStatus)
     {
         @try {
             UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
@@ -157,12 +165,14 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
         @finally {
         }
     }
+    else
+        [self showShoulLoginAlert];
 }
 
 #pragma mark - SCAddCarViewController Delegate Methods
 - (void)addCarSuccessWith:(NSString *)userCarID
 {
-    NSLog(@"%@", userCarID);
+    // 车辆添加成功的回调方法，车辆添加成功以后需要刷新个人中心，展示出用户最新添加的车辆
 }
 
 @end

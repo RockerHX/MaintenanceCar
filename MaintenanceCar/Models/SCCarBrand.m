@@ -16,6 +16,7 @@
 {
     self = [super initWithDictionary:dict error:err];
     if (self) {
+        // 设置CoreData数据信息
         SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
         coreDataManager.entityName         = @"CarBrand";
         coreDataManager.momdName           = @"MaintenanceCar";
@@ -24,6 +25,13 @@
     return self;
 }
 
+/**
+ *  判断CoreData数据库内是否有SCCarBrand对象数据
+ *
+ *  @param object SCCarBrand对象
+ *
+ *  @return 是否包含改对象数据
+ */
 - (BOOL)hasObject:(SCCarBrand *)object
 {
     SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
@@ -44,9 +52,7 @@
                 return NO;
             }
             else
-            {
                 return YES;
-            }
         }
     }
     return NO;
@@ -55,9 +61,11 @@
 #pragma mark - Public Methods
 - (BOOL)save
 {
+    // 拼接车辆品牌logo文件名
     _img_name = [NSString stringWithFormat:@"%@.png", _brand_id];
     if (![self hasObject:self])
     {
+        // 如果CoreData数据库内没有当前对象数据，则向数据库写入数据
         SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
         NSManagedObjectContext *context = [coreDataManager managedObjectContext];
         SCCarBrandManagedObject *carBrandManagedObject = [NSEntityDescription insertNewObjectForEntityForName:coreDataManager.entityName inManagedObjectContext:context];
@@ -74,9 +82,7 @@
         
         NSError *error;
         if (![context save:&error])
-        {
             NSLog(@"Whoops, brand id %@ couldn't save: %@", self.brand_id, [error localizedDescription]);
-        }
         return YES;
     }
     return NO;

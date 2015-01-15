@@ -11,7 +11,9 @@
 @protocol SCMapMerchantInfoViewDelegate <NSObject>
 
 @optional
+// [商户简介]栏被点击，需要跳转到商户详情页面
 - (void)shouldShowMerchantDetail;
+// [预约]按钮被点击，需要显示预约栏目列表
 - (void)shouldShowReservationList;
 
 @end

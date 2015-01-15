@@ -16,15 +16,31 @@
 {
     self = [super initWithDictionary:dict error:err];
     if (self) {
-        SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
-        coreDataManager.entityName         = @"CarModel";
-        coreDataManager.momdName           = @"MaintenanceCar";
-        coreDataManager.sqliteName         = @"MaintenanceCar.sqlite";
+        // 设置CoreData数据信息
+        [self setCoreData];
     }
     return self;
 }
 
+/**
+ *  设置CoreData数据信息
+ */
+- (SCCoreDataManager *)setCoreData
+{
+    SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
+    coreDataManager.entityName         = @"CarModel";
+    coreDataManager.momdName           = @"MaintenanceCar";
+    coreDataManager.sqliteName         = @"MaintenanceCar.sqlite";
+    return coreDataManager;
+}
 
+/**
+ *  判断CoreData数据库内是否有SCCarBrand对象数据
+ *
+ *  @param object SCCarBrand对象
+ *
+ *  @return 是否包含改对象数据
+ */
 - (BOOL)hasObject:(SCCarModel *)object
 {
     SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
@@ -45,9 +61,7 @@
                 return NO;
             }
             else
-            {
                 return YES;
-            }
         }
     }
     return NO;
@@ -58,6 +72,7 @@
 {
     if (![self hasObject:self])
     {
+        // 如果CoreData数据库内没有当前对象数据，则向数据库写入数据
         SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
         NSManagedObjectContext *context = [coreDataManager managedObjectContext];
         SCCarModelManagedObject *carModelManagedObject = [NSEntityDescription insertNewObjectForEntityForName:coreDataManager.entityName inManagedObjectContext:context];
@@ -79,12 +94,9 @@
 
 - (NSArray<Ignore> *)localData
 {
+    // 加载本地数据
     NSMutableArray *carModels = [@[] mutableCopy];
-    SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
-    coreDataManager.entityName         = @"CarModel";
-    coreDataManager.momdName           = @"MaintenanceCar";
-    coreDataManager.sqliteName         = @"MaintenanceCar.sqlite";
-    NSArray *localManageData = coreDataManager.fetchedObjects;
+    NSArray *localManageData = [self setCoreData].fetchedObjects;
     for (SCCarModelManagedObject *object in localManageData)
     {
         SCCarModel *carModel = [[SCCarModel alloc] init];

@@ -7,6 +7,7 @@
 //
 
 #import "SCReservationViewController.h"
+#import <UMengAnalytics/MobClick.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "MicroCommon.h"
 #import "SCMerchant.h"
@@ -36,6 +37,20 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
 @implementation SCReservationViewController
 
 #pragma mark - View Controller Life Cycle
+- (void)viewWillAppear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"[商户] - [商户预约]"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"[商户] - [商户预约]"];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -58,6 +73,7 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
 #pragma mark - Table View Delegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // 关闭所有键盘
     [_ownerNameTextField resignFirstResponder];
     [_ownerPhoneNumberTextField resignFirstResponder];
     [_remarkTextField resignFirstResponder];
@@ -93,6 +109,7 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
 #pragma mark - Button Action Methods
 - (IBAction)reservationButtonPressed:(UIButton *)sender
 {
+    // 检查是否登陆，已登陆进行预约请求，反之则弹出登陆提示框跳转到登陆页面
     if (![SCUserInfo share].loginStatus)
     {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登陆"
@@ -103,23 +120,21 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
         [alertView show];
     }
     else if ([self checkeParamterIntegrity])
-    {
         [self startMerchantReservationRequest];
-    }
 }
 
 #pragma mark - Private Methods
 /**
  *  商户预约请求方法，参数：user_id, company_id, type, reserve_name, reserve_phone, content, time, user_car_id
- *  user_id: 用户 ID
- *  company_id: 商户 ID, 通过这个 ID 可以获取商户详细信息
- *  type:1,2,3,4 对应 洗养修团
- *  reserve_name: XXX
- *  reserve_phone: 电话
- *  content: 预约内容
- *  time: 预约时段,  如 2014-12-13 10:00:00 代表的时间段是当天10点到11点
- *  user_car_id: 可选. 用户已经添加的私家车 id
- *  返回: reserve_id和友盟推送返回信息
+ *  user_id:        用户 ID
+ *  company_id:     商户 ID, 通过这个 ID 可以获取商户详细信息
+ *  type:           1,2,3,4 对应 洗养修团
+ *  reserve_name:   XXX
+ *  reserve_phone:  电话
+ *  content:        预约内容
+ *  time:           预约时段,  如 2014-12-13 10:00:00 代表的时间段是当天10点到11点
+ *  user_car_id:    可选. 用户已经添加的私家车 id
+ *  返回:            reserve_id和友盟推送返回信息
  */
 - (void)startMerchantReservationRequest
 {

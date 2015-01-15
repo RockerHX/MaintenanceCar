@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+// 筛选按钮类型
 typedef NS_ENUM(NSInteger, SCFilterButtonType) {
-    SCFilterButtonTypeDefault           = 1000,
+    SCFilterButtonTypeDefault           = 800,
     SCFilterButtonTypeDistanceButton    = SCFilterButtonTypeDefault,
-    SCFilterButtonTypeRepairTypeButton  = 1001,
-    SCFilterButtonTypeOtherFilterButton = 1002
+    SCFilterButtonTypeRepairTypeButton  = 801,
+    SCFilterButtonTypeOtherFilterButton = 802
 };
 
 @protocol SCMerchantFilterViewDelegate <NSObject>
@@ -31,12 +32,15 @@ typedef NS_ENUM(NSInteger, SCFilterButtonType) {
 @property (weak, nonatomic) IBOutlet    SCFilterPopView *filterPopView;         // 筛选弹出View，展示筛选条件
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *heightConstraint;      // 商户筛选View(SCMerchantFilterView)的高度约束条件
 
-@property (nonatomic, weak) IBOutlet           UIButton *distanceButton;
-@property (nonatomic, weak) IBOutlet           UIButton *repairTypeButton;
-@property (nonatomic, weak) IBOutlet           UIButton *otherFilterButton;
+@property (nonatomic, weak) IBOutlet           UIButton *distanceButton;        // [距离]筛选按钮
+@property (nonatomic, weak) IBOutlet           UIButton *repairTypeButton;      // [保养类型]筛选按钮
+@property (nonatomic, weak) IBOutlet           UIButton *otherFilterButton;     // [其他]条件筛选按钮
 
+// [距离]筛选按钮点击触发事件
 - (IBAction)distanceButtonPressed:(UIButton *)sender;
+// [保养类型]筛选按钮点击触发事件
 - (IBAction)repairTypeButtonPressed:(UIButton *)sender;
+// [其他]条件筛选按钮点击触发事件
 - (IBAction)otherFilterButtonPressed:(UIButton *)sender;
 
 @end

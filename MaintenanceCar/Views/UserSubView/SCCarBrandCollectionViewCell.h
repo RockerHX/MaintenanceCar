@@ -10,7 +10,7 @@
 
 @interface SCCarBrandCollectionViewCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *carIcon;
-@property (weak, nonatomic) IBOutlet UILabel *carTitleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *carIcon;          // 车辆品牌logo
+@property (weak, nonatomic) IBOutlet UILabel     *carTitleLabel;    // 车辆标题显示栏
 
 @end

@@ -10,6 +10,6 @@
 
 @interface SCCollectionItem : UIBarButtonItem
 
-@property (nonatomic, assign) BOOL favorited;
+@property (nonatomic, assign) BOOL favorited;       // 收藏标识
 
 @end

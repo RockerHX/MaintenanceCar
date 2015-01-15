@@ -80,6 +80,7 @@
     [_locationService stopUserLocationService];
 }
 
+// 定位失败，设置相关操作
 - (void)didFailToLocateUserWithError:(NSError *)error
 {
     SCFailure(@"Location error:%@", error);
@@ -90,8 +91,10 @@
 #pragma mark - Private Methods
 - (void)initConfig
 {
-    [self userLog];
-    [self startUpdateCarBrandReuqest];
+    [self userLog];                         // 开启用户日志
+    [self startUpdateCarBrandReuqest];      // 开始车辆品牌数据刷新
+    
+    // 监听登陆通知，收到通知会触发页面跳转方法
     [NOTIFICATION_CENTER addObserver:self selector:@selector(shouldLogin) name:kUserNeedLoginNotification object:nil];
 }
 
@@ -103,10 +106,12 @@
     SCUserInfo *userInfo = [SCUserInfo share];
     if (userInfo.loginStatus)
     {
+        // 本地日志记录
         SCLog(@"登陆成功");
         SCLog(@"userID:%@", userInfo.userID);
         SCLog(@"phoneNmber:%@", userInfo.phoneNmber);
         
+        // 获取用户设备数据，进行远程日志记录
         NSString *os = [UIDevice currentDevice].systemName;
         NSString *osVersion = [UIDevice currentDevice].systemVersion;
         NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
@@ -129,6 +134,9 @@
     }
 }
 
+/**
+ *  收到登陆通知，跳转到登陆页面
+ */
 - (void)shouldLogin
 {
     @try {
@@ -143,6 +151,9 @@
     }
 }
 
+/**
+ *  车辆品牌数据同步
+ */
 - (void)startUpdateCarBrandReuqest
 {
     [SCCarBrandDisplayModel share];

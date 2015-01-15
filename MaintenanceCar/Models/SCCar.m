@@ -7,6 +7,7 @@
 //
 
 #import "SCCar.h"
+#import "MicroCommon.h"
 #import "SCCoreDataManager.h"
 #import "SCCarManagedObject.h"
 
@@ -16,84 +17,111 @@
 {
     self = [super initWithDictionary:dict error:err];
     if (self) {
-        SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
-        coreDataManager.entityName         = @"Car";
-        coreDataManager.momdName           = @"MaintenanceCar";
-        coreDataManager.sqliteName         = @"MaintenanceCar.sqlite";
+        // 设置CoreData数据信息
+        [self setCoreData];
     }
     return self;
 }
 
-- (BOOL)hasObject:(SCCar *)object
+/**
+ *  设置CoreData数据信息
+ */
+- (SCCoreDataManager *)setCoreData
 {
     SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
-    NSArray *objects = coreDataManager.fetchedObjects;
-    
-    for (SCCarManagedObject *carManagedObject in objects)
-    {
-        if ([carManagedObject.brandID isEqualToString:object.brand_id])
+    coreDataManager.entityName         = @"Car";
+    coreDataManager.momdName           = @"MaintenanceCar";
+    coreDataManager.sqliteName         = @"MaintenanceCar.sqlite";
+    return coreDataManager;
+}
+
+/**
+ *  判断CoreData数据库内是否有SCCarBrand对象数据
+ *
+ *  @param object SCCarBrand对象
+ *
+ *  @return 是否包含改对象数据
+ */
+- (BOOL)hasObject:(SCCar *)object
+{
+    @try {
+        SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
+        NSArray *objects = coreDataManager.fetchedObjects;
+        
+        for (SCCarManagedObject *carManagedObject in objects)
         {
-            if (![carManagedObject.updateTime isEqualToString:object.update_time])
+            if ([carManagedObject.brandID isEqualToString:object.brand_id])
             {
-                [coreDataManager.managedObjectContext deleteObject:carManagedObject];
-                NSError *error;
-                if (![coreDataManager.managedObjectContext save:&error])
+                if (![carManagedObject.updateTime isEqualToString:object.update_time])
                 {
-                    NSLog(@"Whoops, brand id %@ couldn't save: %@", self.brand_id, [error localizedDescription]);
+                    [coreDataManager.managedObjectContext deleteObject:carManagedObject];
+                    NSError *error;
+                    if (![coreDataManager.managedObjectContext save:&error])
+                    {
+                        NSLog(@"Whoops, brand id %@ couldn't save: %@", self.brand_id, [error localizedDescription]);
+                    }
+                    return NO;
                 }
-                return NO;
-            }
-            else
-            {
-                return YES;
+                else
+                    return YES;
             }
         }
+        return NO;
     }
-    return NO;
+    @catch (NSException *exception) {
+        SCException(@"SCCar Data Compare Error:%@", exception.reason);
+    }
+    @finally {
+    }
 }
 
 #pragma mark - Public Methods
 - (BOOL)save
 {
-    if (![self hasObject:self])
-    {
-        SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
-        NSManagedObjectContext *context = [coreDataManager managedObjectContext];
-        SCCarManagedObject *carManagedObject = [NSEntityDescription insertNewObjectForEntityForName:coreDataManager.entityName inManagedObjectContext:context];
-        carManagedObject.carID           = _car_id;
-        carManagedObject.modelID         = _model_id;
-        carManagedObject.brandID         = _brand_id;
-        carManagedObject.brandInitials   = _brand_Initials;
-        carManagedObject.carFullModel    = _car_full_model;
-        carManagedObject.carDisplacement = _car_displacement;
-        carManagedObject.updateTime      = _up_time;
-        carManagedObject.carType         = _car_type;
-        carManagedObject.gearBox         = _gearbox;
-        carManagedObject.techOwner       = _tech_owner;
-        carManagedObject.carOption       = _car_option;
-        carManagedObject.turbo           = _turbo;
-        carManagedObject.grade           = _grade;
-        carManagedObject.createTime      = _create_time;
-        carManagedObject.updateTime      = _update_time;
-        
-        NSError *error;
-        if (![context save:&error])
+    @try {
+        if (![self hasObject:self])
         {
-            NSLog(@"Whoops, brand id %@ couldn't save: %@", self.brand_id, [error localizedDescription]);
+            // 如果CoreData数据库内没有当前对象数据，则向数据库写入数据
+            SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
+            NSManagedObjectContext *context = [coreDataManager managedObjectContext];
+            SCCarManagedObject *carManagedObject = [NSEntityDescription insertNewObjectForEntityForName:coreDataManager.entityName inManagedObjectContext:context];
+            carManagedObject.carID           = _car_id;
+            carManagedObject.modelID         = _model_id;
+            carManagedObject.brandID         = _brand_id;
+            carManagedObject.brandInitials   = _brand_Initials;
+            carManagedObject.carFullModel    = _car_full_model;
+            carManagedObject.carDisplacement = _car_displacement;
+            carManagedObject.updateTime      = _up_time;
+            carManagedObject.carType         = _car_type;
+            carManagedObject.gearBox         = _gearbox;
+            carManagedObject.techOwner       = _tech_owner;
+            carManagedObject.carOption       = _car_option;
+            carManagedObject.turbo           = _turbo;
+            carManagedObject.grade           = _grade;
+            carManagedObject.createTime      = _create_time;
+            carManagedObject.updateTime      = _update_time ? _update_time : @"";
+            
+            NSError *error;
+            if (![context save:&error])
+            {
+                NSLog(@"Whoops, brand id %@ couldn't save: %@", self.brand_id, [error localizedDescription]);
+            }
+            return YES;
         }
-        return YES;
+        return NO;
     }
-    return NO;
+    @catch (NSException *exception) {
+        SCException(@"SCCar Data Save Error:%@", exception.reason);
+    }
+    @finally {
+    }
 }
 
 - (NSArray<Ignore> *)localData
 {
+    // 加载本地数据
     NSMutableArray *cars = [@[] mutableCopy];
-    SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
-    coreDataManager.entityName         = @"Car";
-    coreDataManager.momdName           = @"MaintenanceCar";
-    coreDataManager.sqliteName         = @"MaintenanceCar.sqlite";
-    NSArray *localManageData = coreDataManager.fetchedObjects;
+    NSArray *localManageData = [self setCoreData].fetchedObjects;
     for (SCCarManagedObject *object in localManageData)
     {
         SCCar *car = [[SCCar alloc] init];
