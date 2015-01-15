@@ -13,14 +13,24 @@
 #import "SCCarModelView.h"
 #import "SCCollectionIndexView.h"
 #import "SCCarBrandDisplayModel.h"
+#import "SCCarBrand.h"
 
 typedef NS_ENUM(BOOL, SCAddCarStatus) {
     SCAddCarStatusSelected = YES,
     SCAddCarStatusCancel   = NO
 };
 
-@interface SCAddCarViewController () <SCCarBrandViewDelegate>
+typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
+    SCContentViewSwitchCarBrandView = 300,
+    SCContentViewSwitchCarModelView
+};
 
+@interface SCAddCarViewController () <SCCarBrandViewDelegate, SCCarModelViewDelegate>
+{
+    SCCarBrand *_carBrand;
+}
+
+@property (weak, nonatomic) IBOutlet UILabel *carBrandLabel;
 @property (nonatomic, weak) IBOutlet SCCollectionIndexView *indexView;
 
 @end
@@ -70,6 +80,7 @@ typedef NS_ENUM(BOOL, SCAddCarStatus) {
 - (void)initConfig
 {
     _carBrandView.delegate = self;
+    _carModelView.delegate = self;
     [_indexView addTarget:self action:@selector(indexWasTapped:) forControlEvents:UIControlEventTouchUpInside];
     [[SCCarBrandDisplayModel share] addObserver:self forKeyPath:@"loadFinish" options:NSKeyValueObservingOptionNew context:nil];
 }
@@ -123,6 +134,35 @@ typedef NS_ENUM(BOOL, SCAddCarStatus) {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)switchContentView:(SCContentViewSwitch)swtichView
+{
+    switch (swtichView)
+    {
+        case SCContentViewSwitchCarBrandView:
+        {
+            [_carBrandView selected];
+            _carBrandView.canSelected = NO;
+            _carModelView.canSelected = YES;
+            [_carModelView clearAllCache];
+            
+            [_indexView showWithAnimation:YES];
+        }
+            break;
+        case SCContentViewSwitchCarModelView:
+        {
+            [_carModelView selected];
+            _carBrandView.canSelected = YES;
+            _carModelView.canSelected = NO;
+            
+            [_indexView hiddenWithAnimation:YES];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
 #pragma mark - SCCarBrandView Delegate Methods
 - (void)carBrandViewScrollEnd
 {
@@ -133,6 +173,26 @@ typedef NS_ENUM(BOOL, SCAddCarStatus) {
     hud.labelText = [_indexView selectedIndexTitle];
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:0.5f];
+}
+
+- (void)carBrandViewTitleTaped
+{
+    [self switchContentView:SCContentViewSwitchCarBrandView];
+}
+
+- (void)carBrandViewDidSelectedCar:(SCCarBrand *)carBrand
+{
+    _carBrandLabel.text = carBrand.brand_name;
+    _carBrand = carBrand;
+    
+    [self switchContentView:SCContentViewSwitchCarModelView];
+    [_carModelView showWithCarBrand:carBrand];
+}
+
+#pragma mark - SCCarModelView Delegate Methods
+- (void)carModelViewTitleTaped
+{
+//    [self switchContentView:SCContentViewSwitchCarModelView];
 }
 
 @end

@@ -10,10 +10,15 @@
 
 @interface SCCollectionIndexView : UIControl
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightConstraint;
+
 @property (strong, nonatomic)   NSArray   *indexTitles;
 @property (readonly, nonatomic) NSInteger selectedIndex;
 
 - (id)initWithFrame:(CGRect)frame indexTitles:(NSArray *)indexTitles;
 - (NSString *)selectedIndexTitle;
+
+- (void)showWithAnimation:(BOOL)animation;
+- (void)hiddenWithAnimation:(BOOL)animation;
 
 @end

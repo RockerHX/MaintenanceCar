@@ -14,10 +14,10 @@
 		4814D2171A5F92B80071B9D9 /* SCDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4814D2161A5F92B80071B9D9 /* SCDatePickerView.m */; };
 		4814D2191A5F92CB0071B9D9 /* SCDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4814D2181A5F92CB0071B9D9 /* SCDatePickerView.xib */; };
 		481939971A4D985B00F1015E /* SCMerchantTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 481939961A4D985B00F1015E /* SCMerchantTableViewCell.m */; };
-		4820DA3B1A63FDD600129D39 /* SCCarManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4820DA3A1A63FDD600129D39 /* SCCarManagedObject.m */; };
+		4820DA3B1A63FDD600129D39 /* SCCarBrandManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4820DA3A1A63FDD600129D39 /* SCCarBrandManagedObject.m */; };
 		4820DA3E1A63FE5000129D39 /* SCCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4820DA3D1A63FE5000129D39 /* SCCoreDataManager.m */; };
 		4820DA411A64115000129D39 /* SCCarBrandDisplayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4820DA401A64115000129D39 /* SCCarBrandDisplayModel.m */; };
-		4821C7061A638C9E0089EEA0 /* SCCar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4821C7051A638C9E0089EEA0 /* SCCar.m */; };
+		4821C7061A638C9E0089EEA0 /* SCCarBrand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4821C7051A638C9E0089EEA0 /* SCCarBrand.m */; };
 		4821C7091A63B0630089EEA0 /* SCCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4821C7081A63B0630089EEA0 /* SCCollectionReusableView.m */; };
 		4821C70C1A63BEEA0089EEA0 /* SCCollectionIndexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4821C70B1A63BEEA0089EEA0 /* SCCollectionIndexView.m */; };
 		482335351A4BA78700B60921 /* SCAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 482335341A4BA78700B60921 /* SCAPIRequest.m */; };
@@ -99,6 +99,10 @@
 		48F1A0871A6556A6000A1BBD /* libUMOpus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F1A0731A6556A6000A1BBD /* libUMOpus.a */; };
 		48F1A0881A6556E7000A1BBD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F1A05C1A6529CF000A1BBD /* AVFoundation.framework */; };
 		48F2343D1A619B3700D2E663 /* SCReservationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48F2343C1A619B3700D2E663 /* SCReservationTableViewCell.m */; };
+		48F2AA4E1A667F11000578B2 /* SCCarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 48F2AA4D1A667F11000578B2 /* SCCarModel.m */; };
+		48F2AA511A668437000578B2 /* SCCar.m in Sources */ = {isa = PBXBuildFile; fileRef = 48F2AA501A668437000578B2 /* SCCar.m */; };
+		48F2AA541A668462000578B2 /* SCCarModelManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 48F2AA531A668462000578B2 /* SCCarModelManagedObject.m */; };
+		48F2AA571A66846F000578B2 /* SCCarManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 48F2AA561A66846F000578B2 /* SCCarManagedObject.m */; };
 		48F666A31A6505D60044674C /* SCCarBrandCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48F666A21A6505D60044674C /* SCCarBrandCollectionViewCell.m */; };
 		48F666A61A65263F0044674C /* SCSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48F666A51A65263F0044674C /* SCSettingTableViewController.m */; };
 		48FE1ED31A4D614F0083C9DF /* SCMerchant.m in Sources */ = {isa = PBXBuildFile; fileRef = 48FE1ED21A4D614F0083C9DF /* SCMerchant.m */; };
@@ -130,14 +134,14 @@
 		4814D2181A5F92CB0071B9D9 /* SCDatePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCDatePickerView.xib; sourceTree = "<group>"; };
 		481939951A4D985B00F1015E /* SCMerchantTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMerchantTableViewCell.h; sourceTree = "<group>"; };
 		481939961A4D985B00F1015E /* SCMerchantTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMerchantTableViewCell.m; sourceTree = "<group>"; };
-		4820DA391A63FDD600129D39 /* SCCarManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCarManagedObject.h; sourceTree = "<group>"; };
-		4820DA3A1A63FDD600129D39 /* SCCarManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCarManagedObject.m; sourceTree = "<group>"; };
+		4820DA391A63FDD600129D39 /* SCCarBrandManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCarBrandManagedObject.h; sourceTree = "<group>"; };
+		4820DA3A1A63FDD600129D39 /* SCCarBrandManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCarBrandManagedObject.m; sourceTree = "<group>"; };
 		4820DA3C1A63FE5000129D39 /* SCCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCoreDataManager.h; sourceTree = "<group>"; };
 		4820DA3D1A63FE5000129D39 /* SCCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCoreDataManager.m; sourceTree = "<group>"; };
 		4820DA3F1A64115000129D39 /* SCCarBrandDisplayModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCarBrandDisplayModel.h; sourceTree = "<group>"; };
 		4820DA401A64115000129D39 /* SCCarBrandDisplayModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCarBrandDisplayModel.m; sourceTree = "<group>"; };
-		4821C7041A638C9E0089EEA0 /* SCCar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCar.h; sourceTree = "<group>"; };
-		4821C7051A638C9E0089EEA0 /* SCCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCar.m; sourceTree = "<group>"; };
+		4821C7041A638C9E0089EEA0 /* SCCarBrand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCarBrand.h; sourceTree = "<group>"; };
+		4821C7051A638C9E0089EEA0 /* SCCarBrand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCarBrand.m; sourceTree = "<group>"; };
 		4821C7071A63B0630089EEA0 /* SCCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCollectionReusableView.h; sourceTree = "<group>"; };
 		4821C7081A63B0630089EEA0 /* SCCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCollectionReusableView.m; sourceTree = "<group>"; };
 		4821C70A1A63BEEA0089EEA0 /* SCCollectionIndexView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCollectionIndexView.h; sourceTree = "<group>"; };
@@ -310,6 +314,14 @@
 		48F1A0761A6556A6000A1BBD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/UMFeedbackLocalizable.strings"; sourceTree = "<group>"; };
 		48F2343B1A619B3700D2E663 /* SCReservationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCReservationTableViewCell.h; sourceTree = "<group>"; };
 		48F2343C1A619B3700D2E663 /* SCReservationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCReservationTableViewCell.m; sourceTree = "<group>"; };
+		48F2AA4C1A667F11000578B2 /* SCCarModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCarModel.h; sourceTree = "<group>"; };
+		48F2AA4D1A667F11000578B2 /* SCCarModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCarModel.m; sourceTree = "<group>"; };
+		48F2AA4F1A668437000578B2 /* SCCar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCar.h; sourceTree = "<group>"; };
+		48F2AA501A668437000578B2 /* SCCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCar.m; sourceTree = "<group>"; };
+		48F2AA521A668462000578B2 /* SCCarModelManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCarModelManagedObject.h; sourceTree = "<group>"; };
+		48F2AA531A668462000578B2 /* SCCarModelManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCarModelManagedObject.m; sourceTree = "<group>"; };
+		48F2AA551A66846F000578B2 /* SCCarManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCarManagedObject.h; sourceTree = "<group>"; };
+		48F2AA561A66846F000578B2 /* SCCarManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCarManagedObject.m; sourceTree = "<group>"; };
 		48F666A11A6505D60044674C /* SCCarBrandCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCarBrandCollectionViewCell.h; sourceTree = "<group>"; };
 		48F666A21A6505D60044674C /* SCCarBrandCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCarBrandCollectionViewCell.m; sourceTree = "<group>"; };
 		48F666A41A65263F0044674C /* SCSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSettingTableViewController.h; sourceTree = "<group>"; };
@@ -647,6 +659,7 @@
 		48EC70501A442ACB003CE3FD /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				48F2AA4B1A667C03000578B2 /* AddCar */,
 				48EEE0E31A4AD163005C735D /* SCWeather.h */,
 				48EEE0E41A4AD163005C735D /* SCWeather.m */,
 				48FE1ED11A4D614F0083C9DF /* SCMerchant.h */,
@@ -661,12 +674,6 @@
 				48AB35DB1A517CAB00BFBC77 /* SCUserInfo.m */,
 				485B30CA1A61324F00AC3CC2 /* SCReservation.h */,
 				485B30CB1A61324F00AC3CC2 /* SCReservation.m */,
-				4821C7041A638C9E0089EEA0 /* SCCar.h */,
-				4821C7051A638C9E0089EEA0 /* SCCar.m */,
-				4820DA391A63FDD600129D39 /* SCCarManagedObject.h */,
-				4820DA3A1A63FDD600129D39 /* SCCarManagedObject.m */,
-				4820DA3F1A64115000129D39 /* SCCarBrandDisplayModel.h */,
-				4820DA401A64115000129D39 /* SCCarBrandDisplayModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -752,6 +759,27 @@
 				48F1A0741A6556A6000A1BBD /* UMOpus.h */,
 			);
 			path = UMOpus;
+			sourceTree = "<group>";
+		};
+		48F2AA4B1A667C03000578B2 /* AddCar */ = {
+			isa = PBXGroup;
+			children = (
+				4821C7041A638C9E0089EEA0 /* SCCarBrand.h */,
+				4821C7051A638C9E0089EEA0 /* SCCarBrand.m */,
+				4820DA391A63FDD600129D39 /* SCCarBrandManagedObject.h */,
+				4820DA3A1A63FDD600129D39 /* SCCarBrandManagedObject.m */,
+				4820DA3F1A64115000129D39 /* SCCarBrandDisplayModel.h */,
+				4820DA401A64115000129D39 /* SCCarBrandDisplayModel.m */,
+				48F2AA4C1A667F11000578B2 /* SCCarModel.h */,
+				48F2AA4D1A667F11000578B2 /* SCCarModel.m */,
+				48F2AA521A668462000578B2 /* SCCarModelManagedObject.h */,
+				48F2AA531A668462000578B2 /* SCCarModelManagedObject.m */,
+				48F2AA4F1A668437000578B2 /* SCCar.h */,
+				48F2AA501A668437000578B2 /* SCCar.m */,
+				48F2AA551A66846F000578B2 /* SCCarManagedObject.h */,
+				48F2AA561A66846F000578B2 /* SCCarManagedObject.m */,
+			);
+			name = AddCar;
 			sourceTree = "<group>";
 		};
 		48F8055B1A4AC06700BD2379 /* Resource */ = {
@@ -967,10 +995,11 @@
 				48DA960B1A4E8A0C009CCC50 /* SCLocationInfo.m in Sources */,
 				480C01C61A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.m in Sources */,
 				48AB35E01A5183B400BFBC77 /* SCLoginViewController.m in Sources */,
-				4821C7061A638C9E0089EEA0 /* SCCar.m in Sources */,
+				4821C7061A638C9E0089EEA0 /* SCCarBrand.m in Sources */,
 				48C8D4411A5E224C005F55F9 /* SCMerchantFilterView.m in Sources */,
 				489786911A6264C8002593DD /* SCCarBrandView.m in Sources */,
 				4820DA411A64115000129D39 /* SCCarBrandDisplayModel.m in Sources */,
+				48F2AA541A668462000578B2 /* SCCarModelManagedObject.m in Sources */,
 				48F0812E1A45505400531426 /* SCTabbar.m in Sources */,
 				48AE95C41A50F52700A8A4B3 /* MJRefreshConst.m in Sources */,
 				48EC705B1A442BE1003CE3FD /* SCMerchantViewController.m in Sources */,
@@ -982,6 +1011,7 @@
 				48AE95C31A50F52700A8A4B3 /* MJRefreshBaseView.m in Sources */,
 				48ADC8451A5A7D130036AD6E /* SCCollectionItem.m in Sources */,
 				4821C70C1A63BEEA0089EEA0 /* SCCollectionIndexView.m in Sources */,
+				48F2AA4E1A667F11000578B2 /* SCCarModel.m in Sources */,
 				48AE95CC1A51050D00A8A4B3 /* SCReservationViewController.m in Sources */,
 				48F666A61A65263F0044674C /* SCSettingTableViewController.m in Sources */,
 				485B30CF1A61376F00AC3CC2 /* SCTableViewController.m in Sources */,
@@ -994,6 +1024,7 @@
 				48FE1EDA1A4D6A270083C9DF /* SCMerchantDetail.m in Sources */,
 				482335351A4BA78700B60921 /* SCAPIRequest.m in Sources */,
 				4821C7091A63B0630089EEA0 /* SCCollectionReusableView.m in Sources */,
+				48F2AA511A668437000578B2 /* SCCar.m in Sources */,
 				482B57D91A43CB7700E47962 /* main.m in Sources */,
 				48F2343D1A619B3700D2E663 /* SCReservationTableViewCell.m in Sources */,
 				48AE95C91A50F52700A8A4B3 /* UIView+MJExtension.m in Sources */,
@@ -1001,6 +1032,7 @@
 				48EEE0E51A4AD163005C735D /* SCWeather.m in Sources */,
 				4814D2171A5F92B80071B9D9 /* SCDatePickerView.m in Sources */,
 				48A531511A5C182B00646057 /* SCMapViewController.m in Sources */,
+				48F2AA571A66846F000578B2 /* SCCarManagedObject.m in Sources */,
 				485B30C91A61311600AC3CC2 /* SCMyReservationTableViewController.m in Sources */,
 				48DA960E1A4EBBE0009CCC50 /* SCMerchantList.m in Sources */,
 				48EC70611A442C56003CE3FD /* SCUserViewController.m in Sources */,
@@ -1013,7 +1045,7 @@
 				485B30CC1A61324F00AC3CC2 /* SCReservation.m in Sources */,
 				48FE1ED71A4D61E30083C9DF /* SCMerchantDetailViewController.m in Sources */,
 				48BBF3DB1A5D31FC00712BA3 /* SCMapMerchantInfoView.m in Sources */,
-				4820DA3B1A63FDD600129D39 /* SCCarManagedObject.m in Sources */,
+				4820DA3B1A63FDD600129D39 /* SCCarBrandManagedObject.m in Sources */,
 				48EC70581A442BBF003CE3FD /* SCHomePageViewController.m in Sources */,
 				481939971A4D985B00F1015E /* SCMerchantTableViewCell.m in Sources */,
 				48ADC8421A5A6FD80036AD6E /* SCMyFavoriteTableViewController.m in Sources */,

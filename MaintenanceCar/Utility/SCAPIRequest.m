@@ -221,11 +221,26 @@
     [self requestPOSTMethodsWithAPI:UpdateReservationAPIURL parameters:parameters success:success failure:failure];
 }
 
+#pragma mark - Add Car Request
 - (void)startUpdateCarBrandAPIRequestWithParameters:(NSDictionary *)parameters
                                             Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:CarBrandAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startUpdateCarModelAPIRequestWithParameters:(NSDictionary *)parameters
+                                            Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:CarModelAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startUpdateCarsAPIRequestWithParameters:(NSDictionary *)parameters
+                                        Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:CarsAPIURL parameters:parameters success:success failure:failure];
 }
 
 @end

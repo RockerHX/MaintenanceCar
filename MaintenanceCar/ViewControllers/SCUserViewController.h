@@ -10,6 +10,8 @@
 
 @interface SCUserViewController : UITableViewController
 
+- (IBAction)addCarItemPressed:(UIBarButtonItem *)sender;
+
 /**
  *  登陆按钮点击事件
  *

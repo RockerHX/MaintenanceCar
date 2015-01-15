@@ -12,13 +12,7 @@
 #import "API.h"
 #import "SCCollectionReusableView.h"
 #import "SCCarBrandCollectionViewCell.h"
-#import "SCCar.h"
-
-@interface SCCarBrandView ()
-{
-}
-
-@end
+#import "SCCarBrand.h"
 
 @implementation SCCarBrandView
 
@@ -28,6 +22,16 @@
     [super awakeFromNib];
     
     [self performSelector:@selector(initConfig) withObject:nil afterDelay:0.5f];
+    [self.titleView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleColumnTaped)]];
+}
+
+#pragma mark - Action Methods
+- (void)titleColumnTaped
+{
+    if (self.canSelected)
+    {
+        [_delegate carBrandViewTitleTaped];
+    }
 }
 
 #pragma mark - Private Methods
@@ -40,8 +44,6 @@
 
 - (void)viewConfig
 {
-    _collectionView.allowsSelection = NO;
-    _collectionView.allowsMultipleSelection = NO;
 }
 
 #pragma mark - Collection Data Source Methods
@@ -71,9 +73,9 @@
     SCCarBrandCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CarBrandCellReuseIdentifier" forIndexPath:indexPath];
     
     // Configure the cell...
-    SCCar *car = ((NSArray *)_carBrands[_indexTitles[indexPath.section]])[indexPath.row];
-    [cell.carIcon setImageWithURL:[NSURL URLWithString:[ImageURL stringByAppendingString:car.img_name]]];
-    cell.carTitleLabel.text = car.brand_name;
+    SCCarBrand *carBrand = ((NSArray *)_carBrands[_indexTitles[indexPath.section]])[indexPath.row];
+    [cell.carIcon setImageWithURL:[NSURL URLWithString:[ImageURL stringByAppendingString:carBrand.img_name]]];
+    cell.carTitleLabel.text = carBrand.brand_name;
     
     return cell;
 }
@@ -81,7 +83,8 @@
 #pragma mark - Collection Delegate Methods
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@", indexPath);
+    SCCarBrand *carBrand = ((NSArray *)_carBrands[_indexTitles[indexPath.section]])[indexPath.row];
+    [_delegate carBrandViewDidSelectedCar:carBrand];
 }
 
 #pragma mark - Scroll View Delegate Methods

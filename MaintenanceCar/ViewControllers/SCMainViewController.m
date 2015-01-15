@@ -13,7 +13,7 @@
 #import "SCLocationInfo.h"
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
-#import "SCCar.h"
+#import "SCCarBrand.h"
 #import "SCCarBrandDisplayModel.h"
 
 @interface SCMainViewController () <BMKLocationServiceDelegate>
@@ -145,25 +145,7 @@
 
 - (void)startUpdateCarBrandReuqest
 {
-    SCCarBrandDisplayModel *displayModel = [SCCarBrandDisplayModel share];
-    [[SCAPIRequest manager] startUpdateCarBrandAPIRequestWithParameters:nil Success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
-        {
-            for (NSDictionary *carData in responseObject)
-            {
-                SCCar *car = [[SCCar alloc] initWithDictionary:carData error:nil];
-                if ([car save])
-                    [displayModel addObject:car];
-            }
-            [displayModel addFinish];
-        }
-        else
-        {
-            [displayModel loadLocalData];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [displayModel loadLocalData];
-    }];
+    [SCCarBrandDisplayModel share];
 }
 
 #pragma mark - Public Methods

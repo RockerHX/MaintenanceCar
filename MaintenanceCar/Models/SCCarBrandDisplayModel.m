@@ -9,8 +9,9 @@
 #import "SCCarBrandDisplayModel.h"
 #import "MicroCommon.h"
 #import "SCCoreDataManager.h"
-#import "SCCarManagedObject.h"
-#import "SCCar.h"
+#import "SCCarBrandManagedObject.h"
+#import "SCCarBrand.h"
+#import "SCAPIRequest.h"
 
 static SCCarBrandDisplayModel *displayModel = nil;
 
@@ -98,6 +99,18 @@ static SCCarBrandDisplayModel *displayModel = nil;
     dispatch_once(&onceToken, ^{
         displayModel = [[SCCarBrandDisplayModel alloc] init];
         [displayModel loadLocalData];
+        [[SCAPIRequest manager] startUpdateCarBrandAPIRequestWithParameters:nil Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+            {
+                for (NSDictionary *carData in responseObject)
+                {
+                    SCCarBrand *carBrand = [[SCCarBrand alloc] initWithDictionary:carData error:nil];
+                    if ([carBrand save])
+                        [displayModel addObject:carBrand];
+                }
+                [displayModel addFinish];
+            }
+        } failure:nil];
     });
     return displayModel;
 }
@@ -109,10 +122,10 @@ static SCCarBrandDisplayModel *displayModel = nil;
     dispatch_group_t group = dispatch_group_create();
     
     __weak typeof(self) weakSelf = self;
-    for (SCCar *car in data)
+    for (SCCarBrand *carBrand in data)
     {
         dispatch_group_async(group, queue, ^{
-            [weakSelf handelDataWithCar:car];
+            [weakSelf handelDataWithCar:carBrand];
         });
         dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
     }
@@ -139,13 +152,13 @@ static SCCarBrandDisplayModel *displayModel = nil;
     }
 }
 
-- (void)handelDataWithCar:(SCCar *)car
+- (void)handelDataWithCar:(SCCarBrand *)carBrand
 {
     @try {
-        NSString *key = car.brand_init;
+        NSString *key = carBrand.brand_init;
         NSString *propertyName = [NSString stringWithFormat:@"zip%@", key];
         NSMutableArray *zip = (NSMutableArray *)[self valueForKey:propertyName];
-        [zip addObject:car];
+        [zip addObject:carBrand];
         if (![_data valueForKey:key])
         {
             [_data setObject:zip forKey:key];
@@ -174,24 +187,24 @@ static SCCarBrandDisplayModel *displayModel = nil;
 - (void)loadLocalData
 {
     SCCoreDataManager *coreDataManager = [SCCoreDataManager shareManager];
-    coreDataManager.entityName         = @"Car";
+    coreDataManager.entityName         = @"CarBrand";
     coreDataManager.momdName           = @"MaintenanceCar";
     coreDataManager.sqliteName         = @"MaintenanceCar.sqlite";
     NSArray *localManageData = coreDataManager.fetchedObjects;
-    for (SCCarManagedObject *object in localManageData)
+    for (SCCarBrandManagedObject *object in localManageData)
     {
-        SCCar *car = [[SCCar alloc] init];
-        car.brand_id    = object.brandID;
-        car.brand_name  = object.brandName;
-        car.series_id   = object.seriesID;
-        car.series_name = object.seriesName;
-        car.brand_init  = object.brandInit;
-        car.img_name    = object.imgName;
-        car.brand_owner = object.brandOwner;
-        car.hit_count   = object.hitCount;
-        car.status      = object.status;
-        car.create_time = object.createTime;
-        [_localData addObject:car];
+        SCCarBrand *carBrand = [[SCCarBrand alloc] init];
+        carBrand.brand_id    = object.brandID;
+        carBrand.brand_name  = object.brandName;
+        carBrand.series_id   = object.seriesID;
+        carBrand.series_name = object.seriesName;
+        carBrand.brand_init  = object.brandInit;
+        carBrand.img_name    = object.imgName;
+        carBrand.brand_owner = object.brandOwner;
+        carBrand.hit_count   = object.hitCount;
+        carBrand.status      = object.status;
+        carBrand.create_time = object.createTime;
+        [_localData addObject:carBrand];
     }
     [self handleDisplayData:_localData];
 }

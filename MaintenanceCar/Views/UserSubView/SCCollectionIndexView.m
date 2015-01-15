@@ -9,6 +9,8 @@
 #import "SCCollectionIndexView.h"
 #import "MicroCommon.h"
 
+#define LabelWidth      24.0f
+
 @interface SCCollectionIndexView ()
 
 @property (strong, nonatomic) NSArray *indexLabels;
@@ -18,6 +20,7 @@
 
 @implementation SCCollectionIndexView
 
+#pragma mark - Init Methods
 - (id) initWithFrame:(CGRect)frame indexTitles:(NSArray *)indexTitles
 {
     self = [super initWithFrame:frame];
@@ -35,6 +38,7 @@
     _selectedIndex = 0;
 }
 
+#pragma mark - Setter And Getter Methods
 - (void)setIndexTitles:(NSArray *)indexTitles
 {
     if (_indexTitles == indexTitles)
@@ -49,14 +53,41 @@
     return _indexTitles[_selectedIndex];
 }
 
+#pragma mark - Public Methods
+- (void)showWithAnimation:(BOOL)animation
+{
+    _rightConstraint.constant = _rightConstraint.constant + LabelWidth;
+    [self needsUpdateConstraints];
+    if (animation)
+    {
+        __weak typeof(self) weakSelf = self;
+        [UIView animateWithDuration:0.5f animations:^{
+            [weakSelf layoutIfNeeded];
+        }];
+    }
+}
+
+- (void)hiddenWithAnimation:(BOOL)animation
+{
+    _rightConstraint.constant = _rightConstraint.constant - LabelWidth;
+    [self needsUpdateConstraints];
+    if (animation)
+    {
+        __weak typeof(self) weakSelf = self;
+        [UIView animateWithDuration:0.5f animations:^{
+            [weakSelf layoutIfNeeded];
+        }];
+    }
+}
+
 #pragma mark - Private Methods
 - (void)buildIndexLabels
 {
-    CGFloat cumulativeItemHeight = (SCREEN_HEIGHT - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT - 120.0f - 20.0f) / _indexTitles.count;
+    CGFloat cumulativeItemHeight = (SCREEN_HEIGHT - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT - 120.0f - LabelWidth) / _indexTitles.count;
     NSMutableArray *labels = [@[] mutableCopy];
     __weak typeof(self)weakSelf = self;
     [_indexTitles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(DOT_COORDINATE, idx * cumulativeItemHeight, 20.0f, cumulativeItemHeight)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(DOT_COORDINATE, idx * cumulativeItemHeight, LabelWidth, cumulativeItemHeight)];
         label.tag                    = idx;
         label.text                   = obj;
         label.font                   = [UIFont systemFontOfSize:10.0f];

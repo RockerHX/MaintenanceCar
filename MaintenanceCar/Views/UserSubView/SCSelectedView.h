@@ -15,4 +15,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomHeightConstraint;
 
+- (void)selected;
+
 @end

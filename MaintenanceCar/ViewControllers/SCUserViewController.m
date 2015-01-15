@@ -18,8 +18,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     SCUserCenterRowMyOrder = 0,
     SCUserCenterRowMyCustomers,
     SCUserCenterRowMyReservation,
-    SCUserCenterRowMyCollection,
-    SCUserCenterRowComplaintsBusinesses
+    SCUserCenterRowMyCollection
 };
 
 @interface SCUserViewController () <UIAlertViewDelegate>
@@ -84,19 +83,6 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
                     [self pushToSubViewControllerWithController:myFavoriteTableViewController];
                 }
                     break;
-                case SCUserCenterRowComplaintsBusinesses:
-                {
-                    @try {
-                        UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
-                        [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
-                    }
-                    @catch (NSException *exception) {
-                        SCException(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
-                    }
-                    @finally {
-                    }
-                }
-                    break;
                     
                 default:
                     break;
@@ -140,6 +126,31 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     if (buttonIndex != alertView.cancelButtonIndex)
     {
         [self checkShouldLogin];
+    }
+}
+
+- (IBAction)addCarItemPressed:(UIBarButtonItem *)sender
+{
+    if (![SCUserInfo share].loginStatus)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登陆"
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                                  otherButtonTitles:@"登陆", nil];
+        [alertView show];
+    }
+    else
+    {
+        @try {
+            UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
+            [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
+        }
+        @catch (NSException *exception) {
+            SCException(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
     }
 }
 

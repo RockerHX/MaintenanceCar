@@ -65,6 +65,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
     [_verificationCodeView verificationCodeShouldSend:^BOOL{
         if ([weakSelf.phoneNumberTextField.text length])
         {
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [weakSelf startGetVerificationCodeReuqestWithMode:SCVerificationCodeModeMessage];
             return YES;
         }
@@ -108,6 +109,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
                                  @"time_expire": @(VerificationCodeTimeExpire),
                                  @"mode"       : @(mode)};
     [[SCAPIRequest manager] startGetVerificationCodeAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
             if ([[responseObject objectForKey:@"msg"] isEqualToString:@"OK"])
@@ -125,8 +127,10 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
             [weakSelf showPromptHUDWithText:@"获取出错，请重新获取" delay:1.0f mode:SCHUDModeDefault delegate:nil];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         SCFailure(@"Get verification code request error:%@", error);
         [weakSelf showPromptHUDWithText:@"网络错误，请检查网络" delay:1.0f mode:SCHUDModeDefault delegate:nil];
+        [_verificationCodeView stop];
     }];
 }
 
@@ -259,7 +263,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
             break;
         case SCHUDModeCompareVerificationCode:
         {
-            ShowPromptHUDWithText(self.view, @"验证码不对噢亲，请仔细检查下手机短信！", 1.0f);
+            ShowPromptHUDWithText(self.view, @"验证码不对噢亲！", 1.0f);
         }
             break;
         case SCHUDModeRegister:
