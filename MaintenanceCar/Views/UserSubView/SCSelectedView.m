@@ -37,9 +37,9 @@
 - (void)updateArrowIcon
 {
     if (_canSelected)
-        _arrowIcon.image = [UIImage imageNamed:@"arrowheadGrayIcon"];
+        _arrowIcon.image = [UIImage imageNamed:@"ArrowheadGrayIcon"];
     else
-        _arrowIcon.image = [UIImage imageNamed:@"arrowheadBlueIcon"];
+        _arrowIcon.image = [UIImage imageNamed:@"ArrowheadBlueIcon"];
 }
 
 @end

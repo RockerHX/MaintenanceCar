@@ -22,8 +22,10 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
 
 @interface SCCarModelView ()
 {
-    NSMutableArray *_cars;          // 车辆数据Cache
-    NSMutableArray *_carModels;     // 车辆车型数据Cache
+    NSMutableArray *_cars;                  // 车辆数据Cache
+    NSMutableArray *_carModels;             // 车辆车型数据Cache
+    
+    UIImageView    *_selectedColorView;     // 车辆车型列表选中背景
 }
 
 @end
@@ -74,6 +76,10 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     // 为两个列表这是空白View，以便无数据是给用户造成视觉冲突
     _leftTableView.tableFooterView = [[UIView alloc] init];
     _rightTableView.tableFooterView = [[UIView alloc] init];
+    
+    // 设置选中背景
+    _selectedColorView = [[UIImageView alloc] init];
+    _selectedColorView.image = [UIImage imageNamed:@"CellSelectedBgView"];
 }
 
 /**
@@ -198,13 +204,16 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddCarCell" forIndexPath:indexPath];
     cell.textLabel.font = [UIFont systemFontOfSize:12.0f];
+    
     if (tableView.tag == SCTableViewTypeCarModel)
     {
+        cell.selectedBackgroundView = _selectedColorView;
         SCCarModel *carModel = _carModels[indexPath.row];
         cell.textLabel.text = carModel.model_name;
     }
     else
     {
+        cell.backgroundColor = UIColorWithRGBA(240.0f, 240.0f, 240.0f, 1.0f);
         SCCar *car = _cars[indexPath.row];
         cell.textLabel.text = car.car_full_model;
         cell.detailTextLabel.text = car.up_time;
