@@ -13,6 +13,7 @@
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
 #import "SCVerificationCodeView.h"
+#import "UMessage.h"
 
 // 登陆验证模式
 typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
@@ -27,6 +28,11 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
     SCHUDModeCompareVerificationCode,
     SCHUDModeRegister,
     SCHUDModeLogin
+};
+
+typedef NS_ENUM(NSInteger, SCDismissType) {
+    SCDismissTypeLoginSuccess,
+    SCDismissTypeCancel
 };
 
 @interface SCLoginViewController () <MBProgressHUDDelegate>
@@ -148,7 +154,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        SCFailure(@"Get verification code request error:%@", error);
+        NSLog(@"Get verification code request error:%@", error);
         [weakSelf showPromptHUDWithText:@"网络错误，请检查网络" delay:1.0f mode:SCHUDModeDefault delegate:nil];
         [_verificationCodeView stop];
     }];
@@ -176,7 +182,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
             [weakSelf showPromptHUDWithText:@"注册出错，请联系远景车联" delay:2.0f mode:SCHUDModeDefault delegate:nil];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        SCFailure(@"Get verification code request error:%@", error);
+        NSLog(@"Get verification code request error:%@", error);
         [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
         [weakSelf showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
     }];
@@ -193,6 +199,10 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             [SCUserInfo loginSuccessWithUserID:responseObject];
+            [UMessage addAlias:responseObject[@"phone"] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
+                if ([responseObject[@"success"] isEqualToString:@"ok"])
+                    [SCUserInfo share].addAliasSuccess = YES;
+            }];
             [weakSelf showPromptHUDWithText:@"登陆成功" delay:1.0f mode:SCHUDModeLogin delegate:weakSelf];
         }
         else
@@ -200,7 +210,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
             [weakSelf showPromptHUDWithText:@"注册出错，请联系远景车联" delay:2.0f mode:SCHUDModeDefault delegate:nil];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        SCFailure(@"Get verification code request error:%@", error);
+        NSLog(@"Get verification code request error:%@", error);
         [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
         [weakSelf showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
     }];
@@ -214,8 +224,10 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 }
 
 // 返回进入[注册登陆]页面之前的页面
-- (void)dismissController
+- (void)dismissController:(SCDismissType)type
 {
+    if (type == SCDismissTypeLoginSuccess)
+        [[SCUserInfo share] userCarsReuqest:nil];
     [_verificationCodeView stop];           // 退出之前要记得关掉验证码倒计时，防止内存释放引起crash
     [self resignKeyBoard];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
@@ -264,7 +276,7 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
 
 - (IBAction)cancelButtonPressed:(UIButton *)sender
 {
-    [self dismissController];
+    [self dismissController:SCDismissTypeCancel];
 }
 
 - (IBAction)weiboLoginButtonPressed:(UIButton *)sender
@@ -301,14 +313,14 @@ typedef NS_ENUM(NSInteger, SCHUDMode) {
             break;
         case SCHUDModeRegister:
         {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [self dismissController];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [self dismissController:SCDismissTypeLoginSuccess];
         }
             break;
         case SCHUDModeLogin:
         {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [self dismissController];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [self dismissController:SCDismissTypeLoginSuccess];
         }
             break;
     }

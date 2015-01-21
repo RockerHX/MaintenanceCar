@@ -84,7 +84,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
             }
         }
         @catch (NSException *exception) {
-            SCException(@"User Center Push Controller Error:%@", exception.reason);
+            NSLog(@"User Center Push Controller Error:%@", exception.reason);
         }
         @finally {
         }
@@ -96,7 +96,8 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 #pragma mark - Button Action Methods
 - (IBAction)loginButtonPressed:(UIButton *)sender
 {
-    [self checkShouldLogin];
+//    [self checkShouldLogin];
+    [SCUserInfo logout];
 }
 
 #pragma mark - Private Methods
@@ -160,7 +161,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
             [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
         }
         @catch (NSException *exception) {
-            SCException(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
+            NSLog(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
         }
         @finally {
         }
@@ -173,6 +174,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 - (void)addCarSuccessWith:(NSString *)userCarID
 {
     // 车辆添加成功的回调方法，车辆添加成功以后需要刷新个人中心，展示出用户最新添加的车辆
+    [[SCUserInfo share] userCarsReuqest:nil];
 }
 
 @end

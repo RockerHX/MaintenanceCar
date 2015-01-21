@@ -76,7 +76,7 @@
         [_otherFilterButton setTitle:_filterConditions[OtherConditionKey][0][DisplayNameKey] forState:UIControlStateNormal];
     }
     @catch (NSException *exception) {
-        SCException(@"Read Filter Condition Error:%@", exception.reason);
+        NSLog(@"Read Filter Condition Error:%@", exception.reason);
     }
     @finally {
     }

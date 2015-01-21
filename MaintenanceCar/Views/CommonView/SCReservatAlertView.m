@@ -50,7 +50,7 @@
         [_buttonOther setTitle:array[3][DisplayNameKey] forState:UIControlStateNormal];
     }
     @catch (NSException *exception) {
-        SCException(@"SCReservatAlertView Set Button Title Error:%@", exception.reason);
+        NSLog(@"SCReservatAlertView Set Button Title Error:%@", exception.reason);
     }
     @finally {
         self.alpha = DOT_COORDINATE;

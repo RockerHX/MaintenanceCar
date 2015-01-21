@@ -10,4 +10,6 @@
 
 @interface SCHomePageViewController : UIViewController
 
+- (IBAction)maintenanceButtonPressed:(UIButton *)sender;
+
 @end

@@ -13,6 +13,8 @@
 #import "SCCarBrand.h"
 #import "SCAPIRequest.h"
 
+#define CarBrandDataTimeIntervalKey         @"CarBrandDataTimeIntervalKey"
+
 static SCCarBrandDisplayModel *displayModel = nil;
 
 @interface SCCarBrandDisplayModel ()
@@ -20,8 +22,12 @@ static SCCarBrandDisplayModel *displayModel = nil;
 @property (nonatomic, strong) NSMutableArray      *localData;
 @property (nonatomic, strong) NSMutableArray      *serverData;
 @property (nonatomic, strong) NSMutableDictionary *data;
+@property (nonatomic, assign) NSString            *dateTimeInterval;
 
-@property (nonatomic, strong) NSMutableArray      *zipTop;
+@property (nonatomic, assign) BOOL                localLoadFininsh;
+@property (nonatomic, assign) BOOL                serverLoadFininsh;
+
+@property (nonatomic, strong) NSMutableArray      *zip0;
 @property (nonatomic, strong) NSMutableArray      *zipA;
 @property (nonatomic, strong) NSMutableArray      *zipB;
 @property (nonatomic, strong) NSMutableArray      *zipC;
@@ -62,7 +68,7 @@ static SCCarBrandDisplayModel *displayModel = nil;
         _localData  = [@[] mutableCopy];
         _serverData = [@[] mutableCopy];
         _data       = [@{} mutableCopy];
-        _zipTop     = [@[] mutableCopy];
+        _zip0       = [@[] mutableCopy];
         _zipA       = [@[] mutableCopy];
         _zipB       = [@[] mutableCopy];
         _zipC       = [@[] mutableCopy];
@@ -101,16 +107,32 @@ static SCCarBrandDisplayModel *displayModel = nil;
         
         // 车辆品牌显示模型初始化完毕之后先加载本地数据，在进行服务器数据同步操作
         [displayModel loadLocalData];
-        [[SCAPIRequest manager] startUpdateCarBrandAPIRequestWithParameters:nil Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *parameters = @{@"time_flag": displayModel.dateTimeInterval};
+        [[SCAPIRequest manager] startUpdateCarBrandAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
             {
-                // 遍历从服务器同步到的数据，异步检查数据是否存在以及更新
-                for (NSDictionary *carData in responseObject)
+                NSString *date = responseObject[@"stamp"];
+                displayModel.dateTimeInterval = date;
+                BOOL hasData = [responseObject[@"flag"] boolValue];
+                if (hasData)
                 {
-                    SCCarBrand *carBrand = [[SCCarBrand alloc] initWithDictionary:carData error:nil];
-                    if ([carBrand save])
-                        [displayModel addObject:carBrand];
+                    NSDictionary *data = responseObject[@"data"];
+                    // 遍历从服务器同步到的数据，异步检查数据是否存在以及更新
+                    for (NSString *key in [data allKeys])
+                    {
+                        NSArray *brands = data[key];
+                        for (NSDictionary *carData in brands)
+                        {
+                            NSError *error = nil;
+                            SCCarBrand *carBrand = [[SCCarBrand alloc] initWithDictionary:carData error:&error];
+                            if ([key isEqualToString:@"0"])
+                                carBrand.brand_init = @"0";
+                            if ([carBrand save])
+                                [displayModel addObject:carBrand];
+                        }
+                    }
                 }
+                
                 // 检查并添加完毕之后进行通知
                 [displayModel addFinish];
             }
@@ -139,9 +161,14 @@ static SCCarBrandDisplayModel *displayModel = nil;
     
     // 所有异步操作完毕的回调，进行最后的数据处理，设置数据加载结束标识并且处理索引标题集合
     dispatch_group_notify(group, queue, ^{
-        SCLog(@"finish");
-        _loadFinish = YES;
-        [weakSelf handleIndexTitles];
+        
+        if (_localData.count || _serverData.count)
+        {
+            _loadFinish = YES;
+            
+            [weakSelf handleIndexTitles];
+            [self setValue:@(YES) forKey:@"loadFinish"];
+        }
     });
 }
 
@@ -154,7 +181,7 @@ static SCCarBrandDisplayModel *displayModel = nil;
         }] : nil;
     }
     @catch (NSException *exception) {
-        SCException(@"%@", exception.reason);
+        NSLog(@"%@", exception.reason);
     }
     @finally {
     }
@@ -172,10 +199,9 @@ static SCCarBrandDisplayModel *displayModel = nil;
         {
             [_data setObject:zip forKey:key];
         }
-        SCLog(@"%@", propertyName);
     }
     @catch (NSException *exception) {
-        SCException(@"SCCarBrandDisplayModel Set Zip Data Error:%@", exception.reason);
+        NSLog(@"SCCarBrandDisplayModel Set Zip Data Error:%@", exception.reason);
     }
     @finally {
     }
@@ -185,6 +211,21 @@ static SCCarBrandDisplayModel *displayModel = nil;
 - (NSDictionary *)displayData
 {
     return _loadFinish ? _data : nil;
+}
+
+- (NSString *)dateTimeInterval
+{
+    NSString *date = [USER_DEFAULT objectForKey:CarBrandDataTimeIntervalKey];
+    if (date)
+        return date;
+    else
+        return @"0";
+}
+
+- (void)setDateTimeInterval:(NSString *)dateTimeInterval
+{
+    [USER_DEFAULT setObject:dateTimeInterval forKey:CarBrandDataTimeIntervalKey];
+    [USER_DEFAULT synchronize];
 }
 
 #pragma mark - Public Methods
@@ -206,14 +247,8 @@ static SCCarBrandDisplayModel *displayModel = nil;
         SCCarBrand *carBrand = [[SCCarBrand alloc] init];
         carBrand.brand_id    = object.brandID;
         carBrand.brand_name  = object.brandName;
-        carBrand.series_id   = object.seriesID;
-        carBrand.series_name = object.seriesName;
         carBrand.brand_init  = object.brandInit;
         carBrand.img_name    = object.imgName;
-        carBrand.brand_owner = object.brandOwner;
-        carBrand.hit_count   = object.hitCount;
-        carBrand.status      = object.status;
-        carBrand.create_time = object.createTime;
         [_localData addObject:carBrand];
     }
     // 加载完毕进行数据结构转换

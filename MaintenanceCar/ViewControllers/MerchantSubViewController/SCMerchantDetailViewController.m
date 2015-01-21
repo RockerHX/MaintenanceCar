@@ -14,12 +14,12 @@
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
 #import "SCMerchant.h"
-#import "SCMerchantTableViewCell.h"
-#import "SCMerchantPurchaseTableViewCell.h"
-#import "SCMerchantDetialInfoTableViewCell.h"
+#import "SCMerchantDetailCell.h"
 #import "SCCollectionItem.h"
 #import "SCReservationViewController.h"
 #import "SCReservatAlertView.h"
+
+#define MerchantDetailCellIdentifier      @"SCMerchantDetailCell"
 
 typedef NS_ENUM(NSInteger, SCMerchantDetailCellSection) {
     SCMerchantDetailCellSectionMerchantBaseInfo = 0,
@@ -34,13 +34,20 @@ typedef NS_ENUM(NSInteger, SCMerchantDetailCellRow) {
 };
 typedef NS_ENUM(NSInteger, SCAlertType) {
     SCAlertTypeNeedLogin    = 100,
-    SCAlertTypeReuqestError = 101
+    SCAlertTypeReuqestError,
+    SCAlertTypeReuqestCall
 };
 
 @interface SCMerchantDetailViewController () <UIAlertViewDelegate, SCReservatAlertViewDelegate>
 {
     BOOL _needChecked;      // 检查收藏标识
 }
+@property (weak, nonatomic) IBOutlet SCMerchantDetailCell *merchantBriefIntroductionCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell      *merchantCustomersCell;
+@property (weak, nonatomic) IBOutlet UILabel              *merchantAddressLabel;
+@property (weak, nonatomic) IBOutlet UILabel              *merchantPhoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel              *merchantBusinessLabel;
+@property (weak, nonatomic) IBOutlet UILabel              *merchantIntroductionLabel;
 
 @end
 
@@ -69,6 +76,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     
     // 页面数据初始化
     [self initConfig];
+    [self viewConfig];
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,94 +85,25 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table View Data Source Methods
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+#pragma mark - Table View Delegate Methods
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 3;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    switch (section)
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 2)
     {
-        case SCMerchantDetailCellSectionMerchantBaseInfo:
-            return 1;
-            break;
-        case SCMerchantDetailCellSectionPurchaseInfo:
-            return 1;
-            break;
-        case SCMerchantDetailCellSectionMerchantInfo:
-            return 4;
-            break;
+        if (indexPath.row == 0)
+        {
             
-        default:
-            return 0;
-            break;
-    }
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // 根据不同的条件显示刷新不同的栏目
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MerchantCellReuseIdentifier"];
-    switch (indexPath.section)
-    {
-        case SCMerchantDetailCellSectionMerchantBaseInfo:
-        {
-            SCMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MerchantCellReuseIdentifier];
-            cell.merchantNameLabel.text = _merchantDetail.name;
-            cell.distanceLabel.text = _merchantDetail.distance;
-            return cell;
         }
-            break;
-        case SCMerchantDetailCellSectionPurchaseInfo:
+        else if (indexPath.row == 1)
         {
-            SCMerchantPurchaseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantPurchaseTableViewCell"];
-            return cell;
+            [self showAlertWithTitle:@"是否拨打"
+                             message:_merchantDetail.contacts_mobile
+                            delegate:self
+                                type:SCAlertTypeReuqestCall
+                   cancelButtonTitle:@"取消"
+                    otherButtonTitle:@"拨打"];
         }
-            break;
-        case SCMerchantDetailCellSectionMerchantInfo:
-        {
-            switch (indexPath.row)
-            {
-                case SCMerchantDetailCellRowAddress:
-                {
-                    SCMerchantDetialInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetialInfoTableViewCellAddress"];
-                    cell.contentLabel.text = _merchantDetail.address;
-                    return cell;
-                }
-                    break;
-                case SCMerchantDetailCellRowPhone:
-                {
-                    SCMerchantDetialInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetialInfoTableViewCellPhone"];
-                    cell.contentLabel.text = _merchantDetail.telephone;
-                    return cell;
-                }
-                    break;
-                case SCMerchantDetailCellRowBusiness:
-                {
-                    SCMerchantDetialInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetialInfoTableViewCellBusiness"];
-                    cell.contentLabel.text = _merchantDetail.zige;
-                    return cell;
-                }
-                    break;
-                case SCMerchantDetailCellRowIntroduce:
-                {
-                    SCMerchantDetialInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetialInfoTableViewCellIntroduce"];
-                    return cell;
-                }
-                    break;
-                    
-                default:
-                    return cell;
-                    break;
-            }
-        }
-            break;
-            
-        default:
-            return cell;
-            break;
     }
 }
 
@@ -194,16 +133,16 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - Private Methods
 - (void)initConfig
 {
-    // 开启cell高度预估，自动适配cell高度
-    self.tableView.estimatedRowHeight = 44.0f;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
-    
     // 加载提示框，并开始数据请求
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self startMerchantDetailRequestWithParameters];
     
     // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
     [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed) name:kMerchantDtailReservationNotification object:nil];
+}
+
+- (void)viewConfig
+{
 }
 
 /**
@@ -220,7 +159,38 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (void)displayMerchantDetail
 {
     [self startCheckMerchantCollectionStutasRequest];
-    [self.tableView reloadData];
+    
+    _merchantBriefIntroductionCell.distanceLabel.text     = _merchantDetail.distance;
+    
+    [self handleMerchantName:_merchantDetail.name onNameLabel:_merchantBriefIntroductionCell.merchantNameLabel];
+    [self handleMerchantDetail:_merchantDetail.address onLabel:_merchantAddressLabel];
+    [self handleMerchantDetail:_merchantDetail.contacts_mobile onLabel:_merchantPhoneLabel];
+    [self handleMerchantDetail:_merchantDetail.zige onLabel:_merchantBusinessLabel];
+    [self handleMerchantDetail:_merchantDetail.service onLabel:_merchantIntroductionLabel];
+}
+
+- (void)handleMerchantName:(NSString *)merchantName onNameLabel:(UILabel *)nameLabel
+{
+    if (IS_IPHONE_6Plus && (merchantName.length > 40))
+        nameLabel.font = [UIFont systemFontOfSize:16.0f];
+    else if (IS_IPHONE_6 && (merchantName.length > 36))
+        nameLabel.font = [UIFont systemFontOfSize:16.0f];
+    else if (merchantName.length > 30)
+        nameLabel.font = [UIFont systemFontOfSize:16.0f];
+    
+    nameLabel.text = merchantName;
+}
+
+- (void)handleMerchantDetail:(NSString *)detail onLabel:(UILabel *)label
+{
+    if (IS_IPHONE_6Plus && (detail.length > 30))
+        label.font = [UIFont systemFontOfSize:14.0f];
+    else if (IS_IPHONE_6 && (detail.length > 24))
+        label.font = [UIFont systemFontOfSize:14.0f];
+    else if (detail.length > 16)
+        label.font = [UIFont systemFontOfSize:14.0f];
+    
+    label.text = detail;
 }
 
 /**
@@ -376,10 +346,14 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                 [self startMerchantDetailRequestWithParameters];
         }
             break;
+        case SCAlertTypeReuqestCall:
+        {
+            if (buttonIndex != alertView.cancelButtonIndex)
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", _merchantDetail.contacts_mobile]]];
+        }
+            break;
     }
 }
-
-
 
 #pragma mark - SCReservatAlertViewDelegate Methods
 - (void)selectedAtButton:(SCAlertItemType)type
@@ -391,7 +365,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {
-        SCException(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
     }
     @finally {
     }

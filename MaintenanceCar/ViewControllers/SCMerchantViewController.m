@@ -88,6 +88,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SCMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MerchantCellReuseIdentifier forIndexPath:indexPath];
+    cell.reservationButton.hidden = YES;
     
     // 刷新商户列表
     SCMerchant *merchant = _merchantList[indexPath.row];
@@ -154,25 +155,8 @@
 
     _merchantList                = [@[] mutableCopy];           // 商户列表容器初始化
     
-    // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed:) name:kMerchantListReservationNotification object:nil];
-    
     // 监听SCLocationInfo单例的userLocation属性，观察定位是否成功
     [[SCLocationInfo shareLocationInfo] addObserver:self forKeyPath:@"userLocation" options:NSKeyValueObservingOptionNew context:nil];
-}
-
-/**
- *  商户列表预约按钮点击触发事件通知方法
- *
- *  @param notification 接受传递的参数
- */
-- (void)reservationButtonPressed:(NSNotification *)notification
-{
-    _reservationButtonIndex = [notification.object integerValue];       // 设置index，用于在_merchantList里取出SCMerchant对象设置到SCReservationViewController
-    
-    // 显示预约框
-    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
-    [reservatAlertView show];
 }
 
 /**
@@ -194,28 +178,23 @@
         [_tableView footerEndRefreshing];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            SCLog(@"merchent list request data:%@", responseObject);
             NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
             
             // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
             [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 NSError *error       = nil;
                 SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:&error];
-                SCFailure(@"weather model parse error:%@", error);
                 [_merchantList addObject:merchant];
             }];
-            
-            [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];              // 请求完成，移除响应式控件
             
             [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:_offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                   // 数据配置完成，刷新商户列表
             _offset += MerchantListLimit;                                       // 偏移量请求参数递增
         }
         else
-        {
-            SCFailure(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
-        }
+            NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
+        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];              // 请求完成，移除响应式控件
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        SCFailure(@"Get merchant list request error:%@", error);
+        NSLog(@"Get merchant list request error:%@", error);
         [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
     }];
 }
@@ -230,7 +209,7 @@
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {
-        SCException(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
     }
     @finally {
     }

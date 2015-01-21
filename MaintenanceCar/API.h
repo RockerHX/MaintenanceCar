@@ -40,8 +40,8 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define MyReservationAPI            @"/Reservation/all"                     // 我的预约接口
 #define UpdateReservationAPI        @"/Reservation/update"                  // 更新预约接口
 
-#define CarBrandAPI                 @"/Car_brand"                           // 汽车品牌接口
-#define CarModelAPI                 @"/Car_model"                           // 汽车型号接口
+#define CarBrandAPI                 @"/Cars/brands"                         // 汽车品牌接口
+#define CarModelAPI                 @"/Cars/models"                         // 汽车型号接口
 #define CarsAPI                     @"/Cars"                                // 汽车款式接口
 #define AddCarAPI                   @"/Usercar"                             // 添加车辆接口
 

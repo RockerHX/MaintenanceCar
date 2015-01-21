@@ -12,13 +12,7 @@
 
 @dynamic brandID;
 @dynamic brandName;
-@dynamic seriesID;
-@dynamic seriesName;
 @dynamic brandInit;
 @dynamic imgName;
-@dynamic brandOwner;
-@dynamic hitCount;
-@dynamic status;
-@dynamic createTime;
 
 @end

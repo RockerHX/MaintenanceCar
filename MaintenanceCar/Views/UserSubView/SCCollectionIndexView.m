@@ -46,7 +46,10 @@
     // 重写设置索引标题集合Setter方法，在新设置数据之后刷新View
     if (_indexTitles == indexTitles)
         return;
-    _indexTitles = indexTitles;
+    NSMutableArray *tmpIndex = [indexTitles mutableCopy];
+    if ([tmpIndex[Zero] isEqualToString:@"0"])
+        tmpIndex[Zero] = @"推荐";
+    _indexTitles = tmpIndex;
     [_indexLabels performSelector:@selector(removeFromSuperview)];
     [self buildIndexLabels];
 }
@@ -88,11 +91,11 @@
 - (void)buildIndexLabels
 {
     // 索引标题集合被设置后，创建用于显示索引标题元素栏
-    CGFloat cumulativeItemHeight = (SCREEN_HEIGHT - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT - 120.0f - LabelWidth) / _indexTitles.count;
+    CGFloat cumulativeItemHeight = (SCREEN_HEIGHT - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT - 130.0f - LabelWidth) / _indexTitles.count;
     NSMutableArray *labels = [@[] mutableCopy];
     __weak typeof(self)weakSelf = self;
     [_indexTitles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(DOT_COORDINATE, idx * cumulativeItemHeight, LabelWidth, cumulativeItemHeight)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(DOT_COORDINATE, idx * cumulativeItemHeight + 4.0f, LabelWidth, cumulativeItemHeight)];
         label.tag                    = idx;
         label.text                   = obj;
         label.font                   = [UIFont systemFontOfSize:10.0f];

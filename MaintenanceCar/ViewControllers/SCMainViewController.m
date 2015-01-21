@@ -68,13 +68,13 @@
 // 处理方向变更信息
 - (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
 {
-    SCLog(@"didUpdateUserHeading lat %f,long %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+    NSLog(@"didUpdateUserHeading lat %f,long %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
 }
 
 //处理位置坐标更新
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
-    SCLog(@"didUpdateUserLocation lat %f,long %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+    NSLog(@"didUpdateUserLocation lat %f,long %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
     
     [SCLocationInfo shareLocationInfo].userLocation = userLocation;
     [_locationService stopUserLocationService];
@@ -83,7 +83,7 @@
 // 定位失败，设置相关操作
 - (void)didFailToLocateUserWithError:(NSError *)error
 {
-    SCFailure(@"Location error:%@", error);
+    NSLog(@"Location error:%@", error);
     [SCLocationInfo shareLocationInfo].userLocation = nil;
     [SCLocationInfo shareLocationInfo].locationFailure = YES;
 }
@@ -91,8 +91,9 @@
 #pragma mark - Private Methods
 - (void)initConfig
 {
-    [self userLog];                         // 开启用户日志
-    [self startUpdateCarBrandReuqest];      // 开始车辆品牌数据刷新
+    [self userLog];                             // 开启用户日志
+    [self startUpdateCarBrandReuqest];          // 开始车辆品牌数据刷新
+    [[SCUserInfo share] userCarsReuqest:nil];   // 获取用户车辆
     
     // 监听登陆通知，收到通知会触发页面跳转方法
     [NOTIFICATION_CENTER addObserver:self selector:@selector(shouldLogin) name:kUserNeedLoginNotification object:nil];
@@ -106,11 +107,6 @@
     SCUserInfo *userInfo = [SCUserInfo share];
     if (userInfo.loginStatus)
     {
-        // 本地日志记录
-        SCLog(@"登陆成功");
-        SCLog(@"userID:%@", userInfo.userID);
-        SCLog(@"phoneNmber:%@", userInfo.phoneNmber);
-        
         // 获取用户设备数据，进行远程日志记录
         NSString *os = [UIDevice currentDevice].systemName;
         NSString *osVersion = [UIDevice currentDevice].systemVersion;
@@ -122,14 +118,14 @@
         [[SCAPIRequest manager] startUserLogAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
             {
-                SCLog(@"log_id:%@", responseObject[@"log_id"]);
+                NSLog(@"log_id:%@", responseObject[@"log_id"]);
             }
             else
             {
-                SCLog(@"log error:%@", responseObject);
+                NSLog(@"log error:%@", responseObject);
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            SCLog(@"log error:%@", error);
+            NSLog(@"log error:%@", error);
         }];
     }
 }
@@ -145,7 +141,7 @@
         [self presentViewController:loginViewNavigationController animated:YES completion:nil];
     }
     @catch (NSException *exception) {
-        SCException(@"Go to the SCLoginViewController exception reasion:%@", exception.reason);
+        NSLog(@"Go to the SCLoginViewController exception reasion:%@", exception.reason);
     }
     @finally {
     }

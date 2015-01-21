@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="wDd-V4-Nak" customClass="SCMaintenanceItemCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wDd-V4-Nak" id="dld-xQ-dSg">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check-box-uncheck" translatesAutoresizingMaskIntoConstraints="NO" id="Xwv-RY-dR1">
+                        <rect key="frame" x="28" y="10" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="0dG-lJ-ugx"/>
+                            <constraint firstAttribute="height" constant="24" id="eQp-uX-I6j"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="保养项目" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ai1-of-uUQ">
+                        <rect key="frame" x="62" y="9" width="68" height="24"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Xwv-RY-dR1" firstAttribute="leading" secondItem="dld-xQ-dSg" secondAttribute="leadingMargin" constant="20" id="Ecw-hT-kxl"/>
+                    <constraint firstItem="Xwv-RY-dR1" firstAttribute="height" secondItem="ai1-of-uUQ" secondAttribute="height" id="GtK-qE-Zcw"/>
+                    <constraint firstItem="ai1-of-uUQ" firstAttribute="leading" secondItem="Xwv-RY-dR1" secondAttribute="trailing" constant="10" id="dnZ-rs-lmW"/>
+                    <constraint firstItem="Xwv-RY-dR1" firstAttribute="centerY" secondItem="ai1-of-uUQ" secondAttribute="centerY" constant="0.5" id="hHQ-cc-5x7"/>
+                    <constraint firstAttribute="centerY" secondItem="Xwv-RY-dR1" secondAttribute="centerY" id="slP-iX-Spc"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="checkBox" destination="Xwv-RY-dR1" id="jkW-Qs-IqA"/>
+                <outlet property="nameLabel" destination="ai1-of-uUQ" id="CY9-KE-n6N"/>
+            </connections>
+            <point key="canvasLocation" x="362" y="297"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="check-box-uncheck" width="24" height="24"/>
+    </resources>
+</document>

@@ -18,14 +18,14 @@
                             <rect key="frame" x="0.0" y="0.0" width="520" height="40"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您要预约什么项目?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aWf-kc-SgD">
-                                    <rect key="frame" x="16" y="10" width="154.5" height="20"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                    <rect key="frame" x="16" y="10" width="146" height="20"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.17254901959999999" green="0.48627450979999998" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FpX-fW-9XA">
-                                    <rect key="frame" x="474" y="10" width="30" height="20"/>
-                                    <state key="normal" title="取消">
+                                    <rect key="frame" x="483" y="7" width="27" height="26"/>
+                                    <state key="normal" backgroundImage="shut">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
@@ -45,12 +45,12 @@
                                 <constraint firstAttribute="bottom" secondItem="gdV-2I-JLY" secondAttribute="bottom" id="6VU-Sk-igV"/>
                                 <constraint firstAttribute="trailing" secondItem="gdV-2I-JLY" secondAttribute="trailing" id="HJi-Pi-iT7"/>
                                 <constraint firstAttribute="height" constant="40" id="L7a-tx-FBn"/>
-                                <constraint firstAttribute="bottom" secondItem="FpX-fW-9XA" secondAttribute="bottom" constant="10" id="PAw-fh-CQP"/>
+                                <constraint firstAttribute="bottom" secondItem="FpX-fW-9XA" secondAttribute="bottom" constant="7" id="PAw-fh-CQP"/>
                                 <constraint firstItem="aWf-kc-SgD" firstAttribute="leading" secondItem="wRI-0L-hPO" secondAttribute="leading" constant="16" id="U6G-gx-tpE"/>
                                 <constraint firstAttribute="bottom" secondItem="aWf-kc-SgD" secondAttribute="bottom" constant="10" id="b6q-uv-ARU"/>
                                 <constraint firstItem="aWf-kc-SgD" firstAttribute="top" secondItem="wRI-0L-hPO" secondAttribute="top" constant="10" id="g7K-E6-V3p"/>
-                                <constraint firstItem="FpX-fW-9XA" firstAttribute="top" secondItem="wRI-0L-hPO" secondAttribute="top" constant="10" id="jhG-45-60b"/>
-                                <constraint firstAttribute="trailing" secondItem="FpX-fW-9XA" secondAttribute="trailing" constant="16" id="nn7-MW-TOD"/>
+                                <constraint firstItem="FpX-fW-9XA" firstAttribute="top" secondItem="wRI-0L-hPO" secondAttribute="top" constant="7" id="jhG-45-60b"/>
+                                <constraint firstAttribute="trailing" secondItem="FpX-fW-9XA" secondAttribute="trailing" constant="10" id="nn7-MW-TOD"/>
                                 <constraint firstItem="gdV-2I-JLY" firstAttribute="leading" secondItem="wRI-0L-hPO" secondAttribute="leading" id="ouW-bs-nJ8"/>
                             </constraints>
                         </view>
@@ -161,4 +161,7 @@
             <point key="canvasLocation" x="384" y="432"/>
         </view>
     </objects>
+    <resources>
+        <image name="shut" width="27" height="27"/>
+    </resources>
 </document>

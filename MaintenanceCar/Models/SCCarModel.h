@@ -13,9 +13,9 @@
 
 @property (nonatomic, copy)             NSString <Optional>*model_id;       // 车辆车型ID
 @property (nonatomic, copy)             NSString <Optional>*brand_id;       // 车辆品牌ID
-@property (nonatomic, copy)             NSString <Optional>*memo;           //
 @property (nonatomic, copy)             NSString <Optional>*model_name;     // 车辆车型名称
 @property (nonatomic, copy)             NSString <Optional>*create_time;    // 车辆车型数据创建时间
+@property (nonatomic, copy)             NSString <Optional>*memo;           // 备注
 
 @property (nonatomic, strong, readonly) NSArray    <Ignore>*localData;      // 车辆车型本地缓存数据
 
@@ -24,6 +24,6 @@
  *
  *  @return 是否保存成功
  */
-- (BOOL)save;
+- (void)save;
 
 @end

@@ -64,7 +64,7 @@
         _item = _pickerItmes[row][DisplayNameKey];
     }
     @catch (NSException *exception) {
-        SCException(@"SCPickerView Get Item Error:%@", exception.reason);
+        NSLog(@"SCPickerView Get Item Error:%@", exception.reason);
     }
     @finally {
     }
@@ -86,7 +86,7 @@
                                 displayName:_item ? _item : _pickerItmes[0][DisplayNameKey]];
     }
     @catch (NSException *exception) {
-        SCException(@"SCPickerView Return Item Error:%@", exception.reason);
+        NSLog(@"SCPickerView Return Item Error:%@", exception.reason);
     }
     @finally {
         [self removePickerView];

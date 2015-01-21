@@ -65,7 +65,8 @@
     {
         reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"CarBrandCollectionHeaderViewReuseIdentifier" forIndexPath:indexPath];
     }
-    reusableview.titleLabel.text = _indexTitles[indexPath.section];
+    NSString *title = _indexTitles[indexPath.section];
+    reusableview.titleLabel.text = [title isEqualToString:@"0"] ? @"推荐" : title;
     return reusableview;
 }
 

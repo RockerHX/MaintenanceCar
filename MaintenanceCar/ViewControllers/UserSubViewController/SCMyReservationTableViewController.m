@@ -92,7 +92,7 @@
         [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
     }
     @catch (NSException *exception) {
-        SCException(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
+        NSLog(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
     }
     @finally {
     }
@@ -147,12 +147,10 @@
                 [weakSelf clearListData];
             }
             
-            SCLog(@"Collection Merchent List Request Data:%@", responseObject);
             // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
             [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 NSError *error       = nil;
                 SCReservation *reservation = [[SCReservation alloc] initWithDictionary:obj error:&error];
-                SCFailure(@"weather model parse error:%@", error);
                 [_dataList addObject:reservation];
             }];
             
@@ -163,12 +161,12 @@
         }
         else
         {
-            SCFailure(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
+            NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
             ShowPromptHUDWithText(weakSelf.navigationController.view, responseObject[@"error"], 1.0f);
             [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        SCFailure(@"Get merchant list request error:%@", error);
+        NSLog(@"Get merchant list request error:%@", error);
         // 关闭上拉刷新或者下拉刷新
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];

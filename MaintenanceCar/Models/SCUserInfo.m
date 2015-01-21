@@ -8,16 +8,25 @@
 
 #import "SCUserInfo.h"
 #import "MicroCommon.h"
+#import "SCUerCar.h"
+#import "SCAPIRequest.h"
+#import "UMessage.h"
 
 #define kLoginKey               @"kLoginKey"
 #define kUserIDKey              @"kUserIDKey"
 #define kPhoneNumberKey         @"kPhoneNumberKey"
+#define kUserCarsKey            @"kUserCarsKey"
+#define kAddAliasKey            @"kAddAliasKey"
+
+typedef void(^BLOCK)(BOOL finish);
 
 static SCUserInfo *userInfo = nil;
 
 @interface SCUserInfo ()
 {
-    NSArray *_carIDs;
+    NSMutableArray *_cars;
+    
+    BLOCK          _block;
 }
 
 @end
@@ -25,13 +34,35 @@ static SCUserInfo *userInfo = nil;
 @implementation SCUserInfo
 
 #pragma mark - Init Methods
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _cars = [@[] mutableCopy];
+        [self addObserver:self forKeyPath:@"carsLoadFinish" options:NSKeyValueObservingOptionNew context:nil];
+    }
+    return self;
+}
+
 + (instancetype)share
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         userInfo = [[SCUserInfo alloc] init];
+        [userInfo cars];
     });
     return userInfo;
+}
+
+#pragma mark - KVO Methods
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"carsLoadFinish"])
+    {
+        BOOL loadFinish = [change[NSKeyValueChangeNewKey] boolValue];
+        if (loadFinish)
+            _block(loadFinish);
+    }
 }
 
 #pragma mark - Getter Methods
@@ -50,9 +81,33 @@ static SCUserInfo *userInfo = nil;
     return ([[USER_DEFAULT objectForKey:kLoginKey] boolValue] && [USER_DEFAULT objectForKey:kUserIDKey]) ? SCLoginStatusLogin : SCLoginStatusLogout;
 }
 
-- (NSArray *)userCarIDs
+- (NSArray *)cars
 {
-    return _carIDs;
+    NSArray *userCars = [USER_DEFAULT objectForKey:kUserCarsKey];
+    if (self.loginStatus && userCars.count)
+    {
+        [_cars removeAllObjects];
+        for (NSDictionary *carData in userCars)
+        {
+            SCUerCar *userCar = [[SCUerCar alloc] initWithDictionary:carData error:nil];
+            [_cars addObject:userCar];
+        }
+        _firstCar = _cars[Zero];
+        _currentCar = _firstCar;
+    }
+    return _cars;
+}
+
+- (BOOL)addAliasSuccess
+{
+    BOOL success = [[USER_DEFAULT objectForKey:kAddAliasKey] boolValue];
+    return success;
+}
+
+- (void)setAddAliasSuccess:(BOOL)addAliasSuccess
+{
+    [USER_DEFAULT setObject:@(addAliasSuccess) forKey:kAddAliasKey];
+    [USER_DEFAULT synchronize];
 }
 
 #pragma mark - Public Methods
@@ -66,15 +121,66 @@ static SCUserInfo *userInfo = nil;
 
 + (void)logout
 {
+    [UMessage removeAlias:[USER_DEFAULT objectForKey:kPhoneNumberKey] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
+        if ([responseObject[@"success"] isEqualToString:@"ok"])
+            [SCUserInfo share].addAliasSuccess = NO;
+    }];
     [USER_DEFAULT setObject:@(NO) forKey:kLoginKey];
     [USER_DEFAULT removeObjectForKey:kUserIDKey];
     [USER_DEFAULT removeObjectForKey:kPhoneNumberKey];
     [USER_DEFAULT synchronize];
 }
 
-- (void)updateCarIDs:(NSArray *)carIDs
+- (void)addCar:(SCUerCar *)car
 {
-    _carIDs = carIDs;
+    for (SCUerCar *userCar in _cars)
+    {
+        if ([userCar.user_car_id isEqualToString:car.user_car_id])
+        {
+            userCar.user_car_id        = car.user_car_id;
+            userCar.car_id             = car.car_id;
+            userCar.model_id           = car.model_id;
+            userCar.plate              = car.plate;
+            userCar.buy_car_year       = car.buy_car_year;
+            userCar.buy_car_month      = car.buy_car_month;
+            userCar.run_distance       = car.run_distance;
+            userCar.run_distance_stamp = car.run_distance_stamp;
+            userCar.memo               = car.memo;
+        }
+        else
+            [_cars addObject:car];
+    }
+}
+
+- (void)saveUserCarsWithData:(NSArray *)userCars
+{
+    @try {
+        [USER_DEFAULT setObject:userCars forKey:kUserCarsKey];
+        [USER_DEFAULT synchronize];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Save User Cars Error:%@", exception.reason);
+    }
+    @finally {
+        _carsLoadFinish = YES;
+    }
+}
+
+- (void)userCarsReuqest:(void (^)(BOOL))block
+{
+    _block = block;
+    __weak typeof(self) weakSelf = self;
+    if (self.loginStatus)
+    {
+        NSDictionary *parameters = @{@"user_id": self.userID};
+        [[SCAPIRequest manager] startGetUserCarsAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+            {
+                [weakSelf saveUserCarsWithData:responseObject];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        }];
+    }
 }
 
 @end

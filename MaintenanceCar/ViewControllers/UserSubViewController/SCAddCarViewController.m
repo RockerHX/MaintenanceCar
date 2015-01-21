@@ -86,13 +86,10 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     // 监听车辆数据同步是否完成，再经行相关数据加载操作
-    if ([keyPath isEqualToString:@"loadFinish"])
+    if ([change[NSKeyValueChangeNewKey] boolValue])
     {
-        if (change[NSKeyValueChangeNewKey])
-        {
-            [self loadData];
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-        }
+        [self loadData];
+        [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
     }
 }
 
@@ -113,7 +110,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 {
     BOOL loadFinish = [SCCarBrandDisplayModel share].loadFinish;
     if (!loadFinish)
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     else
         [self loadData];
 }
@@ -137,7 +134,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
                                              atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
     }
     @catch (NSException *exception) {
-        SCException(@"Collection View Scroll To Item Error:%@", exception.reason);
+        NSLog(@"Collection View Scroll To Item Error:%@", exception.reason);
     }
     @finally {
     }
@@ -205,7 +202,6 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
     [[SCAPIRequest manager] startAddCarAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            [[SCUserInfo share] updateCarIDs:@[responseObject[@"user_car_id"]]];
             [_delegate addCarSuccessWith:responseObject[@"user_car_id"]];
             [weakSelf showPromptHUDToView:weakSelf.view withText:@"添加成功！" delay:1.0f delegate:weakSelf];
         }

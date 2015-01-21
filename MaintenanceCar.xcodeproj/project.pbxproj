@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		480C01C31A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C01C21A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.m */; };
-		480C01C61A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C01C51A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.m */; };
-		480C01CA1A58EC7000A08F44 /* SCMerchantBaseInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 480C01C81A58EC7000A08F44 /* SCMerchantBaseInfoTableViewCell.m */; };
 		4814D2141A5F82AF0071B9D9 /* ReservationItems.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4814D2131A5F82AF0071B9D9 /* ReservationItems.plist */; };
 		4814D2171A5F92B80071B9D9 /* SCDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4814D2161A5F92B80071B9D9 /* SCDatePickerView.m */; };
 		4814D2191A5F92CB0071B9D9 /* SCDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4814D2181A5F92CB0071B9D9 /* SCDatePickerView.xib */; };
@@ -28,6 +25,19 @@
 		482B57E71A43CB7700E47962 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 482B57E61A43CB7700E47962 /* Images.xcassets */; };
 		482B57EA1A43CB7700E47962 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 482B57E81A43CB7700E47962 /* LaunchScreen.xib */; };
 		482B57F61A43CB7700E47962 /* MaintenanceCarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 482B57F51A43CB7700E47962 /* MaintenanceCarTests.m */; };
+		4841CEBC1A6B481100DA36FC /* SCMerchantDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CEBB1A6B481100DA36FC /* SCMerchantDetailCell.m */; };
+		4841CEBF1A6B9AC400DA36FC /* SCMaintenanceTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CEBE1A6B9AC400DA36FC /* SCMaintenanceTypeCell.m */; };
+		4841CEC11A6B9AE700DA36FC /* SCMaintenanceTypeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4841CEC01A6B9AE700DA36FC /* SCMaintenanceTypeCell.xib */; };
+		4841CEC41A6B9FCB00DA36FC /* SCMaintenanceTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CEC31A6B9FCB00DA36FC /* SCMaintenanceTypeView.m */; };
+		4841CEC71A6BAC1F00DA36FC /* SCMaintenanceItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CEC61A6BAC1F00DA36FC /* SCMaintenanceItemCell.m */; };
+		4841CECA1A6BAC6F00DA36FC /* SCMaintenanceItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4841CEC91A6BAC6F00DA36FC /* SCMaintenanceItemCell.xib */; };
+		4841CECD1A6BE5C300DA36FC /* SCUerCar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CECC1A6BE5C300DA36FC /* SCUerCar.m */; };
+		4841CED31A6CE36400DA36FC /* SCMileageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CED21A6CE36400DA36FC /* SCMileageView.m */; };
+		4841CED91A6D049500DA36FC /* SCChangeMaintenanceDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CED81A6D049500DA36FC /* SCChangeMaintenanceDataViewController.m */; };
+		4841CEDC1A6D414100DA36FC /* SCDriveHabitsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CEDB1A6D414100DA36FC /* SCDriveHabitsItem.m */; };
+		4841CEDF1A6D42BD00DA36FC /* SCCarDriveHabitsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CEDE1A6D42BD00DA36FC /* SCCarDriveHabitsView.m */; };
+		4841CF4A1A6E094B00DA36FC /* libUMessage_Sdk_1.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4841CF481A6E094B00DA36FC /* libUMessage_Sdk_1.1.0.a */; };
+		48433DE11A6989C8002ECA7C /* SCMaintenanceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48433DE01A6989C8002ECA7C /* SCMaintenanceTableViewCell.m */; };
 		485B30C91A61311600AC3CC2 /* SCMyReservationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 485B30C81A61311600AC3CC2 /* SCMyReservationTableViewController.m */; };
 		485B30CC1A61324F00AC3CC2 /* SCReservation.m in Sources */ = {isa = PBXBuildFile; fileRef = 485B30CB1A61324F00AC3CC2 /* SCReservation.m */; };
 		485B30CF1A61376F00AC3CC2 /* SCTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 485B30CE1A61376F00AC3CC2 /* SCTableViewController.m */; };
@@ -122,12 +132,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		480C01C11A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMerchantDetialInfoTableViewCell.h; sourceTree = "<group>"; };
-		480C01C21A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMerchantDetialInfoTableViewCell.m; sourceTree = "<group>"; };
-		480C01C41A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMerchantPurchaseTableViewCell.h; sourceTree = "<group>"; };
-		480C01C51A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMerchantPurchaseTableViewCell.m; sourceTree = "<group>"; };
-		480C01C71A58EC7000A08F44 /* SCMerchantBaseInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMerchantBaseInfoTableViewCell.h; sourceTree = "<group>"; };
-		480C01C81A58EC7000A08F44 /* SCMerchantBaseInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMerchantBaseInfoTableViewCell.m; sourceTree = "<group>"; };
 		4814D2131A5F82AF0071B9D9 /* ReservationItems.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ReservationItems.plist; sourceTree = "<group>"; };
 		4814D2151A5F92B80071B9D9 /* SCDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCDatePickerView.h; sourceTree = "<group>"; };
 		4814D2161A5F92B80071B9D9 /* SCDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCDatePickerView.m; sourceTree = "<group>"; };
@@ -160,6 +164,30 @@
 		482B57EF1A43CB7700E47962 /* MaintenanceCarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaintenanceCarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		482B57F41A43CB7700E47962 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		482B57F51A43CB7700E47962 /* MaintenanceCarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaintenanceCarTests.m; sourceTree = "<group>"; };
+		4841CEBA1A6B481100DA36FC /* SCMerchantDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMerchantDetailCell.h; sourceTree = "<group>"; };
+		4841CEBB1A6B481100DA36FC /* SCMerchantDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMerchantDetailCell.m; sourceTree = "<group>"; };
+		4841CEBD1A6B9AC400DA36FC /* SCMaintenanceTypeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMaintenanceTypeCell.h; sourceTree = "<group>"; };
+		4841CEBE1A6B9AC400DA36FC /* SCMaintenanceTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMaintenanceTypeCell.m; sourceTree = "<group>"; };
+		4841CEC01A6B9AE700DA36FC /* SCMaintenanceTypeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCMaintenanceTypeCell.xib; sourceTree = "<group>"; };
+		4841CEC21A6B9FCB00DA36FC /* SCMaintenanceTypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMaintenanceTypeView.h; sourceTree = "<group>"; };
+		4841CEC31A6B9FCB00DA36FC /* SCMaintenanceTypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMaintenanceTypeView.m; sourceTree = "<group>"; };
+		4841CEC51A6BAC1F00DA36FC /* SCMaintenanceItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMaintenanceItemCell.h; sourceTree = "<group>"; };
+		4841CEC61A6BAC1F00DA36FC /* SCMaintenanceItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMaintenanceItemCell.m; sourceTree = "<group>"; };
+		4841CEC91A6BAC6F00DA36FC /* SCMaintenanceItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCMaintenanceItemCell.xib; sourceTree = "<group>"; };
+		4841CECB1A6BE5C300DA36FC /* SCUerCar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCUerCar.h; sourceTree = "<group>"; };
+		4841CECC1A6BE5C300DA36FC /* SCUerCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCUerCar.m; sourceTree = "<group>"; };
+		4841CED11A6CE36400DA36FC /* SCMileageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMileageView.h; sourceTree = "<group>"; };
+		4841CED21A6CE36400DA36FC /* SCMileageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMileageView.m; sourceTree = "<group>"; };
+		4841CED71A6D049500DA36FC /* SCChangeMaintenanceDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCChangeMaintenanceDataViewController.h; sourceTree = "<group>"; };
+		4841CED81A6D049500DA36FC /* SCChangeMaintenanceDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCChangeMaintenanceDataViewController.m; sourceTree = "<group>"; };
+		4841CEDA1A6D414100DA36FC /* SCDriveHabitsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCDriveHabitsItem.h; sourceTree = "<group>"; };
+		4841CEDB1A6D414100DA36FC /* SCDriveHabitsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCDriveHabitsItem.m; sourceTree = "<group>"; };
+		4841CEDD1A6D42BD00DA36FC /* SCCarDriveHabitsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCarDriveHabitsView.h; sourceTree = "<group>"; };
+		4841CEDE1A6D42BD00DA36FC /* SCCarDriveHabitsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCarDriveHabitsView.m; sourceTree = "<group>"; };
+		4841CF481A6E094B00DA36FC /* libUMessage_Sdk_1.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.1.0.a; sourceTree = "<group>"; };
+		4841CF491A6E094B00DA36FC /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
+		48433DDF1A6989C8002ECA7C /* SCMaintenanceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMaintenanceTableViewCell.h; sourceTree = "<group>"; };
+		48433DE01A6989C8002ECA7C /* SCMaintenanceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMaintenanceTableViewCell.m; sourceTree = "<group>"; };
 		485B30C71A61311600AC3CC2 /* SCMyReservationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMyReservationTableViewController.h; sourceTree = "<group>"; };
 		485B30C81A61311600AC3CC2 /* SCMyReservationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMyReservationTableViewController.m; sourceTree = "<group>"; };
 		485B30CA1A61324F00AC3CC2 /* SCReservation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCReservation.h; sourceTree = "<group>"; };
@@ -352,6 +380,7 @@
 				48A5314E1A5C13DE00646057 /* libbaidumapapi.a in Frameworks */,
 				48A531401A5C120200646057 /* OpenGLES.framework in Frameworks */,
 				48A5313E1A5C11F600646057 /* QuartzCore.framework in Frameworks */,
+				4841CF4A1A6E094B00DA36FC /* libUMessage_Sdk_1.1.0.a in Frameworks */,
 				48D4D2D51A4E575200E516CF /* CoreLocation.framework in Frameworks */,
 				A6FB2DC72803F961C4D04C42 /* libPods.a in Frameworks */,
 			);
@@ -381,12 +410,8 @@
 			children = (
 				481939951A4D985B00F1015E /* SCMerchantTableViewCell.h */,
 				481939961A4D985B00F1015E /* SCMerchantTableViewCell.m */,
-				480C01C71A58EC7000A08F44 /* SCMerchantBaseInfoTableViewCell.h */,
-				480C01C81A58EC7000A08F44 /* SCMerchantBaseInfoTableViewCell.m */,
-				480C01C41A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.h */,
-				480C01C51A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.m */,
-				480C01C11A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.h */,
-				480C01C21A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.m */,
+				4841CEBA1A6B481100DA36FC /* SCMerchantDetailCell.h */,
+				4841CEBB1A6B481100DA36FC /* SCMerchantDetailCell.m */,
 				48BBF3D91A5D31FC00712BA3 /* SCMapMerchantInfoView.h */,
 				48BBF3DA1A5D31FC00712BA3 /* SCMapMerchantInfoView.m */,
 				48ADC8431A5A7D130036AD6E /* SCCollectionItem.h */,
@@ -472,6 +497,46 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		4841CEC81A6BAC2D00DA36FC /* MaintenanceTypeCellSubView */ = {
+			isa = PBXGroup;
+			children = (
+				4841CEC21A6B9FCB00DA36FC /* SCMaintenanceTypeView.h */,
+				4841CEC31A6B9FCB00DA36FC /* SCMaintenanceTypeView.m */,
+				4841CEDA1A6D414100DA36FC /* SCDriveHabitsItem.h */,
+				4841CEDB1A6D414100DA36FC /* SCDriveHabitsItem.m */,
+				4841CEDD1A6D42BD00DA36FC /* SCCarDriveHabitsView.h */,
+				4841CEDE1A6D42BD00DA36FC /* SCCarDriveHabitsView.m */,
+			);
+			name = MaintenanceTypeCellSubView;
+			sourceTree = "<group>";
+		};
+		4841CF471A6E094B00DA36FC /* UMessage_Sdk_1.1.0 */ = {
+			isa = PBXGroup;
+			children = (
+				4841CF481A6E094B00DA36FC /* libUMessage_Sdk_1.1.0.a */,
+				4841CF491A6E094B00DA36FC /* UMessage.h */,
+			);
+			path = UMessage_Sdk_1.1.0;
+			sourceTree = "<group>";
+		};
+		48433DDE1A6989AC002ECA7C /* HomePageSubView */ = {
+			isa = PBXGroup;
+			children = (
+				4841CEC81A6BAC2D00DA36FC /* MaintenanceTypeCellSubView */,
+				48433DDF1A6989C8002ECA7C /* SCMaintenanceTableViewCell.h */,
+				48433DE01A6989C8002ECA7C /* SCMaintenanceTableViewCell.m */,
+				4841CEBD1A6B9AC400DA36FC /* SCMaintenanceTypeCell.h */,
+				4841CEBE1A6B9AC400DA36FC /* SCMaintenanceTypeCell.m */,
+				4841CEC01A6B9AE700DA36FC /* SCMaintenanceTypeCell.xib */,
+				4841CEC51A6BAC1F00DA36FC /* SCMaintenanceItemCell.h */,
+				4841CEC61A6BAC1F00DA36FC /* SCMaintenanceItemCell.m */,
+				4841CEC91A6BAC6F00DA36FC /* SCMaintenanceItemCell.xib */,
+				4841CED11A6CE36400DA36FC /* SCMileageView.h */,
+				4841CED21A6CE36400DA36FC /* SCMileageView.m */,
+			);
+			path = HomePageSubView;
+			sourceTree = "<group>";
+		};
 		48661B771A5E7A9D007F92A7 /* CommonView */ = {
 			isa = PBXGroup;
 			children = (
@@ -518,6 +583,8 @@
 			children = (
 				4884CD271A4D4E050018ED09 /* SCMaintenanceViewController.h */,
 				4884CD281A4D4E050018ED09 /* SCMaintenanceViewController.m */,
+				4841CED71A6D049500DA36FC /* SCChangeMaintenanceDataViewController.h */,
+				4841CED81A6D049500DA36FC /* SCChangeMaintenanceDataViewController.m */,
 			);
 			path = HomePageSubViewController;
 			sourceTree = "<group>";
@@ -625,6 +692,7 @@
 		48AE95B01A50F52700A8A4B3 /* ThirdLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				4841CF471A6E094B00DA36FC /* UMessage_Sdk_1.1.0 */,
 				48F1A05E1A6556A6000A1BBD /* UMengFeedback_SDK_2.1 */,
 				48A82ED71A63C9CC00DB3A16 /* MYNStickyFlowLayout */,
 				48A531091A5C0F2600646057 /* BaiduMap_IOSSDK_v2.6.0_Lib */,
@@ -674,6 +742,8 @@
 				48AB35DB1A517CAB00BFBC77 /* SCUserInfo.m */,
 				485B30CA1A61324F00AC3CC2 /* SCReservation.h */,
 				485B30CB1A61324F00AC3CC2 /* SCReservation.m */,
+				4841CECB1A6BE5C300DA36FC /* SCUerCar.h */,
+				4841CECC1A6BE5C300DA36FC /* SCUerCar.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -702,6 +772,7 @@
 			isa = PBXGroup;
 			children = (
 				48F0812B1A45503C00531426 /* SCTabbar */,
+				48433DDE1A6989AC002ECA7C /* HomePageSubView */,
 				48661B771A5E7A9D007F92A7 /* CommonView */,
 				481939941A4D983C00F1015E /* MerchantSubView */,
 				4884A8AD1A52B4B10067DF78 /* UserSubView */,
@@ -877,6 +948,12 @@
 				TargetAttributes = {
 					482B57D21A43CB7700E47962 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 539L59J6H5;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					482B57EE1A43CB7700E47962 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -909,6 +986,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4841CECA1A6BAC6F00DA36FC /* SCMaintenanceItemCell.xib in Resources */,
 				48F1A0841A6556A6000A1BBD /* umeng_fb_audio_play_02@2x.png in Resources */,
 				48F1A0771A6556A6000A1BBD /* UMFeedbackLocalizable.strings in Resources */,
 				48F1A07C1A6556A6000A1BBD /* save@2x.png in Resources */,
@@ -922,6 +1000,7 @@
 				482B57E51A43CB7700E47962 /* Main.storyboard in Resources */,
 				4814D2141A5F82AF0071B9D9 /* ReservationItems.plist in Resources */,
 				48934F5D1A4CFE1700F29745 /* server.cer in Resources */,
+				4841CEC11A6B9AE700DA36FC /* SCMaintenanceTypeCell.xib in Resources */,
 				48F1A07D1A6556A6000A1BBD /* ToolViewInputText@2x.png in Resources */,
 				48F1A0831A6556A6000A1BBD /* umeng_fb_audio_play_01@2x.png in Resources */,
 				48661B7C1A5E7B23007F92A7 /* SCReservatAlertView.xib in Resources */,
@@ -986,20 +1065,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				480C01C31A58DF8600A08F44 /* SCMerchantDetialInfoTableViewCell.m in Sources */,
 				489786941A626502002593DD /* SCCarModelView.m in Sources */,
 				48B6699C1A53E75C00A753B2 /* SCVerificationCodeView.m in Sources */,
 				482B57DC1A43CB7700E47962 /* AppDelegate.mm in Sources */,
 				482B57DF1A43CB7700E47962 /* MaintenanceCar.xcdatamodeld in Sources */,
 				48AE95C61A50F52700A8A4B3 /* MJRefreshHeaderView.m in Sources */,
 				48DA960B1A4E8A0C009CCC50 /* SCLocationInfo.m in Sources */,
-				480C01C61A58DFC300A08F44 /* SCMerchantPurchaseTableViewCell.m in Sources */,
 				48AB35E01A5183B400BFBC77 /* SCLoginViewController.m in Sources */,
 				4821C7061A638C9E0089EEA0 /* SCCarBrand.m in Sources */,
 				48C8D4411A5E224C005F55F9 /* SCMerchantFilterView.m in Sources */,
 				489786911A6264C8002593DD /* SCCarBrandView.m in Sources */,
+				4841CED91A6D049500DA36FC /* SCChangeMaintenanceDataViewController.m in Sources */,
 				4820DA411A64115000129D39 /* SCCarBrandDisplayModel.m in Sources */,
 				48F2AA541A668462000578B2 /* SCCarModelManagedObject.m in Sources */,
+				4841CEDF1A6D42BD00DA36FC /* SCCarDriveHabitsView.m in Sources */,
 				48F0812E1A45505400531426 /* SCTabbar.m in Sources */,
 				48AE95C41A50F52700A8A4B3 /* MJRefreshConst.m in Sources */,
 				48EC705B1A442BE1003CE3FD /* SCMerchantViewController.m in Sources */,
@@ -1013,6 +1092,7 @@
 				4821C70C1A63BEEA0089EEA0 /* SCCollectionIndexView.m in Sources */,
 				48F2AA4E1A667F11000578B2 /* SCCarModel.m in Sources */,
 				48AE95CC1A51050D00A8A4B3 /* SCReservationViewController.m in Sources */,
+				4841CECD1A6BE5C300DA36FC /* SCUerCar.m in Sources */,
 				48F666A61A65263F0044674C /* SCSettingTableViewController.m in Sources */,
 				485B30CF1A61376F00AC3CC2 /* SCTableViewController.m in Sources */,
 				4897868E1A622FC4002593DD /* SCAddCarViewController.m in Sources */,
@@ -1026,8 +1106,10 @@
 				4821C7091A63B0630089EEA0 /* SCCollectionReusableView.m in Sources */,
 				48F2AA511A668437000578B2 /* SCCar.m in Sources */,
 				482B57D91A43CB7700E47962 /* main.m in Sources */,
+				4841CEC71A6BAC1F00DA36FC /* SCMaintenanceItemCell.m in Sources */,
 				48F2343D1A619B3700D2E663 /* SCReservationTableViewCell.m in Sources */,
 				48AE95C91A50F52700A8A4B3 /* UIView+MJExtension.m in Sources */,
+				4841CEC41A6B9FCB00DA36FC /* SCMaintenanceTypeView.m in Sources */,
 				48C8D4441A5E2B21005F55F9 /* SCFilterPopView.m in Sources */,
 				48EEE0E51A4AD163005C735D /* SCWeather.m in Sources */,
 				4814D2171A5F92B80071B9D9 /* SCDatePickerView.m in Sources */,
@@ -1035,11 +1117,15 @@
 				48F2AA571A66846F000578B2 /* SCCarManagedObject.m in Sources */,
 				485B30C91A61311600AC3CC2 /* SCMyReservationTableViewController.m in Sources */,
 				48DA960E1A4EBBE0009CCC50 /* SCMerchantList.m in Sources */,
+				4841CEDC1A6D414100DA36FC /* SCDriveHabitsItem.m in Sources */,
 				48EC70611A442C56003CE3FD /* SCUserViewController.m in Sources */,
 				48EC70551A442B13003CE3FD /* SCMainViewController.m in Sources */,
+				48433DE11A6989C8002ECA7C /* SCMaintenanceTableViewCell.m in Sources */,
+				4841CEBF1A6B9AC400DA36FC /* SCMaintenanceTypeCell.m in Sources */,
+				4841CEBC1A6B481100DA36FC /* SCMerchantDetailCell.m in Sources */,
 				4884A8B01A52B4E50067DF78 /* SCVerificationCodeButton.m in Sources */,
-				480C01CA1A58EC7000A08F44 /* SCMerchantBaseInfoTableViewCell.m in Sources */,
 				48AE95C81A50F52700A8A4B3 /* UIScrollView+MJRefresh.m in Sources */,
+				4841CED31A6CE36400DA36FC /* SCMileageView.m in Sources */,
 				48B7BDA51A600D7500ED6A20 /* SCPickerView.m in Sources */,
 				489786971A626B47002593DD /* SCSelectedView.m in Sources */,
 				485B30CC1A61324F00AC3CC2 /* SCReservation.m in Sources */,
@@ -1181,6 +1267,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = AppLaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = MaintenanceCar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1190,8 +1278,12 @@
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/BaiduMap_IOSSDK_v2.6.0_Lib",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMengFeedback_SDK_2.1",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMengFeedback_SDK_2.1/UMOpus",
+					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMessage_Sdk_All_1.1.0/UMessage_Sdk_1.1.0",
+					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMessage_Sdk_All_1.1.0/UMessage_Sdk_Demo/UMessage_Sdk_Demo/UMessage_Sdk_1.1.0",
+					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMessage_Sdk_1.1.0",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1202,6 +1294,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = AppLaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = MaintenanceCar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1211,8 +1305,12 @@
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/BaiduMap_IOSSDK_v2.6.0_Lib",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMengFeedback_SDK_2.1",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMengFeedback_SDK_2.1/UMOpus",
+					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMessage_Sdk_All_1.1.0/UMessage_Sdk_1.1.0",
+					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMessage_Sdk_All_1.1.0/UMessage_Sdk_Demo/UMessage_Sdk_Demo/UMessage_Sdk_1.1.0",
+					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMessage_Sdk_1.1.0",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

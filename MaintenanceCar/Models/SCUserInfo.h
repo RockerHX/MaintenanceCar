@@ -13,13 +13,21 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
     SCLoginStatusLogout = NO
 };
 
+@class SCUerCar;
+
 // 用户数据Model
 @interface SCUserInfo : NSObject
 
 @property (nonatomic, copy, readonly)   NSString      *userID;          // 用户ID
 @property (nonatomic, copy, readonly)   NSString      *phoneNmber;      // 用户手机号
-@property (nonatomic, copy, readonly)   NSArray       *userCarIDs;      // 用户私家车的ID集合
+@property (nonatomic, copy, readonly)   NSArray       *cars;            // 用户私家车集合
 @property (nonatomic, assign, readonly) SCLoginStatus loginStatus;      // 登陆状态
+
+@property (nonatomic, strong, readonly) SCUerCar      *firstCar;        // 第一辆车
+@property (nonatomic, strong)           SCUerCar      *currentCar;      // 当前车辆
+
+@property (nonatomic, assign, readonly) BOOL          carsLoadFinish;   // 车辆加载结束标识
+@property (nonatomic, assign)           BOOL          addAliasSuccess;  // 推送Alias添加成功
 
 /**
  *  单例方法
@@ -43,6 +51,15 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
 /**
  *  添加私家车
  */
-- (void)updateCarIDs:(NSArray *)carIDs;
+- (void)addCar:(SCUerCar *)car;
+
+/**
+ *  缓存用户车辆数据，直接本地覆盖
+ *
+ *  @param userCars 用户车辆数据
+ */
+- (void)saveUserCarsWithData:(NSArray *)userCars;
+
+- (void)userCarsReuqest:(void(^)(BOOL finish))block;
 
 @end

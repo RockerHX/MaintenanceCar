@@ -23,6 +23,24 @@
     _specialLabel.layer.cornerRadius = 2.0f;
     _specialLabel.layer.borderWidth = 1.0f;
     _specialLabel.layer.borderColor = UIColorWithRGBA(230.0f, 109.0f, 81.0f, 1.0f).CGColor;
+    
+    
+    if (IS_IPHONE_5_PRIOR || IS_IPHONE_5)
+    {
+        if (IS_IOS8)
+            [self performSelector:@selector(viewConfig) withObject:nil afterDelay:0.1f];
+        else
+            [self viewConfig];
+    }
+}
+
+- (void)viewConfig
+{
+    _buttonWidth.constant = 66.0f;
+    [_reservationButton needsUpdateConstraints];
+    [UIView animateWithDuration:0.3f animations:^{
+        [_reservationButton layoutIfNeeded];
+    }];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

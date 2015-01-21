@@ -107,7 +107,7 @@
         _mapMerchantInfoView.distanceLabel.text = _merchant.distance;
     }
     @catch (NSException *exception) {
-        SCException(@"Select Annotation Error:%@", exception.reason);
+        NSLog(@"Select Annotation Error:%@", exception.reason);
         _mapMerchantInfoView.hidden = YES;
     }
     @finally {
@@ -145,7 +145,7 @@
         [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
     }
     @catch (NSException *exception) {
-        SCException(@"SCMapViewController Go to the SCMerchantDetailViewController exception reasion:%@", exception.reason);
+        NSLog(@"SCMapViewController Go to the SCMerchantDetailViewController exception reasion:%@", exception.reason);
     }
     @finally {
     }
@@ -168,7 +168,7 @@
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {
-        SCException(@"SCMapViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+        NSLog(@"SCMapViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
     }
     @finally {
     }

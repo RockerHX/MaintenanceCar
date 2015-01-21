@@ -12,19 +12,7 @@
 
 @dynamic carID;
 @dynamic modelID;
-@dynamic brandID;
-@dynamic brandCountry;
-@dynamic brandInitials;
-@dynamic carType;
-@dynamic carOption;
 @dynamic carFullModel;
-@dynamic carDisplacement;
-@dynamic turbo;
-@dynamic grade;
 @dynamic upTime;
-@dynamic gearBox;
-@dynamic techOwner;
-@dynamic createTime;
-@dynamic updateTime;
 
 @end

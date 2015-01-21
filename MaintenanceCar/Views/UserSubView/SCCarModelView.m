@@ -100,65 +100,27 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     [_rightTableView reloadData];
 }
 
-/**
- *  从服务器获取车辆车型数据失败，加载本地数据
- */
-- (void)loadCarModelsLocalData
-{
-    SCCarModel *carModel = [[SCCarModel alloc] init];
-    if (carModel.localData.count)
-    {
-        // 加载成功刷新列表
-        [_carModels arrayByAddingObject:carModel.localData];
-        [_leftTableView reloadData];
-    }
-    else
-    {
-        ShowPromptHUDWithText(self, @"数据获取失败，请重新获取！", 1.0f);        // 加载失败进行提示
-    }
-}
-
-/**
- *  从服务器获取车辆型号数据失败，加载本地数据
- */
-- (void)loadCarsLocalData
-{
-    SCCar *car = [[SCCar alloc] init];
-    if (!car.localData.count)
-    {
-        [_carModels arrayByAddingObject:car.localData];                     // 加载失败进行提示
-        [_rightTableView reloadData];
-    }
-    else
-    {
-        ShowPromptHUDWithText(self, @"数据获取失败，请重新获取！", 1.0f);
-    }
-}
-
 - (void)startCarModelReuqest:(SCCarBrand *)carBrand
 {
     __weak typeof(self) weakSelf = self;
-    NSDictionary *parameters = @{@"brand": carBrand.brand_id};
+    NSDictionary *parameters = @{@"brand_id": carBrand.brand_id,
+                                @"time_flag": @"0"};
     [[SCAPIRequest manager] startUpdateCarModelAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess) {
-            if (((NSArray *)responseObject).count)
+        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        {
+            NSArray *models = responseObject[@"data"];
+            for (NSDictionary *carData in models)
             {
-                for (NSDictionary *data in responseObject)
-                {
-                    SCCarModel *carModel = [[SCCarModel alloc] initWithDictionary:data error:nil];
-                    [carModel save];
-                    [_carModels addObject:carModel];
-                }
-                [_leftTableView reloadData];
+                SCCarModel *carModel = [[SCCarModel alloc] initWithDictionary:carData error:nil];
+                [_carModels addObject:carModel];
             }
-            else
-                ShowPromptHUDWithText(weakSelf, @"暂无数据，有待添加！", 1.0f);
+            [_leftTableView reloadData];
         }
         else
-            [weakSelf loadCarModelsLocalData];
+            ShowPromptHUDWithText(weakSelf, @"暂无数据，有待添加！", 1.0f);
         [MBProgressHUD hideHUDForView:weakSelf animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [weakSelf loadCarModelsLocalData];
+        ShowPromptHUDWithText(weakSelf, @"网络卡爆了，去楼顶试试吧，亲！", 1.0f);
         [MBProgressHUD hideHUDForView:weakSelf animated:YES];
     }];
 }
@@ -166,27 +128,28 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
 - (void)startCarsRequest:(SCCarModel *)carModel
 {
     __weak typeof(self) weakSelf = self;
-    NSDictionary *parameters = @{@"model": carModel.model_id};
+    NSDictionary *parameters = @{@"model_id": carModel.model_id,
+                                 @"time_flag": @"0"};
     [[SCAPIRequest manager] startUpdateCarsAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            NSDictionary *defaultCarData = @{@"car_id": @"", @"model_id": carModel.model_id, @"brand_id": carModel.brand_id, @"car_full_model": @"我不清楚"};
+            NSDictionary *defaultCarData = @{@"car_id": @"", @"model_id": carModel.model_id, @"up_time": @"", @"car_full_model": @"我不清楚/其他"};
             SCCar *defaultCar = [[SCCar alloc] initWithDictionary:defaultCarData error:nil];
             [_cars addObject:defaultCar];
             
-            for (NSDictionary *data in responseObject)
+            NSArray *cars = responseObject[@"data"];
+            for (NSDictionary *carData in cars)
             {
-                SCCar *car = [[SCCar alloc] initWithDictionary:data error:nil];
-                [car save];
+                SCCar *car = [[SCCar alloc] initWithDictionary:carData error:nil];
                 [_cars addObject:car];
             }
             [_rightTableView reloadData];
         }
         else
-            [weakSelf loadCarsLocalData];
+            ShowPromptHUDWithText(weakSelf, @"暂无数据，有待添加！", 1.0f);
         [MBProgressHUD hideHUDForView:weakSelf animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [weakSelf loadCarsLocalData];
+        ShowPromptHUDWithText(weakSelf, @"网络卡爆了，去楼顶试试吧，亲！", 1.0f);
         [MBProgressHUD hideHUDForView:weakSelf animated:YES];
     }];
 }

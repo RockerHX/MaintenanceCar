@@ -203,6 +203,15 @@
  */
 - (void)startAddCarAPIRequestWithParameters:(NSDictionary *)parameters
                                         Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  获取用户所有车辆接口请求方法(API:/Usercar - GET)
+ *
+ *  @param parameters   请求参数集合
+ */
+- (void)startGetUserCarsAPIRequestWithParameters:(NSDictionary *)parameters
+                                         Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 @end

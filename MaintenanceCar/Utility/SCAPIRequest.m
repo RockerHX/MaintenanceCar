@@ -250,4 +250,11 @@
     [self requestPOSTMethodsWithAPI:AddCarAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startGetUserCarsAPIRequestWithParameters:(NSDictionary *)parameters
+                                         Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:AddCarAPIURL parameters:parameters success:success failure:failure];
+}
+
 @end
