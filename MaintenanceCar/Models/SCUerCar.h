@@ -19,6 +19,11 @@
 @property (nonatomic, copy) NSString <Optional>*run_distance;           // 里程数
 @property (nonatomic, copy) NSString <Optional>*run_distance_stamp;     // 里程时间
 @property (nonatomic, copy) NSString <Optional>*model_name;             // 车型名称
+@property (nonatomic, copy) NSString <Optional>*habit;                  // 驾驶习惯
 @property (nonatomic, copy) NSString <Optional>*memo;                   // 备注
+
+@property (nonatomic, strong) NSArray <Ignore>*normalItems;             // 保养数据 - 普保
+@property (nonatomic, strong) NSArray <Ignore>*carefulItems;            // 保养数据 - 精保
+@property (nonatomic, strong) NSArray <Ignore>*allItems;                // 保养数据 - 自选
 
 @end

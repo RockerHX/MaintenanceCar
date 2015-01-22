@@ -6,32 +6,23 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
-typedef NS_ENUM(NSInteger, SCMaintenanceType) {
-    SCMaintenanceTypeNormal = 2000,
-    SCMaintenanceTypeAccurate,
-    SCMaintenanceTypeSelf
-};
-
-@class SCMaintenanceTypeView;
+#import "SCMaintenanceTableViewCell.h"
+#import "SCMaintenanceTypeItem.h"
 
 @protocol SCMaintenanceTypeViewDelegate <NSObject>
 
 @optional
-- (void)typeViewSelected:(SCMaintenanceTypeView *)typeView;
+- (void)didSelectedMaintenanceType:(SCMaintenanceType)type;
 
 @end
 
 @interface SCMaintenanceTypeView : UIView
 
-@property (weak, nonatomic) IBOutlet UIImageView       *checkBox;
-@property (weak, nonatomic) IBOutlet UILabel           *nameLabel;
+@property (weak, nonatomic) IBOutlet SCMaintenanceTypeItem *normalItem;
+@property (weak, nonatomic) IBOutlet SCMaintenanceTypeItem *accurateItem;
+@property (weak, nonatomic) IBOutlet SCMaintenanceTypeItem *selfItem;
 
-@property (nonatomic, weak)          id                <SCMaintenanceTypeViewDelegate>delegate;
-@property (nonatomic, assign)        SCMaintenanceType type;
-
-- (void)selected;
-- (void)unSelected;
+@property (nonatomic, weak)          id                    <SCMaintenanceTypeViewDelegate>delegate;
+@property (nonatomic, assign)        SCMaintenanceType     maintenanceType;
 
 @end

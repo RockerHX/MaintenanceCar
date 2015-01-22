@@ -45,6 +45,9 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define CarsAPI                     @"/Cars"                                // 汽车款式接口
 #define AddCarAPI                   @"/Usercar"                             // 添加车辆接口
 
+#define MaintenanceAPI              @"/Baoyang/user"                        // 保养数据接口
+#define UpdateCarAPI                @"/Usercar/update"                      // 更新车辆数据接口
+
 
 #define WearthAPIURL                    [APIURL stringByAppendingString:WearthAPI]                  // 天气接口URL - 用于主页模块获取天气信息
 #define SearchAPIURL                    [APIURL stringByAppendingString:SearchAPI]                  // 商户搜索接口URL - 用于商户搜索和筛选
@@ -66,5 +69,8 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define CarModelAPIURL                  [APIURL stringByAppendingString:CarModelAPI]                // 汽车型号接口URL - 用于更新汽车型号
 #define CarsAPIURL                      [APIURL stringByAppendingString:CarsAPI]                    // 汽车款式接口URL - 用于更新汽车款式
 #define AddCarAPIURL                    [APIURL stringByAppendingString:AddCarAPI]                  // 添加车辆接口URL - 用于用户添加车辆
+
+#define MaintenanceAPIURL               [APIURL stringByAppendingString:MaintenanceAPI]             // 保养数据接口URL - 用于获取用户车辆保养数据
+#define UpdateCarAPIURL                 [APIURL stringByAppendingString:UpdateCarAPI]               // 更新车辆数据接口URL - 用于用户更新车辆数据
 
 #endif

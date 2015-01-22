@@ -257,4 +257,19 @@
     [self requestGETMethodsWithAPI:AddCarAPIURL parameters:parameters success:success failure:failure];
 }
 
+#pragma mark - Maintenance Request
+- (void)startMaintenanceDataAPIRequestWithParameters:(NSDictionary *)parameters
+                                             Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MaintenanceAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startUpdateUserCarAPIRequestWithParameters:(NSDictionary *)parameters
+                                           Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:UpdateCarAPIURL parameters:parameters success:success failure:failure];
+}
+
 @end

@@ -18,22 +18,27 @@
 
 @implementation SCMileageView
 
+#pragma mark - Setter And Getter Methods
 - (void)setMileage:(NSString *)mileage
 {
-    if (mileage.length)
-    {
-        NSDictionary *mileageNumber = [self getMileageNumber:[mileage integerValue]];
-        
-        _bitsLabel.text            = mileageNumber[BitsKey];
-        _tenLabel.text             = mileageNumber[TenKey];
-        _hundredLabel.text         = mileageNumber[HundredKey];
-        _thousandLabel.text        = mileageNumber[ThousandKey];
-        _tenThousandLabel.text     = mileageNumber[TenThousandKey];
-        _hundredThousandLabel.text = mileageNumber[HundredThousandKey];
-    }
+    NSDictionary *mileageNumber = [self getMileageNumber:[mileage integerValue]];
+    
+    _bitsLabel.text            = mileageNumber[BitsKey];
+    _tenLabel.text             = mileageNumber[TenKey];
+    _hundredLabel.text         = mileageNumber[HundredKey];
+    _thousandLabel.text        = mileageNumber[ThousandKey];
+    _tenThousandLabel.text     = mileageNumber[TenThousandKey];
+    _hundredThousandLabel.text = mileageNumber[HundredThousandKey];
 }
 
 #pragma mark - Private Methods
+/**
+ *  分解里程数
+ *
+ *  @param mileage 里程数据
+ *
+ *  @return 里程数据元素
+ */
 - (NSDictionary *)getMileageNumber:(NSInteger)mileage
 {
     NSDictionary *defaultData = @{BitsKey: @"0",
@@ -52,7 +57,7 @@
         NSString *tenThousand     = [NSString stringWithFormat:@"%@", @(mileage/10000)];
         NSString *hundredThousand = [NSString stringWithFormat:@"%@", @(mileage/100000)];
         
-        numbers[bits]               = bits;
+        numbers[BitsKey]            = bits;
         numbers[TenKey]             = [ten substringWithRange:(NSRange){ten.length -1, 1}];
         numbers[HundredKey]         = [hundred substringWithRange:(NSRange){hundred.length -1, 1}];
         numbers[ThousandKey]        = [thousand substringWithRange:(NSRange){thousand.length -1, 1}];

@@ -23,6 +23,10 @@
     _normalItem.delegate = self;
     _highItem.delegate   = self;
     _oftenItem.delegate  = self;
+
+    _normalItem.type     = SCHabitsTypeNoraml;
+    _highItem.type       = SCHabitsTypeHigh;
+    _oftenItem.type      = SCHabitsTypeOften;
     
     _preItem = _normalItem;
 }
@@ -33,7 +37,41 @@
     {
         [_preItem unSelected];
         _preItem = item;
+        _habitsType = item.type;
     }
+}
+
+- (void)setHabitsType:(SCHabitsType)habitsType
+{
+    _habitsType = habitsType;
+    
+    switch (habitsType)
+    {
+        case SCHabitsTypeHigh:
+        {
+            [_highItem selected];
+            [self didSelected:_highItem];
+        }
+            break;
+        case SCHabitsTypeOften:
+        {
+            [_oftenItem selected];
+            [self didSelected:_oftenItem];
+        }
+            break;
+            
+        default:
+        {
+            [_normalItem selected];
+            [self didSelected:_normalItem];
+        }
+            break;
+    }
+}
+
+- (IBAction)saveButtonPressed:(UIButton *)sender
+{
+    [_delegate didSaveWithHabitsType:_habitsType];
 }
 
 @end

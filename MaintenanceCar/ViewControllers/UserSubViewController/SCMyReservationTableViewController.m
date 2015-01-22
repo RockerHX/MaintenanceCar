@@ -87,15 +87,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 列表被点击跳转到商户详情
-    @try {
-        UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
-        [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+//    @try {
+//        UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
+//        [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
+//    }
+//    @catch (NSException *exception) {
+//        NSLog(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
+//    }
+//    @finally {
+//    }
 }
 
 #pragma mark - Public Methods

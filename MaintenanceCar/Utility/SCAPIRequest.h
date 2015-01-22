@@ -214,4 +214,22 @@
                                          Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+#pragma mark - Maintenance API
+/**
+ *  保养数据接口请求方法(API:/Baoyang/user - GET)
+ *
+ *  @param parameters   请求参数集合
+ */
+- (void)startMaintenanceDataAPIRequestWithParameters:(NSDictionary *)parameters
+                                             Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+/**
+ *  更新车辆数据接口请求方法(API:/Usercar/update - POST)
+ *
+ *  @param parameters   请求参数集合
+ */
+- (void)startUpdateUserCarAPIRequestWithParameters:(NSDictionary *)parameters
+                                           Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 @end

@@ -62,4 +62,7 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
 
 - (void)userCarsReuqest:(void(^)(BOOL finish))block;
 
+- (void)load;
+- (void)refresh;
+
 @end

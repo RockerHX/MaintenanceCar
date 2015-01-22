@@ -8,14 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
-@class SCCar;
+@class SCCarDriveHabitsView;
+
+@protocol SCChangeMaintenanceDataViewControllerDelegate <NSObject>
+
+@optional
+- (void)dataSaveSuccess;
+
+@end
 
 @interface SCChangeMaintenanceDataViewController : UITableViewController
 
-@property (weak, nonatomic) IBOutlet UILabel     *userCarLabel;
-@property (weak, nonatomic) IBOutlet UITextField *mileageTextField;
-@property (weak, nonatomic) IBOutlet UILabel     *buyCarDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel              *userCarLabel;            // 车辆名字栏
+@property (weak, nonatomic) IBOutlet UITextField          *mileageTextField;        // 里程输入栏
+@property (weak, nonatomic) IBOutlet UILabel              *buyCarDateLabel;         // 购买时间栏
+@property (weak, nonatomic) IBOutlet SCCarDriveHabitsView *carDriveHabitsView;      // 驾驶习惯View
 
-- (IBAction)buyCarButtonPressed:(UIButton *)sender;
+@property (nonatomic, weak)          id                   <SCChangeMaintenanceDataViewControllerDelegate>delegate;
+
+// 购车时间按钮触发事件
+- (IBAction)buyCarDateButtonPressed:(UIButton *)sender;
 
 @end

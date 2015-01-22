@@ -32,8 +32,8 @@
 
 - (void)setFrame:(CGRect)frame
 {
-    frame.origin.x += 10.0f;
-    frame.size.width -= 20.0f;
+    frame.origin.x = 10.0f;
+    frame.size.width = SCREEN_WIDTH - 20.0f;
     [super setFrame:frame];
 }
 

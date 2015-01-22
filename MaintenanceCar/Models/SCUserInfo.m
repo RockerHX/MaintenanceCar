@@ -24,7 +24,7 @@ static SCUserInfo *userInfo = nil;
 
 @interface SCUserInfo ()
 {
-    NSMutableArray *_cars;
+    NSMutableArray *_userCars;
     
     BLOCK          _block;
 }
@@ -38,7 +38,7 @@ static SCUserInfo *userInfo = nil;
 {
     self = [super init];
     if (self) {
-        _cars = [@[] mutableCopy];
+        _userCars = [@[] mutableCopy];
         [self addObserver:self forKeyPath:@"carsLoadFinish" options:NSKeyValueObservingOptionNew context:nil];
     }
     return self;
@@ -49,7 +49,7 @@ static SCUserInfo *userInfo = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         userInfo = [[SCUserInfo alloc] init];
-        [userInfo cars];
+        [userInfo load];
     });
     return userInfo;
 }
@@ -60,7 +60,7 @@ static SCUserInfo *userInfo = nil;
     if ([keyPath isEqualToString:@"carsLoadFinish"])
     {
         BOOL loadFinish = [change[NSKeyValueChangeNewKey] boolValue];
-        if (loadFinish)
+        if (loadFinish && _block)
             _block(loadFinish);
     }
 }
@@ -79,23 +79,6 @@ static SCUserInfo *userInfo = nil;
 - (SCLoginStatus)loginStatus
 {
     return ([[USER_DEFAULT objectForKey:kLoginKey] boolValue] && [USER_DEFAULT objectForKey:kUserIDKey]) ? SCLoginStatusLogin : SCLoginStatusLogout;
-}
-
-- (NSArray *)cars
-{
-    NSArray *userCars = [USER_DEFAULT objectForKey:kUserCarsKey];
-    if (self.loginStatus && userCars.count)
-    {
-        [_cars removeAllObjects];
-        for (NSDictionary *carData in userCars)
-        {
-            SCUerCar *userCar = [[SCUerCar alloc] initWithDictionary:carData error:nil];
-            [_cars addObject:userCar];
-        }
-        _firstCar = _cars[Zero];
-        _currentCar = _firstCar;
-    }
-    return _cars;
 }
 
 - (BOOL)addAliasSuccess
@@ -133,7 +116,7 @@ static SCUserInfo *userInfo = nil;
 
 - (void)addCar:(SCUerCar *)car
 {
-    for (SCUerCar *userCar in _cars)
+    for (SCUerCar *userCar in _userCars)
     {
         if ([userCar.user_car_id isEqualToString:car.user_car_id])
         {
@@ -148,7 +131,7 @@ static SCUserInfo *userInfo = nil;
             userCar.memo               = car.memo;
         }
         else
-            [_cars addObject:car];
+            [_userCars addObject:car];
     }
 }
 
@@ -163,6 +146,8 @@ static SCUserInfo *userInfo = nil;
     }
     @finally {
         _carsLoadFinish = YES;
+        [self setValue:@(YES) forKey:@"carsLoadFinish"];
+        [self load];
     }
 }
 
@@ -181,6 +166,27 @@ static SCUserInfo *userInfo = nil;
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         }];
     }
+}
+
+- (void)load
+{
+    NSArray *userCars = [USER_DEFAULT objectForKey:kUserCarsKey];
+    if (self.loginStatus && userCars.count)
+    {
+        [_userCars removeAllObjects];
+        for (NSDictionary *carData in userCars)
+        {
+            SCUerCar *userCar = [[SCUerCar alloc] initWithDictionary:carData error:nil];
+            [_userCars addObject:userCar];
+        }
+        _firstCar = _userCars[Zero];
+    }
+    _cars = _userCars;
+}
+
+- (void)refresh
+{
+    _currentCar = _firstCar;
 }
 
 @end

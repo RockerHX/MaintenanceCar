@@ -1,5 +1,5 @@
 //
-//  SCMaintenanceTypeView.m
+//  SCMaintenanceTypeView
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/18.
@@ -7,32 +7,72 @@
 //
 
 #import "SCMaintenanceTypeView.h"
+#import "MicroCommon.h"
+
+@interface SCMaintenanceTypeView () <SCMaintenanceTypeItemDelegate>
+{
+    SCMaintenanceTypeItem *_preTypeView;
+}
+
+@end
 
 @implementation SCMaintenanceTypeView
 
+#pragma mark - Init Methods
 - (void)awakeFromNib
 {
-    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer)]];
+    _normalItem.type       = SCMaintenanceTypeNormal;
+    _accurateItem.type     = SCMaintenanceTypeAccurate;
+    _selfItem.type         = SCMaintenanceTypeSelf;
+
+    _normalItem.delegate   = self;
+    _accurateItem.delegate = self;
+    _selfItem.delegate     = self;
+
+    _preTypeView           = _selfItem;
+    _maintenanceType       = SCMaintenanceTypeSelf;
 }
 
-#pragma mark - Private
-- (void)tapGestureRecognizer
+#pragma mark - Private Methods
+- (void)typeViewSelected:(SCMaintenanceTypeItem *)typeView
 {
-    [self selected];
-    [_delegate typeViewSelected:self];
+    if (typeView != _preTypeView)
+    {
+        [_preTypeView unSelected];
+        
+        _preTypeView     = typeView;
+        _maintenanceType = typeView.type;
+        [_delegate didSelectedMaintenanceType:typeView.type];
+    }
 }
 
-#pragma mark - Public Methods
-- (void)selected
+#pragma mark - Setter And Getter Methods
+- (void)setMaintenanceType:(SCMaintenanceType)maintenanceType
 {
-    _checkBox.image = [UIImage imageNamed:@"the-radio-pitch-on"];
-    _nameLabel.textColor = [UIColor blackColor];
-}
-
-- (void)unSelected
-{
-    _checkBox.image = [UIImage imageNamed:@"the-radio-uncheck"];
-    _nameLabel.textColor = [UIColor lightGrayColor];
+    _maintenanceType = maintenanceType;
+    
+    switch (maintenanceType)
+    {
+        case SCMaintenanceTypeAccurate:
+        {
+            [self typeViewSelected:_accurateItem];
+            [_accurateItem selected];
+        }
+            break;
+        case SCMaintenanceTypeSelf:
+        {
+            [self typeViewSelected:_selfItem];
+            [_selfItem selected];
+        }
+            break;
+            
+        default:
+        {
+            [self typeViewSelected:_normalItem];
+            [_normalItem selected];
+        }
+            break;
+    }
 }
 
 @end

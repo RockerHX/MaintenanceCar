@@ -10,7 +10,7 @@
 #import <UMengAnalytics/MobClick.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "MicroCommon.h"
-#import "SCMaintenanceTypeCell.h"
+#import "SCMaintenanceTypeView.h"
 #import "SCMaintenanceItemCell.h"
 #import "SCMerchantTableViewCell.h"
 #import "SCLocationInfo.h"
@@ -22,20 +22,21 @@
 #import "SCUserInfo.h"
 #import "SCUerCar.h"
 #import "SCMileageView.h"
+#import "SCServiceItem.h"
+#import "SCChangeMaintenanceDataViewController.h"
 
 #define MaintenanceCellReuseIdentifier   @"MaintenanceCellReuseIdentifier"
 
-@interface SCMaintenanceViewController () <SCReservatAlertViewDelegate, MBProgressHUDDelegate>
+@interface SCMaintenanceViewController () <SCReservatAlertViewDelegate, MBProgressHUDDelegate, SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
 {
-    BOOL           _isPush;
-    NSInteger      _reservationButtonIndex;
-    NSMutableArray *_recommendMerchants;
+    BOOL              _isPush;
+    NSInteger         _reservationButtonIndex;
+    NSArray           *_serviceItems;
+    NSMutableArray    *_recommendMerchants;
     
-    NSInteger      _carIndex;
+    NSInteger         _carIndex;
+    SCMaintenanceType _maintenanceType;
 }
-
-@property (nonatomic, assign) BOOL loadMerhcantItemFinish;
-@property (nonatomic, assign) BOOL loadUserCarFinish;
 
 @end
 
@@ -54,6 +55,7 @@
     [super viewDidAppear:animated];
     
     _isPush = NO;
+    [self displayMaintenanceView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -62,8 +64,8 @@
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[首页] - 保养"];
     
+    // 由于首页无导航栏设计，退出保养页面的时候隐藏导航栏
     if (!_isPush)
-        // 由于首页无导航栏设计，退出保养页面的时候隐藏导航栏
         [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
@@ -91,6 +93,8 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     _isPush = YES;
+    SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = segue.destinationViewController;
+    changeMaintenanceDataViewController.delegate = self;
 }
 
 #pragma mark - Action Methods
@@ -101,32 +105,37 @@
     {
         _carIndex --;
         userInfo.currentCar = userInfo.cars[_carIndex];
+        
+        _nextButton.enabled = YES;
+        if (!_carIndex)
+            sender.enabled = NO;
+        [self startMaintenanceDataRequest];
     }
-    else
-        _carIndex = Zero;
-    
-    [self displayMaintenanceView];
 }
 
 - (IBAction)nextButtonPressed:(UIButton *)sender
 {
     SCUserInfo *userInfo = [SCUserInfo share];
-    if (_carIndex < userInfo.cars.count - 1)
+    NSInteger count = userInfo.cars.count - 1;
+    if (_carIndex < count)
     {
         _carIndex ++;
         userInfo.currentCar = userInfo.cars[_carIndex];
+        
+        _preButton.enabled = YES;
+        if (_carIndex == count)
+            sender.enabled = NO;
+        [self startMaintenanceDataRequest];
     }
-    else
-        _carIndex = userInfo.cars.count - 1;
-    
-    [self displayMaintenanceView];
 }
 
 #pragma mark - Private Methods
 - (void)initConfig
 {
     _recommendMerchants = [@[] mutableCopy];
+    [[SCUserInfo share] refresh];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _maintenanceTypeView.delegate = self;
     
     // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
     [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed:) name:kMerchantListReservationNotification object:nil];
@@ -136,14 +145,14 @@
 {
     if (IS_IPHONE_6)
     {
-        _headerView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 210.0f);
+        _headerView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 270.0f);
         _heightConstraint.constant = _heightConstraint.constant + 15.0f;
         [self.view needsUpdateConstraints];
         [self.view layoutIfNeeded];
     }
     else if (IS_IPHONE_6Plus)
     {
-        _headerView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 220.0f);
+        _headerView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 280.0f);
         _heightConstraint.constant = _heightConstraint.constant + 30.0f;
         [self.view needsUpdateConstraints];
         [self.view layoutIfNeeded];
@@ -156,15 +165,26 @@
         _driveHabitLabel.font = [UIFont systemFontOfSize:13.0f];
     }
     [self startDataRequest];
-    [self displayMaintenanceView];
 }
 
 - (void)displayMaintenanceView
 {
-    [[SCUserInfo share] cars];
-    SCUserInfo *userInfo = [SCUserInfo share];
-    _carNameLabel.text = userInfo.currentCar.model_name;
-    _labelView.mileage = userInfo.currentCar.run_distance;
+    SCUerCar *userCar                    = [SCUserInfo share].currentCar;
+    _carNameLabel.text                   = userCar.model_name;
+    _buyCarTimeLabel.text                = ([userCar.buy_car_year integerValue] && [userCar.buy_car_month integerValue]) ? [NSString stringWithFormat:@"%@年%@月", userCar.buy_car_year, userCar.buy_car_month] : @"";
+    _labelView.mileage                   = userCar.run_distance;
+    _driveHabitLabel.text                = [self handleHabitString:userCar.habit];
+    _maintenanceTypeView.maintenanceType = _maintenanceType;
+}
+
+- (NSString *)handleHabitString:(NSString *)habit
+{
+    if ([habit isEqualToString:@"2"])
+        return @"市内高频使用";
+    else if ([habit isEqualToString:@"3"])
+        return @"经常长途使用";
+    else
+        return @"日常通勤";
 }
 
 /**
@@ -188,7 +208,7 @@
  *  @param delay    提示消失时间
  *  @param delegate 代理对象
  */
-- (void)showPromptHUDWithText:(NSString *)text delay:(NSTimeInterval)delay delegate:(id<MBProgressHUDDelegate>)delegate
+- (void)showPromptHUDWithText:(NSString *)text delay:(NSTimeInterval)delay delegate:(id)delegate
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.delegate = delegate;
@@ -203,13 +223,48 @@
 
 - (void)startDataRequest
 {
-//    [self startMaintenanceItemRequest];
+    [self startMaintenanceDataRequest];
     [self startRecommendMerchantRequest];
 }
 
-- (void)startMaintenanceItemRequest
+/**
+ *  保养数据请求方法，参数：user_car_id
+ */
+- (void)startMaintenanceDataRequest
 {
-    
+    __weak typeof(self)weakSelf = self;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSDictionary *parameters = @{@"user_car_id": [SCUserInfo share].currentCar.user_car_id};
+    [[SCAPIRequest manager] startMaintenanceDataAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        {
+            NSArray *normalItems  = responseObject[@"normal"];
+            NSArray *carefulItems = responseObject[@"careful"];
+            NSArray *allItems     = responseObject[@"all"];
+            [weakSelf hanldeServiceDataWithNormalData:normalItems carefulData:carefulItems allData:allItems];
+            
+            SCUerCar *userCar    = [SCUserInfo share].currentCar;
+            if (userCar.normalItems.count)
+            {
+                _serviceItems    = userCar.normalItems;
+                _maintenanceType = SCMaintenanceTypeNormal;
+            }
+            else
+            {
+                _serviceItems    = userCar.allItems;
+                _maintenanceType = SCMaintenanceTypeSelf;
+            }
+            [weakSelf displayMaintenanceView];
+            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationMiddle];
+        }
+        else
+            [weakSelf showPromptHUDWithText:@"网络出错了，请稍后再试>_<" delay:1.0f delegate:weakSelf];
+        [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
+        [weakSelf.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [weakSelf showPromptHUDWithText:@"网络出错了，请稍后再试>_<" delay:1.0f delegate:weakSelf];
+        [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
+    }];
 }
 
 /**
@@ -226,28 +281,54 @@
                                      @"radius"    : @(10),
                                      @"longtitude": locationInfo.longitude,
                                      @"latitude"  : locationInfo.latitude};
-    
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
-            
             // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
-            [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            for (NSDictionary *data in list)
+            {
                 NSError *error       = nil;
-                SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:&error];
+                SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:data[@"fields"] error:&error];
                 [_recommendMerchants addObject:merchant];
-            }];
-            [weakSelf.tableView reloadData];
+            }
+            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationLeft];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
 }
 
+- (void)hanldeServiceDataWithNormalData:(NSArray *)noralData carefulData:(NSArray *)carefulData allData:(NSArray *)allData
+{
+    NSMutableArray *normalItems = [@[] mutableCopy];
+    NSMutableArray *carefulItems = [@[] mutableCopy];
+    NSMutableArray *allItems = [@[] mutableCopy];
+    
+    for (NSDictionary *data in noralData)
+    {
+        SCServiceItem *item = [[SCServiceItem alloc] initWithDictionary:data error:nil];
+        [normalItems addObject:item];
+    }
+    for (NSDictionary *data in carefulData)
+    {
+        SCServiceItem *item = [[SCServiceItem alloc] initWithDictionary:data error:nil];
+        [carefulItems addObject:item];
+    }
+    for (NSDictionary *data in allData)
+    {
+        SCServiceItem *item = [[SCServiceItem alloc] initWithDictionary:data error:nil];
+        [allItems addObject:item];
+    }
+    SCUerCar *userCar    = [SCUserInfo share].currentCar;
+    userCar.normalItems  = normalItems;
+    userCar.carefulItems = carefulItems;
+    userCar.allItems     = allItems;
+}
+
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -255,10 +336,7 @@
     switch (section)
     {
         case 0:
-            return 1;
-            break;
-        case 1:
-            return 2;
+            return _serviceItems.count;
             break;
             
         default:
@@ -269,7 +347,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (section == 2)
+    if (section == 1)
         return @"为您推荐以下可以维修追尾事故的商户";
     else
         return @"";
@@ -281,13 +359,10 @@
     {
         case 0:
         {
-            SCMaintenanceTypeCell *cell = [[SCMaintenanceTypeCell alloc] init];
-            return cell;
-        }
-            break;
-        case 1:
-        {
             SCMaintenanceItemCell *cell = [[SCMaintenanceItemCell alloc] init];
+            
+            SCServiceItem *item = _serviceItems[indexPath.row];
+            cell.nameLabel.text = item.service_name;
             return cell;
         }
             break;
@@ -310,7 +385,7 @@
 #pragma mark - Table View Delegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 2)
+    if (indexPath.section == 1)
     {
         _isPush = YES;
         // 列表栏被点击，执行取消选中动画
@@ -329,22 +404,17 @@
     {
         case 0:
         {
-            if (IS_IPHONE_6)
-                return 25.0f;
-            else if (IS_IPHONE_6Plus)
-                return 35.0f;
+            if (IS_IPHONE_6Plus)
+                return 10.0f;
+            else if (IS_IPHONE_6)
+                return DOT_COORDINATE;
             else
-                return 15.0f;
+                return 10.0f;
         }
             break;
         case 1:
         {
-            return DOT_COORDINATE;
-        }
-            break;
-        case 2:
-        {
-            return  _recommendMerchants.count ? 30.0f : DOT_COORDINATE;
+            return  20.0f;
         }
             break;
             
@@ -356,7 +426,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 2)
+    if (indexPath.section == 1)
         return 100.0f;
     return 44.0f;
 }
@@ -376,7 +446,77 @@
     }
     @finally {
     }
-    
+}
+
+#pragma mark - MBProgressHUD Delegate Methods
+- (void)hudWasHidden:(MBProgressHUD *)hud
+{
+    // 保存成功，返回上一页
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - SCMaintenanceTypeView Delegate Methods
+- (void)didSelectedMaintenanceType:(SCMaintenanceType)type
+{
+    SCUerCar *userCar    = [SCUserInfo share].currentCar;
+    switch (type)
+    {
+        case SCMaintenanceTypeAccurate:
+        {
+            _serviceItems    = userCar.carefulItems;
+            _maintenanceType = SCMaintenanceTypeAccurate;
+        }
+            break;
+        case SCMaintenanceTypeSelf:
+        {
+            _serviceItems    = userCar.allItems;
+            _maintenanceType = SCMaintenanceTypeSelf;
+        }
+            break;
+            
+        default:
+        {
+            _serviceItems    = userCar.normalItems;
+            _maintenanceType = SCMaintenanceTypeNormal;
+        }
+            break;
+    }
+    if (!_serviceItems.count)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请您先完善保养数据！"
+                                                            message:@"您要前往完善吗？"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"完善"
+                                                  otherButtonTitles:@"取消", nil];
+        [alertView show];
+    }
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationMiddle];
+}
+
+#pragma mark - Alert View Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertView.cancelButtonIndex)
+    {
+        @try {
+            SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCChangeMaintenanceDataViewController"];
+            changeMaintenanceDataViewController.delegate = self;
+            [self.navigationController pushViewController:changeMaintenanceDataViewController animated:YES];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"SCMaintenanceViewController Go to the SCChangeMaintenanceDataViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+            _isPush = YES;
+        }
+    }
+}
+
+#pragma mark - SCChangeMaintenanceDataViewController Delegate Methods
+- (void)dataSaveSuccess
+{
+    [self startMaintenanceDataRequest];
 }
 
 @end
