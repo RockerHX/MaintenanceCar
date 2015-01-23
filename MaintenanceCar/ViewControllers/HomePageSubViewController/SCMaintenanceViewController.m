@@ -55,7 +55,6 @@
     [super viewDidAppear:animated];
     
     _isPush = NO;
-    [self displayMaintenanceView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
