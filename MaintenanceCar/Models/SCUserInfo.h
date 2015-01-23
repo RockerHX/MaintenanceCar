@@ -29,6 +29,8 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
 @property (nonatomic, assign, readonly) BOOL          carsLoadFinish;   // 车辆加载结束标识
 @property (nonatomic, assign)           BOOL          addAliasSuccess;  // 推送Alias添加成功
 
+@property (nonatomic, strong, readonly) NSArray       *selectedItems;   // 已选保养项目
+
 /**
  *  单例方法
  *
@@ -64,5 +66,9 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
 
 - (void)load;
 - (void)refresh;
+
+- (void)addMaintenanceItem:(NSString *)item;
+- (void)removeItemAtIndex:(NSInteger)index;
+- (void)removeItems;
 
 @end

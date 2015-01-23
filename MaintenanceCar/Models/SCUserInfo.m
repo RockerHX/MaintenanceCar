@@ -25,6 +25,7 @@ static SCUserInfo *userInfo = nil;
 @interface SCUserInfo ()
 {
     NSMutableArray *_userCars;
+    NSMutableArray *_selectedItems;
     
     BLOCK          _block;
 }
@@ -38,7 +39,8 @@ static SCUserInfo *userInfo = nil;
 {
     self = [super init];
     if (self) {
-        _userCars = [@[] mutableCopy];
+        _userCars      = [@[] mutableCopy];
+        _selectedItems = [@[] mutableCopy];
         [self addObserver:self forKeyPath:@"carsLoadFinish" options:NSKeyValueObservingOptionNew context:nil];
     }
     return self;
@@ -91,6 +93,11 @@ static SCUserInfo *userInfo = nil;
 {
     [USER_DEFAULT setObject:@(addAliasSuccess) forKey:kAddAliasKey];
     [USER_DEFAULT synchronize];
+}
+
+- (NSArray *)selectedItems
+{
+    return _selectedItems;
 }
 
 #pragma mark - Public Methods
@@ -187,6 +194,21 @@ static SCUserInfo *userInfo = nil;
 - (void)refresh
 {
     _currentCar = _firstCar;
+}
+
+- (void)addMaintenanceItem:(NSString *)item
+{
+    [_selectedItems addObject:item];
+}
+
+- (void)removeItemAtIndex:(NSInteger)index
+{
+    [_selectedItems removeObjectAtIndex:index];
+}
+
+- (void)removeItems
+{
+    [_selectedItems removeAllObjects];
 }
 
 @end

@@ -27,10 +27,12 @@
     if (self.selected)
     {
         _checkBox.image = [UIImage imageNamed:@"check-box-pitch-on"];
+        [_delegate didChangeMaintenanceItemWithIndex:self.tag check:YES];
     }
     else
     {
         _checkBox.image = [UIImage imageNamed:@"check-box-uncheck"];
+        [_delegate didChangeMaintenanceItemWithIndex:self.tag check:NO];
     }
 }
 

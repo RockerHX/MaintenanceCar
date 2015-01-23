@@ -8,9 +8,18 @@
 
 #import "SCMaintenanceTableViewCell.h"
 
+@protocol SCMaintenanceItemCellDelegate <NSObject>
+
+@optional
+- (void)didChangeMaintenanceItemWithIndex:(NSInteger)index check:(BOOL)check;
+
+@end
+
 @interface SCMaintenanceItemCell : SCMaintenanceTableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView       *checkBox;
 @property (weak, nonatomic) IBOutlet UILabel           *nameLabel;
+
+@property (nonatomic, weak)          id                <SCMaintenanceItemCellDelegate>delegate;
 
 @end

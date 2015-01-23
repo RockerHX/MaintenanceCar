@@ -27,7 +27,7 @@
 
 #define MaintenanceCellReuseIdentifier   @"MaintenanceCellReuseIdentifier"
 
-@interface SCMaintenanceViewController () <SCReservatAlertViewDelegate, MBProgressHUDDelegate, SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
+@interface SCMaintenanceViewController () <SCReservatAlertViewDelegate, MBProgressHUDDelegate, SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate, SCMaintenanceItemCellDelegate>
 {
     BOOL              _isPush;
     NSInteger         _reservationButtonIndex;
@@ -109,6 +109,7 @@
         if (!_carIndex)
             sender.enabled = NO;
         [self startMaintenanceDataRequest];
+        [[SCUserInfo share] removeItems];
     }
 }
 
@@ -125,6 +126,7 @@
         if (_carIndex == count)
             sender.enabled = NO;
         [self startMaintenanceDataRequest];
+        [[SCUserInfo share] removeItems];
     }
 }
 
@@ -359,9 +361,10 @@
         case 0:
         {
             SCMaintenanceItemCell *cell = [[SCMaintenanceItemCell alloc] init];
-            
-            SCServiceItem *item = _serviceItems[indexPath.row];
-            cell.nameLabel.text = item.service_name;
+            cell.delegate               = self;
+            cell.tag                    = indexPath.row;
+            SCServiceItem *item         = _serviceItems[indexPath.row];
+            cell.nameLabel.text         = item.service_name;
             return cell;
         }
             break;
@@ -459,6 +462,7 @@
 - (void)didSelectedMaintenanceType:(SCMaintenanceType)type
 {
     SCUerCar *userCar    = [SCUserInfo share].currentCar;
+    [[SCUserInfo share] removeItems];
     switch (type)
     {
         case SCMaintenanceTypeAccurate:
@@ -516,6 +520,16 @@
 - (void)dataSaveSuccess
 {
     [self startMaintenanceDataRequest];
+}
+
+#pragma mark - SCMaintenanceItemCell Delegate Methods
+- (void)didChangeMaintenanceItemWithIndex:(NSInteger)index check:(BOOL)check
+{
+    SCUserInfo *userInfo = [SCUserInfo share];
+    if (check)
+        [userInfo addMaintenanceItem:((SCServiceItem *)_serviceItems[index]).service_name];
+    else
+        [userInfo removeItemAtIndex:index];
 }
 
 @end

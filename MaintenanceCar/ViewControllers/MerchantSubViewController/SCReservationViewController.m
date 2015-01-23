@@ -139,6 +139,15 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     _ownerPhoneNumberTextField.leftView     = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
     _remarkTextField.leftViewMode           = UITextFieldViewModeAlways;
     _remarkTextField.leftView               = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
+    
+    NSArray *items = [SCUserInfo share].selectedItems;
+    for (NSString *item in items)
+    {
+        if (_remarkTextField.text.length)
+            _remarkTextField.text = [_remarkTextField.text stringByAppendingString:[NSString stringWithFormat:@",%@", item]];
+        else
+            _remarkTextField.text = item;
+    }
 }
 
 /**
