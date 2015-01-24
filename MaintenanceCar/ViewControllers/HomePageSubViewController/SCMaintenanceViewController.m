@@ -71,11 +71,11 @@
 {
     [super viewDidLoad];
     
-    [self initConfig];
-    [self performSelector:@selector(viewConfig) withObject:nil afterDelay:0.1f];
-    
     // 进入保养页面的时候显示导航栏
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    [self initConfig];
+    [self performSelector:@selector(viewConfig) withObject:nil afterDelay:0.1f];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -355,7 +355,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (section == 1)
-        return @"为您推荐以下可以维修追尾事故的商户";
+        return _recommendMerchants.count ? @"为您推荐以下可以维修追尾事故的商户" : @"";
     else
         return @"";
 }

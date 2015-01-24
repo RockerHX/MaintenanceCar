@@ -12,6 +12,7 @@
 #import "SCUserInfo.h"
 #import "SCAPIRequest.h"
 #import "SCWeather.h"
+#import "SCWashViewController.h"
 
 @interface SCHomePageViewController () <UIAlertViewDelegate>
 
@@ -63,6 +64,10 @@
     }
     else
         [self showShoulLoginAlert];
+}
+
+- (IBAction)repairButtonPressed:(UIButton *)sender
+{
 }
 
 #pragma mark - Private Methods

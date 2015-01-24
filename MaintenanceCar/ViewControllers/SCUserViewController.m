@@ -17,9 +17,9 @@
 
 typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     SCUserCenterRowMyOrder = 0,
+    SCUserCenterRowMyCollection,
     SCUserCenterRowMyCustomers,
     SCUserCenterRowMyReservation,
-    SCUserCenterRowMyCollection
 };
 
 @interface SCUserViewController () <UIAlertViewDelegate, SCAddCarViewControllerDelegate>
@@ -66,7 +66,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
         @try {
             switch (indexPath.row)
             {
-                case SCUserCenterRowMyReservation:
+                case SCUserCenterRowMyOrder:
                 {
                     SCMyReservationTableViewController *myReservationTableViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyReservationTableViewController"];
                     [self pushToSubViewControllerWithController:myReservationTableViewController];

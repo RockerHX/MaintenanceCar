@@ -77,6 +77,9 @@
 		48B6699C1A53E75C00A753B2 /* SCVerificationCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B6699B1A53E75C00A753B2 /* SCVerificationCodeView.m */; };
 		48B7BDA21A600D6400ED6A20 /* SCPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48B7BDA11A600D6400ED6A20 /* SCPickerView.xib */; };
 		48B7BDA51A600D7500ED6A20 /* SCPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B7BDA41A600D7500ED6A20 /* SCPickerView.m */; };
+		48BB50921A7385340047083B /* SCWashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48BB50911A7385340047083B /* SCWashViewController.m */; };
+		48BB50951A73899F0047083B /* SCRepairViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48BB50941A73899F0047083B /* SCRepairViewController.m */; };
+		48BB50981A7397730047083B /* SCHomePageDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48BB50971A7397730047083B /* SCHomePageDetailView.m */; };
 		48BBF3DB1A5D31FC00712BA3 /* SCMapMerchantInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48BBF3DA1A5D31FC00712BA3 /* SCMapMerchantInfoView.m */; };
 		48C8D4411A5E224C005F55F9 /* SCMerchantFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48C8D4401A5E224C005F55F9 /* SCMerchantFilterView.m */; };
 		48C8D4441A5E2B21005F55F9 /* SCFilterPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48C8D4431A5E2B21005F55F9 /* SCFilterPopView.m */; };
@@ -293,6 +296,12 @@
 		48B7BDA11A600D6400ED6A20 /* SCPickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCPickerView.xib; sourceTree = "<group>"; };
 		48B7BDA31A600D7500ED6A20 /* SCPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPickerView.h; sourceTree = "<group>"; };
 		48B7BDA41A600D7500ED6A20 /* SCPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPickerView.m; sourceTree = "<group>"; };
+		48BB50901A7385340047083B /* SCWashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCWashViewController.h; sourceTree = "<group>"; };
+		48BB50911A7385340047083B /* SCWashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCWashViewController.m; sourceTree = "<group>"; };
+		48BB50931A73899F0047083B /* SCRepairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCRepairViewController.h; sourceTree = "<group>"; };
+		48BB50941A73899F0047083B /* SCRepairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCRepairViewController.m; sourceTree = "<group>"; };
+		48BB50961A7397730047083B /* SCHomePageDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCHomePageDetailView.h; sourceTree = "<group>"; };
+		48BB50971A7397730047083B /* SCHomePageDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCHomePageDetailView.m; sourceTree = "<group>"; };
 		48BBF3D91A5D31FC00712BA3 /* SCMapMerchantInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMapMerchantInfoView.h; sourceTree = "<group>"; };
 		48BBF3DA1A5D31FC00712BA3 /* SCMapMerchantInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMapMerchantInfoView.m; sourceTree = "<group>"; };
 		48C8D43F1A5E224C005F55F9 /* SCMerchantFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMerchantFilterView.h; sourceTree = "<group>"; };
@@ -533,6 +542,8 @@
 				4841CEC91A6BAC6F00DA36FC /* SCMaintenanceItemCell.xib */,
 				4841CED11A6CE36400DA36FC /* SCMileageView.h */,
 				4841CED21A6CE36400DA36FC /* SCMileageView.m */,
+				48BB50961A7397730047083B /* SCHomePageDetailView.h */,
+				48BB50971A7397730047083B /* SCHomePageDetailView.m */,
 			);
 			path = HomePageSubView;
 			sourceTree = "<group>";
@@ -594,6 +605,10 @@
 				4884CD281A4D4E050018ED09 /* SCMaintenanceViewController.m */,
 				4841CED71A6D049500DA36FC /* SCChangeMaintenanceDataViewController.h */,
 				4841CED81A6D049500DA36FC /* SCChangeMaintenanceDataViewController.m */,
+				48BB50901A7385340047083B /* SCWashViewController.h */,
+				48BB50911A7385340047083B /* SCWashViewController.m */,
+				48BB50931A73899F0047083B /* SCRepairViewController.h */,
+				48BB50941A73899F0047083B /* SCRepairViewController.m */,
 			);
 			path = HomePageSubViewController;
 			sourceTree = "<group>";
@@ -1100,6 +1115,7 @@
 				48F0812E1A45505400531426 /* SCTabbar.m in Sources */,
 				48AE95C41A50F52700A8A4B3 /* MJRefreshConst.m in Sources */,
 				48EC705B1A442BE1003CE3FD /* SCMerchantViewController.m in Sources */,
+				48BB50981A7397730047083B /* SCHomePageDetailView.m in Sources */,
 				48AE95C71A50F52700A8A4B3 /* UIScrollView+MJExtension.m in Sources */,
 				48661B7A1A5E7B11007F92A7 /* SCReservatAlertView.m in Sources */,
 				48A82EDB1A63C9CC00DB3A16 /* MYNStickyFlowLayout.m in Sources */,
@@ -1116,8 +1132,10 @@
 				4897868E1A622FC4002593DD /* SCAddCarViewController.m in Sources */,
 				488482601A70F7FA00E2CCFB /* SCServiceItem.m in Sources */,
 				48F666A31A6505D60044674C /* SCCarBrandCollectionViewCell.m in Sources */,
+				48BB50921A7385340047083B /* SCWashViewController.m in Sources */,
 				4820DA3E1A63FE5000129D39 /* SCCoreDataManager.m in Sources */,
 				48FE1ED31A4D614F0083C9DF /* SCMerchant.m in Sources */,
+				48BB50951A73899F0047083B /* SCRepairViewController.m in Sources */,
 				48EC705E1A442C45003CE3FD /* SCQAViewController.m in Sources */,
 				48AB35DC1A517CAB00BFBC77 /* SCUserInfo.m in Sources */,
 				48FE1EDA1A4D6A270083C9DF /* SCMerchantDetail.m in Sources */,
