@@ -17,7 +17,6 @@
 #import "SCAPIRequest.h"
 #import "SCMerchant.h"
 #import "SCMerchantDetailViewController.h"
-#import "SCReservatAlertView.h"
 #import "SCReservationViewController.h"
 #import "SCUserInfo.h"
 #import "SCUerCar.h"
@@ -27,7 +26,7 @@
 
 #define MaintenanceCellReuseIdentifier   @"MaintenanceCellReuseIdentifier"
 
-@interface SCMaintenanceViewController () <SCReservatAlertViewDelegate, MBProgressHUDDelegate, SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate, SCMaintenanceItemCellDelegate>
+@interface SCMaintenanceViewController () <MBProgressHUDDelegate, SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate, SCMaintenanceItemCellDelegate>
 {
     BOOL              _isPush;
     NSInteger         _reservationButtonIndex;
@@ -139,7 +138,7 @@
     _maintenanceTypeView.delegate = self;
     
     // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed:) name:kMerchantListReservationNotification object:nil];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed) name:kMaintenanceReservationNotification object:nil];
 }
 
 - (void)viewConfig
@@ -193,13 +192,20 @@
  *
  *  @param notification 接受传递的参数
  */
-- (void)reservationButtonPressed:(NSNotification *)notification
+- (void)reservationButtonPressed
 {
-    _reservationButtonIndex = [notification.object integerValue];       // 设置index，用于在_merchantList里取出SCMerchant对象设置到SCReservationViewController
-    
-    // 显示预约框
-    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
-    [reservatAlertView show];
+    // 跳转到预约页面
+    @try {
+        _isPush = YES;
+        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
+        reservationViewController.merchant = _recommendMerchants[_reservationButtonIndex];
+        [self.navigationController pushViewController:reservationViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
 }
 
 /**
@@ -433,23 +439,6 @@
     return 44.0f;
 }
 
-#pragma mark - SCReservatAlertViewDelegate Methods
-- (void)selectedAtButton:(SCAlertItemType)type
-{
-    // 跳转到预约页面
-    @try {
-        _isPush = YES;
-        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.merchant = _recommendMerchants[_reservationButtonIndex];
-        [self.navigationController pushViewController:reservationViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
-}
-
 #pragma mark - MBProgressHUD Delegate Methods
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
@@ -526,10 +515,11 @@
 - (void)didChangeMaintenanceItemWithIndex:(NSInteger)index check:(BOOL)check
 {
     SCUserInfo *userInfo = [SCUserInfo share];
+    NSString *serviceName = ((SCServiceItem *)_serviceItems[index]).service_name;
     if (check)
-        [userInfo addMaintenanceItem:((SCServiceItem *)_serviceItems[index]).service_name];
+        [userInfo addMaintenanceItem:serviceName];
     else
-        [userInfo removeItemAtIndex:index];
+        [userInfo removeItem:serviceName];
 }
 
 @end

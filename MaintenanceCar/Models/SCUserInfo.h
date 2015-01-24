@@ -68,7 +68,7 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
 - (void)refresh;
 
 - (void)addMaintenanceItem:(NSString *)item;
-- (void)removeItemAtIndex:(NSInteger)index;
+- (void)removeItem:(NSString *)item;
 - (void)removeItems;
 
 @end

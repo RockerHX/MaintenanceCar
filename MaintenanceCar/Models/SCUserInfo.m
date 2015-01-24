@@ -201,9 +201,16 @@ static SCUserInfo *userInfo = nil;
     [_selectedItems addObject:item];
 }
 
-- (void)removeItemAtIndex:(NSInteger)index
+- (void)removeItem:(NSString *)item
 {
-    [_selectedItems removeObjectAtIndex:index];
+    for (NSString *name in _selectedItems)
+    {
+        if ([name isEqualToString:item])
+        {
+            [_selectedItems removeObject:name];
+            break;
+        }
+    }
 }
 
 - (void)removeItems
