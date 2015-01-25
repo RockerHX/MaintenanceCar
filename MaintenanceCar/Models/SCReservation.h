@@ -25,5 +25,6 @@
 @property (nonatomic, copy) NSString <Optional>*in_time;                //
 @property (nonatomic, copy) NSString <Optional>*create_time;            // 预约创建时间
 @property (nonatomic, copy) NSString <Optional>*update_time;            // 预约信息更新时间
+@property (nonatomic, copy) NSString <Optional>*name;                   // 商户名字
 
 @end

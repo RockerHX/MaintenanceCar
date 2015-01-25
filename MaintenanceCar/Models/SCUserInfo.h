@@ -28,6 +28,7 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
 
 @property (nonatomic, assign, readonly) BOOL          carsLoadFinish;   // 车辆加载结束标识
 @property (nonatomic, assign)           BOOL          addAliasSuccess;  // 推送Alias添加成功
+@property (nonatomic, assign)           BOOL          receiveMessage;   // 接受消息
 
 @property (nonatomic, strong, readonly) NSArray       *selectedItems;   // 已选保养项目
 
@@ -43,12 +44,12 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
  *
  *  @param userData 服务返回的用户数据
  */
-+ (void)loginSuccessWithUserID:(NSDictionary *)userData;
+- (void)loginSuccessWithUserID:(NSDictionary *)userData;
 
 /**
  *  用户注销
  */
-+ (void)logout;
+- (void)logout;
 
 /**
  *  添加私家车

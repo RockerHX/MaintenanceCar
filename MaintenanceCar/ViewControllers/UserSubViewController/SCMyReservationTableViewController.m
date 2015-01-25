@@ -60,8 +60,12 @@
     SCReservationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ReservationCellReuseIdentifier" forIndexPath:indexPath];
     
     // Configure the cell...
-    SCReservation *reservation = _dataList[indexPath.row];
-    cell.merchantNameLabel.text = reservation.create_time;
+    SCReservation *reservation         = _dataList[indexPath.row];
+    cell.merchantNameLabel.text        = reservation.name;
+    cell.reservationTypeLabel.text     = reservation.type;
+    cell.reservationDateLabel.text     = reservation.reserve_time;
+    cell.maintenanceScheduleLabel.text = [self handleMaintenanceSchedule:reservation.status];
+    cell.showMoreLabel.text            = [self handleShowMore:reservation.type] ? @"查看进度" : @"";
     
     return cell;
 }
@@ -86,16 +90,21 @@
 #pragma mark - Table View Delegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 列表被点击跳转到商户详情
-//    @try {
-//        UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
-//        [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
-//    }
-//    @catch (NSException *exception) {
-//        NSLog(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
-//    }
-//    @finally {
-//    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    SCReservation *reservation         = _dataList[indexPath.row];
+    if ([self handleShowMore:reservation.type])
+    {
+        // 列表被点击跳转到商户详情
+        @try {
+            UIViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
+            [self.navigationController pushViewController:webViewController animated:YES];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"SCMyReservationTableViewController Go to the SCWebViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
+    }
 }
 
 #pragma mark - Public Methods
@@ -125,6 +134,30 @@
 }
 
 #pragma mark - Private Methods
+- (NSString *)handleMaintenanceSchedule:(NSString *)status
+{
+    if ([status isEqualToString:@"0"])
+        return @"提交预约";
+    else if ([status isEqualToString:@"1"])
+        return @"接受预约";
+    else if ([status isEqualToString:@"2"])
+        return @"拒绝预约";
+    else if ([status isEqualToString:@"3"])
+        return @"预约完成";
+    else if ([status isEqualToString:@"4"])
+        return @"取消预约";
+    else
+        return @"未知状态";
+}
+
+- (BOOL)handleShowMore:(NSString *)status
+{
+    if ([status isEqualToString:@"免费检测"])
+        return YES;
+    else
+        return NO;
+}
+
 /**
  *  预约列表数据请求方法，必选参数：user_id，limit，offset
  */

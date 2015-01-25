@@ -94,11 +94,6 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 }
 
 #pragma mark - Button Action Methods
-- (IBAction)loginButtonPressed:(UIButton *)sender
-{
-//    [self checkShouldLogin];
-    [SCUserInfo logout];
-}
 
 #pragma mark - Private Methods
 - (void)viewConfig

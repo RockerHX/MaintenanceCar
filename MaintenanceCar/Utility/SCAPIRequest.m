@@ -272,4 +272,12 @@
     [self requestPOSTMethodsWithAPI:UpdateCarAPIURL parameters:parameters success:success failure:failure];
 }
 
+#pragma mark - AllDictionary Request
+- (void)startGetAllDictionaryAPIRequestWithParameters:(NSDictionary *)parameters
+                                              Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:AllDictionaryAPIURL parameters:parameters success:success failure:failure];
+}
+
 @end

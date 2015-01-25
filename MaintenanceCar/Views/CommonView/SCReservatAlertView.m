@@ -7,15 +7,15 @@
 //
 
 #import "SCReservatAlertView.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 #import "MicroCommon.h"
 #import "AppDelegate.h"
-
-#define ReservationItemsResourceName    @"ReservationItems"
-#define ReservationItemsResourceType    @"plist"
+#import "SCAllDictionary.h"
 
 @interface SCReservatAlertView ()
 {
     SCAlertAnimation _animation;
+    NSArray          *_items;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *alertView;
@@ -42,24 +42,33 @@
 #pragma mark - Private Methods
 - (void)viewConfig
 {
-    NSArray *array = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:ReservationItemsResourceName ofType:ReservationItemsResourceType]];
-    @try {
-        [_buttonOne setTitle:array[0][DisplayNameKey] forState:UIControlStateNormal];
-        [_buttonTwo setTitle:array[1][DisplayNameKey] forState:UIControlStateNormal];
-        [_buttonThree setTitle:array[2][DisplayNameKey] forState:UIControlStateNormal];
-        [_buttonOther setTitle:array[3][DisplayNameKey] forState:UIControlStateNormal];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCReservatAlertView Set Button Title Error:%@", exception.reason);
-    }
-    @finally {
-        self.alpha = DOT_COORDINATE;
-        _alertView.hidden = YES;
-        _alertView.layer.cornerRadius = 8.0f;
-        _titleView.layer.cornerRadius = _alertView.layer.cornerRadius;
-        _alertView.layer.borderWidth = 1.0f;
-        _alertView.layer.borderColor = [UIColor colorWithWhite:0.8f alpha:.2f].CGColor;
-    }
+    __weak typeof(self) weakSelf = self;
+    [MBProgressHUD showHUDAddedTo:self animated:YES];
+    [[SCAllDictionary share] requestWithType:SCDictionaryTypeOderType finfish:^(NSArray *items) {
+        [MBProgressHUD hideAllHUDsForView:self animated:YES];
+        @try {
+            weakSelf.buttonOne.tag   = [((SCDictionaryItem *)items[0]).dict_id integerValue];
+            weakSelf.buttonTwo.tag   = [((SCDictionaryItem *)items[1]).dict_id integerValue];
+            weakSelf.buttonThree.tag = [((SCDictionaryItem *)items[2]).dict_id integerValue];
+            weakSelf.buttonOther.tag = [((SCDictionaryItem *)items[3]).dict_id integerValue];
+
+            [weakSelf.buttonOne setTitle:((SCDictionaryItem *)items[0]).name forState:UIControlStateNormal];
+            [weakSelf.buttonTwo setTitle:((SCDictionaryItem *)items[1]).name forState:UIControlStateNormal];
+            [weakSelf.buttonThree setTitle:((SCDictionaryItem *)items[2]).name forState:UIControlStateNormal];
+            [weakSelf.buttonOther setTitle:((SCDictionaryItem *)items[3]).name forState:UIControlStateNormal];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"SCReservatAlertView Set Button Title Error:%@", exception.reason);
+        }
+        @finally {
+            weakSelf.alpha                        = DOT_COORDINATE;
+            weakSelf.alertView.hidden             = YES;
+            weakSelf.alertView.layer.cornerRadius = 8.0f;
+            weakSelf.titleView.layer.cornerRadius = weakSelf.alertView.layer.cornerRadius;
+            weakSelf.alertView.layer.borderWidth  = 1.0f;
+            weakSelf.alertView.layer.borderColor  = [UIColor colorWithWhite:0.8f alpha:.2f].CGColor;
+        }
+    }];
 }
 
 - (void)removeAlertView

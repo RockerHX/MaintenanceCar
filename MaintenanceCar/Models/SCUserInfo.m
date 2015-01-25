@@ -17,6 +17,7 @@
 #define kPhoneNumberKey         @"kPhoneNumberKey"
 #define kUserCarsKey            @"kUserCarsKey"
 #define kAddAliasKey            @"kAddAliasKey"
+#define kReceiveMessageKey      @"kReceiveMessageKey"
 
 typedef void(^BLOCK)(BOOL finish);
 
@@ -95,26 +96,63 @@ static SCUserInfo *userInfo = nil;
     [USER_DEFAULT synchronize];
 }
 
+- (BOOL)receiveMessage
+{
+    BOOL receive = [[USER_DEFAULT objectForKey:kReceiveMessageKey] boolValue];
+    return receive;
+}
+
+- (void)setReceiveMessage:(BOOL)receiveMessage
+{
+    [self canReceiveMessage:receiveMessage];
+    [USER_DEFAULT setObject:@(receiveMessage) forKey:kReceiveMessageKey];
+    [USER_DEFAULT synchronize];
+}
+
 - (NSArray *)selectedItems
 {
     return _selectedItems;
 }
 
+- (NSArray *)cars
+{
+    return self.loginStatus ? _userCars : nil;
+}
+
+- (void)canReceiveMessage:(BOOL)can
+{
+    if (can)
+    {
+        [UMessage addAlias:[USER_DEFAULT objectForKey:kPhoneNumberKey] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
+            if ([responseObject[@"success"] isEqualToString:@"ok"])
+                self.addAliasSuccess = YES;
+        }];
+    }
+    else
+    {
+        [UMessage removeAlias:[USER_DEFAULT objectForKey:kPhoneNumberKey] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
+            if ([responseObject[@"success"] isEqualToString:@"ok"])
+                self.addAliasSuccess = NO;
+        }];
+    }
+}
+
 #pragma mark - Public Methods
-+ (void)loginSuccessWithUserID:(NSDictionary *)userData
+- (void)loginSuccessWithUserID:(NSDictionary *)userData
 {
     [USER_DEFAULT setObject:@(YES) forKey:kLoginKey];
     [USER_DEFAULT setObject:userData[@"user_id"] forKey:kUserIDKey];
     [USER_DEFAULT setObject:userData[@"phone"] forKey:kPhoneNumberKey];
     [USER_DEFAULT synchronize];
+    
+    self.receiveMessage = YES;
 }
 
-+ (void)logout
+- (void)logout
 {
-    [UMessage removeAlias:[USER_DEFAULT objectForKey:kPhoneNumberKey] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
-        if ([responseObject[@"success"] isEqualToString:@"ok"])
-            [SCUserInfo share].addAliasSuccess = NO;
-    }];
+    [_userCars removeAllObjects];
+    
+    self.receiveMessage = NO;
     [USER_DEFAULT setObject:@(NO) forKey:kLoginKey];
     [USER_DEFAULT removeObjectForKey:kUserIDKey];
     [USER_DEFAULT removeObjectForKey:kPhoneNumberKey];
@@ -188,7 +226,6 @@ static SCUserInfo *userInfo = nil;
         }
         _firstCar = _userCars[Zero];
     }
-    _cars = _userCars;
 }
 
 - (void)refresh

@@ -9,6 +9,7 @@
 #import "SCHomePageViewController.h"
 #import <UMengAnalytics/MobClick.h>
 #import "MicroCommon.h"
+#import "SCHomePageDetailView.h"
 #import "SCUserInfo.h"
 #import "SCAPIRequest.h"
 #import "SCWeather.h"
@@ -26,6 +27,8 @@
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[首页]"];
+    
+    [_detailView refresh];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

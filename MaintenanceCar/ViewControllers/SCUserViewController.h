@@ -13,7 +13,4 @@
 // [添加车辆]按钮点击事件
 - (IBAction)addCarItemPressed:(UIBarButtonItem *)sender;
 
-// [登陆]按钮点击事件
-- (IBAction)loginButtonPressed:(UIButton *)sender;
-
 @end

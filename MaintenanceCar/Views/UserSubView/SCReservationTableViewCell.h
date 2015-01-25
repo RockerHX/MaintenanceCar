@@ -11,5 +11,9 @@
 @interface SCReservationTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *merchantNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *reservationTypeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *reservationDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *maintenanceScheduleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *showMoreLabel;
 
 @end

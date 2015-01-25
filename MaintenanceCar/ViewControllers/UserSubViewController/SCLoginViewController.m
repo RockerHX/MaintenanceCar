@@ -174,7 +174,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
         }
         else if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            [SCUserInfo loginSuccessWithUserID:responseObject];
+            [[SCUserInfo share] loginSuccessWithUserID:responseObject];
             [weakSelf showPromptHUDWithText:@"注册成功" delay:1.0f mode:SCHUDModeRegister delegate:weakSelf];
         }
         else
@@ -198,7 +198,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     [[SCAPIRequest manager] startLoginAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            [SCUserInfo loginSuccessWithUserID:responseObject];
+            [[SCUserInfo share] loginSuccessWithUserID:responseObject];
             [UMessage addAlias:responseObject[@"phone"] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
                 if ([responseObject[@"success"] isEqualToString:@"ok"])
                     [SCUserInfo share].addAliasSuccess = YES;

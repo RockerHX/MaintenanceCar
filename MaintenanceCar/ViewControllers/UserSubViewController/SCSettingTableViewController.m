@@ -8,9 +8,12 @@
 
 #import "SCSettingTableViewController.h"
 #import <UMengAnalytics/MobClick.h>
+#import <MBProgressHUD/MBProgressHUD.h>
+#import "MicroCommon.h"
 #import "UMFeedback.h"
+#import "SCUserInfo.h"
 
-@interface SCSettingTableViewController ()
+@interface SCSettingTableViewController () <MBProgressHUDDelegate>
 
 @end
 
@@ -34,6 +37,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self initConfig];
+    [self viewConfig];
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,6 +58,67 @@
         // 跳转到[友盟反馈]页面
         [self presentViewController:[UMFeedback feedbackModalViewController] animated:YES completion:nil];
     }
+}
+
+#pragma mark - Private Methods
+- (void)initConfig
+{
+    [_appMessageSwitch addTarget:self action:@selector(appMessageAction:) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)viewConfig
+{
+    [self displayView];
+}
+
+- (void)displayView
+{
+    SCUserInfo *userInfo = [SCUserInfo share];
+    _appMessageSwitch.on             = userInfo.receiveMessage;
+    _logoutView.hidden               = !userInfo.loginStatus;
+    _logoutButton.layer.cornerRadius = 5.0f;
+}
+
+- (void)appMessageAction:(UISwitch *)sender
+{
+    SCUserInfo *userInfo = [SCUserInfo share];
+    if (!userInfo.loginStatus)
+    {
+        _appMessageSwitch.on = NO;
+        ShowPromptHUDWithText(self.view, @"您还为登陆，无法接受维修消息", 0.5f);
+    }
+    userInfo.receiveMessage = sender.on;
+}
+
+/**
+ *  用户提示方法
+ *
+ *  @param text     提示内容
+ *  @param delay    提示消失时间
+ *  @param delegate 代理对象
+ */
+- (void)showPromptHUDWithText:(NSString *)text delay:(NSTimeInterval)delay delegate:(id<MBProgressHUDDelegate>)delegate
+{
+    MBProgressHUD *hud            = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.delegate                  = delegate;
+    hud.mode                      = MBProgressHUDModeIndeterminate;
+    hud.labelText                 = text;
+    hud.removeFromSuperViewOnHide = YES;
+    
+    [hud hide:YES afterDelay:delay];
+}
+
+- (IBAction)logoutButtonPressed:(UIButton *)sender
+{
+    _appMessageSwitch.on = NO;
+    [[SCUserInfo share] logout];
+    [self showPromptHUDWithText:@"正在注销" delay:1.0f delegate:self];
+}
+
+#pragma mark - MBProgressHUD Delegate Methods
+- (void)hudWasHidden:(MBProgressHUD *)hud
+{
+    _logoutView.hidden = YES;
 }
 
 @end
