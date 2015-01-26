@@ -7,10 +7,14 @@
 //
 
 #import "SCMerchantTableViewCell.h"
+#import <HexColors/HexColor.h>
 #import "MicroCommon.h"
+#import "SCStarView.h"
+#import "SCMerchant.h"
 
 @implementation SCMerchantTableViewCell
 
+#pragma mark - Init Methods
 - (void)awakeFromNib
 {
     // Initialization code
@@ -34,6 +38,14 @@
     }
 }
 
+#pragma mark - Action Methods
+- (IBAction)reservationButtonPressed:(UIButton *)sender
+{
+    // 当[预约]按钮被点击，发送消息通知SCMerchantViewController获取index
+    [NOTIFICATION_CENTER postNotificationName:kMaintenanceReservationNotification object:@(sender.tag)];
+}
+
+#pragma mark - Private Methods
 - (void)viewConfig
 {
     _buttonWidth.constant = 66.0f;
@@ -43,17 +55,48 @@
     }];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+- (void)hanleSamllIconWithMerchant:(SCMerchant *)merchant
 {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+    if (merchant.zige)
+    {
+        _zigeLable.text                 = merchant.zige;
+        _zigeLable.backgroundColor      = [self iconColorWithName:merchant.zige];
+    }
+    else
+        _zigeLable.hidden = YES;
+    
+    if (merchant.honest)
+    {
+        _honestLabel.text               = merchant.honest;
+        _honestLabel.backgroundColor    = [self iconColorWithName:merchant.honest];
+    }
+    else
+        _honestLabel.hidden = YES;
+    
+    if (merchant.major_type)
+    {
+        _majorTypeLabel.text            = merchant.major_type;
+        _majorTypeLabel.backgroundColor = [self iconColorWithName:merchant.major_type];
+    }
+    else
+        _majorTypeLabel.hidden = YES;
 }
 
-- (IBAction)reservationButtonPressed:(UIButton *)sender
+- (UIColor *)iconColorWithName:(NSString *)name
 {
-    // 当[预约]按钮被点击，发送消息通知SCMerchantViewController获取index
-    [NOTIFICATION_CENTER postNotificationName:kMaintenanceReservationNotification object:@(sender.tag)];
+    NSString *hexString = _colors[name];
+    return hexString ? [UIColor colorWithHexString:_colors[name]] : [UIColor clearColor];
+}
+
+#pragma mark - Public Methods
+- (void)handelWithMerchant:(SCMerchant *)merchant indexPath:(NSIndexPath *)indexPath
+{
+    _merchantNameLabel.text = merchant.name;
+    _distanceLabel.text     = merchant.distance;
+    _starView.startValue    = merchant.star;
+    _specialLabel.text      = merchant.tags.length ? merchant.tags : @"价格实惠";
+    _reservationButton.tag  = indexPath.row;
+    [self hanleSamllIconWithMerchant:merchant];
 }
 
 @end

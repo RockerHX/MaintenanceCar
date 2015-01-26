@@ -20,11 +20,12 @@
 #import "SCMapViewController.h"
 #import "SCMerchantFilterView.h"
 #import "SCReservatAlertView.h"
+#import "SCStarView.h"
 
 @interface SCMerchantViewController () <UITableViewDelegate, UITableViewDataSource, SCReservatAlertViewDelegate, SCMerchantFilterViewDelegate>
 {
-    NSInteger _reservationButtonIndex;
     NSMutableArray *_merchantList;
+    NSDictionary   *_colors;
 }
 
 @property (nonatomic, assign) NSInteger      offset;        // 商户列表请求偏移量，用户上拉刷新的分页请求操作
@@ -88,13 +89,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SCMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MerchantCellReuseIdentifier forIndexPath:indexPath];
+    cell.colors                   = _colors;
     cell.reservationButton.hidden = YES;
-    
-    // 刷新商户列表
-    SCMerchant *merchant = _merchantList[indexPath.row];
-    cell.merchantNameLabel.text = merchant.name;
-    cell.distanceLabel.text = merchant.distance;
-    cell.reservationButton.tag = indexPath.row;
+    [cell handelWithMerchant:_merchantList[indexPath.row] indexPath:indexPath];
     
     return cell;
 }
@@ -178,6 +175,7 @@
         [_tableView footerEndRefreshing];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
+            _colors = responseObject[@"color"];
             NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
             
             // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
@@ -186,7 +184,6 @@
                 SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:&error];
                 [_merchantList addObject:merchant];
             }];
-            
             [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:_offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                   // 数据配置完成，刷新商户列表
             _offset += MerchantListLimit;                                       // 偏移量请求参数递增
         }
@@ -205,7 +202,6 @@
     // 跳转到预约页面
     @try {
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.merchant = _merchantList[_reservationButtonIndex];
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {
