@@ -46,6 +46,7 @@
     [MBProgressHUD showHUDAddedTo:self animated:YES];
     [[SCAllDictionary share] requestWithType:SCDictionaryTypeOderType finfish:^(NSArray *items) {
         [MBProgressHUD hideAllHUDsForView:self animated:YES];
+        _items = items;
         @try {
             weakSelf.buttonOne.tag   = [((SCDictionaryItem *)items[0]).dict_id integerValue];
             weakSelf.buttonTwo.tag   = [((SCDictionaryItem *)items[1]).dict_id integerValue];
@@ -61,8 +62,6 @@
             NSLog(@"SCReservatAlertView Set Button Title Error:%@", exception.reason);
         }
         @finally {
-            weakSelf.alpha                        = DOT_COORDINATE;
-            weakSelf.alertView.hidden             = YES;
             weakSelf.alertView.layer.cornerRadius = 8.0f;
             weakSelf.titleView.layer.cornerRadius = weakSelf.alertView.layer.cornerRadius;
             weakSelf.alertView.layer.borderWidth  = 1.0f;
@@ -112,7 +111,17 @@
 
 - (IBAction)itemPressed:(UIButton *)sender
 {
-    [_delegate selectedAtButton:sender.tag];
+    SCDictionaryItem *serviceItem = nil;
+    for (SCDictionaryItem *item in _items)
+    {
+        if ([item.dict_id integerValue] == sender.tag)
+        {
+            serviceItem = item;
+            break;
+        }
+    }
+    
+    [_delegate selectedWithServiceItem:serviceItem];
     [self removeAlertView];
 }
 

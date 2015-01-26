@@ -7,13 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SCUerCar.h"
 
 typedef NS_ENUM(BOOL, SCLoginStatus) {
     SCLoginStatusLogin  = YES,
     SCLoginStatusLogout = NO
 };
-
-@class SCUerCar;
 
 // 用户数据Model
 @interface SCUserInfo : NSObject
@@ -50,18 +49,6 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
  *  用户注销
  */
 - (void)logout;
-
-/**
- *  添加私家车
- */
-- (void)addCar:(SCUerCar *)car;
-
-/**
- *  缓存用户车辆数据，直接本地覆盖
- *
- *  @param userCars 用户车辆数据
- */
-- (void)saveUserCarsWithData:(NSArray *)userCars;
 
 - (void)userCarsReuqest:(void(^)(BOOL finish))block;
 

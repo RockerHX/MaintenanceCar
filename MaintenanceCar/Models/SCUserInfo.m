@@ -8,7 +8,6 @@
 
 #import "SCUserInfo.h"
 #import "MicroCommon.h"
-#import "SCUerCar.h"
 #import "SCAPIRequest.h"
 #import "UMessage.h"
 
@@ -42,7 +41,6 @@ static SCUserInfo *userInfo = nil;
     if (self) {
         _userCars      = [@[] mutableCopy];
         _selectedItems = [@[] mutableCopy];
-        [self addObserver:self forKeyPath:@"carsLoadFinish" options:NSKeyValueObservingOptionNew context:nil];
     }
     return self;
 }
@@ -55,17 +53,6 @@ static SCUserInfo *userInfo = nil;
         [userInfo load];
     });
     return userInfo;
-}
-
-#pragma mark - KVO Methods
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:@"carsLoadFinish"])
-    {
-        BOOL loadFinish = [change[NSKeyValueChangeNewKey] boolValue];
-        if (loadFinish && _block)
-            _block(loadFinish);
-    }
 }
 
 #pragma mark - Getter Methods
@@ -159,27 +146,6 @@ static SCUserInfo *userInfo = nil;
     [USER_DEFAULT synchronize];
 }
 
-- (void)addCar:(SCUerCar *)car
-{
-    for (SCUerCar *userCar in _userCars)
-    {
-        if ([userCar.user_car_id isEqualToString:car.user_car_id])
-        {
-            userCar.user_car_id        = car.user_car_id;
-            userCar.car_id             = car.car_id;
-            userCar.model_id           = car.model_id;
-            userCar.plate              = car.plate;
-            userCar.buy_car_year       = car.buy_car_year;
-            userCar.buy_car_month      = car.buy_car_month;
-            userCar.run_distance       = car.run_distance;
-            userCar.run_distance_stamp = car.run_distance_stamp;
-            userCar.memo               = car.memo;
-        }
-        else
-            [_userCars addObject:car];
-    }
-}
-
 - (void)saveUserCarsWithData:(NSArray *)userCars
 {
     @try {
@@ -191,8 +157,10 @@ static SCUserInfo *userInfo = nil;
     }
     @finally {
         _carsLoadFinish = YES;
-        [self setValue:@(YES) forKey:@"carsLoadFinish"];
         [self load];
+        
+        if (_block)
+            _block(YES);
     }
 }
 
@@ -209,6 +177,7 @@ static SCUserInfo *userInfo = nil;
                 [weakSelf saveUserCarsWithData:responseObject];
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            _block(NO);
         }];
     }
 }
@@ -225,6 +194,11 @@ static SCUserInfo *userInfo = nil;
             [_userCars addObject:userCar];
         }
         _firstCar = _userCars[Zero];
+    }
+    else
+    {
+        _firstCar = nil;
+        _currentCar = nil;
     }
 }
 

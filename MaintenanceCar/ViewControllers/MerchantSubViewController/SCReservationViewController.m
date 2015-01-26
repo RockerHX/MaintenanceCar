@@ -10,11 +10,11 @@
 #import <UMengAnalytics/MobClick.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "MicroCommon.h"
-#import "SCMerchant.h"
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
 #import "SCPickerView.h"
 #import "SCDatePickerView.h"
+#import "SCUserInfo.h"
 
 typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     UITableViewRowIndexProject = 3,
@@ -126,7 +126,7 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // 设置商户名称显示
-    _reservationCarID = @"";
+    _reservationCarID = [SCUserInfo share].currentCar.user_car_id;
     _merchantNameLabel.text = _merchant.name;
 }
 
@@ -139,6 +139,8 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     _ownerPhoneNumberTextField.leftView     = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
     _remarkTextField.leftViewMode           = UITextFieldViewModeAlways;
     _remarkTextField.leftView               = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
+    _projectLabel.text                      = _serviceItem.name;
+    _reservationType                        = _serviceItem.dict_id;
     
     NSArray *items = [SCUserInfo share].selectedItems;
     for (NSString *item in items)

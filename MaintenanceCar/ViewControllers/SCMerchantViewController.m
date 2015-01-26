@@ -200,7 +200,7 @@
 }
 
 #pragma mark - SCReservatAlertViewDelegate Methods
-- (void)selectedAtButton:(SCAlertItemType)type
+- (void)selectedWithServiceItem:(SCDictionaryItem *)serviceItem
 {
     // 跳转到预约页面
     @try {

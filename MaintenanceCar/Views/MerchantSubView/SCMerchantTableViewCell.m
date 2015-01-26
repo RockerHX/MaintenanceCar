@@ -53,7 +53,7 @@
 - (IBAction)reservationButtonPressed:(UIButton *)sender
 {
     // 当[预约]按钮被点击，发送消息通知SCMerchantViewController获取index
-    [NOTIFICATION_CENTER postNotificationName:kMaintenanceReservationNotification object:nil];
+    [NOTIFICATION_CENTER postNotificationName:kMaintenanceReservationNotification object:@(sender.tag)];
 }
 
 @end

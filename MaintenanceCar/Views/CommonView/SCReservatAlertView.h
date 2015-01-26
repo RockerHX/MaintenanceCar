@@ -8,12 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger, SCAlertItemType) {
-    SCAlertItemTypeOne   = 0,
-    SCAlertItemTypeTwo,
-    SCAlertItemTypeThree,
-    SCAlertItemTypeOhter
-};
+@class SCDictionaryItem;
 
 typedef NS_ENUM(NSInteger, SCAlertAnimation) {
     SCAlertAnimationDefault = 0,
@@ -24,7 +19,7 @@ typedef NS_ENUM(NSInteger, SCAlertAnimation) {
 @protocol SCReservatAlertViewDelegate <NSObject>
 
 @optional
-- (void)selectedAtButton:(SCAlertItemType)type;
+- (void)selectedWithServiceItem:(SCDictionaryItem *)serviceItem;
 
 @end
 

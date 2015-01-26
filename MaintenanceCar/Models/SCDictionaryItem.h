@@ -16,4 +16,9 @@
 @property (nonatomic, copy) NSString <Optional>*type;       // 字典类型
 @property (nonatomic, copy) NSString <Optional>*index;      // 字典索引
 
+- (id)initWithItemName:(NSString *)itemName
+                dictID:(NSString *)dictID
+                  type:(NSString *)type
+                 index:(NSString *)index;
+
 @end

@@ -13,6 +13,7 @@
 #import "SCUserInfo.h"
 #import "SCReservation.h"
 #import "SCReservationTableViewCell.h"
+#import "SCWebViewController.h"
 
 @interface SCMyReservationTableViewController ()
 
@@ -96,7 +97,8 @@
     {
         // 列表被点击跳转到商户详情
         @try {
-            UIViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
+            SCWebViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
+            webViewController.loadURL = [NSString stringWithFormat:@"%@/%@/%@", InspectionURL, [SCUserInfo share].userID, reservation.user_car_id];
             [self.navigationController pushViewController:webViewController animated:YES];
         }
         @catch (NSException *exception) {

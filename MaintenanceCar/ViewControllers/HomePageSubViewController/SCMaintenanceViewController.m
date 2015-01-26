@@ -15,7 +15,6 @@
 #import "SCMerchantTableViewCell.h"
 #import "SCLocationInfo.h"
 #import "SCAPIRequest.h"
-#import "SCMerchant.h"
 #import "SCMerchantDetailViewController.h"
 #import "SCReservationViewController.h"
 #import "SCUserInfo.h"
@@ -138,7 +137,7 @@
     _maintenanceTypeView.delegate = self;
     
     // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed) name:kMaintenanceReservationNotification object:nil];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed:) name:kMaintenanceReservationNotification object:nil];
 }
 
 - (void)viewConfig
@@ -192,13 +191,14 @@
  *
  *  @param notification 接受传递的参数
  */
-- (void)reservationButtonPressed
+- (void)reservationButtonPressed:(NSNotification *)notification
 {
     // 跳转到预约页面
     @try {
         _isPush = YES;
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.merchant = _recommendMerchants[_reservationButtonIndex];
+        reservationViewController.merchant = _recommendMerchants[[notification.object integerValue]];
+        reservationViewController.serviceItem = [[SCDictionaryItem alloc] initWithItemName:@"养车" dictID:@"2" type:@"1" index:@"1"];
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {

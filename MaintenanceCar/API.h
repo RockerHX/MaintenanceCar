@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define DoMain              @"https://api.yjclw.com"                        // 接口域名
 #define ImageDoMain         @"http://static.yjclw.com"                      // 图片资源域名
+#define InspectionURL       @"http://mobile.yjclw.com/Inspection"           // 检测进度
 
 #define APIPath             @"/v1"                                          // 接口路径
 #define APIURL              [DoMain stringByAppendingString:APIPath]        // 接口链接
