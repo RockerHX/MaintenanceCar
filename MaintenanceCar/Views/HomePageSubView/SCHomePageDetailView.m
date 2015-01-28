@@ -64,8 +64,20 @@
 #pragma mark - Private Methods
 - (void)displayMaintenanceView
 {
-    SCUerCar *userCar                    = [SCUserInfo share].currentCar;
-    _carNameLabel.text                   = userCar.model_name ? userCar.model_name : @"元景修养";
+    SCUserInfo *userInfo = [SCUserInfo share];
+    SCUerCar *userCar    = userInfo.currentCar;
+    _carNameLabel.text   = userCar.model_name ? userCar.model_name : @"元景修养";
+    
+    if (userInfo.cars.count <= 1)
+    {
+        _preButton.enabled = NO;
+        _nextButton.enabled = NO;
+    }
+    else
+    {
+        _preButton.enabled = YES;
+        _nextButton.enabled = YES;
+    }
 }
 
 #pragma mark - Public Methods

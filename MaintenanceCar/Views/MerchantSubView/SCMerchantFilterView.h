@@ -9,18 +9,17 @@
 #import <UIKit/UIKit.h>
 
 // 筛选按钮类型
-typedef NS_ENUM(NSInteger, SCFilterButtonType) {
-    SCFilterButtonTypeDefault           = 800,
-    SCFilterButtonTypeDistanceButton    = SCFilterButtonTypeDefault,
-    SCFilterButtonTypeRepairTypeButton  = 801,
-    SCFilterButtonTypeOtherFilterButton = 802
+typedef NS_ENUM(NSInteger, SCFilterType) {
+    SCFilterTypeDistance,
+    SCFilterTypeRepair,
+    SCFilterTypeOther
 };
 
 @protocol SCMerchantFilterViewDelegate <NSObject>
 
 @optional
 // 筛选按钮被点击的时候触发此代理方法，用于弹出筛选条件
-- (void)filterButtonPressedWithType:(SCFilterButtonType)type;
+- (void)filterButtonPressedWithType:(SCFilterType)type;
 
 @end
 

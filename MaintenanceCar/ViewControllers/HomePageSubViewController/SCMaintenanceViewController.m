@@ -168,12 +168,24 @@
 
 - (void)displayMaintenanceView
 {
-    SCUerCar *userCar                    = [SCUserInfo share].currentCar;
+    SCUserInfo *userInfo                 = [SCUserInfo share];
+    SCUerCar *userCar                    = userInfo.currentCar;
     _carNameLabel.text                   = userCar.model_name;
     _buyCarTimeLabel.text                = ([userCar.buy_car_year integerValue] && [userCar.buy_car_month integerValue]) ? [NSString stringWithFormat:@"%@年%@月", userCar.buy_car_year, userCar.buy_car_month] : @"";
     _labelView.mileage                   = userCar.run_distance;
     _driveHabitLabel.text                = [self handleHabitString:userCar.habit];
     _maintenanceTypeView.maintenanceType = _maintenanceType;
+    
+    if (userInfo.cars.count <= 1)
+    {
+        _preButton.enabled = NO;
+        _nextButton.enabled = NO;
+    }
+    else
+    {
+        _preButton.enabled = YES;
+        _nextButton.enabled = YES;
+    }
 }
 
 - (NSString *)handleHabitString:(NSString *)habit
@@ -371,6 +383,7 @@
             cell.tag                    = indexPath.row;
             SCServiceItem *item         = _serviceItems[indexPath.row];
             cell.nameLabel.text         = item.service_name;
+            cell.memoLabel.text         = item.memo;
             return cell;
         }
             break;

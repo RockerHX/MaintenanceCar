@@ -10,4 +10,13 @@
 
 @implementation SCServiceItem
 
+#pragma mark - Setter And Getter Methods
+- (void)setMemo:(NSString<Optional> *)memo
+{
+    if (memo)
+        _memo = [NSString stringWithFormat:@"(%@)", memo];
+    else
+        _memo = @"";
+}
+
 @end

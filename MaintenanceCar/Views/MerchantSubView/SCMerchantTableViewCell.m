@@ -59,22 +59,25 @@
 {
     if (merchant.zige)
     {
-        _zigeLable.text                 = merchant.zige;
-        _zigeLable.backgroundColor      = [self iconColorWithName:merchant.zige];
+        _zigeLable.hidden          = NO;
+        _zigeLable.text            = merchant.zige;
+        _zigeLable.backgroundColor = [self iconColorWithName:merchant.zige];
     }
     else
         _zigeLable.hidden = YES;
     
     if (merchant.honest)
     {
-        _honestLabel.text               = merchant.honest;
-        _honestLabel.backgroundColor    = [self iconColorWithName:merchant.honest];
+        _honestLabel.hidden          = NO;
+        _honestLabel.text            = merchant.honest;
+        _honestLabel.backgroundColor = [self iconColorWithName:merchant.honest];
     }
     else
         _honestLabel.hidden = YES;
     
     if (merchant.major_type)
     {
+        _majorTypeLabel.hidden          = NO;
         _majorTypeLabel.text            = merchant.major_type;
         _majorTypeLabel.backgroundColor = [self iconColorWithName:merchant.major_type];
     }

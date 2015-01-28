@@ -86,6 +86,7 @@
 #pragma mark - Table View Delegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     // 跳转到预约页面
     @try {
         SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
@@ -172,7 +173,10 @@
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];
         [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"网络错误，请重试！", 1.0f);
+        if (operation.response)
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"您还没有收藏过任何店铺噢！", 1.0f);
+        else
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"网络出错了，请稍后再试>_<", 1.0f);
     }];
 }
 

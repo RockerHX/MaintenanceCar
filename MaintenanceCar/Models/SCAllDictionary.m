@@ -99,6 +99,11 @@ static SCAllDictionary *allDictionary = nil;
     }
 }
 
+- (void)replaceSpecialDataWith:(SCSpecial *)spcial
+{
+    _special = spcial;
+}
+
 #pragma mark - Private Methods
 /**
  *  保存字典数据到本地

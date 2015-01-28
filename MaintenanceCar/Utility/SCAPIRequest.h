@@ -243,4 +243,14 @@
                                               Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+#pragma mark - Special API
+/**
+ *  首页第四个按钮数据接口请求方法(API:/Special - GET)
+ *
+ *  @param parameters   请求参数集合
+ */
+- (void)startHomePageSpecialAPIRequestWithParameters:(NSDictionary *)parameters
+                                             Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 @end

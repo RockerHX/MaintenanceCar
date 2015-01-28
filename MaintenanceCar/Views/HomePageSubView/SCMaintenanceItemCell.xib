@@ -27,17 +27,27 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gBy-gS-7uF">
+                        <rect key="frame" x="138" y="8.5" width="30.5" height="24"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Xwv-RY-dR1" firstAttribute="leading" secondItem="dld-xQ-dSg" secondAttribute="leadingMargin" constant="20" id="Ecw-hT-kxl"/>
                     <constraint firstItem="Xwv-RY-dR1" firstAttribute="height" secondItem="ai1-of-uUQ" secondAttribute="height" id="GtK-qE-Zcw"/>
+                    <constraint firstItem="ai1-of-uUQ" firstAttribute="centerY" secondItem="gBy-gS-7uF" secondAttribute="centerY" constant="0.5" id="LEe-PI-mR7"/>
                     <constraint firstItem="ai1-of-uUQ" firstAttribute="leading" secondItem="Xwv-RY-dR1" secondAttribute="trailing" constant="10" id="dnZ-rs-lmW"/>
+                    <constraint firstItem="gBy-gS-7uF" firstAttribute="leading" secondItem="ai1-of-uUQ" secondAttribute="trailing" constant="8" id="etz-Nk-pDf"/>
                     <constraint firstItem="Xwv-RY-dR1" firstAttribute="centerY" secondItem="ai1-of-uUQ" secondAttribute="centerY" constant="0.5" id="hHQ-cc-5x7"/>
+                    <constraint firstItem="ai1-of-uUQ" firstAttribute="height" secondItem="gBy-gS-7uF" secondAttribute="height" id="seG-qG-odW"/>
                     <constraint firstAttribute="centerY" secondItem="Xwv-RY-dR1" secondAttribute="centerY" id="slP-iX-Spc"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="checkBox" destination="Xwv-RY-dR1" id="jkW-Qs-IqA"/>
+                <outlet property="memoLabel" destination="gBy-gS-7uF" id="uDF-bf-d2d"/>
                 <outlet property="nameLabel" destination="ai1-of-uUQ" id="CY9-KE-n6N"/>
             </connections>
             <point key="canvasLocation" x="362" y="297"/>

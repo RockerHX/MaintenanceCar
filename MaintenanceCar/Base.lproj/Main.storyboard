@@ -1416,7 +1416,7 @@
             </objects>
             <point key="canvasLocation" x="-465" y="1632.75"/>
         </scene>
-        <!--我的预约-->
+        <!--我的订单-->
         <scene sceneID="BUu-K6-buG">
             <objects>
                 <tableViewController storyboardIdentifier="SCMyReservationTableViewController" hidesBottomBarWhenPushed="YES" id="NyP-fo-syM" customClass="SCMyReservationTableViewController" sceneMemberID="viewController">
@@ -1626,7 +1626,7 @@
                             <outlet property="delegate" destination="NyP-fo-syM" id="Frk-sb-fzv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="我的预约" id="qKd-QT-wlD"/>
+                    <navigationItem key="navigationItem" title="我的订单" id="qKd-QT-wlD"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R3q-0t-ExO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2801,7 +2801,7 @@
                                                         <constraint firstAttribute="width" secondItem="mBX-jG-oZ9" secondAttribute="height" multiplier="1:1" id="SbH-kC-GGt"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="自选" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRE-uQ-5uh">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="普保" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRE-uQ-5uh">
                                                     <rect key="frame" x="31.5" y="0.0" width="34" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="34" id="Y9Z-dN-hC7"/>
@@ -2869,7 +2869,7 @@
                                                         <constraint firstAttribute="width" secondItem="s7x-Sp-5jk" secondAttribute="height" multiplier="1:1" id="fky-GU-4ef"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="普保" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gof-Q7-dix">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="自选" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gof-Q7-dix">
                                                     <rect key="frame" x="31.5" y="0.0" width="34" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="34" id="AiW-h0-su2"/>
@@ -4591,7 +4591,6 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <action selector="repairButtonPressed:" destination="Smi-cE-QPc" eventType="touchUpInside" id="H9v-Be-tzy"/>
                                     <segue destination="8Cp-Jr-aXR" kind="push" id="pvp-JS-YIg"/>
                                 </connections>
                             </button>
@@ -4601,7 +4600,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xSZ-nH-oC4">
+                            <button opaque="NO" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xSZ-nH-oC4">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="xSZ-nH-oC4" secondAttribute="height" multiplier="1:1" id="UeS-lH-5q4"/>
@@ -4619,11 +4618,14 @@
                                         <include reference="UeS-lH-5q4"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="SpecialButtonPressed:" destination="Smi-cE-QPc" eventType="touchUpInside" id="Hl7-Oy-E6i"/>
+                                </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="团" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="22" translatesAutoresizingMaskIntoConstraints="NO" id="yFt-7X-39R">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="获取中" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="22" translatesAutoresizingMaskIntoConstraints="NO" id="yFt-7X-39R">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AQa-vL-WFl">
@@ -4871,6 +4873,8 @@
                     <navigationItem key="navigationItem" title="首页" id="jUd-gm-yBO"/>
                     <connections>
                         <outlet property="detailView" destination="Ef7-i4-Lse" id="31g-ql-LIY"/>
+                        <outlet property="specialButton" destination="xSZ-nH-oC4" id="FgG-yB-vi9"/>
+                        <outlet property="specialLabel" destination="yFt-7X-39R" id="jmt-IN-kyI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qqi-x9-z5O" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4919,6 +4923,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="96" y="10" width="216" height="36"/>
+                                                    </variation>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GjB-fE-lOZ">
                                                     <rect key="frame" x="514" y="76" width="78" height="36"/>
@@ -4942,7 +4949,8 @@
                                                             <exclude reference="Wa6-b3-a12"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="232" y="50" width="80" height="36"/>
                                                         <mask key="constraints">
                                                             <include reference="2lt-Lc-qXy"/>
                                                             <include reference="Wa6-b3-a12"/>
@@ -7410,7 +7418,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6c6-aR-JyL" id="c9X-T5-3BP">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="4D3DFB26-E284-49C4-BD49-944BEE47736D" translatesAutoresizingMaskIntoConstraints="NO" id="3bl-4q-gbn">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="56F55034-D590-4717-B63F-68E06699115F" translatesAutoresizingMaskIntoConstraints="NO" id="3bl-4q-gbn">
                                                     <rect key="frame" x="15" y="8" width="104" height="104"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="104" id="gaE-rx-vbl">
@@ -7431,6 +7439,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="96" y="10" width="216" height="36"/>
+                                                    </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="OneIcon" translatesAutoresizingMaskIntoConstraints="NO" id="pyo-WV-Xqs">
                                                     <rect key="frame" x="237" y="8" width="38" height="38"/>
@@ -7476,7 +7487,8 @@
                                                             <exclude reference="jF7-kM-X77"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="232" y="50" width="80" height="36"/>
                                                         <mask key="constraints">
                                                             <include reference="B84-7b-0tI"/>
                                                             <include reference="jF7-kM-X77"/>
@@ -7945,7 +7957,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3De-Qo-Sf0" id="PUA-a3-WUN">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="788E187B-5D26-480B-AC7E-F5BE3CE894A9" translatesAutoresizingMaskIntoConstraints="NO" id="dmw-xb-jX3">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="02E597C4-36F3-4B4C-BB3D-C0856C43C9D2" translatesAutoresizingMaskIntoConstraints="NO" id="dmw-xb-jX3">
                                                     <rect key="frame" x="15" y="8" width="104" height="104"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="104" id="j1n-zg-AoK">
@@ -7966,6 +7978,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="96" y="10" width="216" height="36"/>
+                                                    </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="OneIcon" translatesAutoresizingMaskIntoConstraints="NO" id="rj4-zn-ZWD">
                                                     <rect key="frame" x="237" y="8" width="38" height="38"/>
@@ -8011,7 +8026,8 @@
                                                             <exclude reference="quD-mf-9Ob"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="232" y="50" width="80" height="36"/>
                                                         <mask key="constraints">
                                                             <include reference="PoM-km-14x"/>
                                                             <include reference="quD-mf-9Ob"/>
@@ -8462,7 +8478,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="4D3DFB26-E284-49C4-BD49-944BEE47736D" width="80" height="80">
+        <image name="02E597C4-36F3-4B4C-BB3D-C0856C43C9D2" width="80" height="80">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -8939,7 +8955,7 @@ sgC1ALcAuQC7AL0AwgDZANsA3W1PbVRtX21obXttf22SbZ1tpm2rbbNttm27bcptzm3Vbd1t6m3vbfFt
 8234bgBuA24IbhBuE24lbihuLQAAAAAAAAIBAAAAAAAAAEIAAAAAAAAAAAAAAAAAAG4vA
 </mutableData>
         </image>
-        <image name="788E187B-5D26-480B-AC7E-F5BE3CE894A9" width="80" height="80">
+        <image name="56F55034-D590-4717-B63F-68E06699115F" width="80" height="80">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

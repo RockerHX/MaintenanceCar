@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SCDictionaryItem.h"
+#import "SCSpecial.h"
 
 typedef NS_ENUM(NSInteger, SCDictionaryType) {
     SCDictionaryTypeOderType = 1,                       // 订单类型
@@ -20,12 +21,14 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
 
 @interface SCAllDictionary : NSObject
 
-@property (nonatomic, strong, readonly) NSArray *oderTypeItems;             // 订单类型字典
-@property (nonatomic, strong, readonly) NSArray *reservationTypeItems;      // 预约类型字典
-@property (nonatomic, strong, readonly) NSArray *questionTypeItems;         // 问题类型字典
-@property (nonatomic, strong, readonly) NSArray *reservationStatusItems;    // 预约状态字典
-@property (nonatomic, strong, readonly) NSArray *oderStatusItems;           // 订单状态字典
-@property (nonatomic, strong, readonly) NSArray *driveHabitItems;           // 驾驶习惯字典
+@property (nonatomic, strong, readonly) NSArray   *oderTypeItems;             // 订单类型字典
+@property (nonatomic, strong, readonly) NSArray   *reservationTypeItems;      // 预约类型字典
+@property (nonatomic, strong, readonly) NSArray   *questionTypeItems;         // 问题类型字典
+@property (nonatomic, strong, readonly) NSArray   *reservationStatusItems;    // 预约状态字典
+@property (nonatomic, strong, readonly) NSArray   *oderStatusItems;           // 订单状态字典
+@property (nonatomic, strong, readonly) NSArray   *driveHabitItems;           // 驾驶习惯字典
+
+@property (nonatomic, strong, readonly) SCSpecial *special;                   // 自定义数据
 
 /**
  *  SCAllDictionary单例方法
@@ -41,5 +44,7 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
  *  @param finfish 数据处理后的回调block - items参数为对应请求字典类型的数据对象集合
  */
 - (void)requestWithType:(SCDictionaryType)type finfish:(void(^)(NSArray *items))finfish;
+
+- (void)replaceSpecialDataWith:(SCSpecial *)spcial;
 
 @end

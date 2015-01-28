@@ -9,6 +9,7 @@
 #import "SCMerchantFilterView.h"
 #import "MicroCommon.h"
 #import "SCFilterPopView.h"
+#import "SCAllDictionary.h"
 
 #define MerchantFilterViewUnPopHeight   60.0f
 #define MerchantFilterViewPopHeight     SCREEN_HEIGHT - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT - TAB_TAB_HEIGHT
@@ -40,20 +41,20 @@
 #pragma mark - Action Methods
 - (IBAction)distanceButtonPressed:(UIButton *)sender
 {
-    [self popFilterView];
-    [_delegate filterButtonPressedWithType:SCFilterButtonTypeDistanceButton];
+    [self popFilterViewWtihType:SCFilterTypeDistance];
+    [_delegate filterButtonPressedWithType:SCFilterTypeDistance];
 }
 
 - (IBAction)repairTypeButtonPressed:(UIButton *)sender
 {
-    [self popFilterView];
-    [_delegate filterButtonPressedWithType:SCFilterButtonTypeRepairTypeButton];
+    [self popFilterViewWtihType:SCFilterTypeRepair];
+    [_delegate filterButtonPressedWithType:SCFilterTypeRepair];
 }
 
 - (IBAction)otherFilterButtonPressed:(UIButton *)sender
 {
-    [self popFilterView];
-    [_delegate filterButtonPressedWithType:SCFilterButtonTypeOtherFilterButton];
+    [self popFilterViewWtihType:SCFilterTypeOther];
+    [_delegate filterButtonPressedWithType:SCFilterTypeOther];
 }
 
 #pragma mark - Setter And Getter Methods
@@ -65,6 +66,12 @@
     _filterPopView.delegate = self;
     // 加载本地筛选条件显示数据
     _filterConditions = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:FilterConditionsResourceName ofType:FilterConditionsResourceType]];
+    
+    NSMutableDictionary *filterConditions = [@{} mutableCopy];
+    [[SCAllDictionary share] requestWithType:SCDictionaryTypeOderType finfish:^(NSArray *items) {
+        [filterConditions setObject:items forKey:OtherConditionKey];
+        _filterConditions = filterConditions;
+    }];
 }
 
 - (void)viewConfig
@@ -83,7 +90,7 @@
 }
 
 // 弹出筛选条件View给用户展示，用户才能操作 - 带动画
-- (void)popFilterView
+- (void)popFilterViewWtihType:(SCFilterType)type
 {
     _heightConstraint.constant = MerchantFilterViewPopHeight;
     [_filterPopView showContentView];

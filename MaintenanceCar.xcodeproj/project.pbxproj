@@ -24,6 +24,7 @@
 		482B57E71A43CB7700E47962 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 482B57E61A43CB7700E47962 /* Images.xcassets */; };
 		482B57EA1A43CB7700E47962 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 482B57E81A43CB7700E47962 /* LaunchScreen.xib */; };
 		482B57F61A43CB7700E47962 /* MaintenanceCarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 482B57F51A43CB7700E47962 /* MaintenanceCarTests.m */; };
+		482C8D531A791252003C7D65 /* SCSpecial.m in Sources */ = {isa = PBXBuildFile; fileRef = 482C8D521A791252003C7D65 /* SCSpecial.m */; };
 		4841CEBC1A6B481100DA36FC /* SCMerchantDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CEBB1A6B481100DA36FC /* SCMerchantDetailCell.m */; };
 		4841CEBF1A6B9AC400DA36FC /* SCMaintenanceTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CEBE1A6B9AC400DA36FC /* SCMaintenanceTypeView.m */; };
 		4841CEC41A6B9FCB00DA36FC /* SCMaintenanceTypeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CEC31A6B9FCB00DA36FC /* SCMaintenanceTypeItem.m */; };
@@ -169,6 +170,8 @@
 		482B57EF1A43CB7700E47962 /* MaintenanceCarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaintenanceCarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		482B57F41A43CB7700E47962 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		482B57F51A43CB7700E47962 /* MaintenanceCarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaintenanceCarTests.m; sourceTree = "<group>"; };
+		482C8D511A791252003C7D65 /* SCSpecial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSpecial.h; sourceTree = "<group>"; };
+		482C8D521A791252003C7D65 /* SCSpecial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSpecial.m; sourceTree = "<group>"; };
 		4841CEBA1A6B481100DA36FC /* SCMerchantDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMerchantDetailCell.h; sourceTree = "<group>"; };
 		4841CEBB1A6B481100DA36FC /* SCMerchantDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMerchantDetailCell.m; sourceTree = "<group>"; };
 		4841CEBD1A6B9AC400DA36FC /* SCMaintenanceTypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMaintenanceTypeView.h; sourceTree = "<group>"; };
@@ -519,6 +522,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		482C8D501A791239003C7D65 /* HomePage */ = {
+			isa = PBXGroup;
+			children = (
+				482C8D511A791252003C7D65 /* SCSpecial.h */,
+				482C8D521A791252003C7D65 /* SCSpecial.m */,
+			);
+			name = HomePage;
+			sourceTree = "<group>";
+		};
 		4841CEC81A6BAC2D00DA36FC /* MaintenanceTypeCellSubView */ = {
 			isa = PBXGroup;
 			children = (
@@ -765,6 +777,7 @@
 		48EC70501A442ACB003CE3FD /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				482C8D501A791239003C7D65 /* HomePage */,
 				48F4A4241A74F0B00054926F /* Dictionary */,
 				4884825D1A70F7E100E2CCFB /* Maintenance */,
 				48F2AA4B1A667C03000578B2 /* AddCar */,
@@ -1156,6 +1169,7 @@
 				48F4A4231A74EEED0054926F /* SCDictionaryItem.m in Sources */,
 				48F666A61A65263F0044674C /* SCSettingTableViewController.m in Sources */,
 				485B30CF1A61376F00AC3CC2 /* SCTableViewController.m in Sources */,
+				482C8D531A791252003C7D65 /* SCSpecial.m in Sources */,
 				4897868E1A622FC4002593DD /* SCAddCarViewController.m in Sources */,
 				488482601A70F7FA00E2CCFB /* SCServiceItem.m in Sources */,
 				48F4A4201A74EC640054926F /* SCWebViewController.m in Sources */,

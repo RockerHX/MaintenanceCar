@@ -137,12 +137,15 @@ static SCUserInfo *userInfo = nil;
 
 - (void)logout
 {
+    _firstCar   = nil;
+    _currentCar = nil;
     [_userCars removeAllObjects];
     
     self.receiveMessage = NO;
     [USER_DEFAULT setObject:@(NO) forKey:kLoginKey];
     [USER_DEFAULT removeObjectForKey:kUserIDKey];
     [USER_DEFAULT removeObjectForKey:kPhoneNumberKey];
+    [USER_DEFAULT removeObjectForKey:kUserCarsKey];
     [USER_DEFAULT synchronize];
 }
 
@@ -177,7 +180,8 @@ static SCUserInfo *userInfo = nil;
                 [weakSelf saveUserCarsWithData:responseObject];
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            _block(NO);
+            if (_block)
+                _block(NO);
         }];
     }
 }

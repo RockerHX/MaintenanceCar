@@ -213,19 +213,19 @@
 }
 
 #pragma mark - SCMerchantFilterViewDelegate Methods
-- (void)filterButtonPressedWithType:(SCFilterButtonType)type
+- (void)filterButtonPressedWithType:(SCFilterType)type
 {
     // 筛选条件，选择之后触发请求
     switch (type) {
-        case SCFilterButtonTypeDistanceButton:
+        case SCFilterTypeDistance:
         {
         }
             break;
-        case SCFilterButtonTypeRepairTypeButton:
+        case SCFilterTypeRepair:
         {
         }
             break;
-        case SCFilterButtonTypeOtherFilterButton:
+        case SCFilterTypeOther:
         {
         }
             break;

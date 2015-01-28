@@ -50,6 +50,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define UpdateCarAPI                @"/Usercar/update"                      // 更新车辆数据接口
 
 #define AllDictionaryAPI            @"/Misc/dictAll"                        // 所有数据字典接口
+#define HomePageSpecialAPI          @"/Special"                             // 首页第四个按钮数据接口
 
 
 #define WearthAPIURL                    [APIURL stringByAppendingString:WearthAPI]                  // 天气接口URL - 用于主页模块获取天气信息
@@ -76,6 +77,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define MaintenanceAPIURL               [APIURL stringByAppendingString:MaintenanceAPI]             // 保养数据接口URL - 用于获取用户车辆保养数据
 #define UpdateCarAPIURL                 [APIURL stringByAppendingString:UpdateCarAPI]               // 更新车辆数据接口URL - 用于用户更新车辆数据
 
-#define AllDictionaryAPIURL             [APIURL stringByAppendingString:AllDictionaryAPI]           // 所有数据字典接口接口URL
+#define AllDictionaryAPIURL             [APIURL stringByAppendingString:AllDictionaryAPI]           // 所有数据字典接口URL
+#define HomePageSpecialAPIURL           [APIURL stringByAppendingString:HomePageSpecialAPI]         // 首页第四个按钮数据接口URL
 
 #endif

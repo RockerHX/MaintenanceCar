@@ -8,12 +8,13 @@
 
 #import "SCHomePageViewController.h"
 #import <UMengAnalytics/MobClick.h>
+#import <AFNetworking/UIButton+AFNetworking.h>
 #import "MicroCommon.h"
 #import "SCHomePageDetailView.h"
 #import "SCUserInfo.h"
 #import "SCAPIRequest.h"
-#import "SCWeather.h"
-#import "SCWashViewController.h"
+#import "SCAllDictionary.h"
+#import "SCWebViewController.h"
 
 @interface SCHomePageViewController () <UIAlertViewDelegate>
 
@@ -31,6 +32,13 @@
     [_detailView refresh];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self startSpecialRequest];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     // 用户行为统计，页面停留时间
@@ -42,6 +50,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [self initConfig];
+    [self viewConfig];
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,21 +80,61 @@
         [self showShoulLoginAlert];
 }
 
-- (IBAction)repairButtonPressed:(UIButton *)sender
+- (IBAction)SpecialButtonPressed:(UIButton *)sender
 {
+    SCSpecial *spcial = [SCAllDictionary share].special;
+    if (spcial.html)
+    {
+        @try {
+            SCWebViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
+            [self.navigationController pushViewController:webViewController animated:YES];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"SCHomePageViewController Go to the SCWebViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
+    }
+    else
+    {
+        
+    }
 }
 
 #pragma mark - Private Methods
-- (void)startWeatherReuqest
+- (void)initConfig
 {
-    [[SCAPIRequest manager] startWearthAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
-        NSError *error = nil;
-        SCWeather *weather = [[SCWeather alloc] initWithDictionary:responseObject error:&error];
-        NSLog(@"title:%@", weather.title);
+    [self startSpecialRequest];
+}
+
+- (void)viewConfig
+{
+}
+
+// 自定义数据请求方法(用于首页第四个按钮，预约以及筛选条件)，无参数
+- (void)startSpecialRequest
+{
+    __weak typeof(self)weakSelf = self;
+    [[SCAPIRequest manager] startHomePageSpecialAPIRequestWithParameters:nil Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        {
+            NSError *error = nil;
+            SCSpecial *special = [[SCSpecial alloc] initWithDictionary:responseObject error:&error];
+            NSLog(@"SCSpecial Parse Error:%@", error);
+            
+            [[SCAllDictionary share] replaceSpecialDataWith:special];
+            [weakSelf displaySpecialButtonWithData:special];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
     }];
+}
+
+- (void)displaySpecialButtonWithData:(SCSpecial *)special
+{
+    _specialLabel.textColor = [UIColor blackColor];
+    _specialLabel.text      = special.text;
+    _specialButton.enabled  = YES;
+    [_specialButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:special.pic_url] placeholderImage:[_specialButton backgroundImageForState:UIControlStateNormal]];
 }
 
 /**

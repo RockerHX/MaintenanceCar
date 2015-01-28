@@ -19,6 +19,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView       *checkBox;
 @property (weak, nonatomic) IBOutlet UILabel           *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel           *memoLabel;
 
 @property (nonatomic, weak)          id                <SCMaintenanceItemCellDelegate>delegate;
 
