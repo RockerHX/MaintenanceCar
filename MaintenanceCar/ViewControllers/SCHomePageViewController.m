@@ -104,7 +104,6 @@
 #pragma mark - Private Methods
 - (void)initConfig
 {
-    [self startSpecialRequest];
 }
 
 - (void)viewConfig
@@ -118,9 +117,7 @@
     [[SCAPIRequest manager] startHomePageSpecialAPIRequestWithParameters:nil Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            NSError *error = nil;
-            SCSpecial *special = [[SCSpecial alloc] initWithDictionary:responseObject error:&error];
-            NSLog(@"SCSpecial Parse Error:%@", error);
+            SCSpecial *special = [[SCSpecial alloc] initWithDictionary:responseObject error:nil];
             
             [[SCAllDictionary share] replaceSpecialDataWith:special];
             [weakSelf displaySpecialButtonWithData:special];

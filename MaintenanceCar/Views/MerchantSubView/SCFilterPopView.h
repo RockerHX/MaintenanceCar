@@ -19,8 +19,8 @@
 @interface SCFilterPopView : UIView
 
 @property (nonatomic, weak)                          id <SCFilterPopViewDelegate>delegate;
-@property (weak, nonatomic) IBOutlet             UIView *contentView;                   // 筛选条件的展示View
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewBottomConstraint;   // 筛选条件的展示View(contentView)到父视图(SCFilterPopView)底部的约束条件
+@property (weak, nonatomic) IBOutlet             UIView *contentView;                       // 筛选条件的展示View
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewBottomConstraint;       // 筛选条件的展示View(contentView)到父视图(SCFilterPopView)底部的约束条件
 
 /**
  *  展示筛选条件View - 带动画

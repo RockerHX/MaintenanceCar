@@ -12,13 +12,13 @@
 #import "SCAllDictionary.h"
 
 #define MerchantFilterViewUnPopHeight   60.0f
-#define MerchantFilterViewPopHeight     SCREEN_HEIGHT - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT - TAB_TAB_HEIGHT
+#define MerchantFilterViewPopHeight     SCREEN_HEIGHT - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT
 
 #define FilterConditionsResourceName    @"FilterConditions"
 #define FilterConditionsResourceType    @"plist"
 
 #define DistanceConditionKey            @"DistanceCondition"
-#define RepariConditionKey              @"RepariCondition"
+#define RepairConditionKey              @"RepairCondition"
 #define OtherConditionKey               @"OtherCondition"
 
 @interface SCMerchantFilterView () <SCFilterPopViewDelegate>
@@ -65,13 +65,15 @@
     // 设置弹出视图代理，以便回调方法触发
     _filterPopView.delegate = self;
     // 加载本地筛选条件显示数据
-    _filterConditions = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:FilterConditionsResourceName ofType:FilterConditionsResourceType]];
+    NSDictionary *localData = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:FilterConditionsResourceName ofType:FilterConditionsResourceType]];
     
-    NSMutableDictionary *filterConditions = [@{} mutableCopy];
-    [[SCAllDictionary share] requestWithType:SCDictionaryTypeOderType finfish:^(NSArray *items) {
-        [filterConditions setObject:items forKey:OtherConditionKey];
-        _filterConditions = filterConditions;
-    }];
+    NSMutableDictionary *filterConditions = [localData mutableCopy];
+    NSMutableArray *repairConditions = [NSMutableArray arrayWithArray:localData[RepairConditionKey]];
+    NSMutableArray *otherConditions = [NSMutableArray arrayWithArray:localData[OtherConditionKey]];
+    
+    [filterConditions setObject:repairConditions forKey:RepairConditionKey];
+    [filterConditions setObject:otherConditions forKey:OtherConditionKey];
+    _filterConditions = filterConditions;
 }
 
 - (void)viewConfig
@@ -79,7 +81,7 @@
     // 从本地加载筛选条件数据
     @try {
         [_distanceButton setTitle:_filterConditions[DistanceConditionKey][0][DisplayNameKey] forState:UIControlStateNormal];
-        [_repairTypeButton setTitle:_filterConditions[RepariConditionKey][0][DisplayNameKey] forState:UIControlStateNormal];
+        [_repairTypeButton setTitle:_filterConditions[RepairConditionKey][0][DisplayNameKey] forState:UIControlStateNormal];
         [_otherFilterButton setTitle:_filterConditions[OtherConditionKey][0][DisplayNameKey] forState:UIControlStateNormal];
     }
     @catch (NSException *exception) {
