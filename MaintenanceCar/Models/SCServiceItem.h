@@ -14,4 +14,6 @@
 @property (nonatomic, copy) NSString <Optional>*service_name;   // 服务项目名字
 @property (nonatomic, copy) NSString <Optional>*memo;           // 可选字段
 
+- (id)initWithServiceID:(NSString *)serviceID serviceName:(NSString *)serviceName;
+
 @end

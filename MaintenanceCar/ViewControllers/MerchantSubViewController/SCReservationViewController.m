@@ -79,8 +79,11 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     {
         case UITableViewRowIndexProject:
         {
-            SCPickerView *pickerView = [[SCPickerView alloc] initWithDelegate:self];
-            [pickerView show];
+            if (_canSelectServiceItem)
+            {
+                SCPickerView *pickerView = [[SCPickerView alloc] initWithDelegate:self];
+                [pickerView show];
+            }
         }
             break;
         case UITableViewRowIndexDate:
@@ -126,6 +129,7 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // 设置商户名称显示
+    _canSelectServiceItem = YES;
     _reservationCarID = [SCUserInfo share].currentCar.user_car_id;
     _merchantNameLabel.text = _merchant.name;
 }
@@ -139,8 +143,8 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     _ownerPhoneNumberTextField.leftView     = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
     _remarkTextField.leftViewMode           = UITextFieldViewModeAlways;
     _remarkTextField.leftView               = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
-    _projectLabel.text                      = _serviceItem.name;
-    _reservationType                        = _serviceItem.dict_id;
+    _projectLabel.text                      = _serviceItem.service_name;
+    _reservationType                        = _serviceItem.service_id;
     
     NSArray *items = [SCUserInfo share].selectedItems;
     for (NSString *item in items)
@@ -406,10 +410,10 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
 }
 
 #pragma mark - SCPickerViewDelegate Methods
-- (void)pickerViewSelectedFinish:(NSString *)item displayName:(NSString *)name
+- (void)pickerViewSelectedFinish:(SCServiceItem *)serviceItem
 {
-    _reservationType = item;
-    _projectLabel.text = name;
+    _reservationType = serviceItem.service_id;
+    _projectLabel.text = serviceItem.service_name;
 }
 
 @end

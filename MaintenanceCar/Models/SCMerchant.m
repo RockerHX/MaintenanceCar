@@ -24,7 +24,7 @@
     return self;
 }
 
-#pragma mark - Getter Methods
+#pragma mark - Setter And Getter Methods
 - (void)setZige:(NSString<Optional> *)zige
 {
     switch ([zige integerValue])

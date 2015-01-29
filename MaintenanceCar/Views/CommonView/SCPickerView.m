@@ -9,15 +9,14 @@
 #import "SCPickerView.h"
 #import "MicroCommon.h"
 #import "AppDelegate.h"
-#import "SCAllDictionary.h"
 
 #define ReservationItemsResourceName    @"ReservationItems"
 #define ReservationItemsResourceType    @"plist"
 
 @interface SCPickerView () <UIPickerViewDataSource, UIPickerViewDelegate>
 {
-    NSArray  *_pickerItmes;     // 选择器数据Cache
-    NSString *_item;            // 选择数据Cache
+    NSArray       *_pickerItmes;     // 选择器数据Cache
+    SCServiceItem *_item;            // 选择数据Cache
 }
 
 @end
@@ -34,10 +33,7 @@
     _picker.dataSource = self;
     _picker.delegate = self;
     _delegate = delegate;
-    
-    [[SCAllDictionary share] requestWithType:SCDictionaryTypeOderType finfish:^(NSArray *items) {
-        _pickerItmes = items;
-    }];
+    _pickerItmes = [SCAllDictionary share].serviceItems;
     
     [self viewConfig];
     
@@ -58,14 +54,14 @@
 #pragma mark - Picker View Delegate Methods
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return ((SCDictionaryItem *)_pickerItmes[row]).name;
+    return ((SCServiceItem *)_pickerItmes[row]).service_name;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     // 选择器选择栏被点击之后缓存选择数据
     @try {
-        _item = ((SCDictionaryItem *)_pickerItmes[row]).name;
+        _item = _pickerItmes[row];
     }
     @catch (NSException *exception) {
         NSLog(@"SCPickerView Get Item Error:%@", exception.reason);
@@ -86,8 +82,10 @@
 {
     // 空白区域被点击之后触发回调，为选择取选择器默认数据，关闭时间筛选器
     @try {
-        [_delegate pickerViewSelectedFinish:_item ? _item : ((SCDictionaryItem *)_pickerItmes[0]).dict_id
-                                displayName:_item ? _item : ((SCDictionaryItem *)_pickerItmes[0]).name];
+        if (_item)
+            [_delegate pickerViewSelectedFinish:_item];
+        else
+            [_delegate pickerViewSelectedFinish:_pickerItmes[0]];
     }
     @catch (NSException *exception) {
         NSLog(@"SCPickerView Return Item Error:%@", exception.reason);

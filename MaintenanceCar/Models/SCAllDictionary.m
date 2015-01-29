@@ -8,7 +8,6 @@
 
 #import "SCAllDictionary.h"
 #import "MicroCommon.h"
-#import "SCDictionaryItem.h"
 #import "SCAPIRequest.h"
 
 #define kAllDictionary          @"kAllDictionary"
@@ -102,6 +101,24 @@ static SCAllDictionary *allDictionary = nil;
 - (void)replaceSpecialDataWith:(SCSpecial *)spcial
 {
     _special = spcial;
+}
+
+- (void)generateServiceItemsWtihMerchantImtes:(NSDictionary *)merchantItems;
+{
+    NSArray *washItmes        = merchantItems[@"1"];
+    NSArray *maintenanceItmes = merchantItems[@"2"];
+    NSArray *repairItems      = merchantItems[@"3"];
+    
+    NSMutableArray *items = [@[] mutableCopy];
+    if (washItmes.count)
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"1" serviceName:@"洗车美容"]];
+    if (maintenanceItmes.count)
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"2" serviceName:@"保养"]];
+    if (repairItems.count)
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"3" serviceName:@"维修"]];
+    
+    [items addObject:[[SCServiceItem alloc] initWithServiceID:@"5" serviceName:[SCAllDictionary share].special.text]];
+    _serviceItems = items;
 }
 
 #pragma mark - Private Methods

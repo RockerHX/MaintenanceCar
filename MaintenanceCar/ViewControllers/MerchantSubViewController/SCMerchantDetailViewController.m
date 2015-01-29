@@ -158,9 +158,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)displayMerchantDetail
 {
-    [self startCheckMerchantCollectionStutasRequest];
-    
-    _merchantBriefIntroductionCell.distanceLabel.text     = _merchantDetail.distance;
+    _favoriteItem.favorited                           = _merchantDetail.collected;
+    _merchantBriefIntroductionCell.distanceLabel.text = _merchantDetail.distance;
     
     [self handleMerchantName:_merchantDetail.name onNameLabel:_merchantBriefIntroductionCell.merchantNameLabel];
     [self handleMerchantDetail:_merchantDetail.address onLabel:_merchantAddressLabel];
@@ -199,7 +198,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (void)startMerchantDetailRequestWithParameters
 {
     __weak typeof(self) weakSelf = self;
-    NSDictionary *paramters = @{@"id": _companyID};
+    NSDictionary *paramters = @{@"id": _companyID,
+                                @"user_id": [SCUserInfo share].userID};
     [[SCAPIRequest manager] startMerchantDetailAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
@@ -320,8 +320,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                      message:@"是否重新获取"
                     delegate:self
                         type:SCAlertTypeReuqestError
-           cancelButtonTitle:@"取消"
-            otherButtonTitle:@"重新获取"];
+           cancelButtonTitle:@"重新获取"
+            otherButtonTitle:@"取消"];
 }
 
 #pragma mark - Alert View Delegate Methods
@@ -356,7 +356,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 #pragma mark - SCReservatAlertViewDelegate Methods
-- (void)selectedWithServiceItem:(SCDictionaryItem *)serviceItem
+- (void)selectedWithServiceItem:(SCServiceItem *)serviceItem
 {
     // 跳转到预约页面
     @try {

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class SCDictionaryItem;
+@class SCServiceItem;
 
 typedef NS_ENUM(NSInteger, SCAlertAnimation) {
     SCAlertAnimationDefault = 0,
@@ -19,18 +19,16 @@ typedef NS_ENUM(NSInteger, SCAlertAnimation) {
 @protocol SCReservatAlertViewDelegate <NSObject>
 
 @optional
-- (void)selectedWithServiceItem:(SCDictionaryItem *)serviceItem;
+- (void)selectedWithServiceItem:(SCServiceItem *)serviceItem;
 
 @end
 
-@interface SCReservatAlertView : UIView
+@interface SCReservatAlertView : UIView <UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (nonatomic, weak) id<SCReservatAlertViewDelegate>delegate;
+@property (nonatomic, weak) id      <SCReservatAlertViewDelegate>delegate;
 
-@property (weak, nonatomic) IBOutlet UIButton *buttonOne;
-@property (weak, nonatomic) IBOutlet UIButton *buttonTwo;
-@property (weak, nonatomic) IBOutlet UIButton *buttonThree;
-@property (weak, nonatomic) IBOutlet UIButton *buttonOther;
+@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
 
 - (id)initWithDelegate:(id<SCReservatAlertViewDelegate>)delegate animation:(SCAlertAnimation)anmation;
 

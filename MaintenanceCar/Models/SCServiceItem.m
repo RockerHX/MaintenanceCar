@@ -19,4 +19,15 @@
         _memo = @"";
 }
 
+#pragma mark - Public Methods
+- (id)initWithServiceID:(NSString *)serviceID serviceName:(NSString *)serviceName
+{
+    self = [super init];
+    if (self) {
+        _service_id   = serviceID;
+        _service_name = serviceName;
+    }
+    return self;
+}
+
 @end

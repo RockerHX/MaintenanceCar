@@ -159,7 +159,7 @@
 }
 
 #pragma mark - SCReservatAlertViewDelegate Methods
-- (void)selectedWithServiceItem:(SCDictionaryItem *)serviceItem
+- (void)selectedWithServiceItem:(SCServiceItem *)serviceItem
 {
     // 跳转到预约页面
     @try {

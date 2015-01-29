@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SCAllDictionary.h"
 
 @protocol SCPickerViewDelegate <NSObject>
 
@@ -17,7 +18,7 @@
  *  @param item 筛选选项
  *  @param name 筛选显示名称
  */
-- (void)pickerViewSelectedFinish:(NSString *)item displayName:(NSString *)name;
+- (void)pickerViewSelectedFinish:(SCServiceItem *)serviceItem;
 
 @end
 

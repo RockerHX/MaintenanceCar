@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SCDictionaryItem.h"
+#import "SCServiceItem.h"
 #import "SCSpecial.h"
 
 typedef NS_ENUM(NSInteger, SCDictionaryType) {
@@ -16,7 +17,7 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
     SCDictionaryTypeQuestionType,                       // 问题类型
     SCDictionaryTypeReservationStatus,                  // 预约状态
     SCDictionaryTypeOderStatus,                         // 订单状态
-    SCDictionaryTypeDriveHabit                          // 驾驶习惯
+    SCDictionaryTypeDriveHabit,                         // 驾驶习惯
 };
 
 @interface SCAllDictionary : NSObject
@@ -27,6 +28,8 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
 @property (nonatomic, strong, readonly) NSArray   *reservationStatusItems;    // 预约状态字典
 @property (nonatomic, strong, readonly) NSArray   *oderStatusItems;           // 订单状态字典
 @property (nonatomic, strong, readonly) NSArray   *driveHabitItems;           // 驾驶习惯字典
+
+@property (nonatomic, strong, readonly) NSArray   *serviceItems;              // 服务项目
 
 @property (nonatomic, strong, readonly) SCSpecial *special;                   // 自定义数据
 
@@ -46,5 +49,7 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
 - (void)requestWithType:(SCDictionaryType)type finfish:(void(^)(NSArray *items))finfish;
 
 - (void)replaceSpecialDataWith:(SCSpecial *)spcial;
+
+- (void)generateServiceItemsWtihMerchantImtes:(NSDictionary *)merchantItems;
 
 @end

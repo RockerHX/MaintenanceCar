@@ -13,6 +13,8 @@
 @property (nonatomic, copy) NSString <Optional>*user_car_id;            // 用户车辆ID
 @property (nonatomic, copy) NSString <Optional>*car_id;                 // 车辆型号ID
 @property (nonatomic, copy) NSString <Optional>*model_id;               // 车辆车型ID
+@property (nonatomic, copy) NSString <Optional>*car_full_model;         // 车辆全称
+@property (nonatomic, copy) NSString <Optional>*brand_name;             // 车辆品牌名称
 @property (nonatomic, copy) NSString <Optional>*plate;                  // 牌照
 @property (nonatomic, copy) NSString <Optional>*buy_car_year;           // 购买年份
 @property (nonatomic, copy) NSString <Optional>*buy_car_month;          // 购买月份

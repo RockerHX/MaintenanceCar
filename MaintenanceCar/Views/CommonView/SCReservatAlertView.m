@@ -11,18 +11,18 @@
 #import "MicroCommon.h"
 #import "AppDelegate.h"
 #import "SCAllDictionary.h"
+#import "SCReservationItemCell.h"
 
 @interface SCReservatAlertView ()
 {
     SCAlertAnimation _animation;
-    NSArray          *_items;
+    NSMutableArray   *_itmes;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *alertView;
 @property (weak, nonatomic) IBOutlet UIView *titleView;
 
 - (IBAction)cancelButtonPressed:(UIButton *)sender;
-- (IBAction)itemPressed:(UIButton *)sender;
 
 @end
 
@@ -34,40 +34,29 @@
     self.frame = APP_DELEGATE_INSTANCE.window.bounds;
     _delegate = delegate;
     _animation = anmation;
+    
+    _itmes = [@[] mutableCopy];
+    
+    [self initConfig];
     [self viewConfig];
     
     return self;
 }
 
 #pragma mark - Private Methods
+- (void)initConfig
+{
+    if (IS_IPHONE_5_PRIOR)
+        _flowLayout.itemSize = CGSizeMake(90.0f, _flowLayout.itemSize.height);
+}
+
 - (void)viewConfig
 {
-    __weak typeof(self) weakSelf = self;
-    [MBProgressHUD showHUDAddedTo:self animated:YES];
-    [[SCAllDictionary share] requestWithType:SCDictionaryTypeOderType finfish:^(NSArray *items) {
-        [MBProgressHUD hideAllHUDsForView:self animated:YES];
-        _items = items;
-        @try {
-            weakSelf.buttonOne.tag   = [((SCDictionaryItem *)items[0]).dict_id integerValue];
-            weakSelf.buttonTwo.tag   = [((SCDictionaryItem *)items[1]).dict_id integerValue];
-            weakSelf.buttonThree.tag = [((SCDictionaryItem *)items[2]).dict_id integerValue];
-            weakSelf.buttonOther.tag = [((SCDictionaryItem *)items[3]).dict_id integerValue];
-
-            [weakSelf.buttonOne setTitle:((SCDictionaryItem *)items[0]).name forState:UIControlStateNormal];
-            [weakSelf.buttonTwo setTitle:((SCDictionaryItem *)items[1]).name forState:UIControlStateNormal];
-            [weakSelf.buttonThree setTitle:((SCDictionaryItem *)items[2]).name forState:UIControlStateNormal];
-            [weakSelf.buttonOther setTitle:((SCDictionaryItem *)items[3]).name forState:UIControlStateNormal];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"SCReservatAlertView Set Button Title Error:%@", exception.reason);
-        }
-        @finally {
-            weakSelf.alertView.layer.cornerRadius = 8.0f;
-            weakSelf.titleView.layer.cornerRadius = weakSelf.alertView.layer.cornerRadius;
-            weakSelf.alertView.layer.borderWidth  = 1.0f;
-            weakSelf.alertView.layer.borderColor  = [UIColor colorWithWhite:0.8f alpha:.2f].CGColor;
-        }
-    }];
+    _alertView.layer.cornerRadius = 10.0f;
+    _titleView.layer.cornerRadius = _alertView.layer.cornerRadius;
+    _alertView.layer.borderWidth  = 1.0f;
+    _alertView.layer.borderColor  = [UIColor colorWithWhite:0.8f alpha:.2f].CGColor;
+    [_collectionView registerNib:[UINib nibWithNibName:@"SCReservationItemCell" bundle:nil] forCellWithReuseIdentifier:@"SCReservationItemCell"];
 }
 
 - (void)removeAlertView
@@ -109,22 +98,6 @@
     [self removeAlertView];
 }
 
-- (IBAction)itemPressed:(UIButton *)sender
-{
-    SCDictionaryItem *serviceItem = nil;
-    for (SCDictionaryItem *item in _items)
-    {
-        if ([item.dict_id integerValue] == sender.tag)
-        {
-            serviceItem = item;
-            break;
-        }
-    }
-    
-    [_delegate selectedWithServiceItem:serviceItem];
-    [self removeAlertView];
-}
-
 #pragma mark - Public Methods
 - (void)show
 {
@@ -138,6 +111,8 @@
                 weakSelf.alpha = 1.0f;
                 _alertView.hidden = NO;
                 _alertView.transform = CGAffineTransformMakeScale(1.15f, 1.15f);
+                if (IS_IOS7)
+                    _alertView.translatesAutoresizingMaskIntoConstraints = YES;
             } completion:nil];
         }
             break;
@@ -168,6 +143,31 @@
         }
             break;
     }
+}
+
+#pragma mark - Collection View Data Soure Methods
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return [SCAllDictionary share].serviceItems.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    SCReservationItemCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SCReservationItemCell" forIndexPath:indexPath];
+    
+    SCServiceItem *item = [SCAllDictionary share].serviceItems[indexPath.row];
+    cell.textLabel.text = item.service_name;
+    cell.backgroundColor = (indexPath.row == [SCAllDictionary share].serviceItems.count - 1) ? [UIColor colorWithWhite:0.3f alpha:1.0f] : cell.backgroundColor;
+    return cell;
+}
+
+#pragma mark - Collection View Delegate Methods
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    
+    [_delegate selectedWithServiceItem:[SCAllDictionary share].serviceItems[indexPath.row]];
+    [self removeAlertView];
 }
 
 @end

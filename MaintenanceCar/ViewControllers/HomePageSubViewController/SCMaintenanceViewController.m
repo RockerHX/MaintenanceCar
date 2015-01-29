@@ -20,7 +20,7 @@
 #import "SCUserInfo.h"
 #import "SCUerCar.h"
 #import "SCMileageView.h"
-#import "SCServiceItem.h"
+#import "SCAllDictionary.h"
 #import "SCChangeMaintenanceDataViewController.h"
 
 #define MaintenanceCellReuseIdentifier   @"MaintenanceCellReuseIdentifier"
@@ -210,7 +210,8 @@
         _isPush = YES;
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
         reservationViewController.merchant = _recommendMerchants[[notification.object integerValue]];
-        reservationViewController.serviceItem = [[SCDictionaryItem alloc] initWithItemName:@"养车" dictID:@"2" type:@"1" index:@"1"];
+        reservationViewController.serviceItem = [SCAllDictionary share].serviceItems[1];
+        reservationViewController.canSelectServiceItem = NO;
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {
