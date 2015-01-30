@@ -132,7 +132,6 @@
 - (void)initConfig
 {
     _recommendMerchants = [@[] mutableCopy];
-    [[SCUserInfo share] refresh];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _maintenanceTypeView.delegate = self;
     
@@ -175,17 +174,6 @@
     _labelView.mileage                   = userCar.run_distance;
     _driveHabitLabel.text                = [self handleHabitString:userCar.habit];
     _maintenanceTypeView.maintenanceType = _maintenanceType;
-    
-    if (userInfo.cars.count <= 1)
-    {
-        _preButton.enabled = NO;
-        _nextButton.enabled = NO;
-    }
-    else
-    {
-        _preButton.enabled = YES;
-        _nextButton.enabled = YES;
-    }
 }
 
 - (NSString *)handleHabitString:(NSString *)habit

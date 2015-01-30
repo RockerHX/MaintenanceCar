@@ -56,7 +56,8 @@ typedef void(^BLOCK)(NSInteger index, BOOL animated);
         
         if (newValue != oldValue)
         {
-            _block(newValue, YES);
+            if (_block)
+                _block(newValue, YES);
         }
     }
 }

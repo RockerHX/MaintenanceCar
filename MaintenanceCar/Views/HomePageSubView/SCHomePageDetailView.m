@@ -71,18 +71,7 @@
     SCUserInfo *userInfo   = [SCUserInfo share];
     SCUerCar *userCar      = userInfo.currentCar;
     _carNameLabel.text     = userCar.model_name ? userCar.model_name : @"元景修养";
-    _carFullNameLabel.text = userCar.car_full_model ? userCar.car_full_model : @"";
-    
-    if (userInfo.cars.count <= 1)
-    {
-        _preButton.enabled = NO;
-        _nextButton.enabled = NO;
-    }
-    else
-    {
-        _preButton.enabled = YES;
-        _nextButton.enabled = YES;
-    }
+    _carFullNameLabel.text = userCar.car_full_model ? userCar.car_full_model : @"车生活";
 }
 
 #pragma mark - Public Methods

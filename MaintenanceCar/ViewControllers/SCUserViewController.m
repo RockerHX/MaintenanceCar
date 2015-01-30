@@ -14,6 +14,7 @@
 #import "SCMyFavoriteTableViewController.h"
 #import "SCMyReservationTableViewController.h"
 #import "SCAddCarViewController.h"
+#import "SCUserInfoView.h"
 
 typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     SCUserCenterRowMyOrder = 0,
@@ -22,7 +23,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     SCUserCenterRowMyReservation,
 };
 
-@interface SCUserViewController () <UIAlertViewDelegate, SCAddCarViewControllerDelegate>
+@interface SCUserViewController () <UIAlertViewDelegate, SCAddCarViewControllerDelegate, SCUserInfoViewDelegate>
 
 @end
 
@@ -36,6 +37,13 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     [MobClick beginLogPageView:@"[我] - 个人中心"];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [_userInfoView refresh];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     // 用户行为统计，页面停留时间
@@ -46,7 +54,8 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    [self viewConfig];
 }
 
 - (void)didReceiveMemoryWarning
@@ -98,6 +107,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 #pragma mark - Private Methods
 - (void)viewConfig
 {
+    _userInfoView.delegate = self;
 }
 
 /**
@@ -170,6 +180,12 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 {
     // 车辆添加成功的回调方法，车辆添加成功以后需要刷新个人中心，展示出用户最新添加的车辆
     [[SCUserInfo share] userCarsReuqest:nil];
+}
+
+#pragma mark - SCUserInfoViewDelegate Methods
+- (void)shouldLogin
+{
+    [self checkShouldLogin];
 }
 
 @end
