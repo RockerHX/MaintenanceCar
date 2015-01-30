@@ -10,21 +10,14 @@
 #import "MicroCommon.h"
 #import "SCFilterPopView.h"
 #import "SCAllDictionary.h"
+#import "SCUserInfo.h"
 
 #define MerchantFilterViewUnPopHeight   60.0f
 #define MerchantFilterViewPopHeight     SCREEN_HEIGHT - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT
 
-#define FilterConditionsResourceName    @"FilterConditions"
-#define FilterConditionsResourceType    @"plist"
-
-#define DistanceConditionKey            @"DistanceCondition"
-#define RepairConditionKey              @"RepairCondition"
-#define OtherConditionKey               @"OtherCondition"
-
 @interface SCMerchantFilterView () <SCFilterPopViewDelegate>
 {
     SCFilterType _filterType;
-    NSDictionary *_filterConditions;
 }
 
 @end
@@ -47,6 +40,7 @@
 
 - (IBAction)repairTypeButtonPressed:(UIButton *)sender
 {
+    [[SCAllDictionary share] hanleRepairConditions:[SCUserInfo share].cars];
     [self popFilterViewWtihType:SCFilterTypeRepair];
 }
 
@@ -61,16 +55,6 @@
 - (void)initConfig
 {
     _filterPopView.delegate = self;     // 设置弹出视图代理，以便回调方法触发
-    // 加载本地筛选条件显示数据
-    NSDictionary *localData = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:FilterConditionsResourceName ofType:FilterConditionsResourceType]];
-    
-    NSMutableDictionary *filterConditions = [localData mutableCopy];
-    NSMutableArray *repairConditions = [NSMutableArray arrayWithArray:localData[RepairConditionKey]];
-    NSMutableArray *otherConditions = [NSMutableArray arrayWithArray:localData[OtherConditionKey]];
-    
-    [filterConditions setObject:repairConditions forKey:RepairConditionKey];
-    [filterConditions setObject:otherConditions forKey:OtherConditionKey];
-    _filterConditions = filterConditions;
 }
 
 - (void)viewConfig
@@ -83,18 +67,19 @@
 // 弹出筛选条件View给用户展示，用户才能操作 - 带动画
 - (void)popFilterViewWtihType:(SCFilterType)type
 {
+    SCAllDictionary *allDictionary = [SCAllDictionary share];
     NSArray *filterItems = nil;
     switch (type)
     {
         case SCFilterTypeRepair:
-            filterItems = _filterConditions[RepairConditionKey];
+            filterItems = allDictionary.repairConditions;
             break;
         case SCFilterTypeOther:
-            filterItems = _filterConditions[OtherConditionKey];
+            filterItems = allDictionary.otherConditions;
             break;
             
         default:
-            filterItems = _filterConditions[DistanceConditionKey];
+            filterItems = allDictionary.distanceConditions;
             break;
     }
     _filterType = type;
@@ -127,8 +112,7 @@
 
 - (void)didSelectedItem:(id)item
 {
-    NSString *filterName      = item[DisplayNameKey];
-    NSString *filterCondition = item[RequestValueKey];
+    NSString *filterName = item[DisplayNameKey];
     switch (_filterType)
     {
         case SCFilterTypeRepair:
@@ -142,7 +126,7 @@
             [_distanceButton setTitle:filterName forState:UIControlStateNormal];
             break;
     }
-    [_delegate didSelectedFilterCondition:filterCondition type:_filterType];
+    [_delegate didSelectedFilterCondition:item type:_filterType];
     [self closeFilterView];
 }
 

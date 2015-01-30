@@ -114,7 +114,7 @@
 - (void)startSpecialRequest
 {
     __weak typeof(self)weakSelf = self;
-    [[SCAPIRequest manager] startHomePageSpecialAPIRequestWithParameters:nil Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startHomePageSpecialAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             SCSpecial *special = [[SCSpecial alloc] initWithDictionary:responseObject error:nil];

@@ -253,7 +253,7 @@
 - (void)startMaintenanceDataRequest
 {
     __weak typeof(self)weakSelf = self;
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     NSDictionary *parameters = @{@"user_car_id": [SCUserInfo share].currentCar.user_car_id};
     [[SCAPIRequest manager] startMaintenanceDataAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
@@ -279,11 +279,11 @@
         }
         else
             [weakSelf showPromptHUDWithText:@"网络出错了，请稍后再试>_<" delay:1.0f delegate:weakSelf];
-        [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
         [weakSelf.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf showPromptHUDWithText:@"网络出错了，请稍后再试>_<" delay:1.0f delegate:weakSelf];
-        [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
     }];
 }
 

@@ -58,13 +58,6 @@
     return self;
 }
 
-+ (NSString *)getQuery:(NSString *)query condition:(NSString *)condition
-{
-    if (![query isEqualToString:DefaultQuery])
-        return [DefaultQuery stringByAppendingString:condition];
-    return [query stringByAppendingString:condition];
-}
-
 #pragma mark - Private Methods
 /**
  *  通过导入工程的cer秘钥文件设置安全策略
@@ -288,18 +281,22 @@
 }
 
 #pragma mark - Special API
-- (void)startHomePageSpecialAPIRequestWithParameters:(NSDictionary *)parameters
-                                             Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startHomePageSpecialAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:HomePageSpecialAPIURL parameters:parameters success:success failure:failure];
+    [self requestGETMethodsWithAPI:HomePageSpecialAPIURL parameters:nil success:success failure:failure];
 }
 
-- (void)startFlagsColorAPIRequestWithParameters:(NSDictionary *)parameters
-                                        Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startFlagsColorAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:FlagsColorAPIURL parameters:parameters success:success failure:failure];
+    [self requestGETMethodsWithAPI:FlagsColorAPIURL parameters:nil success:success failure:failure];
+}
+
+- (void)startMerchantTagsAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MerchantTagsAPIURL parameters:nil success:success failure:failure];
 }
 
 @end

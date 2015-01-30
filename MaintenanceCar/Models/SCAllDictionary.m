@@ -9,6 +9,15 @@
 #import "SCAllDictionary.h"
 #import "MicroCommon.h"
 #import "SCAPIRequest.h"
+#import "SCUerCar.h"
+
+
+#define FilterConditionsResourceName    @"FilterConditions"
+#define FilterConditionsResourceType    @"plist"
+
+#define DistanceConditionKey            @"DistanceCondition"
+#define RepairConditionKey              @"RepairCondition"
+#define OtherConditionKey               @"OtherCondition"
 
 #define kColorsKey              @"kColorsKey"
 #define kAllDictionarykey       @"kAllDictionarykey"
@@ -25,6 +34,8 @@ static SCAllDictionary *allDictionary = nil;
     NSArray *_driveHabitItems;
     
     SCDictionaryType _type;
+    
+    NSDictionary *_filterConditions;
 }
 
 @end
@@ -32,6 +43,27 @@ static SCAllDictionary *allDictionary = nil;
 @implementation SCAllDictionary
 
 #pragma mark - Init Methods
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        
+        NSDictionary *localData = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:FilterConditionsResourceName ofType:FilterConditionsResourceType]];
+        
+        NSMutableDictionary *filterConditions = [localData mutableCopy];
+        NSMutableArray *repairConditions = [NSMutableArray arrayWithArray:localData[RepairConditionKey]];
+        NSMutableArray *otherConditions = [NSMutableArray arrayWithArray:localData[OtherConditionKey]];
+        
+        [filterConditions setObject:repairConditions forKey:RepairConditionKey];
+        [filterConditions setObject:otherConditions forKey:OtherConditionKey];
+        _filterConditions = filterConditions;
+        
+        _repairCondition = @"";
+        _otherCondition  = @"";
+    }
+    return self;
+}
+
 + (instancetype)share
 {
     static dispatch_once_t onceToken;
@@ -72,11 +104,26 @@ static SCAllDictionary *allDictionary = nil;
     return _driveHabitItems;
 }
 
+- (NSArray *)distanceConditions
+{
+    return _filterConditions[DistanceConditionKey];
+}
+
+- (NSArray *)repairConditions
+{
+    return _filterConditions[RepairConditionKey];
+}
+
+- (NSArray *)otherConditions
+{
+    return _filterConditions[OtherConditionKey];
+}
+
 #pragma mark - Public Methods
 - (void)requestWithType:(SCDictionaryType)type finfish:(void(^)(NSArray *items))finfish
 {
-    _type = type;                                                           // 混存外部需要的字典类型
-    NSDictionary *localData = [self readLocalDataWithKey:kAllDictionarykey];      // 获取本地字典数据
+    _type = type;                                                               // 混存外部需要的字典类型
+    NSDictionary *localData = [self readLocalDataWithKey:kAllDictionarykey];    // 获取本地字典数据
     
     // 如果本地缓存的字典数据为空，从网络请求，并保存到本地，反之则生成字典数据对象做回调
     if (!localData)
@@ -99,9 +146,24 @@ static SCAllDictionary *allDictionary = nil;
     }
 }
 
-- (void)replaceSpecialDataWith:(SCSpecial *)spcial
+- (void)replaceSpecialDataWith:(SCSpecial *)special
 {
-    _special = spcial;
+    _special = special;
+    NSMutableArray *otherConditions = _filterConditions[OtherConditionKey];
+    @try {
+        if (otherConditions.count >= 5)
+            [otherConditions removeObjectAtIndex:4];
+        [otherConditions insertObject:@{@"DisplayName": special.text, @"RequestValue": @"检"} atIndex:4];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"OtherConditions Add Condition Error:%@", exception.reason);
+    }
+    @finally {
+        [[SCAPIRequest manager] startMerchantTagsAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            for (NSDictionary *data in responseObject)
+                [otherConditions addObject:@{@"DisplayName": data[@"tag_name"], @"RequestValue": @"tag"}];
+        } failure:nil];
+    }
 }
 
 - (void)generateServiceItemsWtihMerchantImtes:(NSDictionary *)merchantItems;
@@ -127,7 +189,7 @@ static SCAllDictionary *allDictionary = nil;
     NSDictionary *localData = [self readLocalDataWithKey:kColorsKey];      // 获取颜色值本地缓存数据
     if (!localData)
     {
-        [[SCAPIRequest manager] startFlagsColorAPIRequestWithParameters:nil Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[SCAPIRequest manager] startFlagsColorAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
             _colors = responseObject;
             [self saveData:responseObject withKey:kColorsKey];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -138,6 +200,24 @@ static SCAllDictionary *allDictionary = nil;
     {
         _colors = localData;
         finfish(localData);
+    }
+}
+
+- (void)hanleRepairConditions:(NSArray *)userCars
+{
+    NSMutableArray *repairConditions = _filterConditions[RepairConditionKey];
+    id defaultCondition = [repairConditions firstObject];
+    [repairConditions removeAllObjects];
+    if (defaultCondition)
+        [repairConditions addObject:defaultCondition];
+    
+    NSMutableSet *carSets = [NSMutableSet set];
+    for (SCUerCar *userCar in userCars)
+        [carSets addObject:userCar.brand_name];
+    for (NSString *brandName in carSets)
+    {
+        NSString *displayName = [@"专修" stringByAppendingString:brandName];
+        [repairConditions addObject:@{@"DisplayName": displayName, @"RequestValue": brandName}];
     }
 }
 

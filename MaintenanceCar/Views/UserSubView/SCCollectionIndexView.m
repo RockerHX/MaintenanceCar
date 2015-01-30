@@ -50,7 +50,10 @@
     if ([tmpIndex[Zero] isEqualToString:@"0"])
         tmpIndex[Zero] = @"推荐";
     _indexTitles = tmpIndex;
-    [_indexLabels performSelector:@selector(removeFromSuperview)];
+    [_indexLabels enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [(UIView *)obj removeFromSuperview];
+    }];
+    
     [self buildIndexLabels];
 }
 

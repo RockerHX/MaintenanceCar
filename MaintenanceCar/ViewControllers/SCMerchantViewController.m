@@ -21,6 +21,7 @@
 #import "SCMerchantFilterView.h"
 #import "SCReservatAlertView.h"
 #import "SCStarView.h"
+#import "SCAllDictionary.h"
 
 @interface SCMerchantViewController () <UITableViewDelegate, UITableViewDataSource, SCReservatAlertViewDelegate, SCMerchantFilterViewDelegate>
 {
@@ -232,33 +233,43 @@
 }
 
 #pragma mark - SCMerchantFilterViewDelegate Methods
-- (void)didSelectedFilterCondition:(id)condition type:(SCFilterType)type
+- (void)didSelectedFilterCondition:(id)item type:(SCFilterType)type
 {
+    NSString *filterCondition = item[RequestValueKey];
+    
     _offset            = 0;
     [_merchantList removeAllObjects];
     
+    SCAllDictionary *allDictionary = [SCAllDictionary share];
     // 筛选条件，选择之后触发请求
     switch (type) {
         case SCFilterTypeRepair:
         {
+            if ([filterCondition isEqualToString:@"default"])
+                allDictionary.repairCondition = @"";
+            else
+                allDictionary.repairCondition = [NSString stringWithFormat:@" AND majors:'%@'", filterCondition];
         }
             break;
         case SCFilterTypeOther:
         {
-            if ([condition boolValue])
-                _query = [SCAPIRequest getQuery:_query condition:@""];
-            else
+            if (![filterCondition isEqualToString:@"default"])
             {
-                condition = [NSString stringWithFormat:@" AND services:'%@'", condition];
-                _query = [SCAPIRequest getQuery:_query condition:condition];
+                if ([filterCondition isEqualToString:@"tag"])
+                    allDictionary.otherCondition = [NSString stringWithFormat:@" AND tags:'%@'", filterCondition];
+                else
+                    allDictionary.otherCondition = [NSString stringWithFormat:@" AND service:'%@'", filterCondition];
             }
+            else
+                allDictionary.otherCondition = @"";
         }
             break;
             
         default:
-            _distanceCondition = condition;
+            _distanceCondition = filterCondition;
             break;
     }
+    _query = [NSString stringWithFormat:@"%@%@%@", DefaultQuery, allDictionary.repairCondition, allDictionary.otherCondition];
     [self refreshMerchantList];
 }
 

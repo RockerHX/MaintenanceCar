@@ -26,7 +26,11 @@
     if (IS_IPHONE_5 || IS_IPHONE_5_PRIOR)
         _carNameLabel.font = [UIFont systemFontOfSize:20.0f];
     
-    [self refresh];
+    __weak typeof(self)weakSelf = self;
+    [[SCUserInfo share] userCarsReuqest:^(BOOL finish) {
+        if (finish)
+            [weakSelf refresh];
+    }];
 }
 
 #pragma Action Methods

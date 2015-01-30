@@ -53,7 +53,7 @@
     _canTap = NO;
     __weak typeof(self)weakSelf = self;
     _filterItems = items;
-    _contentViewHeightConstraint.constant = items.count * 44.0f;
+    _contentViewHeightConstraint.constant = (items.count > 5) ? (5 * 44.0f) : (items.count * 44.0f);
     [_contentView needsUpdateConstraints];
     [UIView animateWithDuration:0.2f animations:^{
         [weakSelf.contentView layoutIfNeeded];

@@ -93,7 +93,6 @@
 {
     [self userLog];                             // 开启用户日志
     [self startUpdateCarBrandReuqest];          // 开始车辆品牌数据刷新
-    [[SCUserInfo share] userCarsReuqest:nil];   // 获取用户车辆
     
     // 监听登陆通知，收到通知会触发页面跳转方法
     [NOTIFICATION_CENTER addObserver:self selector:@selector(shouldLogin) name:kUserNeedLoginNotification object:nil];

@@ -40,8 +40,6 @@
                           path:(NSString *)path
                            api:(NSString *)api;
 
-+ (NSString *)getQuery:(NSString *)query condition:(NSString *)condition;
-
 #pragma mark - Merchant API
 /**
  *  天气接口请求方法(API:/Weather - GET)
@@ -251,17 +249,23 @@
  *
  *  @param parameters   请求参数集合
  */
-- (void)startHomePageSpecialAPIRequestWithParameters:(NSDictionary *)parameters
-                                             Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startHomePageSpecialAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  获取商户对应Flag颜色值接口请求方法(API:/Special/color - GET)
  *
  *  @param parameters   请求参数集合
  */
-- (void)startFlagsColorAPIRequestWithParameters:(NSDictionary *)parameters
-                                        Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startFlagsColorAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  获取商户对应Tag标签接口请求方法(API:/Cars/tags - GET)
+ *
+ *  @param parameters   请求参数集合
+ */
+- (void)startMerchantTagsAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 @end

@@ -31,8 +31,15 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
 
 @property (nonatomic, strong, readonly) NSArray   *serviceItems;              // 服务项目
 
-@property (nonatomic, strong, readonly) SCSpecial    *special;                  // 自定义数据
-@property (nonatomic, strong, readonly) NSDictionary *colors;                   // 商户Flags颜色值
+@property (nonatomic, strong, readonly) SCSpecial    *special;                // 自定义数据
+@property (nonatomic, strong, readonly) NSDictionary *colors;                 // 商户Flags颜色值
+
+@property (nonatomic, strong, readonly) NSArray *distanceConditions;          // 距离筛选条件集合
+@property (nonatomic, strong, readonly) NSArray *repairConditions;            // 品牌筛选条件集合
+@property (nonatomic, strong, readonly) NSArray *otherConditions;             // 业务筛选条件集合
+
+@property (nonatomic, copy) NSString *repairCondition;            // 品牌筛选条件
+@property (nonatomic, copy) NSString *otherCondition;             // 业务筛选条件
 
 /**
  *  SCAllDictionary单例方法
@@ -49,10 +56,12 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
  */
 - (void)requestWithType:(SCDictionaryType)type finfish:(void(^)(NSArray *items))finfish;
 
-- (void)replaceSpecialDataWith:(SCSpecial *)spcial;
+- (void)replaceSpecialDataWith:(SCSpecial *)special;
 
 - (void)generateServiceItemsWtihMerchantImtes:(NSDictionary *)merchantItems;
 
 - (void)requestColors:(void(^)(NSDictionary *colors))finfish;
+
+- (void)hanleRepairConditions:(NSArray *)userCars;
 
 @end
