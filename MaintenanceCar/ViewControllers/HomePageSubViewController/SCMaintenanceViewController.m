@@ -210,8 +210,8 @@
         _isPush = YES;
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
         reservationViewController.merchant = _recommendMerchants[[notification.object integerValue]];
-        reservationViewController.serviceItem = [SCAllDictionary share].serviceItems[1];
-        reservationViewController.canSelectServiceItem = NO;
+        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:@"2" serviceName:@"保养"];
+        reservationViewController.noServiceItems = YES;
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {
@@ -368,7 +368,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (section == 1)
-        return _recommendMerchants.count ? @"为您推荐以下可以维修追尾事故的商户" : @"";
+        return _recommendMerchants.count ? @"为您推荐最近可以保养车辆的商户" : @"";
     else
         return @"";
 }

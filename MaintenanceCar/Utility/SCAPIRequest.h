@@ -40,6 +40,8 @@
                           path:(NSString *)path
                            api:(NSString *)api;
 
++ (NSString *)getQuery:(NSString *)query condition:(NSString *)condition;
+
 #pragma mark - Merchant API
 /**
  *  天气接口请求方法(API:/Weather - GET)

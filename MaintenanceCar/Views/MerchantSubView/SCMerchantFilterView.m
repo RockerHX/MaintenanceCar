@@ -23,6 +23,7 @@
 
 @interface SCMerchantFilterView () <SCFilterPopViewDelegate>
 {
+    SCFilterType _filterType;
     NSDictionary *_filterConditions;
 }
 
@@ -42,19 +43,16 @@
 - (IBAction)distanceButtonPressed:(UIButton *)sender
 {
     [self popFilterViewWtihType:SCFilterTypeDistance];
-    [_delegate filterButtonPressedWithType:SCFilterTypeDistance];
 }
 
 - (IBAction)repairTypeButtonPressed:(UIButton *)sender
 {
     [self popFilterViewWtihType:SCFilterTypeRepair];
-    [_delegate filterButtonPressedWithType:SCFilterTypeRepair];
 }
 
 - (IBAction)otherFilterButtonPressed:(UIButton *)sender
 {
     [self popFilterViewWtihType:SCFilterTypeOther];
-    [_delegate filterButtonPressedWithType:SCFilterTypeOther];
 }
 
 #pragma mark - Setter And Getter Methods
@@ -62,8 +60,7 @@
 #pragma mark - Private Methods
 - (void)initConfig
 {
-    // 设置弹出视图代理，以便回调方法触发
-    _filterPopView.delegate = self;
+    _filterPopView.delegate = self;     // 设置弹出视图代理，以便回调方法触发
     // 加载本地筛选条件显示数据
     NSDictionary *localData = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:FilterConditionsResourceName ofType:FilterConditionsResourceType]];
     
@@ -78,30 +75,37 @@
 
 - (void)viewConfig
 {
-    // 从本地加载筛选条件数据
-    @try {
-        [_distanceButton setTitle:_filterConditions[DistanceConditionKey][0][DisplayNameKey] forState:UIControlStateNormal];
-        [_repairTypeButton setTitle:_filterConditions[RepairConditionKey][0][DisplayNameKey] forState:UIControlStateNormal];
-        [_otherFilterButton setTitle:_filterConditions[OtherConditionKey][0][DisplayNameKey] forState:UIControlStateNormal];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"Read Filter Condition Error:%@", exception.reason);
-    }
-    @finally {
-    }
+    [_distanceButton setTitle:@"按距离" forState:UIControlStateNormal];
+    [_repairTypeButton setTitle:@"按品牌" forState:UIControlStateNormal];
+    [_otherFilterButton setTitle:@"按业务" forState:UIControlStateNormal];
 }
 
 // 弹出筛选条件View给用户展示，用户才能操作 - 带动画
 - (void)popFilterViewWtihType:(SCFilterType)type
 {
+    NSArray *filterItems = nil;
+    switch (type)
+    {
+        case SCFilterTypeRepair:
+            filterItems = _filterConditions[RepairConditionKey];
+            break;
+        case SCFilterTypeOther:
+            filterItems = _filterConditions[OtherConditionKey];
+            break;
+            
+        default:
+            filterItems = _filterConditions[DistanceConditionKey];
+            break;
+    }
+    _filterType = type;
     _heightConstraint.constant = MerchantFilterViewPopHeight;
-    [_filterPopView showContentView];
+    [_filterPopView showContentViewWithItems:filterItems];
 }
 
 // 收回筛选条件View，用户点击黑色透明部分或者选择筛选条件之后 - 带动画
 - (void)closeFilterView
 {
-    _filterPopView.contentViewBottomConstraint.constant = MerchantFilterViewPopHeight - MerchantFilterViewUnPopHeight;
+    _filterPopView.contentViewHeightConstraint.constant = DOT_COORDINATE;
     [_filterPopView.contentView needsUpdateConstraints];
     [UIView animateWithDuration:0.3f animations:^{
         [_filterPopView.contentView layoutIfNeeded];
@@ -109,7 +113,6 @@
         [UIView animateWithDuration:0.2f animations:^{
             _filterPopView.alpha = DOT_COORDINATE;
         } completion:^(BOOL finished) {
-            _filterPopView.contentViewBottomConstraint.constant = DOT_COORDINATE;
             _heightConstraint.constant = MerchantFilterViewUnPopHeight;
             _filterPopView.alpha = 1.0f;
         }];
@@ -119,6 +122,27 @@
 #pragma mark - SCFilterPopViewDelegate Methods
 - (void)shouldClosePopView
 {
+    [self closeFilterView];
+}
+
+- (void)didSelectedItem:(id)item
+{
+    NSString *filterName      = item[DisplayNameKey];
+    NSString *filterCondition = item[RequestValueKey];
+    switch (_filterType)
+    {
+        case SCFilterTypeRepair:
+            [_repairTypeButton setTitle:filterName forState:UIControlStateNormal];
+            break;
+        case SCFilterTypeOther:
+            [_otherFilterButton setTitle:filterName forState:UIControlStateNormal];
+            break;
+            
+        default:
+            [_distanceButton setTitle:filterName forState:UIControlStateNormal];
+            break;
+    }
+    [_delegate didSelectedFilterCondition:filterCondition type:_filterType];
     [self closeFilterView];
 }
 

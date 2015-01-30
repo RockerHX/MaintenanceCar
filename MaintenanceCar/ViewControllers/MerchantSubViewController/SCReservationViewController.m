@@ -79,7 +79,7 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     {
         case UITableViewRowIndexProject:
         {
-            if (_canSelectServiceItem)
+            if (!_noServiceItems)
             {
                 SCPickerView *pickerView = [[SCPickerView alloc] initWithDelegate:self];
                 [pickerView show];
@@ -129,7 +129,6 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // 设置商户名称显示
-    _canSelectServiceItem = YES;
     _reservationCarID = [SCUserInfo share].currentCar.user_car_id;
     _merchantNameLabel.text = _merchant.name;
 }

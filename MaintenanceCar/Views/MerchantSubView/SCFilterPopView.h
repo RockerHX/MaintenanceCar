@@ -13,18 +13,21 @@
 @optional
 // 收回筛选条件View的代理方法，用户点击黑色透明部分或者选择筛选条件之后
 - (void)shouldClosePopView;
+- (void)didSelectedItem:(id)item;
 
 @end
 
-@interface SCFilterPopView : UIView
+@interface SCFilterPopView : UIView <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak)                          id <SCFilterPopViewDelegate>delegate;
-@property (weak, nonatomic) IBOutlet             UIView *contentView;                       // 筛选条件的展示View
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewBottomConstraint;       // 筛选条件的展示View(contentView)到父视图(SCFilterPopView)底部的约束条件
+@property (nonatomic, strong)                   NSArray *filterItems;                       // 筛选项目
+
+@property (weak, nonatomic) IBOutlet        UITableView *contentView;                       // 筛选条件的展示View
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;       // 筛选条件的展示View(contentView)到父视图(SCFilterPopView)底部的约束条件
 
 /**
  *  展示筛选条件View - 带动画
  */
-- (void)showContentView;
+- (void)showContentViewWithItems:(NSArray *)items;
 
 @end

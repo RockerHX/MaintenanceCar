@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, SCFilterType) {
 
 @optional
 // 筛选按钮被点击的时候触发此代理方法，用于弹出筛选条件
-- (void)filterButtonPressedWithType:(SCFilterType)type;
+- (void)didSelectedFilterCondition:(id)condition type:(SCFilterType)type;
 
 @end
 

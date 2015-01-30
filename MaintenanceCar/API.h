@@ -16,6 +16,8 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
     SCAPIRequestStatusCodeServerError = 500
 };
 
+#define DefaultQuery        @"default:'深圳'"
+
 //#define DoMain              @"https://api.yjclw.com"                        // 接口域名
 #warning @"发布时更改测试环境"
 #define DoMain              @"http://testing.yjclw.com"                     // 接口域名

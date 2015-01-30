@@ -8,31 +8,89 @@
 
 #import "SCFilterPopView.h"
 
-#define ShowContentViewBottomConstraint        100.0f
+#define SCFilterItemCell        @"SCFilterItemCell"
+
+@interface SCFilterPopView ()
+{
+    BOOL         _canTap;
+}
+
+@end
 
 @implementation SCFilterPopView
 
 #pragma mark - Init Methods
 - (void)awakeFromNib
 {
-    // 添加单击手势
-    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closePopView)]];
+    [self initConfig];
+    [self viewConfig];
 }
 
 #pragma mark - Private Methods
+- (void)initConfig
+{
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if (_canTap)
+        [self closePopView];
+}
+
+- (void)viewConfig
+{
+    _contentView.tableFooterView = [[UIView alloc] init];
+}
+
 - (void)closePopView
 {
     [_delegate shouldClosePopView];
 }
 
 #pragma mark - Public Methods
-- (void)showContentView
+- (void)showContentViewWithItems:(NSArray *)items
 {
-    _contentViewBottomConstraint.constant = ShowContentViewBottomConstraint;
+    _canTap = NO;
+    __weak typeof(self)weakSelf = self;
+    _filterItems = items;
+    _contentViewHeightConstraint.constant = items.count * 44.0f;
     [_contentView needsUpdateConstraints];
-    [UIView animateWithDuration:0.4f animations:^{
-        [_contentView layoutIfNeeded];
+    [UIView animateWithDuration:0.2f animations:^{
+        [weakSelf.contentView layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        [weakSelf.contentView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+        _canTap = YES;
     }];
+}
+
+#pragma mark - Setter And Getter Methods
+- (void)setFilterItems:(NSArray *)filterItems
+{
+    _filterItems = filterItems;
+    [_contentView reloadData];
+}
+
+#pragma mark - Table View Data Source Methods
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _filterItems.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SCFilterItemCell forIndexPath:indexPath];
+    cell.textLabel.text = _filterItems[indexPath.row][@"DisplayName"];
+    return cell;
+}
+
+#pragma mark - Table View Delegate Methods
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_canTap)
+    {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [_delegate didSelectedItem:_filterItems[indexPath.row]];
+    }
 }
 
 @end

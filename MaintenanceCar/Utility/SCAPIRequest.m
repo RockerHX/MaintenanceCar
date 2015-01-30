@@ -58,6 +58,13 @@
     return self;
 }
 
++ (NSString *)getQuery:(NSString *)query condition:(NSString *)condition
+{
+    if (![query isEqualToString:DefaultQuery])
+        return [DefaultQuery stringByAppendingString:condition];
+    return [query stringByAppendingString:condition];
+}
+
 #pragma mark - Private Methods
 /**
  *  通过导入工程的cer秘钥文件设置安全策略
