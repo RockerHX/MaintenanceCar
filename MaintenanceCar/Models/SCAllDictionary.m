@@ -10,7 +10,8 @@
 #import "MicroCommon.h"
 #import "SCAPIRequest.h"
 
-#define kAllDictionary          @"kAllDictionary"
+#define kColorsKey              @"kColorsKey"
+#define kAllDictionarykey       @"kAllDictionarykey"
 
 static SCAllDictionary *allDictionary = nil;
 
@@ -74,16 +75,16 @@ static SCAllDictionary *allDictionary = nil;
 #pragma mark - Public Methods
 - (void)requestWithType:(SCDictionaryType)type finfish:(void(^)(NSArray *items))finfish
 {
-    _type = type;                                   // 混存外部需要的字典类型
-    NSDictionary *dic = [self readDictionary];      // 获取本地字典数据
+    _type = type;                                                           // 混存外部需要的字典类型
+    NSDictionary *localData = [self readLocalDataWithKey:kAllDictionarykey];      // 获取本地字典数据
     
     // 如果本地缓存的字典数据为空，从网络请求，并保存到本地，反之则生成字典数据对象做回调
-    if (!dic)
+    if (!localData)
     {
         [[SCAPIRequest manager] startGetAllDictionaryAPIRequestWithParameters:nil Success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
             {
-                [self saveDictionary:responseObject];
+                [self saveData:responseObject withKey:kAllDictionarykey];
                 NSArray *data = responseObject[[@(type) stringValue]];
                 [self handleDateWithData:data finfish:finfish];
             }
@@ -93,7 +94,7 @@ static SCAllDictionary *allDictionary = nil;
     }
     else
     {
-        NSArray *data = dic[[@(type) stringValue]];
+        NSArray *data = localData[[@(type) stringValue]];
         [self handleDateWithData:data finfish:finfish];
     }
 }
@@ -121,15 +122,34 @@ static SCAllDictionary *allDictionary = nil;
     _serviceItems = items;
 }
 
+- (void)requestColors:(void(^)(NSDictionary *colors))finfish
+{
+    NSDictionary *localData = [self readLocalDataWithKey:kColorsKey];      // 获取颜色值本地缓存数据
+    if (!localData)
+    {
+        [[SCAPIRequest manager] startFlagsColorAPIRequestWithParameters:nil Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            _colors = responseObject;
+            [self saveData:responseObject withKey:kColorsKey];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            finfish(nil);
+        }];
+    }
+    else
+    {
+        _colors = localData;
+        finfish(localData);
+    }
+}
+
 #pragma mark - Private Methods
 /**
  *  保存字典数据到本地
  *
  *  @param dic 字典数据
  */
-- (void)saveDictionary:(NSDictionary *)dic
+- (void)saveData:(id)data withKey:(NSString *)key
 {
-    [USER_DEFAULT setObject:dic forKey:kAllDictionary];
+    [USER_DEFAULT setObject:data forKey:key];
     [USER_DEFAULT synchronize];
 }
 
@@ -138,10 +158,10 @@ static SCAllDictionary *allDictionary = nil;
  *
  *  @return 字典数据
  */
-- (NSDictionary *)readDictionary
+- (id)readLocalDataWithKey:(NSString *)key
 {
-    NSDictionary *dic = [USER_DEFAULT objectForKey:kAllDictionary];
-    return dic;
+    id data = [USER_DEFAULT objectForKey:key];
+    return data;
 }
 
 /**

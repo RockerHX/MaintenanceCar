@@ -1,12 +1,12 @@
 //
-//  SCMapMerchantDetailView.m
+//  SCMerchantCell.m
 //  MaintenanceCar
 //
-//  Created by ShiCang on 15/1/7.
+//  Created by ShiCang on 15/1/30.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCMapMerchantInfoView.h"
+#import "SCMerchantCell.h"
 #import <HexColors/HexColor.h>
 #import "MicroCommon.h"
 #import "SCStarView.h"
@@ -14,7 +14,7 @@
 #import "SCMerchantFlagCell.h"
 #import "SCAllDictionary.h"
 
-@interface SCMapMerchantInfoView () <UICollectionViewDataSource>
+@interface SCMerchantCell () <UICollectionViewDataSource>
 {
     NSDictionary *_colors;
     NSArray      *_merchantFlags;
@@ -22,7 +22,7 @@
 
 @end
 
-@implementation SCMapMerchantInfoView
+@implementation SCMerchantCell
 
 #pragma mark - Init Methods
 - (void)awakeFromNib
@@ -30,29 +30,14 @@
     [self initConfig];
 }
 
-#pragma mark - Action Methods
-- (IBAction)reservationButtonPressed:(UIBarButtonItem *)sender
-{
-    [_delegate shouldShowReservationList];
-}
-
 #pragma mark - Private Methods
 - (void)initConfig
 {
     _flagView.dataSource = self;
-    // 绘制边框和圆角
+    // 圆角和颜色处理
     _specialLabel.layer.cornerRadius = 2.0f;
     _specialLabel.layer.borderWidth = 1.0f;
-    _specialLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    _reservationButton.layer.cornerRadius = 6.0f;
-    
-    // 添加点击手势
-    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer)]];
-}
-
-- (void)tapGestureRecognizer
-{
-    [_delegate shouldShowMerchantDetail];
+    _specialLabel.layer.borderColor = UIColorWithRGBA(230.0f, 109.0f, 81.0f, 1.0f).CGColor;
 }
 
 - (UIColor *)iconColorWithName:(NSString *)name

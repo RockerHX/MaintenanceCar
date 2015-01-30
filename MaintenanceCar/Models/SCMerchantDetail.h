@@ -35,8 +35,8 @@
 @property (nonatomic, copy) NSString <Optional>*xkdate;               // 许可使时期
 @property (nonatomic, copy) NSString <Optional>*zige;                 //
 
-@property (nonatomic, strong)           NSDictionary <Optional>*service_items;       // 服务项目
-@property (nonatomic, assign)           BOOL                   collected;            // 收藏状态
+@property (nonatomic, strong) NSDictionary <Optional>*service_items;  // 服务项目
+@property (nonatomic, assign) BOOL                   collected;       // 收藏状态
 
 @property (nonatomic, copy, readonly) NSString <Ignore>*distance;     // 手机当前位置与商户的距离
 

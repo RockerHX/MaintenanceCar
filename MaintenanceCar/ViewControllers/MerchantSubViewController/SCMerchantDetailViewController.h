@@ -8,19 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+@class SCMerchant;
 @class SCMerchantDetail;
 @class SCCollectionItem;
 
 @interface SCMerchantDetailViewController : UITableViewController
 
-@property (nonatomic, copy)                  NSString *companyID;       // 商户ID
+@property (nonatomic, copy)                SCMerchant *merchant;        // 商户信息
 @property (nonatomic, strong)        SCMerchantDetail *merchantDetail;  // 商户详情数据模型
 
-@property (weak, nonatomic) IBOutlet SCCollectionItem *favoriteItem;    // 收藏按钮
+@property (weak, nonatomic) IBOutlet SCCollectionItem *collectionItem;    // 收藏按钮
 
 /**
  *  [收藏]按钮触发事件
  */
-- (IBAction)favoriteItemPressed:(SCCollectionItem *)sender;
+- (IBAction)collectionItemPressed:(SCCollectionItem *)sender;
 
 @end

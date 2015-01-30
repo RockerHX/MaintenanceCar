@@ -108,7 +108,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 #pragma mark - Action Methods
-- (IBAction)favoriteItemPressed:(SCCollectionItem *)sender
+- (IBAction)collectionItemPressed:(SCCollectionItem *)sender
 {
     // 是否需要用户登陆，已登陆经行收藏请求或者取消收藏请求，否则弹出警告提示框
     if ([SCUserInfo share].loginStatus)
@@ -158,8 +158,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)displayMerchantDetail
 {
-    _favoriteItem.favorited                           = _merchantDetail.collected;
+    _collectionItem.favorited                         = _merchantDetail.collected;
     _merchantBriefIntroductionCell.distanceLabel.text = _merchantDetail.distance;
+    [_merchantBriefIntroductionCell hanleMerchantFlags:_merchant.merchantFlags];
     
     [self handleMerchantName:_merchantDetail.name onNameLabel:_merchantBriefIntroductionCell.merchantNameLabel];
     [self handleMerchantDetail:_merchantDetail.address onLabel:_merchantAddressLabel];
@@ -193,25 +194,22 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 /**
- *  商户详情请求，需要参数：id(商户id)
+ *  商户详情请求，需要参数：id(商户id)，user_id(用户id，可选)
  */
 - (void)startMerchantDetailRequestWithParameters
 {
     __weak typeof(self) weakSelf = self;
-    NSDictionary *paramters = @{@"id": _companyID,
-                                @"user_id": [SCUserInfo share].userID};
+    NSDictionary *paramters = @{@"id": _merchant.company_id,
+                           @"user_id": [SCUserInfo share].userID};
     [[SCAPIRequest manager] startMerchantDetailAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             _merchantDetail = [[SCMerchantDetail alloc] initWithDictionary:responseObject error:nil];
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
             [weakSelf displayMerchantDetail];
         }
         else
-        {
             [weakSelf showRequestErrorAlert];
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-        }
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf showRequestErrorAlert];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -225,12 +223,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     if ([SCUserInfo share].loginStatus)
     {
-        NSDictionary *paramters = @{@"company_id": _companyID,
-                                    @"user_id": [SCUserInfo share].userID};
+        NSDictionary *paramters = @{@"company_id": _merchant.company_id,
+                                       @"user_id": [SCUserInfo share].userID};
         [[SCAPIRequest manager] startCheckMerchantCollectionStutasAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            _favoriteItem.favorited = (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess);
+            _collectionItem.favorited = (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            _favoriteItem.favorited = NO;
+            _collectionItem.favorited = NO;
         }];
     }
     _needChecked = NO;
@@ -252,11 +250,11 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         }
         else
         {
-            _favoriteItem.favorited = NO;
+            _collectionItem.favorited = NO;
             ShowPromptHUDWithText(weakSelf.navigationController.view, @"收藏失败，请重试", 1.0f);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        _favoriteItem.favorited = NO;
+        _collectionItem.favorited = NO;
         ShowPromptHUDWithText(weakSelf.navigationController.view, @"收藏失败，请检查网络", 1.0f);
     }];
 }
@@ -276,11 +274,11 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         }
         else
         {
-            _favoriteItem.favorited = YES;
+            _collectionItem.favorited = YES;
             ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消收藏失败，请重试", 1.0f);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        _favoriteItem.favorited = YES;
+        _collectionItem.favorited = YES;
         ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消收藏失败，请检查网络", 1.0f);
     }];
 }

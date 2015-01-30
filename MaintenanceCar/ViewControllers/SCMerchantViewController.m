@@ -13,7 +13,7 @@
 #import "MJRefresh.h"
 #import "SCAPIRequest.h"
 #import "SCMerchant.h"
-#import "SCMerchantTableViewCell.h"
+#import "SCMerchantListCell.h"
 #import "SCLocationInfo.h"
 #import "SCReservationViewController.h"
 #import "SCMerchantDetailViewController.h"
@@ -25,7 +25,6 @@
 @interface SCMerchantViewController () <UITableViewDelegate, UITableViewDataSource, SCReservatAlertViewDelegate, SCMerchantFilterViewDelegate>
 {
     NSMutableArray *_merchantList;
-    NSDictionary   *_colors;
     
     NSString       *_query;
     NSString       *_distanceCondition;
@@ -90,10 +89,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MerchantCellReuseIdentifier forIndexPath:indexPath];
-    cell.colors                   = _colors;
-    cell.reservationButton.hidden = YES;
-    [cell handelWithMerchant:_merchantList[indexPath.row] indexPath:indexPath];
+    SCMerchantListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantListCell" forIndexPath:indexPath];
+    // 刷新商户列表，设置相关数据
+    [cell handelWithMerchant:_merchantList[indexPath.row]];
     
     return cell;
 }
@@ -106,7 +104,7 @@
     
     // 根据选中的商户，取到其商户ID，跳转到商户页面进行详情展示
     SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
-    merchantDetialViewControler.companyID = ((SCMerchant *)_merchantList[indexPath.row]).company_id;
+    merchantDetialViewControler.merchant = _merchantList[indexPath.row];
     [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
 }
 
@@ -183,11 +181,9 @@
             
             if (list.count)
             {
-                _colors = responseObject[@"color"];
                 // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
                 [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    NSError *error       = nil;
-                    SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:&error];
+                    SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:nil];
                     [_merchantList addObject:merchant];
                 }];
                 [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:_offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                   // 数据配置完成，刷新商户列表

@@ -101,10 +101,7 @@
     // 进入地图的显示列表内第一个商户的数据
     @try {
         [_mapView selectAnnotation:_annotations[0] animated:YES];
-        
-        _merchant = _merchants[0];
-        _mapMerchantInfoView.merchantNameLabel.text = _merchant.name;
-        _mapMerchantInfoView.distanceLabel.text = _merchant.distance;
+        [_mapMerchantInfoView handelWithMerchant:_merchants[0]];
     }
     @catch (NSException *exception) {
         NSLog(@"Select Annotation Error:%@", exception.reason);
@@ -126,8 +123,7 @@
     {
         if ([view.annotation.title isEqualToString:merchant.name])
         {
-            _mapMerchantInfoView.merchantNameLabel.text = merchant.name;
-            _mapMerchantInfoView.distanceLabel.text = merchant.distance;
+            [_mapMerchantInfoView handelWithMerchant:merchant];
             _merchant = merchant;
             break;
         }
@@ -141,7 +137,7 @@
     // 跳转到预约页面
     @try {
         SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
-        merchantDetialViewControler.companyID = _merchant.company_id;
+        merchantDetialViewControler.merchant = _merchant;
         [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
     }
     @catch (NSException *exception) {

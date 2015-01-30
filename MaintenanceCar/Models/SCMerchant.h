@@ -16,13 +16,12 @@
 @property (nonatomic, copy)           NSString <Optional>*region3;              // 区
 @property (nonatomic, copy)           NSString <Optional>*latitude;             // 商户地理位置 - 纬度
 @property (nonatomic, copy)           NSString <Optional>*longtitude;           // 商户地理位置 - 经度
-@property (nonatomic, copy)           NSString <Optional>*zige;                 // [一]
-@property (nonatomic, copy)           NSString <Optional>*honest;               // [诚]
-@property (nonatomic, copy)           NSString <Optional>*major_type;           // [专]
 @property (nonatomic, copy)           NSString <Optional>*star;                 // 商户星级数
 @property (nonatomic, copy)           NSString <Optional>*tags;                 // 商户特色
+@property (nonatomic, copy)           NSString <Optional>*flags;                // 商户标签
 
-@property (nonatomic, copy, readonly) NSString <Ignore>*distance;               // 手机当前位置与商户的距离
+@property (nonatomic, copy, readonly)   NSString     <Ignore>*distance;         // 手机当前位置与商户的距离
+@property (nonatomic, strong, readonly) NSArray      <Ignore>*merchantFlags;    // 商户标签集合
 
 /**
  *  自定义初始化方法(不通过JSON数据自动解析)

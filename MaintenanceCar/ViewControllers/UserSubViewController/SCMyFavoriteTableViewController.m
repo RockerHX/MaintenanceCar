@@ -58,10 +58,7 @@
     SCMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MerchantCellReuseIdentifier forIndexPath:indexPath];
     
     // 刷新商户列表，设置相关数据
-    SCMerchant *merchant = _dataList[indexPath.row];
-    cell.merchantNameLabel.text = merchant.name;
-    cell.distanceLabel.text = merchant.distance;
-    cell.reservationButton.tag = indexPath.row;
+    [cell handelWithMerchant:_dataList[indexPath.row]];
     
     return cell;
 }
@@ -90,7 +87,7 @@
     // 跳转到预约页面
     @try {
         SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
-        merchantDetialViewControler.companyID = ((SCMerchant *)_dataList[indexPath.row]).company_id;
+        merchantDetialViewControler.merchant = (SCMerchant *)_dataList[indexPath.row];
         [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
     }
     @catch (NSException *exception) {

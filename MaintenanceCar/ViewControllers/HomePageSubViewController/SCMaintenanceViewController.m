@@ -392,11 +392,8 @@
         default:
         {
             SCMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MerchantCellReuseIdentifier forIndexPath:indexPath];
-            // 刷新商户列表
-            SCMerchant *merchant = _recommendMerchants[indexPath.row];
-            cell.merchantNameLabel.text = merchant.name;
-            cell.distanceLabel.text = merchant.distance;
-            cell.reservationButton.tag = indexPath.row;
+            // 刷新商户列表，设置相关数据
+            [cell handelWithMerchant:_recommendMerchants[indexPath.row]];
             
             return cell;
         }
@@ -415,7 +412,7 @@
         
         // 根据选中的商户，取到其商户ID，跳转到商户页面进行详情展示
         SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
-        merchantDetialViewControler.companyID = ((SCMerchant *)_recommendMerchants[indexPath.row]).company_id;
+        merchantDetialViewControler.merchant = (SCMerchant *)_recommendMerchants[indexPath.row];
         [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
     }
 }

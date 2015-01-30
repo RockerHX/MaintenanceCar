@@ -55,6 +55,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define AllDictionaryAPI            @"/Misc/dictAll"                        // 所有数据字典接口
 #define HomePageSpecialAPI          @"/Special"                             // 首页第四个按钮数据接口
+#define FlagsColorAPI               @"/Special/color"                       // 获取商户对应Flag颜色值接口
 
 
 #define WearthAPIURL                    [APIURL stringByAppendingString:WearthAPI]                  // 天气接口URL - 用于主页模块获取天气信息
@@ -83,5 +84,6 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define AllDictionaryAPIURL             [APIURL stringByAppendingString:AllDictionaryAPI]           // 所有数据字典接口URL
 #define HomePageSpecialAPIURL           [APIURL stringByAppendingString:HomePageSpecialAPI]         // 首页第四个按钮数据接口URL
+#define FlagsColorAPIURL                [APIURL stringByAppendingString:FlagsColorAPI]              // 获取商户对应Flag颜色值接口URL
 
 #endif
