@@ -68,9 +68,10 @@
 #pragma mark - Private Methods
 - (void)displayMaintenanceView
 {
-    SCUserInfo *userInfo = [SCUserInfo share];
-    SCUerCar *userCar    = userInfo.currentCar;
-    _carNameLabel.text   = userCar.model_name ? userCar.model_name : @"元景修养";
+    SCUserInfo *userInfo   = [SCUserInfo share];
+    SCUerCar *userCar      = userInfo.currentCar;
+    _carNameLabel.text     = userCar.model_name ? userCar.model_name : @"元景修养";
+    _carFullNameLabel.text = userCar.car_full_model ? userCar.car_full_model : @"";
     
     if (userInfo.cars.count <= 1)
     {

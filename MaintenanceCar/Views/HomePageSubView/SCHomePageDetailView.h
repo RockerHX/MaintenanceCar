@@ -11,6 +11,7 @@
 @interface SCHomePageDetailView : UIView
 
 @property (weak, nonatomic) IBOutlet UILabel  *carNameLabel;                // 车辆名称
+@property (weak, nonatomic) IBOutlet UILabel  *carFullNameLabel;            // 车辆名称
 @property (weak, nonatomic) IBOutlet UIButton *preButton;                   // 车辆名称
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;                  // 车辆名称
 

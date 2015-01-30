@@ -235,6 +235,7 @@
 #pragma mark - SCMerchantFilterViewDelegate Methods
 - (void)didSelectedFilterCondition:(id)item type:(SCFilterType)type
 {
+    NSString *filterName      = item[DisplayNameKey];
     NSString *filterCondition = item[RequestValueKey];
     
     _offset            = 0;
@@ -256,7 +257,7 @@
             if (![filterCondition isEqualToString:@"default"])
             {
                 if ([filterCondition isEqualToString:@"tag"])
-                    allDictionary.otherCondition = [NSString stringWithFormat:@" AND tags:'%@'", filterCondition];
+                    allDictionary.otherCondition = [NSString stringWithFormat:@" AND tags:'%@'", filterName];
                 else
                     allDictionary.otherCondition = [NSString stringWithFormat:@" AND service:'%@'", filterCondition];
             }
