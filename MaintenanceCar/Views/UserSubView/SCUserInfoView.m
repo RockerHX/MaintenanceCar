@@ -10,6 +10,7 @@
 #import <SCInfiniteLoopScrollView/SCInfiniteLoopScrollView.h>
 #import "MicroCommon.h"
 #import "SCUserInfo.h"
+#import <FXBlurView/FXBlurView.h>
 
 @implementation SCUserInfoView
 
@@ -29,6 +30,8 @@
 - (void)viewConfig
 {
     _loginButton.layer.cornerRadius = 8.0f;
+    
+    [self refresh];
 }
 
 #pragma mark - Public Methods
@@ -36,19 +39,31 @@
 {
     SCUserInfo *userInfo = [SCUserInfo share];
     _loginButton.hidden  = userInfo.loginStatus;
-    _userCarsView.hidden = !userInfo.loginStatus;
+    _carInfoView.hidden  = !_loginButton.hidden;
+    _userCarsView.hidden = _carInfoView.hidden;
     
-    if (!_userCarsView.hidden)
+    if (!_userCarsView.hidden && userInfo.cars.count)
     {
         NSMutableArray *items = [@[] mutableCopy];
-        for (SCUerCar *userCar in userInfo.cars)
+        for (NSInteger index = 0; index < userInfo.cars.count; index++)
         {
-            UIView *view = [[UIView alloc] initWithFrame:_userCarsView.frame];
-            view.backgroundColor = UIColorWithRGBA(arc4random()%255, arc4random()%255, arc4random()%255, 1.0f);
-            [items addObject:view];
+            UIImageView *carView = [[UIImageView alloc] init];
+            carView.image = [UIImage imageNamed:@"car"];
+            [items addObject:carView];
         }
         _userCarsView.subItems = items;
+        
+        SCUserCar *car = [userInfo.cars firstObject];
+        _carNameLabel.text = [NSString stringWithFormat:@"%@%@", car.brand_name, car.model_name];
+        _carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", car.run_distance.length ? car.run_distance : @"0"];
     }
+    
+    __weak typeof(self)weakSelf = self;
+    [_userCarsView startAnimation:^(NSInteger index, BOOL animated) {
+        SCUserCar *car = userInfo.cars[index];
+        weakSelf.carNameLabel.text = [NSString stringWithFormat:@"%@%@", car.brand_name, car.model_name];
+        weakSelf.carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", car.run_distance.length ? car.run_distance : @"0"];
+    }];
 }
 
 @end

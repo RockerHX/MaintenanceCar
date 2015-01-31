@@ -32,13 +32,6 @@
     [_detailView refresh];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    [self startSpecialRequest];
-}
-
 - (void)viewWillDisappear:(BOOL)animated
 {
     // 用户行为统计，页面停留时间
@@ -108,6 +101,7 @@
 
 - (void)viewConfig
 {
+    [self startSpecialRequest];
 }
 
 // 自定义数据请求方法(用于首页第四个按钮，预约以及筛选条件)，无参数

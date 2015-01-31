@@ -134,6 +134,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
                                  @"code"       : self.verificationCode,
                                  @"time_expire": @(VerificationCodeTimeExpire),
                                  @"mode"       : @(mode)};
+    NSLog(@"%@", _verificationCode);
     [[SCAPIRequest manager] startGetVerificationCodeAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)

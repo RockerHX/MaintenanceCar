@@ -9,7 +9,7 @@
 #import "SCHomePageDetailView.h"
 #import "MicroCommon.h"
 #import "SCUserInfo.h"
-#import "SCUerCar.h"
+#import "SCUserCar.h"
 
 @interface SCHomePageDetailView ()
 {
@@ -69,8 +69,8 @@
 - (void)displayMaintenanceView
 {
     SCUserInfo *userInfo   = [SCUserInfo share];
-    SCUerCar *userCar      = userInfo.currentCar;
-    _carNameLabel.text     = userCar.model_name ? userCar.model_name : @"元景修养";
+    SCUserCar *userCar     = userInfo.currentCar;
+    _carNameLabel.text     = (userCar.model_name || userCar.brand_name) ? [NSString stringWithFormat:@"%@%@", userCar.brand_name, userCar.model_name] : @"元景修养";
     _carFullNameLabel.text = userCar.car_full_model ? userCar.car_full_model : @"车生活";
 }
 

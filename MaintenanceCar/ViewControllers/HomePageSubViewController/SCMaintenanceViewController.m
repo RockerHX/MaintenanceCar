@@ -18,7 +18,7 @@
 #import "SCMerchantDetailViewController.h"
 #import "SCReservationViewController.h"
 #import "SCUserInfo.h"
-#import "SCUerCar.h"
+#import "SCUserCar.h"
 #import "SCMileageView.h"
 #import "SCAllDictionary.h"
 #import "SCChangeMaintenanceDataViewController.h"
@@ -168,7 +168,7 @@
 - (void)displayMaintenanceView
 {
     SCUserInfo *userInfo                 = [SCUserInfo share];
-    SCUerCar *userCar                    = userInfo.currentCar;
+    SCUserCar *userCar                   = userInfo.currentCar;
     _carNameLabel.text                   = userCar.model_name;
     _buyCarTimeLabel.text                = ([userCar.buy_car_year integerValue] && [userCar.buy_car_month integerValue]) ? [NSString stringWithFormat:@"%@年%@月", userCar.buy_car_year, userCar.buy_car_month] : @"";
     _labelView.mileage                   = userCar.run_distance;
@@ -251,7 +251,7 @@
             NSArray *allItems     = responseObject[@"all"];
             [weakSelf hanldeServiceDataWithNormalData:normalItems carefulData:carefulItems allData:allItems];
             
-            SCUerCar *userCar    = [SCUserInfo share].currentCar;
+            SCUserCar *userCar   = [SCUserInfo share].currentCar;
             if (userCar.normalItems.count)
             {
                 _serviceItems    = userCar.normalItems;
@@ -327,7 +327,7 @@
         SCServiceItem *item = [[SCServiceItem alloc] initWithDictionary:data error:nil];
         [allItems addObject:item];
     }
-    SCUerCar *userCar    = [SCUserInfo share].currentCar;
+    SCUserCar *userCar   = [SCUserInfo share].currentCar;
     userCar.normalItems  = normalItems;
     userCar.carefulItems = carefulItems;
     userCar.allItems     = allItems;
@@ -449,7 +449,7 @@
 #pragma mark - SCMaintenanceTypeView Delegate Methods
 - (void)didSelectedMaintenanceType:(SCMaintenanceType)type
 {
-    SCUerCar *userCar    = [SCUserInfo share].currentCar;
+    SCUserCar *userCar    = [SCUserInfo share].currentCar;
     [[SCUserInfo share] removeItems];
     switch (type)
     {

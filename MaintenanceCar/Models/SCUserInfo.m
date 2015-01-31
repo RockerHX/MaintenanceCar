@@ -192,7 +192,7 @@ static SCUserInfo *userInfo = nil;
         [_userCars removeAllObjects];
         for (NSDictionary *carData in userCars)
         {
-            SCUerCar *userCar = [[SCUerCar alloc] initWithDictionary:carData error:nil];
+            SCUserCar *userCar = [[SCUserCar alloc] initWithDictionary:carData error:nil];
             [_userCars addObject:userCar];
         }
         _firstCar = _userCars[Zero];

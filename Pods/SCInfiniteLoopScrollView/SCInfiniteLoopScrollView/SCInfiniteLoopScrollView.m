@@ -8,6 +8,20 @@
 
 #import "SCInfiniteLoopScrollView.h"
 
+@interface UIImageView (SCInfiniteLoopScrollView) <NSCopying>
+
+@end
+
+@implementation UIImageView (SCInfiniteLoopScrollView)
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:self.image];
+    return imageView;
+}
+
+@end
+
 #define DOT_COORDINATE      0.0f
 
 #define SELF_WIDTH          self.frame.size.width
@@ -39,7 +53,8 @@ typedef void(^BLOCK)(NSInteger index, BOOL animated);
     dispatch_once(&onceToken, ^{
         [self initData];
         [self clearSubViews];
-        [self reloadSubViews:_subItems];
+        if (_subItems)
+            [self reloadSubViews:_subItems];
     });
     
     [super layoutSubviews];
@@ -74,12 +89,6 @@ typedef void(^BLOCK)(NSInteger index, BOOL animated);
     [self addObserver:self forKeyPath:kCurrentIndexKey options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
 }
 
-- (id)duplicate:(id)object
-{
-    NSData *tempArchive = [NSKeyedArchiver archivedDataWithRootObject:object];
-    return [NSKeyedUnarchiver unarchiveObjectWithData:tempArchive];
-}
-
 - (void)clearSubViews
 {
     for (UIView *view in self.subviews)
@@ -95,7 +104,7 @@ typedef void(^BLOCK)(NSInteger index, BOOL animated);
     id lastObject = [subItems lastObject];
     if ([lastObject isKindOfClass:[UIView class]])
     {
-        UIView *view = [self duplicate:lastObject];
+        UIView *view = [lastObject copy];
         view.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, self.frame.size.width, self.frame.size.height);
         [self addSubview:view];
     }
@@ -112,7 +121,7 @@ typedef void(^BLOCK)(NSInteger index, BOOL animated);
     id firstObject = [subItems firstObject];
     if ([firstObject isKindOfClass:[UIView class]])
     {
-        UIView *view = [self duplicate:firstObject];
+        UIView *view = [firstObject copy];
         view.frame = CGRectMake(self.frame.size.width * (subItems.count + 1), DOT_COORDINATE, self.frame.size.width, self.frame.size.height);
         [self addSubview:view];
     }

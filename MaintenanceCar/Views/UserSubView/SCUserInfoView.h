@@ -20,7 +20,10 @@
 @interface SCUserInfoView : UIView
 
 @property (weak, nonatomic) IBOutlet                 UIButton *loginButton;     // 登陆按钮
-@property (weak, nonatomic) IBOutlet SCInfiniteLoopScrollView *userCarsView;    // 用户车辆滚动视图
+@property (weak, nonatomic) IBOutlet                   UIView *carInfoView;     // 用户车辆信息View
+@property (weak, nonatomic) IBOutlet                  UILabel *carNameLabel;    // 用户车辆名称栏
+@property (weak, nonatomic) IBOutlet                  UILabel *carDataLabel;    // 用户车辆数据栏
+@property (weak, nonatomic) IBOutlet SCInfiniteLoopScrollView *userCarsView;    // 用户车辆滚动View
 
 @property (nonatomic, weak)                                id <SCUserInfoViewDelegate>delegate;
 

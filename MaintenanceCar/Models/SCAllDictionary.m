@@ -9,7 +9,7 @@
 #import "SCAllDictionary.h"
 #import "MicroCommon.h"
 #import "SCAPIRequest.h"
-#import "SCUerCar.h"
+#import "SCUserCar.h"
 
 
 #define FilterConditionsResourceName    @"FilterConditions"
@@ -212,7 +212,7 @@ static SCAllDictionary *allDictionary = nil;
         [repairConditions addObject:defaultCondition];
     
     NSMutableSet *carSets = [NSMutableSet set];
-    for (SCUerCar *userCar in userCars)
+    for (SCUserCar *userCar in userCars)
         [carSets addObject:userCar.brand_name];
     for (NSString *brandName in carSets)
     {

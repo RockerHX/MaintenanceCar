@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SCUerCar.h"
+#import "SCUserCar.h"
 
 typedef NS_ENUM(BOOL, SCLoginStatus) {
     SCLoginStatusLogin  = YES,
@@ -22,8 +22,8 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
 @property (nonatomic, copy, readonly)   NSArray       *cars;            // 用户私家车集合
 @property (nonatomic, assign, readonly) SCLoginStatus loginStatus;      // 登陆状态
 
-@property (nonatomic, strong, readonly) SCUerCar      *firstCar;        // 第一辆车
-@property (nonatomic, strong)           SCUerCar      *currentCar;      // 当前车辆
+@property (nonatomic, strong, readonly) SCUserCar     *firstCar;        // 第一辆车
+@property (nonatomic, strong)           SCUserCar     *currentCar;      // 当前车辆
 
 @property (nonatomic, assign, readonly) BOOL          carsLoadFinish;   // 车辆加载结束标识
 @property (nonatomic, assign)           BOOL          addAliasSuccess;  // 推送Alias添加成功

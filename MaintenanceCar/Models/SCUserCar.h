@@ -1,5 +1,5 @@
 //
-//  SCUerCar.h
+//  SCUserCar.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/18.
@@ -8,7 +8,7 @@
 
 #import "JSONModel.h"
 
-@interface SCUerCar : JSONModel
+@interface SCUserCar : JSONModel
 
 @property (nonatomic, copy) NSString <Optional>*user_car_id;            // 用户车辆ID
 @property (nonatomic, copy) NSString <Optional>*car_id;                 // 车辆型号ID
