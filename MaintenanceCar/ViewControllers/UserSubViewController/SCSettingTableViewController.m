@@ -85,7 +85,7 @@
     if (!userInfo.loginStatus)
     {
         _appMessageSwitch.on = NO;
-        ShowPromptHUDWithText(self.view, @"您还为登陆，无法接受维修消息", 0.5f);
+        ShowPromptHUDWithText(self.view, @"您还为登录，无法接受维修消息", 0.5f);
     }
     userInfo.receiveMessage = sender.on;
 }

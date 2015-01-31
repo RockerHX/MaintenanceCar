@@ -13,8 +13,6 @@
 @optional
 // [商户简介]栏被点击，需要跳转到商户详情页面
 - (void)shouldShowMerchantDetail;
-// [预约]按钮被点击，需要显示预约栏目列表
-- (void)shouldShowReservationList;
 
 @end
 
@@ -31,11 +29,8 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *flagView;            // 商户标签栏 - 用于显示商户标签
 @property (weak, nonatomic) IBOutlet SCStarView       *starView;            // 商户星级 - 用于显示商户评分
 @property (weak, nonatomic) IBOutlet UILabel          *specialLabel;        // 商户特点栏 - 用于显示显示商户距离、价格、评价、服务等特点
-@property (weak, nonatomic) IBOutlet UIButton         *reservationButton;   // 预约按钮
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *flagViewWidthConstraint;   // 商户标签栏宽度
-
-- (IBAction)reservationButtonPressed:(UIBarButtonItem *)sender;
 
 - (void)handelWithMerchant:(SCMerchant *)merchant;
 

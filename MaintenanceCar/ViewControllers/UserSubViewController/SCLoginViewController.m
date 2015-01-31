@@ -15,7 +15,7 @@
 #import "SCVerificationCodeView.h"
 #import "UMessage.h"
 
-// 登陆验证模式
+// 登录验证模式
 typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
     SCVerificationCodeModeMessage = 1,          // 短信验证模式
     SCVerificationCodeModeCall                  // 语音验证模式
@@ -81,7 +81,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     _verificationCodeTextField.leftViewMode = UITextFieldViewModeAlways;
     _verificationCodeTextField.leftView = [[UILabel alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 10.0f, 1.0f)];
     
-    // 配置登陆和取消按钮，设置圆角
+    // 配置登录和取消按钮，设置圆角
     _loginButton.layer.cornerRadius = 5.0f;
     _cancelButton.layer.cornerRadius = 5.0f;
     
@@ -190,7 +190,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
 }
 
 /**
- *  登陆请求方法，参数：phone
+ *  登录请求方法，参数：phone
  */
 - (void)startLoginRequest
 {
@@ -204,7 +204,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
                 if ([responseObject[@"success"] isEqualToString:@"ok"])
                     [SCUserInfo share].addAliasSuccess = YES;
             }];
-            [weakSelf showPromptHUDWithText:@"登陆成功" delay:1.0f mode:SCHUDModeLogin delegate:weakSelf];
+            [weakSelf showPromptHUDWithText:@"登录成功" delay:1.0f mode:SCHUDModeLogin delegate:weakSelf];
         }
         else
         {
@@ -224,7 +224,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     [_verificationCodeTextField resignFirstResponder];
 }
 
-// 返回进入[注册登陆]页面之前的页面
+// 返回进入[注册登录]页面之前的页面
 - (void)dismissController:(SCDismissType)type
 {
     if (type == SCDismissTypeLoginSuccess)
@@ -250,7 +250,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
 #pragma mark - Button Action Methods
 - (IBAction)loginButtonPressed:(UIButton *)sender
 {
-    // 登陆按钮点击之后分别经行是否输入手机号，是否输入验证码，验证码是否正确的判断操作，前面这些都正确以后才进行注册登陆操作
+    // 登录按钮点击之后分别经行是否输入手机号，是否输入验证码，验证码是否正确的判断操作，前面这些都正确以后才进行注册登录操作
     [self resignKeyBoard];
     
     if (![_phoneNumberTextField.text length])
@@ -298,7 +298,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
 #pragma mark - MBProgressHUDDelegate Methods
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
-    // 根据注册登陆逻辑，进行相应的注册登陆流程并执行相应方法
+    // 根据注册登录逻辑，进行相应的注册登录流程并执行相应方法
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     switch (hud.tag)
     {

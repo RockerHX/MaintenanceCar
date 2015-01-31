@@ -24,6 +24,4 @@
 @property (weak, nonatomic) IBOutlet UITextField   *remarkTextField;              // 其他需求输入栏
 @property (weak, nonatomic) IBOutlet UIButton      *reservationButton;            // 预约按钮
 
-@property (nonatomic, assign)        BOOL          noServiceItems;                // 是否能选择预约项目，默认为YES
-
 @end

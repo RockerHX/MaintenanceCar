@@ -13,10 +13,8 @@
 #import "MicroCommon.h"
 #import "SCMapMerchantInfoView.h"
 #import "SCMerchantDetailViewController.h"
-#import "SCReservationViewController.h"
-#import "SCReservatAlertView.h"
 
-@interface SCMapViewController () <BMKMapViewDelegate, SCMapMerchantInfoViewDelegate, SCReservatAlertViewDelegate>
+@interface SCMapViewController () <BMKMapViewDelegate, SCMapMerchantInfoViewDelegate>
 {
     NSMutableArray    *_annotations;            // 商户图钉数据集合
     SCMerchant        *_merchant;               // 当前点击商户的数据缓存
@@ -47,6 +45,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self initConfig];
     [self viewConfig];
 }
 
@@ -54,6 +53,19 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - KVO Methods
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    // 监听SCLocationInfo的userLocation，来确定商户列表刷新逻辑
+    if ([keyPath isEqualToString:@"userLocation"])
+    {
+        if ([SCLocationInfo shareLocationInfo].userLocation && change[NSKeyValueChangeNewKey])
+        {
+            [_mapView updateLocationData:[SCLocationInfo shareLocationInfo].userLocation];      // 根据坐标在地图上显示位置
+        }
+    }
 }
 
 #pragma mark - Action Methods
@@ -85,6 +97,12 @@
 }
 
 #pragma mark - Private Methods
+- (void)initConfig
+{
+    // 监听SCLocationInfo单例的userLocation属性，观察定位是否成功
+    [[SCLocationInfo shareLocationInfo] addObserver:self forKeyPath:@"userLocation" options:NSKeyValueObservingOptionNew context:nil];
+}
+
 - (void)viewConfig
 {
     // 配置百度地图
@@ -142,29 +160,6 @@
     }
     @catch (NSException *exception) {
         NSLog(@"SCMapViewController Go to the SCMerchantDetailViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
-}
-
-- (void)shouldShowReservationList
-{
-    // 显示预约提示框
-    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
-    [reservatAlertView show];
-}
-
-#pragma mark - SCReservatAlertViewDelegate Methods
-- (void)selectedWithServiceItem:(SCServiceItem *)serviceItem
-{
-    // 跳转到预约页面
-    @try {
-        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.merchant = _merchant;
-        [self.navigationController pushViewController:reservationViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMapViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
     }
     @finally {
     }

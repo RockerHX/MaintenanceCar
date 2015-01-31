@@ -10,7 +10,6 @@
 #import <SCInfiniteLoopScrollView/SCInfiniteLoopScrollView.h>
 #import "MicroCommon.h"
 #import "SCUserInfo.h"
-#import <FXBlurView/FXBlurView.h>
 
 @implementation SCUserInfoView
 

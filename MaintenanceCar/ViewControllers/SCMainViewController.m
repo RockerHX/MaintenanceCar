@@ -68,16 +68,15 @@
 // 处理方向变更信息
 - (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
 {
-    NSLog(@"didUpdateUserHeading lat %f,long %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+//    NSLog(@"didUpdateUserHeading lat %f,long %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
 }
 
 //处理位置坐标更新
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
-    NSLog(@"didUpdateUserLocation lat %f,long %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+//    NSLog(@"didUpdateUserLocation lat %f,long %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
     
     [SCLocationInfo shareLocationInfo].userLocation = userLocation;
-    [_locationService stopUserLocationService];
 }
 
 // 定位失败，设置相关操作
@@ -94,12 +93,12 @@
     [self userLog];                             // 开启用户日志
     [self startUpdateCarBrandReuqest];          // 开始车辆品牌数据刷新
     
-    // 监听登陆通知，收到通知会触发页面跳转方法
+    // 监听登录通知，收到通知会触发页面跳转方法
     [NOTIFICATION_CENTER addObserver:self selector:@selector(shouldLogin) name:kUserNeedLoginNotification object:nil];
 }
 
 /**
- *  记录用户数据 - 如果有用户登陆，获取数据返回给服务器，没有用户登陆则不管
+ *  记录用户数据 - 如果有用户登录，获取数据返回给服务器，没有用户登录则不管
  */
 - (void)userLog
 {
@@ -130,7 +129,7 @@
 }
 
 /**
- *  收到登陆通知，跳转到登陆页面
+ *  收到登录通知，跳转到登录页面
  */
 - (void)shouldLogin
 {

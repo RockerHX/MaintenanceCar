@@ -10,7 +10,7 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "MicroCommon.h"
 #import "SCUserInfo.h"
-#import "SCUerCar.h"
+#import "SCUserCar.h"
 #import "SCDatePickerView.h"
 #import "SCCarDriveHabitsView.h"
 #import "SCAPIRequest.h"
@@ -70,7 +70,7 @@
 - (void)viewDisplay
 {
     // 刷新页面数据
-    SCUerCar *userCar              = [SCUserInfo share].currentCar;
+    SCUserCar *userCar              = [SCUserInfo share].currentCar;
     _userCarLabel.text             = userCar.model_name;
     _mileageTextField.text         = userCar.run_distance;
     _buyCarDateLabel.text          = ([userCar.buy_car_year integerValue] && [userCar.buy_car_month integerValue]) ? [NSString stringWithFormat:@"%@年%@月", userCar.buy_car_year, userCar.buy_car_month] : @"";
@@ -113,7 +113,7 @@
 - (void)startUpdateUserCarRequest
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    SCUerCar *userCar        = [SCUserInfo share].currentCar;
+    SCUserCar *userCar        = [SCUserInfo share].currentCar;
     NSDictionary *parameters =               @{@"user_id": [SCUserInfo share].userID,
                                            @"user_car_id": userCar.user_car_id,
                                               @"model_id": userCar.model_id,
@@ -157,7 +157,7 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     // 输入结束，更新模型数据
-    SCUerCar *userCar = [SCUserInfo share].currentCar;
+    SCUserCar *userCar = [SCUserInfo share].currentCar;
     userCar.run_distance = textField.text;
 }
 
@@ -170,7 +170,7 @@
     NSString *dateString = [formatter stringFromDate:date];
     _buyCarDateLabel.text = dateString;
     
-    SCUerCar *userCar = [SCUserInfo share].currentCar;
+    SCUserCar *userCar = [SCUserInfo share].currentCar;
     [formatter setDateFormat:@"yyyy"];
     userCar.buy_car_year = [formatter stringFromDate:date];
     [formatter setDateFormat:@"MM"];
@@ -191,7 +191,7 @@
     else
     {
         // 保存按钮被点击，刷新[驾驶习惯]数据，并开始保存请求
-        SCUerCar *userCar = [SCUserInfo share].currentCar;
+        SCUserCar *userCar = [SCUserInfo share].currentCar;
         userCar.habit = [NSString stringWithFormat:@"%@", @(type)];
         
         [self startUpdateUserCarRequest];

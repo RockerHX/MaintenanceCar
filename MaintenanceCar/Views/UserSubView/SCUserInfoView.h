@@ -19,7 +19,7 @@
 
 @interface SCUserInfoView : UIView
 
-@property (weak, nonatomic) IBOutlet                 UIButton *loginButton;     // 登陆按钮
+@property (weak, nonatomic) IBOutlet                 UIButton *loginButton;     // 登录按钮
 @property (weak, nonatomic) IBOutlet                   UIView *carInfoView;     // 用户车辆信息View
 @property (weak, nonatomic) IBOutlet                  UILabel *carNameLabel;    // 用户车辆名称栏
 @property (weak, nonatomic) IBOutlet                  UILabel *carDataLabel;    // 用户车辆数据栏
@@ -27,7 +27,7 @@
 
 @property (nonatomic, weak)                                id <SCUserInfoViewDelegate>delegate;
 
-// [登陆]按钮点击事件
+// [登录]按钮点击事件
 - (IBAction)loginButtonPressed:(UIButton *)sender;
 
 - (void)refresh;

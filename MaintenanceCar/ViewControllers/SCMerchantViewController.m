@@ -15,15 +15,13 @@
 #import "SCMerchant.h"
 #import "SCMerchantListCell.h"
 #import "SCLocationInfo.h"
-#import "SCReservationViewController.h"
 #import "SCMerchantDetailViewController.h"
 #import "SCMapViewController.h"
 #import "SCMerchantFilterView.h"
-#import "SCReservatAlertView.h"
 #import "SCStarView.h"
 #import "SCAllDictionary.h"
 
-@interface SCMerchantViewController () <UITableViewDelegate, UITableViewDataSource, SCReservatAlertViewDelegate, SCMerchantFilterViewDelegate>
+@interface SCMerchantViewController () <UITableViewDelegate, UITableViewDataSource, SCMerchantFilterViewDelegate>
 {
     NSMutableArray *_merchantList;
     
@@ -123,18 +121,21 @@
 #pragma mark - KVO Methods
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    // 监听SCLocationInfo的userLocation，来确定商户列表刷新逻辑
-    if ([keyPath isEqualToString:@"userLocation"])
-    {
-        if ([SCLocationInfo shareLocationInfo].userLocation && change[NSKeyValueChangeNewKey])
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        // 监听SCLocationInfo的userLocation，来确定商户列表刷新逻辑
+        if ([keyPath isEqualToString:@"userLocation"])
         {
-            [self refreshMerchantList];
+            if ([SCLocationInfo shareLocationInfo].userLocation && change[NSKeyValueChangeNewKey])
+            {
+                [self refreshMerchantList];
+            }
+            else if ([SCLocationInfo shareLocationInfo].locationFailure)
+            {
+                [self refreshMerchantList];
+            }
         }
-        else if ([SCLocationInfo shareLocationInfo].locationFailure)
-        {
-            [self refreshMerchantList];
-        }
-    }
+    });
 }
 
 #pragma mark - Private Methods
@@ -214,22 +215,6 @@
 - (void)upRefreshMerchantList
 {
     [self startMerchantListRequest];
-}
-
-#pragma mark - SCReservatAlertViewDelegate Methods
-- (void)selectedWithServiceItem:(SCServiceItem *)serviceItem
-{
-    // 跳转到预约页面
-    @try {
-        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        [self.navigationController pushViewController:reservationViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
-
 }
 
 #pragma mark - SCMerchantFilterViewDelegate Methods

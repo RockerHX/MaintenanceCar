@@ -20,7 +20,7 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
 @property (nonatomic, copy, readonly)   NSString      *userID;          // 用户ID
 @property (nonatomic, copy, readonly)   NSString      *phoneNmber;      // 用户手机号
 @property (nonatomic, copy, readonly)   NSArray       *cars;            // 用户私家车集合
-@property (nonatomic, assign, readonly) SCLoginStatus loginStatus;      // 登陆状态
+@property (nonatomic, assign, readonly) SCLoginStatus loginStatus;      // 登录状态
 
 @property (nonatomic, strong, readonly) SCUserCar     *firstCar;        // 第一辆车
 @property (nonatomic, strong)           SCUserCar     *currentCar;      // 当前车辆
@@ -39,7 +39,7 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
 + (instancetype)share;
 
 /**
- *  登陆成功，设置userID，phoneNmber
+ *  登录成功，设置userID，phoneNmber
  *
  *  @param userData 服务返回的用户数据
  */

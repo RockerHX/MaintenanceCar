@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define VerificationCodeAPI         @"/Verification"                        // 验证码获取API
 #define RegisterAPI                 @"/User"                                // 用户注册API
-#define LoginAPI                    RegisterAPI                             // 用户登陆API
+#define LoginAPI                    RegisterAPI                             // 用户登录API
 #define UserLogAPI                  @"/Userlog"                             // 用户日志记录API
 
 #define MyReservationAPI            @"/Reservation/all"                     // 我的预约接口
@@ -69,7 +69,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define VerificationCodeAPIURL          [APIURL stringByAppendingString:VerificationCodeAPI]        // 获取验证码接口URL - 用于获取短信或者语音验证码
 #define RegisterAPIURL                  [APIURL stringByAppendingString:RegisterAPI]                // 用户注册接口URL - 用于用户注册
-#define LoginAPIURL                     [APIURL stringByAppendingString:LoginAPI]                   // 用户登陆接口URL - 用于用户登陆
+#define LoginAPIURL                     [APIURL stringByAppendingString:LoginAPI]                   // 用户登录接口URL - 用于用户登录
 #define UserLogAPIURL                   [APIURL stringByAppendingString:UserLogAPI]                 // 用户日志记录接口URL - 打开APP后如果用户已经登录异步调用此URL记录
 
 #define MyReservationAPIURL             [APIURL stringByAppendingString:MyReservationAPI]           // 商户预约接口URL - 用于商户预约项目

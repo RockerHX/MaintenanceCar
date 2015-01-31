@@ -124,7 +124,7 @@
                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  用户登陆接口请求方法(API:/User - GET)
+ *  用户登录接口请求方法(API:/User - GET)
  *
  *  @param parameters   请求参数集合
  */

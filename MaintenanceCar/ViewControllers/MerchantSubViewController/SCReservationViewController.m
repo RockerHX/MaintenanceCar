@@ -79,11 +79,8 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     {
         case UITableViewRowIndexProject:
         {
-            if (!_noServiceItems)
-            {
-                SCPickerView *pickerView = [[SCPickerView alloc] initWithDelegate:self];
-                [pickerView show];
-            }
+            SCPickerView *pickerView = [[SCPickerView alloc] initWithDelegate:self];
+            [pickerView show];
         }
             break;
         case UITableViewRowIndexDate:
@@ -107,14 +104,14 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
 #pragma mark - Button Action Methods
 - (IBAction)reservationButtonPressed:(UIButton *)sender
 {
-    // 检查是否登陆，已登陆进行预约请求，反之则弹出登陆提示框跳转到登陆页面
+    // 检查是否登录，已登录进行预约请求，反之则弹出登录提示框跳转到登录页面
     if (![SCUserInfo share].loginStatus)
     {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登陆"
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登录"
                                                             message:nil
                                                            delegate:self
                                                   cancelButtonTitle:@"取消"
-                                                  otherButtonTitles:@"登陆", nil];
+                                                  otherButtonTitles:@"登录", nil];
         [alertView show];
     }
     else if ([self checkeParamterIntegrity])

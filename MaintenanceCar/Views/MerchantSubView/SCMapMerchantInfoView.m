@@ -30,12 +30,6 @@
     [self initConfig];
 }
 
-#pragma mark - Action Methods
-- (IBAction)reservationButtonPressed:(UIBarButtonItem *)sender
-{
-    [_delegate shouldShowReservationList];
-}
-
 #pragma mark - Private Methods
 - (void)initConfig
 {
@@ -44,7 +38,6 @@
     _specialLabel.layer.cornerRadius = 2.0f;
     _specialLabel.layer.borderWidth = 1.0f;
     _specialLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    _reservationButton.layer.cornerRadius = 6.0f;
     
     // 添加点击手势
     [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer)]];

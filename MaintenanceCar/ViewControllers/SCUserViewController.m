@@ -69,7 +69,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    // 检查用户是否登陆，在进行相应页面跳转
+    // 检查用户是否登录，在进行相应页面跳转
     if ([SCUserInfo share].loginStatus)
     {
         @try {
@@ -121,7 +121,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 }
 
 /**
- *  检查用户是否需要登陆，需要则跳转到登陆页面
+ *  检查用户是否需要登录，需要则跳转到登录页面
  */
 - (void)checkShouldLogin
 {
@@ -132,22 +132,22 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 }
 
 /**
- *  提示用户登陆的警告框
+ *  提示用户登录的警告框
  */
 - (void)showShoulLoginAlert
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登陆"
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登录"
                                                         message:nil
                                                        delegate:self
                                               cancelButtonTitle:@"取消"
-                                              otherButtonTitles:@"登陆", nil];
+                                              otherButtonTitles:@"登录", nil];
     [alertView show];
 }
 
 #pragma mark - Alert View Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    // 用户选择是否登陆
+    // 用户选择是否登录
     if (buttonIndex != alertView.cancelButtonIndex)
     {
         [self checkShouldLogin];
