@@ -41,8 +41,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 {
     [super viewDidAppear:animated];
     
-    if ([SCUserInfo share].loginStatus)
-        [_userInfoView refresh];
+    [_userInfoView refresh];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

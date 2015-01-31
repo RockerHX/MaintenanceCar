@@ -313,18 +313,27 @@
     
     for (NSDictionary *data in noralData)
     {
-        SCServiceItem *item = [[SCServiceItem alloc] initWithDictionary:data error:nil];
-        [normalItems addObject:item];
+        if (data[@"service_id"] && ([data[@"service_id"] integerValue] < 100))
+        {
+            SCServiceItem *item = [[SCServiceItem alloc] initWithDictionary:data error:nil];
+            [normalItems addObject:item];
+        }
     }
     for (NSDictionary *data in carefulData)
     {
-        SCServiceItem *item = [[SCServiceItem alloc] initWithDictionary:data error:nil];
-        [carefulItems addObject:item];
+        if (data[@"service_id"] && ([data[@"service_id"] integerValue] < 100))
+        {
+            SCServiceItem *item = [[SCServiceItem alloc] initWithDictionary:data error:nil];
+            [carefulItems addObject:item];
+        }
     }
     for (NSDictionary *data in allData)
     {
-        SCServiceItem *item = [[SCServiceItem alloc] initWithDictionary:data error:nil];
-        [allItems addObject:item];
+        if (data[@"service_id"] && ([data[@"service_id"] integerValue] < 100))
+        {
+            SCServiceItem *item = [[SCServiceItem alloc] initWithDictionary:data error:nil];
+            [allItems addObject:item];
+        }
     }
     SCUserCar *userCar   = [SCUserInfo share].currentCar;
     userCar.normalItems  = normalItems;

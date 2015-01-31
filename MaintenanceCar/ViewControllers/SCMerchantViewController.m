@@ -102,7 +102,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     // 根据选中的商户，取到其商户ID，跳转到商户页面进行详情展示
-    SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
+    SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMerchantDetailViewController"];
     merchantDetialViewControler.merchant = _merchantList[indexPath.row];
     [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
 }

@@ -47,17 +47,18 @@ typedef void(^BLOCK)(NSInteger index, BOOL animated);
 
 @implementation SCInfiniteLoopScrollView
 
-- (void)layoutSubviews
+#pragma mark - Init Methods
+- (void)awakeFromNib
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [self initData];
-        [self clearSubViews];
-        if (_subItems)
-            [self reloadSubViews:_subItems];
-    });
-    
-    [super layoutSubviews];
+    [self initData];
+    [self clearSubViews];
+    if (_subItems)
+        [self reloadSubViews:_subItems];
+}
+
+- (void)dealloc
+{
+    [self removeObserver:self forKeyPath:kCurrentIndexKey];
 }
 
 #pragma mark - KVO Methods
