@@ -48,6 +48,8 @@
 {
     if (IS_IPHONE_5_PRIOR)
         _flowLayout.itemSize = CGSizeMake(90.0f, _flowLayout.itemSize.height);
+    else if (IS_IPHONE_6)
+        _flowLayout.itemSize = CGSizeMake(120.0f, _flowLayout.itemSize.height);
 }
 
 - (void)viewConfig
