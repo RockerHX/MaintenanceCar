@@ -59,9 +59,6 @@
 
 - (void)viewConfig
 {
-    [_distanceButton setTitle:@"按距离" forState:UIControlStateNormal];
-    [_repairTypeButton setTitle:@"按品牌" forState:UIControlStateNormal];
-    [_otherFilterButton setTitle:@"按业务" forState:UIControlStateNormal];
 }
 
 // 弹出筛选条件View给用户展示，用户才能操作 - 带动画

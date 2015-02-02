@@ -25,6 +25,11 @@
 
 @implementation SCMapViewController
 
+- (void)awakeFromNib
+{
+    _itemCanSelected = YES;
+}
+
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -152,16 +157,19 @@
 #pragma mark - SCMapMerchantInfoViewDelegate Methods
 - (void)shouldShowMerchantDetail
 {
-    // 跳转到预约页面
-    @try {
-        SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
-        merchantDetialViewControler.merchant = _merchant;
-        [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMapViewController Go to the SCMerchantDetailViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
+    if (_itemCanSelected)
+    {
+        // 跳转到预约页面
+        @try {
+            SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
+            merchantDetialViewControler.merchant = _merchant;
+            [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"SCMapViewController Go to the SCMerchantDetailViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
     }
 }
 

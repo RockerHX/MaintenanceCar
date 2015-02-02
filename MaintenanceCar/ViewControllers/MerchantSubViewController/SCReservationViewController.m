@@ -417,6 +417,9 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
             [self displayTimeItemWithDate:date];
         }
             break;
+            
+        default:
+            break;
     }
 }
 

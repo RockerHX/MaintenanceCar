@@ -18,6 +18,7 @@
 #import "SCCollectionItem.h"
 #import "SCReservationViewController.h"
 #import "SCReservatAlertView.h"
+#import "SCMapViewController.h"
 
 #define MerchantDetailCellIdentifier      @"SCMerchantDetailCell"
 
@@ -89,20 +90,40 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 2)
+    if (indexPath.section == 1)
     {
         if (indexPath.row == 0)
         {
-            
+            // 地图按钮被点击，跳转到地图页面
+            UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
+            SCMapViewController *mapViewController = (SCMapViewController *)mapNavigationController.topViewController;
+            mapViewController.itemCanSelected = NO;
+            mapViewController.merchants = @[_merchant];
+            mapNavigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+            [self presentViewController:mapNavigationController animated:YES completion:nil];
         }
         else if (indexPath.row == 1)
         {
-            [self showAlertWithTitle:@"是否拨打"
-                             message:_merchantDetail.contacts_mobile
-                            delegate:self
-                                type:SCAlertTypeReuqestCall
-                   cancelButtonTitle:@"取消"
-                    otherButtonTitle:@"拨打"];
+            NSArray *phones = [_merchantDetail.contacts_mobile componentsSeparatedByString:@" "];
+            UIAlertView *alertView = nil;
+            if (phones.count > 1)
+            {
+                alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商户电话"
+                                                       message:nil
+                                                      delegate:self
+                                             cancelButtonTitle:@"取消"
+                                             otherButtonTitles:[phones firstObject], [phones lastObject], nil];
+            }
+            else
+            {
+                alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商户电话"
+                                                       message:nil
+                                                      delegate:self
+                                             cancelButtonTitle:@"取消"
+                                             otherButtonTitles:[phones firstObject], nil];
+            }
+            alertView.tag = SCAlertTypeReuqestCall;
+            [alertView show];
         }
     }
 }
@@ -121,12 +142,13 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     }
     else
     {
-        [self showAlertWithTitle:nil
-                         message:@"收藏商户需要您先登录"
-                        delegate:self
-                            type:SCAlertTypeNeedLogin
-               cancelButtonTitle:@"取消"
-                otherButtonTitle:@"登录"];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:@"收藏商户需要您先登录"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                                  otherButtonTitles:@"登录", nil];
+        alertView.tag = SCAlertTypeNeedLogin;
+        [alertView show];
     }
 }
 
@@ -285,42 +307,17 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 /**
- *  弹出提示框
- *
- *  @param title             提示框标题
- *  @param message           提示框显示消息
- *  @param delegate          代理对象
- *  @param type              提示框类型
- *  @param cancelButtonTitle 取消按钮标题
- *  @param otherButtonTitles 其他按钮标题
- */
-- (void)showAlertWithTitle:(NSString *)title
-                   message:(NSString *)message
-                  delegate:(id)delegate
-                      type:(SCAlertType)type
-         cancelButtonTitle:(NSString *)cancelButtonTitle
-          otherButtonTitle:(NSString *)otherButtonTitle;
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
-                                                        message:message
-                                                       delegate:delegate
-                                              cancelButtonTitle:cancelButtonTitle
-                                              otherButtonTitles:otherButtonTitle, nil];
-    alertView.tag = type;
-    [alertView show];
-}
-
-/**
  *  显示错误警告框
  */
 - (void)showRequestErrorAlert
 {
-    [self showAlertWithTitle:@"商户详情获取失败"
-                     message:@"是否重新获取"
-                    delegate:self
-                        type:SCAlertTypeReuqestError
-           cancelButtonTitle:@"重新获取"
-            otherButtonTitle:@"取消"];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"商户详情获取失败"
+                                                        message:@"是否重新获取"
+                                                       delegate:self
+                                              cancelButtonTitle:@"重新获取"
+                                              otherButtonTitles:@"取消", nil];
+    alertView.tag = SCAlertTypeReuqestError;
+    [alertView show];
 }
 
 #pragma mark - Alert View Delegate Methods
@@ -347,8 +344,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             break;
         case SCAlertTypeReuqestCall:
         {
+            NSArray *phones = [_merchantDetail.contacts_mobile componentsSeparatedByString:@" "];
             if (buttonIndex != alertView.cancelButtonIndex)
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", _merchantDetail.contacts_mobile]]];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", phones[buttonIndex - 1]]]];
         }
             break;
     }

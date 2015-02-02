@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class SCMerchant;
 @class SCMerchantFilterView;
 
 @interface SCMerchantViewController : UIViewController

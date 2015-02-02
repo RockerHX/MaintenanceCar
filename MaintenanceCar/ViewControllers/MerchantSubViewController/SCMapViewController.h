@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet            BMKMapView *mapView;                    // 百度地图
 @property (weak, nonatomic) IBOutlet SCMapMerchantInfoView *mapMerchantInfoView;        // 地图页面，商户信息视图，用户展示商户基本信息
 
+@property (nonatomic, assign)                         BOOL itemCanSelected;
+
 /**
  *  [列表]按钮，用于返回商户列表页面
  */

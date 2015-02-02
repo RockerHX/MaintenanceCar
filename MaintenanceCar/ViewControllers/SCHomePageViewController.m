@@ -15,6 +15,7 @@
 #import "SCAPIRequest.h"
 #import "SCAllDictionary.h"
 #import "SCWebViewController.h"
+#import "SCServiceMerchantListViewController.h"
 
 @interface SCHomePageViewController () <UIAlertViewDelegate>
 
@@ -54,7 +55,35 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Wash"])
+    {
+        SCServiceMerchantListViewController *washMerchanListViewController = segue.destinationViewController;
+        washMerchanListViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'洗'"];
+        washMerchanListViewController.itemTite = @"洗车美容";
+        washMerchanListViewController.title    = @"洗车美容";
+    }
+    else if ([segue.identifier isEqualToString:@"Repair"])
+    {
+        SCServiceMerchantListViewController *repairMerchanListViewController = segue.destinationViewController;
+        repairMerchanListViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'修'"];
+        repairMerchanListViewController.itemTite = @"修车";
+        repairMerchanListViewController.title    = @"修车";
+    }
+}
+
 #pragma mark - Action Methods
+- (IBAction)locationItemPressed:(UIBarButtonItem *)sender
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"对不起，暂时只开通深圳"
+                                                        message:@"其他城市敬请期待！"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil, nil];
+    [alertView show];
+}
+
 - (IBAction)maintenanceButtonPressed:(UIButton *)sender
 {
     SCUserInfo *userInfo = [SCUserInfo share];
@@ -76,8 +105,8 @@
 
 - (IBAction)SpecialButtonPressed:(UIButton *)sender
 {
-    SCSpecial *spcial = [SCAllDictionary share].special;
-    if (spcial.html)
+    SCSpecial *special = [SCAllDictionary share].special;
+    if (special.html)
     {
         @try {
             SCWebViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
@@ -91,7 +120,18 @@
     }
     else
     {
-        
+        @try {
+            SCServiceMerchantListViewController *specialViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCServiceMerchantListViewController"];
+            specialViewController.query    = [DefaultQuery stringByAppendingString:special.query];
+            specialViewController.itemTite = special.text;
+            specialViewController.title    = special.text;
+            [self.navigationController pushViewController:specialViewController animated:YES];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"SCHomePageViewController Go to the SCWebViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
     }
 }
 

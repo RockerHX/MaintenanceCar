@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIButton             *specialButton;             // 首页第四个按钮
 @property (weak, nonatomic) IBOutlet UILabel              *specialLabel;              // 首页第四个文字栏
 
+- (IBAction)locationItemPressed:(UIBarButtonItem *)sender;
 - (IBAction)maintenanceButtonPressed:(UIButton *)sender;
 - (IBAction)SpecialButtonPressed:(UIButton *)sender;
 
