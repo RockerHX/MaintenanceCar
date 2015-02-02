@@ -150,6 +150,7 @@ typedef void(^BLOCK)(NSInteger index, BOOL animated);
 #pragma mark -
 - (void)setSubItems:(NSArray *)subItems
 {
+    self.scrollEnabled = (subItems.count > 1) ? YES : NO;
     [self clearSubViews];
     _subItems = subItems;
     

@@ -27,7 +27,6 @@
 
 @interface SCMaintenanceViewController () <MBProgressHUDDelegate, SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate, SCMaintenanceItemCellDelegate>
 {
-    BOOL              _isPush;
     NSInteger         _reservationButtonIndex;
     NSArray           *_serviceItems;
     NSMutableArray    *_recommendMerchants;
@@ -48,30 +47,16 @@
     [MobClick beginLogPageView:@"[首页] - 保养"];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    _isPush = NO;
-}
-
 - (void)viewWillDisappear:(BOOL)animated
 {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[首页] - 保养"];
-    
-    // 由于首页无导航栏设计，退出保养页面的时候隐藏导航栏
-    if (!_isPush)
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // 进入保养页面的时候显示导航栏
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
     
     [self initConfig];
     [self performSelector:@selector(viewConfig) withObject:nil afterDelay:0.1f];
@@ -87,9 +72,6 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    _isPush = YES;
     SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = segue.destinationViewController;
     changeMaintenanceDataViewController.delegate = self;
 }
@@ -162,7 +144,11 @@
         _driveCarLabel.font   = [UIFont systemFontOfSize:12.0f];
         _driveHabitLabel.font = [UIFont systemFontOfSize:13.0f];
     }
-    [self startDataRequest];
+    
+    if ([SCUserInfo share].cars.count)
+        [self startDataRequest];
+    else
+        [self showPromptHUDWithText:@"暂无车辆，请您添加" delay:0.5f delegate:self];
 }
 
 - (void)displayMaintenanceView
@@ -195,7 +181,6 @@
 {
     // 跳转到预约页面
     @try {
-        _isPush = YES;
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
         reservationViewController.merchant = _recommendMerchants[[notification.object integerValue]];
         reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:@"2" serviceName:@"保养"];
@@ -402,7 +387,6 @@
 {
     if (indexPath.section == 1)
     {
-        _isPush = YES;
         // 列表栏被点击，执行取消选中动画
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
@@ -507,7 +491,6 @@
             NSLog(@"SCMaintenanceViewController Go to the SCChangeMaintenanceDataViewController exception reasion:%@", exception.reason);
         }
         @finally {
-            _isPush = YES;
         }
     }
 }

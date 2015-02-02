@@ -57,7 +57,8 @@
 #pragma mark - Action Methods
 - (IBAction)maintenanceButtonPressed:(UIButton *)sender
 {
-    if ([SCUserInfo share].loginStatus)
+    SCUserInfo *userInfo = [SCUserInfo share];
+    if (userInfo.loginStatus)
     {
         @try {
             UIViewController *maintenanceViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"MaintenanceViewController"];

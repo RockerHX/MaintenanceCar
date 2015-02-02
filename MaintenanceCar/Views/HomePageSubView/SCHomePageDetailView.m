@@ -69,9 +69,30 @@
 - (void)displayMaintenanceView
 {
     SCUserInfo *userInfo   = [SCUserInfo share];
-    SCUserCar *userCar     = userInfo.currentCar;
-    _carNameLabel.text     = (userCar.model_name || userCar.brand_name) ? [NSString stringWithFormat:@"%@%@", userCar.brand_name, userCar.model_name] : @"元景修养";
-    _carFullNameLabel.text = userCar.car_full_model ? userCar.car_full_model : @"车生活";
+    if (userInfo.loginStatus)
+    {
+        if (userInfo.cars.count)
+        {
+            _preButton.hidden  = NO;
+            _nextButton.hidden = _preButton.hidden;
+            
+            SCUserCar *userCar     = userInfo.currentCar;
+            _carNameLabel.text     = [NSString stringWithFormat:@"%@%@", userCar.brand_name, userCar.model_name];
+            _carFullNameLabel.text = userCar.car_full_model;
+        }
+        else
+            [self defaultHandelWithText:@"请添加车辆"];
+    }
+    else
+        [self defaultHandelWithText:@"未登录"];
+}
+
+- (void)defaultHandelWithText:(NSString *)text
+{
+    _preButton.hidden  = YES;
+    _nextButton.hidden = _preButton.hidden;
+    _carNameLabel.text = text;
+    _carFullNameLabel.text = @"";
 }
 
 #pragma mark - Public Methods

@@ -108,6 +108,13 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 - (void)viewConfig
 {
     _userInfoView.delegate = self;
+    
+    if (IS_IPHONE_6)
+        self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 220.f);
+    else if (IS_IPHONE_6Plus)
+        self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 240.f);
+    [self.tableView.tableHeaderView needsUpdateConstraints];
+    [self.tableView.tableHeaderView layoutIfNeeded];
 }
 
 /**
