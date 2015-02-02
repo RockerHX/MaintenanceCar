@@ -34,6 +34,8 @@
 @property (nonatomic, copy) NSString <Optional>*update_time;          // 商户信息更新时间
 @property (nonatomic, copy) NSString <Optional>*xkdate;               // 许可使时期
 @property (nonatomic, copy) NSString <Optional>*zige;                 //
+@property (nonatomic, copy) NSString <Optional>*time_open;            // 商户营业时间
+@property (nonatomic, copy) NSString <Optional>*time_closed;          // 商户打样时间
 
 @property (nonatomic, strong) NSDictionary <Optional>*service_items;  // 服务项目
 @property (nonatomic, assign) BOOL                   collected;       // 收藏状态

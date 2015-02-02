@@ -43,9 +43,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     BOOL _needChecked;      // 检查收藏标识
 }
 @property (weak, nonatomic) IBOutlet SCMerchantDetailCell *merchantBriefIntroductionCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell      *merchantCustomersCell;
 @property (weak, nonatomic) IBOutlet UILabel              *merchantAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel              *merchantPhoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel              *merchantTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel              *merchantBusinessLabel;
 @property (weak, nonatomic) IBOutlet UILabel              *merchantIntroductionLabel;
 
@@ -165,6 +165,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [self handleMerchantName:_merchantDetail.name onNameLabel:_merchantBriefIntroductionCell.merchantNameLabel];
     [self handleMerchantDetail:_merchantDetail.address onLabel:_merchantAddressLabel];
     [self handleMerchantDetail:_merchantDetail.contacts_mobile onLabel:_merchantPhoneLabel];
+    [self handleMerchantDetail:[NSString stringWithFormat:@"%@:00 -- %@:00", _merchantDetail.time_open, _merchantDetail.time_closed] onLabel:_merchantTimeLabel];
     [self handleMerchantDetail:_merchantDetail.zige onLabel:_merchantBusinessLabel];
     [self handleMerchantDetail:_merchantDetail.service onLabel:_merchantIntroductionLabel];
 }
@@ -359,7 +360,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     // 跳转到预约页面
     @try {
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.merchant = [[SCMerchant alloc] initWithMerchantName:_merchantDetail.name companyID:_merchantDetail.company_id];
+        reservationViewController.merchant = [[SCMerchant alloc] initWithMerchantName:_merchantDetail.name companyID:_merchantDetail.company_id openTime:_merchantDetail.time_open closeTime:_merchantDetail.time_closed];
         reservationViewController.serviceItem = serviceItem;
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }

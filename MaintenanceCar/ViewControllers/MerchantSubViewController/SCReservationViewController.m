@@ -91,8 +91,28 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
             break;
         case UITableViewRowIndexTime:
         {
-            SCDatePickerView *datePickerView = [[SCDatePickerView alloc] initWithDelegate:self mode:UIDatePickerModeTime];
-            [datePickerView show];
+            if (_dateLabel.text.length)
+            {
+                SCDatePickerView *datePickerView = [[SCDatePickerView alloc] initWithDelegate:self mode:UIDatePickerModeTime];
+                datePickerView.datePicker.maximumDate = [NSDate dateWithTimeIntervalSince1970:[self getCustomDateWithHour:[_merchant.closeTime integerValue]].timeIntervalSince1970 - 1.0f];
+                if ([_dateLabel.text hasPrefix:@"今天"])
+                {
+                    if (_merchant.openTime && _merchant.closeTime)
+                    {
+                        if ([self date:[NSDate date] betweenFromHour:[_merchant.openTime integerValue] toHour:[_merchant.closeTime integerValue]])
+                            [datePickerView show];
+                        else
+                            ShowPromptHUDWithText(self.view, @"商户已打烊，请另行预约时间", 0.5f);
+                    }
+                }
+                else
+                {
+                    datePickerView.datePicker.minimumDate = [NSDate dateWithTimeIntervalSince1970:[self getCustomDateWithHour:[_merchant.openTime integerValue]].timeIntervalSince1970 + 60.0f];
+                    [datePickerView show];
+                }
+            }
+            else
+                ShowPromptHUDWithText(self.view, @"请先选择预约日期", 0.5f);
         }
             break;
             
@@ -244,21 +264,19 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
     fmt.timeStyle = kCFDateFormatterShortStyle;
     fmt.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
-    _timeLabel.text = [self dateWhichPeriodWithDate:date];
+    _timeLabel.text = [self dateWhichPeriodWithDate:date maxTime:[_merchant.closeTime integerValue]];
 }
 
-- (NSString *)dateWhichPeriodWithDate:(NSDate *)date
+- (NSString *)dateWhichPeriodWithDate:(NSDate *)date maxTime:(NSInteger)maxTime
 {
     NSInteger index;
-    for (index = [[self getCurrentHourWithDate:date] integerValue]; index < 24; index++)
+    for (index = [[self getCurrentHourWithDate:date] integerValue]; index < maxTime; index++)
     {
         NSInteger from = index;
         NSInteger to = index + 1;
         
         if ([self date:date betweenFromHour:from toHour:to])
-        {
             break;
-        }
     }
     return [NSString stringWithFormat:@"%@:00 -- %@:00", @(index), @(index+1)];
 }
@@ -335,7 +353,7 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     }
     else if (!_reservationDate)
     {
-        ShowPromptHUDWithText(self.view, @"请选择您需要预约的时间!", 1.0f);
+        ShowPromptHUDWithText(self.view, @"请选择您需要预约的日期!", 1.0f);
         return NO;
     }
     else if (!_reservationTime)
@@ -398,9 +416,6 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
             _reservationTime = [NSString stringWithFormat:@" %@:00:00", [self getCurrentHourWithDate:date]];
             [self displayTimeItemWithDate:date];
         }
-            break;
-            
-        default:
             break;
     }
 }

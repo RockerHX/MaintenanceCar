@@ -44,6 +44,7 @@
     
     SCDatePickerView *datePicker = [[SCDatePickerView alloc] initWithDelegate:self mode:UIDatePickerModeDate];
     datePicker.datePicker.minimumDate = [NSDate dateWithTimeIntervalSince1970:DOT_COORDINATE];
+    datePicker.datePicker.maximumDate = [NSDate date];
     [datePicker show];
 }
 

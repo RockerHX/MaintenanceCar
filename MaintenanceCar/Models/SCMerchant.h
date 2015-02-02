@@ -20,8 +20,10 @@
 @property (nonatomic, copy)           NSString <Optional>*tags;                 // 商户特色
 @property (nonatomic, copy)           NSString <Optional>*flags;                // 商户标签
 
-@property (nonatomic, copy, readonly)   NSString     <Ignore>*distance;         // 手机当前位置与商户的距离
-@property (nonatomic, strong, readonly) NSArray      <Ignore>*merchantFlags;    // 商户标签集合
+@property (nonatomic, copy)             NSString <Ignore>*openTime;             // 商户标签
+@property (nonatomic, copy)             NSString <Ignore>*closeTime;            // 商户标签
+@property (nonatomic, copy, readonly)   NSString <Ignore>*distance;             // 手机当前位置与商户的距离
+@property (nonatomic, strong, readonly) NSArray  <Ignore>*merchantFlags;        // 商户标签集合
 
 /**
  *  自定义初始化方法(不通过JSON数据自动解析)
@@ -31,6 +33,9 @@
  *
  *  @return 商户Model实例
  */
-- (id)initWithMerchantName:(NSString *)merchantName companyID:(NSString *)companyID;
+- (id)initWithMerchantName:(NSString *)merchantName
+                 companyID:(NSString *)companyID
+                  openTime:(NSString *)openTime
+                 closeTime:(NSString *)closeTime;
 
 @end

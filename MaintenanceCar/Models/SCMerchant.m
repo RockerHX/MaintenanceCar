@@ -12,7 +12,10 @@
 @implementation SCMerchant
 
 #pragma mark - Public Methods
-- (id)initWithMerchantName:(NSString *)merchantName companyID:(NSString *)companyID
+- (id)initWithMerchantName:(NSString *)merchantName
+                 companyID:(NSString *)companyID
+                  openTime:(NSString *)openTime
+                 closeTime:(NSString *)closeTime
 {
     self = [super init];
     if (self)
@@ -20,6 +23,8 @@
         // 通过自定义方法初始化方法
         _name       = merchantName;
         _company_id = companyID;
+        _openTime   = openTime;
+        _closeTime  = closeTime;
     }
     return self;
 }
