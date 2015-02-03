@@ -89,6 +89,7 @@
 		48BBF3DB1A5D31FC00712BA3 /* SCMapMerchantInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48BBF3DA1A5D31FC00712BA3 /* SCMapMerchantInfoView.m */; };
 		48BC1BFF1A7B600C00B64CDE /* SCMerchantFlagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48BC1BFE1A7B600C00B64CDE /* SCMerchantFlagCell.m */; };
 		48C8B1D91A80CC1200E4114E /* SCObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 48C8B1D81A80CC1200E4114E /* SCObject.m */; };
+		48C8B1DC1A80F74A00E4114E /* SCMerchantDetailFlagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48C8B1DB1A80F74A00E4114E /* SCMerchantDetailFlagCell.m */; };
 		48C8D4411A5E224C005F55F9 /* SCMerchantFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48C8D4401A5E224C005F55F9 /* SCMerchantFilterView.m */; };
 		48C8D4441A5E2B21005F55F9 /* SCFilterPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48C8D4431A5E2B21005F55F9 /* SCFilterPopView.m */; };
 		48D4D2D51A4E575200E516CF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48D4D2D31A4E573800E516CF /* CoreLocation.framework */; };
@@ -332,6 +333,8 @@
 		48BC1BFE1A7B600C00B64CDE /* SCMerchantFlagCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMerchantFlagCell.m; sourceTree = "<group>"; };
 		48C8B1D71A80CC1200E4114E /* SCObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCObject.h; sourceTree = "<group>"; };
 		48C8B1D81A80CC1200E4114E /* SCObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCObject.m; sourceTree = "<group>"; };
+		48C8B1DA1A80F74A00E4114E /* SCMerchantDetailFlagCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMerchantDetailFlagCell.h; sourceTree = "<group>"; };
+		48C8B1DB1A80F74A00E4114E /* SCMerchantDetailFlagCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMerchantDetailFlagCell.m; sourceTree = "<group>"; };
 		48C8D43F1A5E224C005F55F9 /* SCMerchantFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMerchantFilterView.h; sourceTree = "<group>"; };
 		48C8D4401A5E224C005F55F9 /* SCMerchantFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMerchantFilterView.m; sourceTree = "<group>"; };
 		48C8D4421A5E2B21005F55F9 /* SCFilterPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFilterPopView.h; sourceTree = "<group>"; };
@@ -460,8 +463,12 @@
 				483DF2961A7B79810090B060 /* SCMerchantListCell.m */,
 				481939951A4D985B00F1015E /* SCMerchantTableViewCell.h */,
 				481939961A4D985B00F1015E /* SCMerchantTableViewCell.m */,
+				48BC1BFD1A7B600C00B64CDE /* SCMerchantFlagCell.h */,
+				48BC1BFE1A7B600C00B64CDE /* SCMerchantFlagCell.m */,
 				4841CEBA1A6B481100DA36FC /* SCMerchantDetailCell.h */,
 				4841CEBB1A6B481100DA36FC /* SCMerchantDetailCell.m */,
+				48C8B1DA1A80F74A00E4114E /* SCMerchantDetailFlagCell.h */,
+				48C8B1DB1A80F74A00E4114E /* SCMerchantDetailFlagCell.m */,
 				48BBF3D91A5D31FC00712BA3 /* SCMapMerchantInfoView.h */,
 				48BBF3DA1A5D31FC00712BA3 /* SCMapMerchantInfoView.m */,
 				48ADC8431A5A7D130036AD6E /* SCCollectionItem.h */,
@@ -470,8 +477,6 @@
 				48C8D4401A5E224C005F55F9 /* SCMerchantFilterView.m */,
 				48C8D4421A5E2B21005F55F9 /* SCFilterPopView.h */,
 				48C8D4431A5E2B21005F55F9 /* SCFilterPopView.m */,
-				48BC1BFD1A7B600C00B64CDE /* SCMerchantFlagCell.h */,
-				48BC1BFE1A7B600C00B64CDE /* SCMerchantFlagCell.m */,
 				48F4A4281A76328D0054926F /* SCStarView.h */,
 				48F4A4291A76328D0054926F /* SCStarView.m */,
 			);
@@ -1174,6 +1179,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48C8B1DC1A80F74A00E4114E /* SCMerchantDetailFlagCell.m in Sources */,
 				489786941A626502002593DD /* SCCarModelView.m in Sources */,
 				48B6699C1A53E75C00A753B2 /* SCVerificationCodeView.m in Sources */,
 				482B57DC1A43CB7700E47962 /* AppDelegate.mm in Sources */,

@@ -9,12 +9,14 @@
 #import "SCMerchantDetailCell.h"
 #import <HexColors/HexColor.h>
 #import "MicroCommon.h"
-#import "SCMerchantFlagCell.h"
+#import "SCMerchantDetailFlagCell.h"
 #import "SCAllDictionary.h"
 
-@interface SCMerchantDetailCell () <UICollectionViewDataSource>
+@interface SCMerchantDetailCell () <UICollectionViewDataSource, UICollectionViewDelegate>
 {
     NSDictionary *_colors;
+    NSDictionary *_explains;
+    NSDictionary *_details;
     NSArray      *_merchantFlags;
 }
 
@@ -27,11 +29,6 @@
 {
     // 绘制圆角
     _reservationButton.layer.cornerRadius = 6.0f;
-    
-    // 绘制边框和圆角
-    _specialLabel.layer.cornerRadius = 2.0f;
-    _specialLabel.layer.borderWidth = 1.0f;
-    _specialLabel.layer.borderColor = UIColorWithRGBA(230.0f, 109.0f, 81.0f, 1.0f).CGColor;
 }
 
 #pragma mark - Action Methods
@@ -46,16 +43,29 @@
 {
     [[SCAllDictionary share] requestColorsExplain:^(NSDictionary *colors, NSDictionary *explain, NSDictionary *detail) {
         _colors        = colors;
+        _explains      = explain;
+        _details       = detail;
         _merchantFlags = merchantFlags;
         [_flagView reloadData];
     }];
 }
 
 #pragma mark - Private Methods
-- (UIColor *)iconColorWithName:(NSString *)name
+- (UIColor *)colorWithName:(NSString *)name
 {
     NSString *hexString = _colors[name];
     return hexString ? [UIColor colorWithHexString:_colors[name]] : [UIColor blackColor];
+}
+
+- (NSString *)explainWithName:(NSString *)name
+{
+    NSString *hexString = _explains[name];
+    return hexString ? hexString : @"";
+}
+- (NSString *)detailWithName:(NSString *)name
+{
+    NSString *hexString = _details[name];
+    return hexString ? hexString : @"";
 }
 
 #pragma mark - Collection View Data Source Methods
@@ -66,11 +76,33 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCMerchantFlagCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SCMerchantFlagCell" forIndexPath:indexPath];
+    SCMerchantDetailFlagCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SCMerchantDetailFlagCell" forIndexPath:indexPath];
     NSString *flag = _merchantFlags[indexPath.row];
-    cell.textLabel.text = flag;
-    cell.textLabel.backgroundColor = [self iconColorWithName:flag];
+    cell.flagLabel.text = flag;
+    cell.textLabel.text = [self explainWithName:flag];
+    cell.color = [self colorWithName:flag];
     return cell;
+}
+
+#pragma mark - Collection View Data Source Methods
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    if (IS_IPHONE_6)
+        return 20.0f;
+    if (IS_IPHONE_6Plus)
+        return 30.0f;
+    else
+        return 10.0f;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[self explainWithName:_merchantFlags[indexPath.row]]
+                                                        message:[self detailWithName:_merchantFlags[indexPath.row]]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil, nil];
+    [alertView show];
 }
 
 @end
