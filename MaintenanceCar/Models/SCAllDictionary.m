@@ -19,20 +19,13 @@
 #define RepairConditionKey              @"RepairCondition"
 #define OtherConditionKey               @"OtherCondition"
 
-#define kColorsKey              @"kColorsKey"
+#define kColorExplainKey        @"kColorExplainKey"
 #define kAllDictionarykey       @"kAllDictionarykey"
 
 static SCAllDictionary *allDictionary = nil;
 
 @interface SCAllDictionary ()
 {
-    NSArray *_oderTypeItems;
-    NSArray *_reservationTypeItems;
-    NSArray *_questionTypeItems;
-    NSArray *_reservationStatusItems;
-    NSArray *_oderStatusItems;
-    NSArray *_driveHabitItems;
-    
     SCDictionaryType _type;
     
     NSDictionary *_filterConditions;
@@ -48,6 +41,7 @@ static SCAllDictionary *allDictionary = nil;
     self = [super init];
     if (self) {
         
+        // 初始化筛选数据
         NSDictionary *localData = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:FilterConditionsResourceName ofType:FilterConditionsResourceType]];
         
         NSMutableDictionary *filterConditions = [localData mutableCopy];
@@ -74,36 +68,6 @@ static SCAllDictionary *allDictionary = nil;
 }
 
 #pragma mark - Setter And Getter
-- (NSArray *)oderTypeItems
-{
-    return _oderTypeItems;
-}
-
-- (NSArray *)reservationTypeItems
-{
-    return _reservationTypeItems;
-}
-
-- (NSArray *)questionTypeItems
-{
-    return _questionTypeItems;
-}
-
-- (NSArray *)reservationStatusItems
-{
-    return _reservationStatusItems;
-}
-
-- (NSArray *)oderStatusItems
-{
-    return _oderStatusItems;
-}
-
-- (NSArray *)driveHabitItems
-{
-    return _driveHabitItems;
-}
-
 - (NSArray *)distanceConditions
 {
     return _filterConditions[DistanceConditionKey];
@@ -125,15 +89,17 @@ static SCAllDictionary *allDictionary = nil;
     _type = type;                                                               // 混存外部需要的字典类型
     NSDictionary *localData = [self readLocalDataWithKey:kAllDictionarykey];    // 获取本地字典数据
     
-    // 如果本地缓存的字典数据为空，从网络请求，并保存到本地，反之则生成字典数据对象做回调
+    __weak typeof(self)weakSelf = self;
+    // 如果本地缓存的字典数据为空，从网络请求，并保存到本地，反之则生成字典数据对象做回调，并异步更新数据
     if (!localData)
     {
         [[SCAPIRequest manager] startGetAllDictionaryAPIRequestWithParameters:nil Success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
             {
-                [self saveData:responseObject withKey:kAllDictionarykey];
+                // 先处理数据，再保存，最后回调
+                [weakSelf saveData:responseObject withKey:kAllDictionarykey];
                 NSArray *data = responseObject[[@(type) stringValue]];
-                [self handleDateWithData:data finfish:finfish];
+                [weakSelf handleDateWithData:data finfish:finfish];
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [self handleDateWithData:nil finfish:finfish];
@@ -141,8 +107,50 @@ static SCAllDictionary *allDictionary = nil;
     }
     else
     {
+        // 先处理数据，再异步更新，最后回调
         NSArray *data = localData[[@(type) stringValue]];
+        
+        [[SCAPIRequest manager] startGetAllDictionaryAPIRequestWithParameters:nil Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+                [weakSelf saveData:responseObject withKey:kAllDictionarykey];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        }];
+        
         [self handleDateWithData:data finfish:finfish];
+    }
+}
+
+- (void)requestColorsExplain:(void(^)(NSDictionary *colors, NSDictionary *explain, NSDictionary *detail))finfish
+{
+    NSDictionary *localData = [self readLocalDataWithKey:kColorExplainKey];      // 获取颜色值本地缓存数据
+    
+    __weak typeof(self)weakSelf = self;
+    // 如果本地缓存的商户Flags数据为空，从网络请求，并保存到本地，反之则生成数据对象做回调，并异步更新数据
+    if (!localData)
+    {
+        [[SCAPIRequest manager] startFlagsColorAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+            {
+                // 先处理数据，再保存，最后回调
+                [weakSelf hanleMerchantFlagsData:responseObject];
+                [weakSelf saveData:responseObject withKey:kColorExplainKey];
+                finfish(weakSelf.colors, weakSelf.explain, weakSelf.detail);
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            finfish(nil, nil, nil);
+        }];
+    }
+    else
+    {
+        // 先处理数据，再异步更新，最后回调
+        [weakSelf hanleMerchantFlagsData:localData];
+        
+        [[SCAPIRequest manager] startFlagsColorAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [weakSelf saveData:responseObject withKey:kColorExplainKey];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        }];
+        
+        finfish(weakSelf.colors, weakSelf.explain, weakSelf.detail);
     }
 }
 
@@ -168,10 +176,12 @@ static SCAllDictionary *allDictionary = nil;
 
 - (void)generateServiceItemsWtihMerchantImtes:(NSDictionary *)merchantItems;
 {
+    // 先分别取出服务项目
     NSArray *washItmes        = merchantItems[@"1"];
     NSArray *maintenanceItmes = merchantItems[@"2"];
     NSArray *repairItems      = merchantItems[@"3"];
     
+    // 生成一个空的可变数组，根据服务项目的有无动态添加数据
     NSMutableArray *items = [@[] mutableCopy];
     if (washItmes.count)
         [items addObject:[[SCServiceItem alloc] initWithServiceID:@"1" serviceName:@"洗车美容"]];
@@ -180,37 +190,22 @@ static SCAllDictionary *allDictionary = nil;
     if (repairItems.count)
         [items addObject:[[SCServiceItem alloc] initWithServiceID:@"3" serviceName:@"维修"]];
     
-    [items addObject:[[SCServiceItem alloc] initWithServiceID:@"5" serviceName:[SCAllDictionary share].special.text]];
+    // 最后动态添加服务器获取到的第四个按钮数据
+    if (_special)
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"5" serviceName:_special.text]];
     _serviceItems = items;
-}
-
-- (void)requestColors:(void(^)(NSDictionary *colors))finfish
-{
-    NSDictionary *localData = [self readLocalDataWithKey:kColorsKey];      // 获取颜色值本地缓存数据
-    if (!localData)
-    {
-        [[SCAPIRequest manager] startFlagsColorAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            _colors = responseObject;
-            [self saveData:responseObject withKey:kColorsKey];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            finfish(nil);
-        }];
-    }
-    else
-    {
-        _colors = localData;
-        finfish(localData);
-    }
 }
 
 - (void)hanleRepairConditions:(NSArray *)userCars
 {
+    // 先获取专修筛选数据
     NSMutableArray *repairConditions = _filterConditions[RepairConditionKey];
+    // 获取专修筛选的第一个数据之后把数组清空，再添第一个预约项
     id defaultCondition = [repairConditions firstObject];
     [repairConditions removeAllObjects];
     if (defaultCondition)
         [repairConditions addObject:defaultCondition];
-    
+    // 根据用户汽车品牌动态添加专修筛选数据
     NSMutableSet *carSets = [NSMutableSet set];
     for (SCUserCar *userCar in userCars)
         [carSets addObject:userCar.brand_name];
@@ -222,28 +217,6 @@ static SCAllDictionary *allDictionary = nil;
 }
 
 #pragma mark - Private Methods
-/**
- *  保存字典数据到本地
- *
- *  @param dic 字典数据
- */
-- (void)saveData:(id)data withKey:(NSString *)key
-{
-    [USER_DEFAULT setObject:data forKey:key];
-    [USER_DEFAULT synchronize];
-}
-
-/**
- *  从本地读取字典数据
- *
- *  @return 字典数据
- */
-- (id)readLocalDataWithKey:(NSString *)key
-{
-    id data = [USER_DEFAULT objectForKey:key];
-    return data;
-}
-
 /**
  *  获取字典数据对象
  *
@@ -314,6 +287,18 @@ static SCAllDictionary *allDictionary = nil;
         }
             break;
     }
+}
+
+/**
+ *  把获取到的商户Flags数据赋值
+ *
+ *  @param data 商户Flags数据
+ */
+- (void)hanleMerchantFlagsData:(NSDictionary *)data
+{
+    _colors = data[@"color"];
+    _explain = data[@"explain"];
+    _detail = data[@"detail"];
 }
 
 @end

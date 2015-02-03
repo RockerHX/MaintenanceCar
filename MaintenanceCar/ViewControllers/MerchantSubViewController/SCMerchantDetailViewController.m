@@ -187,7 +187,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [self handleMerchantName:_merchantDetail.name onNameLabel:_merchantBriefIntroductionCell.merchantNameLabel];
     [self handleMerchantDetail:_merchantDetail.address onLabel:_merchantAddressLabel];
     [self handleMerchantDetail:_merchantDetail.contacts_mobile onLabel:_merchantPhoneLabel];
-    [self handleMerchantDetail:[NSString stringWithFormat:@"%@:00 -- %@:00", _merchantDetail.time_open, _merchantDetail.time_closed] onLabel:_merchantTimeLabel];
+    [self handleMerchantDetail:[NSString stringWithFormat:@"%@ - %@", _merchantDetail.time_open, _merchantDetail.time_closed] onLabel:_merchantTimeLabel];
     [self handleMerchantDetail:_merchantDetail.zige onLabel:_merchantBusinessLabel];
     [self handleMerchantDetail:_merchantDetail.service onLabel:_merchantIntroductionLabel];
 }

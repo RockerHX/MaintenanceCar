@@ -62,7 +62,7 @@
     _starView.startValue    = merchant.star;
     _specialLabel.text      = merchant.tags.length ? merchant.tags : @"价格实惠";
     
-    [[SCAllDictionary share] requestColors:^(NSDictionary *colors) {
+    [[SCAllDictionary share] requestColorsExplain:^(NSDictionary *colors, NSDictionary *explain, NSDictionary *detail) {
         _colors        = colors;
         _merchantFlags = merchant.merchantFlags;
         

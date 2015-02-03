@@ -290,7 +290,7 @@
 - (void)startFlagsColorAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:FlagsColorAPIURL parameters:nil success:success failure:failure];
+    [self requestGETMethodsWithAPI:FlagsColorExplainAPIURL parameters:nil success:success failure:failure];
 }
 
 - (void)startMerchantTagsAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success

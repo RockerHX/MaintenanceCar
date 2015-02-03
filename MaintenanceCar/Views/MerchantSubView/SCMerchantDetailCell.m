@@ -44,7 +44,7 @@
 #pragma mark - Public Methods
 - (void)hanleMerchantFlags:(NSArray *)merchantFlags
 {
-    [[SCAllDictionary share] requestColors:^(NSDictionary *colors) {
+    [[SCAllDictionary share] requestColorsExplain:^(NSDictionary *colors, NSDictionary *explain, NSDictionary *detail) {
         _colors        = colors;
         _merchantFlags = merchantFlags;
         [_flagView reloadData];

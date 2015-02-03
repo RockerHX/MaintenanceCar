@@ -118,24 +118,24 @@
 }
 
 #pragma mark - KVO Methods
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        // 监听SCLocationInfo的userLocation，来确定商户列表刷新逻辑
-        if ([keyPath isEqualToString:@"userLocation"])
-        {
-            if ([SCLocationInfo shareLocationInfo].userLocation && change[NSKeyValueChangeNewKey])
-            {
-                [self refreshMerchantList];
-            }
-            else if ([SCLocationInfo shareLocationInfo].locationFailure)
-            {
-                [self refreshMerchantList];
-            }
-        }
-    });
-}
+//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+//{
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        // 监听SCLocationInfo的userLocation，来确定商户列表刷新逻辑
+//        if ([keyPath isEqualToString:@"userLocation"])
+//        {
+//            if ([SCLocationInfo shareLocationInfo].userLocation && change[NSKeyValueChangeNewKey])
+//            {
+//                [self refreshMerchantList];
+//            }
+//            else if ([SCLocationInfo shareLocationInfo].locationFailure)
+//            {
+//                [self refreshMerchantList];
+//            }
+//        }
+//    });
+//}
 
 #pragma mark - Private Methods
 /**
@@ -149,7 +149,7 @@
     _merchantList      = [@[] mutableCopy];     // 商户列表容器初始化
     
     // 监听SCLocationInfo单例的userLocation属性，观察定位是否成功
-    [[SCLocationInfo shareLocationInfo] addObserver:self forKeyPath:@"userLocation" options:NSKeyValueObservingOptionNew context:nil];
+//    [[SCLocationInfo shareLocationInfo] addObserver:self forKeyPath:@"userLocation" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewConfig

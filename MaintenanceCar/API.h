@@ -55,7 +55,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define AllDictionaryAPI            @"/Misc/dictAll"                        // 所有数据字典接口
 #define HomePageSpecialAPI          @"/Special"                             // 首页第四个按钮数据接口
-#define FlagsColorAPI               @"/Special/color"                       // 获取商户对应Flag颜色值接口
+#define FlagsColorExplainAPI        @"/Special/color_explain"               // 获取商户对应Flag数据接口
 #define MerchantTagsAPI             @"/Cars/tags"                           // 获取商户对应Tag标签接口
 
 
@@ -85,7 +85,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define AllDictionaryAPIURL             [APIURL stringByAppendingString:AllDictionaryAPI]           // 所有数据字典接口URL
 #define HomePageSpecialAPIURL           [APIURL stringByAppendingString:HomePageSpecialAPI]         // 首页第四个按钮数据接口URL
-#define FlagsColorAPIURL                [APIURL stringByAppendingString:FlagsColorAPI]              // 获取商户对应Flag颜色值接口URL
+#define FlagsColorExplainAPIURL         [APIURL stringByAppendingString:FlagsColorExplainAPI]       // 获取商户对应Flag颜色值接口URL
 #define MerchantTagsAPIURL              [APIURL stringByAppendingString:MerchantTagsAPI]            // 获取商户对应Tag标签接口URL
 
 #endif

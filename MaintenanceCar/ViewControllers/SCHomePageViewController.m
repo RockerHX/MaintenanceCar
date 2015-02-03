@@ -76,8 +76,8 @@
 #pragma mark - Action Methods
 - (IBAction)locationItemPressed:(UIBarButtonItem *)sender
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"对不起，暂时只开通深圳"
-                                                        message:@"其他城市敬请期待！"
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
+                                                        message:@"您好，修养目前只开通了深圳城市试运营，其他城市暂时还没有开通，感谢您对修养的关注。"
                                                        delegate:nil
                                               cancelButtonTitle:@"确定"
                                               otherButtonTitles:nil, nil];
