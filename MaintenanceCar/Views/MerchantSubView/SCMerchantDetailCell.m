@@ -84,7 +84,7 @@
     return cell;
 }
 
-#pragma mark - Collection View Data Source Methods
+#pragma mark - Collection View Delegate Methods
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
     if (IS_IPHONE_6)

@@ -234,7 +234,7 @@
             if ([filterCondition isEqualToString:@"default"])
                 allDictionary.repairCondition = @"";
             else
-                allDictionary.repairCondition = [NSString stringWithFormat:@" AND majors:'%@'", filterCondition];
+                allDictionary.repairCondition = [NSString stringWithFormat:@" AND majors:'%@' AND flags:'综'", filterCondition];
         }
             break;
         case SCFilterTypeOther:

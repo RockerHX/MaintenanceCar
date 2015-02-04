@@ -13,8 +13,12 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
     SCAPIRequestStatusCodeGETSuccess  = 200,
     SCAPIRequestStatusCodePOSTSuccess = 201,
     SCAPIRequestStatusCodeError       = 404,
+    SCAPIRequestStatusCodeDataError   = 408,
     SCAPIRequestStatusCodeServerError = 500
 };
+
+#define NetWorkError        @"网络出错了，请稍后再试>_<!"
+#define DataError           @"数据出错了，后台正在处理，请稍后>_<!"
 
 #define DefaultQuery        @"default:'深圳'"
 
@@ -44,6 +48,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define MyReservationAPI            @"/Reservation/all"                     // 我的预约接口
 #define UpdateReservationAPI        @"/Reservation/update"                  // 更新预约接口
+#define ReservationItemNumAPI       @"/Carshop/reservation_left"            // 预约日期数量接口
 
 #define CarBrandAPI                 @"/Cars/brands"                         // 汽车品牌接口
 #define CarModelAPI                 @"/Cars/models"                         // 汽车型号接口
@@ -74,6 +79,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define MyReservationAPIURL             [APIURL stringByAppendingString:MyReservationAPI]           // 商户预约接口URL - 用于商户预约项目
 #define UpdateReservationAPIURL         [APIURL stringByAppendingString:UpdateReservationAPI]       // 更新预约接口URL - 用于用户取消预约项目
+#define ReservationItemNumAPIURL        [APIURL stringByAppendingString:ReservationItemNumAPI]      // 预约日期数量接口URL - 用于获取预约项目数量
 
 #define CarBrandAPIURL                  [APIURL stringByAppendingString:CarBrandAPI]                // 汽车品牌接口URL - 用于更新汽车品牌
 #define CarModelAPIURL                  [APIURL stringByAppendingString:CarModelAPI]                // 汽车型号接口URL - 用于更新汽车型号

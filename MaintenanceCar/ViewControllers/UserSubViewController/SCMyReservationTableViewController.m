@@ -209,7 +209,7 @@
         if (operation.response)
             ShowPromptHUDWithText(weakSelf.navigationController.view, @"您还没有下过任何订单噢！", 1.0f);
         else
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"网络出错了，请稍后再试>_<", 1.0f);
+            ShowPromptHUDWithText(weakSelf.navigationController.view, NetWorkError, 1.0f);
     }];
 }
 

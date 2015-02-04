@@ -250,11 +250,11 @@
             [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationMiddle];
         }
         else
-            [weakSelf showPromptHUDWithText:@"网络出错了，请稍后再试>_<" delay:1.0f delegate:weakSelf];
+            [weakSelf showPromptHUDWithText:NetWorkError delay:1.0f delegate:weakSelf];
         [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
         [weakSelf.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [weakSelf showPromptHUDWithText:@"网络出错了，请稍后再试>_<" delay:1.0f delegate:weakSelf];
+        [weakSelf showPromptHUDWithText:NetWorkError delay:1.0f delegate:weakSelf];
         [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
     }];
 }

@@ -13,7 +13,7 @@
 #import "UMFeedback.h"
 #import "SCUserInfo.h"
 
-@interface SCSettingTableViewController () <MBProgressHUDDelegate>
+@interface SCSettingTableViewController () <MBProgressHUDDelegate, UIAlertViewDelegate>
 
 @end
 
@@ -57,6 +57,15 @@
     {
         // 跳转到[友盟反馈]页面
         [self presentViewController:[UMFeedback feedbackModalViewController] animated:YES completion:nil];
+    }
+    else if (indexPath.section == 1 && indexPath.row == 1)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否联系客服"
+                                                            message:@"400-686-6588"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                                  otherButtonTitles:@"拨打", nil];
+        [alertView show];
     }
 }
 
@@ -119,6 +128,13 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
     _logoutView.hidden = YES;
+}
+
+#pragma mark - Alert View Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertView.cancelButtonIndex)
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", alertView.message]]];
 }
 
 @end

@@ -13,16 +13,15 @@
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
 #import "SCPickerView.h"
-#import "SCDatePickerView.h"
 #import "SCUserInfo.h"
+#import "SCReservationDateViewController.h"
 
 typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     UITableViewRowIndexProject = 3,
     UITableViewRowIndexDate,
-    UITableViewRowIndexTime
 };
 
-@interface SCReservationViewController () <UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, MBProgressHUDDelegate, SCPickerViewDelegate, SCDatePickerViewDelegate>
+@interface SCReservationViewController () <UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, MBProgressHUDDelegate, SCPickerViewDelegate>
 {
     NSString *_reservationType;
     NSString *_reservationDate;
@@ -65,6 +64,14 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    SCReservationDateViewController *reservationDataViewController = segue.destinationViewController;
+    reservationDataViewController.companyID = _merchant.company_id;
+    reservationDataViewController.type      = _reservationType;
+}
+
 #pragma mark - Table View Delegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -85,36 +92,36 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
             break;
         case UITableViewRowIndexDate:
         {
-            SCDatePickerView *datePickerView = [[SCDatePickerView alloc] initWithDelegate:self mode:UIDatePickerModeDate];
-            [datePickerView show];
+//            SCDatePickerView *datePickerView = [[SCDatePickerView alloc] initWithDelegate:self mode:UIDatePickerModeDate];
+//            [datePickerView show];
         }
             break;
-        case UITableViewRowIndexTime:
-        {
-            if (_dateLabel.text.length)
-            {
-                SCDatePickerView *datePickerView = [[SCDatePickerView alloc] initWithDelegate:self mode:UIDatePickerModeTime];
-                datePickerView.datePicker.maximumDate = [NSDate dateWithTimeIntervalSince1970:[self getCustomDateWithHour:[_merchant.closeTime integerValue]].timeIntervalSince1970 - 1.0f];
-                if ([_dateLabel.text hasPrefix:@"今天"])
-                {
-                    if (_merchant.openTime && _merchant.closeTime)
-                    {
-                        if ([self date:[NSDate date] betweenFromHour:[_merchant.openTime integerValue] toHour:[_merchant.closeTime integerValue]])
-                            [datePickerView show];
-                        else
-                            ShowPromptHUDWithText(self.view, @"商户已打烊，请另行预约时间", 0.5f);
-                    }
-                }
-                else
-                {
-                    datePickerView.datePicker.minimumDate = [NSDate dateWithTimeIntervalSince1970:[self getCustomDateWithHour:[_merchant.openTime integerValue]].timeIntervalSince1970 + 60.0f];
-                    [datePickerView show];
-                }
-            }
-            else
-                ShowPromptHUDWithText(self.view, @"请先选择预约日期", 0.5f);
-        }
-            break;
+//        case UITableViewRowIndexTime:
+//        {
+//            if (_dateLabel.text.length)
+//            {
+//                SCDatePickerView *datePickerView = [[SCDatePickerView alloc] initWithDelegate:self mode:UIDatePickerModeTime];
+//                datePickerView.datePicker.maximumDate = [NSDate dateWithTimeIntervalSince1970:[self getCustomDateWithHour:[_merchant.closeTime integerValue]].timeIntervalSince1970 - 1.0f];
+//                if ([_dateLabel.text hasPrefix:@"今天"])
+//                {
+//                    if (_merchant.openTime && _merchant.closeTime)
+//                    {
+//                        if ([self date:[NSDate date] betweenFromHour:[_merchant.openTime integerValue] toHour:[_merchant.closeTime integerValue]])
+//                            [datePickerView show];
+//                        else
+//                            ShowPromptHUDWithText(self.view, @"商户已打烊，请另行预约时间", 0.5f);
+//                    }
+//                }
+//                else
+//                {
+//                    datePickerView.datePicker.minimumDate = [NSDate dateWithTimeIntervalSince1970:[self getCustomDateWithHour:[_merchant.openTime integerValue]].timeIntervalSince1970 + 60.0f];
+//                    [datePickerView show];
+//                }
+//            }
+//            else
+//                ShowPromptHUDWithText(self.view, @"请先选择预约日期", 0.5f);
+//        }
+//            break;
             
         default:
             break;
