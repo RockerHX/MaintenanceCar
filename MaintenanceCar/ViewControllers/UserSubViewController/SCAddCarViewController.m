@@ -82,17 +82,6 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
     [self dismissWithStatus:SCAddCarStatusSelected];
 }
 
-#pragma mark - KVO Methods
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    // 监听车辆数据同步是否完成，再经行相关数据加载操作
-    if ([change[NSKeyValueChangeNewKey] boolValue])
-    {
-        [self loadData];
-        [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
-    }
-}
-
 #pragma mark - Private Methods
 - (void)initConfig
 {
@@ -102,28 +91,27 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
     
     // 为索引控件添加相应事件
     [_indexView addTarget:self action:@selector(indexWasTapped:) forControlEvents:UIControlEventTouchUpInside];
-    // 监听车辆数据同步模型是否加载完成
-    [[SCCarBrandDisplayModel share] addObserver:self forKeyPath:@"loadFinish" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewConfig
 {
-    BOOL loadFinish = [SCCarBrandDisplayModel share].loadFinish;
-    if (!loadFinish)
-        [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    else
-        [self loadData];
-}
-
-- (void)loadData
-{
-    // 加载车辆品牌数据，以及索引数据
-    SCCarBrandDisplayModel *model = [SCCarBrandDisplayModel share];
-    _carBrandView.indexTitles     = model.indexTitles;
-    _carBrandView.carBrands       = model.displayData;
-    [_carBrandView refresh];
-
-    _indexView.indexTitles        = model.indexTitles;
+    __weak typeof(self)weakSelf = self;
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [[SCCarBrandDisplayModel share] requestCarBrands:^(NSDictionary *displayData, NSArray *indexTitles, BOOL finish) {
+        if (finish)
+        {
+            [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
+            weakSelf.indexView.indexTitles    = indexTitles;
+            weakSelf.carBrandView.indexTitles = indexTitles;
+            weakSelf.carBrandView.carBrands   = displayData;
+            [weakSelf.carBrandView refresh];
+        }
+        else
+        {
+            [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"数据错误，请联系修养！", 0.5f);
+        }
+    }];
 }
 
 - (void)indexWasTapped:(SCCollectionIndexView *)indexView

@@ -14,11 +14,6 @@
 @property (nonatomic, copy) NSString <Optional>*brand_id;       // 车辆品牌ID
 @property (nonatomic, copy) NSString <Optional>*brand_init;     // 车辆品牌索引
 @property (nonatomic, copy) NSString <Optional>*brand_name;     // 车辆品牌名称
-@property (nonatomic, copy) NSString <Optional>*img_name;       // 车辆品牌logo
-
-/**
- *  数据保存到CoreData
- */
-- (BOOL)save;
+@property (nonatomic, copy) NSString   <Ignore>*img_name;       // 车辆品牌logo
 
 @end

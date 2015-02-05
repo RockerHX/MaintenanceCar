@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "SCObject.h"
 
 // 车辆品牌显示数据Model
-@interface SCCarBrandDisplayModel : NSObject
+@interface SCCarBrandDisplayModel : SCObject
 
 @property (nonatomic, assign, readonly) BOOL         loadFinish;        // 数据加载标识
 @property (nonatomic, strong, readonly) NSArray      *indexTitles;      // 索引标题集合
@@ -23,20 +23,10 @@
 + (instancetype)share;
 
 /**
- *  添加数据 - SCCarBrand
+ *  请求汽车品牌方法
  *
- *  @param object 需要添加的数据
+ *  @param finfish 完成回调
  */
-- (void)addObject:(id)object;
-
-/**
- *  加载本地数据
- */
-- (void)loadLocalData;
-
-/**
- *  服务器数据添加完毕
- */
-- (void)addFinish;
+- (void)requestCarBrands:(void(^)(NSDictionary *displayData, NSArray *indexTitles, BOOL finish))finfish;
 
 @end

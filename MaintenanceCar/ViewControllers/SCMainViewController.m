@@ -13,8 +13,6 @@
 #import "SCLocationInfo.h"
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
-#import "SCCarBrand.h"
-#import "SCCarBrandDisplayModel.h"
 
 @interface SCMainViewController () <BMKLocationServiceDelegate>
 {
@@ -91,7 +89,6 @@
 - (void)initConfig
 {
     [self userLog];                             // 开启用户日志
-    [self startUpdateCarBrandReuqest];          // 开始车辆品牌数据刷新
     
     // 监听登录通知，收到通知会触发页面跳转方法
     [NOTIFICATION_CENTER addObserver:self selector:@selector(shouldLogin) name:kUserNeedLoginNotification object:nil];
@@ -144,15 +141,5 @@
     @finally {
     }
 }
-
-/**
- *  车辆品牌数据同步
- */
-- (void)startUpdateCarBrandReuqest
-{
-    [SCCarBrandDisplayModel share];
-}
-
-#pragma mark - Public Methods
 
 @end

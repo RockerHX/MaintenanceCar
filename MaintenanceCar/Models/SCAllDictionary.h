@@ -6,7 +6,6 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "SCObject.h"
 #import "SCDictionaryItem.h"
 #import "SCServiceItem.h"

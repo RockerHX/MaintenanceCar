@@ -16,13 +16,4 @@
 @property (nonatomic, copy) NSString <Optional>*car_full_model;         // 车辆型号全称
 @property (nonatomic, copy) NSString <Optional>*up_time;                // 车辆型号出厂年份
 
-@property (nonatomic, strong, readonly) NSArray    <Ignore>*localData;  // 车辆信号本地缓存数据
-
-/**
- *  数据保存到CoreData
- *
- *  @return 是否保存成功
- */
-- (void)save;
-
 @end
