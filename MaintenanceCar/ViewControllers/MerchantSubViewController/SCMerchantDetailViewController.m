@@ -97,33 +97,37 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             // 地图按钮被点击，跳转到地图页面
             UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
             SCMapViewController *mapViewController = (SCMapViewController *)mapNavigationController.topViewController;
-            mapViewController.itemCanSelected = NO;
-            mapViewController.merchants = @[_merchant];
+            mapViewController.showInfoView               = NO;
+            mapViewController.merchants                  = @[_merchant];
+            mapViewController.leftItem.title             = @"详情";
             mapNavigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
             [self presentViewController:mapNavigationController animated:YES completion:nil];
         }
         else if (indexPath.row == 1)
         {
-            NSArray *phones = [_merchantDetail.contacts_mobile componentsSeparatedByString:@" "];
-            UIAlertView *alertView = nil;
-            if (phones.count > 1)
+            if (_merchantDetail.contacts_mobile.length)
             {
-                alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商户电话"
-                                                       message:nil
-                                                      delegate:self
-                                             cancelButtonTitle:@"取消"
-                                             otherButtonTitles:[phones firstObject], [phones lastObject], nil];
+                NSArray *phones = [_merchantDetail.contacts_mobile componentsSeparatedByString:@" "];
+                UIAlertView *alertView = nil;
+                if (phones.count > 1)
+                {
+                    alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商户电话"
+                                                           message:nil
+                                                          delegate:self
+                                                 cancelButtonTitle:@"取消"
+                                                 otherButtonTitles:[phones firstObject], [phones lastObject], nil];
+                }
+                else
+                {
+                    alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商户电话"
+                                                           message:nil
+                                                          delegate:self
+                                                 cancelButtonTitle:@"取消"
+                                                 otherButtonTitles:[phones firstObject], nil];
+                }
+                alertView.tag = SCAlertTypeReuqestCall;
+                [alertView show];
             }
-            else
-            {
-                alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商户电话"
-                                                       message:nil
-                                                      delegate:self
-                                             cancelButtonTitle:@"取消"
-                                             otherButtonTitles:[phones firstObject], nil];
-            }
-            alertView.tag = SCAlertTypeReuqestCall;
-            [alertView show];
         }
     }
 }
@@ -345,8 +349,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         case SCAlertTypeReuqestCall:
         {
             NSArray *phones = [_merchantDetail.contacts_mobile componentsSeparatedByString:@" "];
-            if (buttonIndex != alertView.cancelButtonIndex)
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", phones[buttonIndex - 1]]]];
+            if (buttonIndex == 1)
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones firstObject]]]];
+            else if (buttonIndex == 2)
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones lastObject]]]];
         }
             break;
     }

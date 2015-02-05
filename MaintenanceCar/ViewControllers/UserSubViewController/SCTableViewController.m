@@ -7,7 +7,6 @@
 //
 
 #import "SCTableViewController.h"
-#import "SCLocationInfo.h"
 
 @interface SCTableViewController ()
 {
@@ -34,23 +33,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - KVO Methods
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    // 监听手机定位，在定位结束或者定位失败后才能进行数据请求
-    if ([keyPath isEqualToString:@"userLocation"])
-    {
-        if ([SCLocationInfo shareLocationInfo].userLocation && change[NSKeyValueChangeNewKey])
-        {
-            [self startDownRefreshReuqest];
-        }
-        else if ([SCLocationInfo shareLocationInfo].locationFailure)
-        {
-            [self startDownRefreshReuqest];
-        }
-    }
-}
-
 #pragma mark - Private Methods
 - (void)changeListEditStatus
 {
@@ -62,9 +44,6 @@
 - (void)initConfig
 {
     _dataList = [@[] mutableCopy];                                  // 初始化列表数据缓存
-    
-    // 监听SCLocationInfo单例的userLocation属性，观察定位是否成功
-    [[SCLocationInfo shareLocationInfo] addObserver:self forKeyPath:@"userLocation" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewConfig
@@ -81,10 +60,7 @@
                                                                                            target:self
                                                                                            action:@selector(changeListEditStatus)];
     
-    if ([SCLocationInfo shareLocationInfo].userLocation)
-    {
-        [self startDownRefreshReuqest];
-    }
+    [self startDownRefreshReuqest];
 }
 
 - (void)startDownRefreshReuqest

@@ -13,7 +13,7 @@
 #import "SCMaintenanceTypeView.h"
 #import "SCMaintenanceItemCell.h"
 #import "SCMerchantTableViewCell.h"
-#import "SCLocationInfo.h"
+#import "SCLocationManager.h"
 #import "SCAPIRequest.h"
 #import "SCMerchantDetailViewController.h"
 #import "SCReservationViewController.h"
@@ -164,9 +164,9 @@
 
 - (NSString *)handleHabitString:(NSString *)habit
 {
-    if ([habit isEqualToString:@"2"])
+    if ([habit isEqualToString:@"1"])
         return @"市内高频使用";
-    else if ([habit isEqualToString:@"3"])
+    else if ([habit isEqualToString:@"2"])
         return @"经常长途使用";
     else
         return @"日常通勤";
@@ -266,28 +266,28 @@
 {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
-    SCLocationInfo *locationInfo = [SCLocationInfo shareLocationInfo];
-    NSDictionary *parameters     = @{@"query"     : @"default:'深圳'",
+    [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
+        NSDictionary *parameters = @{@"query"     : @"default:'深圳'",
                                      @"limit"     : @(3),
                                      @"offset"    : @(0),
                                      @"radius"    : @(10),
-                                     @"longtitude": locationInfo.longitude,
-                                     @"latitude"  : locationInfo.latitude};
-    [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
-        {
-            NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
-            // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
-            for (NSDictionary *data in list)
+                                     @"latitude"  : latitude,
+                                     @"longtitude": longitude};
+        [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
             {
-                NSError *error       = nil;
-                SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:data[@"fields"] error:&error];
-                [_recommendMerchants addObject:merchant];
+                NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
+                // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
+                for (NSDictionary *data in list)
+                {
+                    NSError *error       = nil;
+                    SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:data[@"fields"] error:&error];
+                    [_recommendMerchants addObject:merchant];
+                }
+                [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationLeft];
             }
-            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationLeft];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    }];
+        } failure:nil];
+    } failure:nil];
 }
 
 - (void)hanldeServiceDataWithNormalData:(NSArray *)noralData carefulData:(NSArray *)carefulData allData:(NSArray *)allData

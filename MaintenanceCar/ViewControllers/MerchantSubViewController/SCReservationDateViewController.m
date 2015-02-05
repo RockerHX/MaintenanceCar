@@ -23,6 +23,9 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 {
     NSDictionary *_dateItmes;
     NSArray      *_dateKeys;
+    
+    NSString     *_requestDate;
+    NSString     *_displayDate;
 }
 
 @end
@@ -166,14 +169,19 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
     return itemWidth;
 }
 
-- (NSString *)getContentWithDiction:(NSDictionary *)dictionary index:(NSInteger)index
+- (NSNumber *)getContentWithDiction:(NSDictionary *)dictionary index:(NSInteger)index
 {
-    // 升序处理
-    NSArray *keys = [[dictionary allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        return [obj1 compare:obj2 options:NSNumericSearch];
-    }];
-    NSString *key = keys[index];
-    return dictionary[key];
+    if (dictionary)
+    {
+        // 升序处理
+        NSArray *keys = [[dictionary allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            return [obj1 compare:obj2 options:NSNumericSearch];
+        }];
+        NSString *key = keys[index];
+        NSNumber *text = [dictionary objectForKey:key];
+        return text;
+    }
+    return @(0);
 }
 
 - (NSString *)getTime:(NSIndexPath *)indexPath
@@ -201,6 +209,28 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
         return (result == NSOrderedDescending) ? NO : YES;
     }
     return NO;
+}
+
+- (NSString *)getPeriodWithDate:(NSString *)date time:(NSString *)time
+{
+    NSString *dateString = [NSString stringWithFormat:@"%@ %@", date, time];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *fromDate = [formatter dateFromString:dateString];
+    NSDate *toDate = [NSDate dateWithTimeInterval:60*60 sinceDate:fromDate];
+    
+    [formatter setDateFormat:@"HH:mm"];
+    NSString *fromTime = [formatter stringFromDate:fromDate];
+    NSString *toTime = [formatter stringFromDate:toDate];
+    
+    [formatter setDateFormat:@"yyyy年MM月dd日"];
+    dateString = [formatter stringFromDate:fromDate];
+    
+    NSString *showDate = [NSString stringWithFormat:@"%@ %@-%@", dateString, fromTime, toTime];
+    
+    return showDate;
 }
 
 #pragma mark - Collection View Data Source Methods
@@ -235,7 +265,7 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
         if (indexPath.row)
         {
             [selectedCell displayItemWithText:[self getContentWithDiction:_dateItmes[_dateKeys[indexPath.row - 1]]
-                                                                    index:indexPath.row]
+                                                                    index:indexPath.section]
                                   canSelected:[self itemCanSelectedWithIndexPath:indexPath]
                                      constant:[self itemWidthWithInde:indexPath.row]];
         }
@@ -259,15 +289,17 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 {
     if (collectionView.tag == SCCollectionViewTypeSelected && [self itemCanSelectedWithIndexPath:indexPath])
     {
-        NSString *reservationNum = [self getContentWithDiction:_dateItmes[_dateKeys[indexPath.row - 1]]
-                                                         index:indexPath.row];
-        if ([reservationNum integerValue])
+        NSNumber *reservationNum = [self getContentWithDiction:_dateItmes[_dateKeys[indexPath.row - 1]]
+                                                         index:indexPath.section];
+        if ([reservationNum integerValue] > 0)
         {
             NSString *date = _dateKeys[indexPath.row - 1];
             NSString *time = [self getTime:indexPath];
+            _requestDate = [NSString stringWithFormat:@"%@ %@", date, time];
+            _displayDate = [self getPeriodWithDate:date time:time];
             
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否预约"
-                                                                message:[NSString stringWithFormat:@"%@ %@这个时间段?", date, time]
+                                                                message:[_displayDate stringByAppendingString:@"这个时间段?"]
                                                                delegate:self
                                                       cancelButtonTitle:@"取消"
                                                       otherButtonTitles:@"确认", nil];
@@ -289,8 +321,7 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 {
     if (buttonIndex != alertView.cancelButtonIndex)
     {
-        NSString *time = [alertView.message substringWithRange:(NSRange){0, 19}];
-        [_delegate reservationDateSelectedFinish:time];
+        [_delegate reservationDateSelectedFinish:_requestDate displayDate:_displayDate];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

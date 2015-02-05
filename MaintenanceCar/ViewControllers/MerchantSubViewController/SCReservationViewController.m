@@ -70,10 +70,7 @@
 #pragma mark - Table View Delegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 关闭所有键盘
-    [_ownerNameTextField resignFirstResponder];
-    [_ownerPhoneNumberTextField resignFirstResponder];
-    [_remarkTextField resignFirstResponder];
+    [self closeAllKeyboard];
     // 点击[项目][日期][时间]栏触发选择动画
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
@@ -87,6 +84,7 @@
 #pragma mark - Button Action Methods
 - (IBAction)reservationButtonPressed:(UIButton *)sender
 {
+    [self closeAllKeyboard];
     // 检查是否登录，已登录进行预约请求，反之则弹出登录提示框跳转到登录页面
     if (![SCUserInfo share].loginStatus)
     {
@@ -133,6 +131,14 @@
         else
             _remarkTextField.text = item;
     }
+}
+
+- (void)closeAllKeyboard
+{
+    // 关闭所有键盘
+    [_ownerNameTextField resignFirstResponder];
+    [_ownerPhoneNumberTextField resignFirstResponder];
+    [_remarkTextField resignFirstResponder];
 }
 
 /**
@@ -196,7 +202,7 @@
         [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
 }
 
-- (void)displayDateItemWithDate:(NSString *)date
+- (void)displayDateItemWithDate:(NSString *)date displayDate:(NSString *)displayDate
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -207,11 +213,13 @@
     
     if ([selectedDate compare:currentDate] == NSOrderedSame)
     {
-        NSString *displayDateString = @"今天（";
-        _dateLabel.text = [[displayDateString stringByAppendingString:date] stringByAppendingString:@")"];
+        NSString *displayDateString = @"今天(";
+        _dateLabel.text = [[displayDateString stringByAppendingString:displayDate] stringByAppendingString:@")"];
+        if (IS_IPHONE_5_PRIOR)
+            _dateLabel.font = [UIFont systemFontOfSize:16.0f];
     }
     else
-        _dateLabel.text = date;
+        _dateLabel.text = displayDate;
 }
 
 - (BOOL)checkeParamterIntegrity
@@ -277,10 +285,10 @@
 }
 
 #pragma mark - SCReservationDateViewController Delegate Methods
-- (void)reservationDateSelectedFinish:(NSString *)date
+- (void)reservationDateSelectedFinish:(NSString *)requestDate displayDate:(NSString *)displayDate
 {
-    _reservationDate = date;
-    [self displayDateItemWithDate:date];
+    _reservationDate = requestDate;
+    [self displayDateItemWithDate:requestDate displayDate:displayDate];
 }
 
 @end

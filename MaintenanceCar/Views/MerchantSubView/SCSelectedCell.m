@@ -19,15 +19,16 @@
 }
 
 #pragma mark - Public Methods
-- (void)displayItemWithText:(NSString *)text canSelected:(BOOL)canSelected constant:(CGFloat)constant
+- (void)displayItemWithText:(NSNumber *)text canSelected:(BOOL)canSelected constant:(CGFloat)constant
 {
     _canSelected = canSelected;
     if (text)
     {
+        BOOL show = ([text integerValue] > 0);
         // 设置内容显示
-        _textLabel.text      = text;
-        _textLabel.textColor = ([text integerValue] && canSelected) ? APPColor : [UIColor lightGrayColor];
-        self.backgroundColor = [UIColor colorWithWhite:([text integerValue] && canSelected) ? 0.75f : 0.9f alpha:1.0f];
+        _textLabel.text      = show ? [text stringValue] : @"0";
+        _textLabel.textColor = (show && canSelected) ? APPColor : [UIColor lightGrayColor];
+        self.backgroundColor = [UIColor colorWithWhite:(show && canSelected) ? 0.75f : 0.9f alpha:1.0f];
         
         [self displayWithConstant:constant];
     }

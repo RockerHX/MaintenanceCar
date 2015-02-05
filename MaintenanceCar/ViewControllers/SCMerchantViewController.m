@@ -14,7 +14,7 @@
 #import "SCAPIRequest.h"
 #import "SCMerchant.h"
 #import "SCMerchantListCell.h"
-#import "SCLocationInfo.h"
+#import "SCLocationManager.h"
 #import "SCMerchantDetailViewController.h"
 #import "SCMapViewController.h"
 #import "SCMerchantFilterView.h"
@@ -63,15 +63,7 @@
         [weakSelf upRefreshMerchantList];
     }];
     
-    // 根据定位数据经行列表请求操作
-    if ([SCLocationInfo shareLocationInfo].userLocation)
-    {
-        [self refreshMerchantList];
-    }
-    else if ([SCLocationInfo shareLocationInfo].locationFailure)
-    {
-        [self refreshMerchantList];
-    }
+    [self refreshMerchantList];
 }
 
 - (void)didReceiveMemoryWarning
@@ -118,26 +110,6 @@
     [self presentViewController:mapNavigationController animated:YES completion:nil];
 }
 
-#pragma mark - KVO Methods
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        // 监听SCLocationInfo的userLocation，来确定商户列表刷新逻辑
-        if ([keyPath isEqualToString:@"userLocation"])
-        {
-            if ([SCLocationInfo shareLocationInfo].userLocation && change[NSKeyValueChangeNewKey])
-            {
-                [self refreshMerchantList];
-            }
-            else if ([SCLocationInfo shareLocationInfo].locationFailure)
-            {
-                [self refreshMerchantList];
-            }
-        }
-    });
-}
-
 #pragma mark - Private Methods
 /**
  *  初始化配置，列表设置，全局变量初始化都放在这里
@@ -149,9 +121,6 @@
     _distanceCondition = MerchantListRadius;
 
     _merchantList      = [@[] mutableCopy];     // 商户列表容器初始化
-    
-    // 监听SCLocationInfo单例的userLocation属性，观察定位是否成功
-    [[SCLocationInfo shareLocationInfo] addObserver:self forKeyPath:@"userLocation" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewConfig
@@ -160,21 +129,38 @@
     _tableView.tableFooterView   = [[UIView alloc] init];       // 设置footer视图，防止数据不够，显示多余的列表栏
 }
 
+- (void)refreshMerchantList
+{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];      // 加载响应式控件
+    
+    __weak typeof(self) weakSelf = self;
+    [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
+        [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
+    } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
+        ShowPromptHUDWithText(weakSelf.navigationController.view, @"定位失败，采用当前城市中心坐标", 0.5f);
+        [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
+    }];
+}
+
+- (void)upRefreshMerchantList
+{
+    SCLocationManager *locationManager = [SCLocationManager share];
+    [self startMerchantListRequestWithLatitude:locationManager.latitude longitude:locationManager.longitude];
+}
+
 /**
  *  商户列表数据请求方法，参数：query, limit, offset, radius, longtitude, latitude
  */
-- (void)startMerchantListRequest
+- (void)startMerchantListRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
 {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
-    SCLocationInfo *locationInfo = [SCLocationInfo shareLocationInfo];
-    NSDictionary *parameters     = @{@"query"     : _query,
-                                     @"limit"     : @(MerchantListLimit),
-                                     @"offset"    : @(_offset),
-                                     @"radius"    : _distanceCondition,
-                                     @"longtitude": locationInfo.longitude,
-                                     @"latitude"  : locationInfo.latitude};
-    
+    NSDictionary *parameters = @{@"query"     : _query,
+                                 @"limit"     : @(MerchantListLimit),
+                                 @"offset"    : @(_offset),
+                                 @"radius"    : _distanceCondition,
+                                 @"latitude"  : latitude,
+                                 @"longtitude": longitude};
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [_tableView footerEndRefreshing];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
@@ -204,17 +190,6 @@
         NSLog(@"Get merchant list request error:%@", error);
         [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
     }];
-}
-
-- (void)refreshMerchantList
-{
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];      // 加载响应式控件
-    [self startMerchantListRequest];
-}
-
-- (void)upRefreshMerchantList
-{
-    [self startMerchantListRequest];
 }
 
 #pragma mark - SCMerchantFilterViewDelegate Methods

@@ -7,17 +7,11 @@
 //
 
 #import "SCMainViewController.h"
-#import <CoreLocation/CoreLocation.h>
 #import "MicroCommon.h"
-#import "BMapKit.h"
-#import "SCLocationInfo.h"
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
 
-@interface SCMainViewController () <BMKLocationServiceDelegate>
-{
-    BMKLocationService *_locationService;
-}
+@interface SCMainViewController ()
 
 @end
 
@@ -30,59 +24,12 @@
     // Do any additional setup after loading the view.
     
     [self initConfig];
-    [self startLocation];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Location Methods
-/**
- *  开启定位
- */
-- (void)startLocation
-{
-    if (!_locationService)
-    {
-        //设置定位精确度，默认：kCLLocationAccuracyBest
-        [BMKLocationService setLocationDesiredAccuracy:kCLLocationAccuracyNearestTenMeters];
-        //指定最小距离更新(米)，默认：kCLDistanceFilterNone
-        [BMKLocationService setLocationDistanceFilter:100.f];
-        
-        //初始化BMKLocationService
-        _locationService = [[BMKLocationService alloc]init];
-        _locationService.delegate = self;
-    }
-    //启动LocationService
-    [_locationService startUserLocationService];
-}
-
-#pragma mark - BMKLocationService Delegate Methods
-// 当定位到用户的位置时，就会调用（调用的频率比较频繁）
-// 实现相关delegate 处理位置信息更新
-// 处理方向变更信息
-- (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
-{
-//    NSLog(@"didUpdateUserHeading lat %f,long %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
-}
-
-//处理位置坐标更新
-- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
-{
-//    NSLog(@"didUpdateUserLocation lat %f,long %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
-    
-    [SCLocationInfo shareLocationInfo].userLocation = userLocation;
-}
-
-// 定位失败，设置相关操作
-- (void)didFailToLocateUserWithError:(NSError *)error
-{
-    NSLog(@"Location error:%@", error);
-    [SCLocationInfo shareLocationInfo].userLocation = nil;
-    [SCLocationInfo shareLocationInfo].locationFailure = YES;
 }
 
 #pragma mark - Private Methods

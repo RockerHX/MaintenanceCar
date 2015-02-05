@@ -11,7 +11,7 @@
 @protocol SCReservationDateViewControllerDelegate <NSObject>
 
 @optional
-- (void)reservationDateSelectedFinish:(NSString *)date;
+- (void)reservationDateSelectedFinish:(NSString *)requestDate displayDate:(NSString *)displayDate;
 
 @end
 

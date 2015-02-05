@@ -7,7 +7,7 @@
 //
 
 #import "SCMerchantDetail.h"
-#import "SCLocationInfo.h"
+#import "SCLocationManager.h"
 #import "SCAllDictionary.h"
 
 @implementation SCMerchantDetail
@@ -16,7 +16,7 @@
 - (NSString *)distance
 {
     // 本地处理位置距离
-    return [[SCLocationInfo shareLocationInfo] distanceWithLatitude:[_latitude doubleValue] longitude:[_longtitude doubleValue]];
+    return [[SCLocationManager share] distanceWithLatitude:[_latitude doubleValue] longitude:[_longtitude doubleValue]];
 }
 
 - (void)setService_items:(NSDictionary<Optional> *)service_items

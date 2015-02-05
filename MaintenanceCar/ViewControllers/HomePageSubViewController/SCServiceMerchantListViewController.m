@@ -14,7 +14,7 @@
 #import "SCAPIRequest.h"
 #import "SCMerchant.h"
 #import "SCMerchantListCell.h"
-#import "SCLocationInfo.h"
+#import "SCLocationManager.h"
 #import "SCMerchantDetailViewController.h"
 #import "SCMapViewController.h"
 #import "SCMerchantFilterView.h"
@@ -62,15 +62,7 @@
         [weakSelf upRefreshMerchantList];
     }];
     
-    // 根据定位数据经行列表请求操作
-    if ([SCLocationInfo shareLocationInfo].userLocation)
-    {
-        [self refreshMerchantList];
-    }
-    else if ([SCLocationInfo shareLocationInfo].locationFailure)
-    {
-        [self refreshMerchantList];
-    }
+    [self refreshMerchantList];
 }
 
 - (void)didReceiveMemoryWarning
@@ -137,20 +129,38 @@
     [_merchantFilterView.otherFilterButton setTitle:_itemTite forState:UIControlStateNormal];
 }
 
+- (void)refreshMerchantList
+{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];      // 加载响应式控件
+    
+    __weak typeof(self) weakSelf = self;
+    [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
+        [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
+    } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
+        ShowPromptHUDWithText(weakSelf.navigationController.view, @"定位失败，采用当前城市中心坐标", 0.5f);
+        [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
+    }];
+}
+
+- (void)upRefreshMerchantList
+{
+    SCLocationManager *locationManager = [SCLocationManager share];
+    [self startMerchantListRequestWithLatitude:locationManager.latitude longitude:locationManager.longitude];
+}
+
 /**
  *  商户列表数据请求方法，参数：query, limit, offset, radius, longtitude, latitude
  */
-- (void)startMerchantListRequest
+- (void)startMerchantListRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
 {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
-    SCLocationInfo *locationInfo = [SCLocationInfo shareLocationInfo];
     NSDictionary *parameters     = @{@"query"     : _query,
                                      @"limit"     : @(MerchantListLimit),
                                      @"offset"    : @(_offset),
                                      @"radius"    : _distanceCondition,
-                                     @"longtitude": locationInfo.longitude,
-                                     @"latitude"  : locationInfo.latitude};
+                                     @"longtitude": longitude,
+                                     @"latitude"  : latitude};
     
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [_tableView footerEndRefreshing];
@@ -181,17 +191,6 @@
         NSLog(@"Get merchant list request error:%@", error);
         [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
     }];
-}
-
-- (void)refreshMerchantList
-{
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];      // 加载响应式控件
-    [self startMerchantListRequest];
-}
-
-- (void)upRefreshMerchantList
-{
-    [self startMerchantListRequest];
 }
 
 #pragma mark - SCMerchantFilterViewDelegate Methods

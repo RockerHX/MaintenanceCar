@@ -193,7 +193,7 @@
     {
         // 保存按钮被点击，刷新[驾驶习惯]数据，并开始保存请求
         SCUserCar *userCar = [SCUserInfo share].currentCar;
-        userCar.habit = [NSString stringWithFormat:@"%@", @(type)];
+        userCar.habit = [@(type) stringValue];
         
         [self startUpdateUserCarRequest];
     }

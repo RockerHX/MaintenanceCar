@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, SCHabitsType) {
-    SCHabitsTypeNoraml = 1,
+    SCHabitsTypeNoraml = 0,
     SCHabitsTypeHigh,
     SCHabitsTypeOften
 };

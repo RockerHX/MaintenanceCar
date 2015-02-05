@@ -28,7 +28,7 @@
  *  @param indexPath 序列索引
  *  @param constant  label宽度约束值
  */
-- (void)displayItemWithText:(NSString *)text canSelected:(BOOL)canSelected constant:(CGFloat)constant;
+- (void)displayItemWithText:(NSNumber *)text canSelected:(BOOL)canSelected constant:(CGFloat)constant;
 
 /**
  *  刷新时间方法
