@@ -7,6 +7,7 @@
 //
 
 #import "SCSelectedCell.h"
+#import "MicroCommon.h"
 
 @implementation SCSelectedCell
 
@@ -18,22 +19,18 @@
 }
 
 #pragma mark - Public Methods
-- (void)displayItemWithContents:(NSDictionary *)contents indexPath:(NSIndexPath *)indexPath constant:(CGFloat)constant
+- (void)displayItemWithText:(NSString *)text canSelected:(BOOL)canSelected constant:(CGFloat)constant
 {
-    if (contents)
+    _canSelected = canSelected;
+    if (text)
     {
-        // 升序处理
-        NSArray *keys = [[contents allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            return [obj1 compare:obj2 options:NSNumericSearch];
-        }];
-        NSString *key = keys[indexPath.row];
         // 设置内容显示
-        if (indexPath.row)
-            _textLabel.text = contents[key];
+        _textLabel.text      = text;
+        _textLabel.textColor = ([text integerValue] && canSelected) ? APPColor : [UIColor lightGrayColor];
+        self.backgroundColor = [UIColor colorWithWhite:([text integerValue] && canSelected) ? 0.75f : 0.9f alpha:1.0f];
         
         [self displayWithConstant:constant];
     }
-    self.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0f];
 }
 
 - (void)displayItemWithTimes:(NSArray *)times section:(NSInteger)section constant:(CGFloat)constant
@@ -44,7 +41,8 @@
         times = [times sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
             return [obj1 compare:obj2 options:NSNumericSearch];
         }];
-        _textLabel.text = [times[section] substringWithRange:(NSRange){0, 2}];
+        _textLabel.text      = [times[section] substringWithRange:(NSRange){0, 2}];
+        _textLabel.textColor = [UIColor blackColor];
         
         [self displayWithConstant:constant];
     }

@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textLabelWidthConstraint;
 
 @property (nonatomic, assign) BOOL showTopLine;
+@property (nonatomic, assign) BOOL canSelected;
 
 /**
  *  刷新预约数方法
@@ -27,7 +28,7 @@
  *  @param indexPath 序列索引
  *  @param constant  label宽度约束值
  */
-- (void)displayItemWithContents:(NSDictionary *)contents indexPath:(NSIndexPath *)indexPath constant:(CGFloat)constant;
+- (void)displayItemWithText:(NSString *)text canSelected:(BOOL)canSelected constant:(CGFloat)constant;
 
 /**
  *  刷新时间方法

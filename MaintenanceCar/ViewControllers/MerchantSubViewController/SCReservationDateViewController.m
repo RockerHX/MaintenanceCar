@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
     SCCollectionViewTypeSelected
 };
 
-@interface SCReservationDateViewController () <UICollectionViewDataSource, UICollectionViewDelegate, MBProgressHUDDelegate>
+@interface SCReservationDateViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate, MBProgressHUDDelegate>
 {
     NSDictionary *_dateItmes;
     NSArray      *_dateKeys;
@@ -166,6 +166,43 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
     return itemWidth;
 }
 
+- (NSString *)getContentWithDiction:(NSDictionary *)dictionary index:(NSInteger)index
+{
+    // 升序处理
+    NSArray *keys = [[dictionary allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2 options:NSNumericSearch];
+    }];
+    NSString *key = keys[index];
+    return dictionary[key];
+}
+
+- (NSString *)getTime:(NSIndexPath *)indexPath
+{
+    NSArray *times = [[_dateItmes[_dateKeys[indexPath.row - 1]] allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2 options:NSNumericSearch];
+    }];
+    NSString *time = times[indexPath.section];
+    return time;
+}
+
+- (BOOL)itemCanSelectedWithIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row)
+    {
+        NSString *time = [self getTime:indexPath];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"HH:mm:ss"];
+        NSDate *reservationDate = [dateFormatter dateFromString:time];
+        [dateFormatter setDateFormat:@"HH"];
+        NSDate *now = [dateFormatter dateFromString:[dateFormatter stringFromDate:[NSDate date]]];
+        
+        NSComparisonResult result = [now compare:reservationDate];
+        return (result == NSOrderedDescending) ? NO : YES;
+    }
+    return NO;
+}
+
 #pragma mark - Collection View Data Source Methods
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -197,9 +234,10 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
         selectedCell.showTopLine     = !indexPath.section;
         if (indexPath.row)
         {
-            [selectedCell displayItemWithContents:_dateItmes[_dateKeys[indexPath.row - 1]]
-                                        indexPath:indexPath
-                                         constant:[self itemWidthWithInde:indexPath.row]];
+            [selectedCell displayItemWithText:[self getContentWithDiction:_dateItmes[_dateKeys[indexPath.row - 1]]
+                                                                    index:indexPath.row]
+                                  canSelected:[self itemCanSelectedWithIndexPath:indexPath]
+                                     constant:[self itemWidthWithInde:indexPath.row]];
         }
         else
         {
@@ -217,12 +255,44 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
     return CGSizeMake([self itemWidthWithInde:indexPath.row], (collectionView.tag == SCCollectionViewTypeData) ? 60.0f : 50.0f);
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (collectionView.tag == SCCollectionViewTypeSelected && [self itemCanSelectedWithIndexPath:indexPath])
+    {
+        NSString *reservationNum = [self getContentWithDiction:_dateItmes[_dateKeys[indexPath.row - 1]]
+                                                         index:indexPath.row];
+        if ([reservationNum integerValue])
+        {
+            NSString *date = _dateKeys[indexPath.row - 1];
+            NSString *time = [self getTime:indexPath];
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否预约"
+                                                                message:[NSString stringWithFormat:@"%@ %@这个时间段?", date, time]
+                                                               delegate:self
+                                                      cancelButtonTitle:@"取消"
+                                                      otherButtonTitles:@"确认", nil];
+            [alertView show];
+        }
+    }
+}
+
 #pragma mark - MBProgressHUD Delegate Methods
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
     // 保存成功，返回上一页
     [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Alert View Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != alertView.cancelButtonIndex)
+    {
+        NSString *time = [alertView.message substringWithRange:(NSRange){0, 19}];
+        [_delegate reservationDateSelectedFinish:time];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end

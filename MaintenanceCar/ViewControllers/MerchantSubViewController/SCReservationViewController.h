@@ -20,7 +20,6 @@
 @property (weak, nonatomic) IBOutlet UITextField   *ownerPhoneNumberTextField;    // 车主电话输入栏
 @property (weak, nonatomic) IBOutlet UILabel       *projectLabel;                 // 服务项目
 @property (weak, nonatomic) IBOutlet UILabel       *dateLabel;                    // 日期显示栏
-@property (weak, nonatomic) IBOutlet UILabel       *timeLabel;                    // 时间显示栏
 @property (weak, nonatomic) IBOutlet UITextField   *remarkTextField;              // 其他需求输入栏
 @property (weak, nonatomic) IBOutlet UIButton      *reservationButton;            // 预约按钮
 

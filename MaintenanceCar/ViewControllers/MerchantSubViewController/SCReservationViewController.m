@@ -16,16 +16,10 @@
 #import "SCUserInfo.h"
 #import "SCReservationDateViewController.h"
 
-typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
-    UITableViewRowIndexProject = 3,
-    UITableViewRowIndexDate,
-};
-
-@interface SCReservationViewController () <UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, MBProgressHUDDelegate, SCPickerViewDelegate>
+@interface SCReservationViewController () <UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, MBProgressHUDDelegate, SCPickerViewDelegate, SCReservationDateViewControllerDelegate>
 {
     NSString *_reservationType;
     NSString *_reservationDate;
-    NSString *_reservationTime;
     NSString *_reservationCarID;
 }
 
@@ -68,6 +62,7 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     SCReservationDateViewController *reservationDataViewController = segue.destinationViewController;
+    reservationDataViewController.delegate  = self;
     reservationDataViewController.companyID = _merchant.company_id;
     reservationDataViewController.type      = _reservationType;
 }
@@ -82,49 +77,10 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     // 点击[项目][日期][时间]栏触发选择动画
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    switch (indexPath.row)
+    if (indexPath.row == 3)
     {
-        case UITableViewRowIndexProject:
-        {
-            SCPickerView *pickerView = [[SCPickerView alloc] initWithDelegate:self];
-            [pickerView show];
-        }
-            break;
-        case UITableViewRowIndexDate:
-        {
-//            SCDatePickerView *datePickerView = [[SCDatePickerView alloc] initWithDelegate:self mode:UIDatePickerModeDate];
-//            [datePickerView show];
-        }
-            break;
-//        case UITableViewRowIndexTime:
-//        {
-//            if (_dateLabel.text.length)
-//            {
-//                SCDatePickerView *datePickerView = [[SCDatePickerView alloc] initWithDelegate:self mode:UIDatePickerModeTime];
-//                datePickerView.datePicker.maximumDate = [NSDate dateWithTimeIntervalSince1970:[self getCustomDateWithHour:[_merchant.closeTime integerValue]].timeIntervalSince1970 - 1.0f];
-//                if ([_dateLabel.text hasPrefix:@"今天"])
-//                {
-//                    if (_merchant.openTime && _merchant.closeTime)
-//                    {
-//                        if ([self date:[NSDate date] betweenFromHour:[_merchant.openTime integerValue] toHour:[_merchant.closeTime integerValue]])
-//                            [datePickerView show];
-//                        else
-//                            ShowPromptHUDWithText(self.view, @"商户已打烊，请另行预约时间", 0.5f);
-//                    }
-//                }
-//                else
-//                {
-//                    datePickerView.datePicker.minimumDate = [NSDate dateWithTimeIntervalSince1970:[self getCustomDateWithHour:[_merchant.openTime integerValue]].timeIntervalSince1970 + 60.0f];
-//                    [datePickerView show];
-//                }
-//            }
-//            else
-//                ShowPromptHUDWithText(self.view, @"请先选择预约日期", 0.5f);
-//        }
-//            break;
-            
-        default:
-            break;
+        SCPickerView *pickerView = [[SCPickerView alloc] initWithDelegate:self];
+        [pickerView show];
     }
 }
 
@@ -193,27 +149,24 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
  */
 - (void)startMerchantReservationRequest
 {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                               @"company_id": _merchant.company_id,
                                     @"type": _reservationType,
                             @"reserve_name": _ownerNameTextField.text,
                            @"reserve_phone": _ownerPhoneNumberTextField.text,
                                  @"content": _remarkTextField.text,
-                                    @"time": [_reservationDate stringByAppendingString:_reservationTime],
+                                    @"time": _reservationDate,
                              @"user_car_id": _reservationCarID};
     [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
-        {
-            [self showPromptHUDWithText:@"恭喜您，已经预约成功!" delay:1.5f delegate:self];
-        }
+            [self showPromptHUDWithText:@"恭喜您，已经预约成功!" delay:1.0f delegate:self];
         else
-        {
-            [self showPromptHUDWithText:@"很抱歉，预约未成功，请重试!" delay:1.5f delegate:nil];
-        }
+            [self showPromptHUDWithText:@"很抱歉，预约未成功，请重试!" delay:1.0f delegate:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
-        NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:operation.responseData options:kNilOptions error:nil]);
-        [self showPromptHUDWithText:@"网络异常，请重试!" delay:1.5f delegate:nil];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [self showPromptHUDWithText:@"网络异常，请重试!" delay:1.0f delegate:nil];
     }];
 }
 
@@ -240,105 +193,25 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
 - (void)checkShouldLogin
 {
     if (![SCUserInfo share].loginStatus)
-    {
         [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
-    }
 }
 
-- (void)displayDateItemWithDate:(NSDate *)date
+- (void)displayDateItemWithDate:(NSString *)date
 {
-    NSDate *currentDate = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *selectedDate = [formatter dateFromString:date];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *currentDate = [formatter dateFromString:[formatter stringFromDate:[NSDate date]]];
+    selectedDate = [formatter dateFromString:[formatter stringFromDate:selectedDate]];
     
-    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    fmt.dateStyle = kCFDateFormatterFullStyle;
-    fmt.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
-    if ([date compare:currentDate] == NSOrderedAscending)
+    if ([selectedDate compare:currentDate] == NSOrderedSame)
     {
         NSString *displayDateString = @"今天（";
-        NSString *dateString = [fmt stringFromDate:currentDate];
-        _dateLabel.text = [[displayDateString stringByAppendingString:dateString] stringByAppendingString:@")"];
+        _dateLabel.text = [[displayDateString stringByAppendingString:date] stringByAppendingString:@")"];
     }
     else
-    {
-        fmt.dateStyle = kCFDateFormatterFullStyle;
-        fmt.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
-        _dateLabel.text = [fmt stringFromDate:date];
-    }
-}
-
-- (void)displayTimeItemWithDate:(NSDate *)date
-{
-    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    fmt.timeStyle = kCFDateFormatterShortStyle;
-    fmt.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
-    _timeLabel.text = [self dateWhichPeriodWithDate:date maxTime:[_merchant.closeTime integerValue]];
-}
-
-- (NSString *)dateWhichPeriodWithDate:(NSDate *)date maxTime:(NSInteger)maxTime
-{
-    NSInteger index;
-    for (index = [[self getCurrentHourWithDate:date] integerValue]; index < maxTime; index++)
-    {
-        NSInteger from = index;
-        NSInteger to = index + 1;
-        
-        if ([self date:date betweenFromHour:from toHour:to])
-            break;
-    }
-    return [NSString stringWithFormat:@"%@:00 -- %@:00", @(index), @(index+1)];
-}
-
-- (NSString *)getCurrentHourWithDate:(NSDate *)date
-{
-    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    [fmt setDateFormat:@"HH"];
-    return [fmt stringFromDate:date];
-}
-
-/**
- *  判断当前时间是否在fromHour和toHour之间。如，fromHour=8，toHour=23时，即为判断当前时间是否在8:00-23:00之间
- *
- *  @param date     需要判断的时间
- *  @param fromHour 判断初始值
- *  @param toHour   判断结束值
- *
- *  @return 是否是对应范围之内
- */
-- (BOOL)date:(NSDate *)date betweenFromHour:(NSInteger)fromHour toHour:(NSInteger)toHour
-{
-    NSDate *fromDate = [self getCustomDateWithHour:fromHour];
-    NSDate *toDate = [self getCustomDateWithHour:toHour];
-    
-    return (([date compare:fromDate] == NSOrderedDescending) && ([date compare:toDate] == NSOrderedAscending)) ? YES : NO;
-}
-
-/**
- *  生成当天的某个点（返回的是伦敦时间，可直接与当前时间[NSDate date]比较）
- *
- *  @param hour 如hour为“8”，就是上午8:00（本地时间）
- *
- *  @return 时间点
- */
-- (NSDate *)getCustomDateWithHour:(NSInteger)hour
-{
-    //获取当前时间
-    NSDate *currentDate = [NSDate date];
-    NSCalendar *currentCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *currentComps = [[NSDateComponents alloc] init];
-    
-    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
-    
-    currentComps = [currentCalendar components:unitFlags fromDate:currentDate];
-    
-    //设置当天的某个点
-    NSDateComponents *resultComps = [[NSDateComponents alloc] init];
-    [resultComps setYear:[currentComps year]];
-    [resultComps setMonth:[currentComps month]];
-    [resultComps setDay:[currentComps day]];
-    [resultComps setHour:hour];
-    
-    NSCalendar *resultCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    return [resultCalendar dateFromComponents:resultComps];
+        _dateLabel.text = date;
 }
 
 - (BOOL)checkeParamterIntegrity
@@ -363,24 +236,15 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
         ShowPromptHUDWithText(self.view, @"请选择您需要预约的日期!", 1.0f);
         return NO;
     }
-    else if (!_reservationTime)
-    {
-        ShowPromptHUDWithText(self.view, @"请选择您需要预约的时间!", 1.0f);
-        return NO;
-    }
     else
-    {
         return YES;
-    }
 }
 
 #pragma mark - Alert View Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != alertView.cancelButtonIndex)
-    {
         [self checkShouldLogin];
-    }
 }
 
 #pragma mark - Text Field Delegate Methods
@@ -399,42 +263,24 @@ typedef NS_ENUM(NSInteger, UITableViewRowIndex) {
     }
 }
 
-#pragma mark - MBProgressHUDDelegate Methods
+#pragma mark - MBProgressHUD Delegate Methods
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - SCDatePickerViewDelegate Methods
-- (void)datePickerSelectedFinish:(NSDate *)date mode:(UIDatePickerMode)mode
-{
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    switch (mode)
-    {
-        case UIDatePickerModeDate:
-        {
-            [formatter setDateFormat:@"yyyy-MM-dd"];
-            _reservationDate = [formatter stringFromDate:date];
-            [self displayDateItemWithDate:date];
-        }
-            break;
-        case UIDatePickerModeTime:
-        {
-            _reservationTime = [NSString stringWithFormat:@" %@:00:00", [self getCurrentHourWithDate:date]];
-            [self displayTimeItemWithDate:date];
-        }
-            break;
-            
-        default:
-            break;
-    }
-}
-
-#pragma mark - SCPickerViewDelegate Methods
+#pragma mark - SCPickerView Delegate Methods
 - (void)pickerViewSelectedFinish:(SCServiceItem *)serviceItem
 {
     _reservationType = serviceItem.service_id;
     _projectLabel.text = serviceItem.service_name;
+}
+
+#pragma mark - SCReservationDateViewController Delegate Methods
+- (void)reservationDateSelectedFinish:(NSString *)date
+{
+    _reservationDate = date;
+    [self displayDateItemWithDate:date];
 }
 
 @end

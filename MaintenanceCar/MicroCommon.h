@@ -90,6 +90,8 @@ hud.removeFromSuperViewOnHide = YES;\
 [hud hide:YES afterDelay:delay];\
 })
 
+#define APPColor        UIColorWithRGBA(44.0f, 124.0f, 185.0f, 1.0f)
+
 
 #pragma mark - Debug Define
 #pragma mark -
