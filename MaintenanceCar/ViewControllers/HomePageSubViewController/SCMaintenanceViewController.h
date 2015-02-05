@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton              *nextButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint    *heightConstraint;
 @property (weak, nonatomic) IBOutlet UILabel               *carNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel               *carFullNameLabel;
 @property (weak, nonatomic) IBOutlet SCMileageView         *labelView;
 @property (weak, nonatomic) IBOutlet SCMaintenanceTypeView *maintenanceTypeView;
 

@@ -156,6 +156,7 @@
     SCUserInfo *userInfo                 = [SCUserInfo share];
     SCUserCar *userCar                   = userInfo.currentCar;
     _carNameLabel.text                   = userCar.model_name;
+    _carFullNameLabel.text               = userCar.car_full_model;
     _buyCarTimeLabel.text                = ([userCar.buy_car_year integerValue] && [userCar.buy_car_month integerValue]) ? [NSString stringWithFormat:@"%@年%@月", userCar.buy_car_year, userCar.buy_car_month] : @"";
     _labelView.mileage                   = userCar.run_distance;
     _driveHabitLabel.text                = [self handleHabitString:userCar.habit];
