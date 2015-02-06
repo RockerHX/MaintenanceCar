@@ -105,9 +105,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         }
         else if (indexPath.row == 1)
         {
-            if (_merchantDetail.contacts_mobile.length)
+            if (_merchantDetail.telephone.length)
             {
-                NSArray *phones = [_merchantDetail.contacts_mobile componentsSeparatedByString:@" "];
+                NSArray *phones = [_merchantDetail.telephone componentsSeparatedByString:@" "];
                 UIAlertView *alertView = nil;
                 if (phones.count > 1)
                 {
@@ -190,7 +190,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     
     [self handleMerchantName:_merchantDetail.name onNameLabel:_merchantBriefIntroductionCell.merchantNameLabel];
     [self handleMerchantDetail:_merchantDetail.address onLabel:_merchantAddressLabel];
-    [self handleMerchantDetail:_merchantDetail.contacts_mobile onLabel:_merchantPhoneLabel];
+    [self handleMerchantDetail:_merchantDetail.telephone onLabel:_merchantPhoneLabel];
     [self handleMerchantDetail:[NSString stringWithFormat:@"%@ - %@", _merchantDetail.time_open, _merchantDetail.time_closed] onLabel:_merchantTimeLabel];
     [self handleMerchantDetail:_merchantDetail.zige onLabel:_merchantBusinessLabel];
     [self handleMerchantDetail:_merchantDetail.service onLabel:_merchantIntroductionLabel];
@@ -348,7 +348,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             break;
         case SCAlertTypeReuqestCall:
         {
-            NSArray *phones = [_merchantDetail.contacts_mobile componentsSeparatedByString:@" "];
+            NSArray *phones = [_merchantDetail.telephone componentsSeparatedByString:@" "];
             if (buttonIndex == 1)
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones firstObject]]]];
             else if (buttonIndex == 2)
