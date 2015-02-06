@@ -3167,6 +3167,9 @@
                                             <include reference="upA-8N-hPl"/>
                                         </mask>
                                     </variation>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="4OX-kw-WNU" appends="YES" id="LqY-kE-dY4"/>
+                                    </connections>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gDw-Ja-khY" customClass="SCMaintenanceTypeView">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -3742,7 +3745,12 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vIl-D7-E5b" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="bRp-60-BJR">
                     <connections>
-                        <segue destination="vni-fv-RU6" kind="push" id="b7m-6V-2oI"/>
+                        <segue destination="vni-fv-RU6" kind="push" id="K7c-GP-rEo"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="4OX-kw-WNU">
+                    <connections>
+                        <segue destination="vni-fv-RU6" kind="push" id="Lnl-jH-SNC"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -8720,7 +8728,7 @@
         <image name="the-radio-uncheck" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="b7m-6V-2oI"/>
         <segue reference="Ro5-x3-5E1"/>
+        <segue reference="aFE-Ug-8sm"/>
     </inferredMetricsTieBreakers>
 </document>
