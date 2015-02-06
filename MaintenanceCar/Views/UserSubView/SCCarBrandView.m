@@ -27,8 +27,6 @@
     
     // 延时初始化相关数据，以便View正常显示
     [self performSelector:@selector(initConfig) withObject:nil afterDelay:0.5f];
-    // 为标题栏添加点击手势，方便事件触发，通知回调
-    [self.titleView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleColumnTaped)]];
 }
 
 #pragma mark - Action Methods

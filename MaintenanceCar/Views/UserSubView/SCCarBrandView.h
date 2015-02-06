@@ -26,7 +26,6 @@
 @interface SCCarBrandView : SCSelectedView <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;                  // 车辆品牌集合View
-@property (weak, nonatomic) IBOutlet UIView           *titleView;                       // 展示给用户的标题View，用户点击此栏会触发显示货关闭当前View事件
 @property (weak, nonatomic) IBOutlet UILabel          *carBrandLabel;                   // 车辆品牌选择显示栏，用户选择车辆品牌后品牌名称显示在此栏
 
 @property (nonatomic, weak)          id               <SCCarBrandViewDelegate>delegate;

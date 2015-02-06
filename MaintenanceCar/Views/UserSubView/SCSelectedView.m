@@ -15,6 +15,14 @@
 
 @implementation SCSelectedView
 
+#pragma mark - Init Methods
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    // 为标题栏添加点击手势，方便事件触发，通知回调
+    [_titleView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleColumnTaped)]];
+}
+
 #pragma mark - Public Methods
 - (void)selected
 {
@@ -40,6 +48,11 @@
         _arrowIcon.image = [UIImage imageNamed:@"ArrowheadGrayIcon"];
     else
         _arrowIcon.image = [UIImage imageNamed:@"ArrowheadBlueIcon"];
+}
+
+- (void)titleColumnTaped
+{
+    
 }
 
 @end

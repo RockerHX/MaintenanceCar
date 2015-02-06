@@ -133,7 +133,7 @@
 #pragma mark - Alert View Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == alertView.cancelButtonIndex)
+    if (buttonIndex != alertView.cancelButtonIndex)
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", alertView.message]]];
 }
 

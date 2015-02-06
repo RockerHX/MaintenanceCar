@@ -132,7 +132,20 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 {
     // 顶栏[添加]被点击弹出提示框，[取消]被点击这返回个人中心
     if (status)
-        [self showAlert:_car];
+    {
+        if (!_car)
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择具体车辆噢亲！"
+                                                                message:nil
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"确定"
+                                                      otherButtonTitles:nil, nil];
+            [alertView show];
+        }
+        else
+            [self showAlert:_car];
+            
+    }
     else
         [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -234,6 +247,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 
 - (void)carBrandViewTitleTaped
 {
+    _car = nil;
     // 车辆品牌栏被点击，切换到车辆品牌View
     [self switchContentView:SCContentViewSwitchCarBrandView];
 }
@@ -248,6 +262,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 #pragma mark - SCCarModelView Delegate Methods
 - (void)carModelViewTitleTaped
 {
+    _car = nil;
 }
 
 - (void)carModelViewDidSelectedCar:(SCCar *)car

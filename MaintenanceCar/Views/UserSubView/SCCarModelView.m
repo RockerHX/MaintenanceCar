@@ -66,9 +66,6 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     _carModels          = [@[] mutableCopy];
     _leftTableView.tag  = SCTableViewTypeCarModel;
     _rightTableView.tag = SCTableViewTypeCar;
-    
-    // 为标题栏添加点击手势，方便事件触发，通知回调
-    [self.titleView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleColumnTaped)]];
 }
 
 - (void)viewConfig
@@ -194,6 +191,7 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
         [MBProgressHUD showHUDAddedTo:self animated:YES];
         SCCarModel *carModel = _carModels[indexPath.row];
         [self startCarsRequest:carModel];
+        [_delegate carModelViewDidSelectedCar:nil];
     }
     else
     {
