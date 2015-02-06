@@ -33,7 +33,6 @@
 		4841CEBF1A6B9AC400DA36FC /* SCMaintenanceTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CEBE1A6B9AC400DA36FC /* SCMaintenanceTypeView.m */; };
 		4841CEC41A6B9FCB00DA36FC /* SCMaintenanceTypeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CEC31A6B9FCB00DA36FC /* SCMaintenanceTypeItem.m */; };
 		4841CEC71A6BAC1F00DA36FC /* SCMaintenanceItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CEC61A6BAC1F00DA36FC /* SCMaintenanceItemCell.m */; };
-		4841CECA1A6BAC6F00DA36FC /* SCMaintenanceItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4841CEC91A6BAC6F00DA36FC /* SCMaintenanceItemCell.xib */; };
 		4841CECD1A6BE5C300DA36FC /* SCUserCar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CECC1A6BE5C300DA36FC /* SCUserCar.m */; };
 		4841CED31A6CE36400DA36FC /* SCMileageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CED21A6CE36400DA36FC /* SCMileageView.m */; };
 		4841CED91A6D049500DA36FC /* SCChangeMaintenanceDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CED81A6D049500DA36FC /* SCChangeMaintenanceDataViewController.m */; };
@@ -194,7 +193,6 @@
 		4841CEC31A6B9FCB00DA36FC /* SCMaintenanceTypeItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMaintenanceTypeItem.m; sourceTree = "<group>"; };
 		4841CEC51A6BAC1F00DA36FC /* SCMaintenanceItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMaintenanceItemCell.h; sourceTree = "<group>"; };
 		4841CEC61A6BAC1F00DA36FC /* SCMaintenanceItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMaintenanceItemCell.m; sourceTree = "<group>"; };
-		4841CEC91A6BAC6F00DA36FC /* SCMaintenanceItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCMaintenanceItemCell.xib; sourceTree = "<group>"; };
 		4841CECB1A6BE5C300DA36FC /* SCUserCar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCUserCar.h; sourceTree = "<group>"; };
 		4841CECC1A6BE5C300DA36FC /* SCUserCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCUserCar.m; sourceTree = "<group>"; };
 		4841CED11A6CE36400DA36FC /* SCMileageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMileageView.h; sourceTree = "<group>"; };
@@ -592,7 +590,6 @@
 				4841CEBE1A6B9AC400DA36FC /* SCMaintenanceTypeView.m */,
 				4841CEC51A6BAC1F00DA36FC /* SCMaintenanceItemCell.h */,
 				4841CEC61A6BAC1F00DA36FC /* SCMaintenanceItemCell.m */,
-				4841CEC91A6BAC6F00DA36FC /* SCMaintenanceItemCell.xib */,
 				4841CED11A6CE36400DA36FC /* SCMileageView.h */,
 				4841CED21A6CE36400DA36FC /* SCMileageView.m */,
 				48BB50961A7397730047083B /* SCHomePageDetailView.h */,
@@ -1099,7 +1096,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4841CECA1A6BAC6F00DA36FC /* SCMaintenanceItemCell.xib in Resources */,
 				48F1A0841A6556A6000A1BBD /* umeng_fb_audio_play_02@2x.png in Resources */,
 				48F1A0771A6556A6000A1BBD /* UMFeedbackLocalizable.strings in Resources */,
 				48F1A07C1A6556A6000A1BBD /* save@2x.png in Resources */,
@@ -1419,8 +1415,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = AppLaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen Yuanjing Telematics Tech Co., Ltd. (539L59J6H5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shenzhen Yuanjing Telematics Tech Co., Ltd. (539L59J6H5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = MaintenanceCar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1433,7 +1429,7 @@
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMessage_Sdk_1.1.0",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "67b76821-d3d4-4dae-9287-094e11e74ff9";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

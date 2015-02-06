@@ -13,27 +13,21 @@
 
 @implementation SCMaintenanceItemCell
 
-- (id)init
+#pragma mark - Private
+- (void)changCheckStatus:(BOOL)status
 {
-    self = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil] firstObject];
-    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer)]];
-    return self;
+    if (status)
+        _checkBox.image = [UIImage imageNamed:@"check-box-pitch-on"];
+    else
+        _checkBox.image = [UIImage imageNamed:@"check-box-uncheck"];
 }
 
-#pragma mark - Private
-- (void)tapGestureRecognizer
+#pragma mark - Setter And Getter
+- (void)setCheck:(BOOL)check
 {
-    self.selected = !self.selected;
-    if (self.selected)
-    {
-        _checkBox.image = [UIImage imageNamed:@"check-box-pitch-on"];
-        [_delegate didChangeMaintenanceItemWithIndex:self.tag check:YES];
-    }
-    else
-    {
-        _checkBox.image = [UIImage imageNamed:@"check-box-uncheck"];
-        [_delegate didChangeMaintenanceItemWithIndex:self.tag check:NO];
-    }
+    _check        = check;
+    self.selected = check;
+    [self changCheckStatus:check];
 }
 
 @end

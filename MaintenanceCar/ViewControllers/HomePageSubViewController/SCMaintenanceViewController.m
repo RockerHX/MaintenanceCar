@@ -25,11 +25,13 @@
 
 #define MaintenanceCellReuseIdentifier   @"MaintenanceCellReuseIdentifier"
 
-@interface SCMaintenanceViewController () <MBProgressHUDDelegate, SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate, SCMaintenanceItemCellDelegate>
+@interface SCMaintenanceViewController () <MBProgressHUDDelegate, SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
 {
-    NSInteger         _reservationButtonIndex;
-    NSArray           *_serviceItems;
-    NSMutableArray    *_recommendMerchants;
+    NSInteger           _reservationButtonIndex;
+    NSArray             *_serviceItems;
+    
+    NSMutableDictionary *_checkData;
+    NSMutableArray      *_recommendMerchants;
     
     NSInteger         _carIndex;
     SCMaintenanceType _maintenanceType;
@@ -113,6 +115,7 @@
 #pragma mark - Private Methods
 - (void)initConfig
 {
+    _checkData          = [@{} mutableCopy];
     _recommendMerchants = [@[] mutableCopy];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _maintenanceTypeView.delegate = self;
@@ -327,6 +330,11 @@
     userCar.allItems     = allItems;
 }
 
+- (BOOL)cellCheckStatusWithIndex:(NSInteger)index
+{
+    return [_checkData[[@(index) stringValue]] boolValue];
+}
+
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -361,10 +369,10 @@
     {
         case 0:
         {
-            SCMaintenanceItemCell *cell = [[SCMaintenanceItemCell alloc] init];
-            cell.delegate               = self;
-            cell.tag                    = indexPath.row;
             SCServiceItem *item         = _serviceItems[indexPath.row];
+            SCMaintenanceItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMaintenanceItemCell" forIndexPath:indexPath];
+            cell.tag                    = indexPath.row;
+            cell.check                  = [self cellCheckStatusWithIndex:indexPath.row];
             cell.nameLabel.text         = item.service_name;
             cell.memoLabel.text         = item.memo;
             return cell;
@@ -386,7 +394,25 @@
 #pragma mark - Table View Delegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1)
+    if (indexPath.section == 0)
+    {
+        SCUserInfo *userInfo        = [SCUserInfo share];
+        NSString *serviceName       = ((SCServiceItem *)_serviceItems[indexPath.row]).service_name;
+        SCMaintenanceItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMaintenanceItemCell" forIndexPath:indexPath];
+        cell.check                  = ![self cellCheckStatusWithIndex:indexPath.row];
+        if (cell.check)
+        {
+            [userInfo addMaintenanceItem:serviceName];
+            [_checkData setObject:@(YES) forKey:[@(indexPath.row) stringValue]];
+        }
+        else
+        {
+            [userInfo removeItem:serviceName];
+            [_checkData removeObjectForKey:[@(indexPath.row) stringValue]];
+        }
+        [self.tableView reloadData];
+    }
+    else if (indexPath.section == 1)
     {
         // 列表栏被点击，执行取消选中动画
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -500,17 +526,6 @@
 - (void)dataSaveSuccess
 {
     [self startMaintenanceDataRequest];
-}
-
-#pragma mark - SCMaintenanceItemCell Delegate Methods
-- (void)didChangeMaintenanceItemWithIndex:(NSInteger)index check:(BOOL)check
-{
-    SCUserInfo *userInfo = [SCUserInfo share];
-    NSString *serviceName = ((SCServiceItem *)_serviceItems[index]).service_name;
-    if (check)
-        [userInfo addMaintenanceItem:serviceName];
-    else
-        [userInfo removeItem:serviceName];
 }
 
 @end
