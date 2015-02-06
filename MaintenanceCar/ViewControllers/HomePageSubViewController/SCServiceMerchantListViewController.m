@@ -124,6 +124,7 @@
 - (void)viewConfig
 {
     _merchantFilterView.delegate = self;
+    _tableView.scrollsToTop      = YES;
     _tableView.tableFooterView   = [[UIView alloc] init];       // 设置footer视图，防止数据不够，显示多余的列表栏
     
     [_merchantFilterView.otherFilterButton setTitle:_itemTite forState:UIControlStateNormal];

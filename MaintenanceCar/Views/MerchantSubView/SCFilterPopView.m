@@ -39,6 +39,7 @@
 
 - (void)viewConfig
 {
+    _contentView.scrollsToTop      = NO;
     _contentView.tableFooterView = [[UIView alloc] init];
 }
 
