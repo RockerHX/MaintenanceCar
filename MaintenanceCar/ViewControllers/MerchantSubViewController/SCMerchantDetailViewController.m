@@ -19,6 +19,7 @@
 #import "SCReservationViewController.h"
 #import "SCReservatAlertView.h"
 #import "SCMapViewController.h"
+#import "SCAllDictionary.h"
 
 #define MerchantDetailCellIdentifier      @"SCMerchantDetailCell"
 
@@ -184,15 +185,17 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)displayMerchantDetail
 {
-    _collectionItem.favorited                         = _merchantDetail.collected;
-    _merchantBriefIntroductionCell.distanceLabel.text = _merchantDetail.distance;
-    [_merchantBriefIntroductionCell hanleMerchantFlags:_merchant.merchantFlags];
+    _collectionItem.favorited                               = _merchantDetail.collected;
+    _merchantBriefIntroductionCell.majors                   = _merchantDetail.majors;
+    _merchantBriefIntroductionCell.distanceLabel.text       = _merchantDetail.distance;
+    _merchantBriefIntroductionCell.reservationButton.hidden = ![SCAllDictionary share].serviceItems.count;
+    [_merchantBriefIntroductionCell hanleMerchantFlags:_merchantDetail.merchantFlags];
     
     [self handleMerchantName:_merchantDetail.name onNameLabel:_merchantBriefIntroductionCell.merchantNameLabel];
     [self handleMerchantDetail:_merchantDetail.address onLabel:_merchantAddressLabel];
     [self handleMerchantDetail:_merchantDetail.telephone onLabel:_merchantPhoneLabel];
-    [self handleMerchantDetail:[NSString stringWithFormat:@"%@ - %@", _merchantDetail.time_open, _merchantDetail.time_closed] onLabel:_merchantTimeLabel];
-    [self handleMerchantDetail:_merchantDetail.zige onLabel:_merchantBusinessLabel];
+    [self handleMerchantDetail:[NSString stringWithFormat:@"%@ - %@", [_merchantDetail.time_open substringWithRange:(NSRange){0, 5}], [_merchantDetail.time_closed substringWithRange:(NSRange){0, 5}]] onLabel:_merchantTimeLabel];
+    [self handleMerchantDetail:_merchantDetail.tags onLabel:_merchantBusinessLabel];
     [self handleMerchantDetail:_merchantDetail.service onLabel:_merchantIntroductionLabel];
 }
 
@@ -214,7 +217,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         label.font = [UIFont systemFontOfSize:14.0f];
     else if (IS_IPHONE_6 && (detail.length > 24))
         label.font = [UIFont systemFontOfSize:14.0f];
-    else if (detail.length > 16)
+    else if (detail.length > 14)
         label.font = [UIFont systemFontOfSize:14.0f];
     
     label.text = detail;
@@ -364,7 +367,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     // 跳转到预约页面
     @try {
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.merchant = [[SCMerchant alloc] initWithMerchantName:_merchantDetail.name companyID:_merchantDetail.company_id openTime:_merchantDetail.time_open closeTime:_merchantDetail.time_closed];
+        reservationViewController.merchant = [[SCMerchant alloc] initWithMerchantName:_merchantDetail.name
+                                                                            companyID:_merchantDetail.company_id];
         reservationViewController.serviceItem = serviceItem;
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }

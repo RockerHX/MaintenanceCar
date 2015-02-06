@@ -14,8 +14,13 @@
 #import "SCMerchant.h"
 #import "SCMerchantTableViewCell.h"
 #import "SCMerchantDetailViewController.h"
+#import "SCReservatAlertView.h"
+#import "SCReservationViewController.h"
 
-@interface SCMyFavoriteTableViewController ()
+@interface SCMyFavoriteTableViewController () <SCReservatAlertViewDelegate>
+{
+    NSInteger _index;
+}
 
 @end
 
@@ -39,6 +44,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed:) name:kMaintenanceReservationNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,10 +63,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    SCMerchant *merchant = _dataList[indexPath.row];
     SCMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MerchantCellReuseIdentifier forIndexPath:indexPath];
+    cell.reservationButton.tag    = indexPath.row;
+    cell.reservationButton.hidden = !merchant.serviceItems.count;
     
     // 刷新商户列表，设置相关数据
-    [cell handelWithMerchant:_dataList[indexPath.row]];
+    [cell handelWithMerchant:merchant];
     
     return cell;
 }
@@ -200,6 +211,37 @@
         [weakSelf deleteFailureAtIndex:index];
         ShowPromptHUDWithText(weakSelf.navigationController.view, @"删除失败，请检查网络", 1.0f);
     }];
+}
+
+/**
+ *  商户列表预约按钮点击触发事件通知方法
+ *
+ *  @param notification 接受传递的参数
+ */
+- (void)reservationButtonPressed:(NSNotification *)notification
+{
+    _index = [notification.object integerValue];
+    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
+    [reservatAlertView show];
+}
+
+#pragma mark - SCReservatAlertViewDelegate Methods
+- (void)selectedWithServiceItem:(SCServiceItem *)serviceItem
+{
+    // 跳转到预约页面
+    @try {
+        SCMerchant *merchant = _dataList[_index];
+        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
+        reservationViewController.merchant = [[SCMerchant alloc] initWithMerchantName:merchant.name
+                                                                            companyID:merchant.company_id];
+        reservationViewController.serviceItem = serviceItem;
+        [self.navigationController pushViewController:reservationViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
 }
 
 @end

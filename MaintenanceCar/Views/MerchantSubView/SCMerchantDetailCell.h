@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *flagView;             // 商户标签栏 - 用于显示商户标签
 @property (weak, nonatomic) IBOutlet         UIButton *reservationButton;    // 预约按钮
 
+@property (nonatomic, copy)                  NSString *majors;               // 专修品牌
+
 - (void)hanleMerchantFlags:(NSArray *)merchantFlags;
 
 /**

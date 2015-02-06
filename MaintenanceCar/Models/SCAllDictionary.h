@@ -76,8 +76,9 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
  *  合成服务项目 - 用于预约提示，筛选条件
  *
  *  @param merchantItems 商户服务项目
+ *  @param free          能否免费检测
  */
-- (void)generateServiceItemsWtihMerchantImtes:(NSDictionary *)merchantItems;
+- (void)generateServiceItemsWtihMerchantImtes:(NSDictionary *)merchantItems inspectFree:(BOOL)free;
 
 /**
  *  处理专修品牌 - 用于筛选条件

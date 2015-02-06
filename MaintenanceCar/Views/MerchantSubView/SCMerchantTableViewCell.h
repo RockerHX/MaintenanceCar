@@ -10,7 +10,7 @@
 
 @interface SCMerchantTableViewCell : SCMerchantCell
 
-@property (weak, nonatomic) IBOutlet UIButton           *reservationButton; // 预约按钮
+@property (weak, nonatomic) IBOutlet           UIButton *reservationButton; // 预约按钮
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonWidth;       // [预约]按钮宽度约束
 
 /**

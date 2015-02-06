@@ -174,7 +174,7 @@ static SCAllDictionary *allDictionary = nil;
     }
 }
 
-- (void)generateServiceItemsWtihMerchantImtes:(NSDictionary *)merchantItems;
+- (void)generateServiceItemsWtihMerchantImtes:(NSDictionary *)merchantItems inspectFree:(BOOL)free;
 {
     // 先分别取出服务项目
     NSArray *washItmes        = merchantItems[@"1"];
@@ -191,7 +191,7 @@ static SCAllDictionary *allDictionary = nil;
         [items addObject:[[SCServiceItem alloc] initWithServiceID:@"3" serviceName:@"维修"]];
     
     // 最后动态添加服务器获取到的第四个按钮数据
-    if (_special)
+    if (_special && free)
         [items addObject:[[SCServiceItem alloc] initWithServiceID:@"5" serviceName:_special.text]];
     _serviceItems = items;
 }

@@ -271,7 +271,7 @@
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
-        NSDictionary *parameters = @{@"query"     : @"default:'深圳'",
+        NSDictionary *parameters = @{@"query"     : @"default:'深圳' AND service:'养'",
                                      @"limit"     : @(3),
                                      @"offset"    : @(0),
                                      @"radius"    : @(10),
@@ -470,6 +470,7 @@
 {
     SCUserCar *userCar    = [SCUserInfo share].currentCar;
     [[SCUserInfo share] removeItems];
+    [_checkData removeAllObjects];
     switch (type)
     {
         case SCMaintenanceTypeAccurate:
