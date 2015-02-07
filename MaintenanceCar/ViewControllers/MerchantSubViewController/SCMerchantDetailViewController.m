@@ -97,11 +97,11 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         {
             // 地图按钮被点击，跳转到地图页面
             UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
-            SCMapViewController *mapViewController = (SCMapViewController *)mapNavigationController.topViewController;
-            mapViewController.showInfoView               = NO;
-            mapViewController.merchants                  = @[_merchant];
-            mapViewController.leftItem.title             = @"详情";
-            mapNavigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+            SCMapViewController *mapViewController          = (SCMapViewController *)mapNavigationController.topViewController;
+            mapViewController.showInfoView                  = NO;
+            mapViewController.merchants                     = @[_merchant];
+            mapViewController.leftItem.title                = @"详情";
+            mapNavigationController.modalTransitionStyle    = UIModalTransitionStyleCrossDissolve;
             [self presentViewController:mapNavigationController animated:YES completion:nil];
         }
         else if (indexPath.row == 1)

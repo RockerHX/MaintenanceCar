@@ -24,6 +24,7 @@
     BMKAnnotationView *_preAnnotationView;      // 地图图钉缓存
     
     NSTimer           *_timer;
+    CGFloat           _zoomLevel;
 }
 
 @end
@@ -78,6 +79,7 @@
 #pragma mark - Setter Methods
 - (void)setMerchants:(NSArray *)merchants
 {
+    _merchants = merchants;
     if (!_annotations)
         _annotations = [@[] mutableCopy];
     
@@ -92,7 +94,8 @@
         annotation.title = merchant.name;
         [_annotations addObject:annotation];
     }];
-    _merchants = merchants;
+    BMKPointAnnotation *annotation = [_annotations lastObject];
+    _zoomLevel = [self getZoomLevelWithLatitude:annotation.coordinate.latitude longitude:annotation.coordinate.longitude];
 }
 
 #pragma mark - Private Methods
@@ -103,7 +106,7 @@
     _mapView.delegate          = self;                      // 设置百度地图代理
     _mapView.buildingsEnabled  = YES;                       // 允许双指上下滑动展示3D建筑
     _mapView.showsUserLocation = YES;                       // 显示定位图层
-    _mapView.zoomLevel         = 15.0f;                     // 比例尺为：500米
+    _mapView.zoomLevel         = _zoomLevel;                // 地图比例尺
     _mapView.userTrackingMode  = BMKUserTrackingModeFollow; // 定位跟随模式
     
     if (_showInfoView)
@@ -121,6 +124,56 @@
     // 进入地图的显示列表内第一个商户的数据
     [_mapView selectAnnotation:[_annotations firstObject] animated:YES];
     [_mapMerchantInfoView handelWithMerchant:[_merchants firstObject]];
+}
+
+- (CGFloat)getZoomLevelWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude
+{
+//    CLLocation *merchantLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+//    CLLocationDistance distance = [[SCLocationManager share].userLocation.location distanceFromLocation:merchantLocation];
+    
+    CGFloat zoomLevel = 16.0f;
+//    if (distance >= 0 && distance <= 1000)
+//        zoomLevel = 19.0f;
+//    else if (distance > 1000 && distance <= 2000)
+//        zoomLevel = 18.8f;
+//    else if (distance > 2000 && distance <= 3000)
+//        zoomLevel = 18.6f;
+//    else if (distance > 3000 && distance <= 4000)
+//        zoomLevel = 14.8f;
+//    else if (distance > 4000 && distance <= 5000)
+//        zoomLevel = 18.2f;
+//    else if (distance > 5000 && distance <= 6000)
+//        zoomLevel = 18.0f;
+//    else if (distance > 6000 && distance <= 7000)
+//        zoomLevel = 17.8f;
+//    else if (distance > 7000 && distance <= 8000)
+//        zoomLevel = 17.6f;
+//    else if (distance > 8000 && distance <= 9000)
+//        zoomLevel = 14.2f;
+//    else if (distance > 9000 && distance <= 10000)
+//        zoomLevel = 17.2f;
+//    else if (distance > 10000 && distance <= 11000)
+//        zoomLevel = 17.0f;
+//    else if (distance > 11000 && distance <= 12000)
+//        zoomLevel = 13.3f;
+//    else if (distance > 12000 && distance <= 13000)
+//        zoomLevel = 17.0f;
+//    else if (distance > 13000 && distance <= 14000)
+//        zoomLevel = 17.0f;
+//    else if (distance > 14000 && distance <= 15000)
+//        zoomLevel = 17.0f;
+//    else if (distance > 15000 && distance <= 16000)
+//        zoomLevel = 17.0f;
+//    else if (distance > 16000 && distance <= 17000)
+//        zoomLevel = 17.0f;
+//    else if (distance > 17000 && distance <= 18000)
+//        zoomLevel = 17.0f;
+//    else if (distance > 18000 && distance <= 19000)
+//        zoomLevel = 17.0f;
+//    else
+//        zoomLevel = 16.0f;
+    
+    return zoomLevel;
 }
 
 - (void)displayUserLocation

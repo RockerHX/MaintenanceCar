@@ -104,9 +104,9 @@
 {
     // 地图按钮被点击，跳转到地图页面
     UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
-    SCMapViewController *mapViewController = (SCMapViewController *)mapNavigationController.topViewController;
-    mapViewController.merchants = _merchantList;
-    mapNavigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    SCMapViewController *mapViewController          = (SCMapViewController *)mapNavigationController.topViewController;
+    mapViewController.merchants                     = _merchantList;
+    mapNavigationController.modalTransitionStyle    = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:mapNavigationController animated:YES completion:nil];
 }
 
