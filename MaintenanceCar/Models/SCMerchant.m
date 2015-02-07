@@ -21,7 +21,7 @@
     {
         if (_flags)
             _merchantFlags = [_flags componentsSeparatedByString:@","];
-        [self generateServiceItemsWtihMerchantImtes:_service_items inspectFree:_inspect_free];
+        [self generateServiceItemsWtihMerchantImtes:_service_items inspectFree:[_inspect_free boolValue]];
     }
     return self;
 }
