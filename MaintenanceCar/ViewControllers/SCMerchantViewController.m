@@ -180,7 +180,7 @@
             }
             else
             {
-                ShowPromptHUDWithText(weakSelf.navigationController.view, _offset ? @"只有这么多了亲！" : @"没有更多了亲", 0.5f);
+                ShowPromptHUDWithText(weakSelf.navigationController.view, @"优质商户陆续添加中...", 0.5f);
                 [_tableView reloadData];
             }
         }
@@ -203,6 +203,8 @@
     [_merchantList removeAllObjects];
     
     SCAllDictionary *allDictionary = [SCAllDictionary share];
+    allDictionary.repairCondition  = @"";
+    allDictionary.otherCondition   = @"";
     // 筛选条件，选择之后触发请求
     switch (type) {
         case SCFilterTypeRepair:
@@ -210,7 +212,7 @@
             if ([filterCondition isEqualToString:@"default"])
                 allDictionary.repairCondition = @"";
             else
-                allDictionary.repairCondition = [NSString stringWithFormat:@" AND majors:'%@' AND flags:'综'", filterCondition];
+                allDictionary.repairCondition = [NSString stringWithFormat:@" AND majors:'%@'", filterCondition];
         }
             break;
         case SCFilterTypeOther:

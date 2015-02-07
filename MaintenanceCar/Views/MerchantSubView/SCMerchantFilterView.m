@@ -46,7 +46,13 @@
 
 - (IBAction)otherFilterButtonPressed:(UIButton *)sender
 {
-    [self popFilterViewWtihType:SCFilterTypeOther];
+    if (_isRepair)
+    {
+        [[SCAllDictionary share] hanleRepairConditions:[SCUserInfo share].cars];
+        [self popFilterViewWtihType:SCFilterTypeRepair];
+    }
+    else
+        [self popFilterViewWtihType:SCFilterTypeOther];
 }
 
 #pragma mark - Setter And Getter Methods

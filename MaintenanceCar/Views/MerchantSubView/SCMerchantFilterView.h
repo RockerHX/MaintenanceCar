@@ -34,6 +34,7 @@ typedef NS_ENUM(NSInteger, SCFilterType) {
 @property (nonatomic, weak) IBOutlet           UIButton *distanceButton;        // [距离]筛选按钮
 @property (nonatomic, weak) IBOutlet           UIButton *repairTypeButton;      // [保养类型]筛选按钮
 @property (nonatomic, weak) IBOutlet           UIButton *otherFilterButton;     // [其他]条件筛选按钮
+@property (nonatomic, assign)                      BOOL isRepair;
 
 // [距离]筛选按钮点击触发事件
 - (IBAction)distanceButtonPressed:(UIButton *)sender;

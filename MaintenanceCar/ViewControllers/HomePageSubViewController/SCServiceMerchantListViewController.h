@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class SCMerchantFilterView;
+#import "SCMerchantFilterView.h"
 
 @interface SCServiceMerchantListViewController : UIViewController
 
@@ -17,6 +16,7 @@
 
 @property (nonatomic, copy)                      NSString *itemTite;
 @property (nonatomic, copy)                      NSString *query;
+@property (nonatomic, assign)                        BOOL isRepair;
 
 // [地图]按钮触发事件
 - (IBAction)mapItemPressed:(UIBarButtonItem *)sender;

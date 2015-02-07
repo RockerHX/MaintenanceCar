@@ -25,6 +25,7 @@
 {
     NSMutableArray *_merchantList;
     
+    NSString       *_requestQuery;
     NSString       *_distanceCondition;
 }
 
@@ -109,21 +110,28 @@
     [self presentViewController:mapNavigationController animated:YES completion:nil];
 }
 
+- (void)setQuery:(NSString *)query
+{
+    _query = query;
+    _requestQuery = query;
+}
+
 #pragma mark - Private Methods
 /**
  *  初始化配置，列表设置，全局变量初始化都放在这里
  */
 - (void)initConfig
 {
-    _offset            = 0;                     // 第一次进入商户列表列表请求偏移量必须为0
-    _distanceCondition = MerchantListRadius;
-    
-    _merchantList      = [@[] mutableCopy];     // 商户列表容器初始化
+    _offset                      = 0;                   // 第一次进入商户列表列表请求偏移量必须为0
+    _distanceCondition           = MerchantListRadius;
+
+    _merchantList                = [@[] mutableCopy];   // 商户列表容器初始化
+    _merchantFilterView.delegate = self;
+    _merchantFilterView.isRepair = _isRepair;
 }
 
 - (void)viewConfig
 {
-    _merchantFilterView.delegate = self;
     _tableView.scrollsToTop      = YES;
     _tableView.tableFooterView   = [[UIView alloc] init];       // 设置footer视图，防止数据不够，显示多余的列表栏
     
@@ -156,10 +164,11 @@
 {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
-    NSDictionary *parameters     = @{@"query"     : _query,
+    NSDictionary *parameters     = @{@"query"     : _requestQuery,
                                      @"limit"     : @(MerchantListLimit),
                                      @"offset"    : @(_offset),
                                      @"radius"    : _distanceCondition,
+                                     @"flag"      : @"1",
                                      @"longtitude": longitude,
                                      @"latitude"  : latitude};
     
@@ -181,7 +190,7 @@
             }
             else
             {
-                ShowPromptHUDWithText(weakSelf.navigationController.view, _offset ? @"只有这么多了亲！" : @"没有更多了亲", 0.5f);
+                ShowPromptHUDWithText(weakSelf.navigationController.view, @"优质商户陆续添加中...", 0.5f);
                 [_tableView reloadData];
             }
         }
@@ -199,29 +208,42 @@
 {
     NSString *filterName      = item[DisplayNameKey];
     NSString *filterCondition = item[RequestValueKey];
-    
-    _offset            = 0;
+
+    _offset                   = 0;
     [_merchantList removeAllObjects];
     
     SCAllDictionary *allDictionary = [SCAllDictionary share];
+    allDictionary.repairCondition  = @"";
+    allDictionary.otherCondition   = @"";
     // 筛选条件，选择之后触发请求
-    
-    if (type == SCFilterTypeOther)
-    {
-        if (![filterCondition isEqualToString:@"default"])
+    switch (type) {
+        case SCFilterTypeRepair:
         {
-            if ([filterCondition isEqualToString:@"tag"])
-                allDictionary.otherCondition = [NSString stringWithFormat:@" AND tags:'%@'", filterName];
+            if ([filterCondition isEqualToString:@"default"])
+                allDictionary.repairCondition = @"";
             else
-                allDictionary.otherCondition = [NSString stringWithFormat:@" AND service:'%@'", filterCondition];
+                allDictionary.repairCondition = [NSString stringWithFormat:@" AND majors:'%@'", filterCondition];
         }
-        else
-            allDictionary.otherCondition = @"";
-        _query = [NSString stringWithFormat:@"%@%@", DefaultQuery, allDictionary.otherCondition];
+            break;
+        case SCFilterTypeOther:
+        {
+            if (![filterCondition isEqualToString:@"default"])
+            {
+                if ([filterCondition isEqualToString:@"tag"])
+                    allDictionary.otherCondition = [NSString stringWithFormat:@" AND tags:'%@'", filterName];
+                else
+                    allDictionary.otherCondition = [NSString stringWithFormat:@" AND service:'%@'", filterCondition];
+            }
+            else
+                allDictionary.otherCondition = @"";
+        }
+            break;
+            
+        default:
+            _distanceCondition = filterCondition;
+            break;
     }
-    else
-        _distanceCondition = filterCondition;
-    
+    _requestQuery = [NSString stringWithFormat:@"%@%@%@", _query, allDictionary.repairCondition, allDictionary.otherCondition];
     [self refreshMerchantList];
 }
 

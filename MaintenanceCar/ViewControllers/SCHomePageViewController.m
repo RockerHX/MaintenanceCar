@@ -69,6 +69,7 @@
     else if ([segue.identifier isEqualToString:@"Repair"])
     {
         SCServiceMerchantListViewController *repairMerchanListViewController = segue.destinationViewController;
+        repairMerchanListViewController.isRepair = YES;
         repairMerchanListViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'修'"];
         repairMerchanListViewController.itemTite = @"修车";
         repairMerchanListViewController.title    = @"修车";
