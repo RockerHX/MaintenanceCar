@@ -27,6 +27,6 @@
 @property (nonatomic, weak)          id                   <SCChangeMaintenanceDataViewControllerDelegate>delegate;
 
 // 购车时间按钮触发事件
-- (IBAction)buyCarDateButtonPressed:(UIButton *)sender;
+- (IBAction)buyCarDateButtonPressed;
 
 @end

@@ -37,7 +37,7 @@
 }
 
 #pragma mark - Action Methods
-- (IBAction)buyCarDateButtonPressed:(UIButton *)sender
+- (IBAction)buyCarDateButtonPressed
 {
     // 购车按钮点击事件触发，收起键盘，弹出时间选择器
     [self.view endEditing:YES];
@@ -53,6 +53,7 @@
 {
     // 初始化的时候加入单击手势，用于页面点击收起数字键盘
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer)]];
+    [self.buyCarDateLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buyCarDateButtonPressed)]];
 }
 
 - (void)viewConfig
