@@ -99,6 +99,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
             SCMapViewController *mapViewController          = (SCMapViewController *)mapNavigationController.topViewController;
             mapViewController.showInfoView                  = NO;
+            mapViewController.isMerchantMap                 = YES;
             mapViewController.merchants                     = @[_merchant];
             mapViewController.leftItem.title                = @"详情";
             mapNavigationController.modalTransitionStyle    = UIModalTransitionStyleCrossDissolve;

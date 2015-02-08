@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet       UIBarButtonItem *leftItem;
 
 @property (nonatomic, assign)                         BOOL showInfoView;
+@property (nonatomic, assign)                         BOOL isMerchantMap;
 
 /**
  *  [列表]按钮，用于返回商户列表页面
