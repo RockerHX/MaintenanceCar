@@ -19,7 +19,8 @@
 - (void)tapGestureRecognizer
 {
     [self selected];
-    [_delegate typeViewSelected:self];
+    if ([_delegate respondsToSelector:@selector(typeViewSelected:)])
+        [_delegate typeViewSelected:self];
 }
 
 #pragma mark - Public Methods

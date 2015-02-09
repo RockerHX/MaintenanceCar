@@ -17,8 +17,9 @@
 #import "SCAllDictionary.h"
 #import "SCWebViewController.h"
 #import "SCServiceMerchantListViewController.h"
+#import "SCADView.h"
 
-@interface SCHomePageViewController () <UIAlertViewDelegate>
+@interface SCHomePageViewController () <UIAlertViewDelegate, SCADViewDelegate>
 
 @end
 
@@ -109,33 +110,8 @@
 - (IBAction)SpecialButtonPressed:(UIButton *)sender
 {
     SCSpecial *special = [SCAllDictionary share].special;
-    if (special.html)
-    {
-        @try {
-            SCWebViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
-            [self.navigationController pushViewController:webViewController animated:YES];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"SCHomePageViewController Go to the SCWebViewController exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
-    }
-    else
-    {
-        @try {
-            SCServiceMerchantListViewController *specialViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCServiceMerchantListViewController"];
-            specialViewController.query    = [DefaultQuery stringByAppendingString:special.query];
-            specialViewController.itemTite = special.text;
-            specialViewController.title    = special.text;
-            [self.navigationController pushViewController:specialViewController animated:YES];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"SCHomePageViewController Go to the SCWebViewController exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
-    }
+    SCADView *adView = [[SCADView alloc] initWithDelegate:self imageURL:special.post_pic];
+    [adView show];
 }
 
 #pragma mark - Private Methods
@@ -239,6 +215,39 @@
     if (buttonIndex != alertView.cancelButtonIndex)
     {
         [self checkShouldLogin];
+    }
+}
+
+#pragma mark - SCADViewDelegate Methods
+- (void)shouldEnter
+{
+    SCSpecial *special = [SCAllDictionary share].special;
+    if (special.html)
+    {
+        @try {
+            SCWebViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
+            [self.navigationController pushViewController:webViewController animated:YES];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"SCHomePageViewController Go to the SCWebViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
+    }
+    else
+    {
+        @try {
+            SCServiceMerchantListViewController *specialViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCServiceMerchantListViewController"];
+            specialViewController.query    = [DefaultQuery stringByAppendingString:special.query];
+            specialViewController.itemTite = special.text;
+            specialViewController.title    = special.text;
+            [self.navigationController pushViewController:specialViewController animated:YES];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"SCHomePageViewController Go to the SCWebViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
     }
 }
 

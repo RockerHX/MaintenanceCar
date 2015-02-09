@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
 #pragma mark - Action Methods
 - (void)titleColumnTaped
 {
-    if (self.canSelected)
+    if (self.canSelected && [_delegate respondsToSelector:@selector(carModelViewTitleTaped)])
         [_delegate carModelViewTitleTaped];
 }
 
@@ -191,14 +191,18 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
         [MBProgressHUD showHUDAddedTo:self animated:YES];
         SCCarModel *carModel = _carModels[indexPath.row];
         [self startCarsRequest:carModel];
-        [_delegate carModelViewDidSelectedCar:nil];
+        
+        if ([_delegate respondsToSelector:@selector(carModelViewDidSelectedCar:)])
+            [_delegate carModelViewDidSelectedCar:nil];
     }
     else
     {
         // 车辆型号被选择之后清返回给主控制器，用于用户添加车辆请求的数据
         SCCar *car = _cars[indexPath.row];
         _carModelLabel.text = car.car_full_model;
-        [_delegate carModelViewDidSelectedCar:car];
+        
+        if ([_delegate respondsToSelector:@selector(carModelViewDidSelectedCar:)])
+            [_delegate carModelViewDidSelectedCar:car];
     }
 }
 

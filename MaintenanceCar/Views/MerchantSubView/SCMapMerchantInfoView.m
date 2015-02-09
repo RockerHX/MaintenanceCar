@@ -45,7 +45,8 @@
 
 - (void)tapGestureRecognizer
 {
-    [_delegate shouldShowMerchantDetail];
+    if ([_delegate respondsToSelector:@selector(shouldShowMerchantDetail)])
+        [_delegate shouldShowMerchantDetail];
 }
 
 - (UIColor *)iconColorWithName:(NSString *)name

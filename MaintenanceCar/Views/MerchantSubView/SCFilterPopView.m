@@ -45,7 +45,8 @@
 
 - (void)closePopView
 {
-    [_delegate shouldClosePopView];
+    if ([_delegate respondsToSelector:@selector(shouldClosePopView)])
+        [_delegate shouldClosePopView];
 }
 
 #pragma mark - Public Methods
@@ -90,7 +91,8 @@
     if (_canTap)
     {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        [_delegate didSelectedItem:_filterItems[indexPath.row]];
+        if ([_delegate respondsToSelector:@selector(didSelectedItem:)])
+            [_delegate didSelectedItem:_filterItems[indexPath.row]];
     }
 }
 

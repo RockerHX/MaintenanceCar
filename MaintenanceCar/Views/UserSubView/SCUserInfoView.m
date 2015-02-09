@@ -22,7 +22,8 @@
 #pragma mark - Action Methods
 - (IBAction)loginButtonPressed:(UIButton *)sender
 {
-    [_delegate shouldLogin];
+    if ([_delegate respondsToSelector:@selector(shouldLogin)])
+        [_delegate shouldLogin];
 }
 
 #pragma mark - Private Methods

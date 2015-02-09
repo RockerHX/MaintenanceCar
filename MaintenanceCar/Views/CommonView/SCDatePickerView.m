@@ -41,13 +41,15 @@
 -(void)dateChanged:(UIDatePicker *)datePicker
 {
     // 数据一旦有改变就进行回调，以便筛选栏进行显示
-    [_delegate datePickerSelectedFinish:datePicker.date mode:_datePicker.datePickerMode];
+    if ([_delegate respondsToSelector:@selector(datePickerSelectedFinish:mode:)])
+        [_delegate datePickerSelectedFinish:datePicker.date mode:_datePicker.datePickerMode];
 }
 
 - (void)addGestureRecognizer
 {
     // 空白区域被点击之后触发回调，关闭时间筛选器
-    [_delegate datePickerSelectedFinish:_datePicker.date mode:_datePicker.datePickerMode];
+    if ([_delegate respondsToSelector:@selector(datePickerSelectedFinish:mode:)])
+        [_delegate datePickerSelectedFinish:_datePicker.date mode:_datePicker.datePickerMode];
     [self removeDatePickerView];
 }
 

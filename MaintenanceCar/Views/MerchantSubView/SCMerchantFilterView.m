@@ -129,7 +129,8 @@
             [_distanceButton setTitle:filterName forState:UIControlStateNormal];
             break;
     }
-    [_delegate didSelectedFilterCondition:item type:_filterType];
+    if ([_delegate respondsToSelector:@selector(didSelectedFilterCondition:type:)])
+        [_delegate didSelectedFilterCondition:item type:_filterType];
     [self closeFilterView];
 }
 

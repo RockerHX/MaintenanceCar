@@ -19,7 +19,9 @@
 - (void)tapGestureRecognizer
 {
     [self selected];
-    [_delegate didSelected:self];
+    
+    if ([_delegate respondsToSelector:@selector(didSelected:)])
+        [_delegate didSelected:self];
 }
 
 - (void)selected

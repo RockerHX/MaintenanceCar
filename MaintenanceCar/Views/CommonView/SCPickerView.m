@@ -83,9 +83,15 @@
     // 空白区域被点击之后触发回调，为选择取选择器默认数据，关闭时间筛选器
     @try {
         if (_item)
-            [_delegate pickerViewSelectedFinish:_item];
+        {
+            if ([_delegate respondsToSelector:@selector(pickerViewSelectedFinish:)])
+                [_delegate pickerViewSelectedFinish:_item];
+        }
         else
-            [_delegate pickerViewSelectedFinish:_pickerItmes[0]];
+        {
+            if ([_delegate respondsToSelector:@selector(pickerViewSelectedFinish:)])
+                [_delegate pickerViewSelectedFinish:_pickerItmes[0]];
+        }
     }
     @catch (NSException *exception) {
         NSLog(@"SCPickerView Return Item Error:%@", exception.reason);

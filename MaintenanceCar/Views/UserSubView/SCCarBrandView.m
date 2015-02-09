@@ -32,7 +32,7 @@
 #pragma mark - Action Methods
 - (void)titleColumnTaped
 {
-    if (self.canSelected)
+    if (self.canSelected && [_delegate respondsToSelector:@selector(carBrandViewTitleTaped)])
         [_delegate carBrandViewTitleTaped];
 }
 
@@ -92,14 +92,17 @@
     // 某一个车辆品牌被选中之后获取数据，通知回调进行车辆车型数据显示
     SCCarBrand *carBrand = ((NSArray *)_carBrands[_indexTitles[indexPath.section]])[indexPath.row];
     _carBrandLabel.text = carBrand.brand_name;
-    [_delegate carBrandViewDidSelectedCar:carBrand];
+    
+    if ([_delegate respondsToSelector:@selector(carBrandViewDidSelectedCar:)])
+        [_delegate carBrandViewDidSelectedCar:carBrand];
 }
 
 #pragma mark - Scroll View Delegate Methods
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
     // 当前View滚动结束通知代理方法显示提示
-    [_delegate carBrandViewScrollEnd];
+    if ([_delegate respondsToSelector:@selector(carBrandViewScrollEnd)])
+        [_delegate carBrandViewScrollEnd];
 }
 
 #pragma mark - Public Methods

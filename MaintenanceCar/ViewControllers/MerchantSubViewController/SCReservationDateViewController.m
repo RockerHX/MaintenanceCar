@@ -321,7 +321,8 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 {
     if (buttonIndex != alertView.cancelButtonIndex)
     {
-        [_delegate reservationDateSelectedFinish:_requestDate displayDate:_displayDate];
+        if ([_delegate respondsToSelector:@selector(reservationDateSelectedFinish:displayDate:)])
+            [_delegate reservationDateSelectedFinish:_requestDate displayDate:_displayDate];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

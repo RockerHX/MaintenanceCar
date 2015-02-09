@@ -203,7 +203,8 @@
 #pragma mark - MBProgressHUD Delegate Methods
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
-    [_delegate dataSaveSuccess];
+    if ([_delegate respondsToSelector:@selector(dataSaveSuccess)])
+        [_delegate dataSaveSuccess];
     // 保存成功，返回上一页
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [self.navigationController popViewControllerAnimated:YES];

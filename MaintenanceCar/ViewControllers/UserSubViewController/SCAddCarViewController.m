@@ -203,7 +203,8 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
     [[SCAPIRequest manager] startAddCarAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            [_delegate addCarSuccessWith:responseObject[@"user_car_id"]];
+            if ([_delegate respondsToSelector:@selector(addCarSuccessWith:)])
+                [_delegate addCarSuccessWith:responseObject[@"user_car_id"]];
             [weakSelf showPromptHUDToView:weakSelf.view withText:@"添加成功！" delay:1.0f delegate:weakSelf];
         }
         else

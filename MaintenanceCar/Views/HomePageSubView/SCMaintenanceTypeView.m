@@ -42,7 +42,8 @@
         
         _preTypeView     = typeView;
         _maintenanceType = typeView.type;
-        [_delegate didSelectedMaintenanceType:typeView.type];
+        if ([_delegate respondsToSelector:@selector(didSelectedMaintenanceType:)])
+            [_delegate didSelectedMaintenanceType:typeView.type];
     }
 }
 
