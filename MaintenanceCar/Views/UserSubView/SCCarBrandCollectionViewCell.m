@@ -10,4 +10,10 @@
 
 @implementation SCCarBrandCollectionViewCell
 
+- (void)awakeFromNib
+{
+    // 车辆品牌logo圆角处理
+    _carIcon.layer.cornerRadius = 40.0f;
+}
+
 @end

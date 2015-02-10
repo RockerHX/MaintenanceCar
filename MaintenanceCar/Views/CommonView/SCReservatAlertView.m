@@ -140,9 +140,7 @@
             break;
             
         default:
-        {
             self.alpha = 1.0f;
-        }
             break;
     }
 }
