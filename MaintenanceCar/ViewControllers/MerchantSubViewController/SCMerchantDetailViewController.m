@@ -9,6 +9,7 @@
 #import "SCMerchantDetailViewController.h"
 #import <UMengAnalytics/MobClick.h>
 #import <MBProgressHUD/MBProgressHUD.h>
+#import <UIImageView+AFNetworking.h>
 #import "MicroCommon.h"
 #import "SCMerchantDetail.h"
 #import "SCAPIRequest.h"
@@ -49,6 +50,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 @property (weak, nonatomic) IBOutlet UILabel              *merchantPhoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel              *merchantTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel              *merchantBusinessLabel;
+@property (weak, nonatomic) IBOutlet UILabel              *merchantServiceIntroductionLabel;
 @property (weak, nonatomic) IBOutlet UILabel              *merchantIntroductionLabel;
 
 @end
@@ -171,6 +173,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)viewConfig
 {
+    if (IS_IPHONE_6)
+        self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 281.25f);
+    else if (IS_IPHONE_6Plus)
+        self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 310.5f);
+    [self.tableView.tableHeaderView needsUpdateConstraints];
+    [self.tableView.tableHeaderView layoutIfNeeded];
 }
 
 /**
@@ -186,6 +194,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)displayMerchantDetail
 {
+    [_merchantImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@_1.jpg", MerchantImageDoMain, _merchant.company_id]] placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
     _collectionItem.favorited                               = _merchantDetail.collected;
     _merchantBriefIntroductionCell.majors                   = _merchantDetail.majors;
     _merchantBriefIntroductionCell.distanceLabel.text       = _merchantDetail.distance;
@@ -197,6 +206,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [self handleMerchantDetail:_merchantDetail.telephone onLabel:_merchantPhoneLabel];
     [self handleMerchantDetail:[NSString stringWithFormat:@"%@ - %@", [_merchantDetail.time_open substringWithRange:(NSRange){0, 5}], [_merchantDetail.time_closed substringWithRange:(NSRange){0, 5}]] onLabel:_merchantTimeLabel];
     [self handleMerchantDetail:_merchantDetail.tags onLabel:_merchantBusinessLabel];
+    [self handleMerchantDetail:_merchantDetail.serverItemsPrompt onLabel:_merchantServiceIntroductionLabel];
     [self handleMerchantDetail:_merchantDetail.service onLabel:_merchantIntroductionLabel];
 }
 

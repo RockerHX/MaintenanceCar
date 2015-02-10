@@ -375,6 +375,7 @@
             cell.check                  = [self cellCheckStatusWithIndex:indexPath.row];
             cell.nameLabel.text         = item.service_name;
             cell.memoLabel.text         = item.memo;
+            
             return cell;
         }
             break;
@@ -490,6 +491,11 @@
         {
             _serviceItems    = userCar.normalItems;
             _maintenanceType = SCMaintenanceTypeNormal;
+            
+            [_serviceItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                [[SCUserInfo share] addMaintenanceItem:((SCServiceItem *)obj).service_name];
+                [_checkData setObject:@(YES) forKey:[@(idx) stringValue]];
+            }];
         }
             break;
     }

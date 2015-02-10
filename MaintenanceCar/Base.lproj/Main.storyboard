@@ -1819,7 +1819,7 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zW0-QN-5qz" id="WRC-px-ISd">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="MerchantIconDefault" translatesAutoresizingMaskIntoConstraints="NO" id="wnZ-JF-lrI">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="MerchantIconDefault" translatesAutoresizingMaskIntoConstraints="NO" id="wnZ-JF-lrI">
                                             <rect key="frame" x="15" y="8" width="104" height="104"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="104" id="An3-Mg-C8e">
@@ -3581,7 +3581,7 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7CL-hL-AOs" id="xSc-x7-1BE">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="MerchantIconDefault" translatesAutoresizingMaskIntoConstraints="NO" id="Bmc-jM-REF">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="MerchantIconDefault" translatesAutoresizingMaskIntoConstraints="NO" id="Bmc-jM-REF">
                                             <rect key="frame" x="15" y="8" width="104" height="104"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="104" id="d43-Fo-bJQ">
@@ -6141,7 +6141,7 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="MerchantIconDefault" translatesAutoresizingMaskIntoConstraints="NO" id="aoV-bf-fVr">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="MerchantIconDefault" translatesAutoresizingMaskIntoConstraints="NO" id="aoV-bf-fVr">
                                                     <rect key="frame" x="15" y="8" width="104" height="104"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" priority="750" constant="104" id="2W5-P3-xSk">
@@ -6251,6 +6251,9 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
+                                <variation key="heightClass=regular" ambiguous="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                                </variation>
                                 <variation key="widthClass=compact" ambiguous="YES">
                                     <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
                                 </variation>
@@ -6517,40 +6520,40 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="XSU-Hp-wAm">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="240"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vg3-gZ-cBK" customClass="SCInfiniteLoopScrollView">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MerchantImageDefault" translatesAutoresizingMaskIntoConstraints="NO" id="YNq-54-W2H">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                </scrollView>
+                                </imageView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="Vg3-gZ-cBK" firstAttribute="leading" secondItem="XSU-Hp-wAm" secondAttribute="leading" id="MF3-A1-Nbl"/>
-                                <constraint firstAttribute="bottom" secondItem="Vg3-gZ-cBK" secondAttribute="bottom" id="PHi-5g-4bD"/>
-                                <constraint firstItem="Vg3-gZ-cBK" firstAttribute="top" secondItem="XSU-Hp-wAm" secondAttribute="top" id="Wce-wC-VY2"/>
-                                <constraint firstAttribute="trailing" secondItem="Vg3-gZ-cBK" secondAttribute="trailing" id="vk3-e7-Rkm"/>
+                                <constraint firstItem="YNq-54-W2H" firstAttribute="top" secondItem="XSU-Hp-wAm" secondAttribute="top" id="Cen-dJ-7gf"/>
+                                <constraint firstAttribute="bottom" secondItem="YNq-54-W2H" secondAttribute="bottom" id="Ygs-Zs-Wpa"/>
+                                <constraint firstAttribute="trailing" secondItem="YNq-54-W2H" secondAttribute="trailing" id="htj-Uv-dDj"/>
+                                <constraint firstItem="YNq-54-W2H" firstAttribute="leading" secondItem="XSU-Hp-wAm" secondAttribute="leading" id="lah-7t-bTn"/>
                             </constraints>
                             <variation key="default">
                                 <mask key="subviews">
-                                    <exclude reference="Vg3-gZ-cBK"/>
+                                    <exclude reference="YNq-54-W2H"/>
                                 </mask>
                                 <mask key="constraints">
-                                    <exclude reference="MF3-A1-Nbl"/>
-                                    <exclude reference="PHi-5g-4bD"/>
-                                    <exclude reference="Wce-wC-VY2"/>
-                                    <exclude reference="vk3-e7-Rkm"/>
+                                    <exclude reference="Cen-dJ-7gf"/>
+                                    <exclude reference="Ygs-Zs-Wpa"/>
+                                    <exclude reference="htj-Uv-dDj"/>
+                                    <exclude reference="lah-7t-bTn"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
                                 <mask key="subviews">
-                                    <include reference="Vg3-gZ-cBK"/>
+                                    <include reference="YNq-54-W2H"/>
                                 </mask>
                                 <mask key="constraints">
-                                    <include reference="MF3-A1-Nbl"/>
-                                    <include reference="PHi-5g-4bD"/>
-                                    <include reference="Wce-wC-VY2"/>
-                                    <include reference="vk3-e7-Rkm"/>
+                                    <include reference="Cen-dJ-7gf"/>
+                                    <include reference="Ygs-Zs-Wpa"/>
+                                    <include reference="htj-Uv-dDj"/>
+                                    <include reference="lah-7t-bTn"/>
                                 </mask>
                             </variation>
                         </view>
@@ -7148,7 +7151,7 @@
                                             </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="113" id="i2K-Ow-Dre">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="100" id="i2K-Ow-Dre">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i2K-Ow-Dre" id="6E5-RS-cyB">
@@ -7173,7 +7176,7 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="业务介绍" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="339" translatesAutoresizingMaskIntoConstraints="NO" id="Fx4-Cm-Sh8">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="业务介绍" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="259" translatesAutoresizingMaskIntoConstraints="NO" id="Fx4-Cm-Sh8">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -7181,7 +7184,9 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="C1u-ul-Yhc" secondAttribute="centerY" constant="0.75" id="ABA-ZV-uzq"/>
+                                                <constraint firstAttribute="centerY" secondItem="C1u-ul-Yhc" secondAttribute="centerY" constant="0.75" id="ABA-ZV-uzq">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                                </constraint>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Fx4-Cm-Sh8" secondAttribute="bottom" id="HeF-2R-CcW"/>
                                                 <constraint firstItem="Fx4-Cm-Sh8" firstAttribute="leading" secondItem="C1u-ul-Yhc" secondAttribute="trailing" constant="8" id="Lhj-ZM-Asf">
                                                     <variation key="heightClass=regular-widthClass=compact" constant="16"/>
@@ -7220,6 +7225,49 @@
                                             </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="100" id="7kJ-P3-BeQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7kJ-P3-BeQ" id="FR0-f9-Rhh">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商户介绍" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="304" translatesAutoresizingMaskIntoConstraints="NO" id="8bq-lt-ruk">
+                                                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="8bq-lt-ruk" secondAttribute="trailing" id="09d-Id-kPg"/>
+                                                <constraint firstItem="8bq-lt-ruk" firstAttribute="leading" secondItem="FR0-f9-Rhh" secondAttribute="leadingMargin" id="K3F-S0-YOG"/>
+                                                <constraint firstItem="8bq-lt-ruk" firstAttribute="top" secondItem="FR0-f9-Rhh" secondAttribute="topMargin" id="eyf-Qz-UCi"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="8bq-lt-ruk" secondAttribute="bottom" id="iBj-LV-M8Y"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="subviews">
+                                                    <exclude reference="8bq-lt-ruk"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <exclude reference="09d-Id-kPg"/>
+                                                    <exclude reference="K3F-S0-YOG"/>
+                                                    <exclude reference="eyf-Qz-UCi"/>
+                                                    <exclude reference="iBj-LV-M8Y"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="subviews">
+                                                    <include reference="8bq-lt-ruk"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <include reference="09d-Id-kPg"/>
+                                                    <include reference="K3F-S0-YOG"/>
+                                                    <include reference="eyf-Qz-UCi"/>
+                                                    <include reference="iBj-LV-M8Y"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -7240,8 +7288,10 @@
                         <outlet property="merchantAddressLabel" destination="m10-UC-fHr" id="qNl-xC-biv"/>
                         <outlet property="merchantBriefIntroductionCell" destination="KUx-vR-H14" id="6wM-8k-GsM"/>
                         <outlet property="merchantBusinessLabel" destination="7ld-4z-yAc" id="6RO-xu-JJi"/>
-                        <outlet property="merchantIntroductionLabel" destination="Fx4-Cm-Sh8" id="B2r-xZ-Mwd"/>
+                        <outlet property="merchantImageView" destination="YNq-54-W2H" id="fc2-cy-rWs"/>
+                        <outlet property="merchantIntroductionLabel" destination="8bq-lt-ruk" id="clb-gx-UXp"/>
                         <outlet property="merchantPhoneLabel" destination="agX-G6-b2B" id="LQV-tY-QNX"/>
+                        <outlet property="merchantServiceIntroductionLabel" destination="Fx4-Cm-Sh8" id="3wd-5C-3gK"/>
                         <outlet property="merchantTimeLabel" destination="46M-fi-M1g" id="xkK-jJ-p2b"/>
                     </connections>
                 </tableViewController>
@@ -7361,7 +7411,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmO-lK-xr4" customClass="SCMapMerchantInfoView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MerchantIconDefault" translatesAutoresizingMaskIntoConstraints="NO" id="wJ4-oE-oM0">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MerchantIconDefault" translatesAutoresizingMaskIntoConstraints="NO" id="wJ4-oE-oM0">
                                         <rect key="frame" x="15" y="8" width="104" height="104"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="29w-IK-sta"/>
@@ -8402,7 +8452,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C6L-I3-0rj" id="39V-HL-cNP">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="MerchantIconDefault" translatesAutoresizingMaskIntoConstraints="NO" id="0wT-TR-nr8">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="MerchantIconDefault" translatesAutoresizingMaskIntoConstraints="NO" id="0wT-TR-nr8">
                                                     <rect key="frame" x="15" y="8" width="104" height="104"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="104" id="f6X-qI-QNr">
@@ -8927,6 +8977,7 @@
         <image name="MerchantAddressIcon" width="21" height="21"/>
         <image name="MerchantBusinessIcon" width="21" height="21"/>
         <image name="MerchantIconDefault" width="80" height="80"/>
+        <image name="MerchantImageDefault" width="320" height="240"/>
         <image name="MerchantIntroduceIcon" width="21" height="21"/>
         <image name="MerchantListIconUnselected" width="24" height="24"/>
         <image name="MerchantPhoneIcon" width="21" height="21"/>

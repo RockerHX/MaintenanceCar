@@ -30,7 +30,9 @@
 @property (nonatomic, strong) NSDictionary <Optional>*service_items;  // 服务项目
 @property (nonatomic, assign) BOOL                   collected;       // 收藏状态
 
-@property (nonatomic, copy, readonly)  NSString <Ignore>*distance;      // 手机当前位置与商户的距离
-@property (nonatomic, strong, readonly) NSArray <Ignore>*merchantFlags; // 商户标签集合
+@property (nonatomic, copy, readonly)   NSString <Ignore>*distance;             // 手机当前位置与商户的距离
+@property (nonatomic, copy, readonly)   NSString <Ignore>*serverItemsPrompt;    // 商户服务描述
+@property (nonatomic, strong, readonly)  NSArray <Ignore>*merchantFlags;        // 商户标签集合
+
 
 @end

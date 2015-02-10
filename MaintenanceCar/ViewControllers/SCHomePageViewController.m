@@ -238,7 +238,7 @@
     {
         @try {
             SCServiceMerchantListViewController *specialViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCServiceMerchantListViewController"];
-            specialViewController.query    = [DefaultQuery stringByAppendingString:special.query];
+            specialViewController.query    = [DefaultQuery stringByAppendingFormat:@" AND %@", special.query];
             specialViewController.itemTite = special.text;
             specialViewController.title    = special.text;
             [self.navigationController pushViewController:specialViewController animated:YES];
