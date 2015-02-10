@@ -159,7 +159,7 @@
     
     SCServiceItem *item = [SCAllDictionary share].serviceItems[indexPath.row];
     cell.textLabel.text = item.service_name;
-    cell.backgroundColor = (indexPath.row == 3) ? [UIColor colorWithWhite:0.3f alpha:1.0f] : cell.backgroundColor;
+    cell.backgroundColor = [item.service_name isEqualToString:@"免费检测"] ? [UIColor colorWithWhite:0.3f alpha:1.0f] : cell.backgroundColor;
     return cell;
 }
 

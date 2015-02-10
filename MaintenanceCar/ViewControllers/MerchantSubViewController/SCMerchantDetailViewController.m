@@ -221,7 +221,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     else if (detail.length > 14)
         label.font = [UIFont systemFontOfSize:14.0f];
     
-    label.text = detail;
+    label.text = detail.length ? detail : @"数据完善中...";
 }
 
 /**
