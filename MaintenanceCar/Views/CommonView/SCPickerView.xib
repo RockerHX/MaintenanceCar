@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SCPickerView">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UPK-EO-AsY">
+                    <rect key="frame" x="0.0" y="600" width="600" height="180"/>
+                    <subviews>
+                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="os8-2M-gFa">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="180"/>
+                        </pickerView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="os8-2M-gFa" firstAttribute="top" secondItem="UPK-EO-AsY" secondAttribute="top" id="65V-nL-BYu"/>
+                        <constraint firstAttribute="trailing" secondItem="os8-2M-gFa" secondAttribute="trailing" id="LqY-bz-lea"/>
+                        <constraint firstItem="os8-2M-gFa" firstAttribute="leading" secondItem="UPK-EO-AsY" secondAttribute="leading" id="SMI-xc-jWu"/>
+                        <constraint firstAttribute="bottom" secondItem="os8-2M-gFa" secondAttribute="bottom" id="f9X-2l-7be"/>
+                        <constraint firstAttribute="height" constant="180" id="zJF-zy-un3"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="UPK-EO-AsY" secondAttribute="trailing" id="PhD-zr-Z6M"/>
+                <constraint firstAttribute="bottom" secondItem="UPK-EO-AsY" secondAttribute="bottom" constant="-180" id="hE0-dd-gPo"/>
+                <constraint firstItem="UPK-EO-AsY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ni0-PS-TWg"/>
+            </constraints>
+            <connections>
+                <outlet property="bottomConstraint" destination="hE0-dd-gPo" id="9LO-RF-42a"/>
+                <outlet property="containerView" destination="UPK-EO-AsY" id="5uR-dD-OTK"/>
+                <outlet property="picker" destination="os8-2M-gFa" id="Daz-UB-Dgk"/>
+            </connections>
+        </view>
+    </objects>
+</document>

@@ -1,0 +1,1 @@
+../../../SCInfiniteLoopScrollView/SCInfiniteLoopScrollView/SCInfiniteLoopScrollView.h
