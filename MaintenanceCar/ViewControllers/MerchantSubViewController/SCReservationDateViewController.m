@@ -195,7 +195,7 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 
 - (BOOL)itemCanSelectedWithIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row)
+    if (indexPath.row == 1)
     {
         NSString *time = [self getTime:indexPath];
         
@@ -208,6 +208,8 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
         NSComparisonResult result = [now compare:reservationDate];
         return (result == NSOrderedDescending) ? NO : YES;
     }
+    else if (indexPath.row > 1)
+        return YES;
     return NO;
 }
 

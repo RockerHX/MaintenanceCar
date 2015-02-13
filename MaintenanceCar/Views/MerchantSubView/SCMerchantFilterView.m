@@ -29,7 +29,6 @@
 {
     // 加载视图之后初始化相关数据
     [self initConfig];
-    [self viewConfig];
 }
 
 #pragma mark - Action Methods
@@ -46,21 +45,31 @@
 
 - (IBAction)otherFilterButtonPressed:(UIButton *)sender
 {
-    if (_isRepair)
-    {
-        [[SCAllDictionary share] hanleRepairConditions:[SCUserInfo share].cars];
-        [self popFilterViewWtihType:SCFilterTypeRepair];
-    }
-    else
-        [self popFilterViewWtihType:SCFilterTypeOther];
+    [self popFilterViewWtihType:SCFilterTypeOther];
 }
 
 #pragma mark - Setter And Getter Methods
+- (void)setIsWash:(BOOL)isWash
+{
+    _isWash = isWash;
+    if (isWash)
+    {
+        _buttonWidth.constant = DOT_COORDINATE;
+        [_repairTypeButton setTitle:@"" forState:UIControlStateNormal];
+    }
+    else
+        _buttonWidth.constant = (SCREEN_WIDTH - 60.0f)/3;
+    [_repairTypeButton needsUpdateConstraints];
+    [_repairTypeButton layoutIfNeeded];
+}
 
 #pragma mark - Private Methods
 - (void)initConfig
 {
     _filterPopView.delegate = self;     // 设置弹出视图代理，以便回调方法触发
+    
+    self.hidden = YES;
+    self.isWash = NO;
 }
 
 - (void)viewConfig
@@ -116,6 +125,8 @@
 - (void)didSelectedItem:(id)item
 {
     NSString *filterName = item[DisplayNameKey];
+    filterName = [item[RequestValueKey] isEqualToString:@"default"] ? [NSString stringWithFormat:@"按%@", [filterName substringToIndex:2]] : filterName;
+    
     switch (_filterType)
     {
         case SCFilterTypeRepair:

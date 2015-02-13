@@ -126,6 +126,7 @@
 - (void)viewConfig
 {
     _merchantFilterView.delegate = self;
+    _merchantFilterView.hidden   = NO;
     _tableView.scrollsToTop      = YES;
     _tableView.tableFooterView   = [[UIView alloc] init];       // 设置footer视图，防止数据不够，显示多余的列表栏
 }
@@ -230,7 +231,7 @@
             break;
             
         default:
-            _distanceCondition = filterCondition;
+            _distanceCondition = [filterCondition isEqualToString:@"default"] ? MerchantListRadius : filterCondition;
             break;
     }
     _query = [NSString stringWithFormat:@"%@%@%@", DefaultQuery, allDictionary.repairCondition, allDictionary.otherCondition];

@@ -63,6 +63,7 @@
     if ([segue.identifier isEqualToString:@"Wash"])
     {
         SCServiceMerchantListViewController *washMerchanListViewController = segue.destinationViewController;
+        washMerchanListViewController.isWash   = YES;
         washMerchanListViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'洗'"];
         washMerchanListViewController.itemTite = @"洗车美容";
         washMerchanListViewController.title    = @"洗车美容";
@@ -70,7 +71,6 @@
     else if ([segue.identifier isEqualToString:@"Repair"])
     {
         SCServiceMerchantListViewController *repairMerchanListViewController = segue.destinationViewController;
-        repairMerchanListViewController.isRepair = YES;
         repairMerchanListViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'修'"];
         repairMerchanListViewController.itemTite = @"修车";
         repairMerchanListViewController.title    = @"修车";

@@ -26,7 +26,7 @@
     {
         BOOL show = ([text integerValue] > 0);
         // 设置内容显示
-        _textLabel.text      = show ? [text stringValue] : @"0";
+        _textLabel.text      = (show && canSelected) ? [text stringValue] : @"";
         _textLabel.textColor = (show && canSelected) ? APPColor : [UIColor lightGrayColor];
         self.backgroundColor = [UIColor colorWithWhite:(show && canSelected) ? 0.75f : 0.9f alpha:1.0f];
         
