@@ -139,8 +139,6 @@
     return region;
 }
 
-
-
 - (void)displayUserLocation
 {
     __weak typeof(self)weakSelf = self;
