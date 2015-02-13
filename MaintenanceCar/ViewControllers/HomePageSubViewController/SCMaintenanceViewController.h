@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UILabel               *driveCarLabel;
 @property (weak, nonatomic) IBOutlet UILabel               *driveHabitLabel;
 @property (weak, nonatomic) IBOutlet UIView                *headerView;
+@property (weak, nonatomic) IBOutlet UIView                *footerView;
 
 - (IBAction)preCarButtonPressed:(UIButton *)sender;
 - (IBAction)nextButtonPressed:(UIButton *)sender;

@@ -43,6 +43,13 @@
     [MobClick beginLogPageView:[NSString stringWithFormat:@"[%@] - 列表", self.title]];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    _merchantFilterView.isWash = _isWash;
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     // 用户行为统计，页面停留时间
@@ -127,15 +134,12 @@
 
     _merchantList                = [@[] mutableCopy];   // 商户列表容器初始化
     _merchantFilterView.delegate = self;
-    _merchantFilterView.isRepair = _isRepair;
 }
 
 - (void)viewConfig
 {
     _tableView.scrollsToTop      = YES;
     _tableView.tableFooterView   = [[UIView alloc] init];       // 设置footer视图，防止数据不够，显示多余的列表栏
-    
-    [_merchantFilterView.otherFilterButton setTitle:_itemTite forState:UIControlStateNormal];
 }
 
 - (void)refreshMerchantList
@@ -193,6 +197,7 @@
                 ShowPromptHUDWithText(weakSelf.navigationController.view, @"优质商户陆续添加中...", 0.5f);
                 [_tableView reloadData];
             }
+            _merchantFilterView.hidden = NO;
         }
         else
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
@@ -240,7 +245,7 @@
             break;
             
         default:
-            _distanceCondition = filterCondition;
+            _distanceCondition = [filterCondition isEqualToString:@"default"] ? MerchantListRadius : filterCondition;
             break;
     }
     _requestQuery = [NSString stringWithFormat:@"%@%@%@", _query, allDictionary.repairCondition, allDictionary.otherCondition];

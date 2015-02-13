@@ -16,7 +16,7 @@
 
 @property (nonatomic, copy)                      NSString *itemTite;
 @property (nonatomic, copy)                      NSString *query;
-@property (nonatomic, assign)                        BOOL isRepair;
+@property (nonatomic, assign)                        BOOL isWash;
 
 // [地图]按钮触发事件
 - (IBAction)mapItemPressed:(UIBarButtonItem *)sender;

@@ -230,7 +230,7 @@
             break;
             
         default:
-            _distanceCondition = filterCondition;
+            _distanceCondition = [filterCondition isEqualToString:@"default"] ? MerchantListRadius : filterCondition;
             break;
     }
     _query = [NSString stringWithFormat:@"%@%@%@", DefaultQuery, allDictionary.repairCondition, allDictionary.otherCondition];

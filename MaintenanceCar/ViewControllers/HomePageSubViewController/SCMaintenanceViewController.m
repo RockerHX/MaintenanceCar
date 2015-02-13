@@ -22,6 +22,7 @@
 #import "SCMileageView.h"
 #import "SCAllDictionary.h"
 #import "SCChangeMaintenanceDataViewController.h"
+#import "SCServiceMerchantListViewController.h"
 
 #define MaintenanceCellReuseIdentifier   @"MaintenanceCellReuseIdentifier"
 
@@ -74,8 +75,18 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = segue.destinationViewController;
-    changeMaintenanceDataViewController.delegate = self;
+    if ([segue.identifier isEqualToString:@"Maintenance"])
+    {
+        SCServiceMerchantListViewController *maintenanceViewController = segue.destinationViewController;
+        maintenanceViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'养'"];
+        maintenanceViewController.itemTite = @"保养";
+        maintenanceViewController.title    = @"保养";
+    }
+    else
+    {
+        SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = segue.destinationViewController;
+        changeMaintenanceDataViewController.delegate = self;
+    }
 }
 
 #pragma mark - Action Methods
@@ -289,9 +300,15 @@
                     [_recommendMerchants addObject:merchant];
                 }
                 [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationLeft];
+                [self performSelector:@selector(showFooterView:) withObject:@(list.count) afterDelay:0.2f];
             }
         } failure:nil];
     } failure:nil];
+}
+
+- (void)showFooterView:(NSNumber *)show
+{
+    _footerView.hidden = ![show boolValue];
 }
 
 - (void)hanldeServiceDataWithNormalData:(NSArray *)noralData carefulData:(NSArray *)carefulData allData:(NSArray *)allData
@@ -375,7 +392,6 @@
             cell.check                  = [self cellCheckStatusWithIndex:indexPath.row];
             cell.nameLabel.text         = item.service_name;
             cell.memoLabel.text         = item.memo;
-            
             return cell;
         }
             break;
@@ -385,7 +401,6 @@
             SCMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MerchantCellReuseIdentifier forIndexPath:indexPath];
             // 刷新商户列表，设置相关数据
             [cell handelWithMerchant:_recommendMerchants[indexPath.row]];
-            
             return cell;
         }
             break;
@@ -395,6 +410,9 @@
 #pragma mark - Table View Delegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // 列表栏被点击，执行取消选中动画
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if (indexPath.section == 0)
     {
         SCUserInfo *userInfo        = [SCUserInfo share];
@@ -415,9 +433,6 @@
     }
     else if (indexPath.section == 1)
     {
-        // 列表栏被点击，执行取消选中动画
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
         // 根据选中的商户，取到其商户ID，跳转到商户页面进行详情展示
         SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
         merchantDetialViewControler.merchant = (SCMerchant *)_recommendMerchants[indexPath.row];
