@@ -57,7 +57,7 @@ static SCLocationManager *locationManager = nil;
         //设置定位精确度，默认：kCLLocationAccuracyBest
         [BMKLocationService setLocationDesiredAccuracy:kCLLocationAccuracyNearestTenMeters];
         //指定最小距离更新(米)，默认：kCLDistanceFilterNone
-        [BMKLocationService setLocationDistanceFilter:100.f];
+        [BMKLocationService setLocationDistanceFilter:10.0f];
         
         //初始化BMKLocationService
         _locationService = [[BMKLocationService alloc]init];

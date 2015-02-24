@@ -52,6 +52,13 @@
     [MobClick endLogPageView:@"[商户] - 地图"];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [_timer invalidate];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -64,11 +71,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)dealloc
-{
-    [_timer invalidate];
 }
 
 #pragma mark - Action Methods
@@ -139,13 +141,11 @@
     return region;
 }
 
-
-
 - (void)displayUserLocation
 {
     __weak typeof(self)weakSelf = self;
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
-        [_mapView updateLocationData:userLocation];     // 根据坐标在地图上显示位置
+        [weakSelf.mapView updateLocationData:userLocation];     // 根据坐标在地图上显示位置
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
         ShowPromptHUDWithText(weakSelf.view, [error description], 1.0f);
     }];

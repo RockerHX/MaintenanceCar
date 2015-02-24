@@ -13,11 +13,12 @@
 
 @interface SCMapViewController : UIViewController
 
-@property (nonatomic, strong)                      NSArray *merchants;                  // 商户列表数据
 @property (weak, nonatomic) IBOutlet            BMKMapView *mapView;                    // 百度地图
 @property (weak, nonatomic) IBOutlet SCMapMerchantInfoView *mapMerchantInfoView;        // 地图页面，商户信息视图，用户展示商户基本信息
 @property (weak, nonatomic) IBOutlet       UIBarButtonItem *leftItem;
 
+
+@property (nonatomic, strong)                      NSArray *merchants;                  // 商户列表数据
 @property (nonatomic, assign)                         BOOL showInfoView;
 @property (nonatomic, assign)                         BOOL isMerchantMap;
 
