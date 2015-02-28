@@ -18,8 +18,10 @@
 #import "SCWebViewController.h"
 #import "SCServiceMerchantListViewController.h"
 #import "SCADView.h"
+#import "SCAddCarViewController.h"
+#import "SCChangeMaintenanceDataViewController.h"
 
-@interface SCHomePageViewController () <UIAlertViewDelegate, SCADViewDelegate>
+@interface SCHomePageViewController () <UIAlertViewDelegate, SCADViewDelegate, SCHomePageDetailViewDelegate, SCAddCarViewControllerDelegate, SCChangeMaintenanceDataViewControllerDelegate>
 
 @end
 
@@ -117,6 +119,7 @@
 #pragma mark - Private Methods
 - (void)initConfig
 {
+    _detailView.delegate = self;
     [self startSpecialRequest];
 }
 
@@ -249,6 +252,47 @@
         @finally {
         }
     }
+}
+
+#pragma mark - SCHomePageDetailViewDelegate Methods
+- (void)shouldLogin
+{
+    [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
+}
+
+- (void)shouldAddCar
+{
+    @try {
+        UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
+        SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
+        addCarViewController.delegate = self;
+        [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
+}
+
+- (void)shouldChangeCarData:(SCUserCar *)userCar
+{
+    @try {
+        SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCChangeMaintenanceDataViewController"];
+        changeMaintenanceDataViewController.car = userCar;
+        [self.navigationController pushViewController:changeMaintenanceDataViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCHomePageViewController Go to the SCChangeMaintenanceDataViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
+}
+
+#pragma mark - SCAddCarViewControllerDelegate Methods
+- (void)addCarSuccessWith:(NSString *)userCarID
+{
+    [_detailView getUserCar];
 }
 
 @end

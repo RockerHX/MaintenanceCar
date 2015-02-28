@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SCUserInfo.h"
 
 @protocol SCUserInfoViewDelegate <NSObject>
 
 @optional
 - (void)shouldLogin;
+- (void)shouldChangeCarData:(SCUserCar *)userCar;
 
 @end
 

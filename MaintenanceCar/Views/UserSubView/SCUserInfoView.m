@@ -9,7 +9,13 @@
 #import "SCUserInfoView.h"
 #import <SCInfiniteLoopScrollView/SCInfiniteLoopScrollView.h>
 #import "MicroCommon.h"
-#import "SCUserInfo.h"
+
+@interface SCUserInfoView ()
+{
+    NSUInteger _carCount;
+}
+
+@end
 
 @implementation SCUserInfoView
 
@@ -30,8 +36,12 @@
 - (void)viewConfig
 {
     _loginButton.layer.cornerRadius = 8.0f;
-    
-    [self refresh];
+}
+
+- (void)tapGestureRecognizer:(UITapGestureRecognizer *)tap
+{
+    if ([_delegate respondsToSelector:@selector(shouldChangeCarData:)])
+        [_delegate shouldChangeCarData:[SCUserInfo share].cars[tap.view.tag]];
 }
 
 #pragma mark - Public Methods
@@ -42,38 +52,45 @@
     _carInfoView.hidden  = !_loginButton.hidden;
     _userCarsView.hidden = _carInfoView.hidden;
     
-    if (userInfo.cars.count)
+    if (userInfo.loginStatus)
     {
-        if (!_userCarsView.hidden && userInfo.cars.count)
+        if (userInfo.cars.count != _carCount)
         {
-            NSMutableArray *items = [@[] mutableCopy];
-            for (NSInteger index = 0; index < userInfo.cars.count; index++)
+            _carCount = userInfo.cars.count;
+            if (!_userCarsView.hidden && userInfo.cars.count)
             {
-                UIImageView *carView = [[UIImageView alloc] init];
-                carView.image = [UIImage imageNamed:@"car"];
-                [items addObject:carView];
+                NSMutableArray *items = [@[] mutableCopy];
+                for (NSInteger index = 0; index < userInfo.cars.count; index++)
+                {
+                    UIImageView *carView           = [[UIImageView alloc] init];
+                    carView.userInteractionEnabled = YES;
+                    carView.tag                    = index;
+                    carView.image                  = [UIImage imageNamed:@"car"];
+                    [carView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)]];
+                    [items addObject:carView];
+                }
+                _userCarsView.subItems = items;
+                
+                SCUserCar *car = [userInfo.cars firstObject];
+                _carNameLabel.text = [NSString stringWithFormat:@"%@%@", car.brand_name, car.model_name];
+                _carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", car.run_distance.length ? car.run_distance : @"0"];
             }
-            _userCarsView.subItems = items;
             
-            SCUserCar *car = [userInfo.cars firstObject];
-            _carNameLabel.text = [NSString stringWithFormat:@"%@%@", car.brand_name, car.model_name];
-            _carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", car.run_distance.length ? car.run_distance : @"0"];
+            __weak typeof(self)weakSelf = self;
+            [_userCarsView startAnimation:^(NSInteger index, BOOL animated) {
+                SCUserCar *car = userInfo.cars[index];
+                weakSelf.carNameLabel.text = [NSString stringWithFormat:@"%@%@", car.brand_name, car.model_name];
+                weakSelf.carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", car.run_distance.length ? car.run_distance : @"0"];
+            }];
         }
-        
-        __weak typeof(self)weakSelf = self;
-        [_userCarsView startAnimation:^(NSInteger index, BOOL animated) {
-            SCUserCar *car = userInfo.cars[index];
-            weakSelf.carNameLabel.text = [NSString stringWithFormat:@"%@%@", car.brand_name, car.model_name];
-            weakSelf.carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", car.run_distance.length ? car.run_distance : @"0"];
-        }];
-    }
-    else
-    {
-        UIImageView *carView = [[UIImageView alloc] init];
-        carView.image = [UIImage imageNamed:@"car"];
-        _userCarsView.subItems = @[carView];
-        
-        _carNameLabel.text = @"请添加车辆";
+        else if (userInfo.cars.count == 0)
+        {
+            UIImageView *carView = [[UIImageView alloc] init];
+            carView.image = [UIImage imageNamed:@"car"];
+            _userCarsView.subItems = @[carView];
+            
+            _carNameLabel.text = @"请在右上角添加车辆";
+        }
     }
 }
 

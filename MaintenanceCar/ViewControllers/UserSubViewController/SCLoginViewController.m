@@ -228,7 +228,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
 - (void)dismissController:(SCDismissType)type
 {
     if (type == SCDismissTypeLoginSuccess)
-        [[SCUserInfo share] userCarsReuqest:nil];
+        [NOTIFICATION_CENTER postNotificationName:kUserLoginSuccessNotification object:nil];
     [_verificationCodeView stop];           // 退出之前要记得关掉验证码倒计时，防止内存释放引起crash
     [self resignKeyBoard];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];

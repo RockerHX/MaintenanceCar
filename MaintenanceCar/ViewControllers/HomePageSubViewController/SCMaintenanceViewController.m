@@ -34,8 +34,10 @@
     NSMutableDictionary *_checkData;
     NSMutableArray      *_recommendMerchants;
     
-    NSInteger         _carIndex;
-    SCMaintenanceType _maintenanceType;
+    NSInteger           _carIndex;
+    SCMaintenanceType   _maintenanceType;
+    
+    SCUserCar           *_currentCar;
 }
 
 @end
@@ -71,7 +73,6 @@
 }
 
 #pragma mark - Navigation
-
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -82,11 +83,6 @@
         maintenanceViewController.itemTite = @"保养";
         maintenanceViewController.title    = @"保养";
     }
-    else
-    {
-        SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = segue.destinationViewController;
-        changeMaintenanceDataViewController.delegate = self;
-    }
 }
 
 #pragma mark - Action Methods
@@ -96,7 +92,7 @@
     if (_carIndex > Zero)
     {
         _carIndex --;
-        userInfo.currentCar = userInfo.cars[_carIndex];
+        _currentCar = userInfo.cars[_carIndex];
         
         _nextButton.enabled = YES;
         if (!_carIndex)
@@ -113,7 +109,7 @@
     if (_carIndex < count)
     {
         _carIndex ++;
-        userInfo.currentCar = userInfo.cars[_carIndex];
+        _currentCar = userInfo.cars[_carIndex];
         
         _preButton.enabled = YES;
         if (_carIndex == count)
@@ -123,13 +119,30 @@
     }
 }
 
+- (IBAction)infoViewPressed:(id)sender
+{
+    @try {
+        SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCChangeMaintenanceDataViewController"];
+        changeMaintenanceDataViewController.delegate = self;
+        changeMaintenanceDataViewController.car = _currentCar;
+        [self.navigationController pushViewController:changeMaintenanceDataViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCHomePageViewController Go to the SCChangeMaintenanceDataViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
+}
+
 #pragma mark - Private Methods
 - (void)initConfig
 {
-    _checkData          = [@{} mutableCopy];
-    _recommendMerchants = [@[] mutableCopy];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _checkData                    = [@{} mutableCopy];
+    _recommendMerchants           = [@[] mutableCopy];
+    
+    _currentCar                   = [[SCUserInfo share].cars firstObject];
     _maintenanceTypeView.delegate = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
     [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed:) name:kMaintenanceReservationNotification object:nil];
@@ -159,16 +172,19 @@
         _driveHabitLabel.font = [UIFont systemFontOfSize:13.0f];
     }
     
-    if ([SCUserInfo share].cars.count)
+    NSArray *userCars = [SCUserInfo share].cars;
+    if (userCars.count)
+    {
+        _nextButton.enabled = (userCars.count > 1) ? YES : NO;
         [self startDataRequest];
+    }
     else
         [self showPromptHUDWithText:@"暂无车辆，请您添加" delay:0.5f delegate:self];
 }
 
 - (void)displayMaintenanceView
 {
-    SCUserInfo *userInfo                 = [SCUserInfo share];
-    SCUserCar *userCar                   = userInfo.currentCar;
+    SCUserCar *userCar                   = _currentCar;
     _carNameLabel.text                   = userCar.model_name;
     _carFullNameLabel.text               = userCar.car_full_model;
     _buyCarTimeLabel.text                = ([userCar.buy_car_year integerValue] && [userCar.buy_car_month integerValue]) ? [NSString stringWithFormat:@"%@年%@月", userCar.buy_car_year, userCar.buy_car_month] : @"";
@@ -241,7 +257,7 @@
 {
     __weak typeof(self)weakSelf = self;
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    NSDictionary *parameters = @{@"user_car_id": [SCUserInfo share].currentCar.user_car_id};
+    NSDictionary *parameters = @{@"user_car_id": _currentCar.user_car_id};
     [[SCAPIRequest manager] startMaintenanceDataAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
@@ -250,7 +266,7 @@
             NSArray *allItems     = responseObject[@"all"];
             [weakSelf hanldeServiceDataWithNormalData:normalItems carefulData:carefulItems allData:allItems];
             
-            SCUserCar *userCar   = [SCUserInfo share].currentCar;
+            SCUserCar *userCar   = _currentCar;
             if (userCar.normalItems.count)
             {
                 _serviceItems    = userCar.normalItems;
@@ -341,7 +357,7 @@
             [allItems addObject:item];
         }
     }
-    SCUserCar *userCar   = [SCUserInfo share].currentCar;
+    SCUserCar *userCar   = _currentCar;
     userCar.normalItems  = normalItems;
     userCar.carefulItems = carefulItems;
     userCar.allItems     = allItems;
@@ -484,7 +500,7 @@
 #pragma mark - SCMaintenanceTypeView Delegate Methods
 - (void)didSelectedMaintenanceType:(SCMaintenanceType)type
 {
-    SCUserCar *userCar    = [SCUserInfo share].currentCar;
+    SCUserCar *userCar = _currentCar;
     [[SCUserInfo share] removeItems];
     [_checkData removeAllObjects];
     switch (type)

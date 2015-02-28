@@ -3202,7 +3202,7 @@
                                                 </mask>
                                             </variation>
                                             <connections>
-                                                <segue destination="vni-fv-RU6" kind="push" id="aFE-Ug-8sm"/>
+                                                <action selector="infoViewPressed:" destination="ARc-A9-Ntw" eventType="touchUpInside" id="ok3-zD-4fq"/>
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="         " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DbD-bB-R8t">
@@ -4024,12 +4024,12 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vIl-D7-E5b" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="WAY-2o-L1V">
                     <connections>
-                        <segue destination="vni-fv-RU6" kind="push" id="A0j-uD-jiD"/>
+                        <action selector="infoViewPressed:" destination="ARc-A9-Ntw" id="GqG-fd-fLt"/>
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="1wi-Ic-JPv">
                     <connections>
-                        <segue destination="vni-fv-RU6" kind="push" id="Yrx-Y3-5zt"/>
+                        <action selector="infoViewPressed:" destination="ARc-A9-Ntw" id="rzn-vj-yKj"/>
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="9uj-FC-h1z">
@@ -4043,7 +4043,7 @@
         <!--修改车辆数据-->
         <scene sceneID="AnZ-Nu-VXq">
             <objects>
-                <tableViewController storyboardIdentifier="SCChangeMaintenanceDataViewController" id="vni-fv-RU6" customClass="SCChangeMaintenanceDataViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SCChangeMaintenanceDataViewController" hidesBottomBarWhenPushed="YES" id="vni-fv-RU6" customClass="SCChangeMaintenanceDataViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" id="YDT-eq-XE6">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -5354,7 +5354,7 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background2" translatesAutoresizingMaskIntoConstraints="NO" id="hZo-I9-aue">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="元景修养" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S61-b0-KbK">
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="元景修养" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S61-b0-KbK">
                                         <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="iLX-ic-HyO">
@@ -5435,7 +5435,7 @@
                                             <action selector="preCarButtonPressed:" destination="Ef7-i4-Lse" eventType="touchUpInside" id="Qdu-pq-8tb"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zRD-ct-i4T">
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zRD-ct-i4T">
                                         <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="gbX-Mj-cAz"/>
@@ -6551,7 +6551,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="商户列表" id="GPy-oH-Ucf">
-                        <barButtonItem key="leftBarButtonItem" title="地图" id="O66-qs-aiK">
+                        <barButtonItem key="rightBarButtonItem" title="地图" id="O66-qs-aiK">
                             <connections>
                                 <action selector="mapItemPressed:" destination="bZY-wt-C59" id="flX-xW-MS6"/>
                             </connections>
@@ -7762,7 +7762,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="商户地图" id="5iH-PN-oHg">
-                        <barButtonItem key="leftBarButtonItem" title="列表" id="el6-hN-7pS">
+                        <barButtonItem key="rightBarButtonItem" title="列表" id="el6-hN-7pS">
                             <connections>
                                 <action selector="listItemPressed:" destination="TMn-nT-psn" id="NVL-HP-28u"/>
                             </connections>
@@ -9104,7 +9104,6 @@
         <image name="the-radio-uncheck" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aFE-Ug-8sm"/>
-        <segue reference="L2L-7X-s2i"/>
+        <segue reference="XhJ-3w-cxI"/>
     </inferredMetricsTieBreakers>
 </document>

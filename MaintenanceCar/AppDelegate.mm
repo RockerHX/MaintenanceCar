@@ -40,7 +40,7 @@
     // 启用[友盟反馈]
     [UMFeedback setAppkey:UMengAPPKEY];
     // 启动[友盟统计]，采用启动发送的方式 - BATCH
-    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:@"App Store"];
+    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:@"version:1.1.1 - test"];
     // 设置版本号
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [MobClick setAppVersion:version];

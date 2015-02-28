@@ -31,4 +31,6 @@
 - (IBAction)preCarButtonPressed:(UIButton *)sender;
 - (IBAction)nextButtonPressed:(UIButton *)sender;
 
+- (IBAction)infoViewPressed:(id)sender;
+
 @end

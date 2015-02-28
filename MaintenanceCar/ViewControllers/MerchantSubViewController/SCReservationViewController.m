@@ -20,7 +20,6 @@
 {
     NSString *_reservationType;
     NSString *_reservationDate;
-    NSString *_reservationCarID;
 }
 
 - (IBAction)reservationButtonPressed:(UIButton *)sender;
@@ -107,7 +106,6 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // 设置商户名称显示
-    _reservationCarID = [SCUserInfo share].currentCar.user_car_id;
     _merchantNameLabel.text = _merchant.name;
 }
 
@@ -162,8 +160,7 @@
                             @"reserve_name": _ownerNameTextField.text,
                            @"reserve_phone": _ownerPhoneNumberTextField.text,
                                  @"content": _remarkTextField.text,
-                                    @"time": _reservationDate,
-                             @"user_car_id": _reservationCarID};
+                                    @"time": _reservationDate};
     [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)

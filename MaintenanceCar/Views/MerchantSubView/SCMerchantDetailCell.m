@@ -65,8 +65,10 @@
 - (NSString *)detailWithName:(NSString *)name
 {
     NSString *hexString = _details[name];
-    if ([name hasPrefix:@"专"]) {
-        hexString = [NSString stringWithFormat:@"%@（%@）", hexString, _majors];
+    if ([name hasPrefix:@"专"])
+    {
+        if (_majors)
+            hexString = [hexString stringByAppendingString:[NSString stringWithFormat:@"(%@)", _majors]];
     }
     return hexString ? hexString : @"";
 }

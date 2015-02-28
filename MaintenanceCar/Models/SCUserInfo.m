@@ -18,7 +18,7 @@
 #define kAddAliasKey            @"kAddAliasKey"
 #define kReceiveMessageKey      @"kReceiveMessageKey"
 
-typedef void(^BLOCK)(BOOL finish);
+typedef void(^BLOCK)(SCUserInfo *userInfo, BOOL finish);
 
 static SCUserInfo *userInfo = nil;
 
@@ -137,8 +137,6 @@ static SCUserInfo *userInfo = nil;
 
 - (void)logout
 {
-    _firstCar   = nil;
-    _currentCar = nil;
     [_userCars removeAllObjects];
     
     self.receiveMessage = NO;
@@ -159,18 +157,17 @@ static SCUserInfo *userInfo = nil;
         NSLog(@"Save User Cars Error:%@", exception.reason);
     }
     @finally {
-        _carsLoadFinish = YES;
         [self load];
         
         if (_block)
-            _block(YES);
+            _block(self, YES);
     }
 }
 
-- (void)userCarsReuqest:(void (^)(BOOL))block
+- (void)userCarsReuqest:(void (^)(SCUserInfo *, BOOL))block
 {
     _block = block;
-    __weak typeof(self) weakSelf = self;
+    __weak typeof(self)weakSelf = self;
     if (self.loginStatus)
     {
         NSDictionary *parameters = @{@"user_id": self.userID};
@@ -179,15 +176,20 @@ static SCUserInfo *userInfo = nil;
                 [weakSelf saveUserCarsWithData:responseObject];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             if (_block)
-                _block(NO);
+                _block(weakSelf, NO);
         }];
+    }
+    else
+    {
+        if (_block)
+            _block(weakSelf, NO);
     }
 }
 
 - (void)load
 {
     NSArray *userCars = [USER_DEFAULT objectForKey:kUserCarsKey];
-    if (self.loginStatus && userCars.count)
+    if (self.loginStatus)
     {
         [_userCars removeAllObjects];
         for (NSDictionary *carData in userCars)
@@ -195,18 +197,7 @@ static SCUserInfo *userInfo = nil;
             SCUserCar *userCar = [[SCUserCar alloc] initWithDictionary:carData error:nil];
             [_userCars addObject:userCar];
         }
-        _firstCar = _userCars[Zero];
     }
-    else
-    {
-        _firstCar = nil;
-        _currentCar = nil;
-    }
-}
-
-- (void)refresh
-{
-    _currentCar = _firstCar;
 }
 
 - (void)addMaintenanceItem:(NSString *)item

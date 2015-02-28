@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SCUserCar.h"
 
 @class SCCarDriveHabitsView;
 
@@ -25,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet SCCarDriveHabitsView *carDriveHabitsView;      // 驾驶习惯View
 
 @property (nonatomic, weak)          id                   <SCChangeMaintenanceDataViewControllerDelegate>delegate;
+@property (nonatomic, weak)          SCUserCar            *car;
 
 // 购车时间按钮触发事件
 - (IBAction)buyCarDateButtonPressed;

@@ -89,6 +89,11 @@
 }
 
 #pragma mark - Table View Delegate Methods
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"取消预约";
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -225,18 +230,18 @@
                                  @"status": @"4"};
     [[SCAPIRequest manager] startUpdateReservationAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // 根据返回结果进行相应提示
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"删除成功", 1.0f);
+            SCReservation *reservation = _dataList[index];
+            reservation.status         = @"4";
+            [weakSelf deleteFailureAtIndex:index];
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消预约成功", 1.0f);
         }
         else
-        {
-            [weakSelf deleteFailureAtIndex:index];
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"删除失败，请重试", 1.0f);
-        }
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消预约失败，请重试", 1.0f);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf deleteFailureAtIndex:index];
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"删除失败，请检查网络", 1.0f);
+        ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消失败，请检查网络", 1.0f);
     }];
 }
 

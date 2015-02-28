@@ -93,7 +93,6 @@
 
 - (void)deleteFailureAtIndex:(NSInteger)index
 {
-    
     self.tableView.editing = NO;                                    // 改变列表编辑状态
     [_dataList insertObject:_deleteDataCache atIndex:index];        // 从数据缓存中删除某一条数据
     [self.tableView reloadData];                                    // 刷新tableview

@@ -8,6 +8,7 @@
 
 #import "SCUserViewController.h"
 #import <UMengAnalytics/MobClick.h>
+#import <MBProgressHUD/MBProgressHUD.h>
 #import "MicroCommon.h"
 #import "SCUserInfo.h"
 #import "SCLoginViewController.h"
@@ -15,6 +16,7 @@
 #import "SCMyReservationTableViewController.h"
 #import "SCAddCarViewController.h"
 #import "SCUserInfoView.h"
+#import "SCChangeMaintenanceDataViewController.h"
 
 typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     SCUserCenterRowMyOrder = 0,
@@ -23,7 +25,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     SCUserCenterRowMyReservation,
 };
 
-@interface SCUserViewController () <UIAlertViewDelegate, SCAddCarViewControllerDelegate, SCUserInfoViewDelegate>
+@interface SCUserViewController () <UIAlertViewDelegate, SCAddCarViewControllerDelegate, SCUserInfoViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
 
 @end
 
@@ -186,13 +188,36 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 - (void)addCarSuccessWith:(NSString *)userCarID
 {
     // 车辆添加成功的回调方法，车辆添加成功以后需要刷新个人中心，展示出用户最新添加的车辆
-    [[SCUserInfo share] userCarsReuqest:nil];
+    [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
+        [_userInfoView refresh];
+    }];
 }
 
 #pragma mark - SCUserInfoViewDelegate Methods
 - (void)shouldLogin
 {
     [self checkShouldLogin];
+}
+
+- (void)shouldChangeCarData:(SCUserCar *)userCar
+{
+    @try {
+        SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCChangeMaintenanceDataViewController"];
+        changeMaintenanceDataViewController.delegate = self;
+        changeMaintenanceDataViewController.car = userCar;
+        [self.navigationController pushViewController:changeMaintenanceDataViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCHomePageViewController Go to the SCChangeMaintenanceDataViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
+}
+
+#pragma mark - SCChangeMaintenanceDataViewControllerDelegate Methods
+- (void)dataSaveSuccess
+{
+    [self addCarSuccessWith:nil];
 }
 
 @end
