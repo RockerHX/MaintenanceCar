@@ -66,14 +66,21 @@
  */
 - (void)customSecurityPolicy
 {
-    /**** SSL Pinning ****/
-    NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"cer"];                    // 获取cer秘钥文件路径
-    NSData *certData = [NSData dataWithContentsOfFile:cerPath];
-    AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
-    securityPolicy.allowInvalidCertificates = NO;                                                           // 不允许使用无效证书
-    securityPolicy.pinnedCertificates = @[certData];
-    /**** SSL Pinning ****/
-    self.securityPolicy = securityPolicy;
+    @try {
+        /**** SSL Pinning ****/
+        NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"cer"];                    // 获取cer秘钥文件路径
+        NSData *certData = [NSData dataWithContentsOfFile:cerPath];
+        AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
+        securityPolicy.allowInvalidCertificates = NO;                                                           // 不允许使用无效证书
+        securityPolicy.pinnedCertificates = @[certData];
+        /**** SSL Pinning ****/
+        self.securityPolicy = securityPolicy;
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%s:%@", __FUNCTION__, exception.reason);
+    }
+    @finally {
+    }
 }
 
 /**

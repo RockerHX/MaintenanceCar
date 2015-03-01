@@ -14,6 +14,8 @@
 #import "SCReservation.h"
 #import "SCReservationTableViewCell.h"
 #import "SCWebViewController.h"
+#import "SCMerchant.h"
+#import "SCMerchantDetailViewController.h"
 
 @interface SCMyReservationTableViewController ()
 
@@ -108,6 +110,20 @@
         }
         @catch (NSException *exception) {
             NSLog(@"SCMyReservationTableViewController Go to the SCWebViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
+    }
+    else
+    {
+        // 跳转到预约页面
+        @try {
+            SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
+            merchantDetialViewControler.merchant = [[SCMerchant alloc] initWithMerchantName:reservation.name companyID:reservation.company_id];
+            [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"SCMyFavoriteTableViewController Go to the SCMerchantDetailViewController exception reasion:%@", exception.reason);
         }
         @finally {
         }

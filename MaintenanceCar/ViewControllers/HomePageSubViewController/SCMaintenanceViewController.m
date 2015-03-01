@@ -301,7 +301,7 @@
         NSDictionary *parameters = @{@"query"     : @"default:'深圳' AND service:'养'",
                                      @"limit"     : @(3),
                                      @"offset"    : @(0),
-                                     @"radius"    : @(10),
+                                     @"radius"    : MerchantListRadius,
                                      @"latitude"  : latitude,
                                      @"longtitude": longitude};
         [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
