@@ -319,7 +319,14 @@
                 [self performSelector:@selector(showFooterView:) withObject:@(list.count) afterDelay:0.2f];
             }
         } failure:nil];
-    } failure:nil];
+    } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
+                                                            message:@"定位失败，请检查您的定位服务是否打开：设置->隐私->定位服务"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"确定"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
+    }];
 }
 
 - (void)showFooterView:(NSNumber *)show

@@ -152,6 +152,12 @@
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
         ShowPromptHUDWithText(weakSelf.navigationController.view, @"定位失败，采用当前城市中心坐标", 0.5f);
         [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
+                                                            message:@"定位失败，请检查您的定位服务是否打开：设置->隐私->定位服务"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"确定"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
     }];
 }
 
