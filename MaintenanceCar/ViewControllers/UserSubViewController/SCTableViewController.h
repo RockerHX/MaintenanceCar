@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger, SCFavoriteListRequestType) {
     NSMutableArray            *_dataList;           // 列表数据缓存
 }
 
-@property (nonatomic, assign) NSInteger                 offset;         // 商户列表请求偏移量，用户上拉刷新的分页请求操作
+@property (nonatomic, assign) NSInteger                 offset;         // 商家列表请求偏移量，用户上拉刷新的分页请求操作
 @property (nonatomic, assign) SCFavoriteListRequestType requestType;    // 请求类型，是上拉刷新还是下拉刷新
 
 /**

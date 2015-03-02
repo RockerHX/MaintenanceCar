@@ -33,14 +33,14 @@
 {
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"[商户] - [商户预约]"];
+    [MobClick beginLogPageView:@"[商家] - [商家预约]"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"[商户] - [商户预约]"];
+    [MobClick endLogPageView:@"[商家] - [商家预约]"];
 }
 
 - (void)viewDidLoad
@@ -105,7 +105,7 @@
     self.tableView.estimatedRowHeight = 60.0f;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    // 设置商户名称显示
+    // 设置商家名称显示
     _merchantNameLabel.text = _merchant.name;
 }
 
@@ -140,9 +140,9 @@
 }
 
 /**
- *  商户预约请求方法，参数：user_id, company_id, type, reserve_name, reserve_phone, content, time, user_car_id
+ *  商家预约请求方法，参数：user_id, company_id, type, reserve_name, reserve_phone, content, time, user_car_id
  *  user_id:        用户 ID
- *  company_id:     商户 ID, 通过这个 ID 可以获取商户详细信息
+ *  company_id:     商家 ID, 通过这个 ID 可以获取商家详细信息
  *  type:           1,2,3,4 对应 洗养修团
  *  reserve_name:   XXX
  *  reserve_phone:  电话

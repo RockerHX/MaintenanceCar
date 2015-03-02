@@ -12,10 +12,10 @@
 
 @interface SCReservationViewController : UITableViewController
 
-@property (nonatomic, strong)        SCMerchant    *merchant;                     // 商户信息
+@property (nonatomic, strong)        SCMerchant    *merchant;                     // 商家信息
 @property (nonatomic, strong)        SCServiceItem *serviceItem;                  // 服务项目
 
-@property (weak, nonatomic) IBOutlet UILabel       *merchantNameLabel;            // 商户名称栏
+@property (weak, nonatomic) IBOutlet UILabel       *merchantNameLabel;            // 商家名称栏
 @property (weak, nonatomic) IBOutlet UITextField   *ownerNameTextField;           // 车主姓名输入栏
 @property (weak, nonatomic) IBOutlet UITextField   *ownerPhoneNumberTextField;    // 车主电话输入栏
 @property (weak, nonatomic) IBOutlet UILabel       *projectLabel;                 // 服务项目

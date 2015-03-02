@@ -13,7 +13,7 @@
 
 @property (nonatomic, copy) NSString <Optional>*reserve_id;             // 预约ID
 @property (nonatomic, copy) NSString <Optional>*user_id;                // 用户ID
-@property (nonatomic, copy) NSString <Optional>*company_id;             // 商户ID
+@property (nonatomic, copy) NSString <Optional>*company_id;             // 商家ID
 @property (nonatomic, copy) NSString <Optional>*user_car_id;            // 预约车辆ID
 @property (nonatomic, copy) NSString <Optional>*order_id;               // 订单ID
 @property (nonatomic, copy) NSString <Optional>*type;                   // 预约类型
@@ -25,6 +25,6 @@
 @property (nonatomic, copy) NSString <Optional>*in_time;                //
 @property (nonatomic, copy) NSString <Optional>*create_time;            // 预约创建时间
 @property (nonatomic, copy) NSString <Optional>*update_time;            // 预约信息更新时间
-@property (nonatomic, copy) NSString <Optional>*name;                   // 商户名字
+@property (nonatomic, copy) NSString <Optional>*name;                   // 商家名字
 
 @end

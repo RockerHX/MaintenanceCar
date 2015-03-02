@@ -125,7 +125,7 @@ static SCAllDictionary *allDictionary = nil;
     NSDictionary *localData = [self readLocalDataWithKey:kColorExplainKey];      // 获取颜色值本地缓存数据
     
     __weak typeof(self)weakSelf = self;
-    // 如果本地缓存的商户Flags数据为空，从网络请求，并保存到本地，反之则生成数据对象做回调，并异步更新数据
+    // 如果本地缓存的商家Flags数据为空，从网络请求，并保存到本地，反之则生成数据对象做回调，并异步更新数据
     if (!localData)
     {
         [[SCAPIRequest manager] startFlagsColorAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -290,9 +290,9 @@ static SCAllDictionary *allDictionary = nil;
 }
 
 /**
- *  把获取到的商户Flags数据赋值
+ *  把获取到的商家Flags数据赋值
  *
- *  @param data 商户Flags数据
+ *  @param data 商家Flags数据
  */
 - (void)hanleMerchantFlagsData:(NSDictionary *)data
 {

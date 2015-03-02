@@ -32,9 +32,9 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
 @property (nonatomic, strong, readonly) NSArray   *serviceItems;              // 服务项目
 
 @property (nonatomic, strong, readonly) SCSpecial    *special;                // 自定义数据
-@property (nonatomic, strong, readonly) NSDictionary *colors;                 // 商户Flags颜色值
-@property (nonatomic, strong, readonly) NSDictionary *explain;                // 商户Flags名字
-@property (nonatomic, strong, readonly) NSDictionary *detail;                 // 商户Flags描述
+@property (nonatomic, strong, readonly) NSDictionary *colors;                 // 商家Flags颜色值
+@property (nonatomic, strong, readonly) NSDictionary *explain;                // 商家Flags名字
+@property (nonatomic, strong, readonly) NSDictionary *detail;                 // 商家Flags描述
 
 @property (nonatomic, strong, readonly) NSArray *distanceConditions;          // 距离筛选条件集合
 @property (nonatomic, strong, readonly) NSArray *repairConditions;            // 品牌筛选条件集合
@@ -59,9 +59,9 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
 - (void)requestWithType:(SCDictionaryType)type finfish:(void(^)(NSArray *items))finfish;
 
 /**
- *  请求商户Flags数据
+ *  请求商家Flags数据
  *
- *  @param finfish 数据处理后的回调block - colors:商户Flags颜色值, explain:商户Flags名字, detail:商户Flags描述
+ *  @param finfish 数据处理后的回调block - colors:商家Flags颜色值, explain:商家Flags名字, detail:商家Flags描述
  */
 - (void)requestColorsExplain:(void(^)(NSDictionary *colors, NSDictionary *explain, NSDictionary *detail))finfish;
 
@@ -75,7 +75,7 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
 /**
  *  合成服务项目 - 用于预约提示，筛选条件
  *
- *  @param merchantItems 商户服务项目
+ *  @param merchantItems 商家服务项目
  *  @param free          能否免费检测
  */
 - (void)generateServiceItemsWtihMerchantImtes:(NSDictionary *)merchantItems inspectFree:(BOOL)free;

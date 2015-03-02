@@ -68,7 +68,7 @@
     cell.reservationButton.tag    = indexPath.row;
     cell.reservationButton.hidden = !merchant.serviceItems.count;
     
-    // 刷新商户列表，设置相关数据
+    // 刷新商家列表，设置相关数据
     [cell handelWithMerchant:merchant];
     
     return cell;
@@ -157,7 +157,7 @@
                 [weakSelf clearListData];
             }
             
-            // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
+            // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
             [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 NSError *error       = nil;
                 SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj error:&error];
@@ -166,7 +166,7 @@
             
             [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];             // 请求完成，移除响应式控件
             
-            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:weakSelf.offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                                           // 数据配置完成，刷新商户列表
+            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:weakSelf.offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                                           // 数据配置完成，刷新商家列表
             weakSelf.offset += MerchantListLimit;                                                       // 偏移量请求参数递增
         }
         else
@@ -189,7 +189,7 @@
 }
 
 /**
- *  取消收藏商户请求方法，必选参数：company_id，user_id
+ *  取消收藏商家请求方法，必选参数：company_id，user_id
  */
 - (void)startCancelCollectionMerchantRequestWithIndex:(NSInteger)index
 {
@@ -214,7 +214,7 @@
 }
 
 /**
- *  商户列表预约按钮点击触发事件通知方法
+ *  商家列表预约按钮点击触发事件通知方法
  *
  *  @param notification 接受传递的参数
  */

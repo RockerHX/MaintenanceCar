@@ -29,7 +29,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define InspectionURL       @"http://mobile.yjclw.com/Inspection"           // 检测进度
 
 #warning @"临时解决方案，后期替换"
-#define MerchantImageDoMain @"http://cdn1.yjclw.com/"                       // 商户图片资源域名
+#define MerchantImageDoMain @"http://cdn1.yjclw.com/"                       // 商家图片资源域名
 
 #define APIPath             @"/v1"                                          // 接口路径
 #define APIURL              [DoMain stringByAppendingString:APIPath]        // 接口链接
@@ -37,12 +37,12 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define ImageURL            [ImageDoMain stringByAppendingString:ImagePath] // 图片资源链接
 
 #define WearthAPI                   @"/Weather"                             // 天气API
-#define SearchAPI                   @"/company_search"                      // 商户搜索API
-#define MerchantDetailAPI           @"/Carshop"                             // 商户详情API
-#define MerchantCollectionAPI       @"/Collection"                          // 商户收藏API
-#define CancelCollectionAPI         @"/Collection/delete"                   // 取消商户收藏API
-#define CheckMerchantCollectionAPI  @"/Collection/user"                     // 检查商户收藏状态API
-#define MerchantReservationAPI      @"/Reservation"                         // 商户预约API
+#define SearchAPI                   @"/company_search"                      // 商家搜索API
+#define MerchantDetailAPI           @"/Carshop"                             // 商家详情API
+#define MerchantCollectionAPI       @"/Collection"                          // 商家收藏API
+#define CancelCollectionAPI         @"/Collection/delete"                   // 取消商家收藏API
+#define CheckMerchantCollectionAPI  @"/Collection/user"                     // 检查商家收藏状态API
+#define MerchantReservationAPI      @"/Reservation"                         // 商家预约API
 
 #define VerificationCodeAPI         @"/Verification"                        // 验证码获取API
 #define RegisterAPI                 @"/User"                                // 用户注册API
@@ -63,24 +63,24 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define AllDictionaryAPI            @"/Misc/dictAll"                        // 所有数据字典接口
 #define HomePageSpecialAPI          @"/Special"                             // 首页第四个按钮数据接口
-#define FlagsColorExplainAPI        @"/Special/color_explain"               // 获取商户对应Flag数据接口
-#define MerchantTagsAPI             @"/Cars/tags"                           // 获取商户对应Tag标签接口
+#define FlagsColorExplainAPI        @"/Special/color_explain"               // 获取商家对应Flag数据接口
+#define MerchantTagsAPI             @"/Cars/tags"                           // 获取商家对应Tag标签接口
 
 
 #define WearthAPIURL                    [APIURL stringByAppendingString:WearthAPI]                  // 天气接口URL - 用于主页模块获取天气信息
-#define SearchAPIURL                    [APIURL stringByAppendingString:SearchAPI]                  // 商户搜索接口URL - 用于商户搜索和筛选
-#define MerchantDetailAPIURL            [APIURL stringByAppendingString:MerchantDetailAPI]          // 商户详情接口URL - 用于获取短信或者语音验证码
-#define MerchantCollectionAPIURL        [APIURL stringByAppendingString:MerchantCollectionAPI]      // 商户收藏接口URL - 用于商户收藏和获取商户收藏
-#define CancelCollectionAPIURL          [APIURL stringByAppendingString:CancelCollectionAPI]        // 取消商户收藏接口URL - 用于商户详情页面取消收藏或者个人中心页面删除收藏
-#define CheckMerchantCollectionAPIURL   [APIURL stringByAppendingString:CheckMerchantCollectionAPI] // 检查商户收藏状态接口URL - 用于商户详情页面检查商户收藏状态
-#define MerchantReservationAPIURL       [APIURL stringByAppendingString:MerchantReservationAPI]     // 商户预约接口URL - 用于商户预约项目
+#define SearchAPIURL                    [APIURL stringByAppendingString:SearchAPI]                  // 商家搜索接口URL - 用于商家搜索和筛选
+#define MerchantDetailAPIURL            [APIURL stringByAppendingString:MerchantDetailAPI]          // 商家详情接口URL - 用于获取短信或者语音验证码
+#define MerchantCollectionAPIURL        [APIURL stringByAppendingString:MerchantCollectionAPI]      // 商家收藏接口URL - 用于商家收藏和获取商家收藏
+#define CancelCollectionAPIURL          [APIURL stringByAppendingString:CancelCollectionAPI]        // 取消商家收藏接口URL - 用于商家详情页面取消收藏或者个人中心页面删除收藏
+#define CheckMerchantCollectionAPIURL   [APIURL stringByAppendingString:CheckMerchantCollectionAPI] // 检查商家收藏状态接口URL - 用于商家详情页面检查商家收藏状态
+#define MerchantReservationAPIURL       [APIURL stringByAppendingString:MerchantReservationAPI]     // 商家预约接口URL - 用于商家预约项目
 
 #define VerificationCodeAPIURL          [APIURL stringByAppendingString:VerificationCodeAPI]        // 获取验证码接口URL - 用于获取短信或者语音验证码
 #define RegisterAPIURL                  [APIURL stringByAppendingString:RegisterAPI]                // 用户注册接口URL - 用于用户注册
 #define LoginAPIURL                     [APIURL stringByAppendingString:LoginAPI]                   // 用户登录接口URL - 用于用户登录
 #define UserLogAPIURL                   [APIURL stringByAppendingString:UserLogAPI]                 // 用户日志记录接口URL - 打开APP后如果用户已经登录异步调用此URL记录
 
-#define MyReservationAPIURL             [APIURL stringByAppendingString:MyReservationAPI]           // 商户预约接口URL - 用于商户预约项目
+#define MyReservationAPIURL             [APIURL stringByAppendingString:MyReservationAPI]           // 商家预约接口URL - 用于商家预约项目
 #define UpdateReservationAPIURL         [APIURL stringByAppendingString:UpdateReservationAPI]       // 更新预约接口URL - 用于用户取消预约项目
 #define ReservationItemNumAPIURL        [APIURL stringByAppendingString:ReservationItemNumAPI]      // 预约日期数量接口URL - 用于获取预约项目数量
 
@@ -94,7 +94,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define AllDictionaryAPIURL             [APIURL stringByAppendingString:AllDictionaryAPI]           // 所有数据字典接口URL
 #define HomePageSpecialAPIURL           [APIURL stringByAppendingString:HomePageSpecialAPI]         // 首页第四个按钮数据接口URL
-#define FlagsColorExplainAPIURL         [APIURL stringByAppendingString:FlagsColorExplainAPI]       // 获取商户对应Flag颜色值接口URL
-#define MerchantTagsAPIURL              [APIURL stringByAppendingString:MerchantTagsAPI]            // 获取商户对应Tag标签接口URL
+#define FlagsColorExplainAPIURL         [APIURL stringByAppendingString:FlagsColorExplainAPI]       // 获取商家对应Flag颜色值接口URL
+#define MerchantTagsAPIURL              [APIURL stringByAppendingString:MerchantTagsAPI]            // 获取商家对应Tag标签接口URL
 
 #endif

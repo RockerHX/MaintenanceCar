@@ -13,7 +13,7 @@
 
 @interface SCWashViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet SCMerchantFilterView *merchantFilterView;  // 商户列表的筛选View
-@property (weak, nonatomic) IBOutlet UITableView          *tableView;           // 商户列表View
+@property (weak, nonatomic) IBOutlet SCMerchantFilterView *merchantFilterView;  // 商家列表的筛选View
+@property (weak, nonatomic) IBOutlet UITableView          *tableView;           // 商家列表View
 
 @end

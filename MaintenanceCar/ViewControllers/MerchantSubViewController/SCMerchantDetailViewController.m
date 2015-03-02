@@ -60,9 +60,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"[商户] - 商户详情"];
+    [MobClick beginLogPageView:@"[商家] - 商家详情"];
     
-    // 从登录页面登录成功后返回到当前页面并请求登录用户的当前商户收藏状态
+    // 从登录页面登录成功后返回到当前页面并请求登录用户的当前商家收藏状态
     if ([SCUserInfo share].loginStatus && _needChecked)
         [self startCheckMerchantCollectionStutasRequest];
 }
@@ -70,7 +70,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"[商户] - 商户详情"];
+    [MobClick endLogPageView:@"[商家] - 商家详情"];
 }
 
 - (void)viewDidLoad
@@ -116,7 +116,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                 UIAlertView *alertView = nil;
                 if (phones.count > 1)
                 {
-                    alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商户电话"
+                    alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商家电话"
                                                            message:nil
                                                           delegate:self
                                                  cancelButtonTitle:@"取消"
@@ -124,7 +124,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                 }
                 else
                 {
-                    alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商户电话"
+                    alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商家电话"
                                                            message:nil
                                                           delegate:self
                                                  cancelButtonTitle:@"取消"
@@ -152,7 +152,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     else
     {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:@"收藏商户需要您先登录"
+                                                            message:@"收藏商家需要您先登录"
                                                            delegate:self
                                                   cancelButtonTitle:@"取消"
                                                   otherButtonTitles:@"登录", nil];
@@ -183,7 +183,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 /**
- *  商户列表预约按钮点击触发事件通知方法
+ *  商家列表预约按钮点击触发事件通知方法
  *
  *  @param notification 接受传递的参数
  */
@@ -236,7 +236,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 /**
- *  商户详情请求，需要参数：id(商户id)，user_id(用户id，可选)
+ *  商家详情请求，需要参数：id(商家id)，user_id(用户id，可选)
  */
 - (void)startMerchantDetailRequestWithParameters
 {
@@ -259,7 +259,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 /**
- *  检查商户详情接口，需要参数:company_id，user_id
+ *  检查商家详情接口，需要参数:company_id，user_id
  */
 - (void)startCheckMerchantCollectionStutasRequest
 {
@@ -277,7 +277,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 /**
- *  收藏商户，需要参数：company_id，user_id，type_id
+ *  收藏商家，需要参数：company_id，user_id，type_id
  */
 - (void)startCollectionMerchantRequest
 {
@@ -302,7 +302,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 /**
- *  取消收藏商户，需要参数：company_id，user_id
+ *  取消收藏商家，需要参数：company_id，user_id
  */
 - (void)startUnCollectionMerchantRequest
 {
@@ -330,7 +330,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
  */
 - (void)showRequestErrorAlert
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"商户详情获取失败"
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"商家详情获取失败"
                                                         message:@"是否重新获取"
                                                        delegate:self
                                               cancelButtonTitle:@"重新获取"

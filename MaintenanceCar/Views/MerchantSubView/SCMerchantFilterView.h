@@ -32,7 +32,7 @@ typedef NS_ENUM(NSInteger, SCFilterType) {
 
 
 @property (weak, nonatomic) IBOutlet    SCFilterPopView *filterPopView;         // 筛选弹出View，展示筛选条件
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *heightConstraint;      // 商户筛选View(SCMerchantFilterView)的高度约束条件
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *heightConstraint;      // 商家筛选View(SCMerchantFilterView)的高度约束条件
 
 @property (nonatomic, weak) IBOutlet           UIButton *distanceButton;        // [距离]筛选按钮
 @property (nonatomic, weak) IBOutlet           UIButton *repairTypeButton;      // [保养类型]筛选按钮

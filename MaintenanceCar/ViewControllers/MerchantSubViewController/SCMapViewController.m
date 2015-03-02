@@ -19,8 +19,8 @@
 
 @interface SCMapViewController () <BMKMapViewDelegate, SCMapMerchantInfoViewDelegate>
 {
-    NSMutableArray    *_annotations;            // 商户图钉数据集合
-    SCMerchant        *_merchant;               // 当前点击商户的数据缓存
+    NSMutableArray    *_annotations;            // 商家图钉数据集合
+    SCMerchant        *_merchant;               // 当前点击商家的数据缓存
     BMKAnnotationView *_preAnnotationView;      // 地图图钉缓存
     
     NSTimer           *_timer;
@@ -42,14 +42,14 @@
 {
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"[商户] - 地图"];
+    [MobClick beginLogPageView:@"[商家] - 地图"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"[商户] - 地图"];
+    [MobClick endLogPageView:@"[商家] - 地图"];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -86,7 +86,7 @@
     if (!_annotations)
         _annotations = [@[] mutableCopy];
     
-    // 根据传入的商户数据，生成商户图钉需要的数据并添加到商户图钉集合(_annotations)
+    // 根据传入的商家数据，生成商家图钉需要的数据并添加到商家图钉集合(_annotations)
     [merchants enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         SCMerchant *merchant = obj;
         BMKPointAnnotation *annotation = [[BMKPointAnnotation alloc] init];
@@ -130,9 +130,9 @@
 - (void)viewConfig
 {
     [_mapView updateLocationData:[SCLocationManager share].userLocation];   // 根据坐标在地图上显示位置
-    [_mapView addAnnotations:_annotations];                                 // 把所有的商户图钉都显示到地图上
+    [_mapView addAnnotations:_annotations];                                 // 把所有的商家图钉都显示到地图上
     
-    // 进入地图的显示列表内第一个商户的数据
+    // 进入地图的显示列表内第一个商家的数据
     [_mapView selectAnnotation:[_annotations firstObject] animated:YES];
     [_mapMerchantInfoView handelWithMerchant:[_merchants firstObject]];
 }
@@ -163,7 +163,7 @@
     [mapView selectAnnotation:view.annotation animated:YES];
     _preAnnotationView.image = [UIImage imageNamed:@"map-red"];
     view.image = [UIImage imageNamed:@"map-blue"];
-    // 刷新商户数据
+    // 刷新商家数据
     for (SCMerchant *merchant in _merchants)
     {
         if ([view.annotation.title isEqualToString:merchant.name])

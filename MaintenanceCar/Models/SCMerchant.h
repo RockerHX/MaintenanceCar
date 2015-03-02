@@ -8,32 +8,32 @@
 
 #import "JSONModel.h"
 
-// 商户数据Model
+// 商家数据Model
 @interface SCMerchant : JSONModel
 
-@property (nonatomic, copy)       NSString <Optional>*name;                 // 商户名称
-@property (nonatomic, copy)       NSString <Optional>*company_id;           // 商户ID
-@property (nonatomic, copy)       NSString <Optional>*latitude;             // 商户地理位置 - 纬度
-@property (nonatomic, copy)       NSString <Optional>*longtitude;           // 商户地理位置 - 经度
-@property (nonatomic, copy)       NSString <Optional>*star;                 // 商户星级数
-@property (nonatomic, copy)       NSString <Optional>*tags;                 // 商户特色
-@property (nonatomic, copy)       NSString <Optional>*flags;                // 商户标签
+@property (nonatomic, copy)       NSString <Optional>*name;                 // 商家名称
+@property (nonatomic, copy)       NSString <Optional>*company_id;           // 商家ID
+@property (nonatomic, copy)       NSString <Optional>*latitude;             // 商家地理位置 - 纬度
+@property (nonatomic, copy)       NSString <Optional>*longtitude;           // 商家地理位置 - 经度
+@property (nonatomic, copy)       NSString <Optional>*star;                 // 商家星级数
+@property (nonatomic, copy)       NSString <Optional>*tags;                 // 商家特色
+@property (nonatomic, copy)       NSString <Optional>*flags;                // 商家标签
 @property (nonatomic, copy)       NSString <Optional>*inspect_free;         // 能否免费检测
 
 @property (nonatomic, strong) NSDictionary <Optional>*service_items;        // 服务项目
 
 
-@property (nonatomic, copy, readonly)   NSString <Ignore>*distance;         // 手机当前位置与商户的距离
+@property (nonatomic, copy, readonly)   NSString <Ignore>*distance;         // 手机当前位置与商家的距离
 @property (nonatomic, strong, readonly)  NSArray <Ignore>*serviceItems;     // 服务项目
-@property (nonatomic, strong, readonly)  NSArray <Ignore>*merchantFlags;    // 商户标签集合
+@property (nonatomic, strong, readonly)  NSArray <Ignore>*merchantFlags;    // 商家标签集合
 
 /**
  *  自定义初始化方法(不通过JSON数据自动解析)
  *
- *  @param merchantName 商户名称
- *  @param companyID    商户ID
+ *  @param merchantName 商家名称
+ *  @param companyID    商家ID
  *
- *  @return 商户Model实例
+ *  @return 商家Model实例
  */
 - (id)initWithMerchantName:(NSString *)merchantName
                  companyID:(NSString *)companyID;

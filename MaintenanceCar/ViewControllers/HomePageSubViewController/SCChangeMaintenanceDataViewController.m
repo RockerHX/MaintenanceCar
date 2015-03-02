@@ -182,7 +182,7 @@
     }
     else if (!_buyCarDateLabel.text.length)
     {
-        [self showPromptHUDWithText:@"请完善购车时间" delay:0.5f delegate:nil];
+        [self showPromptHUDWithText:@"请完善车辆登记日期" delay:0.5f delegate:nil];
     }
     else
     {

@@ -203,7 +203,7 @@
 }
 
 /**
- *  商户列表预约按钮点击触发事件通知方法
+ *  商家列表预约按钮点击触发事件通知方法
  *
  *  @param notification 接受传递的参数
  */
@@ -290,7 +290,7 @@
 }
 
 /**
- *  商户列表数据请求方法，参数：query, limit, offset, radius, longtitude, latitude
+ *  商家列表数据请求方法，参数：query, limit, offset, radius, longtitude, latitude
  */
 - (void)startRecommendMerchantRequest
 {
@@ -310,7 +310,7 @@
 }
 
 /**
- *  商户列表数据请求方法，参数：query, limit, offset, radius, longtitude, latitude
+ *  商家列表数据请求方法，参数：query, limit, offset, radius, longtitude, latitude
  */
 - (void)startRecommendMerchantListRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
 {
@@ -325,7 +325,7 @@
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
-            // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
+            // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
             for (NSDictionary *data in list)
             {
                 NSError *error       = nil;
@@ -407,7 +407,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (section == 1)
-        return _recommendMerchants.count ? @"为您推荐最近可以保养车辆的商户" : @"";
+        return _recommendMerchants.count ? @"为您推荐最近可以保养车辆的商家" : @"";
     else
         return @"";
 }
@@ -431,7 +431,7 @@
         default:
         {
             SCMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MerchantCellReuseIdentifier forIndexPath:indexPath];
-            // 刷新商户列表，设置相关数据
+            // 刷新商家列表，设置相关数据
             [cell handelWithMerchant:_recommendMerchants[indexPath.row]];
             return cell;
         }
@@ -465,7 +465,7 @@
     }
     else if (indexPath.section == 1)
     {
-        // 根据选中的商户，取到其商户ID，跳转到商户页面进行详情展示
+        // 根据选中的商家，取到其商家ID，跳转到商家页面进行详情展示
         SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
         merchantDetialViewControler.merchant = (SCMerchant *)_recommendMerchants[indexPath.row];
         [self.navigationController pushViewController:merchantDetialViewControler animated:YES];

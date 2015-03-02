@@ -29,7 +29,7 @@
     NSString       *_distanceCondition;
 }
 
-@property (nonatomic, assign) NSInteger      offset;        // 商户列表请求偏移量，用户上拉刷新的分页请求操作
+@property (nonatomic, assign) NSInteger      offset;        // 商家列表请求偏移量，用户上拉刷新的分页请求操作
 
 @end
 
@@ -88,7 +88,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SCMerchantListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantListCell" forIndexPath:indexPath];
-    // 刷新商户列表，设置相关数据
+    // 刷新商家列表，设置相关数据
     [cell handelWithMerchant:_merchantList[indexPath.row]];
     
     return cell;
@@ -100,7 +100,7 @@
     // 列表栏被点击，执行取消选中动画
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    // 根据选中的商户，取到其商户ID，跳转到商户页面进行详情展示
+    // 根据选中的商家，取到其商家ID，跳转到商家页面进行详情展示
     SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMerchantDetailViewController"];
     merchantDetialViewControler.merchant = _merchantList[indexPath.row];
     [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
@@ -129,10 +129,10 @@
  */
 - (void)initConfig
 {
-    _offset                      = 0;                   // 第一次进入商户列表列表请求偏移量必须为0
+    _offset                      = 0;                   // 第一次进入商家列表列表请求偏移量必须为0
     _distanceCondition           = MerchantListRadius;
 
-    _merchantList                = [@[] mutableCopy];   // 商户列表容器初始化
+    _merchantList                = [@[] mutableCopy];   // 商家列表容器初始化
     _merchantFilterView.delegate = self;
 }
 
@@ -170,7 +170,7 @@
 }
 
 /**
- *  商户列表数据请求方法，参数：query, limit, offset, radius, longtitude, latitude
+ *  商家列表数据请求方法，参数：query, limit, offset, radius, longtitude, latitude
  */
 - (void)startMerchantListRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
 {
@@ -192,17 +192,17 @@
             
             if (list.count)
             {
-                // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
+                // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
                 [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                     SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:nil];
                     [_merchantList addObject:merchant];
                 }];
-                [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:_offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                   // 数据配置完成，刷新商户列表
+                [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:_offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                   // 数据配置完成，刷新商家列表
                 _offset += MerchantListLimit;                                       // 偏移量请求参数递增
             }
             else
             {
-                ShowPromptHUDWithText(weakSelf.navigationController.view, @"优质商户陆续添加中...", 0.5f);
+                ShowPromptHUDWithText(weakSelf.navigationController.view, @"优质商家陆续添加中...", 0.5f);
                 [_tableView reloadData];
             }
             _merchantFilterView.hidden = NO;

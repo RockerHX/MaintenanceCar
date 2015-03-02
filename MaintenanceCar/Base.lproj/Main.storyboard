@@ -3102,7 +3102,7 @@
                                                 <outletCollection property="gestureRecognizers" destination="1wi-Ic-JPv" appends="YES" id="WqC-qy-xXg"/>
                                             </connections>
                                         </view>
-                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="购车时间:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XnY-uv-OUx">
+                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车辆登记日期:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XnY-uv-OUx">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="vW9-eA-aK9">
@@ -3117,7 +3117,8 @@
                                                     <exclude reference="vW9-eA-aK9"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
+                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="20" y="157" width="64.5" height="20"/>
                                                 <mask key="constraints">
                                                     <include reference="vW9-eA-aK9"/>
                                                 </mask>
@@ -3138,7 +3139,8 @@
                                                     <exclude reference="amY-9D-dra"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
+                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="88" y="155" width="77.5" height="24"/>
                                                 <mask key="constraints">
                                                     <include reference="amY-9D-dra"/>
                                                 </mask>
@@ -4741,7 +4743,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4ve-o9-2kF" id="pOO-ag-1vk">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="你的购车时间？" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dia-cN-qhR">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="你的车辆登记日期？" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dia-cN-qhR">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="9ZH-hS-nCs"/>
@@ -4930,7 +4932,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="数字表示该时间商户还可以接受预约的数量" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xio-Ab-2zO">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="数字表示该时间商家还可以接受预约的数量" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xio-Ab-2zO">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.17254901959999999" green="0.48627450979999998" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -6012,10 +6014,10 @@
             </objects>
             <point key="canvasLocation" x="1189.5" y="-456.75"/>
         </scene>
-        <!--商户-->
+        <!--商家-->
         <scene sceneID="bgm-QS-pZi">
             <objects>
-                <viewController title="商户" id="bZY-wt-C59" customClass="SCMerchantViewController" sceneMemberID="viewController">
+                <viewController title="商家" id="bZY-wt-C59" customClass="SCMerchantViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fSp-uE-Wnh"/>
                         <viewControllerLayoutGuide type="bottom" id="8d2-3t-AsY"/>
@@ -6550,7 +6552,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="商户列表" id="GPy-oH-Ucf">
+                    <navigationItem key="navigationItem" title="商家列表" id="GPy-oH-Ucf">
                         <barButtonItem key="rightBarButtonItem" title="地图" id="O66-qs-aiK">
                             <connections>
                                 <action selector="mapItemPressed:" destination="bZY-wt-C59" id="flX-xW-MS6"/>
@@ -6566,7 +6568,7 @@
             </objects>
             <point key="canvasLocation" x="1189.5" y="235.5"/>
         </scene>
-        <!--商户详情-->
+        <!--商家详情-->
         <scene sceneID="ZO7-Kc-njE">
             <objects>
                 <tableViewController storyboardIdentifier="SCMerchantDetailViewController" hidesBottomBarWhenPushed="YES" id="hpj-tS-aRE" customClass="SCMerchantDetailViewController" sceneMemberID="viewController">
@@ -7286,7 +7288,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7kJ-P3-BeQ" id="FR0-f9-Rhh">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商户介绍" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="304" translatesAutoresizingMaskIntoConstraints="NO" id="8bq-lt-ruk">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商家介绍" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="304" translatesAutoresizingMaskIntoConstraints="NO" id="8bq-lt-ruk">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -7331,7 +7333,7 @@
                             <outlet property="delegate" destination="hpj-tS-aRE" id="3Qb-lN-kkP"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="商户详情" id="K5r-Va-7n4">
+                    <navigationItem key="navigationItem" title="商家详情" id="K5r-Va-7n4">
                         <barButtonItem key="rightBarButtonItem" image="UnFavoriteIcon" id="lL1-Z2-iGc" customClass="SCCollectionItem">
                             <connections>
                                 <action selector="collectionItemPressed:" destination="hpj-tS-aRE" id="cjb-dI-bhF"/>
@@ -7354,7 +7356,7 @@
             </objects>
             <point key="canvasLocation" x="2034" y="235.5"/>
         </scene>
-        <!--商户地图-->
+        <!--商家地图-->
         <scene sceneID="4P2-iO-ZEH">
             <objects>
                 <viewController id="TMn-nT-psn" customClass="SCMapViewController" sceneMemberID="viewController">
@@ -7372,7 +7374,7 @@
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kde-WW-IV7">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="视野中有20家商户" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nlN-hz-9La">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="视野中有20家商家" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nlN-hz-9La">
                                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -7761,7 +7763,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="商户地图" id="5iH-PN-oHg">
+                    <navigationItem key="navigationItem" title="商家地图" id="5iH-PN-oHg">
                         <barButtonItem key="rightBarButtonItem" title="列表" id="el6-hN-7pS">
                             <connections>
                                 <action selector="listItemPressed:" destination="TMn-nT-psn" id="NVL-HP-28u"/>
@@ -7860,7 +7862,7 @@
                                                     <color key="textColor" red="0.17254901959999999" green="0.48627450979999998" blue="0.72549019609999998" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商户:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s3b-6h-5PA">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商家:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s3b-6h-5PA">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="51" id="Qw5-lt-whs">

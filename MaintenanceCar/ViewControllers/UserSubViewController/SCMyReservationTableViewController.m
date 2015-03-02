@@ -102,7 +102,7 @@
     SCReservation *reservation         = _dataList[indexPath.row];
     if ([self handleShowMore:reservation.type])
     {
-        // 列表被点击跳转到商户详情
+        // 列表被点击跳转到商家详情
         @try {
             SCWebViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
             webViewController.loadURL = [NSString stringWithFormat:@"%@/%@/%@", InspectionURL, [SCUserInfo share].userID, reservation.user_car_id];
@@ -203,7 +203,7 @@
                 [weakSelf clearListData];
             }
             
-            // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
+            // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
             [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 NSError *error       = nil;
                 SCReservation *reservation = [[SCReservation alloc] initWithDictionary:obj error:&error];
@@ -212,7 +212,7 @@
             
             [weakSelf hiddenHUD];
             
-            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:weakSelf.offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                   // 数据配置完成，刷新商户列表
+            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:weakSelf.offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                   // 数据配置完成，刷新商家列表
             weakSelf.offset += MerchantListLimit;                               // 偏移量请求参数递增
         }
         else

@@ -57,7 +57,7 @@
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  商户列表接口请求方法(API:/company_search - GET)
+ *  商家列表接口请求方法(API:/company_search - GET)
  *
  *  @param parameters   请求参数集合
  */
@@ -66,7 +66,7 @@
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  商户详情接口请求方法(API:/Carshop - GET)
+ *  商家详情接口请求方法(API:/Carshop - GET)
  *
  *  @param parameters   请求参数集合
  */
@@ -75,7 +75,7 @@
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  商户收藏接口请求方法(API:/Collection - POST)
+ *  商家收藏接口请求方法(API:/Collection - POST)
  *
  *  @param parameters   请求参数集合
  */
@@ -84,7 +84,7 @@
                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  获取收藏商户接口请求方法(API:/Collection - GET)
+ *  获取收藏商家接口请求方法(API:/Collection - GET)
  *
  *  @param parameters   请求参数集合
  */
@@ -93,7 +93,7 @@
                                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  取消收藏商户接口请求方法(API:/Collection/delete - GET)
+ *  取消收藏商家接口请求方法(API:/Collection/delete - GET)
  *
  *  @param parameters   请求参数集合
  */
@@ -102,7 +102,7 @@
                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  检查商户是否收藏接口请求方法(API:/Collection/user - GET)
+ *  检查商家是否收藏接口请求方法(API:/Collection/user - GET)
  *
  *  @param parameters   请求参数集合
  */
@@ -149,7 +149,7 @@
 
 #pragma mark - Reservation Reuqest
 /**
- *  商户预约接口请求方法(API:/Reservation - POST)
+ *  商家预约接口请求方法(API:/Reservation - POST)
  *
  *  @param parameters   请求参数集合
  */
@@ -269,7 +269,7 @@
                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  获取商户对应Flag颜色值接口请求方法(API:/Special/color - GET)
+ *  获取商家对应Flag颜色值接口请求方法(API:/Special/color - GET)
  *
  *  @param parameters   请求参数集合
  */
@@ -277,7 +277,7 @@
                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  获取商户对应Tag标签接口请求方法(API:/Cars/tags - GET)
+ *  获取商家对应Tag标签接口请求方法(API:/Cars/tags - GET)
  *
  *  @param parameters   请求参数集合
  */
