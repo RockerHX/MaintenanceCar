@@ -80,7 +80,6 @@
     {
         SCServiceMerchantListViewController *maintenanceViewController = segue.destinationViewController;
         maintenanceViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'养'"];
-        maintenanceViewController.itemTite = @"保养";
         maintenanceViewController.title    = @"保养";
     }
 }

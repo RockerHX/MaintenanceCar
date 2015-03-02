@@ -14,7 +14,6 @@
 @property (weak, nonatomic) IBOutlet SCMerchantFilterView *merchantFilterView;  // 商户列表的筛选View
 @property (weak, nonatomic) IBOutlet          UITableView *tableView;           // 商户列表View
 
-@property (nonatomic, copy)                      NSString *itemTite;
 @property (nonatomic, copy)                      NSString *query;
 @property (nonatomic, assign)                        BOOL isWash;
 

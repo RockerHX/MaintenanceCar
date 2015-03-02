@@ -67,15 +67,13 @@
         SCServiceMerchantListViewController *washMerchanListViewController = segue.destinationViewController;
         washMerchanListViewController.isWash   = YES;
         washMerchanListViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'洗'"];
-        washMerchanListViewController.itemTite = @"洗车美容";
         washMerchanListViewController.title    = @"洗车美容";
     }
     else if ([segue.identifier isEqualToString:@"Repair"])
     {
         SCServiceMerchantListViewController *repairMerchanListViewController = segue.destinationViewController;
         repairMerchanListViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'修'"];
-        repairMerchanListViewController.itemTite = @"修车";
-        repairMerchanListViewController.title    = @"修车";
+        repairMerchanListViewController.title    = @"维修";
     }
 }
 
@@ -242,7 +240,6 @@
         @try {
             SCServiceMerchantListViewController *specialViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCServiceMerchantListViewController"];
             specialViewController.query    = [DefaultQuery stringByAppendingFormat:@" AND %@", special.query];
-            specialViewController.itemTite = special.text;
             specialViewController.title    = special.text;
             [self.navigationController pushViewController:specialViewController animated:YES];
         }
