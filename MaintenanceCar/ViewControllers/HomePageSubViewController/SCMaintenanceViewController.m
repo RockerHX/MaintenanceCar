@@ -298,28 +298,9 @@
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
-        NSDictionary *parameters = @{@"query"     : @"default:'深圳' AND service:'养'",
-                                     @"limit"     : @(3),
-                                     @"offset"    : @(0),
-                                     @"radius"    : MerchantListRadius,
-                                     @"latitude"  : latitude,
-                                     @"longtitude": longitude};
-        [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
-            {
-                NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
-                // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
-                for (NSDictionary *data in list)
-                {
-                    NSError *error       = nil;
-                    SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:data[@"fields"] error:&error];
-                    [_recommendMerchants addObject:merchant];
-                }
-                [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationLeft];
-                [self performSelector:@selector(showFooterView:) withObject:@(list.count) afterDelay:0.2f];
-            }
-        } failure:nil];
+        [weakSelf startRecommendMerchantListRequestWithLatitude:latitude longitude:longitude];
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
+        [weakSelf startRecommendMerchantListRequestWithLatitude:latitude longitude:longitude];
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
                                                             message:@"定位失败，请检查您的定位服务是否打开：设置->隐私->定位服务"
                                                            delegate:nil
@@ -327,6 +308,35 @@
                                                   otherButtonTitles:nil, nil];
         [alertView show];
     }];
+}
+
+/**
+ *  商户列表数据请求方法，参数：query, limit, offset, radius, longtitude, latitude
+ */
+- (void)startRecommendMerchantListRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
+{
+    __weak typeof(self) weakSelf = self;
+    NSDictionary *parameters = @{@"query"     : @"default:'深圳' AND service:'养'",
+                                 @"limit"     : @(3),
+                                 @"offset"    : @(0),
+                                 @"radius"    : MerchantListRadius,
+                                 @"latitude"  : latitude,
+                                 @"longtitude": longitude};
+    [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        {
+            NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
+            // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
+            for (NSDictionary *data in list)
+            {
+                NSError *error       = nil;
+                SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:data[@"fields"] error:&error];
+                [_recommendMerchants addObject:merchant];
+            }
+            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationLeft];
+            [self performSelector:@selector(showFooterView:) withObject:@(list.count) afterDelay:0.2f];
+        }
+    } failure:nil];
 }
 
 - (void)showFooterView:(NSNumber *)show

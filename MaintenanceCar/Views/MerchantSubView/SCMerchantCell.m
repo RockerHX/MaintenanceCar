@@ -55,7 +55,14 @@
     _merchantNameLabel.text = merchant.name;
     _distanceLabel.text     = merchant.distance;
     _starView.startValue    = merchant.star;
-    _specialLabel.text      = merchant.tags.length ? merchant.tags : @"价格实惠";
+    
+    if (merchant.tags.length)
+    {
+        _specialLabel.hidden = NO;
+        _specialLabel.text   = merchant.tags;
+    }
+    else
+        _specialLabel.hidden = YES;
     
     [[SCAllDictionary share] requestColorsExplain:^(NSDictionary *colors, NSDictionary *explain, NSDictionary *detail) {
         _colors        = colors;
