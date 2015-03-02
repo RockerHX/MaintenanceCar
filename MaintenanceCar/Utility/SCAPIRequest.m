@@ -17,7 +17,6 @@
 - (void)setImageWithURL:(NSString *)url defaultImage:(NSString *)defaultImage
 {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
     request.cachePolicy = NSURLRequestReloadRevalidatingCacheData;
     [self setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:defaultImage] success:nil failure:nil];
 }
