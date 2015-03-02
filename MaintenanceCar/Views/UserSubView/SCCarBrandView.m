@@ -7,9 +7,9 @@
 //
 
 #import "SCCarBrandView.h"
-#import <UIImageView+AFNetworking.h>
 #import "MicroCommon.h"
 #import "API.h"
+#import "SCAPIRequest.h"
 #import "SCCollectionReusableView.h"
 #import "SCCarBrandCollectionViewCell.h"
 #import "SCCarBrand.h"
@@ -80,7 +80,7 @@
     
     // Configure the cell...
     SCCarBrand *carBrand = ((NSArray *)_carBrands[_indexTitles[indexPath.section]])[indexPath.row];
-    [cell.carIcon setImageWithURL:[NSURL URLWithString:[ImageURL stringByAppendingString:carBrand.img_name]]];
+    [cell.carIcon setImageWithURL:[ImageURL stringByAppendingString:carBrand.img_name] defaultImage:@"DefaultCarBrand"];
     cell.carTitleLabel.text = carBrand.brand_name;
     
     return cell;

@@ -9,7 +9,6 @@
 #import "SCMerchantDetailViewController.h"
 #import <UMengAnalytics/MobClick.h>
 #import <MBProgressHUD/MBProgressHUD.h>
-#import <UIImageView+AFNetworking.h>
 #import "MicroCommon.h"
 #import "SCMerchantDetail.h"
 #import "SCAPIRequest.h"
@@ -196,7 +195,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)displayMerchantDetail
 {
-    [_merchantImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@_1.jpg", MerchantImageDoMain, _merchant.company_id]] placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
+    [_merchantImageView setImageWithURL:[NSString stringWithFormat:@"%@%@_1.jpg", MerchantImageDoMain, _merchant.company_id] defaultImage:@"MerchantImageDefault"];
     _collectionItem.favorited                               = _merchantDetail.collected;
     _merchantBriefIntroductionCell.majors                   = _merchantDetail.majors;
     _merchantBriefIntroductionCell.distanceLabel.text       = _merchantDetail.distance;

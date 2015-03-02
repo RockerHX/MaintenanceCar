@@ -10,6 +10,12 @@
 #import <AFNetworking/AFNetworking.h>
 #import "API.h"
 
+@interface UIImageView (SCAPIRequest)
+
+- (void)setImageWithURL:(NSString *)url defaultImage:(NSString *)defaultImage;
+
+@end
+
 @interface SCAPIRequest : AFHTTPRequestOperationManager
 
 @property (nonatomic, copy) NSString *doMain;       // URL域
