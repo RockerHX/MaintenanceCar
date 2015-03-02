@@ -15,11 +15,13 @@
 #import "SCUserInfo.h"
 #import "SCMerchant.h"
 #import "SCMerchantDetailCell.h"
+#import "SCGroupProductCell.h"
 #import "SCCollectionItem.h"
 #import "SCReservationViewController.h"
 #import "SCReservatAlertView.h"
 #import "SCMapViewController.h"
 #import "SCAllDictionary.h"
+#import "SCGroupProductViewController.h"
 
 #define MerchantDetailCellIdentifier      @"SCMerchantDetailCell"
 
@@ -45,12 +47,13 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     BOOL _needChecked;      // 检查收藏标识
 }
 @property (weak, nonatomic) IBOutlet SCMerchantDetailCell *merchantBriefIntroductionCell;
-@property (weak, nonatomic) IBOutlet UILabel              *merchantAddressLabel;
-@property (weak, nonatomic) IBOutlet UILabel              *merchantPhoneLabel;
-@property (weak, nonatomic) IBOutlet UILabel              *merchantTimeLabel;
-@property (weak, nonatomic) IBOutlet UILabel              *merchantBusinessLabel;
-@property (weak, nonatomic) IBOutlet UILabel              *merchantServiceIntroductionLabel;
-@property (weak, nonatomic) IBOutlet UILabel              *merchantIntroductionLabel;
+@property (weak, nonatomic) IBOutlet   SCGroupProductCell *groupProductCell;
+@property (weak, nonatomic) IBOutlet              UILabel *merchantAddressLabel;
+@property (weak, nonatomic) IBOutlet              UILabel *merchantPhoneLabel;
+@property (weak, nonatomic) IBOutlet              UILabel *merchantTimeLabel;
+@property (weak, nonatomic) IBOutlet              UILabel *merchantBusinessLabel;
+@property (weak, nonatomic) IBOutlet              UILabel *merchantServiceIntroductionLabel;
+@property (weak, nonatomic) IBOutlet              UILabel *merchantIntroductionLabel;
 
 @end
 
@@ -93,6 +96,19 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 1)
+    {
+        @try {
+            SCGroupProductViewController *groupProductViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductViewController"];
+            groupProductViewController.productID = @"";
+            [self.navigationController pushViewController:groupProductViewController animated:YES];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
+    }
+    else if (indexPath.section == 2)
     {
         if (indexPath.row == 0)
         {
@@ -201,6 +217,14 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     _merchantBriefIntroductionCell.distanceLabel.text       = _merchantDetail.distance;
     _merchantBriefIntroductionCell.reservationButton.hidden = ![SCAllDictionary share].serviceItems.count;
     [_merchantBriefIntroductionCell hanleMerchantFlags:_merchantDetail.merchantFlags];
+    
+    SCGroupProduct *product = [_merchantDetail.products firstObject];
+    if (product)
+    {
+        _groupProductCell.productNameLabel.text  = product.title;
+        _groupProductCell.groupPriceLabel.text   = @"0.01";
+        _groupProductCell.productPriceLabel.text = product.total_price;
+    }
     
     [self handleMerchantName:_merchantDetail.name onNameLabel:_merchantBriefIntroductionCell.merchantNameLabel];
     [self handleMerchantDetail:_merchantDetail.address onLabel:_merchantAddressLabel];
