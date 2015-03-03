@@ -7,9 +7,6 @@
 //
 
 #import "SCMainViewController.h"
-#import "MicroCommon.h"
-#import "SCAPIRequest.h"
-#import "SCUserInfo.h"
 
 @interface SCMainViewController ()
 

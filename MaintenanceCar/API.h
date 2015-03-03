@@ -43,6 +43,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define CancelCollectionAPI         @"/Collection/delete"                   // 取消商家收藏API
 #define CheckMerchantCollectionAPI  @"/Collection/user"                     // 检查商家收藏状态API
 #define MerchantReservationAPI      @"/Reservation"                         // 商家预约API
+#define MerchantGroupProductAPI     @"/Group_product"                       // 商家团购详情API
 
 #define VerificationCodeAPI         @"/Verification"                        // 验证码获取API
 #define RegisterAPI                 @"/User"                                // 用户注册API
@@ -74,6 +75,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define CancelCollectionAPIURL          [APIURL stringByAppendingString:CancelCollectionAPI]        // 取消商家收藏接口URL - 用于商家详情页面取消收藏或者个人中心页面删除收藏
 #define CheckMerchantCollectionAPIURL   [APIURL stringByAppendingString:CheckMerchantCollectionAPI] // 检查商家收藏状态接口URL - 用于商家详情页面检查商家收藏状态
 #define MerchantReservationAPIURL       [APIURL stringByAppendingString:MerchantReservationAPI]     // 商家预约接口URL - 用于商家预约项目
+#define MerchantGroupProductAPIURL      [APIURL stringByAppendingString:MerchantGroupProductAPI]    // 商家团购详情接口URL - 用于商家团购项目
 
 #define VerificationCodeAPIURL          [APIURL stringByAppendingString:VerificationCodeAPI]        // 获取验证码接口URL - 用于获取短信或者语音验证码
 #define RegisterAPIURL                  [APIURL stringByAppendingString:RegisterAPI]                // 用户注册接口URL - 用于用户注册

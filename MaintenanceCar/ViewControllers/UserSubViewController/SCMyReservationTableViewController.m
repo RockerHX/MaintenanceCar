@@ -7,10 +7,6 @@
 //
 
 #import "SCMyReservationTableViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import "MicroCommon.h"
-#import "SCAPIRequest.h"
-#import "SCUserInfo.h"
 #import "SCReservation.h"
 #import "SCReservationTableViewCell.h"
 #import "SCWebViewController.h"

@@ -7,13 +7,9 @@
 //
 
 #import "SCReservationViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import <MBProgressHUD/MBProgressHUD.h>
-#import "MicroCommon.h"
-#import "SCAPIRequest.h"
-#import "SCUserInfo.h"
+#import "SCMerchant.h"
+#import "SCServiceItem.h"
 #import "SCPickerView.h"
-#import "SCUserInfo.h"
 #import "SCReservationDateViewController.h"
 
 @interface SCReservationViewController () <UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, MBProgressHUDDelegate, SCPickerViewDelegate, SCReservationDateViewControllerDelegate>

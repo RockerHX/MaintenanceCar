@@ -190,6 +190,13 @@
     [self requestGETMethodsWithAPI:CheckMerchantCollectionAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startMerchantGroupProductDetailAPIRequestWithParameters:(NSDictionary *)parameters
+                                                        Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MerchantGroupProductAPIURL parameters:parameters success:success failure:failure];
+}
+
 #pragma mark - User Center API
 - (void)startGetVerificationCodeAPIRequestWithParameters:(NSDictionary *)parameters
                                                  Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success

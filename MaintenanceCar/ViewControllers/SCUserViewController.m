@@ -7,10 +7,6 @@
 //
 
 #import "SCUserViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import <MBProgressHUD/MBProgressHUD.h>
-#import "MicroCommon.h"
-#import "SCUserInfo.h"
 #import "SCLoginViewController.h"
 #import "SCMyFavoriteTableViewController.h"
 #import "SCMyReservationTableViewController.h"

@@ -7,9 +7,6 @@
 //
 
 #import "SCAboutTableViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import <MBProgressHUD/MBProgressHUD.h>
-#import "MicroCommon.h"
 #import "SCWebViewController.h"
 
 #define kADURLKey       @"kADURLKey"
@@ -22,6 +19,21 @@
 @end
 
 @implementation SCAboutTableViewController
+
+#pragma mark - View Controller Life Cycle
+- (void)viewWillAppear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"[个人中心] - 关于"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillDisappear:animated];
+    [MobClick beginLogPageView:@"[个人中心] - 关于"];
+}
 
 - (void)viewDidLoad
 {

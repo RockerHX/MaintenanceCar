@@ -7,11 +7,6 @@
 //
 
 #import "SCLoginViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import <MBProgressHUD/MBProgressHUD.h>
-#import "MicroCommon.h"
-#import "SCAPIRequest.h"
-#import "SCUserInfo.h"
 #import "SCVerificationCodeView.h"
 #import "UMessage.h"
 

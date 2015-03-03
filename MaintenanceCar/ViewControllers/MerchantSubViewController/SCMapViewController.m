@@ -7,11 +7,8 @@
 //
 
 #import "SCMapViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import <MBProgressHUD/MBProgressHUD.h>
 #import "SCLocationManager.h"
 #import "SCMerchant.h"
-#import "MicroCommon.h"
 #import "SCMapMerchantInfoView.h"
 #import "SCMerchantDetailViewController.h"
 

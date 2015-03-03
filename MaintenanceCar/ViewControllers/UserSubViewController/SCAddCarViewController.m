@@ -7,16 +7,11 @@
 //
 
 #import "SCAddCarViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import <MBProgressHUD/MBProgressHUD.h>
-#import "MicroCommon.h"
 #import "SCCarBrandView.h"
 #import "SCCarModelView.h"
 #import "SCCollectionIndexView.h"
 #import "SCCarBrandDisplayModel.h"
 #import "SCCar.h"
-#import "SCAPIRequest.h"
-#import "SCUserInfo.h"
 
 // 添加车辆返回操作类型
 typedef NS_ENUM(BOOL, SCAddCarStatus) {

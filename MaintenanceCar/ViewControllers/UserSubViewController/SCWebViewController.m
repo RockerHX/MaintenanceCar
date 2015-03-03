@@ -7,13 +7,27 @@
 //
 
 #import "SCWebViewController.h"
-#import <MBProgressHUD/MBProgressHUD.h>
 
 @interface SCWebViewController () <UIWebViewDelegate, UIAlertViewDelegate>
 
 @end
 
 @implementation SCWebViewController
+
+#pragma mark - View Controller Life Cycle
+- (void)viewWillAppear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:[NSString stringWithFormat:@"[%@]", self.title]];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillDisappear:animated];
+    [MobClick beginLogPageView:[NSString stringWithFormat:@"[%@]", self.title]];
+}
 
 - (void)viewDidLoad
 {

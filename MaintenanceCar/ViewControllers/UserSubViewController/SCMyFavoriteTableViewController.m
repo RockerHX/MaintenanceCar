@@ -7,10 +7,6 @@
 //
 
 #import "SCMyFavoriteTableViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import "MicroCommon.h"
-#import "SCAPIRequest.h"
-#import "SCUserInfo.h"
 #import "SCMerchant.h"
 #import "SCMerchantTableViewCell.h"
 #import "SCMerchantDetailViewController.h"

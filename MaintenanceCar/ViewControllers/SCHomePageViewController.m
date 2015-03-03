@@ -7,13 +7,8 @@
 //
 
 #import "SCHomePageViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import <MBProgressHUD/MBProgressHUD.h>
 #import <AFNetworking/UIButton+AFNetworking.h>
-#import "MicroCommon.h"
 #import "SCHomePageDetailView.h"
-#import "SCUserInfo.h"
-#import "SCAPIRequest.h"
 #import "SCAllDictionary.h"
 #import "SCWebViewController.h"
 #import "SCServiceMerchantListViewController.h"

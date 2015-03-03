@@ -6,8 +6,7 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <MBProgressHUD/MBProgressHUD.h>
+#import "SCViewController.h"
 #import "MJRefresh.h"
 
 // 刷新操作的请求类型

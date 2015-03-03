@@ -7,7 +7,6 @@
 //
 
 #import "SCQAViewController.h"
-#import <UMengAnalytics/MobClick.h>
 
 @interface SCQAViewController ()
 

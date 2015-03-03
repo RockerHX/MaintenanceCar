@@ -7,12 +7,7 @@
 //
 
 #import "SCMerchantDetailViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import <MBProgressHUD/MBProgressHUD.h>
-#import "MicroCommon.h"
 #import "SCMerchantDetail.h"
-#import "SCAPIRequest.h"
-#import "SCUserInfo.h"
 #import "SCMerchant.h"
 #import "SCMerchantDetailCell.h"
 #import "SCGroupProductCell.h"
@@ -190,6 +185,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)viewConfig
 {
+    self.tableView.hidden = YES;
+    
     if (IS_IPHONE_6)
         self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 281.25f);
     else if (IS_IPHONE_6Plus)
@@ -272,6 +269,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         {
             _merchantDetail = [[SCMerchantDetail alloc] initWithDictionary:responseObject error:nil];
             [weakSelf displayMerchantDetail];
+            self.tableView.hidden = NO;
         }
         else
             [weakSelf showRequestErrorAlert];

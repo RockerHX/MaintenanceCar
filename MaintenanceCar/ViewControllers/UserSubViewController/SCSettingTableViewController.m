@@ -7,11 +7,7 @@
 //
 
 #import "SCSettingTableViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import <MBProgressHUD/MBProgressHUD.h>
-#import "MicroCommon.h"
 #import "UMFeedback.h"
-#import "SCUserInfo.h"
 
 @interface SCSettingTableViewController () <MBProgressHUDDelegate, UIAlertViewDelegate>
 

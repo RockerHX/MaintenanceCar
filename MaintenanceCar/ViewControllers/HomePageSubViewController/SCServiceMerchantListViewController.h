@@ -6,8 +6,9 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "SCMerchantFilterView.h"
+#import "SCViewController.h"
+
+@class SCMerchantFilterView;
 
 @interface SCServiceMerchantListViewController : UIViewController
 

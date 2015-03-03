@@ -7,12 +7,9 @@
 //
 
 #import "SCChangeMaintenanceDataViewController.h"
-#import <MBProgressHUD/MBProgressHUD.h>
-#import "MicroCommon.h"
-#import "SCUserInfo.h"
+#import "SCUserCar.h"
 #import "SCDatePickerView.h"
 #import "SCCarDriveHabitsView.h"
-#import "SCAPIRequest.h"
 
 @interface SCChangeMaintenanceDataViewController () <UITextFieldDelegate, SCDatePickerViewDelegate, SCCarDriveHabitsViewDelegate, MBProgressHUDDelegate>
 

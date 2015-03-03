@@ -6,9 +6,10 @@
 //  Copyright (c) 2014年 MaintenanceCar. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "SCMerchant.h"
-#import "SCServiceItem.h"
+#import "SCViewController.h"
+
+@class SCMerchant;
+@class SCServiceItem;
 
 @interface SCReservationViewController : UITableViewController
 

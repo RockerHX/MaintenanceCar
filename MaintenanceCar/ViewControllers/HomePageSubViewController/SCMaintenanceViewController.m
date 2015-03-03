@@ -7,18 +7,14 @@
 //
 
 #import "SCMaintenanceViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import <MBProgressHUD/MBProgressHUD.h>
-#import "MicroCommon.h"
 #import "SCMaintenanceTypeView.h"
 #import "SCMaintenanceItemCell.h"
 #import "SCMerchantTableViewCell.h"
 #import "SCLocationManager.h"
-#import "SCAPIRequest.h"
 #import "SCMerchantDetailViewController.h"
 #import "SCReservationViewController.h"
-#import "SCUserInfo.h"
 #import "SCUserCar.h"
+#import "SCMerchant.h"
 #import "SCMileageView.h"
 #import "SCAllDictionary.h"
 #import "SCChangeMaintenanceDataViewController.h"

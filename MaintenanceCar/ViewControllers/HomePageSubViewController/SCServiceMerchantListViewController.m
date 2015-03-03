@@ -7,11 +7,7 @@
 //
 
 #import "SCServiceMerchantListViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import <MBProgressHUD/MBProgressHUD.h>
-#import "MicroCommon.h"
 #import "MJRefresh.h"
-#import "SCAPIRequest.h"
 #import "SCMerchant.h"
 #import "SCMerchantListCell.h"
 #import "SCLocationManager.h"

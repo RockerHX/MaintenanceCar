@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "SCUserCar.h"
+#import "SCViewController.h"
 
+@class SCUserCar;
 @class SCCarDriveHabitsView;
 
 @protocol SCChangeMaintenanceDataViewControllerDelegate <NSObject>
