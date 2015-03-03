@@ -227,6 +227,7 @@
     {
         @try {
             SCWebViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
+            webViewController.title = special.text;
             [self.navigationController pushViewController:webViewController animated:YES];
         }
         @catch (NSException *exception) {
@@ -244,7 +245,7 @@
             [self.navigationController pushViewController:specialViewController animated:YES];
         }
         @catch (NSException *exception) {
-            NSLog(@"SCHomePageViewController Go to the SCWebViewController exception reasion:%@", exception.reason);
+            NSLog(@"SCHomePageViewController Go to the SCServiceMerchantListViewController exception reasion:%@", exception.reason);
         }
         @finally {
         }

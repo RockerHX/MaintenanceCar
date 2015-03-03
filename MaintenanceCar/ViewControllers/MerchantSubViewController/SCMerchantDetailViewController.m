@@ -222,7 +222,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     if (product)
     {
         _groupProductCell.productNameLabel.text  = product.title;
-        _groupProductCell.groupPriceLabel.text   = @"0.01";
+        _groupProductCell.groupPriceLabel.text   = product.final_price;
         _groupProductCell.productPriceLabel.text = product.total_price;
     }
     

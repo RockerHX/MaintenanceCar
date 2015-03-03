@@ -10,6 +10,9 @@
 #import <UMengAnalytics/MobClick.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "MicroCommon.h"
+#import "SCWebViewController.h"
+
+#define kADURLKey       @"kADURLKey"
 
 @interface SCAboutTableViewController () <UIAlertViewDelegate>
 {
@@ -51,6 +54,26 @@
             break;
             
         default:
+        {
+            NSString *url = [USER_DEFAULT objectForKey:kADURLKey];
+            if (!url || ![url length])
+                url = [MobClick getAdURL];
+            if ([url length])
+            {
+                @try {
+                    SCWebViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
+                    webViewController.title = @"精彩推荐";
+                    webViewController.loadURL = url;
+                    [self.navigationController pushViewController:webViewController animated:YES];
+                }
+                @catch (NSException *exception) {
+                    NSLog(@"SCAboutTableViewController Go to the SCWebViewController exception reasion:%@", exception.reason);
+                }
+                @finally {
+                    [self performSelectorInBackground:@selector(getURL) withObject:nil];
+                }
+            }
+        }
             break;
     }
 }
@@ -83,6 +106,12 @@
     }
     else
         ShowPromptHUDWithText(self.view, @"您所安装的是最新版本", 1.0f);
+}
+
+- (void)getURL
+{
+    [USER_DEFAULT setObject:[MobClick getAdURL] forKey:kADURLKey];
+    [USER_DEFAULT synchronize];
 }
 
 #pragma mark - Alert View Delegate Methods

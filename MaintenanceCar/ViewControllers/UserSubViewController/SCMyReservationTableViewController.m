@@ -105,6 +105,7 @@
         // 列表被点击跳转到商家详情
         @try {
             SCWebViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
+            webViewController.title = @"检测结果";
             webViewController.loadURL = [NSString stringWithFormat:@"%@/%@/%@", InspectionURL, [SCUserInfo share].userID, reservation.user_car_id];
             [self.navigationController pushViewController:webViewController animated:YES];
         }
