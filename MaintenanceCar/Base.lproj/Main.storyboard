@@ -3440,12 +3440,11 @@
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="mBX-jG-oZ9" secondAttribute="bottom" id="1IF-HQ-SVy"/>
                                                 <constraint firstItem="pRE-uQ-5uh" firstAttribute="height" secondItem="mBX-jG-oZ9" secondAttribute="height" id="3xq-5J-PpM"/>
                                                 <constraint firstAttribute="height" constant="24" id="7wM-N8-CUx"/>
+                                                <constraint firstItem="mBX-jG-oZ9" firstAttribute="leading" secondItem="Z15-ku-oBa" secondAttribute="leading" id="PTi-RU-vUX"/>
                                                 <constraint firstAttribute="width" constant="68" id="R5X-qZ-iYK"/>
-                                                <constraint firstItem="mBX-jG-oZ9" firstAttribute="leading" secondItem="Z15-ku-oBa" secondAttribute="leading" id="YI9-Y5-QH9"/>
-                                                <constraint firstItem="mBX-jG-oZ9" firstAttribute="top" secondItem="Z15-ku-oBa" secondAttribute="top" id="lTb-yW-6yO"/>
+                                                <constraint firstAttribute="bottom" secondItem="mBX-jG-oZ9" secondAttribute="bottom" id="kJH-iT-DvV"/>
                                                 <constraint firstItem="pRE-uQ-5uh" firstAttribute="centerY" secondItem="mBX-jG-oZ9" secondAttribute="centerY" id="qqZ-AQ-dP7"/>
                                                 <constraint firstItem="pRE-uQ-5uh" firstAttribute="leading" secondItem="mBX-jG-oZ9" secondAttribute="trailing" constant="8" id="yty-IN-bWZ"/>
                                             </constraints>
@@ -3453,12 +3452,16 @@
                                                 <mask key="constraints">
                                                     <exclude reference="7wM-N8-CUx"/>
                                                     <exclude reference="R5X-qZ-iYK"/>
+                                                    <exclude reference="PTi-RU-vUX"/>
+                                                    <exclude reference="kJH-iT-DvV"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="constraints">
                                                     <include reference="7wM-N8-CUx"/>
                                                     <include reference="R5X-qZ-iYK"/>
+                                                    <include reference="PTi-RU-vUX"/>
+                                                    <include reference="kJH-iT-DvV"/>
                                                 </mask>
                                             </variation>
                                             <connections>
@@ -3487,15 +3490,26 @@
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstItem="s7x-Sp-5jk" firstAttribute="leading" secondItem="KoC-ju-Tm2" secondAttribute="leading" id="Fe6-si-ubW"/>
-                                                <constraint firstAttribute="bottom" secondItem="s7x-Sp-5jk" secondAttribute="bottom" id="Vg6-Yv-kdF"/>
                                                 <constraint firstItem="gof-Q7-dix" firstAttribute="height" secondItem="s7x-Sp-5jk" secondAttribute="height" id="Vjn-NN-FJx"/>
+                                                <constraint firstAttribute="bottom" secondItem="s7x-Sp-5jk" secondAttribute="bottom" id="Vxh-Uy-7o1"/>
                                                 <constraint firstItem="gof-Q7-dix" firstAttribute="centerY" secondItem="s7x-Sp-5jk" secondAttribute="centerY" id="WaA-Bu-VsZ"/>
+                                                <constraint firstItem="s7x-Sp-5jk" firstAttribute="leading" secondItem="KoC-ju-Tm2" secondAttribute="leading" id="gPl-PE-DZp"/>
                                                 <constraint firstItem="gof-Q7-dix" firstAttribute="leading" secondItem="s7x-Sp-5jk" secondAttribute="trailing" constant="8" id="hmT-81-LU9">
                                                     <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                                                 </constraint>
-                                                <constraint firstItem="s7x-Sp-5jk" firstAttribute="top" secondItem="KoC-ju-Tm2" secondAttribute="top" id="vdC-JM-9wj"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Vxh-Uy-7o1"/>
+                                                    <exclude reference="gPl-PE-DZp"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="Vxh-Uy-7o1"/>
+                                                    <include reference="gPl-PE-DZp"/>
+                                                </mask>
+                                            </variation>
                                             <connections>
                                                 <outlet property="checkBox" destination="s7x-Sp-5jk" id="tAj-Ro-Co2"/>
                                                 <outlet property="nameLabel" destination="gof-Q7-dix" id="Rxz-Ch-RJn"/>
