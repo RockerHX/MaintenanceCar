@@ -16,7 +16,7 @@
 #import "SCReservatAlertView.h"
 #import "SCMapViewController.h"
 #import "SCAllDictionary.h"
-#import "SCGroupProductViewController.h"
+#import "SCGroupProductDetailViewController.h"
 
 #define MerchantDetailCellIdentifier      @"SCMerchantDetailCell"
 
@@ -93,9 +93,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     if (indexPath.section == 1)
     {
         @try {
-            SCGroupProductViewController *groupProductViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductViewController"];
-            groupProductViewController.productID = @"";
-            [self.navigationController pushViewController:groupProductViewController animated:YES];
+            SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
+            SCGroupProduct *product = [_merchantDetail.products firstObject];
+            groupProductDetailViewController.productID = product.product_id;
+            [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
         }
         @catch (NSException *exception) {
             NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
@@ -185,8 +186,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)viewConfig
 {
-    self.tableView.hidden = YES;
-    
     if (IS_IPHONE_6)
         self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 281.25f);
     else if (IS_IPHONE_6Plus)
@@ -264,7 +263,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     __weak typeof(self) weakSelf = self;
     NSDictionary *paramters = @{@"id": _merchant.company_id,
                            @"user_id": [SCUserInfo share].userID};
-    [[SCAPIRequest manager] startMerchantDetailAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startMerchantDetailAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             _merchantDetail = [[SCMerchantDetail alloc] initWithDictionary:responseObject error:nil];
@@ -289,7 +288,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     {
         NSDictionary *paramters = @{@"company_id": _merchant.company_id,
                                        @"user_id": [SCUserInfo share].userID};
-        [[SCAPIRequest manager] startCheckMerchantCollectionStutasAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[SCAPIRequest manager] startCheckMerchantCollectionStutasAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             _collectionItem.favorited = (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             _collectionItem.favorited = NO;
@@ -307,7 +306,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     NSDictionary *paramters = @{@"company_id": _merchantDetail.company_id,
                                 @"user_id": [SCUserInfo share].userID,
                                 @"type_id": @"1"};
-    [[SCAPIRequest manager] startMerchantCollectionAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startMerchantCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
             ShowPromptHUDWithText(weakSelf.navigationController.view, @"收藏成功", 1.0f);
@@ -331,7 +330,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     __weak typeof(self) weakSelf = self;
     NSDictionary *paramters = @{@"company_id": _merchantDetail.company_id,
                                 @"user_id": [SCUserInfo share].userID};
-    [[SCAPIRequest manager] startCancelCollectionAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startCancelCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消收藏成功", 1.0f);

@@ -20,4 +20,6 @@
 @property (nonatomic, copy) NSString <Optional>*total_price;
 @property (nonatomic, copy) NSString <Optional>*sell_count;
 
+@property (nonatomic, copy) NSString <Optional>*merchantName;
+
 @end

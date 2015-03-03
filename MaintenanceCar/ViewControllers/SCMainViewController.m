@@ -54,7 +54,7 @@
                                     @"os": os,
                                     @"version": appVersion,
                                     @"os_version": osVersion};
-        [[SCAPIRequest manager] startUserLogAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[SCAPIRequest manager] startUserLogAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
             {
                 NSLog(@"log_id:%@", responseObject[@"log_id"]);

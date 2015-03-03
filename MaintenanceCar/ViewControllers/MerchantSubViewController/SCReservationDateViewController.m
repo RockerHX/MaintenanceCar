@@ -99,7 +99,7 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
     __weak typeof(self)weakSelf = self;
     NSDictionary *parameters = @{@"company_id": _companyID,
                                        @"type": _type};
-    [[SCAPIRequest manager] startGetReservationItemNumAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startGetReservationItemNumAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             _dateItmes = responseObject;

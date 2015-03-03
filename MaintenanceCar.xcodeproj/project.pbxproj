@@ -61,6 +61,13 @@
 		48334F6D1AA5B5FE003327D3 /* SCUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48334F421AA5B5FE003327D3 /* SCUserInfoView.m */; };
 		48334F6E1AA5B5FE003327D3 /* SCVerificationCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48334F441AA5B5FE003327D3 /* SCVerificationCodeView.m */; };
 		48334F711AA5E949003327D3 /* SCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48334F701AA5E949003327D3 /* SCViewController.m */; };
+		48334F741AA5EFF6003327D3 /* SCGroupProductDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48334F731AA5EFF6003327D3 /* SCGroupProductDetailCell.m */; };
+		48334F7D1AA605FC003327D3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 48334F7C1AA605FC003327D3 /* libz.dylib */; };
+		48334F811AA6061A003327D3 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 48334F801AA6061A003327D3 /* libc++.dylib */; };
+		48334F841AA606C3003327D3 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 48334F7E1AA60604003327D3 /* libsqlite3.dylib */; };
+		48334F901AA60848003327D3 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48334F8C1AA60848003327D3 /* libWeChatSDK.a */; };
+		48334F911AA60848003327D3 /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 48334F8D1AA60848003327D3 /* read_me.txt */; };
+		48334F941AA609A4003327D3 /* SCWeiXinPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 48334F931AA609A4003327D3 /* SCWeiXinPay.m */; };
 		4841CECD1A6BE5C300DA36FC /* SCUserCar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CECC1A6BE5C300DA36FC /* SCUserCar.m */; };
 		4841CED91A6D049500DA36FC /* SCChangeMaintenanceDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CED81A6D049500DA36FC /* SCChangeMaintenanceDataViewController.m */; };
 		4841CF4A1A6E094B00DA36FC /* libUMessage_Sdk_1.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4841CF481A6E094B00DA36FC /* libUMessage_Sdk_1.1.0.a */; };
@@ -152,7 +159,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		481129A81AA486E800142B74 /* SCGroupProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGroupProductViewController.h; sourceTree = "<group>"; };
+		481129A81AA486E800142B74 /* SCGroupProductDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGroupProductDetailViewController.h; sourceTree = "<group>"; };
 		481129A91AA486E800142B74 /* SCGroupProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGroupProductViewController.m; sourceTree = "<group>"; };
 		481129B11AA4A86000142B74 /* SCBuyGroupProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBuyGroupProductViewController.h; sourceTree = "<group>"; };
 		481129B21AA4A86000142B74 /* SCBuyGroupProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCBuyGroupProductViewController.m; sourceTree = "<group>"; };
@@ -253,6 +260,17 @@
 		48334F441AA5B5FE003327D3 /* SCVerificationCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCVerificationCodeView.m; sourceTree = "<group>"; };
 		48334F6F1AA5E949003327D3 /* SCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCViewController.h; sourceTree = "<group>"; };
 		48334F701AA5E949003327D3 /* SCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCViewController.m; sourceTree = "<group>"; };
+		48334F721AA5EFF6003327D3 /* SCGroupProductDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGroupProductDetailCell.h; sourceTree = "<group>"; };
+		48334F731AA5EFF6003327D3 /* SCGroupProductDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGroupProductDetailCell.m; sourceTree = "<group>"; };
+		48334F7C1AA605FC003327D3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		48334F7E1AA60604003327D3 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		48334F801AA6061A003327D3 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		48334F8C1AA60848003327D3 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		48334F8D1AA60848003327D3 /* read_me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
+		48334F8E1AA60848003327D3 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		48334F8F1AA60848003327D3 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		48334F921AA609A4003327D3 /* SCWeiXinPay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCWeiXinPay.h; sourceTree = "<group>"; };
+		48334F931AA609A4003327D3 /* SCWeiXinPay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCWeiXinPay.m; sourceTree = "<group>"; };
 		4841CECB1A6BE5C300DA36FC /* SCUserCar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCUserCar.h; sourceTree = "<group>"; };
 		4841CECC1A6BE5C300DA36FC /* SCUserCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCUserCar.m; sourceTree = "<group>"; };
 		4841CED71A6D049500DA36FC /* SCChangeMaintenanceDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCChangeMaintenanceDataViewController.h; sourceTree = "<group>"; };
@@ -432,6 +450,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48334F841AA606C3003327D3 /* libsqlite3.dylib in Frameworks */,
+				48334F811AA6061A003327D3 /* libc++.dylib in Frameworks */,
+				48334F7D1AA605FC003327D3 /* libz.dylib in Frameworks */,
+				48334F901AA60848003327D3 /* libWeChatSDK.a in Frameworks */,
 				48F1A0881A6556E7000A1BBD /* AVFoundation.framework in Frameworks */,
 				48A531461A5C122500646057 /* Security.framework in Frameworks */,
 				48A531441A5C121700646057 /* CoreGraphics.framework in Frameworks */,
@@ -637,6 +659,8 @@
 			children = (
 				48334F131AA5B5FE003327D3 /* SCGroupProductCell.h */,
 				48334F141AA5B5FE003327D3 /* SCGroupProductCell.m */,
+				48334F721AA5EFF6003327D3 /* SCGroupProductDetailCell.h */,
+				48334F731AA5EFF6003327D3 /* SCGroupProductDetailCell.m */,
 			);
 			path = GroupProduct;
 			sourceTree = "<group>";
@@ -695,6 +719,17 @@
 				48334F441AA5B5FE003327D3 /* SCVerificationCodeView.m */,
 			);
 			path = UserSubView;
+			sourceTree = "<group>";
+		};
+		48334F8B1AA60848003327D3 /* SDKExport */ = {
+			isa = PBXGroup;
+			children = (
+				48334F8C1AA60848003327D3 /* libWeChatSDK.a */,
+				48334F8D1AA60848003327D3 /* read_me.txt */,
+				48334F8E1AA60848003327D3 /* WXApi.h */,
+				48334F8F1AA60848003327D3 /* WXApiObject.h */,
+			);
+			path = SDKExport;
 			sourceTree = "<group>";
 		};
 		4841CF471A6E094B00DA36FC /* UMessage_Sdk_1.1.0 */ = {
@@ -826,6 +861,7 @@
 		48AE95B01A50F52700A8A4B3 /* ThirdLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				48334F8B1AA60848003327D3 /* SDKExport */,
 				4841CF471A6E094B00DA36FC /* UMessage_Sdk_1.1.0 */,
 				48F1A05E1A6556A6000A1BBD /* UMengFeedback_SDK_2.1 */,
 				48A82ED71A63C9CC00DB3A16 /* MYNStickyFlowLayout */,
@@ -1016,6 +1052,8 @@
 				48FB70BC1AA5A58300AF4AD9 /* SCGroupProduct.m */,
 				48FB70D01AA5B4D900AF4AD9 /* SCGroupProductDetail.h */,
 				48FB70D11AA5B4D900AF4AD9 /* SCGroupProductDetail.m */,
+				48334F921AA609A4003327D3 /* SCWeiXinPay.h */,
+				48334F931AA609A4003327D3 /* SCWeiXinPay.m */,
 			);
 			path = Merchant;
 			sourceTree = "<group>";
@@ -1040,7 +1078,7 @@
 				48A531501A5C182B00646057 /* SCMapViewController.m */,
 				48C8B1DD1A81115E00E4114E /* SCReservationDateViewController.h */,
 				48C8B1DE1A81115E00E4114E /* SCReservationDateViewController.m */,
-				481129A81AA486E800142B74 /* SCGroupProductViewController.h */,
+				481129A81AA486E800142B74 /* SCGroupProductDetailViewController.h */,
 				481129A91AA486E800142B74 /* SCGroupProductViewController.m */,
 				481129B11AA4A86000142B74 /* SCBuyGroupProductViewController.h */,
 				481129B21AA4A86000142B74 /* SCBuyGroupProductViewController.m */,
@@ -1051,6 +1089,9 @@
 		4A941BDF60920671B449F360 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				48334F801AA6061A003327D3 /* libc++.dylib */,
+				48334F7E1AA60604003327D3 /* libsqlite3.dylib */,
+				48334F7C1AA605FC003327D3 /* libz.dylib */,
 				48F1A05C1A6529CF000A1BBD /* AVFoundation.framework */,
 				48A531451A5C122500646057 /* Security.framework */,
 				48A531431A5C121700646057 /* CoreGraphics.framework */,
@@ -1168,6 +1209,7 @@
 				48F1A07C1A6556A6000A1BBD /* save@2x.png in Resources */,
 				48F1A07B1A6556A6000A1BBD /* microphone@2x.png in Resources */,
 				48661B761A5E6627007F92A7 /* FilterConditions.plist in Resources */,
+				48334F911AA60848003327D3 /* read_me.txt in Resources */,
 				48F1A0861A6556A6000A1BBD /* umeng_fb_audio_play_default@2x.png in Resources */,
 				48F1A07F1A6556A6000A1BBD /* ToolViewInputVoice@2x.png in Resources */,
 				48F1A0851A6556A6000A1BBD /* umeng_fb_audio_play_03@2x.png in Resources */,
@@ -1243,6 +1285,7 @@
 				48334F471AA5B5FE003327D3 /* SCPickerView.m in Sources */,
 				48FB70C61AA5A58300AF4AD9 /* SCCarBrandDisplayModel.m in Sources */,
 				482B57DC1A43CB7700E47962 /* AppDelegate.mm in Sources */,
+				48334F741AA5EFF6003327D3 /* SCGroupProductDetailCell.m in Sources */,
 				48334F451AA5B5FE003327D3 /* SCDatePickerView.m in Sources */,
 				48334F611AA5B5FE003327D3 /* SCMerchantFlagCell.m in Sources */,
 				48334F5B1AA5B5FE003327D3 /* SCDateCell.m in Sources */,
@@ -1285,6 +1328,7 @@
 				48FB70C51AA5A58300AF4AD9 /* SCCarBrand.m in Sources */,
 				48334F4D1AA5B5FE003327D3 /* SCADView.m in Sources */,
 				48FB70CC1AA5A58300AF4AD9 /* SCGroupProduct.m in Sources */,
+				48334F941AA609A4003327D3 /* SCWeiXinPay.m in Sources */,
 				4897868E1A622FC4002593DD /* SCAddCarViewController.m in Sources */,
 				48334F501AA5B5FE003327D3 /* SCDriveHabitsItem.m in Sources */,
 				48334F4F1AA5B5FE003327D3 /* SCCarDriveHabitsView.m in Sources */,
@@ -1474,6 +1518,7 @@
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMengFeedback_SDK_2.1",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMengFeedback_SDK_2.1/UMOpus",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMessage_Sdk_1.1.0",
+					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/SDKExport",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1499,6 +1544,7 @@
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMengFeedback_SDK_2.1",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMengFeedback_SDK_2.1/UMOpus",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMessage_Sdk_1.1.0",
+					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/SDKExport",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

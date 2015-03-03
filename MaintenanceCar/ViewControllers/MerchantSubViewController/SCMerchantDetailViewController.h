@@ -14,7 +14,7 @@
 
 @interface SCMerchantDetailViewController : UITableViewController
 
-@property (nonatomic, copy)                SCMerchant *merchant;            // 商家信息
+@property (nonatomic, strong)              SCMerchant *merchant;            // 商家信息
 @property (nonatomic, strong)        SCMerchantDetail *merchantDetail;      // 商家详情数据模型
 
 @property (weak, nonatomic) IBOutlet SCCollectionItem *collectionItem;      // 收藏按钮

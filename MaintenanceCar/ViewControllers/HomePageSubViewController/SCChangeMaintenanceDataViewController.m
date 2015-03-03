@@ -119,7 +119,7 @@
                                                  @"habit": _car.habit};
     
     __weak typeof(self) weakSelf = self;
-    [[SCAPIRequest manager] startUpdateUserCarAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startUpdateUserCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {

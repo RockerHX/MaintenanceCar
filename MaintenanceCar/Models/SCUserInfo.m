@@ -171,7 +171,7 @@ static SCUserInfo *userInfo = nil;
     if (self.loginStatus)
     {
         NSDictionary *parameters = @{@"user_id": self.userID};
-        [[SCAPIRequest manager] startGetUserCarsAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[SCAPIRequest manager] startGetUserCarsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
                 [weakSelf saveUserCarsWithData:responseObject];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

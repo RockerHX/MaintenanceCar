@@ -253,7 +253,7 @@
     __weak typeof(self)weakSelf = self;
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     NSDictionary *parameters = @{@"user_car_id": _currentCar.user_car_id};
-    [[SCAPIRequest manager] startMaintenanceDataAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startMaintenanceDataAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             NSArray *normalItems  = responseObject[@"normal"];
@@ -317,7 +317,7 @@
                                  @"radius"    : MerchantListRadius,
                                  @"latitude"  : latitude,
                                  @"longtitude": longitude};
-    [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];

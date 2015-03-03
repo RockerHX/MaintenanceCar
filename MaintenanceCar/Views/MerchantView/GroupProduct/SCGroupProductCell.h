@@ -8,21 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol SCGroupProductCellDelegate <NSObject>
-
-@optional
-- (void)shouldShowBuyProductView;
-
-@end
-
 @interface SCGroupProductCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *productNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *groupPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *productPriceLabel;
-
-@property (nonatomic, weak)      IBOutlet id <SCGroupProductCellDelegate>delegate;
-
-- (IBAction)bugProductButtonPressed:(id)sender;
 
 @end

@@ -12,13 +12,10 @@
 #import "UMFeedback.h"
 #import "BMapKit.h"
 #import "UMessage.h"
+#import "WXApi.h"
 #import "SCUserInfo.h"
 
-@interface AppDelegate ()
-{
-    BMKMapManager *_mapManager;
-}
-
+@interface AppDelegate () <WXApiDelegate>
 @end
 
 @implementation AppDelegate
@@ -105,6 +102,9 @@
         NSLog(@"manager start failed!");
     }
     
+#pragma mark - WeiXin SDK
+    [WXApi registerApp:WeiXinKEY];
+    
     return YES;
 }
 
@@ -121,6 +121,41 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
 {
     NSLog(@"%s", __FUNCTION__);
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return  [WXApi handleOpenURL:url delegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return  [WXApi handleOpenURL:url delegate:self];
+}
+
+#pragma mark - Wei Xin Pay Delegate Methods
+- (void)onResp:(BaseResp *)resp
+{
+    if ([resp isKindOfClass:[PayResp class]])
+    {
+        PayResp *response = (PayResp *)resp;
+        switch (response.errCode) {
+            case WXSuccess:
+            {
+                //服务器端查询支付通知或查询API返回的结果再提示成功
+                NSLog(@"支付成功");
+            }
+                break;
+            default:
+            {
+                NSLog(@"支付失败， retcode=%d",resp.errCode);
+                NSLog(@"支付失败， type=%d",resp.type);
+                NSLog(@"支付失败， errStr=%@",resp.errStr);
+                NSLog(@"支付失败， returnKey=%@",response.returnKey);
+            }
+                break;
+        }
+    }
 }
 
 @end

@@ -1,20 +1,23 @@
 //
-//  SCGroupProductViewController.m
+//  SCGroupProductDetailViewController.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/3/2.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCGroupProductViewController.h"
-#import "SCGroupProductCell.h"
+#import "SCGroupProductDetailViewController.h"
+#import "SCGroupProductDetail.h"
+#import "SCGroupProductDetailCell.h"
 #import "SCBuyGroupProductViewController.h"
 
-@interface SCGroupProductViewController () <SCGroupProductCellDelegate>
+@interface SCGroupProductDetailViewController () <SCGroupProductCellDetailDelegate>
+
+@property (nonatomic, strong) SCGroupProductDetail *detail;
 
 @end
 
-@implementation SCGroupProductViewController
+@implementation SCGroupProductDetailViewController
 
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated
@@ -53,20 +56,31 @@
 
 - (void)viewConfig
 {
-    self.tableView.hidden = YES;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self startGroupProductDetailRequest];
 }
 
 - (void)startGroupProductDetailRequest
 {
+    __weak typeof(self)weakSelf = self;
     NSDictionary *parameters = @{@"product_id": _productID};
-    [[SCAPIRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject){
+    [[SCAPIRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            
+            _detail = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
+            [weakSelf displayGroupProductDetail];
         }
+        [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
     }];
+}
+
+- (void)displayGroupProductDetail
+{
+    _detailCell.productNameLabel.text  = _detail.title;
+    _detailCell.groupPriceLabel.text   = _detail.final_price;
+    _detailCell.productPriceLabel.text = _detail.total_price;
 }
 
 #pragma mark - SCGroupProductCellDelegate Methods
@@ -74,7 +88,7 @@
 {
     @try {
         SCBuyGroupProductViewController *buyGroupProductViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCBuyGroupProductViewController"];
-        buyGroupProductViewController.productID = @"";
+        buyGroupProductViewController.groupProducDetail= _detail;
         [self.navigationController pushViewController:buyGroupProductViewController animated:YES];
     }
     @catch (NSException *exception) {

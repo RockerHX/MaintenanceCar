@@ -141,7 +141,7 @@
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                  @"limit"  : @(MerchantListLimit),
                                  @"offset" : @(self.offset)};
-    [[SCAPIRequest manager] startGetCollectionMerchantAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startGetCollectionMerchantAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // 关闭上拉刷新或者下拉刷新
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];
@@ -192,7 +192,7 @@
     __weak typeof(self) weakSelf = self;
     NSDictionary *paramters = @{@"company_id": ((SCMerchant *)_deleteDataCache).company_id,
                                    @"user_id": [SCUserInfo share].userID};
-    [[SCAPIRequest manager] startCancelCollectionAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startCancelCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // 根据返回结果进行相应提示
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {

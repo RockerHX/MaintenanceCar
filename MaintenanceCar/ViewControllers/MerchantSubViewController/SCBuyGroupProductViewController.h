@@ -8,8 +8,21 @@
 
 #import "SCViewController.h"
 
+@class SCGroupProductDetail;
+
 @interface SCBuyGroupProductViewController : UITableViewController
 
-@property (nonatomic, copy) NSString *productID;
+@property (weak, nonatomic) IBOutlet UILabel *productNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *merchantNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *groupPriceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *productCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *totalPriceLabel;
+
+@property (nonatomic, strong) SCGroupProductDetail *groupProducDetail;
+
+- (IBAction)cutButtonPressed:(id)sender;
+- (IBAction)addButtonPressed:(id)sender;
+
+- (IBAction)weiXinPayPressed:(id)sender;
 
 @end

@@ -130,7 +130,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
                                  @"time_expire": @(VerificationCodeTimeExpire),
                                  @"mode"       : @(mode)};
     NSLog(@"%@", _verificationCode);
-    [[SCAPIRequest manager] startGetVerificationCodeAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startGetVerificationCodeAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
@@ -163,7 +163,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
 {
     __weak typeof(self) weakSelf = self;
     NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text};
-    [[SCAPIRequest manager] startRegisterAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startRegisterAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             [weakSelf startLoginRequest];
@@ -191,7 +191,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
 {
     __weak typeof(self) weakSelf = self;
     NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text};
-    [[SCAPIRequest manager] startLoginAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startLoginAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             [[SCUserInfo share] loginSuccessWithUserID:responseObject];

@@ -195,7 +195,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                   @"car_id": _car.car_id,
                                 @"model_id": _car.model_id};
-    [[SCAPIRequest manager] startAddCarAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startAddCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
             if ([_delegate respondsToSelector:@selector(addCarSuccessWith:)])

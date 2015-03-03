@@ -102,7 +102,7 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     __weak typeof(self) weakSelf = self;
     NSDictionary *parameters = @{@"brand_id": carBrand.brand_id,
                                 @"time_flag": @"0"};
-    [[SCAPIRequest manager] startUpdateCarModelAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startUpdateCarModelAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             NSArray *models = responseObject[@"data"];
@@ -127,7 +127,7 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     __weak typeof(self) weakSelf = self;
     NSDictionary *parameters = @{@"model_id": carModel.model_id,
                                  @"time_flag": @"0"};
-    [[SCAPIRequest manager] startUpdateCarsAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startUpdateCarsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             NSDictionary *defaultCarData = @{@"car_id": @"", @"model_id": carModel.model_id, @"up_time": @"", @"car_full_model": @"我不清楚/其他"};

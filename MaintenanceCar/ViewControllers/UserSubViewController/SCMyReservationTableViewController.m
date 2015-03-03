@@ -188,7 +188,7 @@
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                  @"limit"  : @(MerchantListLimit),
                                  @"offset" : @(self.offset)};
-    [[SCAPIRequest manager] startGetMyReservationAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startGetMyReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // 关闭上拉刷新或者下拉刷新
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];
@@ -241,7 +241,7 @@
                              @"company_id": ((SCReservation *)_deleteDataCache).company_id,
                              @"reserve_id": ((SCReservation *)_deleteDataCache).reserve_id,
                                  @"status": @"4"};
-    [[SCAPIRequest manager] startUpdateReservationAPIRequestWithParameters:paramters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startUpdateReservationAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // 根据返回结果进行相应提示
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {

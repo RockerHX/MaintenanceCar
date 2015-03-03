@@ -39,6 +39,7 @@
 #pragma mark -
 #define UMengAPPKEY                     @"54995e36fd98c5b910000cc6"     // 友盟SDK对应的APPKEY
 #define BaiDuMapKEY                     @"wNZGKBVyuCobA8GcksWWx9xD"     // 百度地图SDK对应的APPKEY
+#define WeiXinKEY                       @"wx6194bafa9ae065cc"           // 微信SDK对应的APPKEY
 
 #define MerchantListLimit               10                              // 商家列表搜索返回结果条数限制
 #define MerchantListRadius              @"100"                          // 商家列表搜索半径, 用于搜索距离当前位置多少公里范围内的商家. 单位公里(千米)

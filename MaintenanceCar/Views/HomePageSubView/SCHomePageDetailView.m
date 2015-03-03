@@ -14,6 +14,8 @@
 {
     NSInteger         _carIndex;
     SCUserCar         *_currentCar;
+    
+    BOOL              _canTap;
 }
 
 @end
@@ -87,6 +89,7 @@
 
 - (void)defaultHandelWithText:(NSString *)text
 {
+    _canTap = NO;
     _preButton.hidden  = YES;
     _nextButton.hidden = _preButton.hidden;
     _carNameLabel.text = text;
@@ -97,6 +100,7 @@
 {
     if (_currentCar.brand_name && _currentCar.model_name)
     {
+        _canTap = YES;
         _carNameLabel.text     = [NSString stringWithFormat:@"%@%@", _currentCar.brand_name, _currentCar.model_name];
         _carFullNameLabel.text = _currentCar.car_full_model;
     }
@@ -111,7 +115,7 @@
     {
         if (userInfo.cars.count)
         {
-            if ([_delegate respondsToSelector:@selector(shouldChangeCarData:)])
+            if ([_delegate respondsToSelector:@selector(shouldChangeCarData:)] && _canTap)
                 [_delegate shouldChangeCarData:_currentCar];
         }
         else
