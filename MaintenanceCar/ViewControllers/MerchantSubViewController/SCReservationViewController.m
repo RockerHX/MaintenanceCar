@@ -189,12 +189,6 @@
     [hud hide:YES afterDelay:delay];
 }
 
-- (void)checkShouldLogin
-{
-    if (![SCUserInfo share].loginStatus)
-        [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
-}
-
 - (void)displayDateItemWithDate:(NSString *)date displayDate:(NSString *)displayDate
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];

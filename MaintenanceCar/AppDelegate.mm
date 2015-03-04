@@ -103,6 +103,7 @@
     }
     
 #pragma mark - WeiXin SDK
+#warning @"微信SDK"只支持真机调试
     [WXApi registerApp:WeiXinKEY];
     
     return YES;
@@ -125,15 +126,18 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
+#warning @"微信SDK"只支持真机调试
     return  [WXApi handleOpenURL:url delegate:self];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
+#warning @"微信SDK"只支持真机调试
     return  [WXApi handleOpenURL:url delegate:self];
 }
 
 #pragma mark - Wei Xin Pay Delegate Methods
+#warning @"微信SDK"只支持真机调试
 - (void)onResp:(BaseResp *)resp
 {
     if ([resp isKindOfClass:[PayResp class]])

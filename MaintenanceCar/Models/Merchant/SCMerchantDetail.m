@@ -28,6 +28,8 @@
             _time_open = @"";
         if (!_time_closed)
             _time_closed = @"";
+        
+        [self handleProducts:_products];
     }
     return self;
 }
@@ -75,6 +77,15 @@
         prompt = [prompt stringByAppendingFormat:@"%@", string];
     }
     return prompt;
+}
+
+- (void)handleProducts:(NSArray *)products
+{
+    [products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        SCGroupProduct *product = obj;
+        product.companyID       = _company_id;
+        product.merchantName    = _name;
+    }];
 }
 
 #pragma mark - Setter And Getter Methods

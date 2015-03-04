@@ -13,6 +13,16 @@
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
 
-@interface UIViewController (SCViewController)
+@interface UIViewController (SCViewController) <UIAlertViewDelegate>
+
+/**
+ *  提示用户登录的警告框
+ */
+- (void)showShoulLoginAlert;
+
+/**
+ *  检查用户是否需要登录，需要则跳转到登录页面
+ */
+- (void)checkShouldLogin;
 
 @end

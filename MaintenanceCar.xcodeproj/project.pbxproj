@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		481129AA1AA486E800142B74 /* SCGroupProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 481129A91AA486E800142B74 /* SCGroupProductViewController.m */; };
+		481129AA1AA486E800142B74 /* SCGroupProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 481129A91AA486E800142B74 /* SCGroupProductDetailViewController.m */; };
 		481129B31AA4A86000142B74 /* SCBuyGroupProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 481129B21AA4A86000142B74 /* SCBuyGroupProductViewController.m */; };
 		4820DA3E1A63FE5000129D39 /* SCCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4820DA3D1A63FE5000129D39 /* SCCoreDataManager.m */; };
 		482335351A4BA78700B60921 /* SCAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 482335341A4BA78700B60921 /* SCAPIRequest.m */; };
@@ -160,7 +160,7 @@
 
 /* Begin PBXFileReference section */
 		481129A81AA486E800142B74 /* SCGroupProductDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGroupProductDetailViewController.h; sourceTree = "<group>"; };
-		481129A91AA486E800142B74 /* SCGroupProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGroupProductViewController.m; sourceTree = "<group>"; };
+		481129A91AA486E800142B74 /* SCGroupProductDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGroupProductDetailViewController.m; sourceTree = "<group>"; };
 		481129B11AA4A86000142B74 /* SCBuyGroupProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBuyGroupProductViewController.h; sourceTree = "<group>"; };
 		481129B21AA4A86000142B74 /* SCBuyGroupProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCBuyGroupProductViewController.m; sourceTree = "<group>"; };
 		4820DA3C1A63FE5000129D39 /* SCCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCoreDataManager.h; sourceTree = "<group>"; };
@@ -1079,7 +1079,7 @@
 				48C8B1DD1A81115E00E4114E /* SCReservationDateViewController.h */,
 				48C8B1DE1A81115E00E4114E /* SCReservationDateViewController.m */,
 				481129A81AA486E800142B74 /* SCGroupProductDetailViewController.h */,
-				481129A91AA486E800142B74 /* SCGroupProductViewController.m */,
+				481129A91AA486E800142B74 /* SCGroupProductDetailViewController.m */,
 				481129B11AA4A86000142B74 /* SCBuyGroupProductViewController.h */,
 				481129B21AA4A86000142B74 /* SCBuyGroupProductViewController.m */,
 			);
@@ -1164,6 +1164,9 @@
 								enabled = 1;
 							};
 							com.apple.GameCenter = {
+								enabled = 0;
+							};
+							com.apple.HealthKit = {
 								enabled = 0;
 							};
 							com.apple.InAppPurchase = {
@@ -1323,7 +1326,7 @@
 				48FB70CF1AA5A58300AF4AD9 /* SCReservation.m in Sources */,
 				48334F621AA5B5FE003327D3 /* SCMerchantListCell.m in Sources */,
 				48F666A61A65263F0044674C /* SCSettingTableViewController.m in Sources */,
-				481129AA1AA486E800142B74 /* SCGroupProductViewController.m in Sources */,
+				481129AA1AA486E800142B74 /* SCGroupProductDetailViewController.m in Sources */,
 				485B30CF1A61376F00AC3CC2 /* SCTableViewController.m in Sources */,
 				48FB70C51AA5A58300AF4AD9 /* SCCarBrand.m in Sources */,
 				48334F4D1AA5B5FE003327D3 /* SCADView.m in Sources */,

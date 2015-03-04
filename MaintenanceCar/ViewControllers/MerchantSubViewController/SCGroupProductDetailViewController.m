@@ -63,11 +63,13 @@
 - (void)startGroupProductDetailRequest
 {
     __weak typeof(self)weakSelf = self;
-    NSDictionary *parameters = @{@"product_id": _productID};
+    NSDictionary *parameters = @{@"product_id": _product.product_id};
     [[SCAPIRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             _detail = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
+            _detail.companyID = _product.companyID;
+            _detail.merchantName = _product.merchantName;
             [weakSelf displayGroupProductDetail];
         }
         [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];

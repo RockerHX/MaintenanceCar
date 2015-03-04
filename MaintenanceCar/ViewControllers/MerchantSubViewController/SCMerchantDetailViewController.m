@@ -95,7 +95,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         @try {
             SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
             SCGroupProduct *product = [_merchantDetail.products firstObject];
-            groupProductDetailViewController.productID = product.product_id;
+            groupProductDetailViewController.product = product;
             [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
         }
         @catch (NSException *exception) {

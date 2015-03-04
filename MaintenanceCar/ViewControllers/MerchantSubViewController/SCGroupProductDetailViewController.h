@@ -8,12 +8,13 @@
 
 #import "SCViewController.h"
 
+@class SCGroupProduct;
 @class SCGroupProductDetailCell;
 
 @interface SCGroupProductDetailViewController : UITableViewController
 
 @property (weak, nonatomic) IBOutlet SCGroupProductDetailCell *detailCell;
 
-@property (nonatomic, copy) NSString *productID;
+@property (nonatomic, copy) SCGroupProduct *product;
 
 @end

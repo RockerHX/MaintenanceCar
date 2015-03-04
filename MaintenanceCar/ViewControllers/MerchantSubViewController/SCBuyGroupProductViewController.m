@@ -62,24 +62,34 @@
 - (IBAction)addButtonPressed:(id)sender
 {
     _productCount = _productCount + 1;
-    if (_productCount > [_groupProducDetail.sell_count integerValue])
-        _productCount = [_groupProducDetail.sell_count integerValue];
     [self displayView];
 }
 
 - (IBAction)weiXinPayPressed:(id)sender
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [[SCAPIRequest manager] startGetWeiXinPayOrderAPIRequestWithParameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == 200)
-        {
+    if ([SCUserInfo share].loginStatus)
+    {
+        __weak typeof(self)weakSelf = self;
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                                     @"company_id": _groupProducDetail.companyID,
+                                     @"product_id": _groupProducDetail.product_id,
+                                     @"how_many": @(_productCount),
+                                     @"total_price": _totalPriceLabel.text};
+        [[SCAPIRequest manager] startGetWeiXinPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+            {
+                SCWeiXinPay *weiXinPay = [[SCWeiXinPay alloc] initWithDictionary:responseObject error:nil];
+                [weakSelf sendWeiXinPay:weiXinPay];
+            }
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            SCWeiXinPay *weiXinPay = [[SCWeiXinPay alloc] initWithDictionary:responseObject error:nil];
-            [self sendWeiXinPay:weiXinPay];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    }];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            ShowPromptHUDWithText(weakSelf.view, @"下单失败，请重试...", 0.5f);
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        }];
+    }
+    else
+        [self showShoulLoginAlert];
 }
 
 #pragma mark - Private Methods
@@ -114,6 +124,16 @@
     request.timeStamp = pay.timestamp;
     request.sign      = pay.sign;
     [WXApi sendReq:request];
+}
+
+#pragma mark - Alert View Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    // 用户选择是否登录
+    if (buttonIndex != alertView.cancelButtonIndex)
+    {
+        [self checkShouldLogin];
+    }
 }
 
 @end

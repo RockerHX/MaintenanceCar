@@ -201,7 +201,7 @@
                                                success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:WeiXinPayAPIURL parameters:parameters success:success failure:failure];
+    [self requestPOSTMethodsWithAPI:WeiXinPayAPIURL parameters:parameters success:success failure:failure];
 }
 
 #pragma mark - User Center API

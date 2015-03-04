@@ -94,11 +94,12 @@
 - (void)viewConfig
 {
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSString *build = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
     
     _logoImageView.layer.cornerRadius = 30.0f;
     _logoImageView.layer.borderWidth  = 1.0f;
     _logoImageView.layer.borderColor  = [UIColor lightGrayColor].CGColor;
-    _versionLabel.text = [NSString stringWithFormat:@"修养 %@", version];
+    _versionLabel.text = [NSString stringWithFormat:@"当前版本号:%@(Build %@)", version, build];
 }
 
 - (void)checekFinish:(NSDictionary *)info
@@ -117,7 +118,14 @@
         [alertView show];
     }
     else
-        ShowPromptHUDWithText(self.view, @"您所安装的是最新版本", 1.0f);
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您使用的已经是最新的版本"
+                                                            message:nil
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"确定"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 }
 
 - (void)getURL
