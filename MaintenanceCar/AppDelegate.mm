@@ -103,6 +103,7 @@
     }
     
 #pragma mark - WeiXin SDK
+#warning @"微信SDK"真机调试和上传记得打开注释
 #warning @"微信SDK"只支持真机调试
     [WXApi registerApp:WeiXinKEY];
     
@@ -124,6 +125,7 @@
     NSLog(@"%s", __FUNCTION__);
 }
 
+#warning @"微信SDK"真机调试和上传记得打开注释
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
 #warning @"微信SDK"只支持真机调试

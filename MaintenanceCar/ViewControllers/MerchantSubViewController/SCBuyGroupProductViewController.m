@@ -114,6 +114,7 @@
     _totalPriceLabel.text = [NSString stringWithFormat:@"%.2f", (_productCount * _productPrice)];
 }
 
+#warning @"微信SDK"真机调试和上传记得打开注释
 - (void)sendWeiXinPay:(SCWeiXinPay *)pay
 {
     PayReq *request = [[PayReq alloc] init];

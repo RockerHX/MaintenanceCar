@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class SCMerchantDetail;
+
 @interface SCGroupProductCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *productNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *groupPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *productPriceLabel;
+
+- (void)displayCellWithDetail:(SCMerchantDetail *)detail;
 
 @end

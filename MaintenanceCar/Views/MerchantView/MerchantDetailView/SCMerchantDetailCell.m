@@ -11,9 +11,11 @@
 #import "MicroCommon.h"
 #import "SCMerchantDetailFlagCell.h"
 #import "SCAllDictionary.h"
+#import "SCMerchantDetail.h"
 
 @interface SCMerchantDetailCell () <UICollectionViewDataSource, UICollectionViewDelegate>
 {
+    NSString     *_majors;
     NSDictionary *_colors;
     NSDictionary *_explains;
     NSDictionary *_details;
@@ -29,6 +31,15 @@
 {
     // 绘制圆角
     _reservationButton.layer.cornerRadius = 6.0f;
+    
+    CGFloat layoutWidth = DOT_COORDINATE;
+    if (IS_IPHONE_6Plus)
+        layoutWidth = 347.0f;
+    else if (IS_IPHONE_6)
+        layoutWidth = 297.0f;
+    else
+        layoutWidth = 267.0f;
+    _merchantNameLabel.preferredMaxLayoutWidth = layoutWidth;
 }
 
 #pragma mark - Action Methods
@@ -48,6 +59,15 @@
         _merchantFlags = merchantFlags;
         [_flagView reloadData];
     }];
+}
+
+- (void)displayCellWithDetail:(SCMerchantDetail *)detail
+{
+    _merchantNameLabel.text   = detail.name;
+    _majors                   = detail.majors;
+    _distanceLabel.text       = detail.distance;
+    _reservationButton.hidden = ![SCAllDictionary share].serviceItems.count;
+    [self hanleMerchantFlags:detail.merchantFlags];
 }
 
 #pragma mark - Private Methods

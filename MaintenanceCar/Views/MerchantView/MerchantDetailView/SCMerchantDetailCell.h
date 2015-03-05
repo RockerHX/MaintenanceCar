@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class SCMerchantDetail;
+
 @interface SCMerchantDetailCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet          UILabel *merchantNameLabel;    // 商家名称栏 - 用于显示商家名称
@@ -15,9 +17,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *flagView;             // 商家标签栏 - 用于显示商家标签
 @property (weak, nonatomic) IBOutlet         UIButton *reservationButton;    // 预约按钮
 
-@property (nonatomic, copy)                  NSString *majors;               // 专修品牌
-
-- (void)hanleMerchantFlags:(NSArray *)merchantFlags;
+- (void)displayCellWithDetail:(SCMerchantDetail *)detail;
 
 /**
  *  [预约]按钮点击事件方法

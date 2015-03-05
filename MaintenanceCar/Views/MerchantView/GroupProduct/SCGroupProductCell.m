@@ -7,11 +7,26 @@
 //
 
 #import "SCGroupProductCell.h"
+#import "SCMerchantDetail.h"
 
 @implementation SCGroupProductCell
 
-- (void)awakeFromNib {
+#pragma mark - Init Methods
+- (void)awakeFromNib
+{
     // Initialization code
+}
+
+#pragma mark - Public Methods
+- (void)displayCellWithDetail:(SCMerchantDetail *)detail
+{
+    SCGroupProduct *product = [detail.products firstObject];
+    if (product)
+    {
+        _productNameLabel.text  = product.title;
+        _groupPriceLabel.text   = product.final_price;
+        _productPriceLabel.text = product.total_price;
+    }
 }
 
 @end

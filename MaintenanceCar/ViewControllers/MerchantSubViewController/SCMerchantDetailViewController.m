@@ -11,14 +11,13 @@
 #import "SCMerchant.h"
 #import "SCMerchantDetailCell.h"
 #import "SCGroupProductCell.h"
+#import "SCMerchantDetailItemCell.h"
 #import "SCCollectionItem.h"
 #import "SCReservationViewController.h"
 #import "SCReservatAlertView.h"
 #import "SCMapViewController.h"
 #import "SCAllDictionary.h"
 #import "SCGroupProductDetailViewController.h"
-
-#define MerchantDetailCellIdentifier      @"SCMerchantDetailCell"
 
 typedef NS_ENUM(NSInteger, SCMerchantDetailCellSection) {
     SCMerchantDetailCellSectionMerchantBaseInfo = 0,
@@ -40,15 +39,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 @interface SCMerchantDetailViewController () <UIAlertViewDelegate, SCReservatAlertViewDelegate>
 {
     BOOL _needChecked;      // 检查收藏标识
+    BOOL _hasGroupProducts;
 }
-@property (weak, nonatomic) IBOutlet SCMerchantDetailCell *merchantBriefIntroductionCell;
-@property (weak, nonatomic) IBOutlet   SCGroupProductCell *groupProductCell;
-@property (weak, nonatomic) IBOutlet              UILabel *merchantAddressLabel;
-@property (weak, nonatomic) IBOutlet              UILabel *merchantPhoneLabel;
-@property (weak, nonatomic) IBOutlet              UILabel *merchantTimeLabel;
-@property (weak, nonatomic) IBOutlet              UILabel *merchantBusinessLabel;
-@property (weak, nonatomic) IBOutlet              UILabel *merchantServiceIntroductionLabel;
-@property (weak, nonatomic) IBOutlet              UILabel *merchantIntroductionLabel;
+@property (weak, nonatomic)    SCMerchantDetailCell *merchantBriefIntroductionCell;
+@property (weak, nonatomic) SCMerchantDetailItemCell *detailItemCell;
 
 @end
 
@@ -80,71 +74,240 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [self viewConfig];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - Config Methods
+- (void)initConfig
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    if (IS_IOS8)
+    {
+        self.tableView.estimatedRowHeight = 120.0f;
+        self.tableView.rowHeight = UITableViewAutomaticDimension;
+    }
+    
+    // 加载提示框，并开始数据请求
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self startMerchantDetailRequestWithParameters];
+    
+    // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed) name:kMerchantDtailReservationNotification object:nil];
+}
+
+- (void)viewConfig
+{
+    if (IS_IPHONE_6)
+        self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 281.25f);
+    else if (IS_IPHONE_6Plus)
+        self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 310.5f);
+    [self.tableView.tableHeaderView needsUpdateConstraints];
+    [self.tableView.tableHeaderView layoutIfNeeded];
+}
+
+#pragma mark - Table View Data Source Methods
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return _merchantDetail ? (_hasGroupProducts ? 3: 2) : Zero;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    switch (section)
+    {
+        case 1:
+            return _merchantDetail ? (_hasGroupProducts ? 1: 6) : Zero;
+            break;
+        case 2:
+            return _merchantDetail ? 6 : Zero;
+            break;
+            
+        default:
+            return _merchantDetail ? 1 : Zero;
+            break;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = nil;
+    
+    switch (indexPath.section)
+    {
+        case 1:
+        {
+            if (_hasGroupProducts)
+            {
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductCell" forIndexPath:indexPath];
+                [(SCGroupProductCell *)cell displayCellWithDetail:_merchantDetail];
+            }
+            else
+            {
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
+                [(SCMerchantDetailItemCell *)cell displayCellWithIndex:indexPath detail:_merchantDetail];
+            }
+        }
+            break;
+        case 2:
+        {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
+            [(SCMerchantDetailItemCell *)cell displayCellWithIndex:indexPath detail:_merchantDetail];
+        }
+            break;
+            
+        default:
+        {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell" forIndexPath:indexPath];
+            [(SCMerchantDetailCell *)cell displayCellWithDetail:_merchantDetail];
+        }
+            break;
+    }
+    
+    return cell;
 }
 
 #pragma mark - Table View Delegate Methods
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (IS_IOS8)
+    {
+        return UITableViewAutomaticDimension;
+    }
+    else
+    {
+        CGFloat height = DOT_COORDINATE;
+        CGFloat separatorHeight = 1;
+        if (_merchantDetail)
+        {
+            switch (indexPath.section)
+            {
+                case 1:
+                {
+                    if (_hasGroupProducts)
+                        return 60.0f;
+                    else
+                        height = [self calculateCellHeightWithIndexPath:indexPath];
+                }
+                    break;
+                case 2:
+                    height = [self calculateCellHeightWithIndexPath:indexPath];
+                    break;
+                    
+                default:
+                {
+                    if(!self.merchantBriefIntroductionCell)
+                        self.merchantBriefIntroductionCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell"];
+                    [self.merchantBriefIntroductionCell displayCellWithDetail:_merchantDetail];
+                    // Layout the cell
+                    [self.merchantBriefIntroductionCell setNeedsLayout];
+                    [self.merchantBriefIntroductionCell layoutIfNeeded];
+                    height = [self.merchantBriefIntroductionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+                }
+                    break;
+            }
+        }
+    
+        return height + separatorHeight;
+    }
+}
+
+- (CGFloat)calculateCellHeightWithIndexPath:(NSIndexPath *)indexPath
+{
+    if(!self.detailItemCell)
+        self.detailItemCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell"];
+    [self.detailItemCell displayCellWithIndex:indexPath detail:_merchantDetail];
+    // Layout the cell
+    [self.detailItemCell setNeedsLayout];
+    [self.detailItemCell layoutIfNeeded];
+    return [self.detailItemCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.section)
+    {
+        case 1:
+            return (_hasGroupProducts ? 60.0f : 50.0f);
+            break;
+        case 2:
+            return 50.0f;
+            break;
+            
+        default:
+            return 120.0f;
+            break;
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 1)
+    
+    switch (indexPath.section)
     {
-        @try {
-            SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
-            SCGroupProduct *product = [_merchantDetail.products firstObject];
-            groupProductDetailViewController.product = product;
-            [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
-    }
-    else if (indexPath.section == 2)
-    {
-        if (indexPath.row == 0)
+        case 1:
         {
-            _merchant.latitude = _merchantDetail.latitude;
-            _merchant.longtitude = _merchantDetail.longtitude;
-            // 地图按钮被点击，跳转到地图页面
-            UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
-            SCMapViewController *mapViewController          = (SCMapViewController *)mapNavigationController.topViewController;
-            mapViewController.showInfoView                  = NO;
-            mapViewController.isMerchantMap                 = YES;
-            mapViewController.merchants                     = @[_merchant];
-            mapViewController.leftItem.title                = @"详情";
-            mapNavigationController.modalTransitionStyle    = UIModalTransitionStyleCrossDissolve;
-            [self presentViewController:mapNavigationController animated:YES completion:nil];
-        }
-        else if (indexPath.row == 1)
-        {
-            if (_merchantDetail.telephone.length)
+            if (_hasGroupProducts)
             {
-                NSArray *phones = [_merchantDetail.telephone componentsSeparatedByString:@" "];
-                UIAlertView *alertView = nil;
-                if (phones.count > 1)
-                {
-                    alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商家电话"
-                                                           message:nil
-                                                          delegate:self
-                                                 cancelButtonTitle:@"取消"
-                                                 otherButtonTitles:[phones firstObject], [phones lastObject], nil];
+                @try {
+                    SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
+                    SCGroupProduct *product = [_merchantDetail.products firstObject];
+                    groupProductDetailViewController.product = product;
+                    [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
                 }
-                else
-                {
-                    alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商家电话"
-                                                           message:nil
-                                                          delegate:self
-                                                 cancelButtonTitle:@"取消"
-                                                 otherButtonTitles:[phones firstObject], nil];
+                @catch (NSException *exception) {
+                    NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
                 }
-                alertView.tag = SCAlertTypeReuqestCall;
-                [alertView show];
+                @finally {
+                }
             }
+            else
+                [self cellSelectedWithIndexPath:indexPath];
+        }
+            break;
+            
+        default:
+            [self cellSelectedWithIndexPath:indexPath];
+            break;
+    }
+}
+
+- (void)cellSelectedWithIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0)
+    {
+        _merchant.latitude = _merchantDetail.latitude;
+        _merchant.longtitude = _merchantDetail.longtitude;
+        // 地图按钮被点击，跳转到地图页面
+        UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
+        SCMapViewController *mapViewController          = (SCMapViewController *)mapNavigationController.topViewController;
+        mapViewController.showInfoView                  = NO;
+        mapViewController.isMerchantMap                 = YES;
+        mapViewController.merchants                     = @[_merchant];
+        mapViewController.leftItem.title                = @"详情";
+        mapNavigationController.modalTransitionStyle    = UIModalTransitionStyleCrossDissolve;
+        [self presentViewController:mapNavigationController animated:YES completion:nil];
+    }
+    else if (indexPath.row == 1)
+    {
+        if (_merchantDetail.telephone.length)
+        {
+            NSArray *phones = [_merchantDetail.telephone componentsSeparatedByString:@" "];
+            UIAlertView *alertView = nil;
+            if (phones.count > 1)
+            {
+                alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商家电话"
+                                                       message:nil
+                                                      delegate:self
+                                             cancelButtonTitle:@"取消"
+                                             otherButtonTitles:[phones firstObject], [phones lastObject], nil];
+            }
+            else
+            {
+                alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商家电话"
+                                                       message:nil
+                                                      delegate:self
+                                             cancelButtonTitle:@"取消"
+                                             otherButtonTitles:[phones firstObject], nil];
+            }
+            alertView.tag = SCAlertTypeReuqestCall;
+            [alertView show];
         }
     }
 }
@@ -174,26 +337,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 #pragma mark - Private Methods
-- (void)initConfig
-{
-    // 加载提示框，并开始数据请求
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [self startMerchantDetailRequestWithParameters];
-    
-    // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed) name:kMerchantDtailReservationNotification object:nil];
-}
-
-- (void)viewConfig
-{
-    if (IS_IPHONE_6)
-        self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 281.25f);
-    else if (IS_IPHONE_6Plus)
-        self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 310.5f);
-    [self.tableView.tableHeaderView needsUpdateConstraints];
-    [self.tableView.tableHeaderView layoutIfNeeded];
-}
-
 /**
  *  商家列表预约按钮点击触发事件通知方法
  *
@@ -208,51 +351,14 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (void)displayMerchantDetail
 {
     [_merchantImageView setImageWithURL:[NSString stringWithFormat:@"%@%@_1.jpg", MerchantImageDoMain, _merchant.company_id] defaultImage:@"MerchantImageDefault"];
-    _collectionItem.favorited                               = _merchantDetail.collected;
-    _merchantBriefIntroductionCell.majors                   = _merchantDetail.majors;
-    _merchantBriefIntroductionCell.distanceLabel.text       = _merchantDetail.distance;
-    _merchantBriefIntroductionCell.reservationButton.hidden = ![SCAllDictionary share].serviceItems.count;
-    [_merchantBriefIntroductionCell hanleMerchantFlags:_merchantDetail.merchantFlags];
-    
-    SCGroupProduct *product = [_merchantDetail.products firstObject];
-    if (product)
-    {
-        _groupProductCell.productNameLabel.text  = product.title;
-        _groupProductCell.groupPriceLabel.text   = product.final_price;
-        _groupProductCell.productPriceLabel.text = product.total_price;
-    }
-    
-    [self handleMerchantName:_merchantDetail.name onNameLabel:_merchantBriefIntroductionCell.merchantNameLabel];
-    [self handleMerchantDetail:_merchantDetail.address onLabel:_merchantAddressLabel];
-    [self handleMerchantDetail:_merchantDetail.telephone onLabel:_merchantPhoneLabel];
-    [self handleMerchantDetail:[NSString stringWithFormat:@"%@ - %@", [_merchantDetail.time_open substringWithRange:(NSRange){0, 5}], [_merchantDetail.time_closed substringWithRange:(NSRange){0, 5}]] onLabel:_merchantTimeLabel];
-    [self handleMerchantDetail:_merchantDetail.tags onLabel:_merchantBusinessLabel];
-    [self handleMerchantDetail:_merchantDetail.serverItemsPrompt onLabel:_merchantServiceIntroductionLabel];
-    [self handleMerchantDetail:_merchantDetail.service onLabel:_merchantIntroductionLabel];
+    _collectionItem.favorited = _merchantDetail.collected;
+    _hasGroupProducts         = _merchantDetail.products.count;
 }
 
-- (void)handleMerchantName:(NSString *)merchantName onNameLabel:(UILabel *)nameLabel
+- (void)reLayoutMerchantDetailView
 {
-    if (IS_IPHONE_6Plus && (merchantName.length > 40))
-        nameLabel.font = [UIFont systemFontOfSize:16.0f];
-    else if (IS_IPHONE_6 && (merchantName.length > 36))
-        nameLabel.font = [UIFont systemFontOfSize:16.0f];
-    else if (merchantName.length > 30)
-        nameLabel.font = [UIFont systemFontOfSize:16.0f];
-    
-    nameLabel.text = merchantName;
-}
-
-- (void)handleMerchantDetail:(NSString *)detail onLabel:(UILabel *)label
-{
-    if (IS_IPHONE_6Plus && (detail.length > 30))
-        label.font = [UIFont systemFontOfSize:14.0f];
-    else if (IS_IPHONE_6 && (detail.length > 24))
-        label.font = [UIFont systemFontOfSize:14.0f];
-    else if (detail.length > 14)
-        label.font = [UIFont systemFontOfSize:14.0f];
-    
-    label.text = detail.length ? detail : @"数据完善中...";
+    [self.tableView reloadData];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 /**
@@ -268,14 +374,21 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         {
             _merchantDetail = [[SCMerchantDetail alloc] initWithDictionary:responseObject error:nil];
             [weakSelf displayMerchantDetail];
-            self.tableView.hidden = NO;
+            
+            [weakSelf.tableView reloadData];
+            if (IS_IOS8)
+                [weakSelf performSelector:@selector(reLayoutMerchantDetailView) withObject:nil afterDelay:0.1f];
+            else
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
         }
         else
+        {
             [weakSelf showRequestErrorAlert];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf showRequestErrorAlert];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
     }];
 }
 
