@@ -49,7 +49,7 @@
 
 #define MerchantDetailViewControllerStoryBoardID    @"SCMerchantDetailViewController"
 #define ReservationViewControllerStoryBoardID       @"SCReservationViewController"
-#define MerchantCellReuseIdentifier                 @"MerchantCellReuseIdentifier"
+#define MerchantCellReuseIdentifier                 @"SCMerchantTableViewCell"
 
 #define DisplayNameKey                  @"DisplayName"
 #define RequestValueKey                 @"RequestValue"

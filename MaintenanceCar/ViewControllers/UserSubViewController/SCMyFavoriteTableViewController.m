@@ -160,23 +160,22 @@
                 [_dataList addObject:merchant];
             }];
             
-            [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];             // 请求完成，移除响应式控件
-            
             [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:weakSelf.offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                                           // 数据配置完成，刷新商家列表
             weakSelf.offset += MerchantListLimit;                                                       // 偏移量请求参数递增
         }
         else
         {
-            [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
             ShowPromptHUDWithText(weakSelf.navigationController.view, responseObject[@"error"], 1.0f);
         }
+        
+        [weakSelf hiddenHUD];             // 请求完成，移除响应式控件
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Get merchant list request error:%@", error);
         // 关闭上拉刷新或者下拉刷新
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];
-        [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
+        [weakSelf hiddenHUD];
         if (operation.response)
             ShowPromptHUDWithText(weakSelf.navigationController.view, @"您还没有收藏过任何店铺噢！", 1.0f);
         else

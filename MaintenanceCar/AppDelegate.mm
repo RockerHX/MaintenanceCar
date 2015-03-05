@@ -147,7 +147,10 @@
             case WXSuccess:
             {
                 //服务器端查询支付通知或查询API返回的结果再提示成功
-                NSLog(@"支付成功");
+                NSLog(@"支付成功， retcode=%d",resp.errCode);
+                NSLog(@"支付成功， type=%d",resp.type);
+                NSLog(@"支付成功， errStr=%@",resp.errStr);
+                NSLog(@"支付成功， returnKey=%@",response.returnKey);
             }
                 break;
             default:

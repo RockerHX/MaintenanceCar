@@ -190,6 +190,7 @@
     [self requestGETMethodsWithAPI:CheckMerchantCollectionAPIURL parameters:parameters success:success failure:failure];
 }
 
+#pragma mark - Group Product API
 - (void)startMerchantGroupProductDetailAPIRequestWithParameters:(NSDictionary *)parameters
                                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
@@ -202,6 +203,13 @@
                                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestPOSTMethodsWithAPI:WeiXinPayAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startGetMyGroupProductDetailAPIRequestWithParameters:(NSDictionary *)parameters
+                                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MyGroupProductAPIURL parameters:parameters success:success failure:failure];
 }
 
 #pragma mark - User Center API

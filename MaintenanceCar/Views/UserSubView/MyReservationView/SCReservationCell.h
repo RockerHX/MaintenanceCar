@@ -1,5 +1,5 @@
 //
-//  SCReservationTableViewCell.h
+//  SCReservationCell.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/11.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SCReservationTableViewCell : UITableViewCell
+@interface SCReservationCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *merchantNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *reservationTypeLabel;

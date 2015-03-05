@@ -66,23 +66,26 @@
 - (void)startDownRefreshReuqest
 {
     // 下拉刷新时，显示响应式控件，阻止用户操作
-    [self showHUDToView:self.navigationController.view];
+    [self showHUDToView:self.view];
 }
 
 - (void)startUpRefreshRequest
 {
     // 上拉刷新时，显示响应式控件，阻止用户操作
-    [self showHUDToView:self.navigationController.view];
+    [self showHUDToView:self.view];
 }
 
 - (void)showHUDToView:(UIView *)view
 {
+    self.tableView.scrollEnabled = NO;
+    
     _hudView = view;
     [MBProgressHUD showHUDAddedTo:view animated:YES];               // 加载响应式控件
 }
 
 - (void)hiddenHUD
 {
+    self.tableView.scrollEnabled = YES;
     [MBProgressHUD hideHUDForView:_hudView animated:YES];           // 隐藏响应式控件
 }
 

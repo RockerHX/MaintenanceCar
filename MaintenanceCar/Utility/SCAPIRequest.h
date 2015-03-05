@@ -98,6 +98,7 @@
                                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+#pragma mark - Group Product API
 /**
  *  商家团购详情接口请求方法(API:/Group_product - GET)
  */
@@ -106,11 +107,18 @@
                                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  商家团购详情接口请求方法(API:/Group_product - GET)
+ *  获取微信支付订单信息接口请求方法(API:/wepay - POST)
  */
 - (void)startGetWeiXinPayOrderAPIRequestWithParameters:(NSDictionary *)parameters
                                                success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  我的团购列表接口请求方法(API:/Group_ticket/all - GET)
+ */
+- (void)startGetMyGroupProductDetailAPIRequestWithParameters:(NSDictionary *)parameters
+                                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - User Center API
 /**

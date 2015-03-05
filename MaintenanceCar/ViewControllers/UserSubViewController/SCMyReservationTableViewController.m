@@ -8,7 +8,7 @@
 
 #import "SCMyReservationTableViewController.h"
 #import "SCReservation.h"
-#import "SCReservationTableViewCell.h"
+#import "SCReservationCell.h"
 #import "SCWebViewController.h"
 #import "SCMerchant.h"
 #import "SCMerchantDetailViewController.h"
@@ -56,7 +56,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCReservationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ReservationCellReuseIdentifier" forIndexPath:indexPath];
+    SCReservationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCReservationCell" forIndexPath:indexPath];
     
     // Configure the cell...
     SCReservation *reservation         = _dataList[indexPath.row];
@@ -207,8 +207,6 @@
                 [_dataList addObject:reservation];
             }];
             
-            [weakSelf hiddenHUD];
-            
             [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:weakSelf.offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                   // 数据配置完成，刷新商家列表
             weakSelf.offset += MerchantListLimit;                               // 偏移量请求参数递增
         }
@@ -216,14 +214,14 @@
         {
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
             ShowPromptHUDWithText(weakSelf.navigationController.view, responseObject[@"error"], 1.0f);
-            [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
         }
+        [weakSelf hiddenHUD];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Get merchant list request error:%@", error);
         // 关闭上拉刷新或者下拉刷新
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];
-        [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
+        [weakSelf hiddenHUD];
         if (operation.response)
             ShowPromptHUDWithText(weakSelf.navigationController.view, @"您还没有下过任何订单噢！", 1.0f);
         else

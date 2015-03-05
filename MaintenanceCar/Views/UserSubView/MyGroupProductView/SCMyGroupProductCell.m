@@ -1,14 +1,14 @@
 //
-//  SCReservationTableViewCell.m
+//  SCMyGroupProductCell.m
 //  MaintenanceCar
 //
-//  Created by ShiCang on 15/1/11.
+//  Created by ShiCang on 15/3/5.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCReservationTableViewCell.h"
+#import "SCMyGroupProductCell.h"
 
-@implementation SCReservationTableViewCell
+@implementation SCMyGroupProductCell
 
 - (void)awakeFromNib {
     // Initialization code

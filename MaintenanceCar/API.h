@@ -43,30 +43,32 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define CancelCollectionAPI         @"/Collection/delete"                   // 取消商家收藏API
 #define CheckMerchantCollectionAPI  @"/Collection/user"                     // 检查商家收藏状态API
 #define MerchantReservationAPI      @"/Reservation"                         // 商家预约API
+
 #define MerchantGroupProductAPI     @"/Group_product"                       // 商家团购详情API
 #define WeiXinPayAPI                @"/wepay"                               // 微信支付API
+#define MyGroupProductAPI           @"/Group_ticket/all"                    // 我的团购列表API
 
 #define VerificationCodeAPI         @"/Verification"                        // 验证码获取API
 #define RegisterAPI                 @"/User"                                // 用户注册API
 #define LoginAPI                    RegisterAPI                             // 用户登录API
 #define UserLogAPI                  @"/Userlog"                             // 用户日志记录API
 
-#define MyReservationAPI            @"/Reservation/all"                     // 我的预约接口
-#define UpdateReservationAPI        @"/Reservation/update"                  // 更新预约接口
-#define ReservationItemNumAPI       @"/Carshop/reservation_left"            // 预约日期数量接口
+#define MyReservationAPI            @"/Reservation/all"                     // 我的预约API
+#define UpdateReservationAPI        @"/Reservation/update"                  // 更新预约API
+#define ReservationItemNumAPI       @"/Carshop/reservation_left"            // 预约日期数量API
 
-#define CarBrandAPI                 @"/Cars/brands"                         // 汽车品牌接口
-#define CarModelAPI                 @"/Cars/models"                         // 汽车型号接口
-#define CarsAPI                     @"/Cars"                                // 汽车款式接口
-#define AddCarAPI                   @"/Usercar"                             // 添加车辆接口
+#define CarBrandAPI                 @"/Cars/brands"                         // 汽车品牌API
+#define CarModelAPI                 @"/Cars/models"                         // 汽车型号API
+#define CarsAPI                     @"/Cars"                                // 汽车款式API
+#define AddCarAPI                   @"/Usercar"                             // 添加车辆API
 
-#define MaintenanceAPI              @"/Baoyang/user"                        // 保养数据接口
-#define UpdateCarAPI                @"/Usercar/update"                      // 更新车辆数据接口
+#define MaintenanceAPI              @"/Baoyang/user"                        // 保养数据API
+#define UpdateCarAPI                @"/Usercar/update"                      // 更新车辆数据API
 
-#define AllDictionaryAPI            @"/Misc/dictAll"                        // 所有数据字典接口
-#define HomePageSpecialAPI          @"/Special"                             // 首页第四个按钮数据接口
-#define FlagsColorExplainAPI        @"/Special/color_explain"               // 获取商家对应Flag数据接口
-#define MerchantTagsAPI             @"/Cars/tags"                           // 获取商家对应Tag标签接口
+#define AllDictionaryAPI            @"/Misc/dictAll"                        // 所有数据字典API
+#define HomePageSpecialAPI          @"/Special"                             // 首页第四个按钮数据API
+#define FlagsColorExplainAPI        @"/Special/color_explain"               // 获取商家对应Flag数据API
+#define MerchantTagsAPI             @"/Cars/tags"                           // 获取商家对应Tag标签API
 
 
 #define WearthAPIURL                    [APIURL stringByAppendingString:WearthAPI]                  // 天气接口URL - 用于主页模块获取天气信息
@@ -76,8 +78,10 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define CancelCollectionAPIURL          [APIURL stringByAppendingString:CancelCollectionAPI]        // 取消商家收藏接口URL - 用于商家详情页面取消收藏或者个人中心页面删除收藏
 #define CheckMerchantCollectionAPIURL   [APIURL stringByAppendingString:CheckMerchantCollectionAPI] // 检查商家收藏状态接口URL - 用于商家详情页面检查商家收藏状态
 #define MerchantReservationAPIURL       [APIURL stringByAppendingString:MerchantReservationAPI]     // 商家预约接口URL - 用于商家预约项目
+
 #define MerchantGroupProductAPIURL      [APIURL stringByAppendingString:MerchantGroupProductAPI]    // 商家团购详情接口URL - 用于商家团购项目
 #define WeiXinPayAPIURL                 [APIURL stringByAppendingString:WeiXinPayAPI]               // 微信支付接口URL - 用于团购支付时获取微信支付订单信息
+#define MyGroupProductAPIURL            [APIURL stringByAppendingString:MyGroupProductAPI]          // 我的团购列表接口URL - 用于获取用户所有团购券列表
 
 #define VerificationCodeAPIURL          [APIURL stringByAppendingString:VerificationCodeAPI]        // 获取验证码接口URL - 用于获取短信或者语音验证码
 #define RegisterAPIURL                  [APIURL stringByAppendingString:RegisterAPI]                // 用户注册接口URL - 用于用户注册

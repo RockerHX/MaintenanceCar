@@ -394,6 +394,95 @@
                                             </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="8P4-1a-lzF">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8P4-1a-lzF" id="6SJ-dK-ese">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CouponIcon" translatesAutoresizingMaskIntoConstraints="NO" id="w65-Rm-JU3">
+                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="w65-Rm-JU3" secondAttribute="height" multiplier="1:1" id="Bc8-aH-6ht"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="Bc8-aH-6ht"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="Bc8-aH-6ht"/>
+                                                        </mask>
+                                                    </variation>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的团购券" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0gm-cR-ueh">
+                                                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="167" id="4rb-fG-Hx7">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="180"/>
+                                                        </constraint>
+                                                        <constraint firstAttribute="height" constant="40" id="FrT-cI-NSf"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="4rb-fG-Hx7"/>
+                                                            <exclude reference="FrT-cI-NSf"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="4rb-fG-Hx7"/>
+                                                            <include reference="FrT-cI-NSf"/>
+                                                        </mask>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="0gm-cR-ueh" firstAttribute="centerY" secondItem="w65-Rm-JU3" secondAttribute="centerY" constant="0.25" id="84V-pF-flD">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                                </constraint>
+                                                <constraint firstItem="0gm-cR-ueh" firstAttribute="leading" secondItem="w65-Rm-JU3" secondAttribute="trailing" constant="27.5" id="9uZ-3y-sgQ">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="30"/>
+                                                </constraint>
+                                                <constraint firstItem="w65-Rm-JU3" firstAttribute="top" secondItem="6SJ-dK-ese" secondAttribute="topMargin" id="fLk-bg-DPl"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="w65-Rm-JU3" secondAttribute="bottom" constant="1.5" id="jCB-wZ-JQ9">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                                </constraint>
+                                                <constraint firstItem="w65-Rm-JU3" firstAttribute="leading" secondItem="6SJ-dK-ese" secondAttribute="leadingMargin" id="lzf-iw-Y5s">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                                                </constraint>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="subviews">
+                                                    <exclude reference="w65-Rm-JU3"/>
+                                                    <exclude reference="0gm-cR-ueh"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <exclude reference="9uZ-3y-sgQ"/>
+                                                    <exclude reference="84V-pF-flD"/>
+                                                    <exclude reference="fLk-bg-DPl"/>
+                                                    <exclude reference="jCB-wZ-JQ9"/>
+                                                    <exclude reference="lzf-iw-Y5s"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="subviews">
+                                                    <include reference="w65-Rm-JU3"/>
+                                                    <include reference="0gm-cR-ueh"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <include reference="9uZ-3y-sgQ"/>
+                                                    <include reference="84V-pF-flD"/>
+                                                    <include reference="fLk-bg-DPl"/>
+                                                    <include reference="jCB-wZ-JQ9"/>
+                                                    <include reference="lzf-iw-Y5s"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -1588,7 +1677,32 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="00f-Z2-XkK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-465" y="1632.75"/>
+            <point key="canvasLocation" x="-1227" y="1632.75"/>
+        </scene>
+        <!--My Coupon View Controller-->
+        <scene sceneID="X33-bq-noa">
+            <objects>
+                <tableViewController storyboardIdentifier="SCMyCouponViewController" hidesBottomBarWhenPushed="YES" id="yUI-tf-rJX" customClass="SCMyCouponViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="FwD-s6-xNO">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SCMyGroupProductCell" id="zhD-9P-w10" customClass="SCMyGroupProductCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zhD-9P-w10" id="7uv-WB-oaG">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="yUI-tf-rJX" id="lh1-gE-wQq"/>
+                            <outlet property="delegate" destination="yUI-tf-rJX" id="Fqn-0W-fuP"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5JI-Yo-i0B" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-435" y="1632.75"/>
         </scene>
         <!--我的订单-->
         <scene sceneID="BUu-K6-buG">
@@ -1599,7 +1713,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReservationCellReuseIdentifier" id="i4k-Bd-Z8C" customClass="SCReservationTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SCReservationCell" id="i4k-Bd-Z8C" customClass="SCReservationCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i4k-Bd-Z8C" id="A6T-on-zj6">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -1815,7 +1929,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MerchantCellReuseIdentifier" rowHeight="100" id="zW0-QN-5qz" customClass="SCMerchantTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SCMerchantTableViewCell" rowHeight="100" id="zW0-QN-5qz" customClass="SCMerchantTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zW0-QN-5qz" id="WRC-px-ISd">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -3686,7 +3800,7 @@
                             </variation>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MerchantCellReuseIdentifier" rowHeight="100" id="7CL-hL-AOs" customClass="SCMerchantTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SCMerchantTableViewCell" rowHeight="100" id="7CL-hL-AOs" customClass="SCMerchantTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7CL-hL-AOs" id="xSc-x7-1BE">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -9984,6 +10098,7 @@
         <image name="CenterBar" width="29" height="36"/>
         <image name="CheckButton" width="33" height="33"/>
         <image name="CollectIcon" width="60" height="60"/>
+        <image name="CouponIcon" width="60" height="60"/>
         <image name="DateButton" width="23" height="23"/>
         <image name="DefaultCarBrand" width="80" height="80"/>
         <image name="DistanceIcon" width="15" height="15"/>

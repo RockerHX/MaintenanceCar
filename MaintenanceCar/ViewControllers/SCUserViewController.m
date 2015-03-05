@@ -10,6 +10,7 @@
 #import "SCLoginViewController.h"
 #import "SCMyFavoriteTableViewController.h"
 #import "SCMyReservationTableViewController.h"
+#import "SCMyCouponViewController.h"
 #import "SCAddCarViewController.h"
 #import "SCUserInfoView.h"
 #import "SCChangeMaintenanceDataViewController.h"
@@ -17,6 +18,7 @@
 typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     SCUserCenterRowMyOrder = 0,
     SCUserCenterRowMyCollection,
+    SCUserCenterRowMyCoupon,
     SCUserCenterRowMyCustomers,
     SCUserCenterRowMyReservation,
 };
@@ -83,6 +85,12 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
                 {
                     SCMyFavoriteTableViewController *myFavoriteTableViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyFavoriteTableViewController"];
                     [self pushToSubViewControllerWithController:myFavoriteTableViewController];
+                }
+                    break;
+                case SCUserCenterRowMyCoupon:
+                {
+                    SCMyCouponViewController *myCouponViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyCouponViewController"];
+                    [self pushToSubViewControllerWithController:myCouponViewController];
                 }
                     break;
                     
