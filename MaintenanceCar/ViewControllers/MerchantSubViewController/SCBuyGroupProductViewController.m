@@ -13,8 +13,10 @@
 
 @interface SCBuyGroupProductViewController ()
 {
-    NSUInteger _productCount;
-    double     _productPrice;
+    NSUInteger  _productCount;
+    double      _productPrice;
+    
+    SCWeiXinPay *_weiXinPay;
 }
 
 @end
@@ -44,10 +46,23 @@
     [self viewConfig];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - Config Methods
+- (void)initConfig
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    _productCount = 1;
+    _productPrice = [_groupProducDetail.final_price doubleValue];
+    
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(weiXinPaySuccess) name:kWeiXinPaySuccessNotification object:nil];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(weiXinPayFailure) name:kWeiXinPayFailureNotification object:nil];
+}
+
+- (void)viewConfig
+{
+    _productNameLabel.text = _groupProducDetail.title;
+    _merchantNameLabel.text = _groupProducDetail.merchantName;
+    _groupPriceLabel.text = _groupProducDetail.final_price;
+    _productCountLabel.text = [@(_productCount) stringValue];
+    _totalPriceLabel.text = _groupProducDetail.final_price;
 }
 
 #pragma mark - Action Methods
@@ -79,8 +94,8 @@
         [[SCAPIRequest manager] startGetWeiXinPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
             {
-                SCWeiXinPay *weiXinPay = [[SCWeiXinPay alloc] initWithDictionary:responseObject error:nil];
-                [weakSelf sendWeiXinPay:weiXinPay];
+                _weiXinPay = [[SCWeiXinPay alloc] initWithDictionary:responseObject error:nil];
+                [weakSelf sendWeiXinPay:_weiXinPay];
             }
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -93,19 +108,37 @@
 }
 
 #pragma mark - Private Methods
-- (void)initConfig
+- (void)weiXinPaySuccess
 {
-    _productCount = 1;
-    _productPrice = [_groupProducDetail.final_price doubleValue];
+    
 }
 
-- (void)viewConfig
+- (void)weiXinPayFailure
 {
-    _productNameLabel.text = _groupProducDetail.title;
-    _merchantNameLabel.text = _groupProducDetail.merchantName;
-    _groupPriceLabel.text = _groupProducDetail.final_price;
-    _productCountLabel.text = [@(_productCount) stringValue];
-    _totalPriceLabel.text = _groupProducDetail.final_price;
+    ShowPromptHUDWithText(self.view, @"支付失败！请重试..", 1.0f);
+}
+
+- (void)startGenerateGroupProductRequest
+{
+    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                              @"company_id": _groupProducDetail.companyID,
+                              @"product_id": _groupProducDetail.product_id,
+                                 @"content": _groupProducDetail.title,
+                               @"old_price": _groupProducDetail.total_price,
+                                   @"price": _groupProducDetail.final_price,
+                             @"limit_begin": _groupProducDetail.limit_begin,
+                               @"limit_end": _groupProducDetail.limit_end,
+                                @"how_many": @(_productCount),
+                                  @"mobile": [USER_DEFAULT objectForKey:kPhoneNumberKey],
+                                @"order_id": _weiXinPay.out_trade_no};
+    [[SCAPIRequest manager] startGenerateGroupProductAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+        {
+            
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
 }
 
 - (void)displayView

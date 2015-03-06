@@ -36,11 +36,9 @@
 #pragma mark UMeng Analytics SDK
     // 启用[友盟反馈]
     [UMFeedback setAppkey:UMengAPPKEY];
+    
     // 设置版本号
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    [MobClick setAppVersion:version];
-    [MobClick checkUpdate];         // 集成友盟更新
-    
     // 启动[友盟统计]，采用启动发送的方式 - BATCH
 //    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"AppStore:%@", version]];
 #warning @"发布时更改测试统计"
@@ -149,18 +147,12 @@
             case WXSuccess:
             {
                 //服务器端查询支付通知或查询API返回的结果再提示成功
-                NSLog(@"支付成功， retcode=%d",resp.errCode);
-                NSLog(@"支付成功， type=%d",resp.type);
-                NSLog(@"支付成功， errStr=%@",resp.errStr);
-                NSLog(@"支付成功， returnKey=%@",response.returnKey);
+                [NOTIFICATION_CENTER postNotificationName:kWeiXinPaySuccessNotification object:nil];
             }
                 break;
             default:
             {
-                NSLog(@"支付失败， retcode=%d",resp.errCode);
-                NSLog(@"支付失败， type=%d",resp.type);
-                NSLog(@"支付失败， errStr=%@",resp.errStr);
-                NSLog(@"支付失败， returnKey=%@",response.returnKey);
+                [NOTIFICATION_CENTER postNotificationName:kWeiXinPayFailureNotification object:nil];
             }
                 break;
         }

@@ -114,6 +114,14 @@
                                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
+ *  生成团购券接口请求方法(API:/Group_ticket - POST)
+ */
+
+- (void)startGenerateGroupProductAPIRequestWithParameters:(NSDictionary *)parameters
+                                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
  *  我的团购列表接口请求方法(API:/Group_ticket/all - GET)
  */
 - (void)startGetMyGroupProductDetailAPIRequestWithParameters:(NSDictionary *)parameters

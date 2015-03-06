@@ -55,12 +55,6 @@
     {
         case 0:
         {
-            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            [MobClick checkUpdateWithDelegate:self selector:@selector(checekFinish:)];         // 集成友盟更新
-        }
-            break;
-        case 1:
-        {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/xiu-yang/id960929849?mt=8"]];
         }
             break;
@@ -102,43 +96,10 @@
     _versionLabel.text = [NSString stringWithFormat:@"当前版本号:%@(Build %@)", version, build];
 }
 
-- (void)checekFinish:(NSDictionary *)info
-{
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    
-    _updateInfo = info;
-    
-    if ([info[@"update"] boolValue])
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"发现新版本：%@", info[@"version"]]
-                                                            message:info[@"update_log"]
-                                                           delegate:self
-                                                  cancelButtonTitle:@"忽略此版本"
-                                                  otherButtonTitles:@"AppStore更新", nil];
-        [alertView show];
-    }
-    else
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您使用的已经是最新的版本"
-                                                            message:nil
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"确定"
-                                                  otherButtonTitles:nil, nil];
-        [alertView show];
-    }
-}
-
 - (void)getURL
 {
     [USER_DEFAULT setObject:[MobClick getAdURL] forKey:kADURLKey];
     [USER_DEFAULT synchronize];
-}
-
-#pragma mark - Alert View Delegate Methods
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex != alertView.cancelButtonIndex)
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_updateInfo[@"path"]]];
 }
 
 @end

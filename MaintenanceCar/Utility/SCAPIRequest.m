@@ -205,6 +205,13 @@
     [self requestPOSTMethodsWithAPI:WeiXinPayAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startGenerateGroupProductAPIRequestWithParameters:(NSDictionary *)parameters
+                                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:GenerateGroupProductAPIURL parameters:parameters success:success failure:failure];
+}
+
 - (void)startGetMyGroupProductDetailAPIRequestWithParameters:(NSDictionary *)parameters
                                                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure

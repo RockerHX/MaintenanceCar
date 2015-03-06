@@ -22,9 +22,9 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define DefaultQuery        @"default:'深圳'"
 
-//#define DoMain              @"https://api.yjclw.com"                        // 接口域名
+#define DoMain              @"https://api.yjclw.com"                        // 接口域名
 #warning @"发布时更改测试环境"
-#define DoMain              @"http://testing.yjclw.com"                     // 接口域名
+//#define DoMain              @"http://testing.yjclw.com"                     // 接口域名
 #define ImageDoMain         @"http://static.yjclw.com"                      // 图片资源域名
 #define InspectionURL       @"http://mobile.yjclw.com/Inspection"           // 检测进度
 
@@ -46,6 +46,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define MerchantGroupProductAPI     @"/Group_product"                       // 商家团购详情API
 #define WeiXinPayAPI                @"/wepay"                               // 微信支付API
+#define GenerateGroupProductAPI     @"/Group_ticket"                        // 生成团购券API
 #define MyGroupProductAPI           @"/Group_ticket/all"                    // 我的团购列表API
 
 #define VerificationCodeAPI         @"/Verification"                        // 验证码获取API
@@ -81,6 +82,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define MerchantGroupProductAPIURL      [APIURL stringByAppendingString:MerchantGroupProductAPI]    // 商家团购详情接口URL - 用于商家团购项目
 #define WeiXinPayAPIURL                 [APIURL stringByAppendingString:WeiXinPayAPI]               // 微信支付接口URL - 用于团购支付时获取微信支付订单信息
+#define GenerateGroupProductAPIURL      [APIURL stringByAppendingString:GenerateGroupProductAPI]    // 生成团购券接口URL - 用于付款成功后生成团购券
 #define MyGroupProductAPIURL            [APIURL stringByAppendingString:MyGroupProductAPI]          // 我的团购列表接口URL - 用于获取用户所有团购券列表
 
 #define VerificationCodeAPIURL          [APIURL stringByAppendingString:VerificationCodeAPI]        // 获取验证码接口URL - 用于获取短信或者语音验证码

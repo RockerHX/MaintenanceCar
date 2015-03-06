@@ -17,6 +17,7 @@
 @property (nonatomic, copy)   NSString <Optional>*sign;
 @property (nonatomic, copy)   NSString <Optional>*prepayid;
 @property (nonatomic, copy)   NSString <Optional>*partnerid;
+@property (nonatomic, copy)   NSString <Optional>*out_trade_no;
 
 @property (nonatomic, assign) UInt32             timestamp;
 

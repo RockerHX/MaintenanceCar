@@ -246,17 +246,22 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         {
             if (_hasGroupProducts)
             {
-                @try {
-                    SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
-                    SCGroupProduct *product = [_merchantDetail.products firstObject];
-                    groupProductDetailViewController.product = product;
-                    [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
+                if ([SCUserInfo share].loginStatus)
+                {
+                    @try {
+                        SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
+                        SCGroupProduct *product = [_merchantDetail.products firstObject];
+                        groupProductDetailViewController.product = product;
+                        [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
+                    }
+                    @catch (NSException *exception) {
+                        NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
+                    }
+                    @finally {
+                    }
                 }
-                @catch (NSException *exception) {
-                    NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
-                }
-                @finally {
-                }
+                else
+                    [self showShoulLoginAlert];
             }
             else
                 [self cellSelectedWithIndexPath:indexPath];
@@ -353,7 +358,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     [_merchantImageView setImageWithURL:[NSString stringWithFormat:@"%@%@_1.jpg", MerchantImageDoMain, _merchant.company_id] defaultImage:@"MerchantImageDefault"];
     _collectionItem.favorited = _merchantDetail.collected;
-    _hasGroupProducts         = _merchantDetail.products.count;
+//    _hasGroupProducts         = _merchantDetail.products.count;
 }
 
 - (void)reLayoutMerchantDetailView
