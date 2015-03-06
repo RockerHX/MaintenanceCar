@@ -11,13 +11,6 @@
 #import "SCAPIRequest.h"
 #import "UMessage.h"
 
-#define kLoginKey               @"kLoginKey"
-#define kUserIDKey              @"kUserIDKey"
-#define kPhoneNumberKey         @"kPhoneNumberKey"
-#define kUserCarsKey            @"kUserCarsKey"
-#define kAddAliasKey            @"kAddAliasKey"
-#define kReceiveMessageKey      @"kReceiveMessageKey"
-
 typedef void(^BLOCK)(SCUserInfo *userInfo, BOOL finish);
 
 static SCUserInfo *userInfo = nil;

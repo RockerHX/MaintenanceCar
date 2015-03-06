@@ -9,6 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "SCUserCar.h"
 
+#define kLoginKey               @"kLoginKey"
+#define kUserIDKey              @"kUserIDKey"
+#define kPhoneNumberKey         @"kPhoneNumberKey"
+#define kUserCarsKey            @"kUserCarsKey"
+#define kAddAliasKey            @"kAddAliasKey"
+#define kReceiveMessageKey      @"kReceiveMessageKey"
+
 typedef NS_ENUM(BOOL, SCLoginStatus) {
     SCLoginStatusLogin  = YES,
     SCLoginStatusLogout = NO

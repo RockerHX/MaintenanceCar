@@ -14,7 +14,7 @@
 - (void)setFavorited:(BOOL)favorited
 {
     _favorited = favorited;
-    self.image = favorited ? [UIImage imageNamed:@"FavoriteIcon"] : [UIImage imageNamed:@"UnFavoriteIcon"];
+    [self setImage:[UIImage imageNamed:favorited ? @"FavoriteIcon" : @"UnFavoriteIcon"] forState:UIControlStateNormal];
 }
 
 @end

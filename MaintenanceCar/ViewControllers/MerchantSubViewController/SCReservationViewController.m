@@ -112,6 +112,7 @@
     _ownerNameTextField.leftView            = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
     _ownerPhoneNumberTextField.leftViewMode = UITextFieldViewModeAlways;
     _ownerPhoneNumberTextField.leftView     = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
+    _ownerPhoneNumberTextField.text         = [USER_DEFAULT objectForKey:kPhoneNumberKey];
     _remarkTextField.leftViewMode           = UITextFieldViewModeAlways;
     _remarkTextField.leftView               = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
     _projectLabel.text                      = _serviceItem.service_name;

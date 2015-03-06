@@ -83,6 +83,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         self.tableView.rowHeight = UITableViewAutomaticDimension;
     }
     
+    _needChecked = YES;
     // 加载提示框，并开始数据请求
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self startMerchantDetailRequestWithParameters];
@@ -422,16 +423,16 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [[SCAPIRequest manager] startMerchantCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"收藏成功", 1.0f);
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"收藏成功", 0.5f);
         }
         else
         {
             _collectionItem.favorited = NO;
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"收藏失败，请重试", 1.0f);
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"收藏失败，请重试", 0.5f);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         _collectionItem.favorited = NO;
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"收藏失败，请检查网络", 1.0f);
+        ShowPromptHUDWithText(weakSelf.navigationController.view, @"收藏失败，请检查网络", 0.5f);
     }];
 }
 
@@ -446,16 +447,16 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [[SCAPIRequest manager] startCancelCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消收藏成功", 1.0f);
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消收藏成功", 0.5f);
         }
         else
         {
             _collectionItem.favorited = YES;
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消收藏失败，请重试", 1.0f);
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消收藏失败，请重试", 0.5f);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         _collectionItem.favorited = YES;
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消收藏失败，请检查网络", 1.0f);
+        ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消收藏失败，请检查网络", 0.5f);
     }];
 }
 

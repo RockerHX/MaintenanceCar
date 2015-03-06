@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SCCollectionItem : UIBarButtonItem
+@interface SCCollectionItem : UIButton
 
 @property (nonatomic, assign) BOOL favorited;       // 收藏标识
 
