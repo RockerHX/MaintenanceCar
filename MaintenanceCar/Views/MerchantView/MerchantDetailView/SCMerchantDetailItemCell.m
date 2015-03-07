@@ -20,7 +20,7 @@
     if (IS_IPHONE_6Plus)
         layoutWidth = 347.0f;
     else if (IS_IPHONE_6)
-        layoutWidth = 297.0f;
+        layoutWidth = 322.0f;
     else
         layoutWidth = 267.0f;
     _nameLabel.preferredMaxLayoutWidth = layoutWidth;
@@ -31,6 +31,7 @@
 {
     NSString *image        = nil;
     NSString *text         = nil;
+    CGFloat  fontSize      = 17.0f;
     UIColor  *textColor    = [UIColor blackColor];
     BOOL     showAccessory = NO;
     BOOL     canSelected   = NO;
@@ -62,12 +63,14 @@
         {
             image = @"MerchantBusinessIcon";
             text  = detail.tags;
+            fontSize = text.length ? 14.0f : fontSize;
         }
             break;
         case 4:
         {
             image = @"MerchantIntroduceIcon";
             text  = detail.serverItemsPrompt;
+            fontSize = text.length ? 14.0f : fontSize;
         }
             break;
             
@@ -75,11 +78,13 @@
         {
             image = @"MerchantIntroduceIcon";
             text  = detail.service;
+            fontSize = text.length ? 14.0f : fontSize;
         }
             break;
     }
     _icon.image = [UIImage imageNamed:image];
     _nameLabel.text = text.length ? text : @"数据完善中...";
+    _nameLabel.font = [UIFont systemFontOfSize:fontSize];
     _nameLabel.textColor = textColor;
     self.accessoryType = showAccessory ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
     self.selected = canSelected;

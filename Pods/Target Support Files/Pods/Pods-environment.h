@@ -48,11 +48,11 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 5
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 1
 
-// FXBlurView
-#define COCOAPODS_POD_AVAILABLE_FXBlurView
-#define COCOAPODS_VERSION_MAJOR_FXBlurView 1
-#define COCOAPODS_VERSION_MINOR_FXBlurView 6
-#define COCOAPODS_VERSION_PATCH_FXBlurView 3
+// CSStickyHeaderFlowLayout
+#define COCOAPODS_POD_AVAILABLE_CSStickyHeaderFlowLayout
+#define COCOAPODS_VERSION_MAJOR_CSStickyHeaderFlowLayout 0
+#define COCOAPODS_VERSION_MINOR_CSStickyHeaderFlowLayout 2
+#define COCOAPODS_VERSION_PATCH_CSStickyHeaderFlowLayout 4
 
 // HexColors
 #define COCOAPODS_POD_AVAILABLE_HexColors
@@ -70,7 +70,7 @@
 #define COCOAPODS_POD_AVAILABLE_MBProgressHUD
 #define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0
 #define COCOAPODS_VERSION_MINOR_MBProgressHUD 9
-#define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
+#define COCOAPODS_VERSION_PATCH_MBProgressHUD 1
 
 // SCInfiniteLoopScrollView
 #define COCOAPODS_POD_AVAILABLE_SCInfiniteLoopScrollView
@@ -82,5 +82,5 @@
 #define COCOAPODS_POD_AVAILABLE_UMengAnalytics
 #define COCOAPODS_VERSION_MAJOR_UMengAnalytics 3
 #define COCOAPODS_VERSION_MINOR_UMengAnalytics 4
-#define COCOAPODS_VERSION_PATCH_UMengAnalytics 4
+#define COCOAPODS_VERSION_PATCH_UMengAnalytics 6
 

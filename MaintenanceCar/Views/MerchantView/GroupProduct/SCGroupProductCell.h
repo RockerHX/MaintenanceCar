@@ -16,6 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *groupPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *productPriceLabel;
 
-- (void)displayCellWithDetail:(SCMerchantDetail *)detail;
+- (void)displayCellWithMerchantDetail:(SCMerchantDetail *)merchantDetail;
 
 @end

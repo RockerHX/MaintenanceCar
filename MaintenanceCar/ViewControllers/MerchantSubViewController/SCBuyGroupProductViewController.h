@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *productCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalPriceLabel;
 
-@property (nonatomic, strong) SCGroupProductDetail *groupProducDetail;
+@property (nonatomic, strong) SCGroupProductDetail *groupProductDetail;
 
 - (IBAction)cutButtonPressed:(id)sender;
 - (IBAction)addButtonPressed:(id)sender;

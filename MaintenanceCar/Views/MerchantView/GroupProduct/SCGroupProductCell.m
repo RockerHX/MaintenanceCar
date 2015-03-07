@@ -18,9 +18,9 @@
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithDetail:(SCMerchantDetail *)detail
+- (void)displayCellWithMerchantDetail:(SCMerchantDetail *)merchantDetail
 {
-    SCGroupProduct *product = [detail.products firstObject];
+    SCGroupProduct *product = [merchantDetail.products firstObject];
     if (product)
     {
         _productNameLabel.text  = product.title;

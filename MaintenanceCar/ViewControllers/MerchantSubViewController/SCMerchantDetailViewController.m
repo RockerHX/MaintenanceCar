@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     BOOL _needChecked;      // 检查收藏标识
     BOOL _hasGroupProducts;
 }
-@property (weak, nonatomic)    SCMerchantDetailCell *merchantBriefIntroductionCell;
+@property (weak, nonatomic)    SCMerchantDetailCell *briefIntroductionCell;
 @property (weak, nonatomic) SCMerchantDetailItemCell *detailItemCell;
 
 @end
@@ -129,35 +129,38 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     UITableViewCell *cell = nil;
     
-    switch (indexPath.section)
+    if (_merchantDetail)
     {
-        case 1:
+        switch (indexPath.section)
         {
-            if (_hasGroupProducts)
+            case 1:
             {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductCell" forIndexPath:indexPath];
-                [(SCGroupProductCell *)cell displayCellWithDetail:_merchantDetail];
+                if (_hasGroupProducts)
+                {
+                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductCell" forIndexPath:indexPath];
+                    [(SCGroupProductCell *)cell displayCellWithMerchantDetail:_merchantDetail];
+                }
+                else
+                {
+                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
+                    [(SCMerchantDetailItemCell *)cell displayCellWithIndex:indexPath detail:_merchantDetail];
+                }
             }
-            else
+                break;
+            case 2:
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
                 [(SCMerchantDetailItemCell *)cell displayCellWithIndex:indexPath detail:_merchantDetail];
             }
+                break;
+                
+            default:
+            {
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell" forIndexPath:indexPath];
+                [(SCMerchantDetailCell *)cell displayCellWithDetail:_merchantDetail];
+            }
+                break;
         }
-            break;
-        case 2:
-        {
-            cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
-            [(SCMerchantDetailItemCell *)cell displayCellWithIndex:indexPath detail:_merchantDetail];
-        }
-            break;
-            
-        default:
-        {
-            cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell" forIndexPath:indexPath];
-            [(SCMerchantDetailCell *)cell displayCellWithDetail:_merchantDetail];
-        }
-            break;
     }
     
     return cell;
@@ -192,18 +195,18 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                     
                 default:
                 {
-                    if(!self.merchantBriefIntroductionCell)
-                        self.merchantBriefIntroductionCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell"];
-                    [self.merchantBriefIntroductionCell displayCellWithDetail:_merchantDetail];
+                    if(!_briefIntroductionCell)
+                        _briefIntroductionCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell"];
+                    [_briefIntroductionCell displayCellWithDetail:_merchantDetail];
                     // Layout the cell
-                    [self.merchantBriefIntroductionCell setNeedsLayout];
-                    [self.merchantBriefIntroductionCell layoutIfNeeded];
-                    height = [self.merchantBriefIntroductionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+                    [_briefIntroductionCell updateConstraintsIfNeeded];
+                    [_briefIntroductionCell layoutIfNeeded];
+                    height = [_briefIntroductionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
                 }
                     break;
             }
         }
-    
+        
         return height + separatorHeight;
     }
 }
@@ -221,19 +224,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.section)
-    {
-        case 1:
-            return (_hasGroupProducts ? 60.0f : 50.0f);
-            break;
-        case 2:
-            return 50.0f;
-            break;
-            
-        default:
-            return 120.0f;
-            break;
-    }
+    return UITableViewAutomaticDimension;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -358,7 +349,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     [_merchantImageView setImageWithURL:[NSString stringWithFormat:@"%@%@_1.jpg", MerchantImageDoMain, _merchant.company_id] defaultImage:@"MerchantImageDefault"];
     _collectionItem.favorited = _merchantDetail.collected;
-//    _hasGroupProducts         = _merchantDetail.products.count;
+    _hasGroupProducts         = _merchantDetail.products.count;
 }
 
 - (void)reLayoutMerchantDetailView

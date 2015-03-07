@@ -34,11 +34,11 @@
     
     CGFloat layoutWidth = DOT_COORDINATE;
     if (IS_IPHONE_6Plus)
-        layoutWidth = 347.0f;
+        layoutWidth = 376.0f;
     else if (IS_IPHONE_6)
-        layoutWidth = 297.0f;
+        layoutWidth = 351.0f;
     else
-        layoutWidth = 267.0f;
+        layoutWidth = 296.0f;
     _merchantNameLabel.preferredMaxLayoutWidth = layoutWidth;
 }
 
