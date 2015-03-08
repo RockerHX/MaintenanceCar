@@ -16,14 +16,7 @@
 - (void)awakeFromNib
 {
     // Initialization code
-    CGFloat layoutWidth = DOT_COORDINATE;
-    if (IS_IPHONE_6Plus)
-        layoutWidth = 378.0f;
-    else if (IS_IPHONE_6)
-        layoutWidth = 353.0f;
-    else
-        layoutWidth = 398.0f;
-    _contentLabel.preferredMaxLayoutWidth = layoutWidth;
+    _contentLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 22.0f;
 }
 
 #pragma mark - Public Methods

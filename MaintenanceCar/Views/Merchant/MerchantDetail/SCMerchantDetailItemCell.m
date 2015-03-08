@@ -16,14 +16,7 @@
 - (void)awakeFromNib
 {
     // Initialization code
-    CGFloat layoutWidth = DOT_COORDINATE;
-    if (IS_IPHONE_6Plus)
-        layoutWidth = 347.0f;
-    else if (IS_IPHONE_6)
-        layoutWidth = 322.0f;
-    else
-        layoutWidth = 267.0f;
-    _nameLabel.preferredMaxLayoutWidth = layoutWidth;
+    _nameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 53.0f;
 }
 
 #pragma mark - Public Methods
@@ -31,7 +24,7 @@
 {
     NSString *image        = nil;
     NSString *text         = nil;
-    CGFloat  fontSize      = 17.0f;
+    CGFloat  fontSize      = 15.0f;
     UIColor  *textColor    = [UIColor blackColor];
     BOOL     showAccessory = NO;
     BOOL     canSelected   = NO;
@@ -63,14 +56,12 @@
         {
             image = @"MerchantBusinessIcon";
             text  = detail.tags;
-            fontSize = text.length ? 14.0f : fontSize;
         }
             break;
         case 4:
         {
             image = @"MerchantIntroduceIcon";
             text  = detail.serverItemsPrompt;
-            fontSize = text.length ? 14.0f : fontSize;
         }
             break;
             
@@ -78,7 +69,6 @@
         {
             image = @"MerchantIntroduceIcon";
             text  = detail.service;
-            fontSize = text.length ? 14.0f : fontSize;
         }
             break;
     }
@@ -88,6 +78,9 @@
     _nameLabel.textColor = textColor;
     self.accessoryType = showAccessory ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
     self.selected = canSelected;
+    
+    [self.contentView updateConstraintsIfNeeded];
+    [self.contentView layoutIfNeeded];
 }
 
 @end

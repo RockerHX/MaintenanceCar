@@ -32,14 +32,7 @@
     // 绘制圆角
     _reservationButton.layer.cornerRadius = 6.0f;
     
-    CGFloat layoutWidth = DOT_COORDINATE;
-    if (IS_IPHONE_6Plus)
-        layoutWidth = 376.0f;
-    else if (IS_IPHONE_6)
-        layoutWidth = 351.0f;
-    else
-        layoutWidth = 296.0f;
-    _merchantNameLabel.preferredMaxLayoutWidth = layoutWidth;
+    _merchantNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 24.0f;
 }
 
 #pragma mark - Action Methods
@@ -68,6 +61,8 @@
     _distanceLabel.text       = detail.distance;
     _reservationButton.hidden = ![SCAllDictionary share].serviceItems.count;
     [self hanleMerchantFlags:detail.merchantFlags];
+    
+    [self.contentView layoutIfNeeded];
 }
 
 #pragma mark - Private Methods

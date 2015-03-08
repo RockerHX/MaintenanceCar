@@ -198,9 +198,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                     if(!_briefIntroductionCell)
                         _briefIntroductionCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell"];
                     [_briefIntroductionCell displayCellWithDetail:_merchantDetail];
-                    // Layout the cell
-                    [_briefIntroductionCell updateConstraintsIfNeeded];
-                    [_briefIntroductionCell layoutIfNeeded];
+                    
                     height = [_briefIntroductionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
                 }
                     break;
@@ -216,9 +214,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     if(!self.detailItemCell)
         self.detailItemCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell"];
     [self.detailItemCell displayCellWithIndex:indexPath detail:_merchantDetail];
-    // Layout the cell
-    [self.detailItemCell setNeedsLayout];
-    [self.detailItemCell layoutIfNeeded];
+    
     return [self.detailItemCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
 }
 
@@ -414,8 +410,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     __weak typeof(self) weakSelf = self;
     NSDictionary *paramters = @{@"company_id": _merchantDetail.company_id,
-                                @"user_id": [SCUserInfo share].userID,
-                                @"type_id": @"1"};
+                                   @"user_id": [SCUserInfo share].userID,
+                                   @"type_id": @"1"};
     [[SCAPIRequest manager] startMerchantCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
@@ -439,7 +435,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     __weak typeof(self) weakSelf = self;
     NSDictionary *paramters = @{@"company_id": _merchantDetail.company_id,
-                                @"user_id": [SCUserInfo share].userID};
+                                   @"user_id": [SCUserInfo share].userID};
     [[SCAPIRequest manager] startCancelCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
