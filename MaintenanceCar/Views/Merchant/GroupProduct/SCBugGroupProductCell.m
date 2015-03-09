@@ -8,12 +8,14 @@
 
 #import "SCBugGroupProductCell.h"
 #import "SCGroupProductDetail.h"
+#import "SCCouponDetail.h"
 
 @implementation SCBugGroupProductCell
 
 #pragma mark - Init Methods
 - (void)awakeFromNib
 {
+    _buyButton.layer.cornerRadius = 4.0f;
 }
 
 #pragma mark - Action Methods
@@ -24,7 +26,14 @@
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithGroupProductDetail:(SCGroupProductDetail *)detail
+- (void)displayCellWithProductDetial:(SCGroupProductDetail *)detail
+{
+    self.productNameLabel.text  = detail.title;
+    self.groupPriceLabel.text   = detail.final_price;
+    self.productPriceLabel.text = detail.total_price;
+}
+
+- (void)displayCellWithCouponDetial:(SCCouponDetail *)detail
 {
     self.productNameLabel.text  = detail.title;
     self.groupPriceLabel.text   = detail.final_price;

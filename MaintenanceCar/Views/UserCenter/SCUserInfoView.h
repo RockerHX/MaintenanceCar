@@ -27,7 +27,7 @@
 @property (weak, nonatomic) IBOutlet                  UILabel *carDataLabel;    // 用户车辆数据栏
 @property (weak, nonatomic) IBOutlet SCInfiniteLoopScrollView *userCarsView;    // 用户车辆滚动View
 
-@property (nonatomic, weak)                                id <SCUserInfoViewDelegate>delegate;
+@property (nonatomic, weak) IBOutlet                      id <SCUserInfoViewDelegate>delegate;
 
 // [登录]按钮点击事件
 - (IBAction)loginButtonPressed:(UIButton *)sender;

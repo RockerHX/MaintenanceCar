@@ -1,5 +1,5 @@
 //
-//  SCTableViewController.h
+//  SCUserCenterTableViewController.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/10.
@@ -15,13 +15,14 @@ typedef NS_ENUM(NSInteger, SCFavoriteListRequestType) {
     SCFavoriteListRequestTypeDown
 };
 
-@interface SCTableViewController : UITableViewController
+@interface SCUserCenterTableViewController : UITableViewController
 {
     id                        _deleteDataCache;     // 删除数据的缓存
     NSMutableArray            *_dataList;           // 列表数据缓存
 }
 
-@property (nonatomic, assign) NSInteger                 offset;         // 商家列表请求偏移量，用户上拉刷新的分页请求操作
+@property (nonatomic, assign)                      BOOL showTrashItem;
+@property (nonatomic, assign)                 NSInteger offset;         // 商家列表请求偏移量，用户上拉刷新的分页请求操作
 @property (nonatomic, assign) SCFavoriteListRequestType requestType;    // 请求类型，是上拉刷新还是下拉刷新
 
 /**

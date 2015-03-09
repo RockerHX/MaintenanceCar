@@ -1,21 +1,27 @@
 //
-//  SCTableViewController.m
+//  SCUserCenterTableViewController.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/10.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCTableViewController.h"
+#import "SCUserCenterTableViewController.h"
 
-@interface SCTableViewController ()
+@interface SCUserCenterTableViewController ()
 {
     UIView *_hudView;
 }
 
 @end
 
-@implementation SCTableViewController
+@implementation SCUserCenterTableViewController
+
+#pragma mark - Init Methods
+- (void)awakeFromNib
+{
+    _showTrashItem = YES;
+}
 
 #pragma mark - View Controller Life Cycle
 - (void)viewDidLoad
@@ -56,9 +62,12 @@
     
     self.clearsSelectionOnViewWillAppear = YES;                     // 清除cell的选中状态
     // 添加编辑列表的按钮
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
-                                                                                           target:self
-                                                                                           action:@selector(changeListEditStatus)];
+    if (_showTrashItem)
+    {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
+                                                                                               target:self
+                                                                                               action:@selector(changeListEditStatus)];
+    }
     
     [self startDownRefreshReuqest];
 }

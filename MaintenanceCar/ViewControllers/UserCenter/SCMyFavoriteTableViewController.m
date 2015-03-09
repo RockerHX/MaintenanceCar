@@ -149,14 +149,11 @@
         {
             // 如果是下拉刷新数据，先清空列表，在做数据处理
             if (weakSelf.requestType == SCFavoriteListRequestTypeDown)
-            {
                 [weakSelf clearListData];
-            }
             
             // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
             [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                NSError *error       = nil;
-                SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj error:&error];
+                SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj error:nil];
                 [_dataList addObject:merchant];
             }];
             
@@ -166,7 +163,7 @@
         else
         {
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
-            ShowPromptHUDWithText(weakSelf.navigationController.view, responseObject[@"error"], 1.0f);
+            ShowPromptHUDWithText(weakSelf.navigationController.view, responseObject[@"error"], 0.5f);
         }
         
         [weakSelf hiddenHUD];             // 请求完成，移除响应式控件
@@ -176,10 +173,10 @@
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];
         [weakSelf hiddenHUD];
-        if (operation.response)
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"您还没有收藏过任何店铺噢！", 1.0f);
+        if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"您还没有收藏过任何店铺噢！", 0.5f);
         else
-            ShowPromptHUDWithText(weakSelf.navigationController.view, NetWorkError, 1.0f);
+            ShowPromptHUDWithText(weakSelf.navigationController.view, NetWorkError, 0.5f);
     }];
 }
 
@@ -195,16 +192,16 @@
         // 根据返回结果进行相应提示
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"删除成功", 1.0f);
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"删除成功", 0.5f);
         }
         else
         {
             [weakSelf deleteFailureAtIndex:index];
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"删除失败，请重试", 1.0f);
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"删除失败，请重试", 0.5f);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf deleteFailureAtIndex:index];
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"删除失败，请检查网络", 1.0f);
+        ShowPromptHUDWithText(weakSelf.navigationController.view, @"删除失败，请检查网络", 0.5f);
     }];
 }
 

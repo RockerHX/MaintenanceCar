@@ -80,6 +80,7 @@
 #define kMerchantDtailReservationNotification       @"kMerchantDtailReservationNotification"    // 商家详情内[预约]按钮点击触发的通知 - 用于传递tag，得到所点击按钮是位于列表内的index
 #define kWeiXinPaySuccessNotification               @"kWeiXinPaySuccessNotification"            // 微信支付成功的通知
 #define kWeiXinPayFailureNotification               @"kWeiXinPayFailureNotification"            // 微信支付失败的通知
+#define kGenerateCouponSuccessNotification          @"kGenerateCouponSuccessNotification"       // 生成团购券成功的通知
 
 
 #pragma mark - Define Methods

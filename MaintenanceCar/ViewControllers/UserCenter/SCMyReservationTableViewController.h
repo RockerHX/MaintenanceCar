@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCTableViewController.h"
+#import "SCUserCenterTableViewController.h"
 
-@interface SCMyReservationTableViewController : SCTableViewController
+@interface SCMyReservationTableViewController : SCUserCenterTableViewController
 
 @end

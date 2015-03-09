@@ -55,13 +55,19 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 {
     [super viewDidLoad];
     
+    [self initConfig];
     [self viewConfig];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - Private Methods
+- (void)initConfig
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(pushToMyCouponViewController) name:kGenerateCouponSuccessNotification object:nil];
+}
+
+- (void)viewConfig
+{
+    [self.tableView reLayoutHeaderView];
 }
 
 #pragma mark - Table View Delegate Methods
@@ -89,8 +95,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
                     break;
                 case SCUserCenterRowMyCoupon:
                 {
-                    SCMyCouponViewController *myCouponViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyCouponViewController"];
-                    [self pushToSubViewControllerWithController:myCouponViewController];
+                    [self pushToMyCouponViewController];
                 }
                     break;
                     
@@ -108,21 +113,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
         [self showShoulLoginAlert];
 }
 
-#pragma mark - Button Action Methods
-
 #pragma mark - Private Methods
-- (void)viewConfig
-{
-    _userInfoView.delegate = self;
-    
-    if (IS_IPHONE_6)
-        self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 220.f);
-    else if (IS_IPHONE_6Plus)
-        self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 240.f);
-    [self.tableView.tableHeaderView needsUpdateConstraints];
-    [self.tableView.tableHeaderView layoutIfNeeded];
-}
-
 /**
  *  Push到一个页面，带动画
  *
@@ -131,6 +122,12 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 - (void)pushToSubViewControllerWithController:(UIViewController *)viewController
 {
     [self.navigationController pushViewController:viewController animated:YES];
+}
+
+- (void)pushToMyCouponViewController
+{
+    SCMyCouponViewController *myCouponViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyCouponViewController"];
+    [self pushToSubViewControllerWithController:myCouponViewController];
 }
 
 #pragma mark - Alert View Delegate Methods

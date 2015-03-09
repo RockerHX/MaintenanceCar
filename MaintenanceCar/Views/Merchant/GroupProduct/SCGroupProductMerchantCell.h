@@ -17,6 +17,7 @@
 
 @class SCStarView;
 @class SCGroupProductDetail;
+@class SCCouponDetail;
 
 @interface SCGroupProductMerchantCell : UITableViewCell
 
@@ -29,6 +30,7 @@
 
 - (IBAction)callButtonPressed:(id)sender;
 
-- (void)displayCellWithDetial:(SCGroupProductDetail *)detail;
+- (void)displayCellWithProductDetial:(SCGroupProductDetail *)detail;
+- (void)displayCellWithCouponDetial:(SCCouponDetail *)detail;
 
 @end

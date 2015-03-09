@@ -7,9 +7,10 @@
 //
 
 #import "SCGroupProductMerchantCell.h"
-#import "SCGroupProductDetail.h"
-#import "SCStarView.h"
 #import "MicroCommon.h"
+#import "SCStarView.h"
+#import "SCGroupProductDetail.h"
+#import "SCCouponDetail.h"
 
 @implementation SCGroupProductMerchantCell
 
@@ -30,9 +31,20 @@
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithDetial:(SCGroupProductDetail *)detail
+- (void)displayCellWithProductDetial:(SCGroupProductDetail *)detail
 {
     _nameLabel.text = detail.merchantName;
+//    _starView.startValue = detail;
+//    _distanceLabel.text = detail;
+//    _addressLabel.text = detail;
+    _starView.startValue = @"4";
+    _distanceLabel.text = @"123";
+    _addressLabel.text = @"123";
+}
+
+- (void)displayCellWithCouponDetial:(SCCouponDetail *)detail
+{
+    _nameLabel.text = detail.company_name;
 //    _starView.startValue = detail;
 //    _distanceLabel.text = detail;
 //    _addressLabel.text = detail;

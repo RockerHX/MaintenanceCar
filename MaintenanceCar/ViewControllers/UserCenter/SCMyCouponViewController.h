@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCTableViewController.h"
+#import "SCUserCenterTableViewController.h"
 
-@interface SCMyCouponViewController : SCTableViewController
+@interface SCMyCouponViewController : SCUserCenterTableViewController
 
 @end

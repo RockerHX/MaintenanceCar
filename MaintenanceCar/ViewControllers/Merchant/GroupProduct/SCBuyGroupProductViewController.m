@@ -10,7 +10,6 @@
 #import "SCGroupProductDetail.h"
 #import "WXApi.h"
 #import "SCWeiXinPay.h"
-#import "SCGenerateGroupProductViewController.h"
 
 @interface SCBuyGroupProductViewController ()
 {
@@ -51,7 +50,7 @@
 - (void)initConfig
 {
     _productCount = 1;
-    _productPrice = [_groupProductDetail.final_price doubleValue];
+    _productPrice = [_productfinalPrice doubleValue];
     
     [NOTIFICATION_CENTER addObserver:self selector:@selector(weiXinPaySuccess) name:kWeiXinPaySuccessNotification object:nil];
     [NOTIFICATION_CENTER addObserver:self selector:@selector(weiXinPayFailure) name:kWeiXinPayFailureNotification object:nil];
@@ -59,11 +58,11 @@
 
 - (void)viewConfig
 {
-    _productNameLabel.text = _groupProductDetail.title;
-    _merchantNameLabel.text = _groupProductDetail.merchantName;
-    _groupPriceLabel.text = _groupProductDetail.final_price;
+    _productNameLabel.text = _productTitle;
+    _merchantNameLabel.text = _productMerchantName;
+    _groupPriceLabel.text = _productfinalPrice;
     _productCountLabel.text = [@(_productCount) stringValue];
-    _totalPriceLabel.text = _groupProductDetail.final_price;
+    _totalPriceLabel.text = _productfinalPrice;
 }
 
 #pragma mark - Action Methods
@@ -88,8 +87,8 @@
         __weak typeof(self)weakSelf = self;
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                     @"company_id": _groupProductDetail.companyID,
-                                     @"product_id": _groupProductDetail.product_id,
+                                     @"company_id": _productCompanyID,
+                                     @"product_id": _productID,
                                      @"how_many": @(_productCount),
                                      @"total_price": _totalPriceLabel.text};
         [[SCAPIRequest manager] startGetWeiXinPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -97,10 +96,9 @@
             {
                 _weiXinPay = [[SCWeiXinPay alloc] initWithDictionary:responseObject error:nil];
                 
-                _groupProductDetail.outTradeNo = _weiXinPay.out_trade_no;
+                _productOutTradeNo = _weiXinPay.out_trade_no;
                 [weakSelf sendWeiXinPay:_weiXinPay];
             }
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             ShowPromptHUDWithText(weakSelf.view, @"下单失败，请重试...", 0.5f);
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -113,17 +111,7 @@
 #pragma mark - Private Methods
 - (void)weiXinPaySuccess
 {
-    @try {
-        SCGenerateGroupProductViewController *generateGroupProductViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGenerateGroupProductViewController"];
-        generateGroupProductViewController.productCount = _productCount;
-        generateGroupProductViewController.groupProductDetail = _groupProductDetail;
-        [self.navigationController pushViewController:generateGroupProductViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    [self startGenerateGroupProductRequest];
 }
 
 - (void)weiXinPayFailure
@@ -148,6 +136,49 @@
 //    request.timeStamp = pay.timestamp;
 //    request.sign      = pay.sign;
 //    [WXApi sendReq:request];
+}
+
+- (void)startGenerateGroupProductRequest
+{
+    __weak typeof(self) weakSelf = self;
+    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                              @"company_id": _productCompanyID,
+                              @"product_id": _productID,
+                                 @"content": _productTitle,
+                               @"old_price": _productTotalPrice,
+                                   @"price": _productfinalPrice,
+                             @"limit_begin": _productLimitBegin,
+                               @"limit_end": _productLimitEnd,
+                                @"how_many": @(_productCount),
+                                  @"mobile": [USER_DEFAULT objectForKey:kPhoneNumberKey],
+                                @"order_id": _productOutTradeNo};
+    [[SCAPIRequest manager] startGenerateGroupProductAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+        {
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"恭喜您团购成功！", 1.0f);
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            [NOTIFICATION_CENTER postNotificationName:kGenerateCouponSuccessNotification object:nil];
+        }
+        else
+            [weakSelf showGenerateCouponFailureAlert];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
+            [weakSelf showGenerateCouponFailureAlert];
+        else
+            ShowPromptHUDWithText(weakSelf.navigationController.view, NetWorkError, 0.5f);
+    }];
+}
+
+- (void)showGenerateCouponFailureAlert
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
+                                                        message:@"您的网络好像出问题了，请您检查网络，重新购买。之前支付的款项将在3天内自动退回您的银行卡！"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil, nil];
+    [alertView show];
 }
 
 #pragma mark - Alert View Delegate Methods

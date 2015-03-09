@@ -122,11 +122,18 @@
                                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  我的团购列表接口请求方法(API:/Group_ticket/all - GET)
+ *  我的团购券列表接口请求方法(API:/Group_ticket/all - GET)
  */
-- (void)startGetMyGroupProductDetailAPIRequestWithParameters:(NSDictionary *)parameters
-                                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startGetMyCouponAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  团购券详情接口请求方法(API:/Group_ticket - GET)
+ */
+- (void)startGetCouponDetailAPIRequestWithParameters:(NSDictionary *)parameters
+                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - User Center API
 /**

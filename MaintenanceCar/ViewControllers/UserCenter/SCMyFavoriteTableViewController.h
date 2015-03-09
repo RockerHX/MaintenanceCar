@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCTableViewController.h"
+#import "SCUserCenterTableViewController.h"
 
-@interface SCMyFavoriteTableViewController : SCTableViewController
+@interface SCMyFavoriteTableViewController : SCUserCenterTableViewController
 
 @end

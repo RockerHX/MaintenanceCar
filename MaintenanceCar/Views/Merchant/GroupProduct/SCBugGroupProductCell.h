@@ -9,6 +9,7 @@
 #import "SCGroupProductCell.h"
 
 @class SCGroupProductDetail;
+@class SCCouponDetail;
 
 @protocol SCBugGroupProductCellDelegate <NSObject>
 
@@ -19,10 +20,13 @@
 
 @interface SCBugGroupProductCell : SCGroupProductCell
 
+@property (weak, nonatomic) IBOutlet UIButton *buyButton;
+
 @property (nonatomic, weak)      IBOutlet id <SCBugGroupProductCellDelegate>delegate;
 
 - (IBAction)bugProductButtonPressed:(id)sender;
 
-- (void)displayCellWithGroupProductDetail:(SCGroupProductDetail *)detail;
+- (void)displayCellWithProductDetial:(SCGroupProductDetail *)detail;
+- (void)displayCellWithCouponDetial:(SCCouponDetail *)detail;
 
 @end

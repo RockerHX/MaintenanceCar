@@ -196,14 +196,11 @@
         {
             // 如果是下拉刷新数据，先清空列表，在做数据处理
             if (weakSelf.requestType == SCFavoriteListRequestTypeDown)
-            {
                 [weakSelf clearListData];
-            }
             
             // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
             [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                NSError *error       = nil;
-                SCReservation *reservation = [[SCReservation alloc] initWithDictionary:obj error:&error];
+                SCReservation *reservation = [[SCReservation alloc] initWithDictionary:obj error:nil];
                 [_dataList addObject:reservation];
             }];
             
@@ -213,7 +210,7 @@
         else
         {
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
-            ShowPromptHUDWithText(weakSelf.navigationController.view, responseObject[@"error"], 1.0f);
+            ShowPromptHUDWithText(weakSelf.navigationController.view, responseObject[@"error"], 0.5f);
         }
         [weakSelf hiddenHUD];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -222,10 +219,10 @@
         [weakSelf.tableView headerEndRefreshing];
         [weakSelf.tableView footerEndRefreshing];
         [weakSelf hiddenHUD];
-        if (operation.response)
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"您还没有下过任何订单噢！", 1.0f);
+        if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"您还没有下过任何订单噢！", 0.5f);
         else
-            ShowPromptHUDWithText(weakSelf.navigationController.view, NetWorkError, 1.0f);
+            ShowPromptHUDWithText(weakSelf.navigationController.view, NetWorkError, 0.5f);
     }];
 }
 
@@ -246,13 +243,13 @@
             SCReservation *reservation = _dataList[index];
             reservation.status         = @"4";
             [weakSelf deleteFailureAtIndex:index];
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消预约成功", 1.0f);
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消预约成功", 0.5f);
         }
         else
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消预约失败，请重试", 1.0f);
+            ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消预约失败，请重试", 0.5f);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf deleteFailureAtIndex:index];
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消失败，请检查网络", 1.0f);
+        ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消失败，请检查网络", 0.5f);
     }];
 }
 

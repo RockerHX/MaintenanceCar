@@ -26,3 +26,10 @@
 - (void)checkShouldLogin;
 
 @end
+
+
+@interface UITableView (SCTableView)
+
+- (void)reLayoutHeaderView;
+
+@end

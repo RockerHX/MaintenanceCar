@@ -94,12 +94,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)viewConfig
 {
-    if (IS_IPHONE_6)
-        self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 281.25f);
-    else if (IS_IPHONE_6Plus)
-        self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 310.5f);
-    [self.tableView.tableHeaderView needsUpdateConstraints];
-    [self.tableView.tableHeaderView layoutIfNeeded];
+    [self.tableView reLayoutHeaderView];
 }
 
 #pragma mark - Table View Data Source Methods
@@ -176,7 +171,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     else
     {
         CGFloat height = DOT_COORDINATE;
-        CGFloat separatorHeight = 1;
+        CGFloat separatorHeight = 1.0f;
         if (_merchantDetail)
         {
             switch (indexPath.section)

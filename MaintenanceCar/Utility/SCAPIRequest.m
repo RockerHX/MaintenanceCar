@@ -209,14 +209,21 @@
                                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestPOSTMethodsWithAPI:GenerateGroupProductAPIURL parameters:parameters success:success failure:failure];
+    [self requestPOSTMethodsWithAPI:GenerateCouponAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startGetMyGroupProductDetailAPIRequestWithParameters:(NSDictionary *)parameters
-                                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startGetMyCouponAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:MyGroupProductAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startGetCouponDetailAPIRequestWithParameters:(NSDictionary *)parameters
+                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:CouponDetailAPIURL parameters:parameters success:success failure:failure];
 }
 
 #pragma mark - User Center API
