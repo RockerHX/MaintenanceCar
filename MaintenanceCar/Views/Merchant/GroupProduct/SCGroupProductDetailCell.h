@@ -9,13 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @class SCGroupProductDetail;
-@class SCCouponDetail;
 
 @interface SCGroupProductDetailCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 
-- (void)displayCellWithProductDetial:(SCGroupProductDetail *)detail;
-- (void)displayCellWithCouponDetial:(SCCouponDetail *)detail;
+- (void)displayCellWithDetail:(SCGroupProductDetail *)detail;
 
 @end

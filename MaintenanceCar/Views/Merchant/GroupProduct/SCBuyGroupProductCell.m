@@ -1,21 +1,20 @@
 //
-//  SCBugGroupProductCell.m
+//  SCBuyGroupProductCell.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/3/3.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCBugGroupProductCell.h"
+#import "SCBuyGroupProductCell.h"
 #import "SCGroupProductDetail.h"
-#import "SCCouponDetail.h"
 
-@implementation SCBugGroupProductCell
+@implementation SCBuyGroupProductCell
 
 #pragma mark - Init Methods
 - (void)awakeFromNib
 {
-    _buyButton.layer.cornerRadius = 4.0f;
+    _bugProductButton.layer.cornerRadius = 5.0f;
 }
 
 #pragma mark - Action Methods
@@ -26,14 +25,7 @@
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithProductDetial:(SCGroupProductDetail *)detail
-{
-    self.productNameLabel.text  = detail.title;
-    self.groupPriceLabel.text   = detail.final_price;
-    self.productPriceLabel.text = detail.total_price;
-}
-
-- (void)displayCellWithCouponDetial:(SCCouponDetail *)detail
+- (void)displayCellWithDetail:(SCGroupProductDetail *)detail
 {
     self.productNameLabel.text  = detail.title;
     self.groupPriceLabel.text   = detail.final_price;

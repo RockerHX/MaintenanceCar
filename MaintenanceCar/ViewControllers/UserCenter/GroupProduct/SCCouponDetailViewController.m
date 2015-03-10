@@ -8,16 +8,16 @@
 
 #import "SCCouponDetailViewController.h"
 #import "SCCoupon.h"
-#import "SCCouponDetail.h"
+#import "SCGroupProductDetail.h"
 #import "SCCouponCell.h"
-#import "SCBugGroupProductCell.h"
+#import "SCBuyGroupProductCell.h"
 #import "SCGroupProductMerchantCell.h"
 #import "SCGroupProductDetailCell.h"
 #import "SCBuyGroupProductViewController.h"
 
 @interface SCCouponDetailViewController ()
 {
-    SCCouponDetail *_couponDetail;
+    SCGroupProductDetail *_detail;
 }
 @property (weak, nonatomic) SCGroupProductMerchantCell *merchantCell;
 @property (weak, nonatomic)   SCGroupProductDetailCell *detailCell;
@@ -68,7 +68,7 @@
 #pragma mark - Table View Data Source Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return _couponDetail ? 4 : Zero;
+    return _detail ? 4 : Zero;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -79,33 +79,33 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = nil;
-    if (_couponDetail)
+    if (_detail)
     {
         switch (indexPath.section)
         {
             case 1:
             {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCell" forIndexPath:indexPath];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCodeCell" forIndexPath:indexPath];
                 [(SCCouponCell *)cell displayCellWithCoupon:_coupon];
             }
                 break;
             case 2:
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell" forIndexPath:indexPath];
-                [(SCGroupProductMerchantCell *)cell displayCellWithCouponDetial:_couponDetail];
+                [(SCGroupProductMerchantCell *)cell displayCellWithDetial:_detail];
             }
                 break;
             case 3:
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductDetailCell" forIndexPath:indexPath];
-                [(SCGroupProductDetailCell *)cell displayCellWithCouponDetial:_couponDetail];
+                [(SCGroupProductDetailCell *)cell displayCellWithDetail:_detail];
             }
                 break;
                 
             default:
             {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"SCBugGroupProductCell" forIndexPath:indexPath];
-                [(SCBugGroupProductCell *)cell displayCellWithCouponDetial:_couponDetail];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCBuyGroupProductCell" forIndexPath:indexPath];
+                [(SCBuyGroupProductCell *)cell displayCellWithDetail:_detail];
             }
                 break;
         }
@@ -122,7 +122,7 @@
         if (!indexPath.section)
             return 70.0f;
         else if (indexPath.section == 1)
-            return 134.0f;
+            return 44.0f;
             
         return UITableViewAutomaticDimension;
     }
@@ -130,7 +130,7 @@
     {
         CGFloat height = DOT_COORDINATE;
         CGFloat separatorHeight = 1.0f;
-        if (_couponDetail)
+        if (_detail)
         {
             switch (indexPath.section)
             {
@@ -138,7 +138,7 @@
                 {
                     if(!_merchantCell)
                         _merchantCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell"];
-                    [_merchantCell displayCellWithCouponDetial:_couponDetail];
+                    [_merchantCell displayCellWithDetial:_detail];
                     // Layout the cell
                     [_merchantCell updateConstraintsIfNeeded];
                     [_merchantCell layoutIfNeeded];
@@ -149,7 +149,7 @@
                 {
                     if(!_detailCell)
                         _detailCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductDetailCell"];
-                    [_detailCell displayCellWithCouponDetial:_couponDetail];
+                    [_detailCell displayCellWithDetail:_detail];
                     // Layout the cell
                     [_detailCell updateConstraintsIfNeeded];
                     [_detailCell layoutIfNeeded];
@@ -159,7 +159,8 @@
                     
                 default:
                 {
-                    return 70.0f;
+                    if (!indexPath.section)
+                        return indexPath.section ? 44.0f : 70.0f;
                 }
                     break;
             }
@@ -212,13 +213,16 @@
 #pragma mark - Private Methods
 - (void)startCouponDetailRequest
 {
-    __weak typeof(self) weakSelf = self;
-    NSDictionary *parameters = @{@"code": _coupon.code,
-                           @"company_id": _coupon.company_id};
-    [[SCAPIRequest manager] startGetCouponDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    __weak typeof(self)weakSelf = self;
+    NSDictionary *parameters = @{@"product_id": _coupon.product_id};
+    [[SCAPIRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            _couponDetail = [[SCCouponDetail alloc] initWithDictionary:responseObject error:nil];
+            _detail = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
+            _detail.companyID = _coupon.company_id;
+            _detail.merchantName = _coupon.company_name;
             [self.tableView reloadData];
         }
         [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
@@ -232,15 +236,7 @@
 {
     @try {
         SCBuyGroupProductViewController *buyGroupProductViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCBuyGroupProductViewController"];
-        buyGroupProductViewController.productTitle        = _couponDetail.title;
-        buyGroupProductViewController.productMerchantName = _couponDetail.company_name;
-        buyGroupProductViewController.productCompanyID    = _couponDetail.company_id;
-        buyGroupProductViewController.productID           = _couponDetail.product_id;
-//        buyGroupProductViewController.productOutTradeNo   = _couponDetail.outTradeNo;
-        buyGroupProductViewController.productfinalPrice   = _couponDetail.final_price;
-        buyGroupProductViewController.productTotalPrice   = _couponDetail.total_price;
-        buyGroupProductViewController.productLimitBegin   = _couponDetail.limit_begin;
-        buyGroupProductViewController.productLimitEnd     = _couponDetail.limit_end;
+        buyGroupProductViewController.groupProductDetail = _detail;
         [self.navigationController pushViewController:buyGroupProductViewController animated:YES];
     }
     @catch (NSException *exception) {

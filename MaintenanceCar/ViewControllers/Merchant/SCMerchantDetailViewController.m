@@ -166,6 +166,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     if (IS_IOS8)
     {
+        if (_hasGroupProducts && indexPath.section == 1)
+            return 72.0f;
         return UITableViewAutomaticDimension;
     }
     else
@@ -179,7 +181,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                 case 1:
                 {
                     if (_hasGroupProducts)
-                        return 60.0f;
+                        return 72.0f;
                     else
                         height = [self calculateCellHeightWithIndexPath:indexPath];
                 }
@@ -232,7 +234,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                 {
                     @try {
                         SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
-                        SCGroupProduct *product = [_merchantDetail.products firstObject];
+                        SCGroupProduct *product = [_merchantDetail.products lastObject];
                         groupProductDetailViewController.product = product;
                         [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
                     }

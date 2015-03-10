@@ -20,22 +20,13 @@
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithProductDetial:(SCGroupProductDetail *)detail
+- (void)displayCellWithDetail:(SCGroupProductDetail *)detail
 {
     _contentLabel.text = @"";
     NSUInteger count = detail.des.count;
     [detail.des enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         _contentLabel.text = [NSString stringWithFormat:@"%@%@%@", _contentLabel.text, obj, (idx == (count - 1)) ? @"" : @"\n"];
     }];
-}
-
-- (void)displayCellWithCouponDetial:(SCCouponDetail *)detail
-{
-//    _contentLabel.text = @"";
-//    NSUInteger count = detail.des.count;
-//    [detail.des enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//        _contentLabel.text = [NSString stringWithFormat:@"%@%@%@", _contentLabel.text, obj, (idx == (count - 1)) ? @"" : @"\n"];
-//    }];
 }
 
 @end

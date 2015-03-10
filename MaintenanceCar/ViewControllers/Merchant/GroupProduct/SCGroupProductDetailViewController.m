@@ -8,12 +8,12 @@
 
 #import "SCGroupProductDetailViewController.h"
 #import "SCGroupProductDetail.h"
-#import "SCBugGroupProductCell.h"
+#import "SCBuyGroupProductCell.h"
 #import "SCGroupProductMerchantCell.h"
 #import "SCGroupProductDetailCell.h"
 #import "SCBuyGroupProductViewController.h"
 
-@interface SCGroupProductDetailViewController () <SCBugGroupProductCellDelegate>
+@interface SCGroupProductDetailViewController () <SCBuyGroupProductCellDelegate>
 {
     SCGroupProductDetail *_detail;
 }
@@ -84,20 +84,20 @@
             case 1:
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell" forIndexPath:indexPath];
-                [(SCGroupProductMerchantCell *)cell displayCellWithProductDetial:_detail];
+                [_merchantCell displayCellWithDetial:_detail];
             }
                 break;
             case 2:
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductDetailCell" forIndexPath:indexPath];
-                [(SCGroupProductDetailCell *)cell displayCellWithProductDetial:_detail];
+                [(SCGroupProductDetailCell *)cell displayCellWithDetail:_detail];
             }
                 break;
                 
             default:
             {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"SCBugGroupProductCell" forIndexPath:indexPath];
-                [(SCBugGroupProductCell *)cell displayCellWithProductDetial:_detail];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCBuyGroupProductCell" forIndexPath:indexPath];
+                [(SCBuyGroupProductCell *)cell displayCellWithDetail:_detail];
             }
                 break;
         }
@@ -127,7 +127,7 @@
                 {
                     if(!_merchantCell)
                         _merchantCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell"];
-                    [_merchantCell displayCellWithProductDetial:_detail];
+                    [_merchantCell displayCellWithDetial:_detail];
                     // Layout the cell
                     [_merchantCell updateConstraintsIfNeeded];
                     [_merchantCell layoutIfNeeded];
@@ -138,7 +138,7 @@
                 {
                     if(!_detailCell)
                         _detailCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductDetailCell"];
-                    [_detailCell displayCellWithProductDetial:_detail];
+                    [_detailCell displayCellWithDetail:_detail];
                     // Layout the cell
                     [_detailCell updateConstraintsIfNeeded];
                     [_detailCell layoutIfNeeded];
@@ -221,15 +221,7 @@
 {
     @try {
         SCBuyGroupProductViewController *buyGroupProductViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCBuyGroupProductViewController"];
-        buyGroupProductViewController.productTitle        = _detail.title;
-        buyGroupProductViewController.productMerchantName = _detail.merchantName;
-        buyGroupProductViewController.productCompanyID    = _detail.companyID;
-        buyGroupProductViewController.productID           = _detail.product_id;
-        buyGroupProductViewController.productOutTradeNo   = _detail.outTradeNo;
-        buyGroupProductViewController.productfinalPrice   = _detail.final_price;
-        buyGroupProductViewController.productTotalPrice   = _detail.total_price;
-        buyGroupProductViewController.productLimitBegin   = _detail.limit_begin;
-        buyGroupProductViewController.productLimitEnd     = _detail.limit_end;
+        buyGroupProductViewController.groupProductDetail = _detail;
         [self.navigationController pushViewController:buyGroupProductViewController animated:YES];
     }
     @catch (NSException *exception) {

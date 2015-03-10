@@ -6,19 +6,13 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SCCouponCodeCell.h"
 
-@class SCCoupon;
-
-@interface SCCouponCell : UITableViewCell
+@interface SCCouponCell : SCCouponCodeCell
 
 @property (weak, nonatomic) IBOutlet  UILabel *merchantNameLabel;
 @property (weak, nonatomic) IBOutlet  UILabel *productNameLabel;
 @property (weak, nonatomic) IBOutlet  UILabel *couponPriceLabel;
 @property (weak, nonatomic) IBOutlet  UILabel *productPriceLabel;
-@property (weak, nonatomic) IBOutlet  UILabel *codeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *reservationButton;
-
-- (void)displayCellWithCoupon:(SCCoupon *)coupon;
 
 @end

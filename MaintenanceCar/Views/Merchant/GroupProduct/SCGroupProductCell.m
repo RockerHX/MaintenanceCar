@@ -20,7 +20,7 @@
 #pragma mark - Public Methods
 - (void)displayCellWithMerchantDetail:(SCMerchantDetail *)merchantDetail
 {
-    SCGroupProduct *product = [merchantDetail.products firstObject];
+    SCGroupProduct *product = [merchantDetail.products lastObject];
     if (product)
     {
         _productNameLabel.text  = product.title;
