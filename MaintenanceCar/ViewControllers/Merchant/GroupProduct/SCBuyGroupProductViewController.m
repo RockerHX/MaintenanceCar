@@ -84,25 +84,31 @@
 {
     if ([SCUserInfo share].loginStatus)
     {
-        __weak typeof(self)weakSelf = self;
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                     @"company_id": _groupProductDetail.companyID,
-                                     @"product_id": _groupProductDetail.product_id,
-                                     @"how_many": @(_productCount),
-                                     @"total_price": _totalPriceLabel.text};
-        [[SCAPIRequest manager] startGetWeiXinPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
-            {
-                _weiXinPay = [[SCWeiXinPay alloc] initWithDictionary:responseObject error:nil];
-                
-                _groupProductDetail.outTradeNo = _weiXinPay.out_trade_no;
-                [weakSelf sendWeiXinPay:_weiXinPay];
-            }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            ShowPromptHUDWithText(weakSelf.view, @"下单失败，请重试...", 0.5f);
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        }];
+        
+        if ([WXApi isWXAppInstalled])
+        {
+            __weak typeof(self)weakSelf = self;
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                                         @"company_id": _groupProductDetail.companyID,
+                                         @"product_id": _groupProductDetail.product_id,
+                                         @"how_many": @(_productCount),
+                                         @"total_price": _totalPriceLabel.text};
+            [[SCAPIRequest manager] startGetWeiXinPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+                {
+                    _weiXinPay = [[SCWeiXinPay alloc] initWithDictionary:responseObject error:nil];
+                    
+                    _groupProductDetail.outTradeNo = _weiXinPay.out_trade_no;
+                    [weakSelf sendWeiXinPay:_weiXinPay];
+                }
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                ShowPromptHUDWithText(weakSelf.view, @"下单失败，请重试...", 0.5f);
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            }];
+        }
+        else
+            [self showWeiXinInstallAlert];
     }
     else
         [self showShoulLoginAlert];
@@ -175,6 +181,16 @@
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
                                                         message:@"您的网络好像出问题了，请您检查网络，重新购买。之前支付的款项将在3天内自动退回您的银行卡！"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil, nil];
+    [alertView show];
+}
+
+- (void)showWeiXinInstallAlert
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
+                                                        message:@"您的手机还没有安装微信，请先安装微信再使用微信支付，谢谢！"
                                                        delegate:nil
                                               cancelButtonTitle:@"确定"
                                               otherButtonTitles:nil, nil];
