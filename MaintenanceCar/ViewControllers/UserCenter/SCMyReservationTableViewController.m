@@ -8,12 +8,18 @@
 
 #import "SCMyReservationTableViewController.h"
 #import "SCReservation.h"
-#import "SCReservationCell.h"
+#import "SCOderNormalCell.h"
+#import "SCOderUnAppraisalCell.h"
+#import "SCOderAppraisedCell.h"
 #import "SCWebViewController.h"
 #import "SCMerchant.h"
 #import "SCMerchantDetailViewController.h"
 
 @interface SCMyReservationTableViewController ()
+
+@property (weak, nonatomic)      SCOderNormalCell *oderNormalCell;
+@property (weak, nonatomic) SCOderUnAppraisalCell *unappraisalCell;
+@property (weak, nonatomic)   SCOderAppraisedCell *appraisedCell;
 
 @end
 
@@ -41,30 +47,28 @@
     [self.tableView removeFooter];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - Config Methods
+- (void)initConfig
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [super initConfig];
+    
+    if (IS_IOS8)
+    {
+        self.tableView.estimatedRowHeight = 120.0f;
+        self.tableView.rowHeight = UITableViewAutomaticDimension;
+    }
 }
 
 #pragma mark - Table View Data Source Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return _dataList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCReservationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCReservationCell" forIndexPath:indexPath];
-    
-    // Configure the cell...
-    SCReservation *reservation         = _dataList[indexPath.row];
-    cell.merchantNameLabel.text        = reservation.name;
-    cell.reservationTypeLabel.text     = reservation.type;
-    cell.reservationDateLabel.text     = reservation.reserve_time;
-    cell.maintenanceScheduleLabel.text = [self handleMaintenanceSchedule:reservation.status];
-    cell.showMoreLabel.text            = [self handleShowMore:reservation.type] ? @"查看进度" : @"";
+    SCOderNormalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderNormalCell" forIndexPath:indexPath];
+    [cell displayCellWithReservation:_dataList[indexPath.row]];
     
     return cell;
 }
@@ -82,11 +86,41 @@
         _deleteDataCache = _dataList[indexPath.row];        // 设置数据缓存
         [_dataList removeObjectAtIndex:indexPath.row];      // 清楚数据
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];   // 列表中删除相关数据行
-        [self startCancelReservationRequestWithIndex:indexPath.row];                             // 同步服务器
+        [self startCancelReservationRequestWithIndex:indexPath.row];                                    // 同步服务器
     }
 }
 
 #pragma mark - Table View Delegate Methods
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (IS_IOS8)
+    {
+        return UITableViewAutomaticDimension;
+    }
+    else
+    {
+        CGFloat height = DOT_COORDINATE;
+        CGFloat separatorHeight = 1.0f;
+        if (_dataList.count)
+        {
+            if(!_oderNormalCell)
+                _oderNormalCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderNormalCell"];
+            [_oderNormalCell displayCellWithReservation:_dataList[indexPath.row]];
+            // Layout the cell
+            [_oderNormalCell updateConstraintsIfNeeded];
+            [_oderNormalCell layoutIfNeeded];
+            height = [_oderNormalCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+        }
+        
+        return height + separatorHeight;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewAutomaticDimension;
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return @"取消预约";
@@ -96,7 +130,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SCReservation *reservation         = _dataList[indexPath.row];
-    if ([self handleShowMore:reservation.type])
+    if ([SCOderCell handleShowMore:reservation.type])
     {
         // 列表被点击跳转到商家详情
         @try {
@@ -154,30 +188,6 @@
 }
 
 #pragma mark - Private Methods
-- (NSString *)handleMaintenanceSchedule:(NSString *)status
-{
-    if ([status isEqualToString:@"0"])
-        return @"提交预约";
-    else if ([status isEqualToString:@"1"])
-        return @"接受预约";
-    else if ([status isEqualToString:@"2"])
-        return @"拒绝预约";
-    else if ([status isEqualToString:@"3"])
-        return @"预约完成";
-    else if ([status isEqualToString:@"4"])
-        return @"取消预约";
-    else
-        return @"未知状态";
-}
-
-- (BOOL)handleShowMore:(NSString *)status
-{
-    if ([status isEqualToString:@"免费检测"])
-        return YES;
-    else
-        return NO;
-}
-
 /**
  *  预约列表数据请求方法，必选参数：user_id，limit，offset
  */

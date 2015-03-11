@@ -10,4 +10,16 @@
 
 @implementation SCReservation
 
+#pragma mark - Init Mehtods
+- (id)initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err
+{
+    self = [super initWithDictionary:dict error:err];
+    if (self)
+    {
+        _type = [NSString stringWithFormat:@"%@:", _type];
+        _car_model_name = [NSString stringWithFormat:@"【%@】", _car_model_name];
+    }
+    return self;
+}
+
 @end

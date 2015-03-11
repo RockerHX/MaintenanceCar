@@ -22,9 +22,9 @@
 @property (nonatomic, copy) NSString <Optional>*reserve_time;           // 预约时间
 @property (nonatomic, copy) NSString <Optional>*content;                // 预约备注
 @property (nonatomic, copy) NSString <Optional>*status;                 // 预约状态：
-@property (nonatomic, copy) NSString <Optional>*in_time;                //
-@property (nonatomic, copy) NSString <Optional>*create_time;            // 预约创建时间
-@property (nonatomic, copy) NSString <Optional>*update_time;            // 预约信息更新时间
 @property (nonatomic, copy) NSString <Optional>*name;                   // 商家名字
+@property (nonatomic, copy) NSString <Optional>*car_model_name;         // 用户预约车辆名称
+
+@property (nonatomic, copy, readonly) NSString *getCarDays;
 
 @end

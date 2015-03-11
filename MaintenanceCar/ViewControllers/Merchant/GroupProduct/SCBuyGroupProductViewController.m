@@ -84,9 +84,8 @@
 {
     if ([SCUserInfo share].loginStatus)
     {
-        
-        if ([WXApi isWXAppInstalled])
-        {
+//        if ([WXApi isWXAppInstalled])
+//        {
             __weak typeof(self)weakSelf = self;
             [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
@@ -106,9 +105,9 @@
                 ShowPromptHUDWithText(weakSelf.view, @"下单失败，请重试...", 0.5f);
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             }];
-        }
-        else
-            [self showWeiXinInstallAlert];
+//        }
+//        else
+//            [self showWeiXinInstallAlert];
     }
     else
         [self showShoulLoginAlert];

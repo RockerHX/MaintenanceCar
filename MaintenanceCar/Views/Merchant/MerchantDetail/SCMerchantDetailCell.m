@@ -31,7 +31,6 @@
 {
     // 绘制圆角
     _reservationButton.layer.cornerRadius = 6.0f;
-    
     _merchantNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 24.0f;
 }
 
