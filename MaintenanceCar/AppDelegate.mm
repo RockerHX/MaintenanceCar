@@ -25,8 +25,8 @@
 
     // 设置导航条和电池条颜色
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    [[UINavigationBar appearance] setBarTintColor:APPColor];
-    [[UITabBar appearance] setSelectedImageTintColor:APPColor];
+    [[UINavigationBar appearance] setBarTintColor:ThemeColor];
+    [[UITabBar appearance] setSelectedImageTintColor:ThemeColor];
     
     // 设置导航条字体颜色
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];

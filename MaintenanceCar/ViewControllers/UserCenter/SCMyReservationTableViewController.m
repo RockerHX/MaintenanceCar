@@ -8,18 +8,22 @@
 
 #import "SCMyReservationTableViewController.h"
 #import "SCReservation.h"
-#import "SCOderNormalCell.h"
+#import "SCOderCell.h"
 #import "SCOderUnAppraisalCell.h"
 #import "SCOderAppraisedCell.h"
+#import "SCOderUnAppraisalCheckCell.h"
+#import "SCOderAppraisedCheckCell.h"
 #import "SCWebViewController.h"
 #import "SCMerchant.h"
 #import "SCMerchantDetailViewController.h"
 
 @interface SCMyReservationTableViewController ()
 
-@property (weak, nonatomic)      SCOderNormalCell *oderNormalCell;
-@property (weak, nonatomic) SCOderUnAppraisalCell *unappraisalCell;
-@property (weak, nonatomic)   SCOderAppraisedCell *appraisedCell;
+@property (weak, nonatomic)                 SCOderCell *oderCell;
+@property (weak, nonatomic)      SCOderUnAppraisalCell *unappraisalCell;
+@property (weak, nonatomic)        SCOderAppraisedCell *appraisedCell;
+@property (weak, nonatomic) SCOderUnAppraisalCheckCell *unappraisalCheckCell;
+@property (weak, nonatomic)   SCOderAppraisedCheckCell *appraisedCheckCell;
 
 @end
 
@@ -67,8 +71,42 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCOderNormalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderNormalCell" forIndexPath:indexPath];
-    [cell displayCellWithReservation:_dataList[indexPath.row]];
+    SCOderCell *cell = nil;
+    SCReservation *reservation = _dataList[indexPath.row];
+    switch ([reservation oderType])
+    {
+        case SCOderTypeUnAppraisal:
+        {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderUnAppraisalCell" forIndexPath:indexPath];
+            [cell displayCellWithReservation:_dataList[indexPath.row]];
+        }
+            break;
+        case SCOderTypeAppraised:
+        {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderAppraisedCell" forIndexPath:indexPath];
+            [cell displayCellWithReservation:_dataList[indexPath.row]];
+        }
+            break;
+        case SCOderTypeUnAppraisalCheck:
+        {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderUnAppraisalCheckCell" forIndexPath:indexPath];
+            [cell displayCellWithReservation:_dataList[indexPath.row]];
+        }
+            break;
+        case SCOderTypeAppraisedCheck:
+        {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderAppraisedCheckCell" forIndexPath:indexPath];
+            [cell displayCellWithReservation:_dataList[indexPath.row]];
+        }
+            break;
+            
+        default:
+        {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderCell" forIndexPath:indexPath];
+            [cell displayCellWithReservation:_dataList[indexPath.row]];
+        }
+            break;
+    }
     
     return cell;
 }
@@ -100,16 +138,69 @@
     else
     {
         CGFloat height = DOT_COORDINATE;
-        CGFloat separatorHeight = 1.0f;
+        CGFloat separatorHeight = 2.0f;
         if (_dataList.count)
         {
-            if(!_oderNormalCell)
-                _oderNormalCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderNormalCell"];
-            [_oderNormalCell displayCellWithReservation:_dataList[indexPath.row]];
-            // Layout the cell
-            [_oderNormalCell updateConstraintsIfNeeded];
-            [_oderNormalCell layoutIfNeeded];
-            height = [_oderNormalCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            SCReservation *reservation = _dataList[indexPath.row];
+            switch ([reservation oderType])
+            {
+                case SCOderTypeUnAppraisal:
+                {
+                    if(!_unappraisalCell)
+                        _unappraisalCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderUnAppraisalCell"];
+                    [_unappraisalCell displayCellWithReservation:_dataList[indexPath.row]];
+                    // Layout the cell
+                    [_unappraisalCell updateConstraintsIfNeeded];
+                    [_unappraisalCell layoutIfNeeded];
+                    height = [_unappraisalCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+                }
+                    break;
+                case SCOderTypeAppraised:
+                {
+                    if(!_appraisedCell)
+                        _appraisedCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderAppraisedCell"];
+                    [_appraisedCell displayCellWithReservation:_dataList[indexPath.row]];
+                    // Layout the cell
+                    [_appraisedCell updateConstraintsIfNeeded];
+                    [_appraisedCell layoutIfNeeded];
+                    height = [_appraisedCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+                }
+                    break;
+                case SCOderTypeUnAppraisalCheck:
+                {
+                    if(!_unappraisalCheckCell)
+                        _unappraisalCheckCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderUnAppraisalCheckCell"];
+                    [_unappraisalCheckCell displayCellWithReservation:_dataList[indexPath.row]];
+                    // Layout the cell
+                    [_unappraisalCheckCell updateConstraintsIfNeeded];
+                    [_unappraisalCheckCell layoutIfNeeded];
+                    height = [_unappraisalCheckCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+                }
+                    break;
+                case SCOderTypeAppraisedCheck:
+                {
+                    if(!_appraisedCheckCell)
+                        _appraisedCheckCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderAppraisedCheckCell"];
+                    [_appraisedCheckCell displayCellWithReservation:_dataList[indexPath.row]];
+                    // Layout the cell
+                    [_appraisedCheckCell updateConstraintsIfNeeded];
+                    [_appraisedCheckCell layoutIfNeeded];
+                    height = [_appraisedCheckCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+                }
+                    break;
+                    
+                default:
+                {
+                    if(!_oderCell)
+                        _oderCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderCell"];
+                    [_oderCell displayCellWithReservation:_dataList[indexPath.row]];
+                    // Layout the cell
+                    [_oderCell updateConstraintsIfNeeded];
+                    [_oderCell layoutIfNeeded];
+                    height = [_oderCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+                }
+                    break;
+            }
         }
         
         return height + separatorHeight;
@@ -129,8 +220,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    SCReservation *reservation         = _dataList[indexPath.row];
-    if ([SCOderCell handleShowMore:reservation.type])
+    SCReservation *reservation = _dataList[indexPath.row];
+    if ([reservation canShowResult])
     {
         // 列表被点击跳转到商家详情
         @try {

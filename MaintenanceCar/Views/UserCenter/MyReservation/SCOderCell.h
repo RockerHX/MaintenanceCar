@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MicroCommon.h"
 
 @class SCReservation;
 
@@ -18,7 +19,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *scheduleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *carInfoLabel;
 
-+ (BOOL)canShowMore:(NSString *)status;
 - (void)displayCellWithReservation:(SCReservation *)reservation;
 
 @end

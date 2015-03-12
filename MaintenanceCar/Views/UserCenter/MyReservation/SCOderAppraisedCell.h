@@ -6,11 +6,11 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCOderAppraisalCell.h"
+#import "SCOderCell.h"
 
 @class SCStarView;
 
-@interface SCOderAppraisedCell : SCOderAppraisalCell
+@interface SCOderAppraisedCell : SCOderCell
 
 @property (weak, nonatomic) IBOutlet SCStarView *startView;
 @property (weak, nonatomic) IBOutlet    UILabel *appraisalLabel;

@@ -6,9 +6,11 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCOderAppraisalCell.h"
+#import "SCOderCell.h"
 
-@interface SCOderUnAppraisalCell : SCOderAppraisalCell
+@interface SCOderUnAppraisalCell : SCOderCell
+
+@property (weak, nonatomic) IBOutlet UIButton *appraiseButton;
 
 - (IBAction)appraiseButtonPressed:(id)sender;
 
