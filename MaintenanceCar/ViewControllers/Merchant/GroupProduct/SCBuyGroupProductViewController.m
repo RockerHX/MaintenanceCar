@@ -23,6 +23,11 @@
 
 @implementation SCBuyGroupProductViewController
 
+- (void)awakeFromNib
+{
+    _merchantNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 16.0f;
+}
+
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -58,11 +63,20 @@
 
 - (void)viewConfig
 {
+    _productCountLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    _productCountLabel.layer.borderWidth = 1.0f;
+    _cutButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    _cutButton.layer.borderWidth = 1.0f;
+    _addButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    _addButton.layer.borderWidth = 1.0f;
+    
     _productNameLabel.text = _groupProductDetail.title;
     _merchantNameLabel.text = _groupProductDetail.merchantName;
     _groupPriceLabel.text = _groupProductDetail.final_price;
     _productCountLabel.text = [@(_productCount) stringValue];
     _totalPriceLabel.text = _groupProductDetail.final_price;
+    
+    [_weiXinPayButton setTitle:[NSString stringWithFormat:@"微信支付%@元", _totalPriceLabel.text] forState:UIControlStateNormal];
 }
 
 #pragma mark - Action Methods
@@ -128,6 +142,8 @@
 {
     _productCountLabel.text = [@(_productCount) stringValue];
     _totalPriceLabel.text = [NSString stringWithFormat:@"%.2f", (_productCount * _productPrice)];
+    
+    [_weiXinPayButton setTitle:[NSString stringWithFormat:@"微信支付%@元", _totalPriceLabel.text] forState:UIControlStateNormal];
 }
 
 #warning @"微信SDK"真机调试和上传记得打开注释

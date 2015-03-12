@@ -18,6 +18,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *productCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalPriceLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *cutButton;
+@property (weak, nonatomic) IBOutlet UIButton *addButton;
+@property (weak, nonatomic) IBOutlet UIButton *weiXinPayButton;
+
 @property (nonatomic, strong) SCGroupProductDetail *groupProductDetail;
 
 - (IBAction)cutButtonPressed:(id)sender;
