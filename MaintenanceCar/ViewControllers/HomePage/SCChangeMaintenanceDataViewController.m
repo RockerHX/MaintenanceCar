@@ -11,6 +11,12 @@
 #import "SCDatePickerView.h"
 #import "SCCarDriveHabitsView.h"
 
+typedef NS_ENUM(NSInteger, SCHUDType) {
+    SCHUDTypeDefault,
+    SCHUDTypeSaveData,
+    SCHUDTypeDeleteCar
+};
+
 @interface SCChangeMaintenanceDataViewController () <UITextFieldDelegate, SCDatePickerViewDelegate, SCCarDriveHabitsViewDelegate, MBProgressHUDDelegate>
 
 @end
@@ -27,12 +33,33 @@
     [self viewDisplay];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - Action Methods
+- (IBAction)deleteCarButtonPressed
+{
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    
+    __weak typeof(self) weakSelf = self;
+    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                             @"user_car_id": _car.user_car_id};
+    [[SCAPIRequest manager] startDeleteCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+        {
+            [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
+                if (finish)
+                {
+                    [weakSelf showPromptHUDWithText:@"删除成功！" delay:0.5f type:SCHUDTypeDeleteCar delegate:weakSelf];
+                    [NOTIFICATION_CENTER postNotificationName:kUserCarsDataLoadSuccess object:nil];
+                }
+            }];
+        }
+        else
+            [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
+        ShowPromptHUDWithText(weakSelf.navigationController.view, @"车辆删除失败，请重试！", 0.5f);
+    }];
 }
 
-#pragma mark - Action Methods
 - (IBAction)buyCarDateButtonPressed
 {
     // 购车按钮点击事件触发，收起键盘，弹出时间选择器
@@ -41,7 +68,7 @@
     SCDatePickerView *datePicker = [[SCDatePickerView alloc] initWithDelegate:self mode:UIDatePickerModeDate];
     datePicker.datePicker.minimumDate = [NSDate dateWithTimeIntervalSince1970:DOT_COORDINATE];
     datePicker.datePicker.maximumDate = [NSDate date];
-    [datePicker show];
+    [datePicker show];                                    
 }
 
 #pragma mark - Private Methods
@@ -68,7 +95,7 @@
 - (void)viewDisplay
 {
     // 刷新页面数据
-    _userCarLabel.text             = _car.model_name;
+    _userCarLabel.text             = [_car.brand_name stringByAppendingString:_car.model_name];
     _mileageTextField.text         = _car.run_distance;
     _buyCarDateLabel.text          = ([_car.buy_car_year integerValue] && [_car.buy_car_month integerValue]) ? [NSString stringWithFormat:@"%@年%@月", _car.buy_car_year, _car.buy_car_month] : @"";
 
@@ -91,9 +118,13 @@
  *  @param delay    提示消失时间
  *  @param delegate 代理对象
  */
-- (void)showPromptHUDWithText:(NSString *)text delay:(NSTimeInterval)delay delegate:(id)delegate
+- (void)showPromptHUDWithText:(NSString *)text
+                        delay:(NSTimeInterval)delay
+                         type:(SCHUDType)type
+                     delegate:(id)delegate
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.tag = type;
     hud.delegate = delegate;
     hud.mode = MBProgressHUDModeText;
     hud.yOffset = (SCREEN_HEIGHT/2 - 100.0f);
@@ -110,6 +141,8 @@
 - (void)startUpdateUserCarRequest
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    __weak typeof(self) weakSelf = self;
     NSDictionary *parameters =               @{@"user_id": [SCUserInfo share].userID,
                                            @"user_car_id": _car.user_car_id,
                                               @"model_id": _car.model_id,
@@ -117,20 +150,19 @@
                                          @"buy_car_month": _car.buy_car_month,
                                           @"run_distance": _car.run_distance,
                                                  @"habit": _car.habit};
-    
-    __weak typeof(self) weakSelf = self;
     [[SCAPIRequest manager] startUpdateUserCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
             [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
                 if (finish)
-                    [weakSelf showPromptHUDWithText:@"保存成功！" delay:0.5f delegate:weakSelf];
+                    [weakSelf showPromptHUDWithText:@"保存成功！" delay:0.5f type:SCHUDTypeSaveData delegate:weakSelf];
             }];
         }
         else
             [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
+        ShowPromptHUDWithText(weakSelf.navigationController.view, @"数据保存失败，请重试！", 0.5f);
     }];
 }
 
@@ -175,11 +207,11 @@
 {
     if (!_mileageTextField.text.length)
     {
-        [self showPromptHUDWithText:@"请完善里程数" delay:0.5f delegate:nil];
+        [self showPromptHUDWithText:@"请完善里程数" delay:0.5f type:SCHUDTypeDefault delegate:nil];
     }
     else if (!_buyCarDateLabel.text.length)
     {
-        [self showPromptHUDWithText:@"请完善车辆登记日期" delay:0.5f delegate:nil];
+        [self showPromptHUDWithText:@"请完善车辆登记日期" delay:0.5f type:SCHUDTypeDefault delegate:nil];
     }
     else
     {
@@ -193,11 +225,19 @@
 #pragma mark - MBProgressHUD Delegate Methods
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
-    if ([_delegate respondsToSelector:@selector(dataSaveSuccess)])
-        [_delegate dataSaveSuccess];
-    // 保存成功，返回上一页
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    [self.navigationController popViewControllerAnimated:YES];
+    if (hud.tag != SCHUDTypeDeleteCar)
+    {
+        if ([_delegate respondsToSelector:@selector(dataSaveSuccess)])
+            [_delegate dataSaveSuccess];
+        // 保存成功，返回上一页
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 @end

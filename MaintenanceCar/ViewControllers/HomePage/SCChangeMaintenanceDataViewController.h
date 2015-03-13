@@ -28,6 +28,8 @@
 @property (nonatomic, weak)          id                   <SCChangeMaintenanceDataViewControllerDelegate>delegate;
 @property (nonatomic, weak)          SCUserCar            *car;
 
+- (IBAction)deleteCarButtonPressed;
+
 // 车辆登记日期按钮触发事件
 - (IBAction)buyCarDateButtonPressed;
 

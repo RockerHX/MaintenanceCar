@@ -11,7 +11,6 @@
 #import "SCMyFavoriteTableViewController.h"
 #import "SCMyReservationTableViewController.h"
 #import "SCMyCouponViewController.h"
-#import "SCAddCarViewController.h"
 #import "SCUserInfoView.h"
 #import "SCChangeMaintenanceDataViewController.h"
 
@@ -23,7 +22,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     SCUserCenterRowMyReservation,
 };
 
-@interface SCUserViewController () <SCAddCarViewControllerDelegate, SCUserInfoViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
+@interface SCUserViewController () <SCUserInfoViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
 
 @end
 
@@ -63,6 +62,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 - (void)initConfig
 {
     [NOTIFICATION_CENTER addObserver:self selector:@selector(pushToMyCouponViewController) name:kGenerateCouponSuccessNotification object:nil];
+    [NOTIFICATION_CENTER addObserver:_userInfoView selector:@selector(refresh) name:kUserCarsDataLoadSuccess object:nil];
 }
 
 - (void)viewConfig
@@ -147,8 +147,6 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     {
         @try {
             UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
-            SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
-            addCarViewController.delegate = self;
             [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
         }
         @catch (NSException *exception) {
@@ -159,15 +157,6 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     }
     else
         [self showShoulLoginAlert];
-}
-
-#pragma mark - SCAddCarViewController Delegate Methods
-- (void)addCarSuccessWith:(NSString *)userCarID
-{
-    // 车辆添加成功的回调方法，车辆添加成功以后需要刷新个人中心，展示出用户最新添加的车辆
-    [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
-        [_userInfoView refresh];
-    }];
 }
 
 #pragma mark - SCUserInfoViewDelegate Methods
@@ -194,7 +183,11 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 #pragma mark - SCChangeMaintenanceDataViewControllerDelegate Methods
 - (void)dataSaveSuccess
 {
-    [self addCarSuccessWith:nil];
+    // 车辆添加成功的回调方法，车辆添加成功以后需要刷新个人中心，展示出用户最新添加的车辆
+    [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
+        if (finish)
+            [_userInfoView refresh];
+    }];
 }
 
 @end

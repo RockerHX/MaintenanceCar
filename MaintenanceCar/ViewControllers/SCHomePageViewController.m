@@ -13,10 +13,9 @@
 #import "SCWebViewController.h"
 #import "SCServiceMerchantListViewController.h"
 #import "SCADView.h"
-#import "SCAddCarViewController.h"
 #import "SCChangeMaintenanceDataViewController.h"
 
-@interface SCHomePageViewController () <SCADViewDelegate, SCHomePageDetailViewDelegate, SCAddCarViewControllerDelegate, SCChangeMaintenanceDataViewControllerDelegate>
+@interface SCHomePageViewController () <SCADViewDelegate, SCHomePageDetailViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
 
 @end
 
@@ -28,8 +27,6 @@
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[首页]"];
-    
-    [_detailView refresh];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -113,6 +110,9 @@
 - (void)initConfig
 {
     _detailView.delegate = self;
+    [NOTIFICATION_CENTER addObserver:_detailView selector:@selector(refresh) name:kUserCarsDataLoadSuccess object:nil];
+    
+    [_detailView refresh];
     [self startSpecialRequest];
 }
 
@@ -233,8 +233,6 @@
 {
     @try {
         UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
-        SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
-        addCarViewController.delegate = self;
         [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
     }
     @catch (NSException *exception) {
@@ -256,12 +254,6 @@
     }
     @finally {
     }
-}
-
-#pragma mark - SCAddCarViewControllerDelegate Methods
-- (void)addCarSuccessWith:(NSString *)userCarID
-{
-    [_detailView getUserCar];
 }
 
 @end

@@ -11,21 +11,7 @@
 @class SCCarBrandView;
 @class SCCarModelView;
 
-@protocol SCAddCarViewControllerDelegate <NSObject>
-
-@optional
-/**
- *  用户添加车辆成功
- *
- *  @param userCarID 用户ID
- */
-- (void)addCarSuccessWith:(NSString *)userCarID;
-
-@end
-
 @interface SCAddCarViewController : UIViewController
-
-@property (nonatomic, weak)          id             <SCAddCarViewControllerDelegate>delegate;
 
 @property (weak, nonatomic) IBOutlet SCCarBrandView *carBrandView;      // 车辆品牌View
 @property (weak, nonatomic) IBOutlet SCCarModelView *carModelView;      // 车辆车型View

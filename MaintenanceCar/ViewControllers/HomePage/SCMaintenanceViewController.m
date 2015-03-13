@@ -63,11 +63,6 @@
     [self performSelector:@selector(viewConfig) withObject:nil afterDelay:0.1f];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Navigation
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -137,7 +132,6 @@
     
     _currentCar                   = [[SCUserInfo share].cars firstObject];
     _maintenanceTypeView.delegate = self;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
     [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed:) name:kMaintenanceReservationNotification object:nil];
@@ -180,7 +174,7 @@
 - (void)displayMaintenanceView
 {
     SCUserCar *userCar                   = _currentCar;
-    _carNameLabel.text                   = userCar.model_name;
+    _carNameLabel.text                   = [userCar.brand_name stringByAppendingString:userCar.model_name];
     _carFullNameLabel.text               = userCar.car_full_model;
     _buyCarTimeLabel.text                = ([userCar.buy_car_year integerValue] && [userCar.buy_car_month integerValue]) ? [NSString stringWithFormat:@"%@年%@月", userCar.buy_car_year, userCar.buy_car_month] : @"";
     _labelView.mileage                   = userCar.run_distance;

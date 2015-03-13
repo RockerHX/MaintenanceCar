@@ -313,6 +313,13 @@
     [self requestPOSTMethodsWithAPI:AddCarAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startDeleteCarAPIRequestWithParameters:(NSDictionary *)parameters
+                                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:DeleteCarAPIURL parameters:parameters success:success failure:failure];
+}
+
 - (void)startGetUserCarsAPIRequestWithParameters:(NSDictionary *)parameters
                                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure

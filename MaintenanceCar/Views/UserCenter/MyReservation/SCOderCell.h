@@ -8,16 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "MicroCommon.h"
-
-@class SCReservation;
+#import "SCReservation.h"
 
 @interface SCOderCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *merchantNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *reservationTypeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *reservationDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *createDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scheduleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *carInfoLabel;
+
+@property (weak, nonatomic, readonly) SCReservation *reservation;
 
 - (void)displayCellWithReservation:(SCReservation *)reservation;
 

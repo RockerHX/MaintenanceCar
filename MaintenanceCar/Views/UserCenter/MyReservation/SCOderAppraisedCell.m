@@ -7,7 +7,6 @@
 //
 
 #import "SCOderAppraisedCell.h"
-#import "SCReservation.h"
 
 @implementation SCOderAppraisedCell
 

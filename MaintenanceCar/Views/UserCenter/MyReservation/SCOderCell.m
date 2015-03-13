@@ -7,7 +7,6 @@
 //
 
 #import "SCOderCell.h"
-#import "SCReservation.h"
 
 @implementation SCOderCell
 
@@ -15,15 +14,36 @@
 - (void)awakeFromNib
 {
     _merchantNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 69.0f;
+    
+    // IOS7要改变删除按钮颜色必须设置editingAccessoryView
+    UIView *deleteView = [[UIView alloc]initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 1.0f, 1.0f)];
+    self.editingAccessoryView = deleteView;
+}
+
+// IOS7只有didTransitionToState方法能获取到UITableViewCellDeleteConfirmationView
+- (void)didTransitionToState:(UITableViewCellStateMask)state
+{
+    if ((CURRENT_SYSTEM_VERSION < 8.0f) && ![_reservation canUnReservation])
+    {
+        for (UIView *view in self.subviews)
+        {
+            for (UIView *subview in view.subviews)
+            {
+                if ([NSStringFromClass([subview class]) isEqualToString:@"UITableViewCellDeleteConfirmationView"])
+                    ((UIView*)[subview.subviews firstObject]).backgroundColor = [UIColor grayColor];
+            }
+        }
+    }
 }
 
 #pragma mark - Public Methods
 - (void)displayCellWithReservation:(SCReservation *)reservation
 {
+    _reservation = reservation;
     _merchantNameLabel.text    = reservation.name;
     _reservationTypeLabel.text = reservation.type;
     _scheduleLabel.text        = reservation.status;
-    _reservationDateLabel.text = reservation.reserve_time;
+    _createDateLabel.text      = reservation.create_time;
     _carInfoLabel.text         = reservation.car_model_name;
     
     _scheduleLabel.textColor = ([reservation.status isEqualToString:@"预约已取消"] || [reservation.status isEqualToString:@"已完成"]) ? [UIColor redColor] : [UIColor grayColor];

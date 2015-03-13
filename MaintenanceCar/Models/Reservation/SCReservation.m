@@ -18,6 +18,7 @@
     {
         _type = [NSString stringWithFormat:@"%@：", _type];
         _status = [self handleMaintenanceSchedule];
+        _reserve_time = [NSString stringWithFormat:@"%@ ~ %@:00", _reserve_time, @([[_reserve_time substringWithRange:(NSRange){6,2}] integerValue] + 1)];
     }
     return self;
 }
@@ -32,32 +33,43 @@
         case 1:
         {
             schedule = @"预约成功";
+            _oderStatus = SCOderStatusServationSuccess;
         }
             break;
         case 2:
         {
             schedule = @"商家未接受";
+            _oderStatus = SCOderStatusMerchantUnAccepted;
         }
             break;
         case 3:
         {
             schedule = @"业务进行中";
+            _oderStatus = SCOderStatusInProgress;
         }
             break;
         case 4:
         {
             schedule   = @"预约已取消";
+            _oderStatus = SCOderStatusServationCancel;
         }
             break;
         case 5:
-        case 6:
         {
             schedule   = @"已完成";
+            _oderStatus = SCOderStatusCompleted;
+        }
+            break;
+        case 6:
+        {
+            schedule   = @"已过期";
+            _oderStatus = SCOderStatusExpired;
         }
             break;
         default:
         {
             schedule = @"商家确认中";
+            _oderStatus = SCOderStatusMerchantConfirming;
         }
             break;
     }
@@ -65,9 +77,14 @@
 }
 
 #pragma mark - Public Methods
+- (BOOL)canUnReservation
+{
+    return ((_oderStatus == SCOderStatusMerchantConfirming) || (_oderStatus == SCOderStatusServationSuccess));
+}
+
 - (BOOL)canShowResult
 {
-    return [_status isEqualToString:@"免费检测"];
+    return [_type isEqualToString:@"免费检测："] && (_oderStatus == SCOderStatusCompleted);
 }
 
 - (BOOL)isAppraised
@@ -77,7 +94,7 @@
 
 - (SCOderType)oderType
 {
-    if ([_status isEqualToString:@"已完成"])
+    if ((_oderStatus == SCOderStatusInProgress) || (_oderStatus == SCOderStatusCompleted))
     {
         if ([self canShowResult])
             return [self isAppraised] ? SCOderTypeAppraisedCheck : SCOderTypeUnAppraisalCheck;

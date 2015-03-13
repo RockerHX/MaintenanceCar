@@ -8,7 +8,7 @@
 
 #import "SCMyReservationTableViewController.h"
 #import "SCReservation.h"
-#import "SCOderCell.h"
+#import "SCOderNormalCell.h"
 #import "SCOderUnAppraisalCell.h"
 #import "SCOderAppraisedCell.h"
 #import "SCOderUnAppraisalCheckCell.h"
@@ -19,7 +19,7 @@
 
 @interface SCMyReservationTableViewController ()
 
-@property (weak, nonatomic)                 SCOderCell *oderCell;
+@property (weak, nonatomic)           SCOderNormalCell *oderNormalCell;
 @property (weak, nonatomic)      SCOderUnAppraisalCell *unappraisalCell;
 @property (weak, nonatomic)        SCOderAppraisedCell *appraisedCell;
 @property (weak, nonatomic) SCOderUnAppraisalCheckCell *unappraisalCheckCell;
@@ -78,36 +78,35 @@
         case SCOderTypeUnAppraisal:
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderUnAppraisalCell" forIndexPath:indexPath];
-            [cell displayCellWithReservation:_dataList[indexPath.row]];
+            [cell displayCellWithReservation:reservation];
         }
             break;
         case SCOderTypeAppraised:
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderAppraisedCell" forIndexPath:indexPath];
-            [cell displayCellWithReservation:_dataList[indexPath.row]];
+            [cell displayCellWithReservation:reservation];
         }
             break;
         case SCOderTypeUnAppraisalCheck:
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderUnAppraisalCheckCell" forIndexPath:indexPath];
-            [cell displayCellWithReservation:_dataList[indexPath.row]];
+            [cell displayCellWithReservation:reservation];
         }
             break;
         case SCOderTypeAppraisedCheck:
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderAppraisedCheckCell" forIndexPath:indexPath];
-            [cell displayCellWithReservation:_dataList[indexPath.row]];
+            [cell displayCellWithReservation:reservation];
         }
             break;
             
         default:
         {
-            cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderCell" forIndexPath:indexPath];
-            [cell displayCellWithReservation:_dataList[indexPath.row]];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderNormalCell" forIndexPath:indexPath];
+            [cell displayCellWithReservation:reservation];
         }
             break;
     }
-    
     return cell;
 }
 
@@ -116,15 +115,20 @@
     return YES;
 }
 
+// 自定义按钮必须要此方法
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 如果用户经行删除或者滑动删除操作，设置数据缓存，并进行相关删除操作请求，同步服务器数据
-    if (editingStyle == UITableViewCellEditingStyleDelete)
+    SCReservation *reservation = _dataList[indexPath.row];
+    if ([reservation canUnReservation])
     {
-        _deleteDataCache = _dataList[indexPath.row];        // 设置数据缓存
-        [_dataList removeObjectAtIndex:indexPath.row];      // 清楚数据
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];   // 列表中删除相关数据行
-        [self startCancelReservationRequestWithIndex:indexPath.row];                                    // 同步服务器
+        // 如果用户经行删除或者滑动删除操作，设置数据缓存，并进行相关删除操作请求，同步服务器数据
+        if (editingStyle == UITableViewCellEditingStyleDelete)
+        {
+            _deleteDataCache = _dataList[indexPath.row];        // 设置数据缓存
+            [_dataList removeObjectAtIndex:indexPath.row];      // 清楚数据
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];   // 列表中删除相关数据行
+            [self startCancelReservationRequestWithIndex:indexPath.row];                                    // 同步服务器
+        }
     }
 }
 
@@ -148,7 +152,7 @@
                 {
                     if(!_unappraisalCell)
                         _unappraisalCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderUnAppraisalCell"];
-                    [_unappraisalCell displayCellWithReservation:_dataList[indexPath.row]];
+                    [_unappraisalCell displayCellWithReservation:reservation];
                     // Layout the cell
                     [_unappraisalCell updateConstraintsIfNeeded];
                     [_unappraisalCell layoutIfNeeded];
@@ -159,7 +163,7 @@
                 {
                     if(!_appraisedCell)
                         _appraisedCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderAppraisedCell"];
-                    [_appraisedCell displayCellWithReservation:_dataList[indexPath.row]];
+                    [_appraisedCell displayCellWithReservation:reservation];
                     // Layout the cell
                     [_appraisedCell updateConstraintsIfNeeded];
                     [_appraisedCell layoutIfNeeded];
@@ -170,7 +174,7 @@
                 {
                     if(!_unappraisalCheckCell)
                         _unappraisalCheckCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderUnAppraisalCheckCell"];
-                    [_unappraisalCheckCell displayCellWithReservation:_dataList[indexPath.row]];
+                    [_unappraisalCheckCell displayCellWithReservation:reservation];
                     // Layout the cell
                     [_unappraisalCheckCell updateConstraintsIfNeeded];
                     [_unappraisalCheckCell layoutIfNeeded];
@@ -181,7 +185,7 @@
                 {
                     if(!_appraisedCheckCell)
                         _appraisedCheckCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderAppraisedCheckCell"];
-                    [_appraisedCheckCell displayCellWithReservation:_dataList[indexPath.row]];
+                    [_appraisedCheckCell displayCellWithReservation:reservation];
                     // Layout the cell
                     [_appraisedCheckCell updateConstraintsIfNeeded];
                     [_appraisedCheckCell layoutIfNeeded];
@@ -191,13 +195,13 @@
                     
                 default:
                 {
-                    if(!_oderCell)
-                        _oderCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderCell"];
-                    [_oderCell displayCellWithReservation:_dataList[indexPath.row]];
+                    if(!_oderNormalCell)
+                        _oderNormalCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderNormalCell"];
+                    [_oderNormalCell displayCellWithReservation:reservation];
                     // Layout the cell
-                    [_oderCell updateConstraintsIfNeeded];
-                    [_oderCell layoutIfNeeded];
-                    height = [_oderCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+                    [_oderNormalCell updateConstraintsIfNeeded];
+                    [_oderNormalCell layoutIfNeeded];
+                    height = [_oderNormalCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
                 }
                     break;
             }
@@ -212,9 +216,56 @@
     return UITableViewAutomaticDimension;
 }
 
+- (NSString *)deleteTitleWithIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *deleteTitle      = nil;
+    SCReservation *reservation = _dataList[indexPath.row];
+    switch (reservation.oderStatus)
+    {
+        case SCOderStatusMerchantUnAccepted:
+            deleteTitle = @"未接受";
+            break;
+        case SCOderStatusInProgress:
+            deleteTitle = @"进行中";
+            break;
+        case SCOderStatusServationCancel:
+            deleteTitle = @"已取消";
+            break;
+        case SCOderStatusCompleted:
+            deleteTitle = @"已完成";
+            break;
+        case SCOderStatusExpired:
+            deleteTitle = @"已过期";
+            break;
+            
+        default:
+            deleteTitle = @"取消预约";
+            break;
+    }
+    return deleteTitle;
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return @"取消预约";
+    return [self deleteTitleWithIndexPath:indexPath];
+}
+
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SCReservation *reservation = _dataList[indexPath.row];
+    BOOL canUnreservation = [reservation canUnReservation];
+    UITableViewRowAction *button = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:[self deleteTitleWithIndexPath:indexPath] handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        if (canUnreservation)
+        {
+            _deleteDataCache = reservation;                     // 设置数据缓存
+            [_dataList removeObjectAtIndex:indexPath.row];      // 清楚数据
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];   // 列表中删除相关数据行
+            [self startCancelReservationRequestWithIndex:indexPath.row];                                    // 同步服务器
+        }
+    }];
+    button.backgroundColor = canUnreservation ? [UIColor redColor] : [UIColor grayColor];
+    
+    return @[button];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -299,14 +350,14 @@
             if (weakSelf.requestType == SCFavoriteListRequestTypeDown)
                 [weakSelf clearListData];
             
-            // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
+            // 遍历请求回来的订单数据，生成SCReservation用于订单列表显示
             [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 SCReservation *reservation = [[SCReservation alloc] initWithDictionary:obj error:nil];
                 [_dataList addObject:reservation];
             }];
             
-            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:weakSelf.offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                   // 数据配置完成，刷新商家列表
-            weakSelf.offset += MerchantListLimit;                               // 偏移量请求参数递增
+            [weakSelf.tableView reloadData];        // 数据配置完成，刷新商家列表
+            weakSelf.offset += MerchantListLimit;   // 偏移量请求参数递增
         }
         else
         {
@@ -341,8 +392,8 @@
         // 根据返回结果进行相应提示
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            SCReservation *reservation = _dataList[index];
-            reservation.status         = @"4";
+            SCReservation *reservation = _deleteDataCache;
+            reservation.status         = @"预约已取消";
             [weakSelf deleteFailureAtIndex:index];
             ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消预约成功", 0.5f);
         }
@@ -350,7 +401,7 @@
             ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消预约失败，请重试", 0.5f);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf deleteFailureAtIndex:index];
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消失败，请检查网络", 0.5f);
+        ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消预约失败，请重试", 0.5f);
     }];
 }
 

@@ -149,7 +149,7 @@
 
 - (void)refresh
 {
-    [self displayMaintenanceView];
+    [self getUserCar];
 }
 
 @end

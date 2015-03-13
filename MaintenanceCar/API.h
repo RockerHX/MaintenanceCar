@@ -12,6 +12,7 @@
 typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
     SCAPIRequestStatusCodeGETSuccess  = 200,
     SCAPIRequestStatusCodePOSTSuccess = 201,
+    SCAPIRequestStatusCodeError       = 404,
     SCAPIRequestStatusCodeNotFound    = 404,
     SCAPIRequestStatusCodeDataError   = 408,
     SCAPIRequestStatusCodeServerError = 500
@@ -63,6 +64,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define CarModelAPI                 @"/Cars/models"                         // 汽车型号API
 #define CarsAPI                     @"/Cars"                                // 汽车款式API
 #define AddCarAPI                   @"/Usercar"                             // 添加车辆API
+#define DeleteCarAPI                @"/Usercar/delete"                      // 删除车辆API
 
 #define MaintenanceAPI              @"/Baoyang/user"                        // 保养数据API
 #define UpdateCarAPI                @"/Usercar/update"                      // 更新车辆数据API
@@ -100,6 +102,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define CarModelAPIURL                  [APIURL stringByAppendingString:CarModelAPI]                // 汽车型号接口URL - 用于更新汽车型号
 #define CarsAPIURL                      [APIURL stringByAppendingString:CarsAPI]                    // 汽车款式接口URL - 用于更新汽车款式
 #define AddCarAPIURL                    [APIURL stringByAppendingString:AddCarAPI]                  // 添加车辆接口URL - 用于用户添加车辆
+#define DeleteCarAPIURL                 [APIURL stringByAppendingString:DeleteCarAPI]               // 删除车辆接口URL - 用于用户删除车辆
 
 #define MaintenanceAPIURL               [APIURL stringByAppendingString:MaintenanceAPI]             // 保养数据接口URL - 用于获取用户车辆保养数据
 #define UpdateCarAPIURL                 [APIURL stringByAppendingString:UpdateCarAPI]               // 更新车辆数据接口URL - 用于用户更新车辆数据

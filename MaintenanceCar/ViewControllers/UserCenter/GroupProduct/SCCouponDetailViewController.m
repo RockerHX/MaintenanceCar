@@ -17,6 +17,8 @@
 
 @interface SCCouponDetailViewController ()
 {
+    
+    BOOL                 _loadFinish;
     SCGroupProductDetail *_detail;
 }
 @property (weak, nonatomic) SCGroupProductMerchantCell *merchantCell;
@@ -57,6 +59,7 @@
         self.tableView.estimatedRowHeight = 120.0f;
         self.tableView.rowHeight = UITableViewAutomaticDimension;
     }
+    _loadFinish = YES;
 }
 
 - (void)viewConfig
@@ -210,6 +213,15 @@
     return view;
 }
 
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    if ((indexPath.row == 0 && indexPath.section == 3) && _loadFinish)
+    {
+        [self.tableView scrollRectToVisible:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 1.0f, 1.0f) animated:NO];
+        _loadFinish = NO;
+    }
+}
+
 #pragma mark - Private Methods
 - (void)startCouponDetailRequest
 {
@@ -224,6 +236,7 @@
             _detail.companyID = _coupon.company_id;
             _detail.merchantName = _coupon.company_name;
             [self.tableView reloadData];
+            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         }
         [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

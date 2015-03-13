@@ -223,6 +223,13 @@
                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
+ *  用户删除车辆接口请求方法(API:/Usercar/delete - POST)
+ */
+- (void)startDeleteCarAPIRequestWithParameters:(NSDictionary *)parameters
+                                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
  *  获取用户所有车辆接口请求方法(API:/Usercar - GET)
  */
 - (void)startGetUserCarsAPIRequestWithParameters:(NSDictionary *)parameters

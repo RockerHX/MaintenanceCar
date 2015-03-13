@@ -166,7 +166,10 @@
             [self showPromptHUDWithText:@"很抱歉，预约未成功，请重试!" delay:1.0f delegate:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [self showPromptHUDWithText:@"网络异常，请重试!" delay:1.0f delegate:nil];
+        if (operation.response.statusCode == SCAPIRequestStatusCodeError)
+            [self showPromptHUDWithText:@"预约时间已过，请重选时间!" delay:1.0f delegate:self];
+        else
+            [self showPromptHUDWithText:@"网络异常，请重试!" delay:1.0f delegate:nil];
     }];
 }
 

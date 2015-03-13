@@ -40,6 +40,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     BOOL _needChecked;      // 检查收藏标识
     BOOL _hasGroupProducts;
+    BOOL _loadFinish;
 }
 @property (weak, nonatomic)    SCMerchantDetailCell *briefIntroductionCell;
 @property (weak, nonatomic) SCMerchantDetailItemCell *detailItemCell;
@@ -83,6 +84,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         self.tableView.rowHeight = UITableViewAutomaticDimension;
     }
     
+    _loadFinish = YES;
     _needChecked = YES;
     // 加载提示框，并开始数据请求
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -302,6 +304,15 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     }
 }
 
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    if ((indexPath.row == 5 && indexPath.section == _hasGroupProducts ? 2 : 1) && _loadFinish)
+    {
+        [self.tableView scrollRectToVisible:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 1.0f, 1.0f) animated:NO];
+        _loadFinish = NO;
+    }
+}
+
 #pragma mark - Action Methods
 - (IBAction)collectionItemPressed:(SCCollectionItem *)sender
 {
@@ -345,12 +356,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     _hasGroupProducts         = _merchantDetail.products.count;
 }
 
-- (void)reLayoutMerchantDetailView
-{
-    [self.tableView reloadData];
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-}
-
 /**
  *  商家详情请求，需要参数：id(商家id)，user_id(用户id，可选)
  */
@@ -366,10 +371,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             [weakSelf displayMerchantDetail];
             
             [weakSelf.tableView reloadData];
-            if (IS_IOS8)
-                [weakSelf performSelector:@selector(reLayoutMerchantDetailView) withObject:nil afterDelay:0.1f];
-            else
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:5 inSection:_hasGroupProducts ? 2 : 1] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
         }
         else
         {
