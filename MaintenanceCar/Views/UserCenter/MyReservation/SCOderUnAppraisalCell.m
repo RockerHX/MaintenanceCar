@@ -23,7 +23,8 @@
 #pragma mark - Action Methods
 - (IBAction)appraiseButtonPressed:(id)sender
 {
-    
+    if ([_delegate respondsToSelector:@selector(shouldAppraiseOderWithReservation:)])
+        [_delegate shouldAppraiseOderWithReservation:self.reservation];
 }
 
 @end

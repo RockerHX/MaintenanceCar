@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     SCHUDTypeDeleteCar
 };
 
-@interface SCChangeMaintenanceDataViewController () <UITextFieldDelegate, SCDatePickerViewDelegate, SCCarDriveHabitsViewDelegate, MBProgressHUDDelegate>
+@interface SCChangeMaintenanceDataViewController () <UITextFieldDelegate, SCDatePickerViewDelegate, SCCarDriveHabitsViewDelegate>
 
 @end
 
@@ -36,28 +36,11 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 #pragma mark - Action Methods
 - (IBAction)deleteCarButtonPressed
 {
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    
-    __weak typeof(self) weakSelf = self;
-    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                             @"user_car_id": _car.user_car_id};
-    [[SCAPIRequest manager] startDeleteCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
-        {
-            [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
-                if (finish)
-                {
-                    [weakSelf showPromptHUDWithText:@"删除成功！" delay:0.5f type:SCHUDTypeDeleteCar delegate:weakSelf];
-                    [NOTIFICATION_CENTER postNotificationName:kUserCarsDataLoadSuccess object:nil];
-                }
-            }];
-        }
-        else
-            [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"车辆删除失败，请重试！", 0.5f);
-    }];
+    [self showAlertWithTitle:@"警告"
+                     message:@"您确定要删除您的车辆吗？"
+                    delegate:self
+           cancelButtonTitle:@"确认"
+            otherButtonTitle:@"取消"];
 }
 
 - (IBAction)buyCarDateButtonPressed
@@ -112,30 +95,6 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 }
 
 /**
- *  用户提示方法
- *
- *  @param text     提示内容
- *  @param delay    提示消失时间
- *  @param delegate 代理对象
- */
-- (void)showPromptHUDWithText:(NSString *)text
-                        delay:(NSTimeInterval)delay
-                         type:(SCHUDType)type
-                     delegate:(id)delegate
-{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.tag = type;
-    hud.delegate = delegate;
-    hud.mode = MBProgressHUDModeText;
-    hud.yOffset = (SCREEN_HEIGHT/2 - 100.0f);
-    hud.margin = 10.0f;
-    hud.labelText = text;
-    hud.removeFromSuperViewOnHide = YES;
-    
-    [hud hide:YES afterDelay:delay];
-}
-
-/**
  *  车辆数据更新请求，参数：user_id, user_car_id必选，其他可选参数见API文档
  */
 - (void)startUpdateUserCarRequest
@@ -155,14 +114,40 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
         {
             [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
                 if (finish)
-                    [weakSelf showPromptHUDWithText:@"保存成功！" delay:0.5f type:SCHUDTypeSaveData delegate:weakSelf];
+                    [weakSelf showHUDAlertToViewController:weakSelf tag:SCHUDTypeSaveData text:@"保存成功！" delay:0.5f];
             }];
         }
         else
             [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"数据保存失败，请重试！", 0.5f);
+        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"数据保存失败，请重试！" delay:0.5f];
+    }];
+}
+
+- (void)startDeleteUserCarRequest
+{
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    
+    __weak typeof(self) weakSelf = self;
+    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                                 @"user_car_id": _car.user_car_id};
+    [[SCAPIRequest manager] startDeleteCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+        {
+            [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
+                if (finish)
+                {
+                    [weakSelf showHUDAlertToViewController:weakSelf tag:SCHUDTypeDeleteCar text:@"删除成功！" delay:0.5f];
+                    [NOTIFICATION_CENTER postNotificationName:kUserCarsDataLoadSuccess object:nil];
+                }
+            }];
+        }
+        else
+            [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
+        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"车辆删除失败，请重试！" delay:0.5f];
     }];
 }
 
@@ -207,11 +192,11 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 {
     if (!_mileageTextField.text.length)
     {
-        [self showPromptHUDWithText:@"请完善里程数" delay:0.5f type:SCHUDTypeDefault delegate:nil];
+        [self showHUDAlertToViewController:self tag:SCHUDTypeDefault text:@"请完善里程数" delay:0.5f];
     }
     else if (!_buyCarDateLabel.text.length)
     {
-        [self showPromptHUDWithText:@"请完善车辆登记日期" delay:0.5f type:SCHUDTypeDefault delegate:nil];
+        [self showHUDAlertToViewController:self tag:SCHUDTypeDefault text:@"请完善车辆登记日期" delay:0.5f];
     }
     else
     {
@@ -225,19 +210,34 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 #pragma mark - MBProgressHUD Delegate Methods
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
-    if (hud.tag != SCHUDTypeDeleteCar)
+    switch (hud.tag)
     {
-        if ([_delegate respondsToSelector:@selector(dataSaveSuccess)])
-            [_delegate dataSaveSuccess];
-        // 保存成功，返回上一页
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [self.navigationController popViewControllerAnimated:YES];
+        case SCHUDTypeSaveData:
+        {
+            if ([_delegate respondsToSelector:@selector(dataSaveSuccess)])
+                [_delegate dataSaveSuccess];
+            // 保存成功，返回上一页
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+            break;
+        case SCHUDTypeDeleteCar:
+        {
+            [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+            break;
+            
+        default:
+            break;
     }
-    else
-    {
-        [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
+}
+
+#pragma mark - UIAlertViewDelegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertView.cancelButtonIndex)
+        [self startDeleteUserCarRequest];
 }
 
 @end

@@ -114,10 +114,10 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
             [_leftTableView reloadData];
         }
         else
-            ShowPromptHUDWithText(weakSelf, @"暂无数据，有待添加！", 1.0f);
+            [weakSelf showHUDAlertWithText:@"暂无数据，有待添加！" delay:0.5f];
         [MBProgressHUD hideHUDForView:weakSelf animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        ShowPromptHUDWithText(weakSelf, @"网络卡爆了，去楼顶试试吧，亲！", 1.0f);
+        [weakSelf showHUDAlertWithText:@"网络卡爆了，去楼顶试试吧，亲！" delay:0.5f];
         [MBProgressHUD hideHUDForView:weakSelf animated:YES];
     }];
 }
@@ -143,10 +143,10 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
             [_rightTableView reloadData];
         }
         else
-            ShowPromptHUDWithText(weakSelf, @"暂无数据，有待添加！", 1.0f);
+            [weakSelf showHUDAlertWithText:@"暂无数据，有待添加！" delay:0.5f];
         [MBProgressHUD hideHUDForView:weakSelf animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        ShowPromptHUDWithText(weakSelf, @"网络卡爆了，去楼顶试试吧，亲！", 1.0f);
+        [weakSelf showHUDAlertWithText:@"网络卡爆了，去楼顶试试吧，亲！" delay:0.5f];
         [MBProgressHUD hideHUDForView:weakSelf animated:YES];
     }];
 }

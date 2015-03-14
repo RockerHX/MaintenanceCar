@@ -16,7 +16,6 @@
     self = [super initWithDictionary:dict error:err];
     if (self)
     {
-        _type = [NSString stringWithFormat:@"%@：", _type];
         _status = [self handleMaintenanceSchedule];
         _reserve_time = [NSString stringWithFormat:@"%@ ~ %@:00", _reserve_time, @([[_reserve_time substringWithRange:(NSRange){6,2}] integerValue] + 1)];
     }
@@ -84,7 +83,7 @@
 
 - (BOOL)canShowResult
 {
-    return [_type isEqualToString:@"免费检测："] && (_oderStatus == SCOderStatusCompleted);
+    return [_type isEqualToString:@"免费检测"] && (_oderStatus == SCOderStatusCompleted);
 }
 
 - (BOOL)isAppraised

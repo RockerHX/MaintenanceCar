@@ -75,6 +75,11 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [self viewConfig];
 }
 
+- (void)dealloc
+{
+    [NOTIFICATION_CENTER removeObserver:self];
+}
+
 #pragma mark - Config Methods
 - (void)initConfig
 {
@@ -372,7 +377,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             
             [weakSelf.tableView reloadData];
             if (IS_IOS8)
-                [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+                [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:5 inSection:_hasGroupProducts ? 2 : 1] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
             [MBProgressHUD hideHUDForView:self.view animated:YES];
         }
         else
@@ -416,16 +421,16 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [[SCAPIRequest manager] startMerchantCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"收藏成功", 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"收藏成功" delay:0.5f];
         }
         else
         {
             _collectionItem.favorited = NO;
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"收藏失败，请重试", 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"收藏失败，请重试！" delay:0.5f];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         _collectionItem.favorited = NO;
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"收藏失败，请检查网络", 0.5f);
+        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"收藏失败，请检查网络！" delay:0.5f];
     }];
 }
 
@@ -440,16 +445,16 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [[SCAPIRequest manager] startCancelCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消收藏成功", 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"取消收藏成功" delay:0.5f];
         }
         else
         {
             _collectionItem.favorited = YES;
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消收藏失败，请重试", 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"取消收藏失败，请重试！" delay:0.5f];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         _collectionItem.favorited = YES;
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消收藏失败，请检查网络", 0.5f);
+        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"取消收藏失败，请检查网络！" delay:0.5f];
     }];
 }
 

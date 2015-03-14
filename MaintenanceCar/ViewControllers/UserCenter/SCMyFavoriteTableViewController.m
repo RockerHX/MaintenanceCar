@@ -45,10 +45,9 @@
     [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed:) name:kMaintenanceReservationNotification object:nil];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)dealloc
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [NOTIFICATION_CENTER removeObserver:self];
 }
 
 #pragma mark - Table View Data Source Methods
@@ -163,7 +162,7 @@
         else
         {
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
-            ShowPromptHUDWithText(weakSelf.navigationController.view, responseObject[@"error"], 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:responseObject[@"error"] delay:0.5f];
         }
         
         [weakSelf hiddenHUD];             // 请求完成，移除响应式控件
@@ -174,9 +173,9 @@
         [weakSelf.tableView footerEndRefreshing];
         [weakSelf hiddenHUD];
         if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"您还没有收藏过任何店铺噢！", 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"您还没有收藏过任何店铺噢！" delay:0.5f];
         else
-            ShowPromptHUDWithText(weakSelf.navigationController.view, NetWorkError, 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:NetWorkError delay:0.5f];
     }];
 }
 
@@ -192,16 +191,16 @@
         // 根据返回结果进行相应提示
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"删除成功", 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"删除成功" delay:0.5f];
         }
         else
         {
             [weakSelf deleteFailureAtIndex:index];
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"删除失败，请重试", 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"删除失败，请重试！" delay:0.5f];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf deleteFailureAtIndex:index];
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"删除失败，请检查网络", 0.5f);
+        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"删除失败，请检查网络！" delay:0.5f];
     }];
 }
 

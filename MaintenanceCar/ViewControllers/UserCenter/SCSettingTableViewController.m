@@ -9,7 +9,7 @@
 #import "SCSettingTableViewController.h"
 #import "UMFeedback.h"
 
-@interface SCSettingTableViewController () <MBProgressHUDDelegate, UIAlertViewDelegate>
+@interface SCSettingTableViewController () <UIAlertViewDelegate>
 
 @end
 
@@ -90,34 +90,16 @@
     if (!userInfo.loginStatus)
     {
         _appMessageSwitch.on = NO;
-        ShowPromptHUDWithText(self.view, @"您还为登录，无法接受维修消息", 0.5f);
+        [self showHUDAlertToViewController:self text:@"您还未登录，无法接受维修消息" delay:0.5f];
     }
     userInfo.receiveMessage = sender.on;
-}
-
-/**
- *  用户提示方法
- *
- *  @param text     提示内容
- *  @param delay    提示消失时间
- *  @param delegate 代理对象
- */
-- (void)showPromptHUDWithText:(NSString *)text delay:(NSTimeInterval)delay delegate:(id<MBProgressHUDDelegate>)delegate
-{
-    MBProgressHUD *hud            = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.delegate                  = delegate;
-    hud.mode                      = MBProgressHUDModeIndeterminate;
-    hud.labelText                 = text;
-    hud.removeFromSuperViewOnHide = YES;
-    
-    [hud hide:YES afterDelay:delay];
 }
 
 - (IBAction)logoutButtonPressed:(UIButton *)sender
 {
     _appMessageSwitch.on = NO;
     [[SCUserInfo share] logout];
-    [self showPromptHUDWithText:@"正在注销" delay:1.0f delegate:self];
+    [self showHUDPromptToViewController:self tag:Zero text:@"正在注销" delay:0.5f];
 }
 
 #pragma mark - MBProgressHUD Delegate Methods

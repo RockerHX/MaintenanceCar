@@ -51,6 +51,11 @@
     [self viewConfig];
 }
 
+- (void)dealloc
+{
+    [NOTIFICATION_CENTER removeObserver:self];
+}
+
 #pragma mark - Config Methods
 - (void)initConfig
 {
@@ -116,7 +121,7 @@
                     [weakSelf sendWeiXinPay:_weiXinPay];
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                ShowPromptHUDWithText(weakSelf.view, @"下单失败，请重试...", 0.5f);
+                [weakSelf showHUDAlertToViewController:weakSelf text:@"下单失败，请重试..." delay:0.5f];
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             }];
 //        }
@@ -135,7 +140,7 @@
 
 - (void)weiXinPayFailure
 {
-    ShowPromptHUDWithText(self.view, @"支付失败！请重试..", 1.0f);
+    [self showHUDAlertToViewController:self text:@"下单失败，请重试..." delay:0.5f];
 }
 
 - (void)displayView
@@ -177,7 +182,7 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"恭喜您团购成功！", 1.0f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"恭喜您团购成功！" delay:0.5f];
             [self.navigationController popToRootViewControllerAnimated:YES];
             [NOTIFICATION_CENTER postNotificationName:kGenerateCouponSuccessNotification object:nil];
         }
@@ -188,7 +193,7 @@
         if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
             [weakSelf showGenerateCouponFailureAlert];
         else
-            ShowPromptHUDWithText(weakSelf.navigationController.view, NetWorkError, 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:NetWorkError delay:0.5f];
     }];
 }
 

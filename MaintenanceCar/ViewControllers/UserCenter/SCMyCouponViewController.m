@@ -134,7 +134,7 @@
         else
         {
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
-            ShowPromptHUDWithText(weakSelf.navigationController.view, responseObject[@"error"], 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:responseObject[@"error"] delay:0.5f];
         }
         
         [weakSelf hiddenHUD];             // 请求完成，移除响应式控件
@@ -145,9 +145,9 @@
         [weakSelf.tableView footerEndRefreshing];
         [weakSelf hiddenHUD];
         if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"您还没有购买过过任何团购券噢！", 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"您还没有购买过过任何团购券噢！" delay:0.5f];
         else
-            ShowPromptHUDWithText(weakSelf.navigationController.view, NetWorkError, 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:NetWorkError delay:0.5f];
     }];
 }
 

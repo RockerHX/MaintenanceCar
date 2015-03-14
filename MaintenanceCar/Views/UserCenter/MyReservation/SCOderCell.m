@@ -41,7 +41,7 @@
 {
     _reservation = reservation;
     _merchantNameLabel.text    = reservation.name;
-    _reservationTypeLabel.text = reservation.type;
+    _reservationTypeLabel.text = [NSString stringWithFormat:@"%@：", reservation.type];
     _scheduleLabel.text        = reservation.status;
     _createDateLabel.text      = reservation.create_time;
     _carInfoLabel.text         = reservation.car_model_name;

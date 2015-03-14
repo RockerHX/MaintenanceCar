@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     SCDismissTypeCancel
 };
 
-@interface SCLoginViewController () <MBProgressHUDDelegate>
+@interface SCLoginViewController ()
 
 @property (nonatomic, copy)   NSString *verificationCode;         // 请求给用户所发送验证码，由客户端随机生成
 
@@ -92,7 +92,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
         }
         else
         {
-            [weakSelf showPromptHUDWithText:@"请输入手机号" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+            [weakSelf showPromptHUDWithText:@"请输入手机号" delay:1.0f mode:SCHUDModeDefault delegate:nil];
             return NO;
         }
     }];
@@ -105,7 +105,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
  *  @param delay    提示消失时间
  *  @param delegate 代理对象
  */
-- (void)showPromptHUDWithText:(NSString *)text delay:(NSTimeInterval)delay mode:(SCHUDMode)mode delegate:(id<MBProgressHUDDelegate>)delegate
+- (void)showPromptHUDWithText:(NSString *)text delay:(NSTimeInterval)delay mode:(SCHUDMode)mode delegate:(id)delegate
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.tag = mode;
@@ -250,11 +250,11 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     
     if (![_phoneNumberTextField.text length])
     {
-        ShowPromptHUDWithText(self.view, @"请输入手机号噢亲！", 1.0f);
+        [self showHUDAlertToViewController:self text:@"请输入手机号噢亲！" delay:0.5f];
     }
     else if (![_verificationCodeTextField.text length])
     {
-        ShowPromptHUDWithText(self.view, @"请输入验证码噢亲！", 1.0f);
+        [self showHUDAlertToViewController:self text:@"请输入验证码噢亲！" delay:0.5f];
     }
     else if ([_verificationCodeTextField.text isEqualToString:_verificationCode] ||
              ([_phoneNumberTextField.text isEqualToString:@"18683858856"] &&
@@ -306,7 +306,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
             break;
         case SCHUDModeCompareVerificationCode:
         {
-            ShowPromptHUDWithText(self.view, @"验证码不对噢亲！", 1.0f);
+            [self showHUDAlertToViewController:self text:@"验证码不对噢亲！" delay:0.5f];
         }
             break;
         case SCHUDModeRegister:

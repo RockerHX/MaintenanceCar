@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
     SCCollectionViewTypeSelected
 };
 
-@interface SCReservationDateViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate, MBProgressHUDDelegate>
+@interface SCReservationDateViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate>
 {
     NSDictionary *_dateItmes;
     NSArray      *_dateKeys;
@@ -112,33 +112,13 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
             [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
         }
         else
-            [weakSelf showPromptHUDWithText:NetWorkError delay:0.8f delegate:self];
+            [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:NetWorkError delay:0.5f];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeDataError)
-            [weakSelf showPromptHUDWithText:DataError delay:0.8f delegate:self];
+            [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:DataError delay:0.5f];
         else
-            [weakSelf showPromptHUDWithText:NetWorkError delay:0.8f delegate:self];
+            [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:NetWorkError delay:0.5f];
     }];
-}
-
-/**
- *  用户提示方法
- *
- *  @param text     提示内容
- *  @param delay    提示消失时间
- *  @param delegate 代理对象
- */
-- (void)showPromptHUDWithText:(NSString *)text delay:(NSTimeInterval)delay delegate:(id)delegate
-{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.delegate = delegate;
-    hud.mode = MBProgressHUDModeText;
-    hud.yOffset = (SCREEN_HEIGHT/2 - 100.0f);
-    hud.margin = 10.0f;
-    hud.labelText = text;
-    hud.removeFromSuperViewOnHide = YES;
-    
-    [hud hide:YES afterDelay:delay];
 }
 
 - (CGFloat)itemWidthWithInde:(NSInteger)index

@@ -51,6 +51,8 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define MyGroupProductAPI           @"/Group_ticket/all"                    // 我的团购券列表API
 #define CouponDetailAPI             GenerateCouponAPI                       // 团购券详情API
 
+#define CommentAPI                  @"/Comments"                            // 评论API
+
 #define VerificationCodeAPI         @"/Verification"                        // 验证码获取API
 #define RegisterAPI                 @"/User"                                // 用户注册API
 #define LoginAPI                    RegisterAPI                             // 用户登录API
@@ -88,6 +90,8 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define GenerateCouponAPIURL            [APIURL stringByAppendingString:GenerateCouponAPI]          // 生成团购券接口URL - 用于付款成功后生成团购券
 #define MyGroupProductAPIURL            [APIURL stringByAppendingString:MyGroupProductAPI]          // 我的团购券列表接口URL - 用于获取用户所有团购券列表
 #define CouponDetailAPIURL              [APIURL stringByAppendingString:CouponDetailAPI]            // 团购券详情接口URL - 用于获取团购券详情
+
+#define CommentAPIURL                   [APIURL stringByAppendingString:CommentAPI]                 // 评论接口URL - 用于添加评论
 
 #define VerificationCodeAPIURL          [APIURL stringByAppendingString:VerificationCodeAPI]        // 获取验证码接口URL - 用于获取短信或者语音验证码
 #define RegisterAPIURL                  [APIURL stringByAppendingString:RegisterAPI]                // 用户注册接口URL - 用于用户注册

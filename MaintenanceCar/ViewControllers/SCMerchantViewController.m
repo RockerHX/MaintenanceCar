@@ -135,7 +135,7 @@
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
         [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"定位失败，采用当前城市中心坐标", 0.5f);
+        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"定位失败，采用当前城市中心坐标！" delay:0.5f];
         [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
                                                             message:@"定位失败，请检查您的定位服务是否打开：设置->隐私->定位服务"
@@ -183,7 +183,7 @@
             }
             else
             {
-                ShowPromptHUDWithText(weakSelf.navigationController.view, @"优质商家陆续添加中...", 0.5f);
+                [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"优质商家陆续添加中..." delay:0.5f];
                 [_tableView reloadData];
             }
         }

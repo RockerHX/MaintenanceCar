@@ -36,7 +36,7 @@
     //    _starView.startValue = detail;
     //    _distanceLabel.text = detail;
     //    _addressLabel.text = detail;
-    _starView.startValue = @"4";
+    _starView.value = @"4";
     _distanceLabel.text = @"123";
     _addressLabel.text = @"123";
 }

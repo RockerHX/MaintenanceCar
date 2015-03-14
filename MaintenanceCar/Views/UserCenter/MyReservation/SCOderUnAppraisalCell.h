@@ -8,9 +8,18 @@
 
 #import "SCOderCell.h"
 
+@protocol SCOderUnAppraisalCellDelegate <NSObject>
+
+@optional
+- (void)shouldAppraiseOderWithReservation:(SCReservation *)reservation;
+
+@end
+
 @interface SCOderUnAppraisalCell : SCOderCell
 
 @property (weak, nonatomic) IBOutlet UIButton *appraiseButton;
+
+@property (weak, nonatomic)                id <SCOderUnAppraisalCellDelegate>delegate;
 
 - (IBAction)appraiseButtonPressed:(id)sender;
 

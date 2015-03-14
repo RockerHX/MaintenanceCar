@@ -12,6 +12,7 @@
 #import "SCMerchantDetailFlagCell.h"
 #import "SCAllDictionary.h"
 #import "SCMerchantDetail.h"
+#import "SCStarView.h"
 
 @interface SCMerchantDetailCell () <UICollectionViewDataSource, UICollectionViewDelegate>
 {

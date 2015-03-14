@@ -64,7 +64,7 @@
     
     _merchantNameLabel.text = merchant.name;
     _distanceLabel.text     = merchant.distance;
-    _starView.startValue    = merchant.star;
+    _starView.value         = merchant.star;
     
     if (merchant.tags.length)
     {

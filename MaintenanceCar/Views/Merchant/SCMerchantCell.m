@@ -38,8 +38,8 @@
     _flagView.dataSource = self;
     // 圆角和颜色处理
     _specialLabel.layer.cornerRadius = 2.0f;
-    _specialLabel.layer.borderWidth = 1.0f;
-    _specialLabel.layer.borderColor = UIColorWithRGBA(230.0f, 109.0f, 81.0f, 1.0f).CGColor;
+    _specialLabel.layer.borderWidth  = 1.0f;
+    _specialLabel.layer.borderColor  = UIColorWithRGBA(230.0f, 109.0f, 81.0f, 1.0f).CGColor;
 }
 
 - (UIColor *)iconColorWithName:(NSString *)name
@@ -54,7 +54,7 @@
     [_merchantIcon setImageWithURL:[NSString stringWithFormat:@"%@%@_s.jpg", MerchantImageDoMain, merchant.company_id] defaultImage:@"MerchantIconDefault"];
     _merchantNameLabel.text = merchant.name;
     _distanceLabel.text     = merchant.distance;
-    _starView.startValue    = merchant.star;
+    _starView.value         = merchant.star;
     
     if (merchant.tags.length)
     {

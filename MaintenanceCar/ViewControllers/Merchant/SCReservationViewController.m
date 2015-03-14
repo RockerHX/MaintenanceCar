@@ -12,7 +12,7 @@
 #import "SCPickerView.h"
 #import "SCReservationDateViewController.h"
 
-@interface SCReservationViewController () <UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, MBProgressHUDDelegate, SCPickerViewDelegate, SCReservationDateViewControllerDelegate>
+@interface SCReservationViewController () <UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, SCPickerViewDelegate, SCReservationDateViewControllerDelegate>
 {
     NSString *_reservationType;
     NSString *_reservationDate;
@@ -161,36 +161,16 @@
     [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
-            [self showPromptHUDWithText:@"恭喜您，已经预约成功!" delay:1.0f delegate:self];
+            [self showHUDAlertToViewController:self tag:Zero text:@"恭喜您，已经预约成功!" delay:0.5f];
         else
-            [self showPromptHUDWithText:@"很抱歉，预约未成功，请重试!" delay:1.0f delegate:nil];
+            [self showHUDAlertToViewController:self text:@"很抱歉，预约未成功，请重试!" delay:0.5f];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (operation.response.statusCode == SCAPIRequestStatusCodeError)
-            [self showPromptHUDWithText:@"预约时间已过，请重选时间!" delay:1.0f delegate:self];
+            [self showHUDAlertToViewController:self tag:Zero text:@"预约时间已过，请重选时间!" delay:0.5f];
         else
-            [self showPromptHUDWithText:@"网络异常，请重试!" delay:1.0f delegate:nil];
+            [self showHUDAlertToViewController:self text:@"网络异常，请重试!" delay:0.5f];
     }];
-}
-
-/**
- *  用户提示方法
- *
- *  @param text     提示内容
- *  @param delay    提示消失时间
- *  @param delegate 代理对象
- */
-- (void)showPromptHUDWithText:(NSString *)text delay:(NSTimeInterval)delay delegate:(id<MBProgressHUDDelegate>)delegate
-{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.delegate = delegate;
-    hud.mode = MBProgressHUDModeText;
-    hud.yOffset = SCREEN_HEIGHT/2 - 100.0f;
-    hud.margin = 10.f;
-    hud.labelText = text;
-    hud.removeFromSuperViewOnHide = YES;
-    
-    [hud hide:YES afterDelay:delay];
 }
 
 - (void)displayDateItemWithDate:(NSString *)date displayDate:(NSString *)displayDate
@@ -217,22 +197,22 @@
 {
     if (![_ownerNameTextField.text length])
     {
-        ShowPromptHUDWithText(self.view, @"请输入您的姓名!", 1.0f);
+        [self showHUDAlertToViewController:self text:@"请输入您的姓名!" delay:0.5f];
         return NO;
     }
     else if (![_ownerPhoneNumberTextField.text length])
     {
-        ShowPromptHUDWithText(self.view, @"请输入您的手机号码!", 1.0f);
+        [self showHUDAlertToViewController:self text:@"请输入您的手机号码!" delay:0.5f];
         return NO;
     }
     else if (!_reservationType)
     {
-        ShowPromptHUDWithText(self.view, @"请选择您需要预约的类型!", 1.0f);
+        [self showHUDAlertToViewController:self text:@"请选择您需要预约的类型!" delay:0.5f];
         return NO;
     }
     else if (!_reservationDate)
     {
-        ShowPromptHUDWithText(self.view, @"请选择您需要预约的日期!", 1.0f);
+        [self showHUDAlertToViewController:self text:@"请选择您需要预约的日期!" delay:0.5f];
         return NO;
     }
     else

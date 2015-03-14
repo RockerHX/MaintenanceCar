@@ -10,13 +10,6 @@
 #import <SCInfiniteLoopScrollView/SCInfiniteLoopScrollView.h>
 #import "MicroCommon.h"
 
-@interface SCUserInfoView ()
-{
-    NSUInteger _carCount;
-}
-
-@end
-
 @implementation SCUserInfoView
 
 #pragma mark - Init Methods
@@ -54,9 +47,8 @@
     
     if (userInfo.loginStatus)
     {
-        if (userInfo.cars.count != _carCount)
+        if (userInfo.cars.count)
         {
-            _carCount = userInfo.cars.count;
             if (!_userCarsView.hidden && userInfo.cars.count)
             {
                 NSMutableArray *items = [@[] mutableCopy];
@@ -83,7 +75,7 @@
                 weakSelf.carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", car.run_distance.length ? car.run_distance : @"0"];
             }];
         }
-        else if (userInfo.cars.count == 0)
+        else
         {
             UIImageView *carView = [[UIImageView alloc] init];
             carView.image = [UIImage imageNamed:@"car"];

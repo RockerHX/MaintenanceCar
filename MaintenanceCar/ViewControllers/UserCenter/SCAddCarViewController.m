@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
     SCContentViewSwitchCarModelView
 };
 
-@interface SCAddCarViewController () <SCCarBrandViewDelegate, SCCarModelViewDelegate, MBProgressHUDDelegate>
+@interface SCAddCarViewController () <SCCarBrandViewDelegate, SCCarModelViewDelegate>
 {
     SCCar *_car;        // 车辆数据缓存
 }
@@ -104,7 +104,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
         else
         {
             [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"数据错误，请联系修养！", 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"数据错误，请联系修养！" delay:0.5f];
         }
     }];
 }

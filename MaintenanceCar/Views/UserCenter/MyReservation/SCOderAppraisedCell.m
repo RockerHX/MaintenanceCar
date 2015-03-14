@@ -7,6 +7,7 @@
 //
 
 #import "SCOderAppraisedCell.h"
+#import "SCStarView.h"
 
 @implementation SCOderAppraisedCell
 
@@ -22,6 +23,7 @@
 {
     [super displayCellWithReservation:reservation];
     
+    _startView.value     = [@([reservation.comment.star integerValue]/2) stringValue];
     _appraisalLabel.text = reservation.comment.detail;
 }
 

@@ -16,8 +16,12 @@
 #import "SCWebViewController.h"
 #import "SCMerchant.h"
 #import "SCMerchantDetailViewController.h"
+#import "SCAppraiseViewController.h"
 
-@interface SCMyReservationTableViewController ()
+@interface SCMyReservationTableViewController () <SCOderUnAppraisalCellDelegate, SCAppraiseViewControllerDelegate>
+{
+    BOOL _loadFinish;
+}
 
 @property (weak, nonatomic)           SCOderNormalCell *oderNormalCell;
 @property (weak, nonatomic)      SCOderUnAppraisalCell *unappraisalCell;
@@ -61,6 +65,7 @@
         self.tableView.estimatedRowHeight = 120.0f;
         self.tableView.rowHeight = UITableViewAutomaticDimension;
     }
+    _loadFinish = YES;
 }
 
 #pragma mark - Table View Data Source Methods
@@ -78,6 +83,7 @@
         case SCOderTypeUnAppraisal:
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderUnAppraisalCell" forIndexPath:indexPath];
+            ((SCOderUnAppraisalCell *)cell).delegate = self;
             [cell displayCellWithReservation:reservation];
         }
             break;
@@ -90,6 +96,7 @@
         case SCOderTypeUnAppraisalCheck:
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderUnAppraisalCheckCell" forIndexPath:indexPath];
+            ((SCOderUnAppraisalCheckCell *)cell).delegate = self;
             [cell displayCellWithReservation:reservation];
         }
             break;
@@ -296,10 +303,19 @@
             [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
         }
         @catch (NSException *exception) {
-            NSLog(@"SCMyFavoriteTableViewController Go to the SCMerchantDetailViewController exception reasion:%@", exception.reason);
+            NSLog(@"SCMyReservationTableViewController Go to the SCMerchantDetailViewController exception reasion:%@", exception.reason);
         }
         @finally {
         }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    if ((indexPath.row == (_dataList.count - 1) && indexPath.section == Zero) && _loadFinish && IS_IOS8)
+    {
+        [self.tableView scrollRectToVisible:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 1.0f, 1.0f) animated:NO];
+        _loadFinish = NO;
     }
 }
 
@@ -357,12 +373,14 @@
             }];
             
             [weakSelf.tableView reloadData];        // 数据配置完成，刷新商家列表
+            if (IS_IOS8)
+                [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_dataList.count-1) inSection:Zero] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
             weakSelf.offset += MerchantListLimit;   // 偏移量请求参数递增
         }
         else
         {
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
-            ShowPromptHUDWithText(weakSelf.navigationController.view, responseObject[@"error"], 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:responseObject[@"error"] delay:0.5f];
         }
         [weakSelf hiddenHUD];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -372,9 +390,9 @@
         [weakSelf.tableView footerEndRefreshing];
         [weakSelf hiddenHUD];
         if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"您还没有下过任何订单噢！", 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"您还没有下过任何订单噢！" delay:0.5f];
         else
-            ShowPromptHUDWithText(weakSelf.navigationController.view, NetWorkError, 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:NetWorkError delay:0.5f];
     }];
 }
 
@@ -395,14 +413,37 @@
             SCReservation *reservation = _deleteDataCache;
             reservation.status         = @"预约已取消";
             [weakSelf deleteFailureAtIndex:index];
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消预约成功", 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"您取消预约成功" delay:0.5f];
         }
         else
-            ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消预约失败，请重试", 0.5f);
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"取消预约失败，请重试！" delay:0.5f];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf deleteFailureAtIndex:index];
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"取消预约失败，请重试", 0.5f);
+        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"取消预约失败，请重试！" delay:0.5f];
     }];
+}
+
+#pragma mark - SCOderUnAppraisalCellDelegate Methods
+- (void)shouldAppraiseOderWithReservation:(SCReservation *)reservation
+{
+    // 跳转到预约页面
+    @try {
+        SCAppraiseViewController *appraiseViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAppraiseViewController"];
+        appraiseViewController.delegate = self;
+        appraiseViewController.reservation = reservation;
+        [self.navigationController pushViewController:appraiseViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCMyReservationTableViewController Go to the SCAppraiseViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
+}
+
+#pragma mark - SCAppraiseViewControllerDelegate Methods
+- (void)appraiseSuccess
+{
+    [self startDownRefreshReuqest];
 }
 
 @end

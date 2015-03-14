@@ -22,7 +22,7 @@
 
 #define MaintenanceCellReuseIdentifier   @"MaintenanceCellReuseIdentifier"
 
-@interface SCMaintenanceViewController () <MBProgressHUDDelegate, SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
+@interface SCMaintenanceViewController () <SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
 {
     NSInteger           _reservationButtonIndex;
     NSArray             *_serviceItems;
@@ -61,6 +61,11 @@
     
     [self initConfig];
     [self performSelector:@selector(viewConfig) withObject:nil afterDelay:0.1f];
+}
+
+- (void)dealloc
+{
+    [NOTIFICATION_CENTER removeObserver:self];
 }
 
 #pragma mark - Navigation
@@ -168,7 +173,7 @@
         [self startDataRequest];
     }
     else
-        [self showPromptHUDWithText:@"暂无车辆，请您添加" delay:0.5f delegate:self];
+        [self showHUDAlertToViewController:self tag:Zero text:@"暂无车辆，请您添加" delay:0.5f];
 }
 
 - (void)displayMaintenanceView
@@ -213,26 +218,6 @@
     }
 }
 
-/**
- *  用户提示方法
- *
- *  @param text     提示内容
- *  @param delay    提示消失时间
- *  @param delegate 代理对象
- */
-- (void)showPromptHUDWithText:(NSString *)text delay:(NSTimeInterval)delay delegate:(id)delegate
-{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.delegate = delegate;
-    hud.mode = MBProgressHUDModeText;
-    hud.yOffset = (SCREEN_HEIGHT/2 - 100.0f);
-    hud.margin = 10.0f;
-    hud.labelText = text;
-    hud.removeFromSuperViewOnHide = YES;
-    
-    [hud hide:YES afterDelay:delay];
-}
-
 - (void)startDataRequest
 {
     [self startMaintenanceDataRequest];
@@ -270,11 +255,11 @@
             [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationMiddle];
         }
         else
-            [weakSelf showPromptHUDWithText:NetWorkError delay:1.0f delegate:weakSelf];
+            [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:NetWorkError delay:0.5f];
         [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
         [weakSelf.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [weakSelf showPromptHUDWithText:NetWorkError delay:1.0f delegate:weakSelf];
+        [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:NetWorkError delay:0.5f];
         [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
     }];
 }

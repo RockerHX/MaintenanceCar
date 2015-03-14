@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class SCStarView;
 @class SCMerchantDetail;
 
 @interface SCMerchantDetailCell : UITableViewCell
@@ -16,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet          UILabel *distanceLabel;        // 商家距离栏 - 用于显示当前位置到商家的直线距离
 @property (weak, nonatomic) IBOutlet UICollectionView *flagView;             // 商家标签栏 - 用于显示商家标签
 @property (weak, nonatomic) IBOutlet         UIButton *reservationButton;    // 预约按钮
+@property (weak, nonatomic) IBOutlet       SCStarView *starView;             // 商家星级 - 用于显示商家评分
 
 - (void)displayCellWithDetail:(SCMerchantDetail *)detail;
 
