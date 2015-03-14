@@ -215,7 +215,7 @@
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    if ((indexPath.row == 0 && indexPath.section == 3) && _loadFinish)
+    if ((indexPath.row == 0 && indexPath.section == 3) && _loadFinish && IS_IOS8)
     {
         [self.tableView scrollRectToVisible:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 1.0f, 1.0f) animated:NO];
         _loadFinish = NO;
@@ -236,7 +236,8 @@
             _detail.companyID = _coupon.company_id;
             _detail.merchantName = _coupon.company_name;
             [self.tableView reloadData];
-            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            if (IS_IOS8)
+                [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         }
         [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

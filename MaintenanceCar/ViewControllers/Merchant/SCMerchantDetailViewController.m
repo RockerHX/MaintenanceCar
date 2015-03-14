@@ -306,7 +306,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    if ((indexPath.row == 5 && indexPath.section == _hasGroupProducts ? 2 : 1) && _loadFinish)
+    if ((indexPath.row == 5 && indexPath.section == _hasGroupProducts ? 2 : 1) && _loadFinish && IS_IOS8)
     {
         [self.tableView scrollRectToVisible:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 1.0f, 1.0f) animated:NO];
         _loadFinish = NO;
@@ -371,7 +371,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             [weakSelf displayMerchantDetail];
             
             [weakSelf.tableView reloadData];
-            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:5 inSection:_hasGroupProducts ? 2 : 1] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            if (IS_IOS8)
+                [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
             [MBProgressHUD hideHUDForView:self.view animated:YES];
         }
         else

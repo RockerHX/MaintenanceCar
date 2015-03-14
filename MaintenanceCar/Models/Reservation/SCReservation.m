@@ -32,43 +32,43 @@
     {
         case 1:
         {
-            schedule = @"预约成功";
+            schedule    = @"预约成功";
             _oderStatus = SCOderStatusServationSuccess;
         }
             break;
         case 2:
         {
-            schedule = @"商家未接受";
+            schedule    = @"商家未接受";
             _oderStatus = SCOderStatusMerchantUnAccepted;
         }
             break;
         case 3:
         {
-            schedule = @"业务进行中";
+            schedule    = @"业务进行中";
             _oderStatus = SCOderStatusInProgress;
         }
             break;
         case 4:
         {
-            schedule   = @"预约已取消";
+            schedule    = @"预约已取消";
             _oderStatus = SCOderStatusServationCancel;
         }
             break;
         case 5:
         {
-            schedule   = @"已完成";
+            schedule    = @"已完成";
             _oderStatus = SCOderStatusCompleted;
         }
             break;
         case 6:
         {
-            schedule   = @"已过期";
+            schedule    = @"已过期";
             _oderStatus = SCOderStatusExpired;
         }
             break;
         default:
         {
-            schedule = @"商家确认中";
+            schedule    = @"商家确认中";
             _oderStatus = SCOderStatusMerchantConfirming;
         }
             break;
