@@ -121,25 +121,29 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    switch (section)
+    if (_merchantDetail)
     {
-        case 1:
-            return _merchantDetail ? (_hasGroupProducts ? _productCellCount : 6) : Zero;
-            break;
-        case 2:
-            return _merchantDetail ? (_hasGroupProducts ? 6 : 1) : Zero;
-            break;
-        case 3:
-            return _merchantDetail ? (_hasGroupProducts ? 1 : (_commentList.count ? _commentList.count : 1)) : Zero;
-            break;
-        case 4:
-            return _merchantDetail ? (_commentList.count ? _commentList.count : 1) : Zero;
-            break;
-            
-        default:
-            return _merchantDetail ? 1 : Zero;
-            break;
+        switch (section)
+        {
+            case 1:
+                return (_hasGroupProducts ? _productCellCount : 6);
+                break;
+            case 2:
+                return (_hasGroupProducts ? 6 : 1);
+                break;
+            case 3:
+                return (_hasGroupProducts ? 1 : (_commentList.count ? _commentList.count : 1));
+                break;
+            case 4:
+                return (_commentList.count ? _commentList.count : 1);
+                break;
+                
+            default:
+                return 1;
+                break;
+        }
     }
+    return Zero;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -388,9 +392,26 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                 [self cellSelectedWithIndexPath:indexPath];
         }
             break;
+        case 2:
+        {
+            if (_hasGroupProducts)
+                [self cellSelectedWithIndexPath:indexPath];
+            else
+            {
+                
+            }
+        }
+            break;
+        case 3:
+        {
+        }
+            break;
+        case 4:
+        {
+        }
+            break;
             
         default:
-            [self cellSelectedWithIndexPath:indexPath];
             break;
     }
 }
@@ -441,7 +462,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    if ((indexPath.row == (_commentList.count - 1) && indexPath.section == (_hasGroupProducts ? 4 : 3)) && _loadFinish && IS_IOS8)
+    if (((indexPath.row == (_commentList.count ? (_commentList.count - 1) : 0)) && (indexPath.section == (_hasGroupProducts ? 4 : 3))) && _loadFinish && IS_IOS8)
     {
         [self.tableView scrollRectToVisible:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 1.0f, 1.0f) animated:NO];
         _loadFinish = NO;
@@ -599,12 +620,17 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         [self hideHUDOnViewController:self];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf hideHUDOnViewController:weakSelf];
+        [weakSelf.tableView reloadData];
+        if (IS_IOS8)
+            [weakSelf performSelector:@selector(reloadTableView) withObject:nil afterDelay:0.1f];
     }];
 }
 
 - (void)reloadTableView
 {
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_commentList.count - 1) inSection:(_hasGroupProducts ? 4 : 3)] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_commentList.count ? (_commentList.count - 1) : 0)
+                                                              inSection:(_hasGroupProducts ? 4 : 3)]
+                          atScrollPosition:UITableViewScrollPositionBottom animated:NO];
 }
 
 /**
