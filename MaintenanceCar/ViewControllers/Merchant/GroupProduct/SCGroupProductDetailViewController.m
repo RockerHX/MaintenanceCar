@@ -188,7 +188,7 @@
             break;
             
         default:
-            text = @"";
+            return nil;
             break;
     }
     label.text = text;

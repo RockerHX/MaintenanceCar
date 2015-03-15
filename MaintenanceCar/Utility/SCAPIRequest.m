@@ -237,6 +237,13 @@
     [self requestPOSTMethodsWithAPI:CommentAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startGetMerchantCommentListAPIRequestWithParameters:(NSDictionary *)parameters
+                                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MerchantCommentAPIURL parameters:parameters success:success failure:failure];
+}
+
 #pragma mark - User Center API
 - (void)startGetVerificationCodeAPIRequestWithParameters:(NSDictionary *)parameters
                                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success

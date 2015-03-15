@@ -12,6 +12,8 @@
 
 @interface SCCouponDetailViewController : UITableViewController
 
+@property (weak, nonatomic) IBOutlet UIView *footerView;
+
 @property (nonatomic, weak) SCCoupon *coupon;
 
 @end

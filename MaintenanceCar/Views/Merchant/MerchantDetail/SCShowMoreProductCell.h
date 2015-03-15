@@ -2,14 +2,22 @@
 //  SCShowMoreProductCell.h
 //  MaintenanceCar
 //
-//  Created by ShiCang on 15/3/15.
+//  Created by ShiCang on 15/3/16.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SCShowMoreCell.h"
 
-@interface SCShowMoreProductCell : UITableViewCell
+typedef NS_ENUM(NSInteger, SCSCShowMoreCellState) {
+    SCSCShowMoreCellStateDown,
+    SCSCShowMoreCellStateUp
+};
 
-@property (weak, nonatomic) IBOutlet UILabel *productCountLabel;
+@interface SCShowMoreProductCell : SCShowMoreCell
+
+@property (weak, nonatomic)    IBOutlet UIImageView *arrowIcon;
+
+@property (nonatomic, assign)             NSInteger productCount;
+@property (nonatomic, assign) SCSCShowMoreCellState state;
 
 @end

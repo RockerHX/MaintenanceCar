@@ -60,6 +60,7 @@
         self.tableView.rowHeight = UITableViewAutomaticDimension;
     }
     _loadFinish = YES;
+    _footerView.hidden = YES;
 }
 
 - (void)viewConfig
@@ -206,7 +207,7 @@
             break;
             
         default:
-            text = @"";
+            return nil;
             break;
     }
     label.text = text;
@@ -238,6 +239,7 @@
             [self.tableView reloadData];
             if (IS_IOS8)
                 [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            _footerView.hidden = NO;
         }
         [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

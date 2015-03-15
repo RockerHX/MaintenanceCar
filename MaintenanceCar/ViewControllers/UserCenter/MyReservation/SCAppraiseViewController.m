@@ -46,7 +46,7 @@
     _starView.enabled = YES;
     
     _textView.delegate = self;
-    _textView.placeholderText = @"请输入评论内容...";
+    _textView.placeholderText = @"请输入评价内容...";
     // 初始化的时候加入单击手势，用于页面点击收起数字键盘
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer)]];
 }
@@ -62,9 +62,9 @@
     if ([_starView.startValue integerValue])
     {
         if (_textView.text.length == Zero)
-            [self showAlertWithTitle:@"温馨提示" message:@"评论内容不能为空！"];
+            [self showAlertWithTitle:@"温馨提示" message:@"评价内容不能为空！"];
         else if (_textView.text.length > 140)
-            [self showAlertWithTitle:@"温馨提示" message:@"评论内容请限制在140个字以内！"];
+            [self showAlertWithTitle:@"温馨提示" message:@"评价内容请限制在140个字以内！"];
         else
             [self startCommentRequest];
     }
@@ -92,12 +92,12 @@
     [[SCAPIRequest manager] startCommentAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController delegate:weakSelf text:@"评论成功！" delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController delegate:weakSelf text:@"评价成功！" delay:0.5f];
         else
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"评论失败，请重试！" delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"评价失败，请重试！" delay:0.5f];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf hideHUDOnViewController:weakSelf];
-        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"评论失败，请重试！" delay:0.5f];
+        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"评价失败，请重试！" delay:0.5f];
     }];
 }
 
@@ -115,7 +115,7 @@
 {
     if (range.location > MaxTextLenth)
     {
-        [self showAlertWithTitle:@"温馨提示" message:@"评论内容请限制在140个字以内"];
+        [self showAlertWithTitle:@"温馨提示" message:@"评价内容请限制在140个字以内"];
         return NO;
     }
     else
