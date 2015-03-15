@@ -11,6 +11,7 @@
 #import "SCMerchant.h"
 #import "SCMerchantDetailCell.h"
 #import "SCGroupProductCell.h"
+#import "SCShowMoreProductCell.h"
 #import "SCMerchantDetailItemCell.h"
 #import "SCCollectionItem.h"
 #import "SCReservationViewController.h"
@@ -41,6 +42,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     BOOL _needChecked;      // 检查收藏标识
     BOOL _hasGroupProducts;
     BOOL _loadFinish;
+    
+    NSInteger _productCellCount;
 }
 @property (weak, nonatomic)    SCMerchantDetailCell *briefIntroductionCell;
 @property (weak, nonatomic) SCMerchantDetailItemCell *detailItemCell;
@@ -115,7 +118,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     switch (section)
     {
         case 1:
-            return _merchantDetail ? (_hasGroupProducts ? 1: 6) : Zero;
+            return _merchantDetail ? (_hasGroupProducts ? ((_merchantDetail.products.count > 2) ? _productCellCount : _merchantDetail.products.count) : 6) : Zero;
             break;
         case 2:
             return _merchantDetail ? 6 : Zero;
@@ -139,8 +142,16 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             {
                 if (_hasGroupProducts)
                 {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductCell" forIndexPath:indexPath];
-                    [(SCGroupProductCell *)cell displayCellWithMerchantDetail:_merchantDetail];
+                    if ((_merchantDetail.products.count > 3) && (indexPath.row == 2) && (_merchantDetail.products.count != _productCellCount))
+                    {
+                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCShowMoreProductCell" forIndexPath:indexPath];
+                        ((SCShowMoreProductCell *)cell).productCountLabel.text = [@(_merchantDetail.products.count) stringValue];
+                    }
+                    else
+                    {
+                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductCell" forIndexPath:indexPath];
+                        [(SCGroupProductCell *)cell displayCellWithProduct:_merchantDetail.products[indexPath.row]];
+                    }
                 }
                 else
                 {
@@ -174,7 +185,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     if (IS_IOS8)
     {
         if (_hasGroupProducts && indexPath.section == 1)
-            return 72.0f;
+        {
+            if ((_merchantDetail.products.count > 3) && (indexPath.row == 2) && (_merchantDetail.products.count != _productCellCount))
+                return 44.0f;
+            else
+                return 72.0f;
+        }
         return UITableViewAutomaticDimension;
     }
     else
@@ -188,7 +204,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                 case 1:
                 {
                     if (_hasGroupProducts)
-                        return 72.0f;
+                    {
+                        if ((_merchantDetail.products.count > 3) && (indexPath.row == 2) && (_merchantDetail.products.count != _productCellCount))
+                            return 44.0f;
+                        else
+                            return 72.0f;
+                    }
                     else
                         height = [self calculateCellHeightWithIndexPath:indexPath];
                 }
@@ -237,22 +258,29 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         {
             if (_hasGroupProducts)
             {
-                if ([SCUserInfo share].loginStatus)
+                if ((_merchantDetail.products.count > 3) && (indexPath.row == 2) && (_merchantDetail.products.count != _productCellCount))
                 {
-                    @try {
-                        SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
-                        SCGroupProduct *product = [_merchantDetail.products lastObject];
-                        groupProductDetailViewController.product = product;
-                        [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
-                    }
-                    @catch (NSException *exception) {
-                        NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
-                    }
-                    @finally {
-                    }
+                    _productCellCount = _merchantDetail.products.count;
+                    [self.tableView reloadData];
                 }
                 else
-                    [self showShoulLoginAlert];
+                {
+                    if ([SCUserInfo share].loginStatus)
+                    {
+                        @try {
+                            SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
+                            groupProductDetailViewController.product = _merchantDetail.products[indexPath.row];
+                            [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
+                        }
+                        @catch (NSException *exception) {
+                            NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
+                        }
+                        @finally {
+                        }
+                    }
+                    else
+                        [self showShoulLoginAlert];
+                }
             }
             else
                 [self cellSelectedWithIndexPath:indexPath];
@@ -359,6 +387,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [_merchantImageView setImageWithURL:[NSString stringWithFormat:@"%@%@_1.jpg", MerchantImageDoMain, _merchant.company_id] defaultImage:@"MerchantImageDefault"];
     _collectionItem.favorited = _merchantDetail.collected;
     _hasGroupProducts         = _merchantDetail.products.count;
+    _productCellCount         = ((_merchantDetail.products.count > 2) ? 3 : _merchantDetail.products.count);
 }
 
 /**

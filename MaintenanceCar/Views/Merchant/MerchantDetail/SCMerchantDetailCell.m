@@ -59,6 +59,7 @@
     _merchantNameLabel.text   = detail.name;
     _majors                   = detail.majors;
     _distanceLabel.text       = detail.distance;
+    _starView.value           = detail.star;
     _reservationButton.hidden = ![SCAllDictionary share].serviceItems.count;
     [self hanleMerchantFlags:detail.merchantFlags];
     

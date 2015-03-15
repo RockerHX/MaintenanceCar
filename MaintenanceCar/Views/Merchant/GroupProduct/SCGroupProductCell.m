@@ -7,7 +7,7 @@
 //
 
 #import "SCGroupProductCell.h"
-#import "SCMerchantDetail.h"
+#import "SCGroupProduct.h"
 
 @implementation SCGroupProductCell
 
@@ -18,9 +18,8 @@
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithMerchantDetail:(SCMerchantDetail *)merchantDetail
+- (void)displayCellWithProduct:(SCGroupProduct *)product
 {
-    SCGroupProduct *product = [merchantDetail.products lastObject];
     if (product)
     {
         _productNameLabel.text  = product.title;

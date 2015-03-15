@@ -16,8 +16,8 @@
 {
     [super displayCellWithCoupon:coupon];
     
+    _productNameLabel.text = [coupon.title stringByAppendingString:@":"];
     _merchantNameLabel.text = coupon.company_name;
-    _productNameLabel.text = coupon.title;
     _couponPriceLabel.text = coupon.final_price;
     _productPriceLabel.text = coupon.total_price;
 }
