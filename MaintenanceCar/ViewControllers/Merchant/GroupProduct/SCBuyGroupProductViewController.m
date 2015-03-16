@@ -40,7 +40,7 @@
 {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick beginLogPageView:@"[团购] - 团购支付"];
+    [MobClick endLogPageView:@"[团购] - 团购支付"];
 }
 
 - (void)viewDidLoad

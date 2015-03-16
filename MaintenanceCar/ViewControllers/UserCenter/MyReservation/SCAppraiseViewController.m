@@ -29,7 +29,7 @@
 {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick beginLogPageView:@"[我的订单] - 评价"];
+    [MobClick endLogPageView:@"[我的订单] - 评价"];
 }
 
 - (void)viewDidLoad

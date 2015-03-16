@@ -50,7 +50,7 @@
 {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick beginLogPageView:[NSString stringWithFormat:@"[%@] - 列表", self.title]];
+    [MobClick endLogPageView:[NSString stringWithFormat:@"[%@] - 列表", self.title]];
 }
 
 - (void)viewDidLoad

@@ -40,7 +40,7 @@
 {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick beginLogPageView:@"[个人中心] - 团购券详情"];
+    [MobClick endLogPageView:@"[个人中心] - 团购券详情"];
 }
 
 - (void)viewDidLoad

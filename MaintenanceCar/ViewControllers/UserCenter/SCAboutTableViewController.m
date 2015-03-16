@@ -32,7 +32,7 @@
 {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick beginLogPageView:@"[个人中心] - 关于"];
+    [MobClick endLogPageView:@"[个人中心] - 关于"];
 }
 
 - (void)viewDidLoad
