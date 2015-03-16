@@ -61,7 +61,7 @@
 		4866F9261AACBD2D008E195C /* SCMyFavoriteTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F9091AACBD2D008E195C /* SCMyFavoriteTableViewController.m */; };
 		4866F9271AACBD2D008E195C /* SCMyReservationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F90B1AACBD2D008E195C /* SCMyReservationTableViewController.m */; };
 		4866F9281AACBD2D008E195C /* SCSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F90D1AACBD2D008E195C /* SCSettingTableViewController.m */; };
-		4866F9291AACBD2D008E195C /* SCUserCenterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F90F1AACBD2D008E195C /* SCUserCenterTableViewController.m */; };
+		4866F9291AACBD2D008E195C /* SCTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F90F1AACBD2D008E195C /* SCTableViewController.m */; };
 		4866F92A1AACBD2D008E195C /* SCWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F9111AACBD2D008E195C /* SCWebViewController.m */; };
 		4866F9921AACBD89008E195C /* SCDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F92E1AACBD88008E195C /* SCDatePickerView.m */; };
 		4866F9931AACBD89008E195C /* SCDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4866F92F1AACBD88008E195C /* SCDatePickerView.xib */; };
@@ -286,8 +286,8 @@
 		4866F90B1AACBD2D008E195C /* SCMyReservationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMyReservationTableViewController.m; sourceTree = "<group>"; };
 		4866F90C1AACBD2D008E195C /* SCSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSettingTableViewController.h; sourceTree = "<group>"; };
 		4866F90D1AACBD2D008E195C /* SCSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSettingTableViewController.m; sourceTree = "<group>"; };
-		4866F90E1AACBD2D008E195C /* SCUserCenterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCUserCenterTableViewController.h; sourceTree = "<group>"; };
-		4866F90F1AACBD2D008E195C /* SCUserCenterTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCUserCenterTableViewController.m; sourceTree = "<group>"; };
+		4866F90E1AACBD2D008E195C /* SCTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCTableViewController.h; sourceTree = "<group>"; };
+		4866F90F1AACBD2D008E195C /* SCTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCTableViewController.m; sourceTree = "<group>"; };
 		4866F9101AACBD2D008E195C /* SCWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCWebViewController.h; sourceTree = "<group>"; };
 		4866F9111AACBD2D008E195C /* SCWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCWebViewController.m; sourceTree = "<group>"; };
 		4866F92D1AACBD88008E195C /* SCDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCDatePickerView.h; sourceTree = "<group>"; };
@@ -602,6 +602,13 @@
 			path = Comment;
 			sourceTree = "<group>";
 		};
+		482AC99A1AB6B8D2001574EF /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Comment;
+			sourceTree = "<group>";
+		};
 		482B57CA1A43CB7700E47962 = {
 			isa = PBXGroup;
 			children = (
@@ -738,6 +745,7 @@
 		4866F8E31AACBD2D008E195C /* Merchant */ = {
 			isa = PBXGroup;
 			children = (
+				482AC99A1AB6B8D2001574EF /* Comment */,
 				4866F8E41AACBD2D008E195C /* GroupProduct */,
 				4866F8EB1AACBD2D008E195C /* SCMapViewController.h */,
 				4866F8EC1AACBD2D008E195C /* SCMapViewController.m */,
@@ -771,8 +779,8 @@
 				4866F9031AACBD2D008E195C /* SCAddCarViewController.m */,
 				4866F9041AACBD2D008E195C /* SCLoginViewController.h */,
 				4866F9051AACBD2D008E195C /* SCLoginViewController.m */,
-				4866F90E1AACBD2D008E195C /* SCUserCenterTableViewController.h */,
-				4866F90F1AACBD2D008E195C /* SCUserCenterTableViewController.m */,
+				4866F90E1AACBD2D008E195C /* SCTableViewController.h */,
+				4866F90F1AACBD2D008E195C /* SCTableViewController.m */,
 				4866F90A1AACBD2D008E195C /* SCMyReservationTableViewController.h */,
 				4866F90B1AACBD2D008E195C /* SCMyReservationTableViewController.m */,
 				4866F9081AACBD2D008E195C /* SCMyFavoriteTableViewController.h */,
@@ -1514,7 +1522,7 @@
 				4866F9941AACBD89008E195C /* SCPickerView.m in Sources */,
 				4866F91A1AACBD2D008E195C /* SCReservationDateViewController.m in Sources */,
 				4866F8B61AAB32ED008E195C /* SCGroupProduct.m in Sources */,
-				4866F9291AACBD2D008E195C /* SCUserCenterTableViewController.m in Sources */,
+				4866F9291AACBD2D008E195C /* SCTableViewController.m in Sources */,
 				4866F9981AACBD89008E195C /* SCReservationItemCell.m in Sources */,
 				4866F99F1AACBD89008E195C /* SCMaintenanceItemCell.m in Sources */,
 				4841CECD1A6BE5C300DA36FC /* SCUserCar.m in Sources */,

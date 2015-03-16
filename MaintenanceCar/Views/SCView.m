@@ -12,6 +12,17 @@
 @implementation UIView (SCView)
 
 #pragma mark - Public Methods
+
+- (void)showHUD
+{
+    [MBProgressHUD showHUDAddedTo:self animated:YES];
+}
+
+- (void)hideHUD
+{
+    [MBProgressHUD hideAllHUDsForView:self animated:YES];
+}
+
 - (void)showHUDAlertWithText:(NSString *)text
                        delay:(NSTimeInterval)delay
 {

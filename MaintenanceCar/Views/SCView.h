@@ -11,6 +11,9 @@
 
 @interface UIView (SCView)
 
+- (void)showHUD;
+- (void)hideHUD;
+
 /**
  *  显示简单HUD提示
  *

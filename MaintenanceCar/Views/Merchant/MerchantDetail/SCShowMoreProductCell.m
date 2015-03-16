@@ -33,13 +33,11 @@
     }
 }
 
-- (void)setProductCount:(NSInteger)productCount
+#pragma mark - Public Methods
+- (void)displayCellWithProductCount:(NSInteger)productCount
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _productCount = productCount;
-        self.state = SCSCShowMoreCellStateDown;
-    });
+    _productCount = productCount;
+    self.state = _state;
 }
 
 @end

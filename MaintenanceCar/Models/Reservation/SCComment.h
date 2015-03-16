@@ -8,6 +8,9 @@
 
 #import "JSONModel.h"
 
+@protocol SCComment <NSObject>
+@end
+
 @interface SCComment : JSONModel
 
 @property (nonatomic, copy) NSString <Optional>*comment_id;         // 评价ID

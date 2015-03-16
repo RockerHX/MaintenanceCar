@@ -1,21 +1,21 @@
 //
-//  SCUserCenterTableViewController.m
+//  SCTableViewController.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/10.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCUserCenterTableViewController.h"
+#import "SCTableViewController.h"
 
-@interface SCUserCenterTableViewController ()
+@interface SCTableViewController ()
 {
     UIView *_hudView;
 }
 
 @end
 
-@implementation SCUserCenterTableViewController
+@implementation SCTableViewController
 
 #pragma mark - Init Methods
 - (void)awakeFromNib

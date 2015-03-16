@@ -20,4 +20,6 @@ typedef NS_ENUM(NSInteger, SCSCShowMoreCellState) {
 @property (nonatomic, assign)             NSInteger productCount;
 @property (nonatomic, assign) SCSCShowMoreCellState state;
 
+- (void)displayCellWithProductCount:(NSInteger)productCount;
+
 @end

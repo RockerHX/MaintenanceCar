@@ -1,5 +1,5 @@
 //
-//  SCUserCenterTableViewController.h
+//  SCTableViewController.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/10.
@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger, SCFavoriteListRequestType) {
     SCFavoriteListRequestTypeDown
 };
 
-@interface SCUserCenterTableViewController : UITableViewController
+@interface SCTableViewController : UITableViewController
 {
     id                        _deleteDataCache;     // 删除数据的缓存
     NSMutableArray            *_dataList;           // 列表数据缓存
