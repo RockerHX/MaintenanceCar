@@ -13,7 +13,10 @@
 #import "SCBuyGroupProductCell.h"
 #import "SCGroupProductMerchantCell.h"
 #import "SCGroupProductDetailCell.h"
+#import "SCShowMoreCell.h"
+#import "SCCommentCell.h"
 #import "SCBuyGroupProductViewController.h"
+#import "SCCommentListViewController.h"
 
 @interface SCCouponDetailViewController ()
 {
@@ -23,6 +26,7 @@
 }
 @property (weak, nonatomic) SCGroupProductMerchantCell *merchantCell;
 @property (weak, nonatomic)   SCGroupProductDetailCell *detailCell;
+@property (weak, nonatomic)              SCCommentCell *commentCell;
 
 @end
 
@@ -60,7 +64,7 @@
         self.tableView.rowHeight = UITableViewAutomaticDimension;
     }
     _loadFinish = YES;
-    _footerView.hidden = YES;
+    self.tableView.tableFooterView.hidden = YES;
 }
 
 - (void)viewConfig
@@ -69,15 +73,25 @@
     [self startCouponDetailRequest];
 }
 
+#pragma mark - Action Methods
+- (IBAction)reimburseButtonPressed:(id)sender
+{
+    [self showAlertWithTitle:@"温馨提示"
+                     message:@"您确定真的要退掉这张团购券吗？"
+                    delegate:self
+           cancelButtonTitle:@"确定"
+            otherButtonTitle:@"取消"];
+}
+
 #pragma mark - Table View Data Source Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return _detail ? 4 : Zero;
+    return _detail ? 6 : Zero;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return _detail ? ((section == 5) ? _detail.comments.count : 1) : Zero;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -105,7 +119,24 @@
                 [(SCGroupProductDetailCell *)cell displayCellWithDetail:_detail];
             }
                 break;
-                
+            case 4:
+            {
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCShowMoreCell" forIndexPath:indexPath];
+                ((SCShowMoreCell *)cell).count = _detail.comments_num;
+            }
+                break;
+            case 5:
+            {
+                if (_detail.comments.count)
+                {
+                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCCommentCell" forIndexPath:indexPath];
+                    [(SCCommentCell *)cell displayCellWithComment:_detail.comments[indexPath.row]];
+                }
+                else
+                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCNoneCommentCell" forIndexPath:indexPath];
+            }
+                break;
+            
             default:
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCBuyGroupProductCell" forIndexPath:indexPath];
@@ -121,13 +152,18 @@
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    return [self calculateHeightWithTableView:tableView heightForRowAtIndexPath:indexPath];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self calculateHeightWithTableView:tableView heightForRowAtIndexPath:indexPath];
+}
+
+- (CGFloat)calculateHeightWithTableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     if (IS_IOS8)
     {
-        if (!indexPath.section)
-            return 70.0f;
-        else if (indexPath.section == 1)
-            return 44.0f;
-            
         return UITableViewAutomaticDimension;
     }
     else
@@ -138,7 +174,7 @@
         {
             switch (indexPath.section)
             {
-                case 1:
+                case 2:
                 {
                     if(!_merchantCell)
                         _merchantCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell"];
@@ -149,7 +185,7 @@
                     height = [_merchantCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
                 }
                     break;
-                case 2:
+                case 3:
                 {
                     if(!_detailCell)
                         _detailCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductDetailCell"];
@@ -160,11 +196,21 @@
                     height = [_detailCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
                 }
                     break;
+                case 5:
+                {
+                    if(!_commentCell)
+                        _commentCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCCommentCell"];
+                    [_commentCell displayCellWithComment:_detail.comments[indexPath.row]];
+                    // Layout the cell
+                    [_commentCell updateConstraintsIfNeeded];
+                    [_commentCell layoutIfNeeded];
+                    height = [_commentCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+                }
+                    break;
                     
                 default:
                 {
-                    if (!indexPath.section)
-                        return indexPath.section ? 44.0f : 70.0f;
+                    return indexPath.section ? 44.0f : 70.0f;
                 }
                     break;
             }
@@ -174,14 +220,9 @@
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return UITableViewAutomaticDimension;
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (!section)
+    if (section == 0 || section == 4)
         return DOT_COORDINATE;
     return 30.0f;
 }
@@ -205,6 +246,9 @@
         case 3:
             text = @"团购详情";
             break;
+        case 5:
+            text = @"用户评价";
+            break;
             
         default:
             return nil;
@@ -216,10 +260,30 @@
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    if ((indexPath.row == 0 && indexPath.section == 3) && _loadFinish && IS_IOS8)
+    if ((indexPath.row == (_detail.comments.count ? (_detail.comments.count - 1) : 0) && indexPath.section == 5) && _loadFinish && IS_IOS8)
     {
         [self.tableView scrollRectToVisible:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 1.0f, 1.0f) animated:NO];
         _loadFinish = NO;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if ([cell isKindOfClass:[SCShowMoreCell class]])
+    {
+        @try {
+            SCCommentListViewController *commentListViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCommentListViewController"];
+            commentListViewController.companyID = _detail.companyID;
+            commentListViewController.showTrashItem = NO;
+            [self.navigationController pushViewController:commentListViewController animated:YES];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"SCMerchantDetailViewController Go to the SCCommentListViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
     }
 }
 
@@ -238,8 +302,11 @@
             _detail.merchantName = _coupon.company_name;
             [self.tableView reloadData];
             if (IS_IOS8)
-                [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-            _footerView.hidden = NO;
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_detail.comments.count - 1)
+                                                                          inSection:5]
+                                      atScrollPosition:UITableViewScrollPositionBottom
+                                              animated:NO];
+            weakSelf.tableView.tableFooterView.hidden = NO;
         }
         [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -259,6 +326,27 @@
         NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
     }
     @finally {
+    }
+}
+
+#pragma mark - Alert View Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertView.cancelButtonIndex)
+    {
+        [self showHUDOnViewController:self.navigationController];
+        __weak typeof(self)weakSelf = self;
+        NSDictionary *parameters = @{@"company_id": _coupon.company_id,
+                                           @"code": _coupon.code,
+                                         @"status": @"2"};
+        [[SCAPIRequest manager] startUpdateCouponAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [weakSelf hideHUDOnViewController:weakSelf.navigationController];
+            if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+                [weakSelf showHUDAlertToViewController:weakSelf.navigationController delegate:weakSelf text:@"退款成功" delay:0.5f];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [weakSelf hideHUDOnViewController:weakSelf.navigationController];
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"退款失败，请重试或者联系客服..." delay:0.5f];
+        }];
     }
 }
 

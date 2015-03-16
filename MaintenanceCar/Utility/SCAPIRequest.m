@@ -226,6 +226,13 @@
     [self requestGETMethodsWithAPI:CouponDetailAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startUpdateCouponAPIRequestWithParameters:(NSDictionary *)parameters
+                                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:UpdateCouponAPIURL parameters:parameters success:success failure:failure];
+}
+
 #pragma mark - Comment API
 /**
  *  团购券详情接口请求方法(API:/Group_ticket - GET)

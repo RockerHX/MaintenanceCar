@@ -50,6 +50,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define GenerateCouponAPI           @"/Group_ticket"                        // 生成团购券API
 #define MyGroupProductAPI           @"/Group_ticket/all"                    // 我的团购券列表API
 #define CouponDetailAPI             GenerateCouponAPI                       // 团购券详情API
+#define UpdateCouponAPI             @"/Group_ticket/update"                 // 更新团购券状态的API
 
 #define CommentAPI                  @"/Comments"                            // 评价API
 #define MerchantCommentAPI          @"/Comments/shop"                       // 商家的评价
@@ -91,6 +92,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define GenerateCouponAPIURL            [APIURL stringByAppendingString:GenerateCouponAPI]          // 生成团购券接口URL - 用于付款成功后生成团购券
 #define MyGroupProductAPIURL            [APIURL stringByAppendingString:MyGroupProductAPI]          // 我的团购券列表接口URL - 用于获取用户所有团购券列表
 #define CouponDetailAPIURL              [APIURL stringByAppendingString:CouponDetailAPI]            // 团购券详情接口URL - 用于获取团购券详情
+#define UpdateCouponAPIURL              [APIURL stringByAppendingString:UpdateCouponAPI]            // 更新团购券状态的接口URL - 用于更新团购券状态，车主版只使用退款，对应状态码为：4
 
 #define CommentAPIURL                   [APIURL stringByAppendingString:CommentAPI]                 // 评价接口URL - 用于添加评价
 #define MerchantCommentAPIURL           [APIURL stringByAppendingString:MerchantCommentAPI]         // 商家评价接口URL - 用于获取商家评价列表

@@ -144,17 +144,17 @@
 
 - (void)viewConfig
 {
-    if (IS_IPHONE_6)
-    {
-        _headerView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 270.0f);
-        _heightConstraint.constant = _heightConstraint.constant + 15.0f;
-        [self.view needsUpdateConstraints];
-        [self.view layoutIfNeeded];
-    }
-    else if (IS_IPHONE_6Plus)
+    if (IS_IPHONE_6Plus)
     {
         _headerView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 280.0f);
         _heightConstraint.constant = _heightConstraint.constant + 30.0f;
+        [self.view needsUpdateConstraints];
+        [self.view layoutIfNeeded];
+    }
+    else if (IS_IPHONE_6)
+    {
+        _headerView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 270.0f);
+        _heightConstraint.constant = _heightConstraint.constant + 15.0f;
         [self.view needsUpdateConstraints];
         [self.view layoutIfNeeded];
     }
@@ -367,24 +367,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    switch (section)
-    {
-        case 0:
-            return _serviceItems.count;
-            break;
-            
-        default:
-            return _recommendMerchants.count;
-            break;
-    }
+    return section ? _recommendMerchants.count : _serviceItems.count;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (section == 1)
-        return _recommendMerchants.count ? @"为您推荐最近可以保养车辆的商家" : @"";
-    else
-        return @"";
+    return section ?(_recommendMerchants.count ? @"为您推荐最近可以保养车辆的商家" : @"") : @"";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -449,28 +437,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    switch (section)
-    {
-        case 0:
-        {
-            if (IS_IPHONE_6Plus)
-                return 10.0f;
-            else if (IS_IPHONE_6)
-                return DOT_COORDINATE;
-            else
-                return 10.0f;
-        }
-            break;
-        case 1:
-        {
-            return  20.0f;
-        }
-            break;
-            
-        default:
-            return DOT_COORDINATE;
-            break;
-    }
+    return section ? 20.0f : (IS_IPHONE_6Plus ? 40.0f : (IS_IPHONE_6 ? 20.0f : 10.0f));
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -10,10 +10,18 @@
 
 @class SCCoupon;
 
+@protocol SCCouponDetailViewControllerDelegate <NSObject>
+
+@optional
+- (void)reimburseSuccess;
+
+@end
+
 @interface SCCouponDetailViewController : UITableViewController
 
-@property (weak, nonatomic) IBOutlet UIView *footerView;
-
+@property (nonatomic, weak)       id <SCCouponDetailViewControllerDelegate>delegate;
 @property (nonatomic, weak) SCCoupon *coupon;
+
+- (IBAction)reimburseButtonPressed:(id)sender;
 
 @end

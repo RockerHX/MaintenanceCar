@@ -135,6 +135,13 @@
                                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+/**
+ *  团购券详情接口请求方法(API:/Group_ticket/update - POST)
+ */
+- (void)startUpdateCouponAPIRequestWithParameters:(NSDictionary *)parameters
+                                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 #pragma mark - Comment API
 /**
  *  团购券详情接口请求方法(API:/Comments - POST)
