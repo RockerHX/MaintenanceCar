@@ -164,7 +164,7 @@
 {
     if (IS_IOS8)
     {
-        return UITableViewAutomaticDimension;
+        return indexPath.section ? ((indexPath.section == 1 || indexPath.section == 4) ? 44.0f : UITableViewAutomaticDimension) : 70.0f;
     }
     else
     {

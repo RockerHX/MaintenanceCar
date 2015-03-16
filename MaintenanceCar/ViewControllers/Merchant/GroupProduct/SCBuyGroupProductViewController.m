@@ -104,10 +104,10 @@
 {
     if ([SCUserInfo share].loginStatus)
     {
-//        if ([WXApi isWXAppInstalled])
-//        {
+        if ([WXApi isWXAppInstalled])
+        {
+            [self showHUDOnViewController:self];
             __weak typeof(self)weakSelf = self;
-            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                          @"company_id": _groupProductDetail.companyID,
                                          @"product_id": _groupProductDetail.product_id,
@@ -122,12 +122,12 @@
                     [weakSelf sendWeiXinPay:_weiXinPay];
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                [weakSelf hideHUDOnViewController:weakSelf];
                 [weakSelf showHUDAlertToViewController:weakSelf text:@"下单失败，请重试..." delay:0.5f];
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             }];
-//        }
-//        else
-//            [self showWeiXinInstallAlert];
+        }
+        else
+            [self showWeiXinInstallAlert];
     }
     else
         [self showShoulLoginAlert];
@@ -141,7 +141,8 @@
 
 - (void)weiXinPayFailure
 {
-    [self showHUDAlertToViewController:self text:@"下单失败，请重试..." delay:0.5f];
+    [self hideHUDOnViewController:self];
+    [self showHUDAlertToViewController:self text:@"支付失败，请重试..." delay:1.0f];
 }
 
 - (void)displayView
@@ -155,14 +156,14 @@
 #warning @"微信SDK"真机调试和上传记得打开注释
 - (void)sendWeiXinPay:(SCWeiXinPay *)pay
 {
-//    PayReq *request = [[PayReq alloc] init];
-//    request.partnerId = pay.partnerid;
-//    request.prepayId  = pay.prepayid;
-//    request.package   = pay.package;
-//    request.nonceStr  = pay.noncestr;
-//    request.timeStamp = pay.timestamp;
-//    request.sign      = pay.sign;
-//    [WXApi sendReq:request];
+    PayReq *request = [[PayReq alloc] init];
+    request.partnerId = pay.partnerid;
+    request.prepayId  = pay.prepayid;
+    request.package   = pay.package;
+    request.nonceStr  = pay.noncestr;
+    request.timeStamp = pay.timestamp;
+    request.sign      = pay.sign;
+    [WXApi sendReq:request];
 }
 
 - (void)startGenerateGroupProductRequest
