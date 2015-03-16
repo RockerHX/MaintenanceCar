@@ -72,13 +72,6 @@
 }
 
 #pragma mark - Public Methods
-- (void)initConfig
-{
-    [super initConfig];
-    
-    self.showTrashItem = NO;
-}
-
 /**
  *  下拉刷新，请求最新数据
  */

@@ -380,22 +380,21 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         {
             if (_hasGroupProducts)
                 [self cellSelectedWithIndexPath:indexPath];
-            else
-            {
-                
-            }
-        }
-            break;
-        case 3:
-        {
-        }
-            break;
-        case 4:
-        {
         }
             break;
             
         default:
+        {
+            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            if ([cell isKindOfClass:[SCShowMoreProductCell class]])
+            {
+                
+            }
+            else if ([cell isKindOfClass:[SCShowMoreProductCell class]])
+            {
+                
+            }
+        }
             break;
     }
 }
@@ -446,18 +445,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (!section)
+    if ((_hasGroupProducts && (section == 3)) || (!_hasGroupProducts && (section == 2)) || !section)
         return DOT_COORDINATE;
-    if (_hasGroupProducts)
-    {
-        if (section == 3)
-            return DOT_COORDINATE;
-    }
-    else
-    {
-        if (section == 2)
-            return DOT_COORDINATE;
-    }
     return 30.0f;
 }
 

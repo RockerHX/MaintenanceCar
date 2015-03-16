@@ -69,7 +69,7 @@
     // 点击[项目][日期][时间]栏触发选择动画
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row == 3)
+    if (indexPath.row == 4)
     {
         SCPickerView *pickerView = [[SCPickerView alloc] initWithDelegate:self];
         [pickerView show];
@@ -157,7 +157,8 @@
                             @"reserve_name": _ownerNameTextField.text,
                            @"reserve_phone": _ownerPhoneNumberTextField.text,
                                  @"content": _remarkTextField.text,
-                                    @"time": _reservationDate};
+                                 @"time": _reservationDate};/*,
+                                 @"user_car_id": };*/
     [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
