@@ -14,6 +14,7 @@
 
 @interface SCReservationViewController () <UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, SCPickerViewDelegate, SCReservationDateViewControllerDelegate>
 {
+    NSString *_selectedCarID;
     NSString *_reservationType;
     NSString *_reservationDate;
 }
@@ -47,54 +48,12 @@
     [self viewConfig];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)dealloc
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [NOTIFICATION_CENTER removeObserver:self name:kUserCarsDataLoadSuccess object:nil];
 }
 
-#pragma mark - Navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    SCReservationDateViewController *reservationDataViewController = segue.destinationViewController;
-    reservationDataViewController.delegate  = self;
-    reservationDataViewController.companyID = _merchant.company_id;
-    reservationDataViewController.type      = _reservationType;
-}
-
-#pragma mark - Table View Delegate Methods
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self closeAllKeyboard];
-    // 点击[项目][日期][时间]栏触发选择动画
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    if (indexPath.row == 4)
-    {
-        SCPickerView *pickerView = [[SCPickerView alloc] initWithDelegate:self];
-        [pickerView show];
-    }
-}
-
-#pragma mark - Button Action Methods
-- (IBAction)reservationButtonPressed:(UIButton *)sender
-{
-    [self closeAllKeyboard];
-    // 检查是否登录，已登录进行预约请求，反之则弹出登录提示框跳转到登录页面
-    if (![SCUserInfo share].loginStatus)
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登录"
-                                                            message:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:@"取消"
-                                                  otherButtonTitles:@"登录", nil];
-        [alertView show];
-    }
-    else if ([self checkeParamterIntegrity])
-        [self startMerchantReservationRequest];
-}
-
-#pragma mark - Private Methods
+#pragma mark - Config Methods
 - (void)initConfig
 {
     // 开启cell高度预估，自动适配cell高度
@@ -103,6 +62,7 @@
     
     // 设置商家名称显示
     _merchantNameLabel.text = _merchant.name;
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(refresh) name:kUserCarsDataLoadSuccess object:nil];
 }
 
 - (void)viewConfig
@@ -126,6 +86,54 @@
         else
             _remarkTextField.text = item;
     }
+}
+
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    SCReservationDateViewController *reservationDataViewController = segue.destinationViewController;
+    reservationDataViewController.delegate  = self;
+    reservationDataViewController.companyID = _merchant.company_id;
+    reservationDataViewController.type      = _reservationType;
+}
+
+#pragma mark - Table View Delegate Methods
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self closeAllKeyboard];
+    // 点击[项目][日期][时间]栏触发选择动画
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    SCPickerView *pickerView = nil;
+    if (indexPath.row == 3)
+        pickerView = [[SCPickerView alloc] initWithItems:nil type:SCPickerTypeCar delegate:self];
+    else if (indexPath.row == 4)
+        pickerView = [[SCPickerView alloc] initWithItems:nil type:SCPickerTypeService delegate:self];
+    [pickerView show];
+}
+
+#pragma mark - Button Action Methods
+- (IBAction)reservationButtonPressed:(UIButton *)sender
+{
+    [self closeAllKeyboard];
+    // 检查是否登录，已登录进行预约请求，反之则弹出登录提示框跳转到登录页面
+    if (![SCUserInfo share].loginStatus)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登录"
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                                  otherButtonTitles:@"登录", nil];
+        [alertView show];
+    }
+    else if ([self checkeParamterIntegrity])
+        [self startMerchantReservationRequest];
+}
+
+#pragma mark - Private Methods
+- (void)refresh
+{
+    [[SCUserInfo share] userCarsReuqest:nil];
 }
 
 - (void)closeAllKeyboard
@@ -157,8 +165,8 @@
                             @"reserve_name": _ownerNameTextField.text,
                            @"reserve_phone": _ownerPhoneNumberTextField.text,
                                  @"content": _remarkTextField.text,
-                                 @"time": _reservationDate};/*,
-                                 @"user_car_id": };*/
+                                    @"time": _reservationDate,
+                             @"user_car_id": _selectedCarID};
     [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
@@ -250,10 +258,49 @@
 }
 
 #pragma mark - SCPickerView Delegate Methods
-- (void)pickerViewSelectedFinish:(SCServiceItem *)serviceItem
+- (void)pickerView:(SCPickerView *)pickerView didSelectRow:(NSInteger)row item:(id)item
 {
-    _reservationType = serviceItem.service_id;
-    _projectLabel.text = serviceItem.service_name;
+    switch (pickerView.type)
+    {
+        case SCPickerTypeCar:
+        {
+            if ([pickerView lastItem:item])
+            {
+                if ([SCUserInfo share].loginStatus)
+                {
+                    @try {
+                        UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
+                        [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
+                    }
+                    @catch (NSException *exception) {
+                        NSLog(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
+                    }
+                    @finally {
+                        [pickerView hidde];
+                    }
+                }
+                else
+                    [self showShoulLoginAlert];
+            }
+            else
+            {
+                SCUserCar *car = item;
+                _selectedCarID = car.user_car_id;
+                _carLabel.text = [car.brand_name stringByAppendingString:car.model_name];
+            }
+        }
+            break;
+        case SCPickerTypeService:
+        {
+            SCServiceItem *serviceItem = item;
+            _reservationType   = serviceItem.service_id;
+            _projectLabel.text = serviceItem.service_name;
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - SCReservationDateViewController Delegate Methods

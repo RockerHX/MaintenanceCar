@@ -87,7 +87,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)dealloc
 {
-    [NOTIFICATION_CENTER removeObserver:self];
+    [NOTIFICATION_CENTER removeObserver:self name:kMerchantDtailReservationNotification object:nil];
 }
 
 #pragma mark - Config Methods

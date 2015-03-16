@@ -53,7 +53,8 @@
 
 - (void)dealloc
 {
-    [NOTIFICATION_CENTER removeObserver:self];
+    [NOTIFICATION_CENTER removeObserver:self name:kWeiXinPaySuccessNotification object:nil];
+    [NOTIFICATION_CENTER removeObserver:self name:kWeiXinPayFailureNotification object:nil];
 }
 
 #pragma mark - Config Methods

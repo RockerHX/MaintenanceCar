@@ -65,7 +65,7 @@
 
 - (void)dealloc
 {
-    [NOTIFICATION_CENTER removeObserver:self];
+    [NOTIFICATION_CENTER removeObserver:self name:kMaintenanceReservationNotification object:nil];
 }
 
 #pragma mark - Navigation

@@ -10,20 +10,16 @@
 #import "MicroCommon.h"
 #import "AppDelegate.h"
 
-#define ReservationItemsResourceName    @"ReservationItems"
-#define ReservationItemsResourceType    @"plist"
-
-@interface SCPickerView () <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface SCPickerView ()
 {
-    NSArray       *_pickerItmes;     // 选择器数据Cache
-    SCServiceItem *_item;            // 选择数据Cache
+    id _item;            // 选择数据Cache
 }
 
 @end
 
 @implementation SCPickerView
 
-- (id)initWithDelegate:(id<SCPickerViewDelegate>)delegate
+- (id)initWithItems:(NSArray *)items type:(SCPickerType)type delegate:(id<SCPickerViewDelegate>)delegate
 {
     // 从Xib加载View
     self = [[[NSBundle mainBundle] loadNibNamed:@"SCPickerView" owner:self options:nil] firstObject];
@@ -31,11 +27,33 @@
     
     // 设置代理，初始化数据
     _picker.dataSource = self;
-    _picker.delegate = self;
-    _delegate = delegate;
-    _pickerItmes = [SCAllDictionary share].serviceItems;
+    _picker.delegate   = self;
+    _delegate          = delegate;
+    _type              = type;
     
-    [self viewConfig];
+    switch (type)
+    {
+        case SCPickerTypeCar:
+        {
+            SCUserCar *car       = [[SCUserCar alloc] init];
+            car.brand_name       = @"添加车辆";
+            car.model_name       = @"";
+            car.user_car_id      = @"";
+            NSMutableArray *cars = [NSMutableArray arrayWithArray:[SCUserInfo share].cars];
+            [cars addObject:car];
+            _pickerItmes = cars;
+        }
+            break;
+        case SCPickerTypeService:
+            _pickerItmes = [SCAllDictionary share].serviceItems;
+            break;
+            
+        default:
+            _pickerItmes = items;
+            break;
+    }
+    
+    [self initConfig];
     
     return self;
 }
@@ -54,7 +72,30 @@
 #pragma mark - Picker View Delegate Methods
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return ((SCServiceItem *)_pickerItmes[row]).service_name;
+    // 选择器选择栏被点击之后缓存选择数据
+    @try {
+        switch (_type)
+        {
+            case SCPickerTypeCar:
+            {
+                SCUserCar *car = _pickerItmes[row];
+                return [car.brand_name stringByAppendingString:car.model_name];
+            }
+                break;
+            case SCPickerTypeService:
+                return ((SCServiceItem *)_pickerItmes[row]).service_name;
+                break;
+                
+            default:
+                return _pickerItmes[row];
+                break;
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCPickerView Get Item Error:%@", exception.reason);
+    }
+    @finally {
+    }
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
@@ -71,7 +112,7 @@
 }
 
 #pragma mark - Private Methods
-- (void)viewConfig
+- (void)initConfig
 {
     // 添加单机手势，初始化数据
     [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addGestureRecognizer)]];
@@ -81,24 +122,17 @@
 - (void)addGestureRecognizer
 {
     // 空白区域被点击之后触发回调，为选择取选择器默认数据，关闭时间筛选器
-    @try {
-        if (_item)
-        {
-            if ([_delegate respondsToSelector:@selector(pickerViewSelectedFinish:)])
-                [_delegate pickerViewSelectedFinish:_item];
-        }
-        else
-        {
-            if ([_delegate respondsToSelector:@selector(pickerViewSelectedFinish:)])
-                [_delegate pickerViewSelectedFinish:_pickerItmes[0]];
-        }
+    if (_item)
+    {
+        if ([_delegate respondsToSelector:@selector(pickerView:didSelectRow:item:)])
+            [_delegate pickerView:self didSelectRow:[self indexOfItem:_item] item:_item];
     }
-    @catch (NSException *exception) {
-        NSLog(@"SCPickerView Return Item Error:%@", exception.reason);
+    else
+    {
+        if ([_delegate respondsToSelector:@selector(pickerView:didSelectRow:item:)])
+            [_delegate pickerView:self didSelectRow:[self indexOfItem:_item] item:[_pickerItmes firstObject]];
     }
-    @finally {
-        [self removePickerView];
-    }
+    [self removePickerView];
 }
 
 - (void)removePickerView
@@ -131,6 +165,26 @@
             [weakSelf.containerView layoutIfNeeded];
         } completion:nil];
     }];
+}
+
+- (void)hidde
+{
+    [self removePickerView];
+}
+
+- (NSInteger)indexOfItem:(id)item
+{
+    return [_pickerItmes indexOfObject:item];
+}
+
+- (BOOL)firstItem:(id)item
+{
+    return [[_pickerItmes firstObject] isEqual:item];
+}
+
+- (BOOL)lastItem:(id)item
+{
+    return [[_pickerItmes lastObject] isEqual:item];
 }
 
 @end

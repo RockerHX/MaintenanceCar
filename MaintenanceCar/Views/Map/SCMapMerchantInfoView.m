@@ -66,12 +66,12 @@
     _distanceLabel.text     = merchant.distance;
     _starView.value         = [@([merchant.star integerValue]/2) stringValue];
     
-    if (merchant.tags.length)
-    {
-        _specialLabel.hidden = NO;
-        _specialLabel.text   = merchant.tags;
-    }
-    else
+//    if (merchant.tags.length)
+//    {
+//        _specialLabel.hidden = NO;
+//        _specialLabel.text   = merchant.tags;
+//    }
+//    else
         _specialLabel.hidden = YES;
     
     [[SCAllDictionary share] requestColorsExplain:^(NSDictionary *colors, NSDictionary *explain, NSDictionary *detail) {
