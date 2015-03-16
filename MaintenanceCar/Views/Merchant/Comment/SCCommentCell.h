@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class SCStarView;
-@class SCComment;
+#import "SCComment.h"
+#import "SCStarView.h"
 
 @interface SCCommentCell : UITableViewCell
 

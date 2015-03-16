@@ -7,9 +7,6 @@
 //
 
 #import "SCCommentCell.h"
-#import "SCComment.h"
-#import "SCStarView.h"
-#import "SCAPIRequest.h"
 
 @implementation SCCommentCell
 

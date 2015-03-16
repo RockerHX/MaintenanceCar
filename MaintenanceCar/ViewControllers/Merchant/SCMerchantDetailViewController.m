@@ -22,6 +22,7 @@
 #import "SCAllDictionary.h"
 #import "SCGroupProductDetailViewController.h"
 #import "SCView.h"
+#import "SCCommentListViewController.h"
 
 typedef NS_ENUM(NSInteger, SCMerchantDetailCellSection) {
     SCMerchantDetailCellSectionMerchantBaseInfo = 0,
@@ -386,13 +387,18 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         default:
         {
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            if ([cell isKindOfClass:[SCShowMoreProductCell class]])
+            if ([cell isKindOfClass:[SCShowMoreCell class]])
             {
-                
-            }
-            else if ([cell isKindOfClass:[SCShowMoreProductCell class]])
-            {
-                
+                @try {
+                    SCCommentListViewController *commentListViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCommentListViewController"];
+                    commentListViewController.companyID = _merchantDetail.company_id;
+                    [self.navigationController pushViewController:commentListViewController animated:YES];
+                }
+                @catch (NSException *exception) {
+                    NSLog(@"SCMerchantDetailViewController Go to the SCCommentListViewController exception reasion:%@", exception.reason);
+                }
+                @finally {
+                }
             }
         }
             break;

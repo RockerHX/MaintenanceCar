@@ -51,8 +51,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self.tableView removeFooter];
 }
 
 #pragma mark - Config Methods
@@ -374,7 +372,7 @@
             
             [weakSelf.tableView reloadData];        // 数据配置完成，刷新商家列表
             if (IS_IOS8)
-                [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_dataList.count-1) inSection:Zero] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+                [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_dataList.count - 1) inSection:Zero] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
             weakSelf.offset += MerchantListLimit;   // 偏移量请求参数递增
         }
         else

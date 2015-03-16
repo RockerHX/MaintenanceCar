@@ -10,4 +10,6 @@
 
 @interface SCCommentListViewController : SCTableViewController
 
+@property (nonatomic, copy) NSString *companyID;
+
 @end
