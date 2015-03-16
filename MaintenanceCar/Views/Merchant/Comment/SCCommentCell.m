@@ -16,6 +16,9 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    
+    _commentDateLabel.layer.borderColor = [UIColor orangeColor].CGColor;
+    _commentDateLabel.layer.borderWidth = 1.0f;
 }
 
 #pragma mark - Public Methods
