@@ -10,6 +10,11 @@
 #import "SCCommentCell.h"
 
 @interface SCCommentListViewController ()
+{
+    BOOL _loadFinish;
+}
+
+@property (nonatomic, weak) SCCommentCell *commentCell;
 
 @end
 
@@ -20,20 +25,33 @@
 {
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"[评论] - 商家评论列表"];
+    [MobClick beginLogPageView:@"[评价] - 商家评价列表"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"[评论] - 商家评论列表"];
+    [MobClick endLogPageView:@"[评价] - 商家评价列表"];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+#pragma mark - Config Methods
+- (void)initConfig
+{
+    [super initConfig];
+    
+    if (IS_IOS8)
+    {
+        self.tableView.estimatedRowHeight = 120.0f;
+        self.tableView.rowHeight = UITableViewAutomaticDimension;
+    }
+    _loadFinish = YES;
 }
 
 #pragma mark - Table View Data Source Methods
@@ -51,6 +69,36 @@
 }
 
 #pragma mark - Table View Delegate Methods
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (IS_IOS8)
+    {
+        return UITableViewAutomaticDimension;
+    }
+    else
+    {
+        CGFloat height = DOT_COORDINATE;
+        CGFloat separatorHeight = 1.0f;
+        if (_dataList.count)
+        {
+            if(!_commentCell)
+                _commentCell = [tableView dequeueReusableCellWithIdentifier:@"SCCommentCell"];
+            [_commentCell displayCellWithComment:_dataList[indexPath.row]];
+            // Layout the cell
+            [_commentCell updateConstraintsIfNeeded];
+            [_commentCell layoutIfNeeded];
+            height = [_commentCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+        }
+        
+        return height + separatorHeight;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewAutomaticDimension;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -112,15 +160,13 @@
             if (weakSelf.requestType == SCFavoriteListRequestTypeDown)
                 [weakSelf clearListData];
             
-            // 遍历请求回来的订单数据，生成SCReservation用于订单列表显示
+            // 遍历请求回来的订单数据，生成SCComment用于订单列表显示
             [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 SCComment *comment = [[SCComment alloc] initWithDictionary:obj error:nil];
                 [_dataList addObject:comment];
             }];
             
             [weakSelf.tableView reloadData];        // 数据配置完成，刷新商家列表
-            if (IS_IOS8)
-                [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_dataList.count - 1) inSection:Zero] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
             weakSelf.offset += MerchantListLimit;   // 偏移量请求参数递增
         }
         else

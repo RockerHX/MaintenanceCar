@@ -147,7 +147,7 @@
     else
     {
         CGFloat height = DOT_COORDINATE;
-        CGFloat separatorHeight = 2.0f;
+        CGFloat separatorHeight = 1.0f;
         if (_dataList.count)
         {
             SCReservation *reservation = _dataList[indexPath.row];
