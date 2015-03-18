@@ -166,7 +166,7 @@
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     
-    if ([_delegate respondsToSelector:@selector(selectedWithServiceItem:)])
+    if (_delegate && [_delegate respondsToSelector:@selector(selectedWithServiceItem:)])
         [_delegate selectedWithServiceItem:[SCAllDictionary share].serviceItems[indexPath.row]];
     [self removeAlertView];
 }

@@ -124,12 +124,12 @@
     // 空白区域被点击之后触发回调，为选择取选择器默认数据，关闭时间筛选器
     if (_item)
     {
-        if ([_delegate respondsToSelector:@selector(pickerView:didSelectRow:item:)])
+        if (_delegate && [_delegate respondsToSelector:@selector(pickerView:didSelectRow:item:)])
             [_delegate pickerView:self didSelectRow:[self indexOfItem:_item] item:_item];
     }
     else
     {
-        if ([_delegate respondsToSelector:@selector(pickerView:didSelectRow:item:)])
+        if (_delegate && [_delegate respondsToSelector:@selector(pickerView:didSelectRow:item:)])
             [_delegate pickerView:self didSelectRow:[self indexOfItem:_item] item:[_pickerItmes firstObject]];
     }
     [self removePickerView];

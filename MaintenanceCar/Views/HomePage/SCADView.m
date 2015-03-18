@@ -31,7 +31,7 @@
 #pragma mark - Action Methods
 - (IBAction)enterButtonPressed:(id)sender
 {
-    if ([_delegate respondsToSelector:@selector(shouldEnter)])
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldEnter)])
         [_delegate shouldEnter];
     [self removeFromSuperview];
 }

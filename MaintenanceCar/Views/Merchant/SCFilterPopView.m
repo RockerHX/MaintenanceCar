@@ -45,7 +45,7 @@
 
 - (void)closePopView
 {
-    if ([_delegate respondsToSelector:@selector(shouldClosePopView)])
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldClosePopView)])
         [_delegate shouldClosePopView];
 }
 
@@ -91,7 +91,7 @@
     if (_canTap)
     {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        if ([_delegate respondsToSelector:@selector(didSelectedItem:)])
+        if (_delegate && [_delegate respondsToSelector:@selector(didSelectedItem:)])
             [_delegate didSelectedItem:_filterItems[indexPath.row]];
     }
 }

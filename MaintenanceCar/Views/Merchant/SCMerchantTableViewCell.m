@@ -30,8 +30,8 @@
 #pragma mark - Action Methods
 - (IBAction)reservationButtonPressed:(UIButton *)sender
 {
-    // 当[预约]按钮被点击，发送消息通知SCMerchantViewController获取index
-    [NOTIFICATION_CENTER postNotificationName:kMaintenanceReservationNotification object:@(sender.tag)];
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldReservationWithIndex:)])
+        [_delegate shouldReservationWithIndex:_index];
 }
 
 #pragma mark - Private Methods

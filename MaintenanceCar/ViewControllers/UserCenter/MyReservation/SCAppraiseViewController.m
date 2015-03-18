@@ -126,7 +126,7 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
     [self.navigationController popViewControllerAnimated:YES];
-    if ([_delegate respondsToSelector:@selector(appraiseSuccess)])
+    if (_delegate && [_delegate respondsToSelector:@selector(appraiseSuccess)])
         [_delegate appraiseSuccess];
 }
 

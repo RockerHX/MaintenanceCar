@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     SCAlertTypeReuqestCall
 };
 
-@interface SCMerchantDetailViewController () <UIAlertViewDelegate, SCReservatAlertViewDelegate>
+@interface SCMerchantDetailViewController () <UIAlertViewDelegate, SCReservatAlertViewDelegate, SCMerchantDetailCellDelegate>
 {
     BOOL           _needChecked;      // 检查收藏标识
     BOOL           _hasGroupProducts;
@@ -86,11 +86,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [self viewConfig];
 }
 
-- (void)dealloc
-{
-    [NOTIFICATION_CENTER removeObserver:self name:kMerchantDtailReservationNotification object:nil];
-}
-
 #pragma mark - Config Methods
 - (void)initConfig
 {
@@ -102,9 +97,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     
     _loadFinish  = YES;
     _needChecked = YES;
-    
-    // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed) name:kMerchantDtailReservationNotification object:nil];
 }
 
 - (void)viewConfig
@@ -226,6 +218,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             default:
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell" forIndexPath:indexPath];
+                ((SCMerchantDetailCell *)cell).delegate = self;
                 [(SCMerchantDetailCell *)cell displayCellWithDetail:_merchantDetail];
             }
                 break;
@@ -543,17 +536,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     }];
 }
 
-/**
- *  商家列表预约按钮点击触发事件通知方法
- *
- *  @param notification 接受传递的参数
- */
-- (void)reservationButtonPressed
-{
-    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
-    [reservatAlertView show];
-}
-
 - (void)displayMerchantDetail
 {
     [_merchantImageView setImageWithURL:[NSString stringWithFormat:@"%@%@_1.jpg", MerchantImageDoMain, _merchant.company_id] defaultImage:@"MerchantImageDefault"];
@@ -735,6 +717,13 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     }
     @finally {
     }
+}
+
+#pragma mark - SCMerchantDetailCell Delegate Methods
+- (void)shouldReservation
+{
+    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
+    [reservatAlertView show];
 }
 
 @end

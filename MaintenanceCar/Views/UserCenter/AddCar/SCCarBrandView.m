@@ -32,7 +32,7 @@
 #pragma mark - Action Methods
 - (void)titleColumnTaped
 {
-    if (self.canSelected && [_delegate respondsToSelector:@selector(carBrandViewTitleTaped)])
+    if (self.canSelected && _delegate && [_delegate respondsToSelector:@selector(carBrandViewTitleTaped)])
         [_delegate carBrandViewTitleTaped];
 }
 
@@ -93,7 +93,7 @@
     SCCarBrand *carBrand = ((NSArray *)_carBrands[_indexTitles[indexPath.section]])[indexPath.row];
     _carBrandLabel.text = carBrand.brand_name;
     
-    if ([_delegate respondsToSelector:@selector(carBrandViewDidSelectedCar:)])
+    if (_delegate && [_delegate respondsToSelector:@selector(carBrandViewDidSelectedCar:)])
         [_delegate carBrandViewDidSelectedCar:carBrand];
 }
 
@@ -101,7 +101,7 @@
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
     // 当前View滚动结束通知代理方法显示提示
-    if ([_delegate respondsToSelector:@selector(carBrandViewScrollEnd)])
+    if (_delegate && [_delegate respondsToSelector:@selector(carBrandViewScrollEnd)])
         [_delegate carBrandViewScrollEnd];
 }
 

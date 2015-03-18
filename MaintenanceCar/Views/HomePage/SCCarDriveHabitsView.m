@@ -71,7 +71,7 @@
 
 - (IBAction)saveButtonPressed:(UIButton *)sender
 {
-    if ([_delegate respondsToSelector:@selector(didSaveWithHabitsType:)])
+    if (_delegate && [_delegate respondsToSelector:@selector(didSaveWithHabitsType:)])
         [_delegate didSaveWithHabitsType:_habitsType];
 }
 

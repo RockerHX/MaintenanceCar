@@ -47,7 +47,7 @@
 
 - (void)tapGestureRecognizer
 {
-    if ([_delegate respondsToSelector:@selector(shouldShowMerchantDetail)])
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldShowMerchantDetail)])
         [_delegate shouldShowMerchantDetail];
 }
 

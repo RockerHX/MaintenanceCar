@@ -12,7 +12,7 @@
 #import "SCSpecial.h"
 
 typedef NS_ENUM(NSInteger, SCDictionaryType) {
-    SCDictionaryTypeOderType = 1,                       // 订单类型
+    SCDictionaryTypeOderType,                           // 订单类型
     SCDictionaryTypeReservationType,                    // 预约类型
     SCDictionaryTypeQuestionType,                       // 问题类型
     SCDictionaryTypeReservationStatus,                  // 预约状态

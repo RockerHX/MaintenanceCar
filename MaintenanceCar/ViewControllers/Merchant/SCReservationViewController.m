@@ -11,6 +11,7 @@
 #import "SCServiceItem.h"
 #import "SCPickerView.h"
 #import "SCReservationDateViewController.h"
+#import "SCAllDictionary.h"
 
 @interface SCReservationViewController () <UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, SCPickerViewDelegate, SCReservationDateViewControllerDelegate>
 {
@@ -75,6 +76,18 @@
     _ownerPhoneNumberTextField.text         = [USER_DEFAULT objectForKey:kPhoneNumberKey];
     _remarkTextField.leftViewMode           = UITextFieldViewModeAlways;
     _remarkTextField.leftView               = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
+    
+    if (!_serviceItem)
+    {
+        __weak typeof(self) weakSelf = self;
+        [[SCAllDictionary share] requestWithType:SCDictionaryTypeReservationType finfish:^(NSArray *items) {
+            for (SCDictionaryItem *item in items)
+            {
+                if ([item.dict_id isEqualToString:weakSelf.reservationType])
+                    _serviceItem = [[SCServiceItem alloc] initWithServiceID:item.dict_id serviceName:item.name];
+            }
+        }];
+    }
     _projectLabel.text                      = _serviceItem.service_name;
     _reservationType                        = _serviceItem.service_id;
     
@@ -107,7 +120,7 @@
     SCPickerView *pickerView = nil;
     if (indexPath.row == 3)
         pickerView = [[SCPickerView alloc] initWithItems:nil type:SCPickerTypeCar delegate:self];
-    else if (indexPath.row == 4)
+    else if ((indexPath.row == 4) && !_isGroup)
         pickerView = [[SCPickerView alloc] initWithItems:nil type:SCPickerTypeService delegate:self];
     [pickerView show];
 }

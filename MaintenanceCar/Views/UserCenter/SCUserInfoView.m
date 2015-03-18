@@ -21,7 +21,7 @@
 #pragma mark - Action Methods
 - (IBAction)loginButtonPressed:(UIButton *)sender
 {
-    if ([_delegate respondsToSelector:@selector(shouldLogin)])
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldLogin)])
         [_delegate shouldLogin];
 }
 
@@ -33,7 +33,7 @@
 
 - (void)tapGestureRecognizer:(UITapGestureRecognizer *)tap
 {
-    if ([_delegate respondsToSelector:@selector(shouldChangeCarData:)])
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldChangeCarData:)])
         [_delegate shouldChangeCarData:[SCUserInfo share].cars[tap.view.tag]];
 }
 

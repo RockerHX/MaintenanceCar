@@ -22,7 +22,7 @@
 
 #define MaintenanceCellReuseIdentifier   @"MaintenanceCellReuseIdentifier"
 
-@interface SCMaintenanceViewController () <SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
+@interface SCMaintenanceViewController () <SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate, SCMerchantTableViewCellDelegate>
 {
     NSInteger           _reservationButtonIndex;
     NSArray             *_serviceItems;
@@ -61,11 +61,6 @@
     
     [self initConfig];
     [self performSelector:@selector(viewConfig) withObject:nil afterDelay:0.1f];
-}
-
-- (void)dealloc
-{
-    [NOTIFICATION_CENTER removeObserver:self name:kMaintenanceReservationNotification object:nil];
 }
 
 #pragma mark - Navigation
@@ -137,9 +132,6 @@
     
     _currentCar                   = [[SCUserInfo share].cars firstObject];
     _maintenanceTypeView.delegate = self;
-    
-    // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed:) name:kMaintenanceReservationNotification object:nil];
 }
 
 - (void)viewConfig
@@ -195,27 +187,6 @@
         return @"经常长途使用";
     else
         return @"日常通勤";
-}
-
-/**
- *  商家列表预约按钮点击触发事件通知方法
- *
- *  @param notification 接受传递的参数
- */
-- (void)reservationButtonPressed:(NSNotification *)notification
-{
-    // 跳转到预约页面
-    @try {
-        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.merchant = _recommendMerchants[[notification.object integerValue]];
-        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:@"2" serviceName:@"保养"];
-        [self.navigationController pushViewController:reservationViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
 }
 
 - (void)startDataRequest
@@ -377,29 +348,32 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell *cell = nil;
     switch (indexPath.section)
     {
         case 0:
         {
-            SCServiceItem *item         = _serviceItems[indexPath.row];
-            SCMaintenanceItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMaintenanceItemCell" forIndexPath:indexPath];
-            cell.tag                    = indexPath.row;
-            cell.check                  = [self cellCheckStatusWithIndex:indexPath.row];
-            cell.nameLabel.text         = item.service_name;
-            cell.memoLabel.text         = item.memo;
-            return cell;
+            SCServiceItem *item             = _serviceItems[indexPath.row];
+            cell                            = [tableView dequeueReusableCellWithIdentifier:@"SCMaintenanceItemCell" forIndexPath:indexPath];
+            SCMaintenanceItemCell *itemCell = (SCMaintenanceItemCell *)cell;
+            itemCell.tag                    = indexPath.row;
+            itemCell.check                  = [self cellCheckStatusWithIndex:indexPath.row];
+            itemCell.nameLabel.text         = item.service_name;
+            itemCell.memoLabel.text         = item.memo;
         }
             break;
             
         default:
         {
-            SCMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MerchantCellReuseIdentifier forIndexPath:indexPath];
-            // 刷新商家列表，设置相关数据
-            [cell handelWithMerchant:_recommendMerchants[indexPath.row]];
-            return cell;
+            cell                                  = [tableView dequeueReusableCellWithIdentifier:MerchantCellReuseIdentifier forIndexPath:indexPath];
+            SCMerchantTableViewCell *merchantCell = (SCMerchantTableViewCell *)cell;
+            merchantCell.delegate                 = self;
+            merchantCell.index                    = indexPath.row;
+            [merchantCell handelWithMerchant:_recommendMerchants[indexPath.row]];
         }
             break;
     }
+    return cell;
 }
 
 #pragma mark - Table View Delegate Methods
@@ -522,6 +496,23 @@
 - (void)dataSaveSuccess
 {
     [self startMaintenanceDataRequest];
+}
+
+#pragma mark - SCMerchantTableViewCell Delegate Methods
+- (void)shouldReservationWithIndex:(NSInteger)index
+{
+    // 跳转到预约页面
+    @try {
+        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
+        reservationViewController.merchant = _recommendMerchants[index];
+        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:@"2" serviceName:@"保养"];
+        [self.navigationController pushViewController:reservationViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
 }
 
 @end

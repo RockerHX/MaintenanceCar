@@ -93,7 +93,7 @@ static SCAllDictionary *allDictionary = nil;
     // 如果本地缓存的字典数据为空，从网络请求，并保存到本地，反之则生成字典数据对象做回调，并异步更新数据
     if (!localData)
     {
-        [[SCAPIRequest manager] startGetAllDictionaryAPIRequestWithParameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[SCAPIRequest manager] startGetAllDictionaryAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
             {
                 // 先处理数据，再保存，最后回调
@@ -110,7 +110,7 @@ static SCAllDictionary *allDictionary = nil;
         // 先处理数据，再异步更新，最后回调
         NSArray *data = localData[[@(type) stringValue]];
         
-        [[SCAPIRequest manager] startGetAllDictionaryAPIRequestWithParameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[SCAPIRequest manager] startGetAllDictionaryAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
                 [weakSelf saveData:responseObject withKey:kAllDictionarykey];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

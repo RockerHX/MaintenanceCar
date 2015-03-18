@@ -10,10 +10,20 @@
 
 @class SCCoupon;
 
+@protocol SCCouponCodeCellDelegate <NSObject>
+
+@optional
+- (void)couponShouldReservationWithIndex:(NSInteger)index;
+
+@end
+
 @interface SCCouponCodeCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet  UILabel *codeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *reservationButton;
+
+@property (nonatomic, weak)                id  <SCCouponCodeCellDelegate>delegate;
+@property (nonatomic, assign)       NSInteger  index;
 
 - (IBAction)reservationButtonPressed:(id)sender;
 

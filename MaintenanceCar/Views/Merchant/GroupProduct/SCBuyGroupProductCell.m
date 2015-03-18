@@ -20,7 +20,7 @@
 #pragma mark - Action Methods
 - (IBAction)bugProductButtonPressed:(id)sender
 {
-    if ([_delegate respondsToSelector:@selector(shouldShowBuyProductView)])
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldShowBuyProductView)])
         [_delegate shouldShowBuyProductView];
 }
 

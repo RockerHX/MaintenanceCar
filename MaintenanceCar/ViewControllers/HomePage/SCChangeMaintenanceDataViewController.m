@@ -214,7 +214,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     {
         case SCHUDTypeSaveData:
         {
-            if ([_delegate respondsToSelector:@selector(dataSaveSuccess)])
+            if (_delegate && [_delegate respondsToSelector:@selector(dataSaveSuccess)])
                 [_delegate dataSaveSuccess];
             // 保存成功，返回上一页
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];

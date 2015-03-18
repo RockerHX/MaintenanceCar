@@ -115,18 +115,18 @@
     {
         if (userInfo.cars.count)
         {
-            if ([_delegate respondsToSelector:@selector(shouldChangeCarData:)] && _canTap)
+            if (_delegate && [_delegate respondsToSelector:@selector(shouldChangeCarData:)] && _canTap)
                 [_delegate shouldChangeCarData:_currentCar];
         }
         else
         {
-            if ([_delegate respondsToSelector:@selector(shouldAddCar)])
+            if (_delegate && [_delegate respondsToSelector:@selector(shouldAddCar)])
                 [_delegate shouldAddCar];
         }
     }
     else
     {
-        if ([_delegate respondsToSelector:@selector(shouldLogin)])
+        if (_delegate && [_delegate respondsToSelector:@selector(shouldLogin)])
             [_delegate shouldLogin];
     }
 }

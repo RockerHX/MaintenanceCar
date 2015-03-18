@@ -25,7 +25,7 @@
 #pragma mark - Action Methods
 - (IBAction)callButtonPressed:(id)sender
 {
-    if ([_delegate respondsToSelector:@selector(shouldCallMerchant)])
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldCallMerchant)])
         [_delegate shouldCallMerchant];
 }
 

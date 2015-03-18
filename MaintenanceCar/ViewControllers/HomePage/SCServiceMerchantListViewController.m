@@ -170,7 +170,6 @@
                                      @"limit"     : @(MerchantListLimit),
                                      @"offset"    : @(_offset),
                                      @"radius"    : _distanceCondition,
-                                     @"flag"      : @"1",
                                      @"longtitude": longitude,
                                      @"latitude"  : latitude};
     

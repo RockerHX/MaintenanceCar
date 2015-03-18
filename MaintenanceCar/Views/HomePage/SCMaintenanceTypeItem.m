@@ -19,7 +19,7 @@
 - (void)tapGestureRecognizer
 {
     [self selected];
-    if ([_delegate respondsToSelector:@selector(typeViewSelected:)])
+    if (_delegate && [_delegate respondsToSelector:@selector(typeViewSelected:)])
         [_delegate typeViewSelected:self];
 }
 

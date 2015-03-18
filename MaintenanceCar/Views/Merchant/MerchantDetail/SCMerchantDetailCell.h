@@ -11,6 +11,13 @@
 @class SCStarView;
 @class SCMerchantDetail;
 
+@protocol SCMerchantDetailCellDelegate <NSObject>
+
+@optional
+- (void)shouldReservation;
+
+@end
+
 @interface SCMerchantDetailCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet          UILabel *merchantNameLabel;    // 商家名称栏 - 用于显示商家名称
@@ -18,6 +25,9 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *flagView;             // 商家标签栏 - 用于显示商家标签
 @property (weak, nonatomic) IBOutlet         UIButton *reservationButton;    // 预约按钮
 @property (weak, nonatomic) IBOutlet       SCStarView *starView;             // 商家星级 - 用于显示商家评分
+
+@property (nonatomic, weak)                        id  <SCMerchantDetailCellDelegate>delegate;
+@property (nonatomic, assign)               NSInteger  index;
 
 - (void)displayCellWithDetail:(SCMerchantDetail *)detail;
 

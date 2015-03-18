@@ -368,11 +368,10 @@
 }
 
 #pragma mark - AllDictionary Request
-- (void)startGetAllDictionaryAPIRequestWithParameters:(NSDictionary *)parameters
-                                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startGetAllDictionaryAPIRequestWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:AllDictionaryAPIURL parameters:parameters success:success failure:failure];
+    [self requestGETMethodsWithAPI:AllDictionaryAPIURL parameters:nil success:success failure:failure];
 }
 
 #pragma mark - Special API

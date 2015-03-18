@@ -277,9 +277,8 @@
 /**
  *  保养数据接口请求方法(API:/Misc/dictAll - GET)
  */
-- (void)startGetAllDictionaryAPIRequestWithParameters:(NSDictionary *)parameters
-                                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startGetAllDictionaryAPIRequestWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - Special API
 /**

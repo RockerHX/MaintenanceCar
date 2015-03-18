@@ -20,7 +20,7 @@
 {
     [self selected];
     
-    if ([_delegate respondsToSelector:@selector(didSelected:)])
+    if (_delegate && [_delegate respondsToSelector:@selector(didSelected:)])
         [_delegate didSelected:self];
 }
 

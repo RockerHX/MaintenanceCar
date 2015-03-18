@@ -22,6 +22,8 @@
 #pragma mark - Action Methods
 - (IBAction)reservationButtonPressed:(id)sender
 {
+    if (_delegate && [_delegate respondsToSelector:@selector(couponShouldReservationWithIndex:)])
+        [_delegate couponShouldReservationWithIndex:_index];
 }
 
 #pragma mark - Public Methods

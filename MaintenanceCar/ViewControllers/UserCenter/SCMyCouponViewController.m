@@ -11,8 +11,11 @@
 #import "SCCouponCell.h"
 #import "SCCoupon.h"
 #import "SCCouponDetailViewController.h"
+#import "SCReservationViewController.h"
+#import "SCServiceItem.h"
+#import "SCMerchant.h"
 
-@interface SCMyCouponViewController ()
+@interface SCMyCouponViewController () <SCCouponCodeCellDelegate>
 
 @end
 
@@ -47,6 +50,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SCCouponCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCell" forIndexPath:indexPath];
+    cell.delegate      = self;
     [cell displayCellWithCoupon:_dataList[indexPath.row]];
     
     return cell;
@@ -157,6 +161,26 @@
         else
             [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:NetWorkError delay:0.5f];
     }];
+}
+
+#pragma mark - SCCouponCodeCell Delegate Methods
+- (void)couponShouldReservationWithIndex:(NSInteger)index
+{
+    // 跳转到预约页面
+    @try {
+        SCCoupon *coupon = _dataList[index];
+        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
+        reservationViewController.isGroup                      = YES;
+        reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName:coupon.company_name
+                                                                            companyID:coupon.company_id];
+        reservationViewController.reservationType              = coupon.type;
+        [self.navigationController pushViewController:reservationViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
 }
 
 @end

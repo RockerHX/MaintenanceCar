@@ -40,14 +40,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // 绑定kMerchantListReservationNotification通知，此通知的用途见定义文档
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(reservationButtonPressed:) name:kMaintenanceReservationNotification object:nil];
-}
-
-- (void)dealloc
-{
-    [NOTIFICATION_CENTER removeObserver:self name:kMaintenanceReservationNotification object:nil];
 }
 
 #pragma mark - Table View Data Source Methods
