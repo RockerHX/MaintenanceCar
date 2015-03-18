@@ -8,6 +8,14 @@
 
 #import "JSONModel.h"
 
+typedef NS_ENUM(NSInteger, SCCouponState) {
+    SCCouponStateUnUse,
+    SCCouponStateUsed,
+    SCCouponStateCancel,
+    SCCouponStateExpired,
+    SCCouponStateRefunded
+};
+
 @interface SCCoupon : JSONModel
 
 @property (nonatomic, copy) NSString <Optional>*group_ticket_id;
@@ -24,5 +32,10 @@
 @property (nonatomic, copy) NSString <Optional>*final_price;
 @property (nonatomic, copy) NSString <Optional>*total_price;
 @property (nonatomic, copy) NSString <Optional>*company_name;
+
+@property (nonatomic, assign, readonly) SCCouponState state;
+
+- (BOOL)expired;
+- (NSString *)expiredPrompt;
 
 @end

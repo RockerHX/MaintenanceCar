@@ -10,9 +10,11 @@
 
 @interface SCCouponCell : SCCouponCodeCell
 
-@property (weak, nonatomic) IBOutlet  UILabel *merchantNameLabel;
-@property (weak, nonatomic) IBOutlet  UILabel *productNameLabel;
-@property (weak, nonatomic) IBOutlet  UILabel *couponPriceLabel;
-@property (weak, nonatomic) IBOutlet  UILabel *productPriceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *merchantNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *productNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *couponPriceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *productPriceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *couponStateLabel;
+@property (weak, nonatomic) IBOutlet  UIView *codeLine;
 
 @end

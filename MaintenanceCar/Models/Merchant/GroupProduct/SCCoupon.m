@@ -7,7 +7,69 @@
 //
 
 #import "SCCoupon.h"
+#import "MicroCommon.h"
 
 @implementation SCCoupon
+
+#pragma mark - Init Methods
+- (id)initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err
+{
+    self = [super initWithDictionary:dict error:err];
+    if (self)
+    {
+        _state = [self couponState];
+    }
+    return self;
+}
+
+#pragma mark - Public Methods
+- (BOOL)expired
+{
+    return ([self expiredInterval] < Zero);
+}
+
+- (NSString *)expiredPrompt
+{
+    NSTimeInterval expiredInterval = [self expiredInterval] / (60*60*24);
+    
+    return [self expired] ? @"": [NSString stringWithFormat:@"还有%@天过期", @((NSInteger)expiredInterval)];
+}
+
+#pragma mark - Private Methods
+- (NSTimeInterval)expiredInterval
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    NSDate *expiredDate = [formatter dateFromString:_limit_end];
+    NSTimeInterval expiredInterval = [expiredDate timeIntervalSinceNow];
+    
+    return expiredInterval;
+}
+
+- (SCCouponState)couponState
+{
+    SCCouponState state = SCCouponStateUnUse;
+    switch ([_status integerValue])
+    {
+        case 1:
+            state = SCCouponStateUsed;
+            break;
+        case 2:
+            state = SCCouponStateCancel;
+            break;
+        case 3:
+            state = SCCouponStateExpired;
+            break;
+        case 4:
+            state = SCCouponStateRefunded;
+            break;
+            
+        default:
+            state = [self expired] ? SCCouponStateExpired : SCCouponStateUnUse;
+            break;
+    }
+    return state;
+}
 
 @end

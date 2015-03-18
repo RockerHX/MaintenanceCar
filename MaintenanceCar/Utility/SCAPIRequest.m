@@ -226,11 +226,11 @@
     [self requestGETMethodsWithAPI:CouponDetailAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startUpdateCouponAPIRequestWithParameters:(NSDictionary *)parameters
+- (void)startCouponRefundAPIRequestWithParameters:(NSDictionary *)parameters
                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestPOSTMethodsWithAPI:UpdateCouponAPIURL parameters:parameters success:success failure:failure];
+    [self requestPOSTMethodsWithAPI:CouponRefundAPIURL parameters:parameters success:success failure:failure];
 }
 
 #pragma mark - Comment API

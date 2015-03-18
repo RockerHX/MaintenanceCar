@@ -136,9 +136,9 @@
                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  团购券详情接口请求方法(API:/Group_ticket/update - POST)
+ *  团购券详情接口请求方法(API:/wepay/refund - POST)
  */
-- (void)startUpdateCouponAPIRequestWithParameters:(NSDictionary *)parameters
+- (void)startCouponRefundAPIRequestWithParameters:(NSDictionary *)parameters
                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 

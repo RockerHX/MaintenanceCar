@@ -170,7 +170,6 @@
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
-            
             if (list.count)
             {
                 // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示

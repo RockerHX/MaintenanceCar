@@ -336,10 +336,9 @@
     {
         [self showHUDOnViewController:self.navigationController];
         __weak typeof(self)weakSelf = self;
-        NSDictionary *parameters = @{@"company_id": _coupon.company_id,
-                                           @"code": _coupon.code,
-                                         @"status": @"2"};
-        [[SCAPIRequest manager] startUpdateCouponAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                             @"group_ticket_id": _coupon.group_ticket_id};
+        [[SCAPIRequest manager] startCouponRefundAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [weakSelf hideHUDOnViewController:weakSelf.navigationController];
             if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
                 [weakSelf showHUDAlertToViewController:weakSelf.navigationController delegate:weakSelf text:@"退款成功" delay:0.5f];
