@@ -16,7 +16,7 @@
 - (void)awakeFromNib
 {
     // Initialization code
-    _nameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 53.0f;
+    _contentLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 53.0f;
 }
 
 #pragma mark - Public Methods
@@ -73,9 +73,9 @@
             break;
     }
     _icon.image = [UIImage imageNamed:image];
-    _nameLabel.text = text.length ? text : @"数据完善中...";
-    _nameLabel.font = [UIFont systemFontOfSize:fontSize];
-    _nameLabel.textColor = textColor;
+    _contentLabel.text = text.length ? text : @"数据完善中...";
+    _contentLabel.font = [UIFont systemFontOfSize:fontSize];
+    _contentLabel.textColor = textColor;
     self.accessoryType = showAccessory ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
     self.selected = canSelected;
     

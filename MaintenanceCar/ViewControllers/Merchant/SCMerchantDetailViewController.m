@@ -49,8 +49,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     BOOL           _productOpen;
     
     NSInteger      _productCellCount;
-    
-    UIView         *_blankView;
 }
 @property (weak, nonatomic)     SCMerchantDetailCell *briefIntroductionCell;
 @property (weak, nonatomic) SCMerchantDetailItemCell *detailItemCell;
@@ -94,7 +92,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)viewConfig
 {
-    [self loadBlankView];
     [self.tableView reLayoutHeaderView];
     // 开始数据请求
     [self startMerchantDetailRequestWithParameters];
@@ -357,26 +354,22 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                 [self cellSelectedWithIndexPath:indexPath];
         }
             break;
-            
-        default:
-        {
-            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            if ([cell isKindOfClass:[SCShowMoreCell class]])
-            {
-                @try {
-                    SCCommentListViewController *commentListViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCommentListViewController"];
-                    commentListViewController.companyID = _merchantDetail.company_id;
-                    commentListViewController.showTrashItem = NO;
-                    [self.navigationController pushViewController:commentListViewController animated:YES];
-                }
-                @catch (NSException *exception) {
-                    NSLog(@"SCMerchantDetailViewController Go to the SCCommentListViewController exception reasion:%@", exception.reason);
-                }
-                @finally {
-                }
-            }
+    }
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if ([cell isKindOfClass:[SCShowMoreCell class]])
+    {
+        @try {
+            SCCommentListViewController *commentListViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCommentListViewController"];
+            commentListViewController.companyID = _merchantDetail.company_id;
+            commentListViewController.showTrashItem = NO;
+            [self.navigationController pushViewController:commentListViewController animated:YES];
         }
-            break;
+        @catch (NSException *exception) {
+            NSLog(@"SCMerchantDetailViewController Go to the SCCommentListViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
     }
 }
 
@@ -495,28 +488,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 #pragma mark - Private Methods
-- (void)loadBlankView
-{
-    if (!_blankView)
-    {
-        _blankView = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, STATUS_BAR_HEIGHT + NAVIGATION_BAR_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
-        _blankView.backgroundColor = [UIColor whiteColor];
-    }
-    [self.navigationController.view addSubview:_blankView];
-}
-
-- (void)removeBlankView
-{
-    [MBProgressHUD hideAllHUDsForView:_blankView animated:YES];
-    
-    [UIView animateWithDuration:0.3f delay:0.1f options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        _blankView.alpha = DOT_COORDINATE;
-    } completion:^(BOOL finished) {
-        [_blankView removeFromSuperview];
-        _blankView = nil;
-    }];
-}
-
 - (void)displayMerchantDetail
 {
     [_merchantImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@_1.jpg", MerchantImageDoMain, _merchant.company_id]]
@@ -531,7 +502,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
  */
 - (void)startMerchantDetailRequestWithParameters
 {
-    [MBProgressHUD showHUDAddedTo:_blankView animated:YES];
+    [self showHUDOnViewController:self];
     __weak typeof(self) weakSelf = self;
     NSDictionary *paramters = @{@"id": _merchant.company_id,
                            @"user_id": [SCUserInfo share].userID};
@@ -545,10 +516,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         }
         else
             [weakSelf showRequestErrorAlert];
-        [self removeBlankView];
+        [self hideHUDOnViewController:self];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf showRequestErrorAlert];
-        [self removeBlankView];
+        [self hideHUDOnViewController:self];
     }];
 }
 
