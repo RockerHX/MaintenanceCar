@@ -11,7 +11,7 @@
 @protocol SCGroupProductMerchantCellDelegate <NSObject>
 
 @optional
-- (void)shouldCallMerchant;
+- (void)shouldCallToMerchant;
 
 @end
 

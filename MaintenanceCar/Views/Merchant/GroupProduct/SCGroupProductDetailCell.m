@@ -27,6 +27,8 @@
     [detail.des enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         _contentLabel.text = [NSString stringWithFormat:@"%@%@%@", _contentLabel.text, obj, (idx == (count - 1)) ? @"" : @"\n"];
     }];
+    [self.contentView updateConstraintsIfNeeded];
+    [self.contentView layoutIfNeeded];
 }
 
 @end

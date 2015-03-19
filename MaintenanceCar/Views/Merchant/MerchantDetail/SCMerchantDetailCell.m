@@ -63,6 +63,7 @@
     _reservationButton.hidden = ![SCAllDictionary share].serviceItems.count;
     [self hanleMerchantFlags:detail.merchantFlags];
     
+    [self.contentView updateConstraintsIfNeeded];
     [self.contentView layoutIfNeeded];
 }
 

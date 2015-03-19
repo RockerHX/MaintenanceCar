@@ -39,6 +39,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     [self showAlertWithTitle:@"警告"
                      message:@"您确定要删除您的车辆吗？"
                     delegate:self
+                         tag:Zero
            cancelButtonTitle:@"确认"
             otherButtonTitle:@"取消"];
 }

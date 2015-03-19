@@ -13,7 +13,7 @@
 #import "SCGroupProductDetailCell.h"
 #import "SCBuyGroupProductViewController.h"
 
-@interface SCGroupProductDetailViewController () <SCBuyGroupProductCellDelegate>
+@interface SCGroupProductDetailViewController () <SCBuyGroupProductCellDelegate, SCGroupProductMerchantCellDelegate, UIAlertViewDelegate>
 {
     SCGroupProductDetail *_detail;
 }
@@ -79,6 +79,7 @@
             case 1:
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell" forIndexPath:indexPath];
+                (((SCGroupProductMerchantCell *)cell)).delegate = self;
                 [(SCGroupProductMerchantCell *)cell displayCellWithDetial:_detail];
             }
                 break;
@@ -115,9 +116,6 @@
                 if(!_merchantCell)
                     _merchantCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell"];
                 [_merchantCell displayCellWithDetial:_detail];
-                // Layout the cell
-                [_merchantCell updateConstraintsIfNeeded];
-                [_merchantCell layoutIfNeeded];
                 height = [_merchantCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -126,9 +124,6 @@
                 if(!_detailCell)
                     _detailCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductDetailCell"];
                 [_detailCell displayCellWithDetail:_detail];
-                // Layout the cell
-                [_detailCell updateConstraintsIfNeeded];
-                [_detailCell layoutIfNeeded];
                 height = [_detailCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -208,6 +203,43 @@
     }
     @finally {
     }
+}
+
+#pragma mark - SCGroupProductMerchantCell Delegate Methods
+- (void)shouldCallToMerchant
+{
+    if (_detail.telephone.length)
+    {
+        NSArray *phones = [_detail.telephone componentsSeparatedByString:@" "];
+        UIAlertView *alertView = nil;
+        if (phones.count > 1)
+        {
+            alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商家电话"
+                                                   message:nil
+                                                  delegate:self
+                                         cancelButtonTitle:@"取消"
+                                         otherButtonTitles:[phones firstObject], [phones lastObject], nil];
+        }
+        else
+        {
+            alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商家电话"
+                                                   message:nil
+                                                  delegate:self
+                                         cancelButtonTitle:@"取消"
+                                         otherButtonTitles:[phones firstObject], nil];
+        }
+        [alertView show];
+    }
+}
+
+#pragma mark - Alert View Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSArray *phones = [_detail.telephone componentsSeparatedByString:@" "];
+    if (buttonIndex == 1)
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones firstObject]]]];
+    else if (buttonIndex == 2)
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones lastObject]]]];
 }
 
 @end

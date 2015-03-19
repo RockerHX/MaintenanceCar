@@ -20,7 +20,12 @@
 #import "SCReservationViewController.h"
 #import "SCMerchant.h"
 
-@interface SCCouponDetailViewController () <SCCouponCodeCellDelegate>
+typedef NS_ENUM(NSInteger, SCAlertType) {
+    SCAlertTyperefund,
+    SCAlertTypeCall
+};
+
+@interface SCCouponDetailViewController () <SCCouponCodeCellDelegate, SCGroupProductMerchantCellDelegate, UIAlertViewDelegate>
 {
     SCGroupProductDetail *_detail;
 }
@@ -74,6 +79,7 @@
     [self showAlertWithTitle:@"温馨提示"
                      message:@"您确定真的要退掉这张团购券吗？"
                     delegate:self
+                         tag:SCAlertTyperefund
            cancelButtonTitle:@"确定"
             otherButtonTitle:@"取消"];
 }
@@ -106,6 +112,7 @@
             case 2:
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell" forIndexPath:indexPath];
+                (((SCGroupProductMerchantCell *)cell)).delegate = self;
                 [(SCGroupProductMerchantCell *)cell displayCellWithDetial:_detail];
             }
                 break;
@@ -159,9 +166,6 @@
                 if(!_merchantCell)
                     _merchantCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell"];
                 [_merchantCell displayCellWithDetial:_detail];
-                // Layout the cell
-                [_merchantCell updateConstraintsIfNeeded];
-                [_merchantCell layoutIfNeeded];
                 height = [_merchantCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -170,9 +174,6 @@
                 if(!_detailCell)
                     _detailCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductDetailCell"];
                 [_detailCell displayCellWithDetail:_detail];
-                // Layout the cell
-                [_detailCell updateConstraintsIfNeeded];
-                [_detailCell layoutIfNeeded];
                 height = [_detailCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -181,9 +182,6 @@
                 if(!_commentCell)
                     _commentCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCCommentCell"];
                 [_commentCell displayCellWithComment:_detail.comments[indexPath.row]];
-                // Layout the cell
-                [_commentCell updateConstraintsIfNeeded];
-                [_commentCell layoutIfNeeded];
                 height = [_commentCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -292,28 +290,6 @@
     }
 }
 
-#pragma mark - Alert View Delegate Methods
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == alertView.cancelButtonIndex)
-    {
-        [self showHUDOnViewController:self.navigationController];
-        __weak typeof(self)weakSelf = self;
-        NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                             @"group_ticket_id": _coupon.group_ticket_id};
-        [[SCAPIRequest manager] startCouponRefundAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [weakSelf hideHUDOnViewController:weakSelf.navigationController];
-            if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
-                [weakSelf showHUDAlertToViewController:weakSelf.navigationController delegate:weakSelf text:@"退款成功" delay:0.5f];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [weakSelf hideHUDOnViewController:weakSelf.navigationController];
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"退款失败，请重试或者联系客服..." delay:0.5f];
-        }];
-    }
-}
-
-
-
 #pragma mark - SCCouponCodeCell Delegate Methods
 - (void)couponShouldReservationWithIndex:(NSInteger)index
 {
@@ -330,6 +306,65 @@
         NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
     }
     @finally {
+    }
+}
+
+#pragma mark - SCGroupProductMerchantCell Delegate Methods
+- (void)shouldCallToMerchant
+{
+    if (_detail.telephone.length)
+    {
+        NSArray *phones = [_detail.telephone componentsSeparatedByString:@" "];
+        UIAlertView *alertView = nil;
+        if (phones.count > 1)
+        {
+            alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商家电话"
+                                                   message:nil
+                                                  delegate:self
+                                         cancelButtonTitle:@"取消"
+                                         otherButtonTitles:[phones firstObject], [phones lastObject], nil];
+        }
+        else
+        {
+            alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商家电话"
+                                                   message:nil
+                                                  delegate:self
+                                         cancelButtonTitle:@"取消"
+                                         otherButtonTitles:[phones firstObject], nil];
+        }
+        alertView.tag = SCAlertTypeCall;
+        [alertView show];
+    }
+}
+
+#pragma mark - Alert View Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == SCAlertTyperefund)
+    {
+        if (buttonIndex == alertView.cancelButtonIndex)
+        {
+            [self showHUDOnViewController:self.navigationController];
+            __weak typeof(self)weakSelf = self;
+            NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                                         @"group_ticket_id": _coupon.group_ticket_id};
+            [[SCAPIRequest manager] startCouponRefundAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [weakSelf hideHUDOnViewController:weakSelf.navigationController];
+                if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+                    [weakSelf showHUDAlertToViewController:weakSelf.navigationController delegate:weakSelf text:@"退款成功" delay:0.5f];
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                [weakSelf hideHUDOnViewController:weakSelf.navigationController];
+                [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"退款失败，请重试或者联系客服..." delay:0.5f];
+            }];
+        }
+    }
+    else
+    {
+        NSArray *phones = [_detail.telephone componentsSeparatedByString:@" "];
+        if (buttonIndex == 1)
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones firstObject]]]];
+        else if (buttonIndex == 2)
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones lastObject]]]];
     }
 }
 

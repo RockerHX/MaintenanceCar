@@ -41,7 +41,7 @@
 }
 
 #pragma mark - Setter And Getter Methods
-- (NSString *)distance
+- (NSString<Ignore> *)distance
 {
     // 本地处理位置距离
     return [[SCLocationManager share] distanceWithLatitude:[_latitude doubleValue] longitude:[_longtitude doubleValue]];

@@ -29,5 +29,8 @@
     _starView.value        = [@([comment.star integerValue]/2) stringValue];
     _commentDateLabel.text = comment.create_time;
     _contentLabel.text     = comment.detail;
+    
+    [self.contentView updateConstraintsIfNeeded];
+    [self.contentView layoutIfNeeded];
 }
 @end

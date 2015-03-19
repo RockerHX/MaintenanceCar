@@ -25,20 +25,19 @@
 #pragma mark - Action Methods
 - (IBAction)callButtonPressed:(id)sender
 {
-    if (_delegate && [_delegate respondsToSelector:@selector(shouldCallMerchant)])
-        [_delegate shouldCallMerchant];
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldCallToMerchant)])
+        [_delegate shouldCallToMerchant];
 }
 
 #pragma mark - Public Methods
 - (void)displayCellWithDetial:(SCGroupProductDetail *)detail
 {
     _nameLabel.text = detail.merchantName;
-    //    _starView.startValue = detail;
-    //    _distanceLabel.text = detail;
-    //    _addressLabel.text = detail;
     _starView.value = @"4";
-    _distanceLabel.text = @"123";
-    _addressLabel.text = @"123\nsadfsdfsdfsdfasdfsadfawerwqerwqerqwerwqersadfasfweqrwsersafsadfsdaczxcvasdfdasfdsdafasf\nsafdasdfsadfsadfsadfasdfasdfsadf\nasdfasdfasdf";
+    _distanceLabel.text = detail.distance;
+    _addressLabel.text = detail.address;
+    [self.contentView updateConstraintsIfNeeded];
+    [self.contentView layoutIfNeeded];
 }
 
 @end

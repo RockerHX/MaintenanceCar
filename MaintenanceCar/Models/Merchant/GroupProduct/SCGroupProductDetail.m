@@ -8,6 +8,7 @@
 
 #import "SCGroupProductDetail.h"
 #import "MicroCommon.h"
+#import "SCLocationManager.h"
 
 @implementation SCGroupProductDetail
 
@@ -22,6 +23,13 @@
     NSTimeInterval expiredInterval = [expiredDate timeIntervalSinceDate:serviceDate];
     
     return expiredInterval;
+}
+
+#pragma mark - Setter And Getter Methods
+- (NSString<Ignore> *)distance
+{
+    // 本地处理位置距离
+    return [[SCLocationManager share] distanceWithLatitude:[_latitude doubleValue] longitude:[_longtitude doubleValue]];
 }
 
 #pragma mark - Public Methods

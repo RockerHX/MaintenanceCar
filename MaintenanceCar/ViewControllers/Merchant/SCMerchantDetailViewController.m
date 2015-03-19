@@ -49,6 +49,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     BOOL           _productOpen;
     
     NSInteger      _productCellCount;
+    
+    UIView         *_blankView;
 }
 @property (weak, nonatomic)     SCMerchantDetailCell *briefIntroductionCell;
 @property (weak, nonatomic) SCMerchantDetailItemCell *detailItemCell;
@@ -92,6 +94,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)viewConfig
 {
+    [self loadBlankView];
     [self.tableView reLayoutHeaderView];
     // 开始数据请求
     [self startMerchantDetailRequestWithParameters];
@@ -419,7 +422,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if ((_hasGroupProducts && (section == 3)) || (!_hasGroupProducts && (section == 2)) || !section)
+    if ((_hasGroupProducts && (section == 3)) || (!_hasGroupProducts && (section == 2)) || !section || section == 4)
         return DOT_COORDINATE;
     return 30.0f;
 }
@@ -427,11 +430,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     NSString *text  = @"";
-    UIView *view    = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 30.0f)];
-    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, DOT_COORDINATE, 100.0f, 30.0f)];
-    label.font      = [UIFont systemFontOfSize:15.0f];
-    label.textColor = [UIColor grayColor];
-    [view addSubview:label];
     switch (section)
     {
         case 1:
@@ -444,22 +442,17 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             text = @"商家信息";
         }
             break;
-        case 3:
-        {
-            if (_hasGroupProducts)
-                return nil;
-            text = @"用户评价";
-        }
-            break;
-        case 4:
-            text = @"用户评价";
-            break;
             
         default:
             return nil;
             break;
     }
+    UIView *view    = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 30.0f)];
+    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, DOT_COORDINATE, 100.0f, 30.0f)];
+    label.font      = [UIFont systemFontOfSize:15.0f];
+    label.textColor = [UIColor grayColor];
     label.text = text;
+    [view addSubview:label];
     return view;
 }
 
@@ -488,6 +481,28 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 #pragma mark - Private Methods
+- (void)loadBlankView
+{
+    if (!_blankView)
+    {
+        _blankView = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, STATUS_BAR_HEIGHT + NAVIGATION_BAR_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        _blankView.backgroundColor = [UIColor whiteColor];
+    }
+    [self.navigationController.view addSubview:_blankView];
+}
+
+- (void)removeBlankView
+{
+    [MBProgressHUD hideAllHUDsForView:_blankView animated:YES];
+    
+    [UIView animateWithDuration:0.3f delay:0.1f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        _blankView.alpha = DOT_COORDINATE;
+    } completion:^(BOOL finished) {
+        [_blankView removeFromSuperview];
+        _blankView = nil;
+    }];
+}
+
 - (void)displayMerchantDetail
 {
     [_merchantImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@_1.jpg", MerchantImageDoMain, _merchant.company_id]]
@@ -502,7 +517,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
  */
 - (void)startMerchantDetailRequestWithParameters
 {
-    [self showHUDOnViewController:self];
+    [MBProgressHUD showHUDAddedTo:_blankView animated:YES];
     __weak typeof(self) weakSelf = self;
     NSDictionary *paramters = @{@"id": _merchant.company_id,
                            @"user_id": [SCUserInfo share].userID};
@@ -516,10 +531,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         }
         else
             [weakSelf showRequestErrorAlert];
-        [self hideHUDOnViewController:self];
+        [self removeBlankView];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf showRequestErrorAlert];
-        [self hideHUDOnViewController:self];
+        [self removeBlankView];
     }];
 }
 

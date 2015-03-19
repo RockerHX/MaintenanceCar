@@ -17,21 +17,6 @@
 
 #pragma mark - Alert Methods
 /**
- *  显示警告框
- *
- *  @param title             警告框标题
- *  @param message           警告框消息
- *  @param delegate          警告框代理对象
- *  @param cancelButtonTitle 警告框取消按钮标题
- *  @param otherButtonTitle  警告框其他按钮标题
- */
-- (void)showAlertWithTitle:(NSString *)title
-                   message:(NSString *)message
-                  delegate:(id)delegate
-         cancelButtonTitle:(NSString *)cancelButtonTitle
-          otherButtonTitle:(NSString *)otherButtonTitle;
-
-/**
  *  显示简单提示警告框（警告框只有[确定]按钮）
  *
  *  @param title   提示标题
@@ -49,6 +34,23 @@
  *  检查用户是否需要登录，需要则跳转到登录页面
  */
 - (void)checkShouldLogin;
+
+/**
+ *  显示警告框
+ *
+ *  @param title             警告框标题
+ *  @param message           警告框消息
+ *  @param delegate          警告框代理对象
+ *  @param tag               警告框显示类型
+ *  @param cancelButtonTitle 警告框取消按钮标题
+ *  @param otherButtonTitle  警告框其他按钮标题
+ */
+- (void)showAlertWithTitle:(NSString *)title
+                   message:(NSString *)message
+                  delegate:(id)delegate
+                       tag:(NSInteger)tag
+         cancelButtonTitle:(NSString *)cancelButtonTitle
+          otherButtonTitle:(NSString *)otherButtonTitle;
 
 #pragma mark - HUD Methods
 - (void)showHUDOnViewController:(UIViewController *)viewController;

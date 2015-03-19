@@ -15,24 +15,11 @@
 #pragma mark - Alert Methods
 - (void)showAlertWithTitle:(NSString *)title
                    message:(NSString *)message
-                  delegate:(id)delegate
-         cancelButtonTitle:(NSString *)cancelButtonTitle
-          otherButtonTitle:(NSString *)otherButtonTitle
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
-                                                        message:message
-                                                       delegate:delegate
-                                              cancelButtonTitle:cancelButtonTitle
-                                              otherButtonTitles:otherButtonTitle, nil];
-    [alertView show];
-}
-
-- (void)showAlertWithTitle:(NSString *)title
-                   message:(NSString *)message
 {
     [self showAlertWithTitle:title
                      message:message
                     delegate:nil
+                         tag:Zero
            cancelButtonTitle:@"确定"
             otherButtonTitle:nil];
 }
@@ -42,8 +29,25 @@
     [self showAlertWithTitle:@"您还没有登录"
                      message:nil
                     delegate:self
+                         tag:Zero
            cancelButtonTitle:@"取消"
             otherButtonTitle:@"登录"];
+}
+
+- (void)showAlertWithTitle:(NSString *)title
+                   message:(NSString *)message
+                  delegate:(id)delegate
+                       tag:(NSInteger)tag
+         cancelButtonTitle:(NSString *)cancelButtonTitle
+          otherButtonTitle:(NSString *)otherButtonTitle
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
+                                                        message:message
+                                                       delegate:delegate
+                                              cancelButtonTitle:cancelButtonTitle
+                                              otherButtonTitles:otherButtonTitle, nil];
+    alertView.tag = tag;
+    [alertView show];
 }
 
 - (void)checkShouldLogin
