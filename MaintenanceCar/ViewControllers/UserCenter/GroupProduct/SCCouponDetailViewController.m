@@ -187,9 +187,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                 break;
                 
             default:
-            {
                 return indexPath.section ? 44.0f : 70.0f;
-            }
                 break;
         }
     }
@@ -207,11 +205,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     NSString *text  = @"";
-    UIView *view    = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 30.0f)];
-    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, DOT_COORDINATE, 100.0f, 30.0f)];
-    label.font      = [UIFont systemFontOfSize:15.0f];
-    label.textColor = [UIColor grayColor];
-    [view addSubview:label];
     switch (section)
     {
         case 1:
@@ -228,6 +221,11 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             return nil;
             break;
     }
+    UIView *view    = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 30.0f)];
+    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, DOT_COORDINATE, 100.0f, 30.0f)];
+    label.font      = [UIFont systemFontOfSize:15.0f];
+    label.textColor = [UIColor grayColor];
+    [view addSubview:label];
     label.text = text;
     return view;
 }

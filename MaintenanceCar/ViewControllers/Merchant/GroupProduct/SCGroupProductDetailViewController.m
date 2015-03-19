@@ -11,7 +11,10 @@
 #import "SCBuyGroupProductCell.h"
 #import "SCGroupProductMerchantCell.h"
 #import "SCGroupProductDetailCell.h"
+#import "SCShowMoreCell.h"
+#import "SCCommentCell.h"
 #import "SCBuyGroupProductViewController.h"
+#import "SCCommentListViewController.h"
 
 @interface SCGroupProductDetailViewController () <SCBuyGroupProductCellDelegate, SCGroupProductMerchantCellDelegate, UIAlertViewDelegate>
 {
@@ -19,6 +22,7 @@
 }
 @property (weak, nonatomic) SCGroupProductMerchantCell *merchantCell;
 @property (weak, nonatomic)   SCGroupProductDetailCell *detailCell;
+@property (weak, nonatomic)              SCCommentCell *commentCell;
 
 @end
 
@@ -61,12 +65,12 @@
 #pragma mark - Table View Data Source Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return _detail ? 3 : Zero;
+    return _detail ? 5 : Zero;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return _detail ? ((section == 4) ? _detail.comments.count : 1) : Zero;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -87,6 +91,23 @@
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductDetailCell" forIndexPath:indexPath];
                 [(SCGroupProductDetailCell *)cell displayCellWithDetail:_detail];
+            }
+                break;
+            case 3:
+            {
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCShowMoreCell" forIndexPath:indexPath];
+                ((SCShowMoreCell *)cell).count = _detail.comments_num;
+            }
+                break;
+            case 4:
+            {
+                if (_detail.comments.count)
+                {
+                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCCommentCell" forIndexPath:indexPath];
+                    [(SCCommentCell *)cell displayCellWithComment:_detail.comments[indexPath.row]];
+                }
+                else
+                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCNoneCommentCell" forIndexPath:indexPath];
             }
                 break;
                 
@@ -127,9 +148,17 @@
                 height = [_detailCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
+            case 4:
+            {
+                if(!_commentCell)
+                    _commentCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCCommentCell"];
+                [_commentCell displayCellWithComment:_detail.comments[indexPath.row]];
+                height = [_commentCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            }
+                break;
                 
             default:
-                return 70.0f;
+                return indexPath.section ? 44.0f : 70.0f;
                 break;
         }
     }
@@ -139,19 +168,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (!section)
-        return DOT_COORDINATE;
-    return 30.0f;
+    if (section == 1 || section == 2)
+        return 30.0f;
+    return DOT_COORDINATE;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     NSString *text  = @"";
-    UIView *view    = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 30.0f)];
-    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, DOT_COORDINATE, 100.0f, 30.0f)];
-    label.font      = [UIFont systemFontOfSize:15.0f];
-    label.textColor = [UIColor grayColor];
-    [view addSubview:label];
     switch (section)
     {
         case 1:
@@ -165,8 +189,33 @@
             return nil;
             break;
     }
+    UIView *view    = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 30.0f)];
+    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, DOT_COORDINATE, 100.0f, 30.0f)];
+    label.font      = [UIFont systemFontOfSize:15.0f];
+    label.textColor = [UIColor grayColor];
+    [view addSubview:label];
     label.text = text;
     return view;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if ([cell isKindOfClass:[SCShowMoreCell class]])
+    {
+        @try {
+            SCCommentListViewController *commentListViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCommentListViewController"];
+            commentListViewController.companyID = _detail.companyID;
+            commentListViewController.showTrashItem = NO;
+            [self.navigationController pushViewController:commentListViewController animated:YES];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"SCMerchantDetailViewController Go to the SCCommentListViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
+    }
 }
 
 #pragma mark - Private Methods
