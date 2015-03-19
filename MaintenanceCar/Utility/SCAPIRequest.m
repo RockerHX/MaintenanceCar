@@ -7,21 +7,8 @@
 //
 
 #import "SCAPIRequest.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
-
 #define CustomRequestHeaderKey        @"X-API-KEY"                  // 请求加密Key
 #define CustomRequestHeaderValue      @"SlwX20U65YMTuNRDe3fZ"       // 请求加密Value
-
-@implementation UIImageView (SCAPIRequest)
-
-- (void)setImageWithURL:(NSString *)url defaultImage:(NSString *)defaultImage
-{
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-    request.cachePolicy = NSURLRequestReloadRevalidatingCacheData;
-    [self setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:defaultImage] success:nil failure:nil];
-}
-
-@end
 
 @interface SCAPIRequest ()
 
