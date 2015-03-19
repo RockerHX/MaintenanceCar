@@ -23,6 +23,11 @@
 @property (nonatomic, assign)                         BOOL isMerchantMap;
 
 /**
+ *  [导航]按钮，用于调用第三方地图导航到商家对应地址
+ */
+- (IBAction)mapNavigaitonItemPressed:(UIBarButtonItem *)sender;
+
+/**
  *  [列表]按钮，用于返回商家列表页面
  */
 - (IBAction)listItemPressed:(UIBarButtonItem *)sender;

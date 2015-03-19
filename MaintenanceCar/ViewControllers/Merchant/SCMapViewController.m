@@ -11,10 +11,11 @@
 #import "SCMerchant.h"
 #import "SCMapMerchantInfoView.h"
 #import "SCMerchantDetailViewController.h"
+#import "GPSTransform.h"
 
 #define MAP_REFRESH_TIME_INTERVAL   5.0f
 
-@interface SCMapViewController () <BMKMapViewDelegate, SCMapMerchantInfoViewDelegate>
+@interface SCMapViewController () <BMKMapViewDelegate, SCMapMerchantInfoViewDelegate, UIActionSheetDelegate>
 {
     NSMutableArray    *_annotations;            // 商家图钉数据集合
     SCMerchant        *_merchant;               // 当前点击商家的数据缓存
@@ -71,6 +72,16 @@
 }
 
 #pragma mark - Action Methods
+- (IBAction)mapNavigaitonItemPressed:(UIBarButtonItem *)sender
+{
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请选择导航应用"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                         destructiveButtonTitle:@"苹果地图"
+                                              otherButtonTitles:@"百度地图", @"高德地图", nil];
+    [sheet showInView:self.view];
+}
+
 - (IBAction)listItemPressed:(UIBarButtonItem *)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -173,7 +184,7 @@
     _preAnnotationView = view;
 }
 
-#pragma mark - SCMapMerchantInfoViewDelegate Methods
+#pragma mark - SCMapMerchantInfoView Delegate Methods
 - (void)shouldShowMerchantDetail
 {
     if (_showInfoView)
@@ -190,6 +201,53 @@
         @finally {
         }
     }
+}
+
+#pragma mark - UIActionSheet Delegate Methods
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    CLLocationCoordinate2D bdLocCoor = [SCLocationManager share].userLocation.location.coordinate;
+    CLLocationDegrees bdLocLat = bdLocCoor.latitude;
+    CLLocationDegrees bdLocLng = bdLocCoor.longitude;
+    CLLocationDegrees bdMerchantLat = [_merchant.latitude doubleValue];
+    CLLocationDegrees bdMerchantLng = [_merchant.longtitude doubleValue];
+    CLLocationDegrees gcjLocLat, gcjLocLng, gcjMerchantLat, gcjMerchantLng;
+    
+    bd_decrypt(bdLocLat, bdLocLng, &gcjLocLat, &gcjLocLng);
+    bd_decrypt(bdMerchantLat, bdMerchantLng, &gcjMerchantLat, &gcjMerchantLng);
+    
+    NSString *urlString = nil;
+    if (buttonIndex == actionSheet.destructiveButtonIndex)
+        urlString = [[NSString alloc] initWithFormat:@"http://maps.apple.com/maps?saddr=%@,%@&daddr=%@,%@&dirfl=d", @(gcjLocLat), @(gcjLocLng), @(gcjMerchantLat), @(gcjMerchantLng)];
+    else if (buttonIndex == 1)
+    {
+        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"baidumap://map/"]])
+        {
+            urlString = [NSString stringWithFormat:@"baidumap://map/direction?origin=latlng:%@,%@|name:我的位置&destination=latlng:%@,%@|name:%@&mode=transit", [SCLocationManager share].latitude, [SCLocationManager share].longitude, _merchant.latitude, _merchant.longtitude, _merchant.name];
+        }
+        else
+        {
+            [self showAlertWithTitle:@"温馨提示" message:@"您还未安装百度地图"];
+            return;
+        }
+    }
+    else if (buttonIndex == 2)
+    {
+        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"iosamap://"]])
+        {
+            urlString = [NSString stringWithFormat:@"iosamap://navi?sourceApplication=%@&backScheme=applicationScheme&poiname=fangheng&poiid=BGVIS&lat=%@&lon=%@&dev=0&style=3", _merchant.name, @(gcjMerchantLat), @(gcjMerchantLng)];
+        }
+        else
+        {
+            [self showAlertWithTitle:@"温馨提示" message:@"您还未安装高德地图"];
+            return;
+        }
+    }
+    else
+        return;
+    urlString   = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *aURL = [NSURL URLWithString:urlString];
+    [[UIApplication sharedApplication] openURL:aURL];
 }
 
 @end

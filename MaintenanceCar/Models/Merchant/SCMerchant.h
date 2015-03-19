@@ -14,7 +14,7 @@
 @property (nonatomic, copy)       NSString <Optional>*name;                 // 商家名称
 @property (nonatomic, copy)       NSString <Optional>*company_id;           // 商家ID
 @property (nonatomic, copy)       NSString <Optional>*latitude;             // 商家地理位置 - 纬度
-@property (nonatomic, copy)       NSString <Optional>*longtitude;           // 商家地理位置 - 经度
+@property (nonatomic, copy)       NSString <Optional>*longtitude;            // 商家地理位置 - 经度
 @property (nonatomic, copy)       NSString <Optional>*star;                 // 商家星级数
 @property (nonatomic, copy)       NSString <Optional>*tags;                 // 商家特色
 @property (nonatomic, copy)       NSString <Optional>*flags;                // 商家标签
