@@ -17,7 +17,7 @@
 - (void)awakeFromNib
 {
     // Initialization code
-    CGFloat layoutWidth = SCREEN_WIDTH - 71.0f;
+    CGFloat layoutWidth = SCREEN_WIDTH - 70.0f;
     _nameLabel.preferredMaxLayoutWidth = layoutWidth;
     _addressLabel.preferredMaxLayoutWidth = layoutWidth;
 }

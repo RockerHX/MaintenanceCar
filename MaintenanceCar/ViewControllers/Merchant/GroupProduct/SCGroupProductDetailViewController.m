@@ -79,7 +79,7 @@
             case 1:
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell" forIndexPath:indexPath];
-                [_merchantCell displayCellWithDetial:_detail];
+                [(SCGroupProductMerchantCell *)cell displayCellWithDetial:_detail];
             }
                 break;
             case 2:
