@@ -15,6 +15,7 @@
 {
     _count = count;
     _promptLabel.text = [NSString stringWithFormat:@"评价（%@）", @(_count)];
+    self.selectionStyle = count ? UITableViewCellSelectionStyleDefault : UITableViewCellSelectionStyleNone;
 }
 
 @end
