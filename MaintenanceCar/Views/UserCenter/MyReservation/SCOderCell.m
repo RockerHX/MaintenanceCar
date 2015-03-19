@@ -13,7 +13,7 @@
 #pragma mark - Init Methods
 - (void)awakeFromNib
 {
-    _merchantNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 69.0f;
+    _merchantNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 55.0f;
     
     // IOS7要改变删除按钮颜色必须设置editingAccessoryView
     UIView *deleteView = [[UIView alloc]initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 1.0f, 1.0f)];
