@@ -67,7 +67,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 
 - (void)viewConfig
 {
-    [self.tableView reLayoutHeaderView];
+//    [self.tableView reLayoutHeaderView];
 }
 
 #pragma mark - Table View Delegate Methods

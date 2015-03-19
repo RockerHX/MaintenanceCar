@@ -7,8 +7,8 @@
 //
 
 #import "SCUserInfoView.h"
-#import <SCInfiniteLoopScrollView/SCInfiniteLoopScrollView.h>
 #import "MicroCommon.h"
+#import "SCLoopScrollView.h"
 
 @implementation SCUserInfoView
 
@@ -29,12 +29,6 @@
 - (void)viewConfig
 {
     _loginButton.layer.cornerRadius = 8.0f;
-}
-
-- (void)tapGestureRecognizer:(UITapGestureRecognizer *)tap
-{
-    if (_delegate && [_delegate respondsToSelector:@selector(shouldChangeCarData:)])
-        [_delegate shouldChangeCarData:[SCUserInfo share].cars[tap.view.tag]];
 }
 
 #pragma mark - Public Methods
@@ -58,10 +52,9 @@
                     carView.userInteractionEnabled = YES;
                     carView.tag                    = index;
                     carView.image                  = [UIImage imageNamed:@"car"];
-                    [carView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)]];
                     [items addObject:carView];
                 }
-                _userCarsView.subItems = items;
+                _userCarsView.items = items;
                 
                 SCUserCar *car = [userInfo.cars firstObject];
                 _carNameLabel.text = [NSString stringWithFormat:@"%@%@", car.brand_name, car.model_name];
@@ -69,17 +62,20 @@
             }
             
             __weak typeof(self)weakSelf = self;
-            [_userCarsView startAnimation:^(NSInteger index, BOOL animated) {
+            [_userCarsView begin:^(NSInteger index) {
                 SCUserCar *car = userInfo.cars[index];
                 weakSelf.carNameLabel.text = [NSString stringWithFormat:@"%@%@", car.brand_name, car.model_name];
                 weakSelf.carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", car.run_distance.length ? car.run_distance : @"0"];
+            } tap:^(NSInteger index) {
+                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(shouldChangeCarData:)])
+                    [weakSelf.delegate shouldChangeCarData:[SCUserInfo share].cars[index]];
             }];
         }
         else
         {
             UIImageView *carView = [[UIImageView alloc] init];
             carView.image = [UIImage imageNamed:@"car"];
-            _userCarsView.subItems = @[carView];
+            _userCarsView.items = @[carView];
             
             _carNameLabel.text = @"请在右上角添加车辆";
         }

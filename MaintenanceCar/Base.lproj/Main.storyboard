@@ -56,9 +56,10 @@
                                         <action selector="loginButtonPressed:" destination="uVb-2f-ddo" eventType="touchUpInside" id="Vsi-rY-Mlg"/>
                                     </connections>
                                 </button>
-                                <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Roe-G6-lgf" customClass="SCInfiniteLoopScrollView">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GBe-pN-Sld" customClass="SCLoopScrollView">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
-                                </scrollView>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </view>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eEt-d2-6Zu">
                                     <rect key="frame" x="0.0" y="190" width="320" height="50"/>
                                     <subviews>
@@ -93,15 +94,15 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="Roe-G6-lgf" firstAttribute="leading" secondItem="uVb-2f-ddo" secondAttribute="leading" id="0pe-42-FJs"/>
-                                <constraint firstAttribute="trailing" secondItem="Roe-G6-lgf" secondAttribute="trailing" id="7sB-iy-rc2"/>
+                                <constraint firstAttribute="bottom" secondItem="GBe-pN-Sld" secondAttribute="bottom" id="Jn0-Ay-PIy"/>
                                 <constraint firstAttribute="centerX" secondItem="16I-yD-U26" secondAttribute="centerX" id="VsO-H0-LMR"/>
-                                <constraint firstAttribute="bottom" secondItem="Roe-G6-lgf" secondAttribute="bottom" id="Y3T-d2-yl2"/>
                                 <constraint firstAttribute="bottom" secondItem="eEt-d2-6Zu" secondAttribute="bottom" id="Y7a-x6-JeC"/>
+                                <constraint firstAttribute="trailing" secondItem="GBe-pN-Sld" secondAttribute="trailing" id="b2B-sc-PJ2"/>
                                 <constraint firstAttribute="centerY" secondItem="16I-yD-U26" secondAttribute="centerY" id="cgC-pm-L4u"/>
-                                <constraint firstItem="Roe-G6-lgf" firstAttribute="top" secondItem="uVb-2f-ddo" secondAttribute="top" id="lkG-dZ-BX3"/>
+                                <constraint firstItem="GBe-pN-Sld" firstAttribute="leading" secondItem="uVb-2f-ddo" secondAttribute="leading" id="fiM-qV-AWs"/>
                                 <constraint firstAttribute="trailing" secondItem="eEt-d2-6Zu" secondAttribute="trailing" id="qvd-sL-oCT"/>
                                 <constraint firstItem="eEt-d2-6Zu" firstAttribute="leading" secondItem="uVb-2f-ddo" secondAttribute="leading" id="two-sn-6Le"/>
+                                <constraint firstItem="GBe-pN-Sld" firstAttribute="top" secondItem="uVb-2f-ddo" secondAttribute="top" id="uxk-Dc-vQr"/>
                             </constraints>
                             <connections>
                                 <outlet property="carDataLabel" destination="Alx-EU-uFI" id="RJW-tp-2vh"/>
@@ -109,7 +110,7 @@
                                 <outlet property="carNameLabel" destination="tV8-vp-hfL" id="CtL-5I-HZc"/>
                                 <outlet property="delegate" destination="FgE-ku-k2t" id="htD-7m-mTz"/>
                                 <outlet property="loginButton" destination="16I-yD-U26" id="vf8-Qy-jwR"/>
-                                <outlet property="userCarsView" destination="Roe-G6-lgf" id="0km-Wv-nfN"/>
+                                <outlet property="userCarsView" destination="GBe-pN-Sld" id="pgl-y8-M1x"/>
                             </connections>
                         </view>
                         <sections>
@@ -234,7 +235,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eD0-tK-Vw6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="634.39999999999998" y="893.88999999999999"/>
+            <point key="canvasLocation" x="634" y="893"/>
         </scene>
         <!--登录-->
         <scene sceneID="1eb-XY-Du8">
@@ -5086,10 +5087,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="eKH-qn-479">
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="eKH-qn-479" customClass="SCLoopScrollView">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCBuyGroupProductCell" rowHeight="70" id="rvM-2s-Beq" customClass="SCBuyGroupProductCell">
@@ -5624,7 +5624,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="Jk4-Fp-snN">
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="Jk4-Fp-snN" customClass="SCLoopScrollView">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </view>
