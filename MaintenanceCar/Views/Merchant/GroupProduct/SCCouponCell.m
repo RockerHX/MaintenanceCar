@@ -24,6 +24,7 @@
     
     _codeLine.hidden = (coupon.state == SCCouponStateUnUse);
     self.codeLabel.textColor = (coupon.state == SCCouponStateUnUse) ? [UIColor orangeColor] : [UIColor lightGrayColor];
+    self.reservationButton.hidden = [coupon expired];
 }
 
 #pragma mark - Private Methods

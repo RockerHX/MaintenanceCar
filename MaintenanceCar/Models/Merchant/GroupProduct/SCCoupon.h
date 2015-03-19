@@ -32,6 +32,7 @@ typedef NS_ENUM(NSInteger, SCCouponState) {
 @property (nonatomic, copy) NSString <Optional>*final_price;
 @property (nonatomic, copy) NSString <Optional>*total_price;
 @property (nonatomic, copy) NSString <Optional>*company_name;
+@property (nonatomic, copy) NSString <Optional>*now;
 
 @property (nonatomic, assign, readonly) SCCouponState state;
 

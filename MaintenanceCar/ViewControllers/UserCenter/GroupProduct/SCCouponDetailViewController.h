@@ -19,9 +19,11 @@
 
 @interface SCCouponDetailViewController : UITableViewController
 
-@property (nonatomic, weak)       id <SCCouponDetailViewControllerDelegate>delegate;
+@property (weak, nonatomic) IBOutlet UIView *refundView;
+
+@property (nonatomic, weak)       id  <SCCouponDetailViewControllerDelegate>delegate;
 @property (nonatomic, weak) SCCoupon *coupon;
 
-- (IBAction)reimburseButtonPressed:(id)sender;
+- (IBAction)refundButtonPressed:(id)sender;
 
 @end

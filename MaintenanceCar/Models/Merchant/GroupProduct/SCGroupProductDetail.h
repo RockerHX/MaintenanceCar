@@ -21,11 +21,13 @@
 @property (nonatomic, copy)  NSString <Optional>*memo;
 @property (nonatomic, copy)  NSString <Optional>*exception;
 @property (nonatomic, copy)  NSString <Optional>*reserve_pre_day;
-@property (nonatomic, assign)         NSInteger comments_num;
+@property (nonatomic, assign)          NSInteger comments_num;
 
 @property (nonatomic, strong)            NSArray <Optional>*des;
 @property (nonatomic, strong) NSArray <Optional, SCComment>*comments;
+@property (nonatomic, copy)             NSString <Optional>*outTradeNo;
+@property (nonatomic, copy)             NSString <Optional>*serviceDate;
 
-@property (nonatomic, copy)   NSString <Optional>*outTradeNo;
+- (BOOL)canBug;
 
 @end

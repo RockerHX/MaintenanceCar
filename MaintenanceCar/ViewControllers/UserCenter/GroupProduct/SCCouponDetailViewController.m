@@ -69,12 +69,13 @@
 
 - (void)viewConfig
 {
+    self.tableView.tableFooterView = [_coupon expired] ? nil : _refundView;
     [self.tableView reLayoutHeaderView];
     [self startCouponDetailRequest];
 }
 
 #pragma mark - Action Methods
-- (IBAction)reimburseButtonPressed:(id)sender
+- (IBAction)refundButtonPressed:(id)sender
 {
     [self showAlertWithTitle:@"温馨提示"
                      message:@"您确定真的要退掉这张团购券吗？"
@@ -297,9 +298,10 @@
     [[SCAPIRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            _detail = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
-            _detail.companyID = _coupon.company_id;
+            _detail              = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
+            _detail.companyID    = _coupon.company_id;
             _detail.merchantName = _coupon.company_name;
+            _detail.serviceDate  = _coupon.now;
             [self.tableView reloadData];
             if (IS_IOS8)
                 [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_detail.comments.count - 1)

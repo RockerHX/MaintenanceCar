@@ -42,7 +42,8 @@
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
     NSDate *expiredDate = [formatter dateFromString:_limit_end];
-    NSTimeInterval expiredInterval = [expiredDate timeIntervalSinceNow];
+    NSDate *serviceDate = [formatter dateFromString:_now];
+    NSTimeInterval expiredInterval = [expiredDate timeIntervalSinceDate:serviceDate];
     
     return expiredInterval;
 }

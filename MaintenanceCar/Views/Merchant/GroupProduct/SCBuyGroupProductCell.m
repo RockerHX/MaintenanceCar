@@ -30,6 +30,9 @@
     self.productNameLabel.text  = detail.title;
     self.groupPriceLabel.text   = detail.final_price;
     self.productPriceLabel.text = detail.total_price;
+    
+    _bugProductButton.enabled = [detail canBug];
+    [_bugProductButton setTitle:[detail canBug] ? @"抢购" : @"已抢光" forState:UIControlStateNormal];
 }
 
 @end
