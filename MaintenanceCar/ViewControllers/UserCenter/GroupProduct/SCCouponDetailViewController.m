@@ -17,8 +17,10 @@
 #import "SCCommentCell.h"
 #import "SCBuyGroupProductViewController.h"
 #import "SCCommentListViewController.h"
+#import "SCReservationViewController.h"
+#import "SCMerchant.h"
 
-@interface SCCouponDetailViewController ()
+@interface SCCouponDetailViewController () <SCCouponCodeCellDelegate>
 {
     SCGroupProductDetail *_detail;
 }
@@ -97,6 +99,7 @@
             case 1:
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCodeCell" forIndexPath:indexPath];
+                (((SCCouponCell *)cell)).delegate = self;
                 [(SCCouponCell *)cell displayCellWithCoupon:_coupon];
             }
                 break;
@@ -306,6 +309,27 @@
             [weakSelf hideHUDOnViewController:weakSelf.navigationController];
             [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"退款失败，请重试或者联系客服..." delay:0.5f];
         }];
+    }
+}
+
+
+
+#pragma mark - SCCouponCodeCell Delegate Methods
+- (void)couponShouldReservationWithIndex:(NSInteger)index
+{
+    // 跳转到预约页面
+    @try {
+        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
+        reservationViewController.isGroup                      = YES;
+        reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName:_coupon.company_name
+                                                                                                companyID:_coupon.company_id];
+        reservationViewController.reservationType              = _coupon.type;
+        [self.navigationController pushViewController:reservationViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
     }
 }
 

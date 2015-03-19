@@ -30,6 +30,7 @@
 - (void)displayCellWithCoupon:(SCCoupon *)coupon
 {
     _codeLabel.text = coupon.code;
+    _reservationButton.hidden = [coupon expired];
 }
 
 @end
