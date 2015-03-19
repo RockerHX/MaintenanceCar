@@ -7,6 +7,7 @@
 //
 
 #import "SCCommentCell.h"
+#import "MicroCommon.h"
 
 @implementation SCCommentCell
 
@@ -16,6 +17,8 @@
     
     _commentDateLabel.layer.borderColor = [UIColor orangeColor].CGColor;
     _commentDateLabel.layer.borderWidth = 1.0f;
+    
+    _contentLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 23.0f;
 }
 
 #pragma mark - Public Methods

@@ -50,11 +50,6 @@
 #pragma mark - Config Methods
 - (void)initConfig
 {
-    if (IS_IOS8)
-    {
-        self.tableView.estimatedRowHeight = 120.0f;
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
-    }
 }
 
 - (void)viewConfig
@@ -109,58 +104,42 @@
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (IS_IOS8)
+    CGFloat height = DOT_COORDINATE;
+    CGFloat separatorHeight = 1.0f;
+    if (_detail)
     {
-        if (!indexPath.section)
-            return 70.0f;
-        return UITableViewAutomaticDimension;
-    }
-    else
-    {
-        CGFloat height = DOT_COORDINATE;
-        CGFloat separatorHeight = 1.0f;
-        if (_detail)
+        switch (indexPath.section)
         {
-            switch (indexPath.section)
+            case 1:
             {
-                case 1:
-                {
-                    if(!_merchantCell)
-                        _merchantCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell"];
-                    [_merchantCell displayCellWithDetial:_detail];
-                    // Layout the cell
-                    [_merchantCell updateConstraintsIfNeeded];
-                    [_merchantCell layoutIfNeeded];
-                    height = [_merchantCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                }
-                    break;
-                case 2:
-                {
-                    if(!_detailCell)
-                        _detailCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductDetailCell"];
-                    [_detailCell displayCellWithDetail:_detail];
-                    // Layout the cell
-                    [_detailCell updateConstraintsIfNeeded];
-                    [_detailCell layoutIfNeeded];
-                    height = [_detailCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                }
-                    break;
-                    
-                default:
-                {
-                    return 70.0f;
-                }
-                    break;
+                if(!_merchantCell)
+                    _merchantCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell"];
+                [_merchantCell displayCellWithDetial:_detail];
+                // Layout the cell
+                [_merchantCell updateConstraintsIfNeeded];
+                [_merchantCell layoutIfNeeded];
+                height = [_merchantCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
+                break;
+            case 2:
+            {
+                if(!_detailCell)
+                    _detailCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductDetailCell"];
+                [_detailCell displayCellWithDetail:_detail];
+                // Layout the cell
+                [_detailCell updateConstraintsIfNeeded];
+                [_detailCell layoutIfNeeded];
+                height = [_detailCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            }
+                break;
+                
+            default:
+                return 70.0f;
+                break;
         }
-        
-        return height + separatorHeight;
     }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return UITableViewAutomaticDimension;
+    
+    return height + separatorHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

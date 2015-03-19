@@ -38,7 +38,7 @@
     //    _addressLabel.text = detail;
     _starView.value = @"4";
     _distanceLabel.text = @"123";
-    _addressLabel.text = @"123";
+    _addressLabel.text = @"123\nsadfsdfsdfsdfasdfsadfawerwqerwqerqwerwqersadfasfweqrwsersafsadfsdaczxcvasdfdasfdsdafasf\nsafdasdfsadfsadfsadfasdfasdfsadf\nasdfasdfasdf";
 }
 
 @end

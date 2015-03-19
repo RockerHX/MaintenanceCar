@@ -20,8 +20,6 @@
 
 @interface SCCouponDetailViewController ()
 {
-    
-    BOOL                 _loadFinish;
     SCGroupProductDetail *_detail;
 }
 @property (weak, nonatomic) SCGroupProductMerchantCell *merchantCell;
@@ -58,12 +56,6 @@
 #pragma mark - Config Methods
 - (void)initConfig
 {
-    if (IS_IOS8)
-    {
-        self.tableView.estimatedRowHeight = 120.0f;
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
-    }
-    _loadFinish = YES;
     self.tableView.tableFooterView.hidden = YES;
 }
 
@@ -153,77 +145,60 @@
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self calculateHeightWithTableView:tableView heightForRowAtIndexPath:indexPath];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [self calculateHeightWithTableView:tableView heightForRowAtIndexPath:indexPath];
-}
-
-- (CGFloat)calculateHeightWithTableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (IS_IOS8)
+    CGFloat height = DOT_COORDINATE;
+    CGFloat separatorHeight = 1.0f;
+    if (_detail)
     {
-        return indexPath.section ? ((indexPath.section == 1 || indexPath.section == 4) ? 44.0f : UITableViewAutomaticDimension) : 70.0f;
-    }
-    else
-    {
-        CGFloat height = DOT_COORDINATE;
-        CGFloat separatorHeight = 1.0f;
-        if (_detail)
+        switch (indexPath.section)
         {
-            switch (indexPath.section)
+            case 2:
             {
-                case 2:
-                {
-                    if(!_merchantCell)
-                        _merchantCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell"];
-                    [_merchantCell displayCellWithDetial:_detail];
-                    // Layout the cell
-                    [_merchantCell updateConstraintsIfNeeded];
-                    [_merchantCell layoutIfNeeded];
-                    height = [_merchantCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                }
-                    break;
-                case 3:
-                {
-                    if(!_detailCell)
-                        _detailCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductDetailCell"];
-                    [_detailCell displayCellWithDetail:_detail];
-                    // Layout the cell
-                    [_detailCell updateConstraintsIfNeeded];
-                    [_detailCell layoutIfNeeded];
-                    height = [_detailCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                }
-                    break;
-                case 5:
-                {
-                    if(!_commentCell)
-                        _commentCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCCommentCell"];
-                    [_commentCell displayCellWithComment:_detail.comments[indexPath.row]];
-                    // Layout the cell
-                    [_commentCell updateConstraintsIfNeeded];
-                    [_commentCell layoutIfNeeded];
-                    height = [_commentCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                }
-                    break;
-                    
-                default:
-                {
-                    return indexPath.section ? 44.0f : 70.0f;
-                }
-                    break;
+                if(!_merchantCell)
+                    _merchantCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell"];
+                [_merchantCell displayCellWithDetial:_detail];
+                // Layout the cell
+                [_merchantCell updateConstraintsIfNeeded];
+                [_merchantCell layoutIfNeeded];
+                height = [_merchantCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
+                break;
+            case 3:
+            {
+                if(!_detailCell)
+                    _detailCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductDetailCell"];
+                [_detailCell displayCellWithDetail:_detail];
+                // Layout the cell
+                [_detailCell updateConstraintsIfNeeded];
+                [_detailCell layoutIfNeeded];
+                height = [_detailCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            }
+                break;
+            case 5:
+            {
+                if(!_commentCell)
+                    _commentCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCCommentCell"];
+                [_commentCell displayCellWithComment:_detail.comments[indexPath.row]];
+                // Layout the cell
+                [_commentCell updateConstraintsIfNeeded];
+                [_commentCell layoutIfNeeded];
+                height = [_commentCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            }
+                break;
+                
+            default:
+            {
+                return indexPath.section ? 44.0f : 70.0f;
+            }
+                break;
         }
-        
-        return height + separatorHeight;
     }
+    
+    return height + separatorHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == 0 || section == 4)
+    if (section == 0 || section == 4 || section == 5)
         return DOT_COORDINATE;
     return 30.0f;
 }
@@ -247,9 +222,6 @@
         case 3:
             text = @"团购详情";
             break;
-        case 5:
-            text = @"用户评价";
-            break;
             
         default:
             return nil;
@@ -257,15 +229,6 @@
     }
     label.text = text;
     return view;
-}
-
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    if ((indexPath.row == (_detail.comments.count ? (_detail.comments.count - 1) : 0) && indexPath.section == 5) && _loadFinish && IS_IOS8)
-    {
-        [self.tableView scrollRectToVisible:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 1.0f, 1.0f) animated:NO];
-        _loadFinish = NO;
-    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -303,11 +266,6 @@
             _detail.merchantName = _coupon.company_name;
             _detail.serviceDate  = _coupon.now;
             [self.tableView reloadData];
-            if (IS_IOS8)
-                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_detail.comments.count - 1)
-                                                                          inSection:5]
-                                      atScrollPosition:UITableViewScrollPositionBottom
-                                              animated:NO];
             weakSelf.tableView.tableFooterView.hidden = NO;
         }
         [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];

@@ -16,7 +16,7 @@
 - (void)awakeFromNib
 {
     // Initialization code
-    _contentLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 22.0f;
+    _contentLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 23.0f;
 }
 
 #pragma mark - Public Methods

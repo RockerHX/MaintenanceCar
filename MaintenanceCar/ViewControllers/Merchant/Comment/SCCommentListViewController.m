@@ -10,9 +10,6 @@
 #import "SCCommentCell.h"
 
 @interface SCCommentListViewController ()
-{
-    BOOL _loadFinish;
-}
 
 @property (nonatomic, weak) SCCommentCell *commentCell;
 
@@ -40,19 +37,6 @@
     [super viewDidLoad];
 }
 
-#pragma mark - Config Methods
-- (void)initConfig
-{
-    [super initConfig];
-    
-    if (IS_IOS8)
-    {
-        self.tableView.estimatedRowHeight = 120.0f;
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
-    }
-    _loadFinish = YES;
-}
-
 #pragma mark - Table View Data Source Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -70,32 +54,20 @@
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (IS_IOS8)
+    CGFloat height = DOT_COORDINATE;
+    CGFloat separatorHeight = 1.0f;
+    if (_dataList.count)
     {
-        return UITableViewAutomaticDimension;
+        if(!_commentCell)
+            _commentCell = [tableView dequeueReusableCellWithIdentifier:@"SCCommentCell"];
+        [_commentCell displayCellWithComment:_dataList[indexPath.row]];
+        // Layout the cell
+        [_commentCell updateConstraintsIfNeeded];
+        [_commentCell layoutIfNeeded];
+        height = [_commentCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
     }
-    else
-    {
-        CGFloat height = DOT_COORDINATE;
-        CGFloat separatorHeight = 1.0f;
-        if (_dataList.count)
-        {
-            if(!_commentCell)
-                _commentCell = [tableView dequeueReusableCellWithIdentifier:@"SCCommentCell"];
-            [_commentCell displayCellWithComment:_dataList[indexPath.row]];
-            // Layout the cell
-            [_commentCell updateConstraintsIfNeeded];
-            [_commentCell layoutIfNeeded];
-            height = [_commentCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-        }
-        
-        return height + separatorHeight;
-    }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return UITableViewAutomaticDimension;
+    
+    return height + separatorHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

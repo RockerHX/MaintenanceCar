@@ -171,8 +171,8 @@
                     SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:nil];
                     [_merchantList addObject:merchant];
                 }];
-                [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:_offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];   // 数据配置完成，刷新商家列表
-                _offset += MerchantListLimit;                                    // 偏移量请求参数递增
+                [_tableView reloadData];                // 数据配置完成，刷新商家列表
+                _offset += MerchantListLimit;           // 偏移量请求参数递增
             }
             else
             {

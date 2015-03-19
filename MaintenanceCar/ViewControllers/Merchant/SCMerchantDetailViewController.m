@@ -46,7 +46,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     BOOL           _needChecked;      // 检查收藏标识
     BOOL           _hasGroupProducts;
-    BOOL           _loadFinish;
     BOOL           _productOpen;
     
     NSInteger      _productCellCount;
@@ -90,13 +89,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - Config Methods
 - (void)initConfig
 {
-    if (IS_IOS8)
-    {
-        self.tableView.estimatedRowHeight = 120.0f;
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
-    }
-    
-    _loadFinish  = YES;
     _needChecked = YES;
 }
 
@@ -232,64 +224,57 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (IS_IOS8)
+    CGFloat height = DOT_COORDINATE;
+    CGFloat separatorHeight = 1.0f;
+    if (_merchantDetail)
     {
-        return UITableViewAutomaticDimension;
-    }
-    else
-    {
-        CGFloat height = DOT_COORDINATE;
-        CGFloat separatorHeight = 1.0f;
-        if (_merchantDetail)
+        switch (indexPath.section)
         {
-            switch (indexPath.section)
+            case 1:
             {
-                case 1:
+                if (_hasGroupProducts)
                 {
-                    if (_hasGroupProducts)
-                    {
-                        if (((indexPath.row == _merchantDetail.products.count) && _productOpen) || ((indexPath.row == 2) && !_productOpen))
-                            return 44.0f;
-                        else
-                            return 72.0f;
-                    }
-                    height = [self calculatedetailItemCellHeightWithIndexPath:indexPath];
-                }
-                    break;
-                case 2:
-                {
-                    if (!_hasGroupProducts)
+                    if (((indexPath.row == _merchantDetail.products.count) && _productOpen) || ((indexPath.row == 2) && !_productOpen))
                         return 44.0f;
-                    height = [self calculatedetailItemCellHeightWithIndexPath:indexPath];
+                    else
+                        return 72.0f;
                 }
-                    break;
-                case 3:
-                {
-                    if (_hasGroupProducts)
-                        return 44.0f;
-                    height = [self calculateCommentCellHeightWithIndexPath:indexPath];
-                }
-                    break;
-                case 4:
-                {
-                    height = [self calculateCommentCellHeightWithIndexPath:indexPath];
-                }
-                    break;
-                    
-                default:
-                {
-                    if(!_briefIntroductionCell)
-                        _briefIntroductionCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell"];
-                    [_briefIntroductionCell displayCellWithDetail:_merchantDetail];
-                    
-                    height = [_briefIntroductionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                }
-                    break;
+                height = [self calculatedetailItemCellHeightWithIndexPath:indexPath];
             }
+                break;
+            case 2:
+            {
+                if (!_hasGroupProducts)
+                    return 44.0f;
+                height = [self calculatedetailItemCellHeightWithIndexPath:indexPath];
+            }
+                break;
+            case 3:
+            {
+                if (_hasGroupProducts)
+                    return 44.0f;
+                height = [self calculateCommentCellHeightWithIndexPath:indexPath];
+            }
+                break;
+            case 4:
+            {
+                height = [self calculateCommentCellHeightWithIndexPath:indexPath];
+            }
+                break;
+                
+            default:
+            {
+                if(!_briefIntroductionCell)
+                    _briefIntroductionCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell"];
+                [_briefIntroductionCell displayCellWithDetail:_merchantDetail];
+                
+                height = [_briefIntroductionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            }
+                break;
         }
-        
-        return height + separatorHeight;
     }
+    
+    return height + separatorHeight;
 }
 
 - (CGFloat)calculatedetailItemCellHeightWithIndexPath:(NSIndexPath *)indexPath
@@ -313,11 +298,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     }
     else
         return 44.0f;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return UITableViewAutomaticDimension;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -562,8 +542,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             [weakSelf displayMerchantDetail];
             
             [weakSelf.tableView reloadData];
-            if (IS_IOS8)
-                [weakSelf performSelector:@selector(reloadTableView) withObject:nil afterDelay:0.1f];
         }
         else
             [weakSelf showRequestErrorAlert];
@@ -572,20 +550,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         [weakSelf showRequestErrorAlert];
         [self removeBlankView];
     }];
-}
-
-- (void)reloadTableView
-{
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_merchantDetail.comments.count ? (_merchantDetail.comments.count - 1) : 0)
-                                                              inSection:(_hasGroupProducts ? 4 : 3)]
-                          atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-    
-    [self performSelector:@selector(tableScrollToTop) withObject:nil afterDelay:0.1f];
-}
-
-- (void)tableScrollToTop
-{
-    [self.tableView scrollRectToVisible:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 1.0f, 1.0f) animated:NO];
 }
 
 /**

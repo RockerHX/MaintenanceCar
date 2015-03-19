@@ -153,8 +153,8 @@
                 [_dataList addObject:merchant];
             }];
             
-            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:weakSelf.offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                                           // 数据配置完成，刷新商家列表
-            weakSelf.offset += MerchantListLimit;                                                       // 偏移量请求参数递增
+            [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
+            weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
         }
         else
         {
