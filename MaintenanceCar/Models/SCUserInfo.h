@@ -9,6 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "SCUserCar.h"
 
+#define kLoginKey               @"kLoginKey"
+#define kUserIDKey              @"kUserIDKey"
+#define kPhoneNumberKey         @"kPhoneNumberKey"
+#define kUserCarsKey            @"kUserCarsKey"
+#define kAddAliasKey            @"kAddAliasKey"
+#define kReceiveMessageKey      @"kReceiveMessageKey"
+
 typedef NS_ENUM(BOOL, SCLoginStatus) {
     SCLoginStatusLogin  = YES,
     SCLoginStatusLogout = NO
@@ -22,10 +29,6 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
 @property (nonatomic, copy, readonly)   NSArray       *cars;            // 用户私家车集合
 @property (nonatomic, assign, readonly) SCLoginStatus loginStatus;      // 登录状态
 
-@property (nonatomic, strong, readonly) SCUserCar     *firstCar;        // 第一辆车
-@property (nonatomic, strong)           SCUserCar     *currentCar;      // 当前车辆
-
-@property (nonatomic, assign, readonly) BOOL          carsLoadFinish;   // 车辆加载结束标识
 @property (nonatomic, assign)           BOOL          addAliasSuccess;  // 推送Alias添加成功
 @property (nonatomic, assign)           BOOL          receiveMessage;   // 接受消息
 
@@ -50,10 +53,7 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
  */
 - (void)logout;
 
-- (void)userCarsReuqest:(void(^)(BOOL finish))block;
-
-- (void)load;
-- (void)refresh;
+- (void)userCarsReuqest:(void(^)(SCUserInfo *userInfo, BOOL finish))block;
 
 - (void)addMaintenanceItem:(NSString *)item;
 - (void)removeItem:(NSString *)item;

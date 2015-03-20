@@ -51,229 +51,244 @@
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  商户列表接口请求方法(API:/company_search - GET)
- *
- *  @param parameters   请求参数集合
+ *  商家列表接口请求方法(API:/company_search - GET)
  */
 - (void)startMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
-                                          Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  商户详情接口请求方法(API:/Carshop - GET)
- *
- *  @param parameters   请求参数集合
+ *  商家详情接口请求方法(API:/Carshop - GET)
  */
 - (void)startMerchantDetailAPIRequestWithParameters:(NSDictionary *)parameters
-                                            Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  商户收藏接口请求方法(API:/Collection - POST)
- *
- *  @param parameters   请求参数集合
+ *  商家收藏接口请求方法(API:/Collection - POST)
  */
 - (void)startMerchantCollectionAPIRequestWithParameters:(NSDictionary *)parameters
-                                                Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  获取收藏商户接口请求方法(API:/Collection - GET)
- *
- *  @param parameters   请求参数集合
+ *  获取收藏商家接口请求方法(API:/Collection - GET)
  */
 - (void)startGetCollectionMerchantAPIRequestWithParameters:(NSDictionary *)parameters
-                                                   Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  取消收藏商户接口请求方法(API:/Collection/delete - GET)
- *
- *  @param parameters   请求参数集合
+ *  取消收藏商家接口请求方法(API:/Collection/delete - GET)
  */
 - (void)startCancelCollectionAPIRequestWithParameters:(NSDictionary *)parameters
-                                              Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  检查商户是否收藏接口请求方法(API:/Collection/user - GET)
- *
- *  @param parameters   请求参数集合
+ *  检查商家是否收藏接口请求方法(API:/Collection/user - GET)
  */
 - (void)startCheckMerchantCollectionStutasAPIRequestWithParameters:(NSDictionary *)parameters
-                                                           Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark - Group Product API
+/**
+ *  商家团购详情接口请求方法(API:/Group_product - GET)
+ */
+- (void)startMerchantGroupProductDetailAPIRequestWithParameters:(NSDictionary *)parameters
+                                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  获取微信支付订单信息接口请求方法(API:/wepay - POST)
+ */
+- (void)startGetWeiXinPayOrderAPIRequestWithParameters:(NSDictionary *)parameters
+                                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  生成团购券接口请求方法(API:/Group_ticket - POST)
+ */
+
+- (void)startGenerateGroupProductAPIRequestWithParameters:(NSDictionary *)parameters
+                                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  我的团购券列表接口请求方法(API:/Group_ticket/all - GET)
+ */
+- (void)startGetMyCouponAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  团购券详情接口请求方法(API:/Group_ticket - GET)
+ */
+- (void)startGetCouponDetailAPIRequestWithParameters:(NSDictionary *)parameters
+                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  团购券详情接口请求方法(API:/wepay/refund - POST)
+ */
+- (void)startCouponRefundAPIRequestWithParameters:(NSDictionary *)parameters
+                                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark - Comment API
+/**
+ *  团购券详情接口请求方法(API:/Comments - POST)
+ */
+- (void)startCommentAPIRequestWithParameters:(NSDictionary *)parameters
+                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  团购券详情接口请求方法(API:/Comments/shop - GET)
+ */
+- (void)startGetMerchantCommentListAPIRequestWithParameters:(NSDictionary *)parameters
+                                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - User Center API
 /**
  *  验证码获取请求方法(API:/Verification - POST)
- *
- *  @param parameters   请求参数集合
  */
 - (void)startGetVerificationCodeAPIRequestWithParameters:(NSDictionary *)parameters
-                                                 Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  用户注册接口请求方法(API:/User - POST)
- *
- *  @param parameters   请求参数集合
  */
 - (void)startRegisterAPIRequestWithParameters:(NSDictionary *)parameters
-                                      Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  用户登录接口请求方法(API:/User - GET)
- *
- *  @param parameters   请求参数集合
  */
 - (void)startLoginAPIRequestWithParameters:(NSDictionary *)parameters
-                                   Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  用户日志记录接口请求方法(API:/Userlog - POST)
- *
- *  @param parameters   请求参数集合
  */
 - (void)startUserLogAPIRequestWithParameters:(NSDictionary *)parameters
-                                     Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - Reservation Reuqest
 /**
- *  商户预约接口请求方法(API:/Reservation - POST)
- *
- *  @param parameters   请求参数集合
+ *  商家预约接口请求方法(API:/Reservation - POST)
  */
 - (void)startMerchantReservationAPIRequestWithParameters:(NSDictionary *)parameters
-                                                 Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  我的预约接口请求方法(API:/Reservation/all - GET)
- *
- *  @param parameters   请求参数集合
  */
 - (void)startGetMyReservationAPIRequestWithParameters:(NSDictionary *)parameters
-                                              Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  更新预约接口请求方法(API:/Reservation/update - POST)
- *
- *  @param parameters   请求参数集合
  */
 - (void)startUpdateReservationAPIRequestWithParameters:(NSDictionary *)parameters
-                                               Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  更新预约接口请求方法(API:/Carshop/reservation_left - GET)
- *
- *  @param parameters   请求参数集合
  */
 - (void)startGetReservationItemNumAPIRequestWithParameters:(NSDictionary *)parameters
-                                                   Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - Car Reuqest
 /**
  *  更新汽车品牌接口请求方法(API:/Car_brand - GET)
- *
- *  @param parameters   请求参数集合
  */
 - (void)startUpdateCarBrandAPIRequestWithParameters:(NSDictionary *)parameters
-                                            Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  更新汽车型号接口请求方法(API:/Car_model - GET)
- *
- *  @param parameters   请求参数集合
  */
 - (void)startUpdateCarModelAPIRequestWithParameters:(NSDictionary *)parameters
-                                            Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  更新汽车款式接口请求方法(API:/Cars - GET)
- *
- *  @param parameters   请求参数集合
  */
 - (void)startUpdateCarsAPIRequestWithParameters:(NSDictionary *)parameters
-                                        Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  用户添加车辆接口请求方法(API:/Usercar - POST)
- *
- *  @param parameters   请求参数集合
  */
 - (void)startAddCarAPIRequestWithParameters:(NSDictionary *)parameters
-                                        Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
+ *  用户删除车辆接口请求方法(API:/Usercar/delete - POST)
+ */
+- (void)startDeleteCarAPIRequestWithParameters:(NSDictionary *)parameters
+                                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
  *  获取用户所有车辆接口请求方法(API:/Usercar - GET)
- *
- *  @param parameters   请求参数集合
  */
 - (void)startGetUserCarsAPIRequestWithParameters:(NSDictionary *)parameters
-                                         Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - Maintenance API
 /**
  *  保养数据接口请求方法(API:/Baoyang/user - GET)
- *
- *  @param parameters   请求参数集合
  */
 - (void)startMaintenanceDataAPIRequestWithParameters:(NSDictionary *)parameters
-                                             Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  更新车辆数据接口请求方法(API:/Usercar/update - POST)
- *
- *  @param parameters   请求参数集合
  */
 - (void)startUpdateUserCarAPIRequestWithParameters:(NSDictionary *)parameters
-                                           Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - Dictionary API
 /**
  *  保养数据接口请求方法(API:/Misc/dictAll - GET)
- *
- *  @param parameters   请求参数集合
  */
-- (void)startGetAllDictionaryAPIRequestWithParameters:(NSDictionary *)parameters
-                                              Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startGetAllDictionaryAPIRequestWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - Special API
 /**
  *  首页第四个按钮数据接口请求方法(API:/Special - GET)
- *
- *  @param parameters   请求参数集合
  */
 - (void)startHomePageSpecialAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  获取商户对应Flag颜色值接口请求方法(API:/Special/color - GET)
- *
- *  @param parameters   请求参数集合
+ *  获取商家对应Flag颜色值接口请求方法(API:/Special/color - GET)
  */
 - (void)startFlagsColorAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  获取商户对应Tag标签接口请求方法(API:/Cars/tags - GET)
- *
- *  @param parameters   请求参数集合
+ *  获取商家对应Tag标签接口请求方法(API:/Cars/tags - GET)
  */
 - (void)startMerchantTagsAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;

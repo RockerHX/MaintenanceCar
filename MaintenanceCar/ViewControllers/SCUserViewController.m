@@ -7,23 +7,22 @@
 //
 
 #import "SCUserViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import "MicroCommon.h"
-#import "SCUserInfo.h"
 #import "SCLoginViewController.h"
 #import "SCMyFavoriteTableViewController.h"
 #import "SCMyReservationTableViewController.h"
-#import "SCAddCarViewController.h"
+#import "SCMyCouponViewController.h"
 #import "SCUserInfoView.h"
+#import "SCChangeMaintenanceDataViewController.h"
 
 typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     SCUserCenterRowMyOrder = 0,
     SCUserCenterRowMyCollection,
+    SCUserCenterRowMyCoupon,
     SCUserCenterRowMyCustomers,
     SCUserCenterRowMyReservation,
 };
 
-@interface SCUserViewController () <UIAlertViewDelegate, SCAddCarViewControllerDelegate, SCUserInfoViewDelegate>
+@interface SCUserViewController () <SCUserInfoViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
 
 @end
 
@@ -55,13 +54,20 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 {
     [super viewDidLoad];
     
+    [self initConfig];
     [self viewConfig];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - Private Methods
+- (void)initConfig
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(pushToMyCouponViewController) name:kGenerateCouponSuccessNotification object:nil];
+    [NOTIFICATION_CENTER addObserver:_userInfoView selector:@selector(refresh) name:kUserCarsDataLoadSuccess object:nil];
+}
+
+- (void)viewConfig
+{
+//    [self.tableView reLayoutHeaderView];
 }
 
 #pragma mark - Table View Delegate Methods
@@ -78,6 +84,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
                 case SCUserCenterRowMyOrder:
                 {
                     SCMyReservationTableViewController *myReservationTableViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyReservationTableViewController"];
+                    myReservationTableViewController.showTrashItem = NO;
                     [self pushToSubViewControllerWithController:myReservationTableViewController];
                 }
                     break;
@@ -85,6 +92,11 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
                 {
                     SCMyFavoriteTableViewController *myFavoriteTableViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyFavoriteTableViewController"];
                     [self pushToSubViewControllerWithController:myFavoriteTableViewController];
+                }
+                    break;
+                case SCUserCenterRowMyCoupon:
+                {
+                    [self pushToMyCouponViewController];
                 }
                     break;
                     
@@ -102,21 +114,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
         [self showShoulLoginAlert];
 }
 
-#pragma mark - Button Action Methods
-
 #pragma mark - Private Methods
-- (void)viewConfig
-{
-    _userInfoView.delegate = self;
-    
-    if (IS_IPHONE_6)
-        self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 220.f);
-    else if (IS_IPHONE_6Plus)
-        self.tableView.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 240.f);
-    [self.tableView.tableHeaderView needsUpdateConstraints];
-    [self.tableView.tableHeaderView layoutIfNeeded];
-}
-
 /**
  *  Push到一个页面，带动画
  *
@@ -127,28 +125,11 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-/**
- *  检查用户是否需要登录，需要则跳转到登录页面
- */
-- (void)checkShouldLogin
+- (void)pushToMyCouponViewController
 {
-    if (![SCUserInfo share].loginStatus)
-    {
-        [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
-    }
-}
-
-/**
- *  提示用户登录的警告框
- */
-- (void)showShoulLoginAlert
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登录"
-                                                        message:nil
-                                                       delegate:self
-                                              cancelButtonTitle:@"取消"
-                                              otherButtonTitles:@"登录", nil];
-    [alertView show];
+    SCMyCouponViewController *myCouponViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyCouponViewController"];
+    myCouponViewController.showTrashItem = NO;
+    [self pushToSubViewControllerWithController:myCouponViewController];
 }
 
 #pragma mark - Alert View Delegate Methods
@@ -168,8 +149,6 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     {
         @try {
             UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
-            SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
-            addCarViewController.delegate = self;
             [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
         }
         @catch (NSException *exception) {
@@ -182,17 +161,35 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
         [self showShoulLoginAlert];
 }
 
-#pragma mark - SCAddCarViewController Delegate Methods
-- (void)addCarSuccessWith:(NSString *)userCarID
-{
-    // 车辆添加成功的回调方法，车辆添加成功以后需要刷新个人中心，展示出用户最新添加的车辆
-    [[SCUserInfo share] userCarsReuqest:nil];
-}
-
 #pragma mark - SCUserInfoViewDelegate Methods
 - (void)shouldLogin
 {
     [self checkShouldLogin];
+}
+
+- (void)shouldChangeCarData:(SCUserCar *)userCar
+{
+    @try {
+        SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCChangeMaintenanceDataViewController"];
+        changeMaintenanceDataViewController.delegate = self;
+        changeMaintenanceDataViewController.car = userCar;
+        [self.navigationController pushViewController:changeMaintenanceDataViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCHomePageViewController Go to the SCChangeMaintenanceDataViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
+}
+
+#pragma mark - SCChangeMaintenanceDataViewControllerDelegate Methods
+- (void)dataSaveSuccess
+{
+    // 车辆添加成功的回调方法，车辆添加成功以后需要刷新个人中心，展示出用户最新添加的车辆
+    [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
+        if (finish)
+            [_userInfoView refresh];
+    }];
 }
 
 @end

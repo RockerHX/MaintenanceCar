@@ -78,7 +78,11 @@ static SCLocationManager *locationManager = nil;
 - (NSString *)displayDistance:(CLLocationDistance)distance
 {
     NSString *displayDistance = @"";
-    if (distance < 500.f)
+    if (distance == 0)
+    {
+        displayDistance = @" - ";
+    }
+    else if (distance < 500.f)
     {
         displayDistance = @"500米以内";
     }
@@ -160,6 +164,7 @@ static SCLocationManager *locationManager = nil;
 // 定位失败，设置相关操作
 - (void)didFailToLocateUserWithError:(NSError *)error
 {
+    [_locationService stopUserLocationService];
     NSLog(@"Location error:%@", error);
     _userLocation = nil;
     _locationFailure = YES;

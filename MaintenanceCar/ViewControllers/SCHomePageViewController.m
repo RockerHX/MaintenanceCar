@@ -7,19 +7,15 @@
 //
 
 #import "SCHomePageViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import <MBProgressHUD/MBProgressHUD.h>
 #import <AFNetworking/UIButton+AFNetworking.h>
-#import "MicroCommon.h"
 #import "SCHomePageDetailView.h"
-#import "SCUserInfo.h"
-#import "SCAPIRequest.h"
 #import "SCAllDictionary.h"
 #import "SCWebViewController.h"
 #import "SCServiceMerchantListViewController.h"
 #import "SCADView.h"
+#import "SCChangeMaintenanceDataViewController.h"
 
-@interface SCHomePageViewController () <UIAlertViewDelegate, SCADViewDelegate>
+@interface SCHomePageViewController () <SCADViewDelegate, SCHomePageDetailViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
 
 @end
 
@@ -31,8 +27,6 @@
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[首页]"];
-    
-    [_detailView refresh];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -65,15 +59,13 @@
         SCServiceMerchantListViewController *washMerchanListViewController = segue.destinationViewController;
         washMerchanListViewController.isWash   = YES;
         washMerchanListViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'洗'"];
-        washMerchanListViewController.itemTite = @"洗车美容";
         washMerchanListViewController.title    = @"洗车美容";
     }
     else if ([segue.identifier isEqualToString:@"Repair"])
     {
         SCServiceMerchantListViewController *repairMerchanListViewController = segue.destinationViewController;
         repairMerchanListViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'修'"];
-        repairMerchanListViewController.itemTite = @"修车";
-        repairMerchanListViewController.title    = @"修车";
+        repairMerchanListViewController.title    = @"维修";
     }
 }
 
@@ -117,6 +109,10 @@
 #pragma mark - Private Methods
 - (void)initConfig
 {
+    _detailView.delegate = self;
+    [NOTIFICATION_CENTER addObserver:_detailView selector:@selector(refresh) name:kUserCarsDataLoadSuccess object:nil];
+    
+    [_detailView refresh];
     [self startSpecialRequest];
 }
 
@@ -184,30 +180,6 @@
     [_specialButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:special.pic_url] placeholderImage:[_specialButton backgroundImageForState:UIControlStateNormal]];
 }
 
-/**
- *  提示用户登录的警告框
- */
-- (void)showShoulLoginAlert
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登录"
-                                                        message:nil
-                                                       delegate:self
-                                              cancelButtonTitle:@"取消"
-                                              otherButtonTitles:@"登录", nil];
-    [alertView show];
-}
-
-/**
- *  检查用户是否需要登录，需要则跳转到登录页面
- */
-- (void)checkShouldLogin
-{
-    if (![SCUserInfo share].loginStatus)
-    {
-        [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
-    }
-}
-
 #pragma mark - Alert View Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -226,6 +198,7 @@
     {
         @try {
             SCWebViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
+            webViewController.title = special.text;
             [self.navigationController pushViewController:webViewController animated:YES];
         }
         @catch (NSException *exception) {
@@ -239,15 +212,47 @@
         @try {
             SCServiceMerchantListViewController *specialViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCServiceMerchantListViewController"];
             specialViewController.query    = [DefaultQuery stringByAppendingFormat:@" AND %@", special.query];
-            specialViewController.itemTite = special.text;
             specialViewController.title    = special.text;
             [self.navigationController pushViewController:specialViewController animated:YES];
         }
         @catch (NSException *exception) {
-            NSLog(@"SCHomePageViewController Go to the SCWebViewController exception reasion:%@", exception.reason);
+            NSLog(@"SCHomePageViewController Go to the SCServiceMerchantListViewController exception reasion:%@", exception.reason);
         }
         @finally {
         }
+    }
+}
+
+#pragma mark - SCHomePageDetailViewDelegate Methods
+- (void)shouldLogin
+{
+    [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
+}
+
+- (void)shouldAddCar
+{
+    @try {
+        UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
+        [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
+}
+
+- (void)shouldChangeCarData:(SCUserCar *)userCar
+{
+    @try {
+        SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCChangeMaintenanceDataViewController"];
+        changeMaintenanceDataViewController.car = userCar;
+        [self.navigationController pushViewController:changeMaintenanceDataViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCHomePageViewController Go to the SCChangeMaintenanceDataViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
     }
 }
 

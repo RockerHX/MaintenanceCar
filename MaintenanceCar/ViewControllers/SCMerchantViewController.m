@@ -7,11 +7,7 @@
 //
 
 #import "SCMerchantViewController.h"
-#import <UMengAnalytics/MobClick.h>
-#import <MBProgressHUD/MBProgressHUD.h>
-#import "MicroCommon.h"
 #import "MJRefresh.h"
-#import "SCAPIRequest.h"
 #import "SCMerchant.h"
 #import "SCMerchantListCell.h"
 #import "SCLocationManager.h"
@@ -29,7 +25,7 @@
     NSString       *_distanceCondition;
 }
 
-@property (nonatomic, assign) NSInteger      offset;        // 商户列表请求偏移量，用户上拉刷新的分页请求操作
+@property (nonatomic, assign) NSInteger      offset;        // 商家列表请求偏移量，用户上拉刷新的分页请求操作
 
 @end
 
@@ -40,14 +36,14 @@
 {
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"[商户] - 列表"];
+    [MobClick beginLogPageView:@"[商家] - 列表"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"[商户] - 列表"];
+    [MobClick endLogPageView:@"[商家] - 列表"];
 }
 
 - (void)viewDidLoad
@@ -66,12 +62,6 @@
     [self refreshMerchantList];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table View Data Source Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -81,7 +71,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SCMerchantListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantListCell" forIndexPath:indexPath];
-    // 刷新商户列表，设置相关数据
+    // 刷新商家列表，设置相关数据
     [cell handelWithMerchant:_merchantList[indexPath.row]];
     
     return cell;
@@ -93,7 +83,7 @@
     // 列表栏被点击，执行取消选中动画
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    // 根据选中的商户，取到其商户ID，跳转到商户页面进行详情展示
+    // 根据选中的商家，取到其商家ID，跳转到商家页面进行详情展示
     SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMerchantDetailViewController"];
     merchantDetialViewControler.merchant = _merchantList[indexPath.row];
     [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
@@ -117,10 +107,10 @@
 - (void)initConfig
 {
     _query             = DefaultQuery;
-    _offset            = 0;                     // 第一次进入商户列表列表请求偏移量必须为0
+    _offset            = 0;                     // 第一次进入商家列表列表请求偏移量必须为0
     _distanceCondition = MerchantListRadius;
 
-    _merchantList      = [@[] mutableCopy];     // 商户列表容器初始化
+    _merchantList      = [@[] mutableCopy];     // 商家列表容器初始化
 }
 
 - (void)viewConfig
@@ -139,8 +129,14 @@
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
         [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
-        ShowPromptHUDWithText(weakSelf.navigationController.view, @"定位失败，采用当前城市中心坐标", 0.5f);
+        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"定位失败，采用当前城市中心坐标！" delay:0.5f];
         [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
+                                                            message:@"定位失败，请检查您的定位服务是否打开：设置->隐私->定位服务"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"确定"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
     }];
 }
 
@@ -151,7 +147,7 @@
 }
 
 /**
- *  商户列表数据请求方法，参数：query, limit, offset, radius, longtitude, latitude
+ *  商家列表数据请求方法，参数：query, limit, offset, radius, longtitude, latitude
  */
 - (void)startMerchantListRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
 {
@@ -163,25 +159,24 @@
                                  @"radius"    : _distanceCondition,
                                  @"latitude"  : latitude,
                                  @"longtitude": longitude};
-    [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters Success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [_tableView footerEndRefreshing];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
-            
             if (list.count)
             {
-                // 遍历请求回来的商户数据，生成SCMerchant用于商户列表显示
+                // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
                 [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                     SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:nil];
                     [_merchantList addObject:merchant];
                 }];
-                [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:_offset ? UITableViewRowAnimationTop : UITableViewRowAnimationFade];                                   // 数据配置完成，刷新商户列表
-                _offset += MerchantListLimit;                                       // 偏移量请求参数递增
+                [_tableView reloadData];                // 数据配置完成，刷新商家列表
+                _offset += MerchantListLimit;           // 偏移量请求参数递增
             }
             else
             {
-                ShowPromptHUDWithText(weakSelf.navigationController.view, @"优质商户陆续添加中...", 0.5f);
+                [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"优质商家陆续添加中..." delay:0.5f];
                 [_tableView reloadData];
             }
         }

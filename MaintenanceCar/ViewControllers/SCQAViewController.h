@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 MaintenanceCar. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SCViewController.h"
 
 @interface SCQAViewController : UIViewController
 

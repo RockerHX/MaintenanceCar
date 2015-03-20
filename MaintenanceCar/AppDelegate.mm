@@ -12,13 +12,10 @@
 #import "UMFeedback.h"
 #import "BMapKit.h"
 #import "UMessage.h"
+#import "WXApi.h"
 #import "SCUserInfo.h"
 
-@interface AppDelegate ()
-{
-    BMKMapManager *_mapManager;
-}
-
+@interface AppDelegate () <WXApiDelegate>
 @end
 
 @implementation AppDelegate
@@ -28,8 +25,8 @@
 
     // 设置导航条和电池条颜色
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    [[UINavigationBar appearance] setBarTintColor:APPColor];
-    [[UITabBar appearance] setSelectedImageTintColor:APPColor];
+    [[UINavigationBar appearance] setBarTintColor:ThemeColor];
+    [[UITabBar appearance] setSelectedImageTintColor:ThemeColor];
     
     // 设置导航条字体颜色
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
@@ -39,16 +36,18 @@
 #pragma mark UMeng Analytics SDK
     // 启用[友盟反馈]
     [UMFeedback setAppkey:UMengAPPKEY];
-    // 启动[友盟统计]，采用启动发送的方式 - BATCH
-    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:@"App Store"];
     // 设置版本号
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [MobClick setAppVersion:version];
     [MobClick checkUpdate];         // 集成友盟更新
     
+    // 启动[友盟统计]，采用启动发送的方式 - BATCH
+//    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"AppStore:%@", version]];
+#warning @"发布时更改测试统计"
+    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"TestVersion:%@", version]];
+    
     //set AppKey and AppSecret
     [UMessage startWithAppkey:UMengAPPKEY launchOptions:launchOptions];
-    
     //register remoteNotification types
     if (IS_IOS7)
     {
@@ -103,6 +102,11 @@
         NSLog(@"manager start failed!");
     }
     
+#pragma mark - WeiXin SDK
+#warning @"微信SDK"真机调试和上传记得打开注释
+//#warning @"微信SDK"只支持真机调试
+//    [WXApi registerApp:WeiXinKEY];
+    
     return YES;
 }
 
@@ -120,5 +124,41 @@
 {
     NSLog(@"%s", __FUNCTION__);
 }
+
+//#warning @"微信SDK"真机调试和上传记得打开注释
+//- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+//{
+//#warning @"微信SDK"只支持真机调试
+//    return  [WXApi handleOpenURL:url delegate:self];
+//}
+//
+//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+//{
+//#warning @"微信SDK"只支持真机调试
+//    return  [WXApi handleOpenURL:url delegate:self];
+//}
+//
+//#pragma mark - Wei Xin Pay Delegate Methods
+//#warning @"微信SDK"只支持真机调试
+//- (void)onResp:(BaseResp *)resp
+//{
+//    if ([resp isKindOfClass:[PayResp class]])
+//    {
+//        PayResp *response = (PayResp *)resp;
+//        switch (response.errCode) {
+//            case WXSuccess:
+//            {
+//                //服务器端查询支付通知或查询API返回的结果再提示成功
+//                [NOTIFICATION_CENTER postNotificationName:kWeiXinPaySuccessNotification object:nil];
+//            }
+//                break;
+//            default:
+//            {
+//                [NOTIFICATION_CENTER postNotificationName:kWeiXinPayFailureNotification object:nil];
+//            }
+//                break;
+//        }
+//    }
+//}
 
 @end

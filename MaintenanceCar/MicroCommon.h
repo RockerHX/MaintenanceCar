@@ -39,16 +39,17 @@
 #pragma mark -
 #define UMengAPPKEY                     @"54995e36fd98c5b910000cc6"     // 友盟SDK对应的APPKEY
 #define BaiDuMapKEY                     @"wNZGKBVyuCobA8GcksWWx9xD"     // 百度地图SDK对应的APPKEY
+#define WeiXinKEY                       @"wx6194bafa9ae065cc"           // 微信SDK对应的APPKEY
 
-#define MerchantListLimit               10                              // 商户列表搜索返回结果条数限制
-#define MerchantListRadius              @"100"                          // 商户列表搜索半径, 用于搜索距离当前位置多少公里范围内的商户. 单位公里(千米)
+#define MerchantListLimit               10                              // 商家列表搜索返回结果条数限制
+#define MerchantListRadius              @"100"                          // 商家列表搜索半径, 用于搜索距离当前位置多少公里范围内的商家. 单位公里(千米)
 
 #define VerificationCodeTimeExpire      1                               // 验证码过期时间，单位为分钟
 
 
 #define MerchantDetailViewControllerStoryBoardID    @"SCMerchantDetailViewController"
 #define ReservationViewControllerStoryBoardID       @"SCReservationViewController"
-#define MerchantCellReuseIdentifier                 @"MerchantCellReuseIdentifier"
+#define MerchantCellReuseIdentifier                 @"SCMerchantTableViewCell"
 
 #define DisplayNameKey                  @"DisplayName"
 #define RequestValueKey                 @"RequestValue"
@@ -73,24 +74,17 @@
 
 #pragma mark - Notification Name Define
 #pragma mark -
+#define kUserCarsDataLoadSuccess                    @"kUserCarsDataLoadSuccess"                 // 用户车辆数据加载成功的通知
 #define kUserNeedLoginNotification                  @"kUserNeedLoginNotification"               // 需要用户的通知，收到此通知，会跳转到登录页面
-#define kMaintenanceReservationNotification         @"kMaintenanceReservationNotification"      // 保养页面内[预约]按钮点击触发的通知 - 用于传递tag，得到所点击按钮是位于列表内的index
-#define kMerchantDtailReservationNotification       @"kMerchantDtailReservationNotification"    // 商户详情内[预约]按钮点击触发的通知 - 用于传递tag，得到所点击按钮是位于列表内的index
+#define kUserLoginSuccessNotification               @"kUserLoginSuccessNotification"            // 用户登录成功的通知，用于登录成功之后通知对应页面刷新数据
+#define kWeiXinPaySuccessNotification               @"kWeiXinPaySuccessNotification"            // 微信支付成功的通知
+#define kWeiXinPayFailureNotification               @"kWeiXinPayFailureNotification"            // 微信支付失败的通知
+#define kGenerateCouponSuccessNotification          @"kGenerateCouponSuccessNotification"       // 生成团购券成功的通知
 
 
 #pragma mark - Define Methods
 #pragma mark -
-#define ShowPromptHUDWithText(view, text, delay)          ({\
-MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];\
-hud.mode = MBProgressHUDModeText;\
-hud.yOffset = SCREEN_HEIGHT/2 - 100.0f;\
-hud.margin = 10.f;\
-hud.labelText = text;\
-hud.removeFromSuperViewOnHide = YES;\
-[hud hide:YES afterDelay:delay];\
-})
-
-#define APPColor        UIColorWithRGBA(44.0f, 124.0f, 185.0f, 1.0f)
+#define ThemeColor        UIColorWithRGBA(44.0f, 124.0f, 185.0f, 1.0f)
 
 
 #pragma mark - Debug Define

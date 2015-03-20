@@ -7,7 +7,6 @@
 //
 
 #import "SCAPIRequest.h"
-
 #define CustomRequestHeaderKey        @"X-API-KEY"                  // 请求加密Key
 #define CustomRequestHeaderValue      @"SlwX20U65YMTuNRDe3fZ"       // 请求加密Value
 
@@ -66,14 +65,22 @@
  */
 - (void)customSecurityPolicy
 {
-    /**** SSL Pinning ****/
-    NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"cer"];                    // 获取cer秘钥文件路径
-    NSData *certData = [NSData dataWithContentsOfFile:cerPath];
-    AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
-    securityPolicy.allowInvalidCertificates = NO;                                                           // 不允许使用无效证书
-    securityPolicy.pinnedCertificates = @[certData];
-    /**** SSL Pinning ****/
-    self.securityPolicy = securityPolicy;
+    @try {
+        /**** SSL Pinning ****/
+        NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"cer"];                    // 获取cer秘钥文件路径
+        NSData *certData = [NSData dataWithContentsOfFile:cerPath];
+        AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
+        securityPolicy.allowInvalidCertificates = NO;                                                           // 不允许使用无效证书
+        securityPolicy.pinnedCertificates = @[certData];
+        /**** SSL Pinning ****/
+        self.securityPolicy = securityPolicy;
+//        self.requestSerializer.cachePolicy = NSURLRequestReloadRevalidatingCacheData;
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%s:%@", __FUNCTION__, exception.reason);
+    }
+    @finally {
+    }
 }
 
 /**
@@ -129,71 +136,132 @@
 
 #pragma mark - Merchant API
 - (void)startMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
-                                          Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:SearchAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startMerchantDetailAPIRequestWithParameters:(NSDictionary *)parameters
-                                            Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:MerchantDetailAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startMerchantCollectionAPIRequestWithParameters:(NSDictionary *)parameters
-                                                Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestPOSTMethodsWithAPI:MerchantCollectionAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startGetCollectionMerchantAPIRequestWithParameters:(NSDictionary *)parameters
-                                                   Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:MerchantCollectionAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startCancelCollectionAPIRequestWithParameters:(NSDictionary *)parameters
-                                              Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestPOSTMethodsWithAPI:CancelCollectionAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startCheckMerchantCollectionStutasAPIRequestWithParameters:(NSDictionary *)parameters
-                                                           Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:CheckMerchantCollectionAPIURL parameters:parameters success:success failure:failure];
 }
 
+#pragma mark - Group Product API
+- (void)startMerchantGroupProductDetailAPIRequestWithParameters:(NSDictionary *)parameters
+                                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MerchantGroupProductAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startGetWeiXinPayOrderAPIRequestWithParameters:(NSDictionary *)parameters
+                                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:WeiXinPayAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startGenerateGroupProductAPIRequestWithParameters:(NSDictionary *)parameters
+                                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:GenerateCouponAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startGetMyCouponAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MyGroupProductAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startGetCouponDetailAPIRequestWithParameters:(NSDictionary *)parameters
+                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:CouponDetailAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startCouponRefundAPIRequestWithParameters:(NSDictionary *)parameters
+                                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:CouponRefundAPIURL parameters:parameters success:success failure:failure];
+}
+
+#pragma mark - Comment API
+/**
+ *  团购券详情接口请求方法(API:/Group_ticket - GET)
+ */
+- (void)startCommentAPIRequestWithParameters:(NSDictionary *)parameters
+                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:CommentAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startGetMerchantCommentListAPIRequestWithParameters:(NSDictionary *)parameters
+                                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MerchantCommentAPIURL parameters:parameters success:success failure:failure];
+}
+
 #pragma mark - User Center API
 - (void)startGetVerificationCodeAPIRequestWithParameters:(NSDictionary *)parameters
-                                                 Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestPOSTMethodsWithAPI:VerificationCodeAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startRegisterAPIRequestWithParameters:(NSDictionary *)parameters
-                                      Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 {
     [self requestPOSTMethodsWithAPI:RegisterAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startLoginAPIRequestWithParameters:(NSDictionary *)parameters
-                                   Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:LoginAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startUserLogAPIRequestWithParameters:(NSDictionary *)parameters
-                                     Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestPOSTMethodsWithAPI:UserLogAPIURL parameters:parameters success:success failure:failure];
@@ -201,28 +269,28 @@
 
 #pragma mark - Reservation Reuqest
 - (void)startMerchantReservationAPIRequestWithParameters:(NSDictionary *)parameters
-                                                 Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestPOSTMethodsWithAPI:MerchantReservationAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startGetMyReservationAPIRequestWithParameters:(NSDictionary *)parameters
-                                              Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:MyReservationAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startUpdateReservationAPIRequestWithParameters:(NSDictionary *)parameters
-                                               Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestPOSTMethodsWithAPI:UpdateReservationAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startGetReservationItemNumAPIRequestWithParameters:(NSDictionary *)parameters
-                                                   Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:ReservationItemNumAPIURL parameters:parameters success:success failure:failure];
@@ -230,35 +298,42 @@
 
 #pragma mark - Add Car Request
 - (void)startUpdateCarBrandAPIRequestWithParameters:(NSDictionary *)parameters
-                                            Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:CarBrandAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startUpdateCarModelAPIRequestWithParameters:(NSDictionary *)parameters
-                                            Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:CarModelAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startUpdateCarsAPIRequestWithParameters:(NSDictionary *)parameters
-                                        Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:CarsAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startAddCarAPIRequestWithParameters:(NSDictionary *)parameters
-                                    Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestPOSTMethodsWithAPI:AddCarAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startDeleteCarAPIRequestWithParameters:(NSDictionary *)parameters
+                                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:DeleteCarAPIURL parameters:parameters success:success failure:failure];
+}
+
 - (void)startGetUserCarsAPIRequestWithParameters:(NSDictionary *)parameters
-                                         Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:AddCarAPIURL parameters:parameters success:success failure:failure];
@@ -266,25 +341,24 @@
 
 #pragma mark - Maintenance Request
 - (void)startMaintenanceDataAPIRequestWithParameters:(NSDictionary *)parameters
-                                             Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:MaintenanceAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startUpdateUserCarAPIRequestWithParameters:(NSDictionary *)parameters
-                                           Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestPOSTMethodsWithAPI:UpdateCarAPIURL parameters:parameters success:success failure:failure];
 }
 
 #pragma mark - AllDictionary Request
-- (void)startGetAllDictionaryAPIRequestWithParameters:(NSDictionary *)parameters
-                                              Success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startGetAllDictionaryAPIRequestWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:AllDictionaryAPIURL parameters:parameters success:success failure:failure];
+    [self requestGETMethodsWithAPI:AllDictionaryAPIURL parameters:nil success:success failure:failure];
 }
 
 #pragma mark - Special API

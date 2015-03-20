@@ -6,14 +6,14 @@
 //  Copyright (c) 2014年 MaintenanceCar. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SCViewController.h"
 
 @class SCMerchantFilterView;
 
 @interface SCMerchantViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet SCMerchantFilterView *merchantFilterView;  // 商户列表的筛选View
-@property (weak, nonatomic) IBOutlet UITableView          *tableView;           // 商户列表View
+@property (weak, nonatomic) IBOutlet SCMerchantFilterView *merchantFilterView;  // 商家列表的筛选View
+@property (weak, nonatomic) IBOutlet UITableView          *tableView;           // 商家列表View
 
 // [地图]按钮触发事件
 - (IBAction)mapItemPressed:(UIBarButtonItem *)sender;
