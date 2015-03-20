@@ -16,6 +16,7 @@
 #import "SCGroupProductCell.h"
 #import "SCShowMoreProductCell.h"
 #import "SCMerchantDetailItemCell.h"
+#import "SCMerchantServiceCell.h"
 #import "SCCommentCell.h"
 #import "SCCollectionItem.h"
 #import "SCReservationViewController.h"
@@ -114,10 +115,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         switch (section)
         {
             case 1:
-                return (_hasGroupProducts ? _productCellCount : 6);
+                return (_hasGroupProducts ? _productCellCount : 4);
                 break;
             case 2:
-                return (_hasGroupProducts ? 6 : 1);
+                return (_hasGroupProducts ? 4 : 1);
                 break;
             case 3:
                 return (_hasGroupProducts ? 1 : (_merchantDetail.comments.count ? _merchantDetail.comments.count : 1));
@@ -159,8 +160,16 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                 }
                 else
                 {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
-                    [(SCMerchantDetailItemCell *)cell displayCellWithIndex:indexPath detail:_merchantDetail];
+                    if (indexPath.row == 3)
+                    {
+                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantServiceCell" forIndexPath:indexPath];
+                        [(SCMerchantServiceCell *)cell displayCellWithDetail:_merchantDetail];
+                    }
+                    else
+                    {
+                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
+                        [(SCMerchantDetailItemCell *)cell displayCellWithIndex:indexPath detail:_merchantDetail];
+                    }
                 }
             }
                 break;
@@ -168,8 +177,16 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             {
                 if (_hasGroupProducts)
                 {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
-                    [(SCMerchantDetailItemCell *)cell displayCellWithIndex:indexPath detail:_merchantDetail];
+                    if (indexPath.row == 3)
+                    {
+                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantServiceCell" forIndexPath:indexPath];
+                        [(SCMerchantServiceCell *)cell displayCellWithDetail:_merchantDetail];
+                    }
+                    else
+                    {
+                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
+                        [(SCMerchantDetailItemCell *)cell displayCellWithIndex:indexPath detail:_merchantDetail];
+                    }
                 }
                 else
                 {
@@ -280,11 +297,17 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (CGFloat)calculatedetailItemCellHeightWithIndexPath:(NSIndexPath *)indexPath
 {
-    if(!_detailItemCell)
-        _detailItemCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell"];
-    [_detailItemCell displayCellWithIndex:indexPath detail:_merchantDetail];
-    
-    return [_detailItemCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    if (indexPath.row != 3)
+    {
+        CGFloat height;
+        if(!_detailItemCell)
+            _detailItemCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell"];
+        [_detailItemCell displayCellWithIndex:indexPath detail:_merchantDetail];
+        
+        height = [_detailItemCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+        return (height > 43.0f) ? height : 43.0f;
+    }
+    return 120.0f;
 }
 
 - (CGFloat)calculateCommentCellHeightWithIndexPath:(NSIndexPath *)indexPath
@@ -423,7 +446,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if ((_hasGroupProducts && (section == 3)) || (!_hasGroupProducts && (section == 2)) || !section || section == 4)
+    if ((!_hasGroupProducts && (section == 2)) || !section || section == 3|| section == 4)
         return DOT_COORDINATE;
     return 30.0f;
 }

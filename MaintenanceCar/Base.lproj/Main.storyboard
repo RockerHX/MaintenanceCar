@@ -4559,6 +4559,106 @@
                                     <outlet property="icon" destination="6Ft-io-my1" id="b4H-KA-8kA"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCMerchantServiceCell" rowHeight="120" id="0iJ-MZ-H0L" customClass="SCMerchantServiceCell">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0iJ-MZ-H0L" id="1LB-vG-OOR">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MerchantBusinessIcon" translatesAutoresizingMaskIntoConstraints="NO" id="KOR-cX-1CM">
+                                            <rect key="frame" x="15" y="15" width="21" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="21" id="gU1-v1-JR5"/>
+                                                <constraint firstAttribute="height" constant="21" id="oTe-5r-Ece"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="业务内容" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="268" translatesAutoresizingMaskIntoConstraints="NO" id="vnp-bc-hhp">
+                                            <rect key="frame" x="44" y="8" width="268" height="34"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="34" id="wN0-ed-svi"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ogu-Hq-Ya7">
+                                            <rect key="frame" x="21" y="44" width="285" height="70"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="70" id="riz-lk-elS"/>
+                                            </constraints>
+                                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="10" id="RAt-61-DRd">
+                                                <size key="itemSize" width="55" height="70"/>
+                                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            </collectionViewFlowLayout>
+                                            <cells>
+                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SCServiceItemCell" id="W4D-al-zBN" customClass="SCServiceItemCell">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                        <rect key="frame" x="0.0" y="0.0" width="55" height="70"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="业务名称" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8da-2k-PBg">
+                                                                <rect key="frame" x="0.0" y="55" width="55" height="15"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="15" id="Qqo-yC-K3W"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fV-Hl-bOM">
+                                                                <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
+                                                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <state key="normal">
+                                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="itemPressed:" destination="W4D-al-zBN" eventType="touchUpInside" id="SDO-OR-6Qe"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    </view>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="8da-2k-PBg" secondAttribute="trailing" id="19Q-Rz-Sgp"/>
+                                                        <constraint firstAttribute="bottom" secondItem="8da-2k-PBg" secondAttribute="bottom" id="BUO-zj-jd1"/>
+                                                        <constraint firstItem="8fV-Hl-bOM" firstAttribute="leading" secondItem="W4D-al-zBN" secondAttribute="leading" id="OWN-nO-msh"/>
+                                                        <constraint firstItem="8da-2k-PBg" firstAttribute="top" secondItem="8fV-Hl-bOM" secondAttribute="bottom" id="RFh-q6-PZn"/>
+                                                        <constraint firstItem="8fV-Hl-bOM" firstAttribute="top" secondItem="W4D-al-zBN" secondAttribute="top" id="ixK-fC-r9k"/>
+                                                        <constraint firstAttribute="trailing" secondItem="8fV-Hl-bOM" secondAttribute="trailing" id="jpM-Rw-IHw"/>
+                                                        <constraint firstItem="8da-2k-PBg" firstAttribute="leading" secondItem="W4D-al-zBN" secondAttribute="leading" id="qgv-Pr-huV"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <outlet property="icon" destination="8fV-Hl-bOM" id="vgH-WK-hcb"/>
+                                                        <outlet property="textLabel" destination="8da-2k-PBg" id="qKS-W9-twl"/>
+                                                    </connections>
+                                                </collectionViewCell>
+                                            </cells>
+                                            <connections>
+                                                <outlet property="dataSource" destination="0iJ-MZ-H0L" id="J6P-by-bTe"/>
+                                                <outlet property="delegate" destination="0iJ-MZ-H0L" id="LZR-pB-OPE"/>
+                                            </connections>
+                                        </collectionView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="vnp-bc-hhp" secondAttribute="trailing" priority="750" constant="8" id="FPO-aR-1k1"/>
+                                        <constraint firstItem="KOR-cX-1CM" firstAttribute="centerY" secondItem="vnp-bc-hhp" secondAttribute="centerY" id="K2Z-ke-1WI"/>
+                                        <constraint firstItem="KOR-cX-1CM" firstAttribute="leading" secondItem="1LB-vG-OOR" secondAttribute="leading" constant="15" id="Kw1-SU-yiD"/>
+                                        <constraint firstItem="vnp-bc-hhp" firstAttribute="top" secondItem="1LB-vG-OOR" secondAttribute="top" constant="8" id="LAs-g4-ogN"/>
+                                        <constraint firstItem="ogu-Hq-Ya7" firstAttribute="top" secondItem="vnp-bc-hhp" secondAttribute="bottom" constant="2" id="Uud-rq-l8k"/>
+                                        <constraint firstItem="ogu-Hq-Ya7" firstAttribute="trailing" secondItem="vnp-bc-hhp" secondAttribute="trailing" constant="-6" id="okZ-Ee-UfM"/>
+                                        <constraint firstItem="ogu-Hq-Ya7" firstAttribute="leading" secondItem="KOR-cX-1CM" secondAttribute="leading" constant="6" id="tWu-ra-ETY"/>
+                                        <constraint firstItem="vnp-bc-hhp" firstAttribute="leading" secondItem="KOR-cX-1CM" secondAttribute="trailing" constant="8" id="tdF-n1-3gD"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="serviceView" destination="ogu-Hq-Ya7" id="faL-eu-R1v"/>
+                                </connections>
+                            </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SCShowMoreCell" id="ohc-kp-YeA" customClass="SCShowMoreCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -4793,7 +4893,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Frj-5y-CwQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1084.8" y="222.94"/>
+            <point key="canvasLocation" x="1084" y="222"/>
         </scene>
         <!--商家地图-->
         <scene sceneID="4P2-iO-ZEH">
