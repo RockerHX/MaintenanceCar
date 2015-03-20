@@ -62,7 +62,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 - (void)initConfig
 {
     [NOTIFICATION_CENTER addObserver:self selector:@selector(pushToMyCouponViewController) name:kGenerateCouponSuccessNotification object:nil];
-    [NOTIFICATION_CENTER addObserver:_userInfoView selector:@selector(refresh) name:kUserCarsDataLoadSuccess object:nil];
+    [NOTIFICATION_CENTER addObserver:_userInfoView selector:@selector(refresh) name:kUserCarsDataNeedReloadSuccess object:nil];
 }
 
 - (void)viewConfig
@@ -185,11 +185,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 #pragma mark - SCChangeMaintenanceDataViewControllerDelegate Methods
 - (void)dataSaveSuccess
 {
-    // 车辆添加成功的回调方法，车辆添加成功以后需要刷新个人中心，展示出用户最新添加的车辆
-    [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
-        if (finish)
-            [_userInfoView refresh];
-    }];
+    [_userInfoView refresh];
 }
 
 @end

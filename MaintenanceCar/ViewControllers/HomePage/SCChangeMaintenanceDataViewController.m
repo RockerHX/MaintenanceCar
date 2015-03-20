@@ -140,7 +140,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
                 if (finish)
                 {
                     [weakSelf showHUDAlertToViewController:weakSelf tag:SCHUDTypeDeleteCar text:@"删除成功！" delay:0.5f];
-                    [NOTIFICATION_CENTER postNotificationName:kUserCarsDataLoadSuccess object:nil];
+                    [NOTIFICATION_CENTER postNotificationName:kUserCarsDataNeedReloadSuccess object:nil];
                 }
             }];
         }

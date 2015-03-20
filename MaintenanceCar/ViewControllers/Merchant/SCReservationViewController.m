@@ -49,7 +49,7 @@
 
 - (void)dealloc
 {
-    [NOTIFICATION_CENTER removeObserver:self name:kUserCarsDataLoadSuccess object:nil];
+    [NOTIFICATION_CENTER removeObserver:self name:kUserCarsDataNeedReloadSuccess object:nil];
 }
 
 #pragma mark - Config Methods
@@ -61,7 +61,7 @@
     
     // 设置商家名称显示
     _merchantNameLabel.text = _merchant.name;
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(refresh) name:kUserCarsDataLoadSuccess object:nil];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(refresh) name:kUserCarsDataNeedReloadSuccess object:nil];
 }
 
 - (void)viewConfig

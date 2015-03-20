@@ -74,7 +74,7 @@
 
 #pragma mark - Notification Name Define
 #pragma mark -
-#define kUserCarsDataLoadSuccess                    @"kUserCarsDataLoadSuccess"                 // 用户车辆数据加载成功的通知
+#define kUserCarsDataNeedReloadSuccess              @"kUserCarsDataNeedReloadSuccess"           // 用户车辆数据加载成功的通知
 #define kUserNeedLoginNotification                  @"kUserNeedLoginNotification"               // 需要用户的通知，收到此通知，会跳转到登录页面
 #define kUserLoginSuccessNotification               @"kUserLoginSuccessNotification"            // 用户登录成功的通知，用于登录成功之后通知对应页面刷新数据
 #define kWeiXinPaySuccessNotification               @"kWeiXinPaySuccessNotification"            // 微信支付成功的通知
