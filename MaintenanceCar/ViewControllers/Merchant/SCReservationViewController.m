@@ -7,7 +7,6 @@
 //
 
 #import "SCReservationViewController.h"
-#import "SCMerchant.h"
 #import "SCServiceItem.h"
 #import "SCPickerView.h"
 #import "SCReservationDateViewController.h"
@@ -16,7 +15,6 @@
 @interface SCReservationViewController () <UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, SCPickerViewDelegate, SCReservationDateViewControllerDelegate>
 {
     NSString *_selectedCarID;
-    NSString *_reservationType;
     NSString *_reservationDate;
 }
 
@@ -84,12 +82,15 @@
             for (SCDictionaryItem *item in items)
             {
                 if ([item.dict_id isEqualToString:weakSelf.reservationType])
+                {
                     _serviceItem = [[SCServiceItem alloc] initWithServiceID:item.dict_id serviceName:item.name];
+                    break;
+                }
             }
+            [weakSelf refreshProjectLabel];
         }];
     }
-    _projectLabel.text                      = _serviceItem.service_name;
-    _reservationType                        = _serviceItem.service_id;
+    [self refreshProjectLabel];
     
     NSArray *items = [SCUserInfo share].selectedItems;
     for (NSString *item in items)
@@ -155,6 +156,12 @@
     [_ownerNameTextField resignFirstResponder];
     [_ownerPhoneNumberTextField resignFirstResponder];
     [_remarkTextField resignFirstResponder];
+}
+
+- (void)refreshProjectLabel
+{
+    _projectLabel.text = _serviceItem.service_name;
+    _reservationType   = _serviceItem.service_id;
 }
 
 /**

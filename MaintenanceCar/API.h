@@ -63,6 +63,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define MyReservationAPI            @"/Reservation/all"                     // 我的预约API
 #define UpdateReservationAPI        @"/Reservation/update"                  // 更新预约API
 #define ReservationItemNumAPI       @"/Carshop/reservation_left"            // 预约日期数量API
+#define HomePageReservationAPI      @"/Reservation/latest"                  // 最新预约信息API
 
 #define CarBrandAPI                 @"/Cars/brands"                         // 汽车品牌API
 #define CarModelAPI                 @"/Cars/models"                         // 汽车型号API
@@ -105,6 +106,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define MyReservationAPIURL             [APIURL stringByAppendingString:MyReservationAPI]           // 商家预约接口URL - 用于商家预约项目
 #define UpdateReservationAPIURL         [APIURL stringByAppendingString:UpdateReservationAPI]       // 更新预约接口URL - 用于用户取消预约项目
 #define ReservationItemNumAPIURL        [APIURL stringByAppendingString:ReservationItemNumAPI]      // 预约日期数量接口URL - 用于获取预约项目数量
+#define HomePageReservationAPIURL       [APIURL stringByAppendingString:HomePageReservationAPI]     // 最新预约信息接口URL - 用于首页获取
 
 #define CarBrandAPIURL                  [APIURL stringByAppendingString:CarBrandAPI]                // 汽车品牌接口URL - 用于更新汽车品牌
 #define CarModelAPIURL                  [APIURL stringByAppendingString:CarModelAPI]                // 汽车型号接口URL - 用于更新汽车型号

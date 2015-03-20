@@ -94,12 +94,13 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 
 - (void)startReservationItemsRequest
 {
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [self showHUDOnViewController:self];
     
     __weak typeof(self)weakSelf = self;
     NSDictionary *parameters = @{@"company_id": _companyID,
                                        @"type": _type};
     [[SCAPIRequest manager] startGetReservationItemNumAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [weakSelf hideHUDOnViewController:self];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             _dateItmes = responseObject;
@@ -109,7 +110,6 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
             
             [_dateCollectionView reloadData];
             [_selectedCollectionView reloadData];
-            [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
         }
         else
             [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:NetWorkError delay:0.5f];

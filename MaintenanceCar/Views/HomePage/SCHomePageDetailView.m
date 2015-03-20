@@ -9,13 +9,16 @@
 #import "SCHomePageDetailView.h"
 #import "MicroCommon.h"
 #import "SCUserInfo.h"
+#import "SCAPIRequest.h"
+#import "SCReservation.h"
+#import "SCAllDictionary.h"
 
 @interface SCHomePageDetailView ()
 {
-    NSInteger         _carIndex;
     SCUserCar         *_currentCar;
+    SCReservation     *_reservation;
     
-    BOOL              _canTap;
+    BOOL               _canTap;
 }
 
 @end
@@ -25,110 +28,123 @@
 #pragma mark - Init Methods
 - (void)awakeFromNib
 {
-    if (IS_IPHONE_5 || IS_IPHONE_5_PRIOR)
-        _carNameLabel.font = [UIFont systemFontOfSize:20.0f];
-    
-    [self getUserCar];
-    
-    [_carNameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer)]];
-    [_carFullNameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer)]];
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(getUserCar) name:kUserLoginSuccessNotification object:nil];
+    _canTap = YES;
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(refresh) name:kUserLoginSuccessNotification object:nil];
 }
 
 #pragma Action Methods
-- (IBAction)preCarButtonPressed:(UIButton *)sender
+- (IBAction)promptTap:(id)sender
 {
-    SCUserInfo *userInfo = [SCUserInfo share];
-    if (_carIndex > Zero)
+    if (_canTap)
     {
-        _carIndex --;
-        _currentCar = userInfo.cars[_carIndex];
-        
-        _nextButton.enabled = YES;
-        if (!_carIndex)
-            sender.enabled = NO;
-        [self displayCarData];
-    }
-}
-
-- (IBAction)nextButtonPressed:(UIButton *)sender
-{
-    SCUserInfo *userInfo = [SCUserInfo share];
-    NSInteger count = userInfo.cars.count - 1;
-    if (_carIndex < count)
-    {
-        _carIndex ++;
-        _currentCar = userInfo.cars[_carIndex];
-        
-        _preButton.enabled = YES;
-        if (_carIndex == count)
-            sender.enabled = NO;
-        [self displayCarData];
+        if ([SCUserInfo share].loginStatus)
+        {
+            if (_currentCar)
+            {
+                if (_delegate && [_delegate respondsToSelector:@selector(shouldChangeCarData:)])
+                    [_delegate shouldChangeCarData:_currentCar];
+            }
+            else
+            {
+                if (_delegate && [_delegate respondsToSelector:@selector(shouldAddCar)])
+                    [_delegate shouldAddCar];
+            }
+        }
+        else
+            [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
     }
 }
 
 #pragma mark - Private Methods
-- (void)displayMaintenanceView
+- (void)displayDetailView
 {
-    SCUserInfo *userInfo = [SCUserInfo share];
-    if (userInfo.loginStatus)
+    if (_reservation)
     {
-        if (userInfo.cars.count)
-        {
-            _preButton.hidden  = NO;
-            _nextButton.hidden = _preButton.hidden;
-            
-            [self displayCarData];
-        }
-        else
-            [self defaultHandelWithText:@"请添加车辆"];
+        [self handelReservationInfo];
+    }
+    else if (_currentCar)
+    {
+        [self displayCarData];
     }
     else
-        [self defaultHandelWithText:@"未登录"];
+    {
+        _canTap  = YES;
+        _promptLabel.text = @"点击加车";
+    }
 }
 
-- (void)defaultHandelWithText:(NSString *)text
+- (void)handelReservationInfo
 {
-    _canTap = NO;
-    _preButton.hidden  = YES;
-    _nextButton.hidden = _preButton.hidden;
-    _carNameLabel.text = text;
-    _carFullNameLabel.text = @"";
+    _canTap                    = YES;
+    _promptLabel.hidden        = YES;
+
+    _merchantNameLabel.hidden  = NO;
+    _serviceNameLabel.hidden   = NO;
+    _servicePromptLabel.hidden = NO;
+    _serviceDaysLabel.hidden   = NO;
+
+    _merchantNameLabel.text    = _reservation.company_name;
+    _serviceDaysLabel.text     = [self expiredPrompt];
+    [self refreshServiceNameLabel];
+}
+
+- (void)refreshServiceNameLabel
+{
+    [[SCAllDictionary share] requestWithType:SCDictionaryTypeReservationType finfish:^(NSArray *items) {
+        for (SCDictionaryItem *item in items)
+        {
+            if ([item.dict_id isEqualToString:_reservation.type])
+                _serviceNameLabel.text = item.name;
+        }
+    }];
+}
+
+- (NSString *)expiredPrompt
+{
+    NSTimeInterval expiredInterval = [self expiredInterval] / (60*60*24);
+    return [NSString stringWithFormat:@"%@天", @((NSInteger)expiredInterval)];
+}
+
+- (NSTimeInterval)expiredInterval
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    NSDate *expiredDate = [formatter dateFromString:_reservation.update_time];
+    NSDate *nowDate = [NSDate date];
+    NSTimeInterval expiredInterval = [nowDate timeIntervalSinceDate:expiredDate];
+    
+    return expiredInterval;
+}
+
+- (void)showPrompt
+{
+    if ([SCUserInfo share].loginStatus)
+    {
+        _canTap = NO;
+        _promptLabel.text = @"数据获取中...";
+    }
+    else
+    {
+        _canTap = YES;
+        _promptLabel.text = @"请点击登录";
+    }
 }
 
 - (void)displayCarData
 {
+    _canTap                    = YES;
+    _promptLabel.hidden        = NO;
     if (_currentCar.brand_name && _currentCar.model_name)
     {
-        _canTap = YES;
-        _carNameLabel.text     = [NSString stringWithFormat:@"%@%@", _currentCar.brand_name, _currentCar.model_name];
-        _carFullNameLabel.text = _currentCar.car_full_model;
+        _merchantNameLabel.hidden  = YES;
+        _serviceNameLabel.hidden   = YES;
+        _servicePromptLabel.hidden = YES;
+        _serviceDaysLabel.hidden   = YES;
+        _promptLabel.text          = [NSString stringWithFormat:@"%@ %@ %@", _currentCar.brand_name, _currentCar.model_name, _currentCar.car_full_model];
     }
     else
-        [self defaultHandelWithText:@"车辆数据获取中..."];
-}
-
-- (void)tapGestureRecognizer
-{
-    SCUserInfo *userInfo = [SCUserInfo share];
-    if (userInfo.loginStatus)
-    {
-        if (userInfo.cars.count)
-        {
-            if (_delegate && [_delegate respondsToSelector:@selector(shouldChangeCarData:)] && _canTap)
-                [_delegate shouldChangeCarData:_currentCar];
-        }
-        else
-        {
-            if (_delegate && [_delegate respondsToSelector:@selector(shouldAddCar)])
-                [_delegate shouldAddCar];
-        }
-    }
-    else
-    {
-        if (_delegate && [_delegate respondsToSelector:@selector(shouldLogin)])
-            [_delegate shouldLogin];
-    }
+        _promptLabel.text = @"点击加车";
 }
 
 #pragma mark - Public Methods
@@ -137,19 +153,30 @@
     __weak typeof(self)weakSelf = self;
     [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
         if (finish)
-        {
-            _carIndex           = Zero;
-            _nextButton.enabled = (userInfo.cars.count == 1) ? NO : YES;
-            _preButton.enabled  = NO;
-            _currentCar         = [userInfo.cars firstObject];
-            [weakSelf displayMaintenanceView];
-        }
+            _currentCar = [userInfo.cars firstObject];
+        [weakSelf displayDetailView];
     }];
 }
 
 - (void)refresh
 {
-    [self getUserCar];
+    [self showPrompt];
+    if ([SCUserInfo share].loginStatus)
+    {
+        __weak typeof(self)weakSelf = self;
+        NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID};
+        [[SCAPIRequest manager] startHomePageReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+            {
+                _reservation = [[SCReservation alloc] initWithDictionary:responseObject error:nil];
+                [weakSelf displayDetailView];
+            }
+            else
+                [weakSelf getUserCar];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [weakSelf getUserCar];
+        }];
+    }
 }
 
 @end

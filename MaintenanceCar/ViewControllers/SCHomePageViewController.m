@@ -14,6 +14,7 @@
 #import "SCServiceMerchantListViewController.h"
 #import "SCADView.h"
 #import "SCChangeMaintenanceDataViewController.h"
+#import "SCReservationViewController.h"
 
 @interface SCHomePageViewController () <SCADViewDelegate, SCHomePageDetailViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
 
@@ -27,6 +28,8 @@
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[首页]"];
+    
+    [_detailView refresh];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -36,20 +39,41 @@
     [MobClick endLogPageView:@"[首页]"];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (IS_IPHONE_6Plus)
+        _buttonWidthConstraint.constant = 110.0f;
+    else if (IS_IPHONE_6)
+        _buttonWidthConstraint.constant = 90.0f;
+    else if (IS_IPHONE_5)
+        _buttonWidthConstraint.constant = 75.0f;
+    else
+        _buttonWidthConstraint.constant = 55.0f;
+    
+    [_washButton needsUpdateConstraints];
+    [_washButton layoutIfNeeded];
+    [_washLabel needsUpdateConstraints];
+    [_washLabel layoutIfNeeded];
+    [_maintenanceButton needsUpdateConstraints];
+    [_maintenanceButton layoutIfNeeded];
+    [_maintenanceLabel needsUpdateConstraints];
+    [_maintenanceLabel layoutIfNeeded];
+    [_repairButton needsUpdateConstraints];
+    [_repairButton layoutIfNeeded];
+    [_repairLabel needsUpdateConstraints];
+    [_repairLabel layoutIfNeeded];
+    [_specialButton needsUpdateConstraints];
+    [_specialButton layoutIfNeeded];
+    [_specialLabel needsUpdateConstraints];
+    [_specialLabel layoutIfNeeded];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    [self performSelector:@selector(viewConfig) withObject:nil afterDelay:0.3f];
     [self initConfig];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -110,50 +134,8 @@
 - (void)initConfig
 {
     _detailView.delegate = self;
-    [NOTIFICATION_CENTER addObserver:_detailView selector:@selector(refresh) name:kUserCarsDataLoadSuccess object:nil];
     
-    [_detailView refresh];
     [self startSpecialRequest];
-}
-
-- (void)viewConfig
-{
-    if (IS_IPHONE_6Plus)
-        _buttonWidthConstraint.constant = 110.0f;
-    else if (IS_IPHONE_6)
-        _buttonWidthConstraint.constant = 90.0f;
-    else if (IS_IPHONE_5)
-        _buttonWidthConstraint.constant = 75.0f;
-    else
-        _buttonWidthConstraint.constant = 55.0f;
-    
-    [_washButton needsUpdateConstraints];
-    [_washButton layoutIfNeeded];
-    [_washLabel needsUpdateConstraints];
-    [_washLabel layoutIfNeeded];
-    [_maintenanceButton needsUpdateConstraints];
-    [_maintenanceButton layoutIfNeeded];
-    [_maintenanceLabel needsUpdateConstraints];
-    [_maintenanceLabel layoutIfNeeded];
-    [_repairButton needsUpdateConstraints];
-    [_repairButton layoutIfNeeded];
-    [_repairLabel needsUpdateConstraints];
-    [_repairLabel layoutIfNeeded];
-    [_specialButton needsUpdateConstraints];
-    [_specialButton layoutIfNeeded];
-    [_specialLabel needsUpdateConstraints];
-    [_specialLabel layoutIfNeeded];
-    
-    _washButton.hidden = NO;
-    _washLabel.hidden = NO;
-    _maintenanceButton.hidden = NO;
-    _maintenanceLabel.hidden = NO;
-    _repairButton.hidden = NO;
-    _repairLabel.hidden = NO;
-    _specialButton.hidden = NO;
-    _specialLabel.hidden = NO;
-    
-    [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
 }
 
 // 自定义数据请求方法(用于首页第四个按钮，预约以及筛选条件)，无参数
@@ -224,11 +206,6 @@
 }
 
 #pragma mark - SCHomePageDetailViewDelegate Methods
-- (void)shouldLogin
-{
-    [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
-}
-
 - (void)shouldAddCar
 {
     @try {

@@ -43,7 +43,9 @@ typedef NS_ENUM(NSInteger, SCOderStatus) {
 @property (nonatomic, copy)  NSString <Optional>*content;               // 预约备注
 @property (nonatomic, copy)  NSString <Optional>*status;                // 预约状态：
 @property (nonatomic, copy)  NSString <Optional>*name;                  // 商家名字
+@property (nonatomic, copy)  NSString <Optional>*company_name;          // 商家名字
 @property (nonatomic, copy)  NSString <Optional>*car_model_name;        // 用户预约车辆名称
+@property (nonatomic, copy)  NSString <Optional>*update_time;           // 用户预约更新时间
 @property (nonatomic, copy) SCComment <Optional>*comment;               // 评价详情
 
 @property (nonatomic, assign, readonly) SCOderStatus oderStatus;

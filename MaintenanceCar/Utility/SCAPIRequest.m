@@ -296,6 +296,13 @@
     [self requestGETMethodsWithAPI:ReservationItemNumAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startHomePageReservationAPIRequestWithParameters:(NSDictionary *)parameters
+                                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:HomePageReservationAPIURL parameters:parameters success:success failure:failure];
+}
+
 #pragma mark - Add Car Request
 - (void)startUpdateCarBrandAPIRequestWithParameters:(NSDictionary *)parameters
                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
