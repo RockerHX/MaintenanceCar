@@ -15,6 +15,8 @@
 #import "SCCommentCell.h"
 #import "SCBuyGroupProductViewController.h"
 #import "SCCommentListViewController.h"
+#import <SCLoopScrollView/SCLoopScrollView.h>
+#import <AFNetworking/UIImageView+AFNetworking.h>
 
 @interface SCGroupProductDetailViewController () <SCBuyGroupProductCellDelegate, SCGroupProductMerchantCellDelegate, UIAlertViewDelegate>
 {
@@ -211,7 +213,7 @@
             [self.navigationController pushViewController:commentListViewController animated:YES];
         }
         @catch (NSException *exception) {
-            NSLog(@"SCMerchantDetailViewController Go to the SCCommentListViewController exception reasion:%@", exception.reason);
+            NSLog(@"SCGroupProductDetailViewController Go to the SCCommentListViewController exception reasion:%@", exception.reason);
         }
         @finally {
         }
@@ -231,12 +233,25 @@
             _detail = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
             _detail.companyID = _product.companyID;
             _detail.merchantName = _product.merchantName;
-            [self.tableView reloadData];
+            
+            [weakSelf dispalyDetialView];
+            [weakSelf.tableView reloadData];
         }
         [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
     }];
+}
+
+- (void)dispalyDetialView
+{
+    NSMutableArray *items = [@[] mutableCopy];
+    UIImageView *carView  = [[UIImageView alloc] init];
+    [carView setImageWithURL:[NSURL URLWithString:_detail.img1]
+            placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
+    [items addObject:carView];
+    _merchanImagesView.items = items;
+    [_merchanImagesView begin:nil finished:nil];
 }
 
 #pragma mark - SCGroupProductCellDelegate Methods
@@ -248,7 +263,7 @@
         [self.navigationController pushViewController:buyGroupProductViewController animated:YES];
     }
     @catch (NSException *exception) {
-        NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
+        NSLog(@"SCGroupProductDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
     }
     @finally {
     }

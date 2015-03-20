@@ -380,7 +380,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     if (indexPath.row == 0)
     {
-        _merchant.latitude = _merchantDetail.latitude;
+        _merchant.latitude   = _merchantDetail.latitude;
         _merchant.longtitude = _merchantDetail.longtitude;
         // 地图按钮被点击，跳转到地图页面
         UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];

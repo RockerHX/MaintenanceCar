@@ -50,10 +50,8 @@
                     NSMutableArray *items = [@[] mutableCopy];
                     for (NSInteger index = 0; index < userInfo.cars.count; index++)
                     {
-                        UIImageView *carView           = [[UIImageView alloc] init];
-                        carView.userInteractionEnabled = YES;
-                        carView.tag                    = index;
-                        carView.image                  = [UIImage imageNamed:@"car"];
+                        UIImageView *carView = [[UIImageView alloc] init];
+                        carView.image        = [UIImage imageNamed:@"car"];
                         [items addObject:carView];
                     }
                     _userCarsView.items = items;
