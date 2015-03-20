@@ -19,10 +19,11 @@
     if (self)
     {
         if (_flags)
-            _merchantFlags = [_flags componentsSeparatedByString:@","];
+        _merchantFlags     = [_flags componentsSeparatedByString:@","];
         [[SCAllDictionary share] generateServiceItemsWtihMerchantImtes:_service_items inspectFree:[_inspect_free boolValue]];
-        
+
         _serverItemsPrompt = [self generateServicePrompt:_service_items];
+        _merchantImages    = [self handleMerchantImages];
         
         if (!_time_open)
             _time_open = @"";
@@ -33,6 +34,7 @@
     }
     return self;
 }
+
 #pragma mark - Private Methods
 - (NSString *)generateServicePrompt:(NSDictionary *)items
 {
@@ -86,6 +88,22 @@
         product.companyID       = _company_id;
         product.merchantName    = _name;
     }];
+}
+
+- (NSArray *)handleMerchantImages
+{
+    NSMutableArray *images = [NSMutableArray arrayWithArray:_images];
+    for (NSDictionary *pic in images)
+    {
+        if (pic[@"pic_type"])
+        {
+            [images removeObject:pic];
+            [images insertObject:pic atIndex:0];
+            break;
+        }
+    }
+    
+    return images;
 }
 
 #pragma mark - Setter And Getter Methods

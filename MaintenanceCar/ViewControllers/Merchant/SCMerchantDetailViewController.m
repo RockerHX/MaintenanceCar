@@ -8,6 +8,7 @@
 
 #import "SCMerchantDetailViewController.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
+#import <SCLoopScrollView/SCLoopScrollView.h>
 #import "SCMerchant.h"
 #import "SCMerchantDetail.h"
 #import "SCComment.h"
@@ -505,8 +506,17 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)displayMerchantDetail
 {
-    [_merchantImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@_1.jpg", MerchantImageDoMain, _merchant.company_id]]
-                       placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
+    NSMutableArray *items = [@[] mutableCopy];
+    for (NSDictionary *image in _merchantDetail.merchantImages)
+    {
+        UIImageView *carView = [[UIImageView alloc] init];
+        [carView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", MerchantImageDoMain, image[@"name"]]]
+                placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
+        [items addObject:carView];
+    }
+    _merchantImagesView.items = items;
+    [_merchantImagesView begin:nil finished:nil];
+    
     _collectionItem.favorited = _merchantDetail.collected;
     _hasGroupProducts         = _merchantDetail.products.count;
     _productCellCount         = ((_merchantDetail.products.count > 2) ? 3 : _merchantDetail.products.count);

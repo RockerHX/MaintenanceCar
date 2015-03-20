@@ -4187,21 +4187,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="XSU-Hp-wAm">
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="XSU-Hp-wAm" customClass="SCLoopScrollView">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MerchantImageDefault" translatesAutoresizingMaskIntoConstraints="NO" id="YNq-54-W2H">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
-                                </imageView>
-                            </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstItem="YNq-54-W2H" firstAttribute="top" secondItem="XSU-Hp-wAm" secondAttribute="top" id="Cen-dJ-7gf"/>
-                                <constraint firstAttribute="bottom" secondItem="YNq-54-W2H" secondAttribute="bottom" id="Ygs-Zs-Wpa"/>
-                                <constraint firstAttribute="trailing" secondItem="YNq-54-W2H" secondAttribute="trailing" id="htj-Uv-dDj"/>
-                                <constraint firstItem="YNq-54-W2H" firstAttribute="leading" secondItem="XSU-Hp-wAm" secondAttribute="leading" id="lah-7t-bTn"/>
-                            </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCMerchantDetailCell" rowHeight="120" id="KUx-vR-H14" customClass="SCMerchantDetailCell">
@@ -4799,7 +4788,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionItem" destination="kKB-po-FQB" id="5KV-uF-e8W"/>
-                        <outlet property="merchantImageView" destination="YNq-54-W2H" id="fc2-cy-rWs"/>
+                        <outlet property="merchantImagesView" destination="XSU-Hp-wAm" id="Zj6-OQ-Ha6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Frj-5y-CwQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -7607,7 +7596,6 @@
         <image name="LogoIcon" width="160" height="160"/>
         <image name="MerchantBusinessIcon" width="21" height="21"/>
         <image name="MerchantIconDefault" width="80" height="80"/>
-        <image name="MerchantImageDefault" width="320" height="240"/>
         <image name="MerchantListIconUnselected" width="24" height="24"/>
         <image name="OrderIcon" width="60" height="60"/>
         <image name="PhoneNumberTextField" width="327" height="69"/>
