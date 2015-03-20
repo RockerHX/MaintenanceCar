@@ -23,13 +23,12 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define DefaultQuery        @"default:'深圳'"
 
-//#define DoMain              @"https://api.yjclw.com"                        // 接口域名
+#define DoMain              @"https://api.yjclw.com"                        // 接口域名
 #warning @"发布时更改测试环境"
-#define DoMain              @"http://testing.yjclw.com"                     // 接口域名
+//#define DoMain              @"http://testing.yjclw.com"                     // 接口域名
 #define ImageDoMain         @"http://static.yjclw.com"                      // 图片资源域名
 #define InspectionURL       @"http://mobile.yjclw.com/Inspection"           // 检测进度
 
-#warning @"临时解决方案，后期替换"
 #define MerchantImageDoMain @"http://cdn1.yjclw.com/"                       // 商家图片资源域名
 
 #define APIPath             @"/v1"                                          // 接口路径

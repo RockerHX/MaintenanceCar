@@ -35,14 +35,14 @@
 {
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"[个人中心] - 我的预约"];
+    [MobClick beginLogPageView:@"[个人中心] - 我的订单"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"[个人中心] - 我的预约"];
+    [MobClick endLogPageView:@"[个人中心] - 我的订单"];
 }
 
 - (void)viewDidLoad

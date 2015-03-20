@@ -65,6 +65,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - Config Methods
 - (void)initConfig
 {
+    self.tableView.tableFooterView.hidden = YES;
 }
 
 - (void)viewConfig
@@ -204,6 +205,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             return 40.0f;
         else if (IS_IPHONE_6Plus)
             return 60.0f;
+        else
+            return DOT_COORDINATE;
     }
     if (section == 4 || section == 5)
         return DOT_COORDINATE;

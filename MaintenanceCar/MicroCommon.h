@@ -84,7 +84,7 @@
 
 #pragma mark - Define Methods
 #pragma mark -
-#define ThemeColor        UIColorWithRGBA(44.0f, 124.0f, 185.0f, 1.0f)
+#define ThemeColor        UIColorWithRGBA(38.0f, 126.0f, 183.0f, 1.0f)
 
 
 #pragma mark - Debug Define
