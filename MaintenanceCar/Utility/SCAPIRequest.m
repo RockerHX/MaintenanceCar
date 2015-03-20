@@ -296,13 +296,6 @@
     [self requestGETMethodsWithAPI:ReservationItemNumAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startHomePageReservationAPIRequestWithParameters:(NSDictionary *)parameters
-                                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    [self requestGETMethodsWithAPI:HomePageReservationAPIURL parameters:parameters success:success failure:failure];
-}
-
 #pragma mark - Add Car Request
 - (void)startUpdateCarBrandAPIRequestWithParameters:(NSDictionary *)parameters
                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -368,13 +361,6 @@
     [self requestGETMethodsWithAPI:AllDictionaryAPIURL parameters:nil success:success failure:failure];
 }
 
-#pragma mark - Special API
-- (void)startHomePageSpecialAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    [self requestGETMethodsWithAPI:HomePageSpecialAPIURL parameters:nil success:success failure:failure];
-}
-
 - (void)startFlagsColorAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
@@ -385,6 +371,26 @@
                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:MerchantTagsAPIURL parameters:nil success:success failure:failure];
+}
+
+#pragma mark - Home Page API
+- (void)startGetOperatADAPIRequestWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:OperatADAPIURL parameters:nil success:success failure:failure];
+}
+
+- (void)startHomePageReservationAPIRequestWithParameters:(NSDictionary *)parameters
+                                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:HomePageReservationAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startHomePageSpecialAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:HomePageSpecialAPIURL parameters:nil success:success failure:failure];
 }
 
 @end

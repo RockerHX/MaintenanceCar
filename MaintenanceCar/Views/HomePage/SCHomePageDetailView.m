@@ -12,23 +12,26 @@
 #import "SCAPIRequest.h"
 #import "SCReservation.h"
 #import "SCAllDictionary.h"
-
-@interface SCHomePageDetailView ()
-{
-    SCUserCar         *_currentCar;
-    SCReservation     *_reservation;
-    
-    BOOL               _canTap;
-}
-
-@end
+#import "SCSpecial.h"
+#import <SCLoopScrollView/SCLoopScrollView.h>
+#import <AFNetworking/UIImageView+AFNetworking.h>
 
 @implementation SCHomePageDetailView
+{
+    BOOL            _canTap;
+    
+    NSMutableArray *_opratADs;
+    SCReservation  *_reservation;
+    SCUserCar      *_currentCar;
+}
 
 #pragma mark - Init Methods
 - (void)awakeFromNib
 {
-    _canTap = YES;
+    _canTap   = YES;
+    _opratADs = [@[] mutableCopy];
+    
+    [self startOperatADReuqet];
     [NOTIFICATION_CENTER addObserver:self selector:@selector(refresh) name:kUserLoginSuccessNotification object:nil];
 }
 
@@ -39,15 +42,18 @@
     {
         if ([SCUserInfo share].loginStatus)
         {
-            if (_currentCar)
+            if (!_reservation)
             {
-                if (_delegate && [_delegate respondsToSelector:@selector(shouldChangeCarData:)])
-                    [_delegate shouldChangeCarData:_currentCar];
-            }
-            else
-            {
-                if (_delegate && [_delegate respondsToSelector:@selector(shouldAddCar)])
-                    [_delegate shouldAddCar];
+                if (_currentCar)
+                {
+                    if (_delegate && [_delegate respondsToSelector:@selector(shouldChangeCarData:)])
+                        [_delegate shouldChangeCarData:_currentCar];
+                }
+                else
+                {
+                    if (_delegate && [_delegate respondsToSelector:@selector(shouldAddCar)])
+                        [_delegate shouldAddCar];
+                }
             }
         }
         else
@@ -56,6 +62,58 @@
 }
 
 #pragma mark - Private Methods
+- (void)startOperatADReuqet
+{
+    __weak typeof(self)weakSelf = self;
+    [[SCAPIRequest manager] startGetOperatADAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        {
+//            [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                SCSpecial *operatAD = [[SCSpecial alloc] initWithDictionary:responseObject error:nil];
+                [_opratADs addObject:operatAD];
+//            }];
+        }
+        [weakSelf refreshOperatAD];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [weakSelf refreshOperatAD];
+    }];
+}
+
+- (void)refreshOperatAD
+{
+    NSMutableArray *items = [@[] mutableCopy];
+    if (_opratADs.count)
+    {
+        for (SCSpecial *special in _opratADs)
+        {
+            UIImageView *view = [[UIImageView alloc] init];
+            [view setImageWithURL:[NSURL URLWithString:special.pic_url] placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
+            [items addObject:view];
+        }
+        
+        _operatADView.items = items;
+        [_operatADView begin:^(NSInteger index) {
+            NSLog(@"%@", @(index));
+        } finished:nil];
+    }
+    else
+    {
+        UIImageView *view = [[UIImageView alloc] init];
+        view.image = [UIImage imageNamed:@"MerchantImageDefault"];
+        view.backgroundColor = [UIColor redColor];
+        [items addObject:view];
+    }
+    
+    _operatADView.items = items;
+    [_operatADView begin:^(NSInteger index) {
+        if (_opratADs.count)
+        {
+            if (_delegate && [_delegate respondsToSelector:@selector(shouldShowOperatAd:)])
+                [_delegate shouldShowOperatAd:_opratADs[index]];
+        }
+    } finished:nil];
+}
+
 - (void)displayDetailView
 {
     if (_reservation)
@@ -126,7 +184,12 @@
     }
     else
     {
-        _canTap = YES;
+        _canTap                    = YES;
+        _promptLabel.hidden        = NO;
+        _merchantNameLabel.hidden  = YES;
+        _serviceNameLabel.hidden   = YES;
+        _servicePromptLabel.hidden = YES;
+        _serviceDaysLabel.hidden   = YES;
         _promptLabel.text = @"请点击登录";
     }
 }
