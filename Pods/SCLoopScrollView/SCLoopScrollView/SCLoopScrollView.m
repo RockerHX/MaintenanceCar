@@ -3,7 +3,7 @@
 //  ShiCang
 //
 //  Created by ShiCang on 15/3/18.
-//  Copyright (c) 2014年 ShiCang. All rights reserved.
+//  Copyright (c) 2015年 ShiCang. All rights reserved.
 //
 
 
@@ -31,17 +31,6 @@ typedef void(^BLOCK)(NSInteger index);
     UIScrollView *_scrollView;
     UIImageView  *_firstItem;
     UIImageView  *_lastItem;
-}
-
-#pragma mark - Init Methods
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self)
-    {
-        [self initConfig];
-    }
-    return self;
 }
 
 #pragma mark - layout Methods
@@ -73,7 +62,7 @@ typedef void(^BLOCK)(NSInteger index);
 #pragma mark - Setter And Getter Methods
 - (void)setIndex:(NSInteger)index
 {
-    if (index != _oldIndex)
+    if ((index != _oldIndex) && _scrollBlock)
         _scrollBlock(index);
     _oldIndex = index;
 }
@@ -85,22 +74,23 @@ typedef void(^BLOCK)(NSInteger index);
 }
 
 #pragma mark - Public Methods
-- (void)begin:(void(^)(NSInteger index))finished tap:(void(^)(NSInteger index))tap
+- (void)begin:(void(^)(NSInteger index))tap
+     finished:(void(^)(NSInteger index))finished
 {
-    [self beginWithAutoScroll:NO animation:NO finished:finished tap:tap];
+    [self beginWithAutoScroll:NO animation:NO tap:tap finished:finished];
 }
 
 - (void)beginWithAutoScroll:(BOOL)autoScroll
                   animation:(BOOL)animation
-                   finished:(void(^)(NSInteger index))finished
                         tap:(void(^)(NSInteger index))tap
+                   finished:(void(^)(NSInteger index))finished
 {
-    _scrollBlock = nil;
     _tapBlock    = nil;
+    _scrollBlock = nil;
     _autoScroll  = autoScroll;
     _animation   = animation;
-    _scrollBlock = finished;
     _tapBlock    = tap;
+    _scrollBlock = finished;
     
     [self displayView];
 }
@@ -145,7 +135,7 @@ typedef void(^BLOCK)(NSInteger index);
 {
     if ([self canBeginLoad])
     {
-        [_scrollView setContentSize:CGSizeMake(SELF_WIDTH * (_items.count + 2), SELF_HEIGHT)];
+        [_scrollView setContentSize:CGSizeMake(SELF_WIDTH * (_items.count + 2), ZERO_POINT)];
         
         UIImage *lastImage                = ((UIImageView *)[_items lastObject]).image;
         _firstItem                        = [[UIImageView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SELF_WIDTH, SELF_HEIGHT)];
@@ -195,7 +185,8 @@ typedef void(^BLOCK)(NSInteger index);
 
 - (void)tapGestureRecognizer:(UITapGestureRecognizer *)tap
 {
-    _tapBlock(tap.view.tag);
+    if (_tapBlock)
+        _tapBlock(tap.view.tag);
 }
 
 #pragma mark - UISrollView Delegate Methods
@@ -209,7 +200,6 @@ typedef void(^BLOCK)(NSInteger index);
     {
         [scrollView setContentOffset:CGPointMake(MIN_BORDER, ZERO_POINT)];
     }
-    
     NSInteger index = (scrollView.contentOffset.x / SELF_WIDTH) - 1;
     self.index = [self getCurrentIndex:index];
 }

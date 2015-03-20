@@ -141,7 +141,6 @@
 		48DA4F341AB08A3500A6FF8C /* SCOderUnAppraisalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DA4F331AB08A3500A6FF8C /* SCOderUnAppraisalCell.m */; };
 		48DA960B1A4E8A0C009CCC50 /* SCLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DA960A1A4E8A0C009CCC50 /* SCLocationManager.m */; };
 		48DF20691ABB20C2009708F8 /* GPSTransform.c in Sources */ = {isa = PBXBuildFile; fileRef = 48DF20561ABB20C2009708F8 /* GPSTransform.c */; };
-		48DF207D1ABB2650009708F8 /* SCLoopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DF207C1ABB2650009708F8 /* SCLoopScrollView.m */; };
 		48EEE0E51A4AD163005C735D /* SCWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = 48EEE0E41A4AD163005C735D /* SCWeather.m */; };
 		48F1A0771A6556A6000A1BBD /* UMFeedbackLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 48F1A05F1A6556A6000A1BBD /* UMFeedbackLocalizable.strings */; };
 		48F1A0781A6556A6000A1BBD /* libUMFeedback.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F1A0611A6556A6000A1BBD /* libUMFeedback.a */; };
@@ -471,8 +470,6 @@
 		48DA960A1A4E8A0C009CCC50 /* SCLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLocationManager.m; sourceTree = "<group>"; };
 		48DF20561ABB20C2009708F8 /* GPSTransform.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GPSTransform.c; sourceTree = "<group>"; };
 		48DF20571ABB20C2009708F8 /* GPSTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSTransform.h; sourceTree = "<group>"; };
-		48DF207B1ABB2650009708F8 /* SCLoopScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLoopScrollView.h; sourceTree = "<group>"; };
-		48DF207C1ABB2650009708F8 /* SCLoopScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLoopScrollView.m; sourceTree = "<group>"; };
 		48EEE0E31A4AD163005C735D /* SCWeather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCWeather.h; sourceTree = "<group>"; };
 		48EEE0E41A4AD163005C735D /* SCWeather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCWeather.m; sourceTree = "<group>"; };
 		48EEE0E61A4AD294005C735D /* API.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = API.h; sourceTree = "<group>"; };
@@ -1107,7 +1104,6 @@
 		48AE95B01A50F52700A8A4B3 /* ThirdLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				48DF207A1ABB2650009708F8 /* SCLoopScrollView */,
 				48DF20531ABB20C2009708F8 /* EvilTransform */,
 				48334F8B1AA60848003327D3 /* SDKExport */,
 				4841CF471A6E094B00DA36FC /* UMessage_Sdk_1.1.0 */,
@@ -1156,15 +1152,6 @@
 				48DF20571ABB20C2009708F8 /* GPSTransform.h */,
 			);
 			path = c;
-			sourceTree = "<group>";
-		};
-		48DF207A1ABB2650009708F8 /* SCLoopScrollView */ = {
-			isa = PBXGroup;
-			children = (
-				48DF207B1ABB2650009708F8 /* SCLoopScrollView.h */,
-				48DF207C1ABB2650009708F8 /* SCLoopScrollView.m */,
-			);
-			path = SCLoopScrollView;
 			sourceTree = "<group>";
 		};
 		48EC70501A442ACB003CE3FD /* Models */ = {
@@ -1618,7 +1605,6 @@
 				48FB70CA1AA5A58300AF4AD9 /* SCSpecial.m in Sources */,
 				4866F9EB1AAD8EE7008E195C /* SCCouponHeaderView.m in Sources */,
 				4866F9A01AACBD89008E195C /* SCMaintenanceTableViewCell.m in Sources */,
-				48DF207D1ABB2650009708F8 /* SCLoopScrollView.m in Sources */,
 				4866F9A81AACBD89008E195C /* SCGroupProductMerchantCell.m in Sources */,
 				4866F9231AACBD2D008E195C /* SCAddCarViewController.m in Sources */,
 				4866F9AB1AACBD89008E195C /* SCMerchantDetailItemCell.m in Sources */,

@@ -3,7 +3,7 @@
 //  ShiCang
 //
 //  Created by ShiCang on 15/3/18.
-//  Copyright (c) 2014年 ShiCang. All rights reserved.
+//  Copyright (c) 2015年 ShiCang. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -18,13 +18,13 @@
 
 @property (nonatomic, strong) NSArray   *items;
 
-- (void)begin:(void(^)(NSInteger index))finished
-          tap:(void(^)(NSInteger index))tap;
+- (void)begin:(void(^)(NSInteger index))tap
+     finished:(void(^)(NSInteger index))finished;
 
 - (void)beginWithAutoScroll:(BOOL)autoScroll
                   animation:(BOOL)animation
-                   finished:(void(^)(NSInteger index))finished
-                        tap:(void(^)(NSInteger index))tap;
+                        tap:(void(^)(NSInteger index))tap
+                   finished:(void(^)(NSInteger index))finished;
 
 @end
 

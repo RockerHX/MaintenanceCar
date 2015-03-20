@@ -8,7 +8,7 @@
 
 #import "SCUserInfoView.h"
 #import "MicroCommon.h"
-#import "SCLoopScrollView.h"
+#import <SCLoopScrollView/SCLoopScrollView.h>
 
 @implementation SCUserInfoView
 
@@ -63,12 +63,12 @@
             
             __weak typeof(self)weakSelf = self;
             [_userCarsView begin:^(NSInteger index) {
+                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(shouldChangeCarData:)])
+                    [weakSelf.delegate shouldChangeCarData:[SCUserInfo share].cars[index]];
+            } finished:^(NSInteger index) {
                 SCUserCar *car = userInfo.cars[index];
                 weakSelf.carNameLabel.text = [NSString stringWithFormat:@"%@%@", car.brand_name, car.model_name];
                 weakSelf.carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", car.run_distance.length ? car.run_distance : @"0"];
-            } tap:^(NSInteger index) {
-                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(shouldChangeCarData:)])
-                    [weakSelf.delegate shouldChangeCarData:[SCUserInfo share].cars[index]];
             }];
         }
         else

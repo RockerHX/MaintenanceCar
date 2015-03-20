@@ -72,6 +72,12 @@
 #define COCOAPODS_VERSION_MINOR_MBProgressHUD 9
 #define COCOAPODS_VERSION_PATCH_MBProgressHUD 1
 
+// SCLoopScrollView
+#define COCOAPODS_POD_AVAILABLE_SCLoopScrollView
+#define COCOAPODS_VERSION_MAJOR_SCLoopScrollView 0
+#define COCOAPODS_VERSION_MINOR_SCLoopScrollView 1
+#define COCOAPODS_VERSION_PATCH_SCLoopScrollView 0
+
 // UMengAnalytics
 #define COCOAPODS_POD_AVAILABLE_UMengAnalytics
 #define COCOAPODS_VERSION_MAJOR_UMengAnalytics 3
