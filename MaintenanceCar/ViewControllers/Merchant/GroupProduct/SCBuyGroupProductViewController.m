@@ -104,8 +104,8 @@
 {
     if ([SCUserInfo share].loginStatus)
     {
-        if ([WXApi isWXAppInstalled])
-        {
+//        if ([WXApi isWXAppInstalled])
+//        {
             [self showHUDOnViewController:self];
             __weak typeof(self)weakSelf = self;
             NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
@@ -125,9 +125,9 @@
                 [weakSelf hideHUDOnViewController:weakSelf];
                 [weakSelf showHUDAlertToViewController:weakSelf text:@"下单失败，请重试..." delay:0.5f];
             }];
-        }
-        else
-            [self showWeiXinInstallAlert];
+//        }
+//        else
+//            [self showWeiXinInstallAlert];
     }
     else
         [self showShoulLoginAlert];
@@ -156,14 +156,14 @@
 #warning @"微信SDK"真机调试和上传记得打开注释
 - (void)sendWeiXinPay:(SCWeiXinPay *)pay
 {
-    PayReq *request = [[PayReq alloc] init];
-    request.partnerId = pay.partnerid;
-    request.prepayId  = pay.prepayid;
-    request.package   = pay.package;
-    request.nonceStr  = pay.noncestr;
-    request.timeStamp = pay.timestamp;
-    request.sign      = pay.sign;
-    [WXApi sendReq:request];
+//    PayReq *request = [[PayReq alloc] init];
+//    request.partnerId = pay.partnerid;
+//    request.prepayId  = pay.prepayid;
+//    request.package   = pay.package;
+//    request.nonceStr  = pay.noncestr;
+//    request.timeStamp = pay.timestamp;
+//    request.sign      = pay.sign;
+//    [WXApi sendReq:request];
 }
 
 - (void)startGenerateGroupProductRequest

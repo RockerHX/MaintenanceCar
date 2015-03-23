@@ -7,7 +7,7 @@
 //
 
 #import "SCServiceMerchantListViewController.h"
-#import "MJRefresh.h"
+#import <MJRefresh/MJRefresh.h>
 #import "SCMerchant.h"
 #import "SCMerchantListCell.h"
 #import "SCLocationManager.h"
@@ -62,7 +62,7 @@
     
     __weak typeof(self) weakSelf = self;
     // 添加上拉刷新控件
-    [_tableView addFooterWithCallback:^{
+    [_tableView addLegendFooterWithRefreshingBlock:^{
         [weakSelf upRefreshMerchantList];
     }];
     
@@ -174,7 +174,7 @@
                                      @"latitude"  : latitude};
     
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [_tableView footerEndRefreshing];
+        [weakSelf.tableView.footer endRefreshing];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];

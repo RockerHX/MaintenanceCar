@@ -250,7 +250,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         @try {
             SCCommentListViewController *commentListViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCommentListViewController"];
             commentListViewController.companyID = _detail.companyID;
-            commentListViewController.showTrashItem = NO;
             [self.navigationController pushViewController:commentListViewController animated:YES];
         }
         @catch (NSException *exception) {

@@ -84,13 +84,13 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
                 case SCUserCenterRowMyOrder:
                 {
                     SCMyReservationTableViewController *myReservationTableViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyReservationTableViewController"];
-                    myReservationTableViewController.showTrashItem = NO;
                     [self pushToSubViewControllerWithController:myReservationTableViewController];
                 }
                     break;
                 case SCUserCenterRowMyCollection:
                 {
                     SCMyFavoriteTableViewController *myFavoriteTableViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyFavoriteTableViewController"];
+                    myFavoriteTableViewController.showTrashItem = YES;
                     [self pushToSubViewControllerWithController:myFavoriteTableViewController];
                 }
                     break;
@@ -128,7 +128,6 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 - (void)pushToMyCouponViewController
 {
     SCMyCouponViewController *myCouponViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyCouponViewController"];
-    myCouponViewController.showTrashItem = NO;
     [self pushToSubViewControllerWithController:myCouponViewController];
 }
 

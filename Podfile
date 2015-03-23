@@ -1,8 +1,9 @@
 platform :ios, '7.0'
 
 pod 'AFNetworking',             '~> 2.5.1'
-pod 'JSONModel',                '~> 1.0.1'
-pod 'MBProgressHUD',            '~> 0.9'
+pod 'JSONModel',                '~> 1.0.2'
+pod 'MBProgressHUD',            '~> 0.9.1'
+pod 'MJRefresh',                '~> 1.4.1'
 pod 'CSStickyHeaderFlowLayout', '~> 0.2.4'
 pod 'HexColors',                '~> 2.2.1'
 pod 'SCLoopScrollView',         '~> 0.1'

@@ -103,8 +103,8 @@
     }
     
 #pragma mark - WeiXin SDK
-#warning @"微信SDK"真机调试和上传记得打开注释
-    [WXApi registerApp:WeiXinKEY];
+//#warning @"微信SDK"真机调试和上传记得打开注释
+//    [WXApi registerApp:WeiXinKEY];
     
     return YES;
 }
@@ -125,37 +125,37 @@
 }
 
 #warning @"微信SDK"真机调试和上传记得打开注释
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
-    return  [WXApi handleOpenURL:url delegate:self];
-}
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-{
-    return  [WXApi handleOpenURL:url delegate:self];
-}
-
-#pragma mark - Wei Xin Pay Delegate Methods
-#warning @"微信SDK"只支持真机调试
-- (void)onResp:(BaseResp *)resp
-{
-    if ([resp isKindOfClass:[PayResp class]])
-    {
-        PayResp *response = (PayResp *)resp;
-        switch (response.errCode) {
-            case WXSuccess:
-            {
-                //服务器端查询支付通知或查询API返回的结果再提示成功
-                [NOTIFICATION_CENTER postNotificationName:kWeiXinPaySuccessNotification object:nil];
-            }
-                break;
-            default:
-            {
-                [NOTIFICATION_CENTER postNotificationName:kWeiXinPayFailureNotification object:nil];
-            }
-                break;
-        }
-    }
-}
+//- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+//{
+//    return  [WXApi handleOpenURL:url delegate:self];
+//}
+//
+//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+//{
+//    return  [WXApi handleOpenURL:url delegate:self];
+//}
+//
+//#pragma mark - Wei Xin Pay Delegate Methods
+//#warning @"微信SDK"只支持真机调试
+//- (void)onResp:(BaseResp *)resp
+//{
+//    if ([resp isKindOfClass:[PayResp class]])
+//    {
+//        PayResp *response = (PayResp *)resp;
+//        switch (response.errCode) {
+//            case WXSuccess:
+//            {
+//                //服务器端查询支付通知或查询API返回的结果再提示成功
+//                [NOTIFICATION_CENTER postNotificationName:kWeiXinPaySuccessNotification object:nil];
+//            }
+//                break;
+//            default:
+//            {
+//                [NOTIFICATION_CENTER postNotificationName:kWeiXinPayFailureNotification object:nil];
+//            }
+//                break;
+//        }
+//    }
+//}
 
 @end
