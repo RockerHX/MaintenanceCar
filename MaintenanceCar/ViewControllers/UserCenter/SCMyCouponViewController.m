@@ -91,16 +91,16 @@
 }
 
 #pragma mark - Public Methods
-- (void)startPullUpRefreshRequest
+- (void)startDropDownRefreshReuqest
 {
-    [super startPullUpRefreshRequest];
+    [super startDropDownRefreshReuqest];
     
     [self startMyCouponListRequest];
 }
 
-- (void)startDropDownRefreshReuqest
+- (void)startPullUpRefreshRequest
 {
-    [super startDropDownRefreshReuqest];
+    [super startPullUpRefreshRequest];
     
     [self startMyCouponListRequest];
 }
