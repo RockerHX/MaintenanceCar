@@ -45,12 +45,12 @@
                                                                                                target:self
                                                                                                action:@selector(changeListEditStatus)];
     }
-    
     self.tableView.tableFooterView = [[UIView alloc] init];         // 为tableview添加空白尾部，以免没有数据显示时有很多条纹
     
     // 为tableview添加上拉和下拉响应式控件和触发方法
     [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(startDropDownRefreshReuqest)];
     [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(startPullUpRefreshRequest)];
+    [self.tableView.footer setHidden:YES];
     [self.tableView.header beginRefreshing];
 }
 
@@ -71,7 +71,10 @@
 {
     // 关闭上拉刷新或者下拉刷新
     if (_requestType == SCRequestRefreshTypeDropDown)
+    {
         [self.tableView.header endRefreshing];
+        [self.tableView.footer setHidden:NO];
+    }
     else
         [self.tableView.footer endRefreshing];
 }

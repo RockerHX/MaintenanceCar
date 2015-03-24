@@ -53,12 +53,9 @@
     [self initConfig];
     [self viewConfig];
     
-    __weak typeof(self) weakSelf = self;
     // 添加上拉刷新控件
-    [_tableView addLegendFooterWithRefreshingBlock:^{
-        [weakSelf upRefreshMerchantList];
-    }];
-    
+    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(upRefreshMerchantList)];
+    [self.tableView.footer setHidden:YES];
     [self refreshMerchantList];
 }
 
@@ -160,7 +157,6 @@
                                  @"latitude"  : latitude,
                                  @"longtitude": longitude};
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [weakSelf.tableView.footer endRefreshing];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
@@ -179,12 +175,15 @@
                 [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"优质商家陆续添加中..." delay:0.5f];
                 [_tableView reloadData];
             }
+            [weakSelf.tableView.footer setHidden:NO];
         }
         else
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
+        [weakSelf.tableView.footer endRefreshing];
         [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];              // 请求完成，移除响应式控件
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Get merchant list request error:%@", error);
+        [weakSelf.tableView.footer endRefreshing];
         [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
     }];
 }

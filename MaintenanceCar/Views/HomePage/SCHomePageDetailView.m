@@ -68,10 +68,10 @@
     [[SCAPIRequest manager] startGetOperatADAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-//            [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [responseObject[@"ad"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 SCSpecial *operatAD = [[SCSpecial alloc] initWithDictionary:responseObject error:nil];
                 [_opratADs addObject:operatAD];
-//            }];
+            }];
         }
         [weakSelf refreshOperatAD];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
