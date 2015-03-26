@@ -29,7 +29,6 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define ImageDoMain         @"http://static.yjclw.com"                      // 图片资源域名
 #define InspectionURL       @"http://mobile.yjclw.com/Inspection"           // 检测进度
 
-#warning @"临时解决方案，后期替换"
 #define MerchantImageDoMain @"http://cdn1.yjclw.com/"                       // 商家图片资源域名
 
 #define APIPath             @"/v1"                                          // 接口路径
@@ -74,9 +73,12 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define UpdateCarAPI                @"/Usercar/update"                      // 更新车辆数据API
 
 #define AllDictionaryAPI            @"/Misc/dictAll"                        // 所有数据字典API
-#define HomePageSpecialAPI          @"/Special"                             // 首页第四个按钮数据API
 #define FlagsColorExplainAPI        @"/Special/color_explain"               // 获取商家对应Flag数据API
 #define MerchantTagsAPI             @"/Cars/tags"                           // 获取商家对应Tag标签API
+
+#define OperatADAPI                 @"/Special/ad"                          // 首页运营位API
+#define HomePageReservationAPI      @"/Reservation/latest"                  // 最新预约信息API
+#define HomePageSpecialAPI          @"/Special"                             // 首页第四个按钮数据API
 
 
 #define WearthAPIURL                    [APIURL stringByAppendingString:WearthAPI]                  // 天气接口URL - 用于主页模块获取天气信息
@@ -116,8 +118,12 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define UpdateCarAPIURL                 [APIURL stringByAppendingString:UpdateCarAPI]               // 更新车辆数据接口URL - 用于用户更新车辆数据
 
 #define AllDictionaryAPIURL             [APIURL stringByAppendingString:AllDictionaryAPI]           // 所有数据字典接口URL
-#define HomePageSpecialAPIURL           [APIURL stringByAppendingString:HomePageSpecialAPI]         // 首页第四个按钮数据接口URL
 #define FlagsColorExplainAPIURL         [APIURL stringByAppendingString:FlagsColorExplainAPI]       // 获取商家对应Flag颜色值接口URL
 #define MerchantTagsAPIURL              [APIURL stringByAppendingString:MerchantTagsAPI]            // 获取商家对应Tag标签接口URL
+
+
+#define OperatADAPIURL                  [APIURL stringByAppendingString:OperatADAPI]                // 首页运营位接口URL - 用于首页运营位数据
+#define HomePageReservationAPIURL       [APIURL stringByAppendingString:HomePageReservationAPI]     // 最新预约信息接口URL - 用于首页获取
+#define HomePageSpecialAPIURL           [APIURL stringByAppendingString:HomePageSpecialAPI]         // 首页第四个按钮数据接口URL
 
 #endif

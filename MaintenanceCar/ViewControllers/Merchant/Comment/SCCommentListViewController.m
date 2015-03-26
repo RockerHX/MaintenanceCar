@@ -88,28 +88,17 @@
 }
 
 #pragma mark - Public Methods
-/**
- *  下拉刷新，请求最新数据
- */
-- (void)startDownRefreshReuqest
+- (void)startDropDownRefreshReuqest
 {
-    [super startDownRefreshReuqest];
+    [super startDropDownRefreshReuqest];
     
-    // 刷新前把数据偏移量offset设置为0，设置刷新类型，以便请求最新数据
-    self.offset = Zero;
-    self.requestType = SCFavoriteListRequestTypeDown;
     [self startCommentListRequest];
 }
 
-/**
- *  上拉刷新，加载更多数据
- */
-- (void)startUpRefreshRequest
+- (void)startPullUpRefreshRequest
 {
-    [super startUpRefreshRequest];
+    [super startPullUpRefreshRequest];
     
-    // 设置刷新类型
-    self.requestType = SCFavoriteListRequestTypeUp;
     [self startCommentListRequest];
 }
 
@@ -122,13 +111,10 @@
                                  @"limit"  : @(MerchantListLimit),
                                  @"offset" : @(self.offset)};
     [[SCAPIRequest manager] startGetMerchantCommentListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        // 关闭上拉刷新或者下拉刷新
-        [weakSelf.tableView headerEndRefreshing];
-        [weakSelf.tableView footerEndRefreshing];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            // 如果是下拉刷新数据，先清空列表，在做数据处理
-            if (weakSelf.requestType == SCFavoriteListRequestTypeDown)
+            // 如果是下拉刷新数据，先清空列表，再做数据处理
+            if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
                 [weakSelf clearListData];
             
             // 遍历请求回来的订单数据，生成SCComment用于订单列表显示
@@ -145,17 +131,14 @@
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
             [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:responseObject[@"error"] delay:0.5f];
         }
-        [weakSelf hiddenHUD];
+        [weakSelf endRefresh];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Get merchant list request error:%@", error);
-        // 关闭上拉刷新或者下拉刷新
-        [weakSelf.tableView headerEndRefreshing];
-        [weakSelf.tableView footerEndRefreshing];
-        [weakSelf hiddenHUD];
         if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
             [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"该商家暂时还没有任何评价噢！" delay:0.5f];
         else
             [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:NetWorkError delay:0.5f];
+        [weakSelf endRefresh];
     }];
 }
 

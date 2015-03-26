@@ -8,20 +8,9 @@
 
 #import "SCTableViewController.h"
 
-@interface SCTableViewController ()
-{
-    UIView *_hudView;
-}
-
-@end
-
 @implementation SCTableViewController
 
 #pragma mark - Init Methods
-- (void)awakeFromNib
-{
-    _showTrashItem = YES;
-}
 
 #pragma mark - View Controller Life Cycle
 - (void)viewDidLoad
@@ -48,12 +37,6 @@
 
 - (void)viewConfig
 {
-    self.tableView.tableFooterView = [[UIView alloc] init];         // 为tableview添加空白尾部，以免没有数据显示时有很多条纹
-    
-    // 为tableview添加上拉和下拉响应式控件和触发方法
-    [self.tableView addHeaderWithTarget:self action:@selector(startDownRefreshReuqest)];
-    [self.tableView addFooterWithTarget:self action:@selector(startUpRefreshRequest)];
-    
     self.clearsSelectionOnViewWillAppear = YES;                     // 清除cell的选中状态
     // 添加编辑列表的按钮
     if (_showTrashItem)
@@ -62,34 +45,38 @@
                                                                                                target:self
                                                                                                action:@selector(changeListEditStatus)];
     }
+    self.tableView.tableFooterView = [[UIView alloc] init];         // 为tableview添加空白尾部，以免没有数据显示时有很多条纹
     
-    [self startDownRefreshReuqest];
+    // 为tableview添加上拉和下拉响应式控件和触发方法
+    [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(startDropDownRefreshReuqest)];
+    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(startPullUpRefreshRequest)];
+    [self.tableView.footer setHidden:YES];
+    [self.tableView.header beginRefreshing];
 }
 
-- (void)startDownRefreshReuqest
+- (void)startDropDownRefreshReuqest
 {
-    // 下拉刷新时，显示响应式控件，阻止用户操作
-    [self showHUDToView:self.view];
+    // 刷新前把数据偏移量offset设置为0，设置刷新类型，以便请求最新数据
+    self.offset = Zero;
+    self.requestType = SCRequestRefreshTypeDropDown;
 }
 
-- (void)startUpRefreshRequest
+- (void)startPullUpRefreshRequest
 {
-    // 上拉刷新时，显示响应式控件，阻止用户操作
-    [self showHUDToView:self.view];
+    // 设置刷新类型
+    self.requestType = SCRequestRefreshTypePullUp;
 }
 
-- (void)showHUDToView:(UIView *)view
+- (void)endRefresh
 {
-    self.tableView.scrollEnabled = NO;
-    
-    _hudView = view;
-    [MBProgressHUD showHUDAddedTo:view animated:YES];               // 加载响应式控件
-}
-
-- (void)hiddenHUD
-{
-    self.tableView.scrollEnabled = YES;
-    [MBProgressHUD hideHUDForView:_hudView animated:YES];           // 隐藏响应式控件
+    // 关闭上拉刷新或者下拉刷新
+    if (_requestType == SCRequestRefreshTypeDropDown)
+    {
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer setHidden:NO];
+    }
+    else
+        [self.tableView.footer endRefreshing];
 }
 
 - (void)clearListData

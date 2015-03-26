@@ -14,6 +14,7 @@
 #import "SCServiceMerchantListViewController.h"
 #import "SCADView.h"
 #import "SCChangeMaintenanceDataViewController.h"
+#import "SCReservationViewController.h"
 
 @interface SCHomePageViewController () <SCADViewDelegate, SCHomePageDetailViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
 
@@ -27,6 +28,8 @@
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[首页]"];
+    
+    [_detailView refresh];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -39,17 +42,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     [self performSelector:@selector(viewConfig) withObject:nil afterDelay:0.3f];
     [self initConfig];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -110,9 +106,7 @@
 - (void)initConfig
 {
     _detailView.delegate = self;
-    [NOTIFICATION_CENTER addObserver:_detailView selector:@selector(refresh) name:kUserCarsDataLoadSuccess object:nil];
     
-    [_detailView refresh];
     [self startSpecialRequest];
 }
 
@@ -180,25 +174,14 @@
     [_specialButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:special.pic_url] placeholderImage:[_specialButton backgroundImageForState:UIControlStateNormal]];
 }
 
-#pragma mark - Alert View Delegate Methods
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)jumpToSpecialViewControllerWith:(SCSpecial *)special
 {
-    // 用户选择是否登录
-    if (buttonIndex != alertView.cancelButtonIndex)
-    {
-        [self checkShouldLogin];
-    }
-}
-
-#pragma mark - SCADViewDelegate Methods
-- (void)shouldEnter
-{
-    SCSpecial *special = [SCAllDictionary share].special;
     if (special.html)
     {
         @try {
             SCWebViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
-            webViewController.title = special.text;
+            webViewController.title                = special.text;
+            webViewController.loadURL              = special.url;
             [self.navigationController pushViewController:webViewController animated:YES];
         }
         @catch (NSException *exception) {
@@ -223,10 +206,26 @@
     }
 }
 
-#pragma mark - SCHomePageDetailViewDelegate Methods
-- (void)shouldLogin
+#pragma mark - Alert View Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
+    // 用户选择是否登录
+    if (buttonIndex != alertView.cancelButtonIndex)
+    {
+        [self checkShouldLogin];
+    }
+}
+
+#pragma mark - SCADViewDelegate Methods
+- (void)shouldEnter
+{
+    [self jumpToSpecialViewControllerWith:[SCAllDictionary share].special];
+}
+
+#pragma mark - SCHomePageDetailViewDelegate Methods
+- (void)shouldShowOperatAd:(SCSpecial *)special
+{
+    [self jumpToSpecialViewControllerWith:special];
 }
 
 - (void)shouldAddCar

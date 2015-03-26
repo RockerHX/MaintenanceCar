@@ -11,6 +11,7 @@
 @class SCMerchant;
 @class SCMerchantDetail;
 @class SCCollectionItem;
+@class SCLoopScrollView;
 
 @interface SCMerchantDetailViewController : UITableViewController
 
@@ -18,7 +19,7 @@
 @property (nonatomic, strong)        SCMerchantDetail *merchantDetail;      // 商家详情数据模型
 
 @property (weak, nonatomic) IBOutlet SCCollectionItem *collectionItem;      // 收藏按钮
-@property (weak, nonatomic) IBOutlet      UIImageView *merchantImageView;   // 商家图片
+@property (weak, nonatomic) IBOutlet SCLoopScrollView *merchantImagesView;  // 商户图片
 
 /**
  *  [收藏]按钮触发事件

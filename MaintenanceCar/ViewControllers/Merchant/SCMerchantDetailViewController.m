@@ -8,6 +8,7 @@
 
 #import "SCMerchantDetailViewController.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
+#import <SCLoopScrollView/SCLoopScrollView.h>
 #import "SCMerchant.h"
 #import "SCMerchantDetail.h"
 #import "SCComment.h"
@@ -15,6 +16,7 @@
 #import "SCGroupProductCell.h"
 #import "SCShowMoreProductCell.h"
 #import "SCMerchantDetailItemCell.h"
+#import "SCMerchantServiceCell.h"
 #import "SCCommentCell.h"
 #import "SCCollectionItem.h"
 #import "SCReservationViewController.h"
@@ -113,10 +115,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         switch (section)
         {
             case 1:
-                return (_hasGroupProducts ? _productCellCount : 6);
+                return (_hasGroupProducts ? _productCellCount : 4);
                 break;
             case 2:
-                return (_hasGroupProducts ? 6 : 1);
+                return (_hasGroupProducts ? 4 : 1);
                 break;
             case 3:
                 return (_hasGroupProducts ? 1 : (_merchantDetail.comments.count ? _merchantDetail.comments.count : 1));
@@ -158,8 +160,16 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                 }
                 else
                 {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
-                    [(SCMerchantDetailItemCell *)cell displayCellWithIndex:indexPath detail:_merchantDetail];
+                    if (indexPath.row == 3)
+                    {
+                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantServiceCell" forIndexPath:indexPath];
+                        [(SCMerchantServiceCell *)cell displayCellWithDetail:_merchantDetail];
+                    }
+                    else
+                    {
+                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
+                        [(SCMerchantDetailItemCell *)cell displayCellWithIndex:indexPath detail:_merchantDetail];
+                    }
                 }
             }
                 break;
@@ -167,8 +177,16 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             {
                 if (_hasGroupProducts)
                 {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
-                    [(SCMerchantDetailItemCell *)cell displayCellWithIndex:indexPath detail:_merchantDetail];
+                    if (indexPath.row == 3)
+                    {
+                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantServiceCell" forIndexPath:indexPath];
+                        [(SCMerchantServiceCell *)cell displayCellWithDetail:_merchantDetail];
+                    }
+                    else
+                    {
+                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
+                        [(SCMerchantDetailItemCell *)cell displayCellWithIndex:indexPath detail:_merchantDetail];
+                    }
                 }
                 else
                 {
@@ -279,11 +297,17 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (CGFloat)calculatedetailItemCellHeightWithIndexPath:(NSIndexPath *)indexPath
 {
-    if(!_detailItemCell)
-        _detailItemCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell"];
-    [_detailItemCell displayCellWithIndex:indexPath detail:_merchantDetail];
-    
-    return [_detailItemCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    if (indexPath.row != 3)
+    {
+        CGFloat height;
+        if(!_detailItemCell)
+            _detailItemCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell"];
+        [_detailItemCell displayCellWithIndex:indexPath detail:_merchantDetail];
+        
+        height = [_detailItemCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+        return (height > 43.0f) ? height : 43.0f;
+    }
+    return 120.0f;
 }
 
 - (CGFloat)calculateCommentCellHeightWithIndexPath:(NSIndexPath *)indexPath
@@ -365,7 +389,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         @try {
             SCCommentListViewController *commentListViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCommentListViewController"];
             commentListViewController.companyID = _merchantDetail.company_id;
-            commentListViewController.showTrashItem = NO;
             [self.navigationController pushViewController:commentListViewController animated:YES];
         }
         @catch (NSException *exception) {
@@ -380,7 +403,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     if (indexPath.row == 0)
     {
-        _merchant.latitude = _merchantDetail.latitude;
+        _merchant.latitude   = _merchantDetail.latitude;
         _merchant.longtitude = _merchantDetail.longtitude;
         // 地图按钮被点击，跳转到地图页面
         UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
@@ -422,7 +445,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if ((_hasGroupProducts && (section == 3)) || (!_hasGroupProducts && (section == 2)) || !section || section == 4)
+    if ((!_hasGroupProducts && (section == 2)) || !section || section == 3|| section == 4)
         return DOT_COORDINATE;
     return 30.0f;
 }
@@ -505,8 +528,17 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)displayMerchantDetail
 {
-    [_merchantImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@_1.jpg", MerchantImageDoMain, _merchant.company_id]]
-                       placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
+    NSMutableArray *items = [@[] mutableCopy];
+    for (NSDictionary *image in _merchantDetail.merchantImages)
+    {
+        UIImageView *carView = [[UIImageView alloc] init];
+        [carView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", MerchantImageDoMain, image[@"name"]]]
+                placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
+        [items addObject:carView];
+    }
+    _merchantImagesView.items = items;
+    [_merchantImagesView begin:nil finished:nil];
+    
     _collectionItem.favorited = _merchantDetail.collected;
     _hasGroupProducts         = _merchantDetail.products.count;
     _productCellCount         = ((_merchantDetail.products.count > 2) ? 3 : _merchantDetail.products.count);

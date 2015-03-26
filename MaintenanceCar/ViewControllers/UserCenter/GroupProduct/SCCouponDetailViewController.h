@@ -9,6 +9,7 @@
 #import "SCViewController.h"
 
 @class SCCoupon;
+@class SCLoopScrollView;
 
 @protocol SCCouponDetailViewControllerDelegate <NSObject>
 
@@ -19,7 +20,8 @@
 
 @interface SCCouponDetailViewController : UITableViewController
 
-@property (weak, nonatomic) IBOutlet UIView *refundView;
+@property (weak, nonatomic) IBOutlet SCLoopScrollView *couponImagesView;
+@property (weak, nonatomic) IBOutlet           UIView *refundView;
 
 @property (nonatomic, weak)       id  <SCCouponDetailViewControllerDelegate>delegate;
 @property (nonatomic, weak) SCCoupon *coupon;

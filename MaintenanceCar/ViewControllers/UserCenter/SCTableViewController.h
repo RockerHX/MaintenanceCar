@@ -7,23 +7,23 @@
 //
 
 #import "SCViewController.h"
-#import "MJRefresh.h"
+#import <MJRefresh/MJRefresh.h>
 
 // 刷新操作的请求类型
-typedef NS_ENUM(NSInteger, SCFavoriteListRequestType) {
-    SCFavoriteListRequestTypeUp = 1000,
-    SCFavoriteListRequestTypeDown
+typedef NS_ENUM(NSInteger, SCRequestRefreshType) {
+    SCRequestRefreshTypeDropDown,
+    SCRequestRefreshTypePullUp
 };
 
 @interface SCTableViewController : UITableViewController
 {
-    id                        _deleteDataCache;     // 删除数据的缓存
-    NSMutableArray            *_dataList;           // 列表数据缓存
+    id              _deleteDataCache;    // 删除数据的缓存
+    NSMutableArray *_dataList;           // 列表数据缓存
 }
 
-@property (nonatomic, assign)                      BOOL showTrashItem;
-@property (nonatomic, assign)                 NSInteger offset;         // 商家列表请求偏移量，用户上拉刷新的分页请求操作
-@property (nonatomic, assign) SCFavoriteListRequestType requestType;    // 请求类型，是上拉刷新还是下拉刷新
+@property (nonatomic, assign)                 BOOL showTrashItem;
+@property (nonatomic, assign)            NSInteger offset;         // 商家列表请求偏移量，用户上拉刷新的分页请求操作
+@property (nonatomic, assign) SCRequestRefreshType requestType;    // 请求类型，是上拉刷新还是下拉刷新
 
 /**
  *  数据初始化
@@ -38,24 +38,17 @@ typedef NS_ENUM(NSInteger, SCFavoriteListRequestType) {
 /**
  *  下拉刷新
  */
-- (void)startDownRefreshReuqest;
+- (void)startDropDownRefreshReuqest;
 
 /**
  *  上拉刷新
  */
-- (void)startUpRefreshRequest;
+- (void)startPullUpRefreshRequest;
 
 /**
- *  显示HUD
- *
- *  @param view 需要显示HUD的View
+ *  结束刷新
  */
-- (void)showHUDToView:(UIView *)view;
-
-/**
- *  隐藏HUD
- */
-- (void)hiddenHUD;
+- (void)endRefresh;
 
 /**
  *  清空列表缓存数据

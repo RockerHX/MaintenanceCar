@@ -28,16 +28,19 @@
 @property (nonatomic, copy) NSString <Optional>*time_closed;          // 商家打样时间
 @property (nonatomic, copy) NSString <Optional>*majors;               // 专修品牌
 @property (nonatomic, copy) NSString <Optional>*star;                 // 商家星级
+@property (nonatomic, copy) NSString <Optional>*now;
 @property (nonatomic, assign)        NSInteger comments_num;          // 评价数量
 
 @property (nonatomic, strong)            NSDictionary <Optional>*service_items;   // 服务项目
 @property (nonatomic, strong) NSArray <Optional, SCGroupProduct>*products;        // 团购项目
 @property (nonatomic, strong)      NSArray <Optional, SCComment>*comments;        // 用户评价
+@property (nonatomic, strong)                 NSArray <Optional>*images;          // 商家图片
 @property (nonatomic, assign)                              BOOL collected;        // 收藏状态
 
-@property (nonatomic, copy, readonly)   NSString <Ignore>*distance;             // 手机当前位置与商家的距离
-@property (nonatomic, copy, readonly)   NSString <Ignore>*serverItemsPrompt;    // 商家服务描述
-@property (nonatomic, strong, readonly)  NSArray <Ignore>*merchantFlags;        // 商家标签集合
+@property (nonatomic, copy, readonly)       NSString <Ignore>*distance;           // 手机当前位置与商家的距离
+@property (nonatomic, strong, readonly)      NSArray <Ignore>*merchantFlags;      // 商家标签集合
+@property (nonatomic, strong, readonly)      NSArray <Ignore>*merchantImages;     // 商家图片集合
+@property (nonatomic, strong, readonly) NSDictionary <Ignore>*serviceItems;       // 商家服务项目
 
 
 @end

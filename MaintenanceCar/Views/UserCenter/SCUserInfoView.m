@@ -41,44 +41,48 @@
     
     if (userInfo.loginStatus)
     {
-        if (userInfo.cars.count)
-        {
-            if (!_userCarsView.hidden && userInfo.cars.count)
+        __weak typeof(self)weakSelf = self;
+        [userInfo userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
+            if (userInfo.cars.count)
             {
-                NSMutableArray *items = [@[] mutableCopy];
-                for (NSInteger index = 0; index < userInfo.cars.count; index++)
+                if (!_userCarsView.hidden && userInfo.cars.count)
                 {
-                    UIImageView *carView           = [[UIImageView alloc] init];
-                    carView.userInteractionEnabled = YES;
-                    carView.tag                    = index;
-                    carView.image                  = [UIImage imageNamed:@"car"];
-                    [items addObject:carView];
+                    NSMutableArray *items = [@[] mutableCopy];
+                    for (NSInteger index = 0; index < userInfo.cars.count; index++)
+                    {
+                        UIImageView *carView = [[UIImageView alloc] init];
+                        carView.image        = [UIImage imageNamed:@"car"];
+                        [items addObject:carView];
+                    }
+                    _userCarsView.items = items;
+                    
+                    SCUserCar *car = [userInfo.cars firstObject];
+                    _carNameLabel.text = [NSString stringWithFormat:@"%@%@", car.brand_name, car.model_name];
+                    _carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", car.run_distance.length ? car.run_distance : @"0"];
                 }
-                _userCarsView.items = items;
+            }
+            else
+            {
+                UIImageView *carView = [[UIImageView alloc] init];
+                carView.image = [UIImage imageNamed:@"car"];
+                _userCarsView.items = @[carView];
                 
-                SCUserCar *car = [userInfo.cars firstObject];
-                _carNameLabel.text = [NSString stringWithFormat:@"%@%@", car.brand_name, car.model_name];
-                _carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", car.run_distance.length ? car.run_distance : @"0"];
+                _carNameLabel.text = @"请在右上角添加车辆";
+                _carDataLabel.text = @"";
             }
             
-            __weak typeof(self)weakSelf = self;
             [_userCarsView begin:^(NSInteger index) {
-                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(shouldChangeCarData:)])
-                    [weakSelf.delegate shouldChangeCarData:[SCUserInfo share].cars[index]];
+                if (userInfo.cars.count)
+                {
+                    if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(shouldChangeCarData:)])
+                        [weakSelf.delegate shouldChangeCarData:[SCUserInfo share].cars[index]];
+                }
             } finished:^(NSInteger index) {
                 SCUserCar *car = userInfo.cars[index];
                 weakSelf.carNameLabel.text = [NSString stringWithFormat:@"%@%@", car.brand_name, car.model_name];
                 weakSelf.carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", car.run_distance.length ? car.run_distance : @"0"];
             }];
-        }
-        else
-        {
-            UIImageView *carView = [[UIImageView alloc] init];
-            carView.image = [UIImage imageNamed:@"car"];
-            _userCarsView.items = @[carView];
-            
-            _carNameLabel.text = @"请在右上角添加车辆";
-        }
+        }];
     }
 }
 

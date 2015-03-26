@@ -7,7 +7,7 @@
 //
 
 #import "SCServiceMerchantListViewController.h"
-#import "MJRefresh.h"
+#import <MJRefresh/MJRefresh.h>
 #import "SCMerchant.h"
 #import "SCMerchantListCell.h"
 #import "SCLocationManager.h"
@@ -60,12 +60,9 @@
     [self initConfig];
     [self viewConfig];
     
-    __weak typeof(self) weakSelf = self;
     // 添加上拉刷新控件
-    [_tableView addFooterWithCallback:^{
-        [weakSelf upRefreshMerchantList];
-    }];
-    
+    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(upRefreshMerchantList)];
+    [self.tableView.footer setHidden:YES];
     [self refreshMerchantList];
 }
 
@@ -172,9 +169,7 @@
                                      @"radius"    : _distanceCondition,
                                      @"longtitude": longitude,
                                      @"latitude"  : latitude};
-    
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [_tableView footerEndRefreshing];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
@@ -195,12 +190,15 @@
                 [_tableView reloadData];
             }
             _merchantFilterView.hidden = NO;
+            [weakSelf.tableView.footer setHidden:NO];
         }
         else
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
+        [weakSelf.tableView.footer endRefreshing];
         [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];              // 请求完成，移除响应式控件
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Get merchant list request error:%@", error);
+        [weakSelf.tableView.footer endRefreshing];
         [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
     }];
 }

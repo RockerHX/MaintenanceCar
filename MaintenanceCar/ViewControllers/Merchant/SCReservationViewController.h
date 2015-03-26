@@ -7,8 +7,8 @@
 //
 
 #import "SCViewController.h"
+#import "SCMerchant.h"
 
-@class SCMerchant;
 @class SCServiceItem;
 
 @interface SCReservationViewController : UITableViewController

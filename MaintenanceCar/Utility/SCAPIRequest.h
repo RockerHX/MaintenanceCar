@@ -203,7 +203,7 @@
                                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  更新预约接口请求方法(API:/Carshop/reservation_left - GET)
+ *  获取预约数量接口请求方法(API:/Carshop/reservation_left - GET)
  */
 - (void)startGetReservationItemNumAPIRequestWithParameters:(NSDictionary *)parameters
                                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -274,13 +274,6 @@
 - (void)startGetAllDictionaryAPIRequestWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
-#pragma mark - Special API
-/**
- *  首页第四个按钮数据接口请求方法(API:/Special - GET)
- */
-- (void)startHomePageSpecialAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
 /**
  *  获取商家对应Flag颜色值接口请求方法(API:/Special/color - GET)
  */
@@ -292,5 +285,25 @@
  */
 - (void)startMerchantTagsAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark - Home Page API
+/**
+ *  首页运营位数据接口请求方法(API:/Special/ad - GET)
+ */
+- (void)startGetOperatADAPIRequestWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+/**
+ *  首页最新预约数据接口请求方法(API:/Reservation/latest - GET)
+ */
+- (void)startHomePageReservationAPIRequestWithParameters:(NSDictionary *)parameters
+                                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  首页第四个按钮数据接口请求方法(API:/Special - GET)
+ */
+- (void)startHomePageSpecialAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 
 @end

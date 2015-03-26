@@ -127,7 +127,6 @@ typedef void(^BLOCK)(NSInteger index);
         }
         return YES;
     }
-    NSLog(@"Items is empty.");
     return NO;
 }
 

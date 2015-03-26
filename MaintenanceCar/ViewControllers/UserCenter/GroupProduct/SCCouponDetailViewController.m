@@ -19,6 +19,8 @@
 #import "SCCommentListViewController.h"
 #import "SCReservationViewController.h"
 #import "SCMerchant.h"
+#import <SCLoopScrollView/SCLoopScrollView.h>
+#import <AFNetworking/UIImageView+AFNetworking.h>
 
 typedef NS_ENUM(NSInteger, SCAlertType) {
     SCAlertTyperefund,
@@ -197,7 +199,16 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == 0 || section == 4 || section == 5)
+    if (!section)
+    {
+        if (IS_IPHONE_6)
+            return 40.0f;
+        else if (IS_IPHONE_6Plus)
+            return 60.0f;
+        else
+            return DOT_COORDINATE;
+    }
+    if (section == 4 || section == 5)
         return DOT_COORDINATE;
     return 30.0f;
 }
@@ -239,11 +250,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         @try {
             SCCommentListViewController *commentListViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCommentListViewController"];
             commentListViewController.companyID = _detail.companyID;
-            commentListViewController.showTrashItem = NO;
             [self.navigationController pushViewController:commentListViewController animated:YES];
         }
         @catch (NSException *exception) {
-            NSLog(@"SCMerchantDetailViewController Go to the SCCommentListViewController exception reasion:%@", exception.reason);
+            NSLog(@"SCCouponDetailViewController Go to the SCCommentListViewController exception reasion:%@", exception.reason);
         }
         @finally {
         }
@@ -264,13 +274,26 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             _detail.companyID    = _coupon.company_id;
             _detail.merchantName = _coupon.company_name;
             _detail.serviceDate  = _coupon.now;
-            [self.tableView reloadData];
+            
+            [weakSelf dispalyDetialView];
+            [weakSelf.tableView reloadData];
             weakSelf.tableView.tableFooterView.hidden = NO;
         }
         [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
     }];
+}
+
+- (void)dispalyDetialView
+{
+    NSMutableArray *items = [@[] mutableCopy];
+    UIImageView *carView  = [[UIImageView alloc] init];
+    [carView setImageWithURL:[NSURL URLWithString:_detail.img1]
+            placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
+    [items addObject:carView];
+    _couponImagesView.items = items;
+    [_couponImagesView begin:nil finished:nil];
 }
 
 #pragma mark - SCGroupProductCellDelegate Methods
@@ -282,7 +305,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         [self.navigationController pushViewController:buyGroupProductViewController animated:YES];
     }
     @catch (NSException *exception) {
-        NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
+        NSLog(@"SCCouponDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
     }
     @finally {
     }
@@ -301,7 +324,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {
-        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+        NSLog(@"SCCouponDetailViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
     }
     @finally {
     }

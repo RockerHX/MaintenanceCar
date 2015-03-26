@@ -103,8 +103,7 @@
     }
     
 #pragma mark - WeiXin SDK
-#warning @"微信SDK"真机调试和上传记得打开注释
-//#warning @"微信SDK"只支持真机调试
+//#warning @"微信SDK"真机调试和上传记得打开注释
 //    [WXApi registerApp:WeiXinKEY];
     
     return YES;
@@ -112,29 +111,29 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+    NSLog(@"%s:%@", __FUNCTION__, deviceToken);
     [UMessage registerDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    NSLog(@"%s:%@", __FUNCTION__, userInfo);
     [UMessage didReceiveRemoteNotification:userInfo];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
 {
-    NSLog(@"%s", __FUNCTION__);
+    NSLog(@"%s:%@", __FUNCTION__, userInfo);
 }
 
-//#warning @"微信SDK"真机调试和上传记得打开注释
+#warning @"微信SDK"真机调试和上传记得打开注释
 //- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 //{
-//#warning @"微信SDK"只支持真机调试
 //    return  [WXApi handleOpenURL:url delegate:self];
 //}
 //
 //- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 //{
-//#warning @"微信SDK"只支持真机调试
 //    return  [WXApi handleOpenURL:url delegate:self];
 //}
 //
