@@ -55,6 +55,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     UIView         *_blankView;
 }
 @property (weak, nonatomic)     SCMerchantDetailCell *briefIntroductionCell;
+@property (weak, nonatomic)       SCGroupProductCell *productCell;
 @property (weak, nonatomic) SCMerchantDetailItemCell *detailItemCell;
 @property (weak, nonatomic)            SCCommentCell *commentCell;
 
@@ -252,25 +253,32 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             {
                 if (_hasGroupProducts)
                 {
-                    if (((indexPath.row == _merchantDetail.products.count) && _productOpen) || ((indexPath.row == 2) && !_productOpen))
-                        return 44.0f;
+                    if (!(((indexPath.row == _merchantDetail.products.count) && _productOpen) || ((indexPath.row == 2) && !_productOpen)))
+                    {
+                        if(!_productCell)
+                            _productCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductCell"];
+                        [_productCell displayCellWithProduct:_merchantDetail.products[indexPath.row]];
+                        
+                        height = [_productCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+                    }
                     else
-                        return 72.0f;
+                        return 43.0f;
                 }
-                height = [self calculatedetailItemCellHeightWithIndexPath:indexPath];
+                else
+                    height = [self calculatedetailItemCellHeightWithIndexPath:indexPath];
             }
                 break;
             case 2:
             {
                 if (!_hasGroupProducts)
-                    return 44.0f;
+                    return 43.0f;
                 height = [self calculatedetailItemCellHeightWithIndexPath:indexPath];
             }
                 break;
             case 3:
             {
                 if (_hasGroupProducts)
-                    return 44.0f;
+                    return 43.0f;
                 height = [self calculateCommentCellHeightWithIndexPath:indexPath];
             }
                 break;
