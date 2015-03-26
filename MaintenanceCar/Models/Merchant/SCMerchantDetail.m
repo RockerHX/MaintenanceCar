@@ -42,6 +42,7 @@
         SCGroupProduct *product = obj;
         product.companyID       = _company_id;
         product.merchantName    = _name;
+        product.now             = _now;
     }];
 }
 

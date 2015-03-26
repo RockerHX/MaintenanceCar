@@ -232,6 +232,7 @@
             _detail = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
             _detail.companyID = _product.companyID;
             _detail.merchantName = _product.merchantName;
+            _detail.serviceDate  = _product.now;
             
             [weakSelf dispalyDetialView];
             [weakSelf.tableView reloadData];
