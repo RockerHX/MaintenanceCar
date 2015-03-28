@@ -7,9 +7,9 @@
 //
 
 #import "SCUserInfo.h"
+#import <UMengMessage/UMessage.h>
 #import "MicroCommon.h"
 #import "SCAPIRequest.h"
-#import "UMessage.h"
 
 typedef void(^BLOCK)(SCUserInfo *userInfo, BOOL finish);
 

@@ -96,3 +96,16 @@
 #define COCOAPODS_VERSION_MINOR_UMengAnalytics 4
 #define COCOAPODS_VERSION_PATCH_UMengAnalytics 6
 
+// UMengMessage
+#define COCOAPODS_POD_AVAILABLE_UMengMessage
+// This library does not follow semantic-versioning,
+// so we were not able to define version macros.
+// Please contact the author.
+// Version: 1.1.0.2.
+
+// Weixin
+#define COCOAPODS_POD_AVAILABLE_Weixin
+#define COCOAPODS_VERSION_MAJOR_Weixin 1
+#define COCOAPODS_VERSION_MINOR_Weixin 5
+#define COCOAPODS_VERSION_PATCH_Weixin 0
+

@@ -7,12 +7,12 @@
 //
 
 #import "AppDelegate.h"
-#import "MicroCommon.h"
 #import <Baidu-Maps-iOS-SDK/BMapKit.h>
 #import <UMengAnalytics/MobClick.h>
+#import <UMengMessage/UMessage.h>
+#import <Weixin/WXApi.h>
+#import "MicroCommon.h"
 #import "UMFeedback.h"
-#import "UMessage.h"
-#import "WXApi.h"
 #import "SCUserInfo.h"
 
 @interface AppDelegate () <WXApiDelegate>

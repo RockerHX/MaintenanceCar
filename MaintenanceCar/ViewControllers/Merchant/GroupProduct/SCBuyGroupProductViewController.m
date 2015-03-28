@@ -7,8 +7,8 @@
 //
 
 #import "SCBuyGroupProductViewController.h"
+#import <Weixin/WXApi.h>
 #import "SCGroupProductDetail.h"
-#import "WXApi.h"
 #import "SCWeiXinPayOder.h"
 #import "SCAliPayOrder.h"
 
