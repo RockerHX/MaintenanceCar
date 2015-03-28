@@ -12,7 +12,6 @@ pod 'SCLoopScrollView',         '~> 0.1'
 # 友盟统计SDK
 pod 'UMengMessage',             '~> 1.1.0.2'
 pod 'UMengAnalytics',           '~> 3.4.4'
-#pod 'UMengFeedback',            '~> 2.1'
 
 pod 'Baidu-Maps-iOS-SDK',       '~> 2.6.0'
 
