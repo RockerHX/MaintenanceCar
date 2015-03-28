@@ -36,7 +36,7 @@
 - (BOOL)canBug
 {
     if (_serviceDate)
-        return (([self expiredInterval] > Zero) && ([_group_capacity integerValue] > Zero));
+        return (([self expiredInterval] > Zero) && ![_sold_out integerValue]);
     return NO;
 }
 
