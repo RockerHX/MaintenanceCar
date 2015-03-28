@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *cutButton;
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 @property (weak, nonatomic) IBOutlet UIButton *weiXinPayButton;
+@property (weak, nonatomic) IBOutlet UIButton *aliPayButton;
 
 @property (nonatomic, strong) SCGroupProductDetail *groupProductDetail;
 
@@ -28,5 +29,6 @@
 - (IBAction)addButtonPressed:(id)sender;
 
 - (IBAction)weiXinPayPressed:(id)sender;
+- (IBAction)aliPayPressed:(id)sender;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  SCWeiXinPay.h
+//  SCWeiXinPayOder.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/2/28.
@@ -8,7 +8,7 @@
 
 #import "JSONModel.h"
 
-@interface SCWeiXinPay : JSONModel
+@interface SCWeiXinPayOder : JSONModel
 
 @property (nonatomic, copy)   NSString <Optional>*appid;
 @property (nonatomic, copy)   NSString <Optional>*noncestr;

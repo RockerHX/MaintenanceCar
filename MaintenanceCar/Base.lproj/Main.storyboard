@@ -4611,7 +4611,7 @@
                                                                     <constraint firstAttribute="height" constant="15" id="Qqo-yC-K3W"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fV-Hl-bOM">
@@ -5740,7 +5740,7 @@
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="A6q-8m-YNx">
-                            <rect key="frame" x="0.0" y="290" width="320" height="100"/>
+                            <rect key="frame" x="0.0" y="290" width="320" height="120"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mOD-OH-a2s">
@@ -5758,10 +5758,27 @@
                                         <action selector="weiXinPayPressed:" destination="kuH-O5-1tf" eventType="touchUpInside" id="Kwy-5p-nIi"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jP7-P9-mA0">
+                                    <rect key="frame" x="60" y="80" width="200" height="40"/>
+                                    <color key="backgroundColor" red="0.17254901959999999" green="0.48627450979999998" blue="0.72549019609999998" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="200" id="AMG-CT-uyZ"/>
+                                        <constraint firstAttribute="height" constant="40" id="PUz-kI-G7n"/>
+                                    </constraints>
+                                    <state key="normal" title="支付宝支付">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="aliPayPressed:" destination="kuH-O5-1tf" eventType="touchUpInside" id="uRa-69-D3p"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstAttribute="bottom" secondItem="jP7-P9-mA0" secondAttribute="bottom" id="3ie-iH-Kbr"/>
                                 <constraint firstAttribute="centerX" secondItem="mOD-OH-a2s" secondAttribute="centerX" id="E6R-Ma-J6B"/>
+                                <constraint firstAttribute="centerX" secondItem="jP7-P9-mA0" secondAttribute="centerX" id="nxu-KN-qwM"/>
                                 <constraint firstItem="mOD-OH-a2s" firstAttribute="top" secondItem="A6q-8m-YNx" secondAttribute="top" constant="20" id="uKS-h5-cTu"/>
                             </constraints>
                         </view>
@@ -5916,6 +5933,7 @@
                     <navigationItem key="navigationItem" title="购买" id="rFM-CF-lMQ"/>
                     <connections>
                         <outlet property="addButton" destination="QBs-Wd-CBR" id="34v-TD-UqW"/>
+                        <outlet property="aliPayButton" destination="jP7-P9-mA0" id="C5L-gj-VMf"/>
                         <outlet property="cutButton" destination="kdO-Dy-Ggc" id="7fJ-s5-DrO"/>
                         <outlet property="groupPriceLabel" destination="1mT-XK-QdP" id="cH6-bd-lh0"/>
                         <outlet property="merchantNameLabel" destination="no5-4h-bKX" id="Nwv-Eh-dKX"/>

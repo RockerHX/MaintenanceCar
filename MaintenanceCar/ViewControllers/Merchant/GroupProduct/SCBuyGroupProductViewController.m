@@ -9,14 +9,16 @@
 #import "SCBuyGroupProductViewController.h"
 #import "SCGroupProductDetail.h"
 #import "WXApi.h"
-#import "SCWeiXinPay.h"
+#import "SCWeiXinPayOder.h"
+#import "SCAliPayOrder.h"
 
 @interface SCBuyGroupProductViewController ()
 {
     NSUInteger  _productCount;
     CGFloat     _productPrice;
     
-    SCWeiXinPay *_weiXinPay;
+    SCWeiXinPayOder *_weiXinPayOder;
+    SCAliPayOrder   *_aliPayOder;
 }
 
 @end
@@ -83,6 +85,7 @@
     _totalPriceLabel.text = _groupProductDetail.final_price;
     
     [_weiXinPayButton setTitle:[NSString stringWithFormat:@"微信支付%@元", _totalPriceLabel.text] forState:UIControlStateNormal];
+    [_aliPayButton setTitle:[NSString stringWithFormat:@"支付宝支付%@元", _totalPriceLabel.text] forState:UIControlStateNormal];
 }
 
 #pragma mark - Action Methods
@@ -116,10 +119,10 @@
             [[SCAPIRequest manager] startGetWeiXinPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
                 {
-                    _weiXinPay = [[SCWeiXinPay alloc] initWithDictionary:responseObject error:nil];
+                    _weiXinPayOder = [[SCWeiXinPayOder alloc] initWithDictionary:responseObject error:nil];
                     
-                    _groupProductDetail.outTradeNo = _weiXinPay.out_trade_no;
-                    [weakSelf sendWeiXinPay:_weiXinPay];
+                    _groupProductDetail.outTradeNo = _weiXinPayOder.out_trade_no;
+                    [weakSelf sendWeiXinPay:_weiXinPayOder];
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 [weakSelf hideHUDOnViewController:weakSelf];
@@ -128,6 +131,35 @@
         }
         else
             [self showWeiXinInstallAlert];
+    }
+    else
+        [self showShoulLoginAlert];
+}
+
+- (IBAction)aliPayPressed:(id)sender
+{
+    if ([SCUserInfo share].loginStatus)
+    {
+        [self showHUDOnViewController:self];
+        __weak typeof(self)weakSelf = self;
+        NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                                     @"company_id": _groupProductDetail.companyID,
+                                     @"product_id": _groupProductDetail.product_id,
+                                     @"how_many": @(_productCount),
+                                     @"total_price": _totalPriceLabel.text,
+                                     @"mobile": [SCUserInfo share].phoneNmber};
+        [[SCAPIRequest manager] startGetAliPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+            {
+                _aliPayOder = [[SCAliPayOrder alloc] initWithDictionary:responseObject error:nil];
+                
+                _groupProductDetail.outTradeNo = _aliPayOder.out_trade_no;
+                [weakSelf sendAliPay:_aliPayOder];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [weakSelf hideHUDOnViewController:weakSelf];
+            [weakSelf showHUDAlertToViewController:weakSelf text:@"下单失败，请重试..." delay:0.5f];
+        }];
     }
     else
         [self showShoulLoginAlert];
@@ -151,19 +183,25 @@
     _totalPriceLabel.text = [NSString stringWithFormat:@"%.2f", (_productCount * _productPrice)];
     
     [_weiXinPayButton setTitle:[NSString stringWithFormat:@"微信支付%@元", _totalPriceLabel.text] forState:UIControlStateNormal];
+    [_aliPayButton setTitle:[NSString stringWithFormat:@"支付宝支付%@元", _totalPriceLabel.text] forState:UIControlStateNormal];
 }
 
 #warning @"微信SDK"真机调试和上传记得打开注释
-- (void)sendWeiXinPay:(SCWeiXinPay *)pay
+- (void)sendWeiXinPay:(SCWeiXinPayOder *)oder
 {
     PayReq *request = [[PayReq alloc] init];
-    request.partnerId = pay.partnerid;
-    request.prepayId  = pay.prepayid;
-    request.package   = pay.package;
-    request.nonceStr  = pay.noncestr;
-    request.timeStamp = pay.timestamp;
-    request.sign      = pay.sign;
+    request.partnerId = oder.partnerid;
+    request.prepayId  = oder.prepayid;
+    request.package   = oder.package;
+    request.nonceStr  = oder.noncestr;
+    request.timeStamp = oder.timestamp;
+    request.sign      = oder.sign;
     [WXApi sendReq:request];
+}
+
+- (void)sendAliPay:(SCAliPayOrder *)oder
+{
+    NSLog(@"%@", [oder requestString]);
 }
 
 - (void)startGenerateGroupProductRequest

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4803EB061ABCB2AB001AD4F9 /* SCMerchantServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4803EB051ABCB2AB001AD4F9 /* SCMerchantServiceCell.m */; };
 		4803EB091ABCB688001AD4F9 /* SCServiceItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4803EB081ABCB688001AD4F9 /* SCServiceItemCell.m */; };
+		480445B61AC5616B004C20B9 /* SCAliPayOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 480445B51AC5616B004C20B9 /* SCAliPayOrder.m */; };
 		4820DA3E1A63FE5000129D39 /* SCCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4820DA3D1A63FE5000129D39 /* SCCoreDataManager.m */; };
 		482335351A4BA78700B60921 /* SCAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 482335341A4BA78700B60921 /* SCAPIRequest.m */; };
 		482AC9691AB19E1D001574EF /* SCOderAppraisedCheckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 482AC9681AB19E1D001574EF /* SCOderAppraisedCheckCell.m */; };
@@ -41,7 +42,7 @@
 		48661B761A5E6627007F92A7 /* FilterConditions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 48661B751A5E6627007F92A7 /* FilterConditions.plist */; };
 		4866F8B61AAB32ED008E195C /* SCGroupProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F8B11AAB32ED008E195C /* SCGroupProduct.m */; };
 		4866F8B71AAB32ED008E195C /* SCGroupProductDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F8B31AAB32ED008E195C /* SCGroupProductDetail.m */; };
-		4866F8B81AAB32ED008E195C /* SCWeiXinPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F8B51AAB32ED008E195C /* SCWeiXinPay.m */; };
+		4866F8B81AAB32ED008E195C /* SCWeiXinPayOder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F8B51AAB32ED008E195C /* SCWeiXinPayOder.m */; };
 		4866F9121AACBD2D008E195C /* SCChangeMaintenanceDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F8DE1AACBD2D008E195C /* SCChangeMaintenanceDataViewController.m */; };
 		4866F9131AACBD2D008E195C /* SCMaintenanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F8E01AACBD2D008E195C /* SCMaintenanceViewController.m */; };
 		4866F9141AACBD2D008E195C /* SCServiceMerchantListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F8E21AACBD2D008E195C /* SCServiceMerchantListViewController.m */; };
@@ -184,6 +185,8 @@
 		4803EB051ABCB2AB001AD4F9 /* SCMerchantServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMerchantServiceCell.m; sourceTree = "<group>"; };
 		4803EB071ABCB688001AD4F9 /* SCServiceItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCServiceItemCell.h; sourceTree = "<group>"; };
 		4803EB081ABCB688001AD4F9 /* SCServiceItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCServiceItemCell.m; sourceTree = "<group>"; };
+		480445B41AC5616B004C20B9 /* SCAliPayOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAliPayOrder.h; sourceTree = "<group>"; };
+		480445B51AC5616B004C20B9 /* SCAliPayOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAliPayOrder.m; sourceTree = "<group>"; };
 		4820DA3C1A63FE5000129D39 /* SCCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCoreDataManager.h; sourceTree = "<group>"; };
 		4820DA3D1A63FE5000129D39 /* SCCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCoreDataManager.m; sourceTree = "<group>"; };
 		482335331A4BA78700B60921 /* SCAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAPIRequest.h; sourceTree = "<group>"; };
@@ -242,8 +245,8 @@
 		4866F8B11AAB32ED008E195C /* SCGroupProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGroupProduct.m; sourceTree = "<group>"; };
 		4866F8B21AAB32ED008E195C /* SCGroupProductDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGroupProductDetail.h; sourceTree = "<group>"; };
 		4866F8B31AAB32ED008E195C /* SCGroupProductDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGroupProductDetail.m; sourceTree = "<group>"; };
-		4866F8B41AAB32ED008E195C /* SCWeiXinPay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCWeiXinPay.h; sourceTree = "<group>"; };
-		4866F8B51AAB32ED008E195C /* SCWeiXinPay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCWeiXinPay.m; sourceTree = "<group>"; };
+		4866F8B41AAB32ED008E195C /* SCWeiXinPayOder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCWeiXinPayOder.h; sourceTree = "<group>"; };
+		4866F8B51AAB32ED008E195C /* SCWeiXinPayOder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCWeiXinPayOder.m; sourceTree = "<group>"; };
 		4866F8DD1AACBD2D008E195C /* SCChangeMaintenanceDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCChangeMaintenanceDataViewController.h; sourceTree = "<group>"; };
 		4866F8DE1AACBD2D008E195C /* SCChangeMaintenanceDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCChangeMaintenanceDataViewController.m; sourceTree = "<group>"; };
 		4866F8DF1AACBD2D008E195C /* SCMaintenanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMaintenanceViewController.h; sourceTree = "<group>"; };
@@ -687,8 +690,10 @@
 				4866F8B11AAB32ED008E195C /* SCGroupProduct.m */,
 				4866F8B21AAB32ED008E195C /* SCGroupProductDetail.h */,
 				4866F8B31AAB32ED008E195C /* SCGroupProductDetail.m */,
-				4866F8B41AAB32ED008E195C /* SCWeiXinPay.h */,
-				4866F8B51AAB32ED008E195C /* SCWeiXinPay.m */,
+				4866F8B41AAB32ED008E195C /* SCWeiXinPayOder.h */,
+				4866F8B51AAB32ED008E195C /* SCWeiXinPayOder.m */,
+				480445B41AC5616B004C20B9 /* SCAliPayOrder.h */,
+				480445B51AC5616B004C20B9 /* SCAliPayOrder.m */,
 				4866F9F01AAD96F7008E195C /* SCCoupon.h */,
 				4866F9F11AAD96F7008E195C /* SCCoupon.m */,
 				4866F9FD1AAE0EAE008E195C /* SCCouponDetail.h */,
@@ -1534,6 +1539,7 @@
 				4866F91D1AACBD2D008E195C /* SCMainViewController.m in Sources */,
 				4866F9C01AACBD89008E195C /* SCUserInfoView.m in Sources */,
 				48AB35DC1A517CAB00BFBC77 /* SCUserInfo.m in Sources */,
+				480445B61AC5616B004C20B9 /* SCAliPayOrder.m in Sources */,
 				4866F99D1AACBD89008E195C /* SCDriveHabitsItem.m in Sources */,
 				482335351A4BA78700B60921 /* SCAPIRequest.m in Sources */,
 				48FB70CE1AA5A58300AF4AD9 /* SCMerchantDetail.m in Sources */,
@@ -1568,7 +1574,7 @@
 				4866F9221AACBD2D008E195C /* SCAboutTableViewController.m in Sources */,
 				48FB70CB1AA5A58300AF4AD9 /* SCServiceItem.m in Sources */,
 				482AC9851AB4B701001574EF /* SCView.m in Sources */,
-				4866F8B81AAB32ED008E195C /* SCWeiXinPay.m in Sources */,
+				4866F8B81AAB32ED008E195C /* SCWeiXinPayOder.m in Sources */,
 				4866F9BA1AACBD89008E195C /* SCCollectionIndexView.m in Sources */,
 				4866F9BD1AACBD89008E195C /* SCMyGroupProductCell.m in Sources */,
 				4866F9AC1AACBD89008E195C /* SCDateCell.m in Sources */,
@@ -1709,6 +1715,11 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = AppLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: xiao hua (58FGBM23AF)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xiao hua (58FGBM23AF)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/AliPay",
+					2.2.1,
+				);
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = MaintenanceCar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1735,6 +1746,11 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = AppLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen Yuanjing Telematics Tech Co., Ltd. (539L59J6H5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shenzhen Yuanjing Telematics Tech Co., Ltd. (539L59J6H5)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/AliPay",
+					2.2.1,
+				);
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = MaintenanceCar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

@@ -108,6 +108,13 @@
                                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
+ *  获取支付宝钱包订单信息接口请求方法(API:/zhipay - POST)
+ */
+- (void)startGetAliPayOrderAPIRequestWithParameters:(NSDictionary *)parameters
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
  *  生成团购券接口请求方法(API:/Group_ticket - POST)
  */
 
