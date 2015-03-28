@@ -103,21 +103,27 @@
     }
     
 #pragma mark - WeiXin SDK
-#warning @"微信SDK"真机调试和上传记得打开注释
     [WXApi registerApp:WeiXinKEY];
     
     return YES;
 }
 
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    [BMKMapView willBackGround];    //当应用即将后台时调用，停止一切调用opengl相关的操作
+}
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [BMKMapView didForeGround];     //当应用恢复前台状态时调用，回复地图的渲染和opengl相关的操作
+}
+
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    NSLog(@"%s:%@", __FUNCTION__, deviceToken);
     [UMessage registerDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSLog(@"%s:%@", __FUNCTION__, userInfo);
     [UMessage didReceiveRemoteNotification:userInfo];
 }
 
@@ -126,7 +132,6 @@
     NSLog(@"%s:%@", __FUNCTION__, userInfo);
 }
 
-#warning @"微信SDK"真机调试和上传记得打开注释
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
     return  [WXApi handleOpenURL:url delegate:self];
@@ -138,7 +143,6 @@
 }
 
 #pragma mark - Wei Xin Pay Delegate Methods
-#warning @"微信SDK"只支持真机调试
 - (void)onResp:(BaseResp *)resp
 {
     if ([resp isKindOfClass:[PayResp class]])

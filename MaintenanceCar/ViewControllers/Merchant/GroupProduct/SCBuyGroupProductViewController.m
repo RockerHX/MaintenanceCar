@@ -186,7 +186,6 @@
     [_aliPayButton setTitle:[NSString stringWithFormat:@"支付宝支付%@元", _totalPriceLabel.text] forState:UIControlStateNormal];
 }
 
-#warning @"微信SDK"真机调试和上传记得打开注释
 - (void)sendWeiXinPay:(SCWeiXinPayOder *)oder
 {
     PayReq *request = [[PayReq alloc] init];
