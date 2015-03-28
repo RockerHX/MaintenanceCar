@@ -11,6 +11,7 @@
 #import <UMengAnalytics/MobClick.h>
 #import <UMengMessage/UMessage.h>
 #import <Weixin/WXApi.h>
+#import <AlipaySDK/AlipaySDK.h>
 #import "MicroCommon.h"
 #import "UMFeedback.h"
 #import "SCUserInfo.h"
@@ -139,7 +140,14 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    return  [WXApi handleOpenURL:url delegate:self];
+    if ([url.host isEqualToString:@"safepay"])
+    {
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@", resultDic);
+        }];
+        return YES;
+    }
+    return [WXApi handleOpenURL:url delegate:self];
 }
 
 #pragma mark - Wei Xin Pay Delegate Methods

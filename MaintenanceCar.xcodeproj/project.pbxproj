@@ -10,6 +10,8 @@
 		4803EB061ABCB2AB001AD4F9 /* SCMerchantServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4803EB051ABCB2AB001AD4F9 /* SCMerchantServiceCell.m */; };
 		4803EB091ABCB688001AD4F9 /* SCServiceItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4803EB081ABCB688001AD4F9 /* SCServiceItemCell.m */; };
 		480445B61AC5616B004C20B9 /* SCAliPayOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 480445B51AC5616B004C20B9 /* SCAliPayOrder.m */; };
+		481D94C41AC6B330005F3DD7 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 481D94621AC6B330005F3DD7 /* AlipaySDK.bundle */; };
+		481D94C51AC6B330005F3DD7 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 481D94631AC6B330005F3DD7 /* AlipaySDK.framework */; };
 		4820DA3E1A63FE5000129D39 /* SCCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4820DA3D1A63FE5000129D39 /* SCCoreDataManager.m */; };
 		482335351A4BA78700B60921 /* SCAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 482335341A4BA78700B60921 /* SCAPIRequest.m */; };
 		482AC9691AB19E1D001574EF /* SCOderAppraisedCheckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 482AC9681AB19E1D001574EF /* SCOderAppraisedCheckCell.m */; };
@@ -173,6 +175,8 @@
 		4803EB081ABCB688001AD4F9 /* SCServiceItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCServiceItemCell.m; sourceTree = "<group>"; };
 		480445B41AC5616B004C20B9 /* SCAliPayOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAliPayOrder.h; sourceTree = "<group>"; };
 		480445B51AC5616B004C20B9 /* SCAliPayOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAliPayOrder.m; sourceTree = "<group>"; };
+		481D94621AC6B330005F3DD7 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		481D94631AC6B330005F3DD7 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		4820DA3C1A63FE5000129D39 /* SCCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCoreDataManager.h; sourceTree = "<group>"; };
 		4820DA3D1A63FE5000129D39 /* SCCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCoreDataManager.m; sourceTree = "<group>"; };
 		482335331A4BA78700B60921 /* SCAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAPIRequest.h; sourceTree = "<group>"; };
@@ -448,6 +452,7 @@
 				48EBF5E71AC6AFE600892099 /* libUMOpus.a in Frameworks */,
 				48EBF5BB1AC6AF8D00892099 /* AVFoundation.framework in Frameworks */,
 				9E0A36B3F4162AAD50219CE6 /* libPods.a in Frameworks */,
+				481D94C51AC6B330005F3DD7 /* AlipaySDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,6 +473,15 @@
 				6BF7DC11E8E03D2E33EF3C43 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		481D94611AC6B330005F3DD7 /* AliPay2.2.1 */ = {
+			isa = PBXGroup;
+			children = (
+				481D94621AC6B330005F3DD7 /* AlipaySDK.bundle */,
+				481D94631AC6B330005F3DD7 /* AlipaySDK.framework */,
+			);
+			path = AliPay2.2.1;
 			sourceTree = "<group>";
 		};
 		482335321A4BA71300B60921 /* Utility */ = {
@@ -939,6 +953,7 @@
 		48AE95B01A50F52700A8A4B3 /* ThirdLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				481D94611AC6B330005F3DD7 /* AliPay2.2.1 */,
 				48EBF5BE1AC6AFE600892099 /* UMengFeedback_SDK_2.1 */,
 				48DF20531ABB20C2009708F8 /* EvilTransform */,
 			);
@@ -1230,6 +1245,7 @@
 				4866F9971AACBD89008E195C /* SCReservatAlertView.xib in Resources */,
 				48934F5D1A4CFE1700F29745 /* server.cer in Resources */,
 				4866F9951AACBD89008E195C /* SCPickerView.xib in Resources */,
+				481D94C41AC6B330005F3DD7 /* AlipaySDK.bundle in Resources */,
 				48EBF5E31AC6AFE600892099 /* umeng_fb_audio_play_01@2x.png in Resources */,
 				48EBF5DE1AC6AFE600892099 /* ToolViewInputTextHL@2x.png in Resources */,
 				48EBF5DC1AC6AFE600892099 /* save@2x.png in Resources */,
@@ -1545,7 +1561,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = AppLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: xiao hua (58FGBM23AF)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xiao hua (58FGBM23AF)";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/AliPay2.2.1",
+				);
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = MaintenanceCar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1554,6 +1573,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMengFeedback_SDK_2.1",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMengFeedback_SDK_2.1/UMOpus",
+					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/AliPay2.2.1",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "fa214f40-6d3a-4ac6-9dda-ae6cb50dd86a";
@@ -1569,7 +1589,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = AppLaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen Yuanjing Telematics Tech Co., Ltd. (539L59J6H5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shenzhen Yuanjing Telematics Tech Co., Ltd. (539L59J6H5)";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/AliPay2.2.1",
+				);
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = MaintenanceCar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1578,6 +1601,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMengFeedback_SDK_2.1",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMengFeedback_SDK_2.1/UMOpus",
+					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/AliPay2.2.1",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8b5052f1-f902-4978-a645-16abae86324c";

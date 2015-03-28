@@ -8,9 +8,18 @@
 
 #import "SCBuyGroupProductViewController.h"
 #import <Weixin/WXApi.h>
+#import <AlipaySDK/AlipaySDK.h>
 #import "SCGroupProductDetail.h"
 #import "SCWeiXinPayOder.h"
 #import "SCAliPayOrder.h"
+
+typedef NS_ENUM(NSInteger, SCAliPayCode) {
+    SCAliPayCodePaySuccess    = 9000,
+    SCAliPayCodePayProcessing = 8000,
+    SCAliPayCodePayFailure    = 4000,
+    SCAliPayCodeUserCancel    = 6001,
+    SCAliPayCodeNetworkError  = 6002
+};
 
 @interface SCBuyGroupProductViewController ()
 {
@@ -173,8 +182,35 @@
 
 - (void)weiXinPayFailure
 {
+    [self showPromptWithText:@"支付失败，请重试..."];
+}
+
+- (void)alipayResult:(NSDictionary *)reslut
+{
+    switch ([reslut[@"resultStatus"] integerValue])
+    {
+        case SCAliPayCodePaySuccess:
+            [self startGenerateGroupProductRequest];
+            break;
+        case SCAliPayCodePayProcessing:
+            [self showPromptWithText:@"交易进行中"];
+            break;
+        case SCAliPayCodePayFailure:
+            [self showPromptWithText:@"支付失败"];
+            break;
+        case SCAliPayCodeUserCancel:
+            [self showPromptWithText:@"用户取消"];
+            break;
+        case SCAliPayCodeNetworkError:
+            [self showPromptWithText:@"网络错误"];
+            break;
+    }
+}
+
+- (void)showPromptWithText:(NSString *)text
+{
     [self hideHUDOnViewController:self];
-    [self showHUDAlertToViewController:self text:@"支付失败，请重试..." delay:1.0f];
+    [self showHUDAlertToViewController:self text:text delay:1.0f];
 }
 
 - (void)displayView
@@ -200,7 +236,10 @@
 
 - (void)sendAliPay:(SCAliPayOrder *)oder
 {
-    NSLog(@"%@", [oder requestString]);
+    __weak typeof(self)weakSelf = self;
+    [[AlipaySDK defaultService] payOrder:[oder requestString] fromScheme:@"com.YJCL.XiuYang" callback:^(NSDictionary *resultDic) {
+        [weakSelf alipayResult:resultDic];
+    }];
 }
 
 - (void)startGenerateGroupProductRequest
