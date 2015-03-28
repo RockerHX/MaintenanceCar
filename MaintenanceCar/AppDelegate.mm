@@ -8,9 +8,9 @@
 
 #import "AppDelegate.h"
 #import "MicroCommon.h"
+#import <Baidu-Maps-iOS-SDK/BMapKit.h>
 #import <UMengAnalytics/MobClick.h>
 #import "UMFeedback.h"
-#import "BMapKit.h"
 #import "UMessage.h"
 #import "WXApi.h"
 #import "SCUserInfo.h"

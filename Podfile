@@ -1,6 +1,6 @@
 platform :ios, '7.0'
 
-pod 'AFNetworking',             '~> 2.5.1'
+pod 'AFNetworking',             '~> 2.5.2'
 pod 'JSONModel',                '~> 1.0.2'
 pod 'MBProgressHUD',            '~> 0.9.1'
 pod 'MJRefresh',                '~> 1.4.1'
