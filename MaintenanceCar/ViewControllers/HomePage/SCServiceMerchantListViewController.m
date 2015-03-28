@@ -96,12 +96,15 @@
 #pragma mark - Action Methods
 - (IBAction)mapItemPressed:(UIBarButtonItem *)sender
 {
-    // 地图按钮被点击，跳转到地图页面
-    UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
-    SCMapViewController *mapViewController = (SCMapViewController *)mapNavigationController.topViewController;
-    mapViewController.merchants = _merchantList;
-    mapNavigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self presentViewController:mapNavigationController animated:YES completion:nil];
+    if (_merchantList.count)
+    {
+        // 地图按钮被点击，跳转到地图页面
+        UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
+        SCMapViewController *mapViewController = (SCMapViewController *)mapNavigationController.topViewController;
+        mapViewController.merchants = _merchantList;
+        mapNavigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        [self presentViewController:mapNavigationController animated:YES completion:nil];
+    }
 }
 
 - (void)setQuery:(NSString *)query
