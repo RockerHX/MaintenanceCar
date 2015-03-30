@@ -12,6 +12,8 @@
 @interface SCGroupProductDetail : SCGroupProduct
 
 @property (nonatomic, copy) NSString <Optional>*group_capacity;
+@property (nonatomic, copy) NSString <Optional>*sell_count;
+@property (nonatomic, copy) NSString <Optional>*sold_out;
 @property (nonatomic, copy) NSString <Optional>*img1;
 @property (nonatomic, copy) NSString <Optional>*limit_begin;
 @property (nonatomic, copy) NSString <Optional>*limit_end;

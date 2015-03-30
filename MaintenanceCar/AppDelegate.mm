@@ -7,12 +7,13 @@
 //
 
 #import "AppDelegate.h"
-#import "MicroCommon.h"
+#import <Baidu-Maps-iOS-SDK/BMapKit.h>
 #import <UMengAnalytics/MobClick.h>
+#import <UMengMessage/UMessage.h>
+#import <Weixin/WXApi.h>
+#import <AlipaySDK/AlipaySDK.h>
+#import "MicroCommon.h"
 #import "UMFeedback.h"
-#import "BMapKit.h"
-#import "UMessage.h"
-#import "WXApi.h"
 #import "SCUserInfo.h"
 
 @interface AppDelegate () <WXApiDelegate>
@@ -42,9 +43,9 @@
     [MobClick checkUpdate];         // 集成友盟更新
     
     // 启动[友盟统计]，采用启动发送的方式 - BATCH
-//    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"AppStore:%@", version]];
+    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"AppStore:%@", version]];
 #warning @"发布时更改测试统计"
-    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"TestVersion:%@", version]];
+//    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"TestVersion:%@", version]];
     
     //set AppKey and AppSecret
     [UMessage startWithAppkey:UMengAPPKEY launchOptions:launchOptions];
@@ -103,21 +104,27 @@
     }
     
 #pragma mark - WeiXin SDK
-//#warning @"微信SDK"真机调试和上传记得打开注释
-//    [WXApi registerApp:WeiXinKEY];
+    [WXApi registerApp:WeiXinKEY];
     
     return YES;
 }
 
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    [BMKMapView willBackGround];    //当应用即将后台时调用，停止一切调用opengl相关的操作
+}
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [BMKMapView didForeGround];     //当应用恢复前台状态时调用，回复地图的渲染和opengl相关的操作
+}
+
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    NSLog(@"%s:%@", __FUNCTION__, deviceToken);
     [UMessage registerDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSLog(@"%s:%@", __FUNCTION__, userInfo);
     [UMessage didReceiveRemoteNotification:userInfo];
 }
 
@@ -126,38 +133,43 @@
     NSLog(@"%s:%@", __FUNCTION__, userInfo);
 }
 
-#warning @"微信SDK"真机调试和上传记得打开注释
-//- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-//{
-//    return  [WXApi handleOpenURL:url delegate:self];
-//}
-//
-//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-//{
-//    return  [WXApi handleOpenURL:url delegate:self];
-//}
-//
-//#pragma mark - Wei Xin Pay Delegate Methods
-//#warning @"微信SDK"只支持真机调试
-//- (void)onResp:(BaseResp *)resp
-//{
-//    if ([resp isKindOfClass:[PayResp class]])
-//    {
-//        PayResp *response = (PayResp *)resp;
-//        switch (response.errCode) {
-//            case WXSuccess:
-//            {
-//                //服务器端查询支付通知或查询API返回的结果再提示成功
-//                [NOTIFICATION_CENTER postNotificationName:kWeiXinPaySuccessNotification object:nil];
-//            }
-//                break;
-//            default:
-//            {
-//                [NOTIFICATION_CENTER postNotificationName:kWeiXinPayFailureNotification object:nil];
-//            }
-//                break;
-//        }
-//    }
-//}
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return  [WXApi handleOpenURL:url delegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    if ([url.host isEqualToString:@"safepay"])
+    {
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@", resultDic);
+        }];
+        return YES;
+    }
+    return [WXApi handleOpenURL:url delegate:self];
+}
+
+#pragma mark - Wei Xin Pay Delegate Methods
+- (void)onResp:(BaseResp *)resp
+{
+    if ([resp isKindOfClass:[PayResp class]])
+    {
+        PayResp *response = (PayResp *)resp;
+        switch (response.errCode) {
+            case WXSuccess:
+            {
+                //服务器端查询支付通知或查询API返回的结果再提示成功
+                [NOTIFICATION_CENTER postNotificationName:kWeiXinPaySuccessNotification object:nil];
+            }
+                break;
+            default:
+            {
+                [NOTIFICATION_CENTER postNotificationName:kWeiXinPayFailureNotification object:nil];
+            }
+                break;
+        }
+    }
+}
 
 @end

@@ -22,6 +22,7 @@
 {
     SCGroupProductDetail *_detail;
 }
+@property (weak, nonatomic)      SCBuyGroupProductCell *productCell;
 @property (weak, nonatomic) SCGroupProductMerchantCell *merchantCell;
 @property (weak, nonatomic)   SCGroupProductDetailCell *detailCell;
 @property (weak, nonatomic)              SCCommentCell *commentCell;
@@ -158,9 +159,17 @@
                 height = [_commentCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
+            case 0:
+            {
+                if(!_productCell)
+                    _productCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCBuyGroupProductCell"];
+                [_productCell displayCellWithDetail:_detail];
+                height = [_productCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            }
+                break;
                 
             default:
-                return indexPath.section ? 44.0f : 70.0f;
+                return 43.0f;
                 break;
         }
     }

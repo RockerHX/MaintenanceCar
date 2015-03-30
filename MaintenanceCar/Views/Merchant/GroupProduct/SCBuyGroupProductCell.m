@@ -8,6 +8,7 @@
 
 #import "SCBuyGroupProductCell.h"
 #import "SCGroupProductDetail.h"
+#import "MicroCommon.h"
 
 @implementation SCBuyGroupProductCell
 
@@ -15,6 +16,7 @@
 - (void)awakeFromNib
 {
     _bugProductButton.layer.cornerRadius = 5.0f;
+    self.productNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 100.0f;
 }
 
 #pragma mark - Action Methods
@@ -33,6 +35,9 @@
     
     _bugProductButton.enabled = [detail canBug];
     [_bugProductButton setTitle:[detail canBug] ? @"抢购" : @"已抢光" forState:UIControlStateNormal];
+    
+    [self.contentView updateConstraintsIfNeeded];
+    [self.contentView layoutIfNeeded];
 }
 
 @end

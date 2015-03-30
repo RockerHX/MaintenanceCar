@@ -30,17 +30,14 @@
 
 @implementation SCMapViewController
 
-- (void)awakeFromNib
-{
-    _showInfoView = YES;
-}
-
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated
 {
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[商家] - 地图"];
+    
+     _mapView.delegate = self;  // 此处记得不用的时候需要置nil，否则影响内存的释放
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -48,6 +45,8 @@
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[商家] - 地图"];
+    
+    _mapView.delegate = nil;    // 不用时，置nil
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -91,6 +90,7 @@
 - (void)setMerchants:(NSArray *)merchants
 {
     _merchants = merchants;
+    _merchant  = [merchants firstObject];
     if (!_annotations)
         _annotations = [@[] mutableCopy];
     
@@ -116,17 +116,17 @@
 {
     // 配置百度地图
     _mapView.frame             = self.view.bounds;          // 全屏显示
-    _mapView.delegate          = self;                      // 设置百度地图代理
     _mapView.buildingsEnabled  = YES;                       // 允许双指上下滑动展示3D建筑
     _mapView.showsUserLocation = YES;                       // 显示定位图层
     _mapView.userTrackingMode  = BMKUserTrackingModeFollow; // 定位跟随模式
     [_mapView setRegion:_coordinateRegion animated:NO];
     
-    if (!_showInfoView)
+    if (_isMerchantMap)
     {
         _mapMerchantInfoView.hidden   = YES;
-        self.navigationItem.leftBarButtonItem = _leftItem;
-        self.navigationItem.rightBarButtonItem = nil;
+        UIBarButtonItem *item = self.navigationItem.leftBarButtonItem;
+        self.navigationItem.leftBarButtonItem = self.navigationItem.rightBarButtonItem;
+        self.navigationItem.rightBarButtonItem = item;
     }
     else
     {
@@ -187,7 +187,7 @@
 #pragma mark - SCMapMerchantInfoView Delegate Methods
 - (void)shouldShowMerchantDetail
 {
-    if (_showInfoView)
+    if (!_isMerchantMap)
     {
         // 跳转到预约页面
         @try {

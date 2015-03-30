@@ -7,8 +7,8 @@
 //
 
 #import "SCLoginViewController.h"
+#import <UMengMessage/UMessage.h>
 #import "SCVerificationCodeView.h"
-#import "UMessage.h"
 
 // 登录验证模式
 typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {

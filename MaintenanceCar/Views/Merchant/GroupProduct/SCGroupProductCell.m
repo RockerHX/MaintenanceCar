@@ -8,13 +8,14 @@
 
 #import "SCGroupProductCell.h"
 #import "SCGroupProduct.h"
+#import "MicroCommon.h"
 
 @implementation SCGroupProductCell
 
 #pragma mark - Init Methods
 - (void)awakeFromNib
 {
-    // Initialization code
+    _productNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 70.0f;
 }
 
 #pragma mark - Public Methods
@@ -26,6 +27,9 @@
         _groupPriceLabel.text   = product.final_price;
         _productPriceLabel.text = product.total_price;
     }
+    
+    [self.contentView updateConstraintsIfNeeded];
+    [self.contentView layoutIfNeeded];
 }
 
 @end
