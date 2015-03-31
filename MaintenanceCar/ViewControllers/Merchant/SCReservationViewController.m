@@ -60,6 +60,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // 设置商家名称显示
+    _selectedCarID = @"";
     _merchantNameLabel.text = _merchant.name;
     [NOTIFICATION_CENTER addObserver:self selector:@selector(refresh) name:kUserCarsDataNeedReloadSuccess object:nil];
 }
