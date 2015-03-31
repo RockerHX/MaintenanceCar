@@ -256,7 +256,8 @@
 {
     NSMutableArray *items = [@[] mutableCopy];
     UIImageView *carView  = [[UIImageView alloc] init];
-    [carView setImageWithURL:[NSURL URLWithString:_detail.img1]
+    NSString *imageURL = [NSString stringWithFormat:@"%@%@", MerchantImageDoMain, _detail.img1 ? _detail.img1 : [NSString stringWithFormat:@"%@_1.jpg", _detail.companyID]];
+    [carView setImageWithURL:[NSURL URLWithString:imageURL]
             placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
     [items addObject:carView];
     _merchanImagesView.items = items;

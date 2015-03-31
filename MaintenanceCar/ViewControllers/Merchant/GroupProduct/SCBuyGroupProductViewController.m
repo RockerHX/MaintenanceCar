@@ -133,9 +133,10 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                     _groupProductDetail.outTradeNo = _weiXinPayOder.out_trade_no;
                     [weakSelf sendWeiXinPay:_weiXinPayOder];
                 }
+                else
+                    [weakSelf oderFailure];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                [weakSelf hideHUDOnViewController:weakSelf];
-                [weakSelf showHUDAlertToViewController:weakSelf text:@"下单失败，请重试..." delay:0.5f];
+                [weakSelf oderFailure];
             }];
         }
         else
@@ -165,9 +166,10 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                 _groupProductDetail.outTradeNo = _aliPayOder.out_trade_no;
                 [weakSelf sendAliPay:_aliPayOder];
             }
+            else
+                [weakSelf oderFailure];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [weakSelf hideHUDOnViewController:weakSelf];
-            [weakSelf showHUDAlertToViewController:weakSelf text:@"下单失败，请重试..." delay:0.5f];
+            [weakSelf oderFailure];
         }];
     }
     else
@@ -175,6 +177,12 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 }
 
 #pragma mark - Private Methods
+- (void)oderFailure
+{
+    [self hideHUDOnViewController:self];
+    [self showHUDAlertToViewController:self text:@"下单失败，请重试..." delay:0.5f];
+}
+
 - (void)weiXinPaySuccess
 {
     [self startGenerateGroupProductRequest];
@@ -246,16 +254,16 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 {
     __weak typeof(self) weakSelf = self;
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                              @"company_id": _groupProductDetail.companyID,
-                              @"product_id": _groupProductDetail.product_id,
+                                 @"company_id": _groupProductDetail.companyID,
+                                 @"product_id": _groupProductDetail.product_id,
                                  @"content": _groupProductDetail.title,
-                               @"old_price": _groupProductDetail.total_price,
-                                   @"price": _groupProductDetail.final_price,
-                             @"limit_begin": _groupProductDetail.limit_begin,
-                               @"limit_end": _groupProductDetail.limit_end,
-                                @"how_many": @(_productCount),
-                                  @"mobile": [USER_DEFAULT objectForKey:kPhoneNumberKey],
-                                @"order_id": _groupProductDetail.outTradeNo};
+                                 @"old_price": _groupProductDetail.total_price,
+                                 @"price": _groupProductDetail.final_price,
+                                 @"limit_begin": _groupProductDetail.limit_begin,
+                                 @"limit_end": _groupProductDetail.limit_end,
+                                 @"how_many": @(_productCount),
+                                 @"mobile": [USER_DEFAULT objectForKey:kPhoneNumberKey],
+                                 @"order_id": _groupProductDetail.outTradeNo};
     [[SCAPIRequest manager] startGenerateGroupProductAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
