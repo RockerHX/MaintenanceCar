@@ -52,6 +52,25 @@
             text  = [NSString stringWithFormat:@"%@ - %@", [detail.time_open substringWithRange:(NSRange){0, 5}], [detail.time_closed substringWithRange:(NSRange){0, 5}]];
         }
             break;
+        case 3:
+        {
+            image = @"MerchantBusinessIcon";
+            text  = detail.tags;
+        }
+            break;
+        case 4:
+        {
+            image = @"MerchantIntroduceIcon";
+            text  = detail.serverItemsPrompt;
+        }
+            break;
+            
+        default:
+        {
+            image = @"MerchantIntroduceIcon";
+            text  = detail.service;
+        }
+            break;
     }
     _icon.image = [UIImage imageNamed:image];
     _contentLabel.text = text.length ? text : @"数据完善中...";

@@ -38,6 +38,7 @@
 @property (nonatomic, assign)                              BOOL collected;        // 收藏状态
 
 @property (nonatomic, copy, readonly)       NSString <Ignore>*distance;           // 手机当前位置与商家的距离
+@property (nonatomic, copy, readonly)       NSString <Ignore>*serverItemsPrompt;  // 商家服务描述
 @property (nonatomic, strong, readonly)      NSArray <Ignore>*merchantFlags;      // 商家标签集合
 @property (nonatomic, strong, readonly)      NSArray <Ignore>*merchantImages;     // 商家图片集合
 @property (nonatomic, strong, readonly) NSDictionary <Ignore>*serviceItems;       // 商家服务项目
