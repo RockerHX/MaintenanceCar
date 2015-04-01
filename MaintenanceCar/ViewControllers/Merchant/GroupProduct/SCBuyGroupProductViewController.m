@@ -242,7 +242,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
     request.prepayId  = oder.prepayid;
     request.package   = oder.package;
     request.nonceStr  = oder.noncestr;
-    request.timeStamp = oder.timestamp;
+    request.timeStamp = (UInt32)oder.timestamp;
     request.sign      = oder.sign;
     [WXApi sendReq:request];
 }
