@@ -60,11 +60,23 @@
 #define COCOAPODS_VERSION_MINOR_CSStickyHeaderFlowLayout 2
 #define COCOAPODS_VERSION_PATCH_CSStickyHeaderFlowLayout 4
 
+// DateTools
+#define COCOAPODS_POD_AVAILABLE_DateTools
+#define COCOAPODS_VERSION_MAJOR_DateTools 1
+#define COCOAPODS_VERSION_MINOR_DateTools 5
+#define COCOAPODS_VERSION_PATCH_DateTools 0
+
 // HexColors
 #define COCOAPODS_POD_AVAILABLE_HexColors
 #define COCOAPODS_VERSION_MAJOR_HexColors 2
 #define COCOAPODS_VERSION_MINOR_HexColors 2
 #define COCOAPODS_VERSION_PATCH_HexColors 1
+
+// IQKeyboardManager
+#define COCOAPODS_POD_AVAILABLE_IQKeyboardManager
+#define COCOAPODS_VERSION_MAJOR_IQKeyboardManager 3
+#define COCOAPODS_VERSION_MINOR_IQKeyboardManager 2
+#define COCOAPODS_VERSION_PATCH_IQKeyboardManager 2
 
 // JSONModel
 #define COCOAPODS_POD_AVAILABLE_JSONModel
@@ -82,7 +94,7 @@
 #define COCOAPODS_POD_AVAILABLE_MJRefresh
 #define COCOAPODS_VERSION_MAJOR_MJRefresh 1
 #define COCOAPODS_VERSION_MINOR_MJRefresh 4
-#define COCOAPODS_VERSION_PATCH_MJRefresh 1
+#define COCOAPODS_VERSION_PATCH_MJRefresh 3
 
 // SCLoopScrollView
 #define COCOAPODS_POD_AVAILABLE_SCLoopScrollView
