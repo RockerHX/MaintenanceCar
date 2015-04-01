@@ -180,7 +180,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 - (void)oderFailure
 {
     [self hideHUDOnViewController:self];
-    [self showHUDAlertToViewController:self text:@"下单失败，请重试..." delay:0.5f];
+    [self showHUDAlertToViewController:self text:@"下单失败，请重试..." delay:1.0f];
 }
 
 - (void)weiXinPaySuccess
@@ -198,7 +198,12 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
     switch ([reslut[@"resultStatus"] integerValue])
     {
         case SCAliPayCodePaySuccess:
-            [self startGenerateGroupProductRequest];
+        {
+//            [self startGenerateGroupProductRequest];
+            [self showPromptWithText:@"支付成功"];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            [NOTIFICATION_CENTER postNotificationName:kGenerateCouponSuccessNotification object:nil];
+        }
             break;
         case SCAliPayCodePayProcessing:
             [self showPromptWithText:@"交易进行中"];

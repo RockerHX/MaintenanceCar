@@ -6,6 +6,8 @@ pod 'MBProgressHUD',            '~> 0.9.1'
 pod 'MJRefresh',                '~> 1.4.1'
 pod 'CSStickyHeaderFlowLayout', '~> 0.2.4'
 pod 'HexColors',                '~> 2.2.1'
+#pod 'DateTools',                '~> 1.5.0'
+#pod 'IQKeyboardManager',        '~> 3.2.2'
 pod 'SCLoopScrollView',         '~> 0.1'
 
 # ********************** 第三方SDK **********************
