@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import <AFNetworking/UIKit+AFNetworking.h>
+#import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 #import <Baidu-Maps-iOS-SDK/BMapKit.h>
 #import <UMengAnalytics/MobClick.h>
 #import <UMengMessage/UMessage.h>
@@ -23,6 +25,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+#pragma mark 网络日志
+//    [[AFNetworkActivityLogger sharedLogger] startLogging];
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
 
     // 设置导航条和电池条颜色
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
