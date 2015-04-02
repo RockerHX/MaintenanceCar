@@ -27,7 +27,8 @@
 @property (nonatomic, copy) NSString <Optional>*latitude;             // 商家地理位置 - 纬度
 @property (nonatomic, copy) NSString <Optional>*longtitude;           // 商家地理位置 - 经度
 @property (nonatomic, copy) NSString <Optional>*address;
-@property (nonatomic, assign)          NSInteger comments_num;
+@property (nonatomic, copy) NSString <Optional>*star;                 // 商家星级
+@property (nonatomic, assign)        NSInteger  comments_num;
 
 @property (nonatomic, strong)            NSArray <Optional>*des;
 @property (nonatomic, strong) NSArray <Optional, SCComment>*comments;

@@ -33,7 +33,7 @@
 - (void)displayCellWithDetial:(SCGroupProductDetail *)detail
 {
     _nameLabel.text = detail.merchantName;
-    _starView.value = @"4";
+    _starView.value = [@([detail.star integerValue]/2) stringValue];
     _distanceLabel.text = detail.distance;
     _addressLabel.text = detail.address;
     [self.contentView updateConstraintsIfNeeded];
