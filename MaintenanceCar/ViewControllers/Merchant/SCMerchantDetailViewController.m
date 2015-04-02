@@ -362,21 +362,16 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                 }
                 else
                 {
-                    if ([SCUserInfo share].loginStatus)
-                    {
-                        @try {
-                            SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
-                            groupProductDetailViewController.product = _merchantDetail.products[indexPath.row];
-                            [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
-                        }
-                        @catch (NSException *exception) {
-                            NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
-                        }
-                        @finally {
-                        }
+                    @try {
+                        SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
+                        groupProductDetailViewController.product = _merchantDetail.products[indexPath.row];
+                        [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
                     }
-                    else
-                        [self showShoulLoginAlert];
+                    @catch (NSException *exception) {
+                        NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
+                    }
+                    @finally {
+                    }
                 }
             }
             else

@@ -267,16 +267,21 @@
 #pragma mark - SCGroupProductCellDelegate Methods
 - (void)shouldShowBuyProductView
 {
-    @try {
-        SCBuyGroupProductViewController *buyGroupProductViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCBuyGroupProductViewController"];
-        buyGroupProductViewController.groupProductDetail = _detail;
-        [self.navigationController pushViewController:buyGroupProductViewController animated:YES];
+    if ([SCUserInfo share].loginStatus)
+    {
+        @try {
+            SCBuyGroupProductViewController *buyGroupProductViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCBuyGroupProductViewController"];
+            buyGroupProductViewController.groupProductDetail = _detail;
+            [self.navigationController pushViewController:buyGroupProductViewController animated:YES];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"SCGroupProductDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
     }
-    @catch (NSException *exception) {
-        NSLog(@"SCGroupProductDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    else
+        [self showShoulLoginAlert];
 }
 
 #pragma mark - SCGroupProductMerchantCell Delegate Methods
@@ -302,6 +307,7 @@
                                          cancelButtonTitle:@"取消"
                                          otherButtonTitles:[phones firstObject], nil];
         }
+        alertView.tag = 1;
         [alertView show];
     }
 }
@@ -309,11 +315,16 @@
 #pragma mark - Alert View Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSArray *phones = [_detail.telephone componentsSeparatedByString:@" "];
-    if (buttonIndex == 1)
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones firstObject]]]];
-    else if (buttonIndex == 2)
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones lastObject]]]];
+    if (alertView.tag)
+    {
+        NSArray *phones = [_detail.telephone componentsSeparatedByString:@" "];
+        if (buttonIndex == 1)
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones firstObject]]]];
+        else if (buttonIndex == 2)
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones lastObject]]]];
+    }
+    else
+        [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
 }
 
 @end
