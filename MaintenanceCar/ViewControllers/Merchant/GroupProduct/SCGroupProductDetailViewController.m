@@ -324,7 +324,10 @@
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones lastObject]]]];
     }
     else
-        [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
+    {
+        if (buttonIndex != alertView.cancelButtonIndex)
+            [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
+    }
 }
 
 @end
