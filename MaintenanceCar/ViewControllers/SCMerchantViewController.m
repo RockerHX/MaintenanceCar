@@ -157,6 +157,7 @@
                                  @"limit": @(MerchantListLimit),
                                 @"offset": @(_offset),
                                 @"radius": _distanceCondition,
+                                  @"flag": @"1",
                               @"latitude": latitude,
                             @"longtitude": longitude};
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

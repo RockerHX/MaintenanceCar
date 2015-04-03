@@ -166,12 +166,13 @@
 {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
-    NSDictionary *parameters     = @{@"query"     : _requestQuery,
-                                     @"limit"     : @(MerchantListLimit),
-                                     @"offset"    : @(_offset),
-                                     @"radius"    : _distanceCondition,
-                                     @"longtitude": longitude,
-                                     @"latitude"  : latitude};
+    NSDictionary *parameters     = @{@"query": _requestQuery,
+                                     @"limit": @(MerchantListLimit),
+                                    @"offset": @(_offset),
+                                    @"radius": _distanceCondition,
+                                      @"flag": @"1",
+                                @"longtitude": longitude,
+                                  @"latitude": latitude};
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
