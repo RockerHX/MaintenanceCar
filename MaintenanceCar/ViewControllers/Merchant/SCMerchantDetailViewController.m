@@ -116,10 +116,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         switch (section)
         {
             case 1:
-                return (_hasGroupProducts ? _productCellCount : 6);
+                return (_hasGroupProducts ? _productCellCount : 5);
                 break;
             case 2:
-                return (_hasGroupProducts ? 6 : 1);
+                return (_hasGroupProducts ? 5 : 1);
                 break;
             case 3:
                 return (_hasGroupProducts ? 1 : (_merchantDetail.comments.count ? _merchantDetail.comments.count : 1));

@@ -55,12 +55,6 @@
             break;
         case 3:
         {
-            image = @"MerchantBusinessIcon";
-            text  = detail.tags;
-        }
-            break;
-        case 4:
-        {
             image = @"MerchantIntroduceIcon";
             text  = detail.serverItemsPrompt;
         }
