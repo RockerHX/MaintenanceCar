@@ -7,7 +7,7 @@
 //
 
 #import "SCPlaceholderTextView.h"
-#import "MicroCommon.h"
+#import "UIConstants.h"
 
 @implementation SCPlaceholderTextView
 

@@ -7,7 +7,6 @@
 //
 
 #import "SCAllDictionary.h"
-#import "MicroCommon.h"
 #import "SCAPIRequest.h"
 #import "SCUserCar.h"
 

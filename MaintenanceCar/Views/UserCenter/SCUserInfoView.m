@@ -7,7 +7,6 @@
 //
 
 #import "SCUserInfoView.h"
-#import "MicroCommon.h"
 #import <SCLoopScrollView/SCLoopScrollView.h>
 
 @implementation SCUserInfoView

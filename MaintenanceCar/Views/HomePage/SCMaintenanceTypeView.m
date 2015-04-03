@@ -7,7 +7,6 @@
 //
 
 #import "SCMaintenanceTypeView.h"
-#import "MicroCommon.h"
 
 @interface SCMaintenanceTypeView () <SCMaintenanceTypeItemDelegate>
 {

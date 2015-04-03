@@ -7,7 +7,8 @@
 //
 
 #import "SCHomePageDetailView.h"
-#import "MicroCommon.h"
+#import "MicroConstants.h"
+#import "AppMicroConstants.h"
 #import "SCUserInfo.h"
 #import "SCAPIRequest.h"
 #import "SCReservation.h"

@@ -7,7 +7,7 @@
 //
 
 #import "SCVerificationCodeView.h"
-#import "MicroCommon.h"
+#import "AppMicroConstants.h"
 
 typedef BOOL(^BLOCK)(void);
 

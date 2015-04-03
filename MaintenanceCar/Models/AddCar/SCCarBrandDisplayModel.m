@@ -7,7 +7,7 @@
 //
 
 #import "SCCarBrandDisplayModel.h"
-#import "MicroCommon.h"
+#import "MicroConstants.h"
 #import "SCCarBrand.h"
 #import "SCAPIRequest.h"
 

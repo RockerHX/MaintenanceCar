@@ -8,7 +8,8 @@
 
 #import "SCMerchantDetailCell.h"
 #import <HexColors/HexColor.h>
-#import "MicroCommon.h"
+#import "VersionConstants.h"
+#import "UIConstants.h"
 #import "SCMerchantDetailFlagCell.h"
 #import "SCAllDictionary.h"
 #import "SCMerchantDetail.h"

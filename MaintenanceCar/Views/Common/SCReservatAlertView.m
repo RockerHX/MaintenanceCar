@@ -8,7 +8,9 @@
 
 #import "SCReservatAlertView.h"
 #import <MBProgressHUD/MBProgressHUD.h>
-#import "MicroCommon.h"
+#import "UIConstants.h"
+#import "MicroConstants.h"
+#import "VersionConstants.h"
 #import "AppDelegate.h"
 #import "SCAllDictionary.h"
 #import "SCReservationItemCell.h"

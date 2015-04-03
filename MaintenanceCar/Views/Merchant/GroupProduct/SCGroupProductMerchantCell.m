@@ -7,7 +7,7 @@
 //
 
 #import "SCGroupProductMerchantCell.h"
-#import "MicroCommon.h"
+#import "UIConstants.h"
 #import "SCStarView.h"
 #import "SCGroupProductDetail.h"
 

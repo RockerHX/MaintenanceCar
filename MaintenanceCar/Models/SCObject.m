@@ -7,7 +7,7 @@
 //
 
 #import "SCObject.h"
-#import "MicroCommon.h"
+#import "MicroConstants.h"
 
 @implementation SCObject
 

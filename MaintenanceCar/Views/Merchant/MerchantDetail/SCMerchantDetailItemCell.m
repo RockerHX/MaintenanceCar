@@ -7,7 +7,8 @@
 //
 
 #import "SCMerchantDetailItemCell.h"
-#import "MicroCommon.h"
+#import "UIConstants.h"
+#import "MicroConstants.h"
 #import "SCMerchantDetail.h"
 
 @implementation SCMerchantDetailItemCell

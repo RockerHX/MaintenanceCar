@@ -7,7 +7,7 @@
 //
 
 #import "SCMerchantTableViewCell.h"
-#import "MicroCommon.h"
+#import "VersionConstants.h"
 
 @implementation SCMerchantTableViewCell
 

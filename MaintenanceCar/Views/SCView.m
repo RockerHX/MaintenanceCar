@@ -7,7 +7,7 @@
 //
 
 #import "SCView.h"
-#import "MicroCommon.h"
+#import "UIConstants.h"
 
 @implementation UIView (SCView)
 

@@ -9,7 +9,7 @@
 #import "SCMerchantCell.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import <HexColors/HexColor.h>
-#import "MicroCommon.h"
+#import "MicroConstants.h"
 #import "SCAPIRequest.h"
 #import "SCStarView.h"
 #import "SCMerchant.h"

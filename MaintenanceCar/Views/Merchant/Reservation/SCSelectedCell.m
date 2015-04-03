@@ -7,7 +7,7 @@
 //
 
 #import "SCSelectedCell.h"
-#import "MicroCommon.h"
+#import "AppMicroConstants.h"
 
 @implementation SCSelectedCell
 

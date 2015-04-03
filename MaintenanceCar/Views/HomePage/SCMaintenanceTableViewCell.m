@@ -7,7 +7,7 @@
 //
 
 #import "SCMaintenanceTableViewCell.h"
-#import "MicroCommon.h"
+#import "UIConstants.h"
 
 @implementation SCMaintenanceTableViewCell
 

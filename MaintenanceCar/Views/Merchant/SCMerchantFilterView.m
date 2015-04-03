@@ -7,7 +7,8 @@
 //
 
 #import "SCMerchantFilterView.h"
-#import "MicroCommon.h"
+#import "AppMicroConstants.h"
+#import "UIConstants.h"
 #import "SCFilterPopView.h"
 #import "SCAllDictionary.h"
 #import "SCUserInfo.h"

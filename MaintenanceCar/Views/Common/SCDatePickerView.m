@@ -7,7 +7,8 @@
 //
 
 #import "SCDatePickerView.h"
-#import "MicroCommon.h"
+#import "UIConstants.h"
+#import "MicroConstants.h"
 #import "AppDelegate.h"
 
 @implementation SCDatePickerView

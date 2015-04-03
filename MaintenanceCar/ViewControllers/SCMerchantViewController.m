@@ -108,7 +108,7 @@
 {
     _query             = DefaultQuery;
     _offset            = 0;                     // 第一次进入商家列表列表请求偏移量必须为0
-    _distanceCondition = MerchantListRadius;
+    _distanceCondition = @(MerchantListRadius).stringValue;
 
     _merchantList      = [@[] mutableCopy];     // 商家列表容器初始化
 }
@@ -228,7 +228,7 @@
             break;
             
         default:
-            _distanceCondition = [filterCondition isEqualToString:@"default"] ? MerchantListRadius : filterCondition;
+            _distanceCondition = [filterCondition isEqualToString:@"default"] ? @(MerchantListRadius).stringValue : filterCondition;
             break;
     }
     _query = [NSString stringWithFormat:@"%@%@%@", DefaultQuery, allDictionary.repairCondition, allDictionary.otherCondition];

@@ -7,7 +7,8 @@
 //
 
 #import "SCPickerView.h"
-#import "MicroCommon.h"
+#import "MicroConstants.h"
+#import "UIConstants.h"
 #import "AppDelegate.h"
 
 @interface SCPickerView ()

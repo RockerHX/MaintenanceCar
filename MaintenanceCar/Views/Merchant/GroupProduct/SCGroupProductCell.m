@@ -8,7 +8,7 @@
 
 #import "SCGroupProductCell.h"
 #import "SCGroupProduct.h"
-#import "MicroCommon.h"
+#import "UIConstants.h"
 
 @implementation SCGroupProductCell
 

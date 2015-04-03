@@ -7,7 +7,7 @@
 //
 
 #import "SCGroupProductDetail.h"
-#import "MicroCommon.h"
+#import "NumberConstants.h"
 #import "SCLocationManager.h"
 
 @implementation SCGroupProductDetail

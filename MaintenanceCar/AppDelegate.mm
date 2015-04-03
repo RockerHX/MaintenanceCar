@@ -14,7 +14,7 @@
 #import <UMengMessage/UMessage.h>
 #import <Weixin/WXApi.h>
 #import <AlipaySDK/AlipaySDK.h>
-#import "MicroCommon.h"
+#import "AllMicroConstants.h"
 #import "UMFeedback.h"
 #import "SCUserInfo.h"
 

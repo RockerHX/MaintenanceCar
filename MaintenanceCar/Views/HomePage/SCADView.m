@@ -7,7 +7,8 @@
 //
 
 #import "SCADView.h"
-#import "MicroCommon.h"
+#import "UIConstants.h"
+#import "MicroConstants.h"
 #import "AppDelegate.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 

@@ -7,7 +7,7 @@
 //
 
 #import "SCCouponHeaderView.h"
-#import "MicroCommon.h"
+#import "UIConstants.h"
 #import "SCCoupon.h"
 
 @implementation SCCouponHeaderView

@@ -8,7 +8,7 @@
 
 #import "SCCarModelView.h"
 #import <MBProgressHUD/MBProgressHUD.h>
-#import "MicroCommon.h"
+#import "MicroConstants.h"
 #import "SCAPIRequest.h"
 #import "SCCarBrand.h"
 #import "SCCarModel.h"

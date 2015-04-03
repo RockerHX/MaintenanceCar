@@ -8,7 +8,7 @@
 
 #import "SCCarBrandView.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
-#import "MicroCommon.h"
+#import "UIConstants.h"
 #import "API.h"
 #import "SCAPIRequest.h"
 #import "SCCollectionReusableView.h"

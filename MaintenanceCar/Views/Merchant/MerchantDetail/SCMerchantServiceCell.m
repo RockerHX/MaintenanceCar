@@ -8,7 +8,8 @@
 
 #import "SCMerchantServiceCell.h"
 #import "SCMerchantDetail.h"
-#import "MicroCommon.h"
+#import "VersionConstants.h"
+#import "UIConstants.h"
 
 @implementation SCMerchantServiceCell
 {

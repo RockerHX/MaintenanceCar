@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <UMengAnalytics/MobClick.h>
 #import <MBProgressHUD/MBProgressHUD.h>
-#import "MicroCommon.h"
+#import "AllMicroConstants.h"
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
 
