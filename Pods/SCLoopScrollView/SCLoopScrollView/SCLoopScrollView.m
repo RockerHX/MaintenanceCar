@@ -134,34 +134,48 @@ typedef void(^BLOCK)(NSInteger index);
 {
     if ([self canBeginLoad])
     {
-        [_scrollView setContentSize:CGSizeMake(SELF_WIDTH * (_items.count + 2), ZERO_POINT)];
-        
-        UIImage *lastImage                = ((UIImageView *)[_items lastObject]).image;
-        _firstItem                        = [[UIImageView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SELF_WIDTH, SELF_HEIGHT)];
-        _firstItem.tag                    = _items.count - 1;
-        _firstItem.image                  = lastImage;
-        _firstItem.userInteractionEnabled = YES;
-        [_firstItem addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)]];
-        [_scrollView addSubview:_firstItem];
-        
-        [_items enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            UIView *view                = obj;
-            view.frame                  = CGRectMake(SELF_WIDTH * (idx + 1), ZERO_POINT, SELF_WIDTH, SELF_HEIGHT);
-            view.tag                    = idx;
+        CGFloat contentOffsetX = ZERO_POINT;
+        if (_items.count > 1)
+        {
+            [_scrollView setContentSize:CGSizeMake(SELF_WIDTH * (_items.count + 2), ZERO_POINT)];
+            
+            UIImage *lastImage                = ((UIImageView *)[_items lastObject]).image;
+            _firstItem                        = [[UIImageView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SELF_WIDTH, SELF_HEIGHT)];
+            _firstItem.tag                    = _items.count - 1;
+            _firstItem.image                  = lastImage;
+            _firstItem.userInteractionEnabled = YES;
+            [_firstItem addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)]];
+            [_scrollView addSubview:_firstItem];
+            
+            [_items enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                UIView *view                = obj;
+                view.frame                  = CGRectMake(SELF_WIDTH * (idx + 1), ZERO_POINT, SELF_WIDTH, SELF_HEIGHT);
+                view.tag                    = idx;
+                view.userInteractionEnabled = YES;
+                [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)]];
+                [_scrollView addSubview:view];
+            }];
+            
+            UIImage *firstImage              = ((UIImageView *)[_items firstObject]).image;
+            _lastItem                        = [[UIImageView alloc] initWithFrame:CGRectMake(SELF_WIDTH * (_items.count + 1), ZERO_POINT, SELF_WIDTH, SELF_HEIGHT)];
+            _lastItem.tag                    = ZERO;
+            _lastItem.image                  = firstImage;
+            _lastItem.userInteractionEnabled = YES;
+            [_lastItem addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)]];
+            [_scrollView addSubview:_lastItem];
+            
+            contentOffsetX = SELF_WIDTH;
+        }
+        else
+        {
+            UIView *view                = [_items firstObject];
+            view.frame                  = CGRectMake(ZERO_POINT, ZERO_POINT, SELF_WIDTH, SELF_HEIGHT);
+            view.tag                    = ZERO;
             view.userInteractionEnabled = YES;
             [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)]];
             [_scrollView addSubview:view];
-        }];
-        
-        UIImage *firstImage              = ((UIImageView *)[_items firstObject]).image;
-        _lastItem                        = [[UIImageView alloc] initWithFrame:CGRectMake(SELF_WIDTH * (_items.count + 1), ZERO_POINT, SELF_WIDTH, SELF_HEIGHT)];
-        _lastItem.tag                    = ZERO;
-        _lastItem.image                  = firstImage;
-        _lastItem.userInteractionEnabled = YES;
-        [_lastItem addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)]];
-        [_scrollView addSubview:_lastItem];
-        
-        [_scrollView setContentOffset:CGPointMake(SELF_WIDTH, ZERO_POINT)];
+        }
+        [_scrollView setContentOffset:CGPointMake(contentOffsetX, ZERO_POINT)];
     }
 }
 

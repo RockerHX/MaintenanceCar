@@ -95,15 +95,20 @@
 - (NSArray *)handleMerchantImages
 {
     NSMutableArray *images = [NSMutableArray arrayWithArray:_images];
-    for (NSDictionary *pic in images)
+    if (images.count)
     {
-        if (pic[@"pic_type"])
+        for (NSDictionary *pic in images)
         {
-            [images removeObject:pic];
-            [images insertObject:pic atIndex:0];
-            break;
+            if (pic[@"pic_type"])
+            {
+                [images removeObject:pic];
+                [images insertObject:pic atIndex:0];
+                break;
+            }
         }
     }
+    else
+        [images addObject:[@{} mutableCopy]];
     
     return images;
 }
