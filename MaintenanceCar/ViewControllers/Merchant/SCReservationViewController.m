@@ -69,12 +69,12 @@
 {
     _reservationButton.layer.cornerRadius   = 5.0f;
     _ownerNameTextField.leftViewMode        = UITextFieldViewModeAlways;
-    _ownerNameTextField.leftView            = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
+    _ownerNameTextField.leftView            = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
     _ownerPhoneNumberTextField.leftViewMode = UITextFieldViewModeAlways;
-    _ownerPhoneNumberTextField.leftView     = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
+    _ownerPhoneNumberTextField.leftView     = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
     _ownerPhoneNumberTextField.text         = [USER_DEFAULT objectForKey:kPhoneNumberKey];
     _remarkTextField.leftViewMode           = UITextFieldViewModeAlways;
-    _remarkTextField.leftView               = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
+    _remarkTextField.leftView               = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
     
     if (!_serviceItem)
     {

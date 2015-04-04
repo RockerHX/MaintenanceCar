@@ -43,9 +43,6 @@
 #pragma mark - Merchant API
 /**
  *  天气接口请求方法(API:/Weather - GET)
- *
- *  @param uccess  请求成功的block
- *  @param failure 请求失败的block
  */
 - (void)startWearthAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;

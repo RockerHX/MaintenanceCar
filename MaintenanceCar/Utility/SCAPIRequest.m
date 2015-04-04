@@ -7,6 +7,7 @@
 //
 
 #import "SCAPIRequest.h"
+
 #define CustomRequestHeaderKey        @"X-API-KEY"                  // 请求加密Key
 #define CustomRequestHeaderValue      @"SlwX20U65YMTuNRDe3fZ"       // 请求加密Value
 
@@ -127,6 +128,7 @@
     [self POST:api parameters:parameters success:success failure:failure];
 }
 
+#pragma mark - Merchant API
 - (void)startWearthAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
@@ -134,7 +136,6 @@
     [self requestGETMethodsWithAPI:WearthAPIURL parameters:parameters success:success failure:failure];
 }
 
-#pragma mark - Merchant API
 - (void)startMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure

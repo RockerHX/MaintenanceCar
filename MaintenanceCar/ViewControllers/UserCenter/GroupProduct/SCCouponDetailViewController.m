@@ -157,7 +157,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = DOT_COORDINATE;
+    CGFloat height = ZERO_POINT;
     CGFloat separatorHeight = 1.0f;
     if (_detail)
     {
@@ -206,10 +206,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         else if (IS_IPHONE_6Plus)
             return 60.0f;
         else
-            return DOT_COORDINATE;
+            return ZERO_POINT;
     }
     if (section == 4 || section == 5)
-        return DOT_COORDINATE;
+        return ZERO_POINT;
     return 30.0f;
 }
 
@@ -232,8 +232,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             return nil;
             break;
     }
-    UIView *view    = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 30.0f)];
-    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, DOT_COORDINATE, 100.0f, 30.0f)];
+    UIView *view    = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 30.0f)];
+    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, ZERO_POINT, 100.0f, 30.0f)];
     label.font      = [UIFont systemFontOfSize:15.0f];
     label.textColor = [UIColor grayColor];
     [view addSubview:label];

@@ -16,7 +16,7 @@
     _merchantNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 55.0f;
     
     // IOS7要改变删除按钮颜色必须设置editingAccessoryView
-    UIView *deleteView = [[UIView alloc]initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 1.0f, 1.0f)];
+    UIView *deleteView = [[UIView alloc]initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 1.0f, 1.0f)];
     self.editingAccessoryView = deleteView;
     
     _scheduleLabel.layer.borderWidth = 1.0f;

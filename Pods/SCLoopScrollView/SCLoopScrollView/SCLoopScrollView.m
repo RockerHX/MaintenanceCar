@@ -16,6 +16,7 @@
 #define MIN_BORDER          SELF_WIDTH
 #define MAX_BORDER          (_items.count + 1) * SELF_WIDTH
 
+#define CriticalCondition   _items.count > 1
 
 #import "SCLoopScrollView.h"
 
@@ -55,7 +56,6 @@ typedef void(^BLOCK)(NSInteger index);
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.showsVerticalScrollIndicator   = NO;
         [self addSubview:_scrollView];
-        [self displayView];
     }
 }
 
@@ -134,8 +134,7 @@ typedef void(^BLOCK)(NSInteger index);
 {
     if ([self canBeginLoad])
     {
-        CGFloat contentOffsetX = ZERO_POINT;
-        if (_items.count > 1)
+        if (CriticalCondition)
         {
             [_scrollView setContentSize:CGSizeMake(SELF_WIDTH * (_items.count + 2), ZERO_POINT)];
             
@@ -163,8 +162,6 @@ typedef void(^BLOCK)(NSInteger index);
             _lastItem.userInteractionEnabled = YES;
             [_lastItem addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)]];
             [_scrollView addSubview:_lastItem];
-            
-            contentOffsetX = SELF_WIDTH;
         }
         else
         {
@@ -175,7 +172,7 @@ typedef void(^BLOCK)(NSInteger index);
             [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)]];
             [_scrollView addSubview:view];
         }
-        [_scrollView setContentOffset:CGPointMake(contentOffsetX, ZERO_POINT)];
+        [_scrollView setContentOffset:CGPointMake((CriticalCondition) ? SELF_WIDTH : ZERO_POINT, ZERO_POINT)];
     }
 }
 
@@ -205,16 +202,19 @@ typedef void(^BLOCK)(NSInteger index);
 #pragma mark - UISrollView Delegate Methods
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (scrollView.contentOffset.x < MIN_BORDER)
+    if (CriticalCondition)
     {
-        [scrollView setContentOffset:CGPointMake(MAX_BORDER, ZERO_POINT)];
+        if (scrollView.contentOffset.x < MIN_BORDER)
+        {
+            [scrollView setContentOffset:CGPointMake(MAX_BORDER, ZERO_POINT)];
+        }
+        else if (scrollView.contentOffset.x > MAX_BORDER)
+        {
+            [scrollView setContentOffset:CGPointMake(MIN_BORDER, ZERO_POINT)];
+        }
+        NSInteger index = (scrollView.contentOffset.x / SELF_WIDTH) - 1;
+        self.index = [self getCurrentIndex:index];
     }
-    else if (scrollView.contentOffset.x > MAX_BORDER)
-    {
-        [scrollView setContentOffset:CGPointMake(MIN_BORDER, ZERO_POINT)];
-    }
-    NSInteger index = (scrollView.contentOffset.x / SELF_WIDTH) - 1;
-    self.index = [self getCurrentIndex:index];
 }
 
 @end

@@ -10,5 +10,6 @@
 #define MaintenanceCar_NumberConstants_h
 
 #define Zero        0
+#define CGFlotZero  0.0f
 
 #endif

@@ -69,8 +69,8 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 
 - (void)viewConfig
 {
-    CGFloat promptFontSize = DOT_COORDINATE;
-    CGFloat subPromptFontSize = DOT_COORDINATE;
+    CGFloat promptFontSize = ZERO_POINT;
+    CGFloat subPromptFontSize = ZERO_POINT;
     if (IS_IPHONE_6Plus)
     {
         promptFontSize = 20.0f;
@@ -123,7 +123,7 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 
 - (CGFloat)itemWidthWithInde:(NSInteger)index
 {
-    CGFloat itemWidth = DOT_COORDINATE;
+    CGFloat itemWidth = ZERO_POINT;
     if (index)
     {
         if (IS_IPHONE_6Plus)

@@ -72,9 +72,9 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
 {
     // 配置手机输入框和短信验证码输入框，输入光标向右偏移10个像素，避免光标贴到输入框边缘造成视觉影响
     _phoneNumberTextField.leftViewMode = UITextFieldViewModeAlways;
-    _phoneNumberTextField.leftView = [[UILabel alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 10.0f, 1.0f)];
+    _phoneNumberTextField.leftView = [[UILabel alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 10.0f, 1.0f)];
     _verificationCodeTextField.leftViewMode = UITextFieldViewModeAlways;
-    _verificationCodeTextField.leftView = [[UILabel alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 10.0f, 1.0f)];
+    _verificationCodeTextField.leftView = [[UILabel alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 10.0f, 1.0f)];
     
     // 配置登录和取消按钮，设置圆角
     _loginButton.layer.cornerRadius = 5.0f;
@@ -111,7 +111,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     hud.tag = mode;
     hud.delegate = delegate;
     hud.mode = (mode == SCHUDModeCompareVerificationCode) ? MBProgressHUDModeIndeterminate : MBProgressHUDModeText;
-    hud.yOffset = (mode == SCHUDModeCompareVerificationCode) ? DOT_COORDINATE : (SCREEN_HEIGHT/2 - 100.0f);
+    hud.yOffset = (mode == SCHUDModeCompareVerificationCode) ? ZERO_POINT : (SCREEN_HEIGHT/2 - 100.0f);
     hud.margin = (mode == SCHUDModeCompareVerificationCode) ? hud.margin : 10.0f;
     hud.labelText = text;
     hud.removeFromSuperViewOnHide = YES;

@@ -54,7 +54,7 @@
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = DOT_COORDINATE;
+    CGFloat height = ZERO_POINT;
     CGFloat separatorHeight = 1.0f;
     if (_dataList.count)
     {

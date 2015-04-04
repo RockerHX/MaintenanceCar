@@ -40,7 +40,7 @@
 #pragma mark - LayoutGUI Methods
 - (void)layoutGUI
 {
-    _placeholderLabel.alpha = [self.text length] ? DOT_COORDINATE : 1.0f;
+    _placeholderLabel.alpha = [self.text length] ? ZERO_POINT : 1.0f;
 }
 
 #pragma mark - Setters

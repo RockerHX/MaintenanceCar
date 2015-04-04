@@ -17,7 +17,7 @@
 {
     // 从Xib加载View
     self = [[[NSBundle mainBundle] loadNibNamed:@"SCCouponCell" owner:self options:nil] firstObject];
-    self.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 120.0f);
+    self.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 120.0f);
     return self;
 }
 

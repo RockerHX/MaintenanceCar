@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     [self.view endEditing:YES];
     
     SCDatePickerView *datePicker = [[SCDatePickerView alloc] initWithDelegate:self mode:UIDatePickerModeDate];
-    datePicker.datePicker.minimumDate = [NSDate dateWithTimeIntervalSince1970:DOT_COORDINATE];
+    datePicker.datePicker.minimumDate = [NSDate dateWithTimeIntervalSince1970:ZERO_POINT];
     datePicker.datePicker.maximumDate = [NSDate date];
     [datePicker show];                                    
 }

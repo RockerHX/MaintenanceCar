@@ -243,7 +243,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = DOT_COORDINATE;
+    CGFloat height = ZERO_POINT;
     CGFloat separatorHeight = 1.0f;
     if (_merchantDetail)
     {
@@ -447,7 +447,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if ((!_hasGroupProducts && (section == 2)) || !section || section == 3|| section == 4)
-        return DOT_COORDINATE;
+        return ZERO_POINT;
     return 30.0f;
 }
 
@@ -471,8 +471,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             return nil;
             break;
     }
-    UIView *view    = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 30.0f)];
-    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, DOT_COORDINATE, 100.0f, 30.0f)];
+    UIView *view    = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 30.0f)];
+    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, ZERO_POINT, 100.0f, 30.0f)];
     label.font      = [UIFont systemFontOfSize:15.0f];
     label.textColor = [UIColor grayColor];
     label.text = text;
@@ -509,7 +509,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     if (!_blankView)
     {
-        _blankView = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, STATUS_BAR_HEIGHT + NAVIGATION_BAR_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        _blankView = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, STATUS_BAR_HEIGHT + NAVIGATION_BAR_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
         _blankView.backgroundColor = [UIColor whiteColor];
     }
     [self.navigationController.view addSubview:_blankView];
@@ -520,7 +520,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [MBProgressHUD hideAllHUDsForView:_blankView animated:YES];
     
     [UIView animateWithDuration:0.3f delay:0.1f options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        _blankView.alpha = DOT_COORDINATE;
+        _blankView.alpha = ZERO_POINT;
     } completion:^(BOOL finished) {
         [_blankView removeFromSuperview];
         _blankView = nil;

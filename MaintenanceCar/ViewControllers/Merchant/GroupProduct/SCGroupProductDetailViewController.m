@@ -129,7 +129,7 @@
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = DOT_COORDINATE;
+    CGFloat height = ZERO_POINT;
     CGFloat separatorHeight = 1.0f;
     if (_detail)
     {
@@ -181,7 +181,7 @@
 {
     if (section == 1 || section == 2)
         return 30.0f;
-    return DOT_COORDINATE;
+    return ZERO_POINT;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -200,8 +200,8 @@
             return nil;
             break;
     }
-    UIView *view    = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 30.0f)];
-    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, DOT_COORDINATE, 100.0f, 30.0f)];
+    UIView *view    = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 30.0f)];
+    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, ZERO_POINT, 100.0f, 30.0f)];
     label.font      = [UIFont systemFontOfSize:15.0f];
     label.textColor = [UIColor grayColor];
     [view addSubview:label];

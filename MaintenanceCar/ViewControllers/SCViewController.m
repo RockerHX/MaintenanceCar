@@ -137,9 +137,9 @@
 - (void)reLayoutHeaderView
 {
     if (IS_IPHONE_6)
-        self.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 281.25f);
+        self.tableHeaderView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 281.25f);
     else if (IS_IPHONE_6Plus)
-        self.tableHeaderView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 300.0f);
+        self.tableHeaderView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 300.0f);
     [self.tableHeaderView needsUpdateConstraints];
     [self.tableHeaderView layoutIfNeeded];
 }

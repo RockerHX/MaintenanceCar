@@ -12,10 +12,10 @@ pod 'IQKeyboardManager'
 pod 'SCLoopScrollView'
 
 # ********************** 第三方SDK **********************
-# 友盟统计SDK
+# 友盟SDK
 pod 'UMengMessage'
 pod 'UMengAnalytics'
-
+# 百度地图SDK
 pod 'Baidu-Maps-iOS-SDK'
-
+# 微信SDK
 pod 'Weixin'

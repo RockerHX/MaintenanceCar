@@ -136,14 +136,14 @@
 {
     if (IS_IPHONE_6Plus)
     {
-        _headerView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 280.0f);
+        _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 280.0f);
         _heightConstraint.constant = _heightConstraint.constant + 30.0f;
         [self.view needsUpdateConstraints];
         [self.view layoutIfNeeded];
     }
     else if (IS_IPHONE_6)
     {
-        _headerView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 270.0f);
+        _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 270.0f);
         _heightConstraint.constant = _heightConstraint.constant + 15.0f;
         [self.view needsUpdateConstraints];
         [self.view layoutIfNeeded];

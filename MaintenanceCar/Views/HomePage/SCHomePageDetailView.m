@@ -91,16 +91,11 @@
             [view setImageWithURL:[NSURL URLWithString:special.pic_url] placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
             [items addObject:view];
         }
-        
-        _operatADView.items = items;
-        [_operatADView begin:^(NSInteger index) {
-            NSLog(@"%@", @(index));
-        } finished:nil];
     }
     else
     {
-        UIImageView *view = [[UIImageView alloc] init];
-        view.image = [UIImage imageNamed:@"MerchantImageDefault"];
+        UIImageView *view    = [[UIImageView alloc] init];
+        view.image           = [UIImage imageNamed:@"MerchantImageDefault"];
         view.backgroundColor = [UIColor redColor];
         [items addObject:view];
     }

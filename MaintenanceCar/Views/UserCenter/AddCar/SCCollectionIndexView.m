@@ -26,7 +26,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // View视图数据初始化
-        self.backgroundColor = [UIColor colorWithWhite:DOT_COORDINATE alpha:0.8f];
+        self.backgroundColor = [UIColor colorWithWhite:ZERO_POINT alpha:0.8f];
         _indexTitles = indexTitles;
         _selectedIndex = 0;
         // add pan recognizer
@@ -98,7 +98,7 @@
     NSMutableArray *labels = [@[] mutableCopy];
     __weak typeof(self)weakSelf = self;
     [_indexTitles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(DOT_COORDINATE, idx * cumulativeItemHeight + 4.0f, LabelWidth, cumulativeItemHeight)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(ZERO_POINT, idx * cumulativeItemHeight + 4.0f, LabelWidth, cumulativeItemHeight)];
         label.tag                    = idx;
         label.text                   = obj;
         label.font                   = [UIFont systemFontOfSize:10.0f];

@@ -55,7 +55,7 @@
     _isWash = isWash;
     if (isWash)
     {
-        _buttonWidth.constant = DOT_COORDINATE;
+        _buttonWidth.constant = ZERO_POINT;
         [_repairTypeButton setTitle:@"" forState:UIControlStateNormal];
     }
     else
@@ -103,13 +103,13 @@
 // 收回筛选条件View，用户点击黑色透明部分或者选择筛选条件之后 - 带动画
 - (void)closeFilterView
 {
-    _filterPopView.contentViewHeightConstraint.constant = DOT_COORDINATE;
+    _filterPopView.contentViewHeightConstraint.constant = ZERO_POINT;
     [_filterPopView.contentView needsUpdateConstraints];
     [UIView animateWithDuration:0.3f animations:^{
         [_filterPopView.contentView layoutIfNeeded];
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.2f animations:^{
-            _filterPopView.alpha = DOT_COORDINATE;
+            _filterPopView.alpha = ZERO_POINT;
         } completion:^(BOOL finished) {
             _heightConstraint.constant = MerchantFilterViewUnPopHeight;
             _filterPopView.alpha = 1.0f;
