@@ -7,6 +7,7 @@
 //
 
 #import "SCAllDictionary.h"
+#import "SCObject.h"
 #import "SCAPIRequest.h"
 #import "SCUserCar.h"
 
@@ -18,8 +19,8 @@
 #define RepairConditionKey              @"RepairCondition"
 #define OtherConditionKey               @"OtherCondition"
 
-#define kColorExplainKey        @"kColorExplainKey"
-#define kAllDictionarykey       @"kAllDictionarykey"
+#define fColorExplainFileName           @"ColorExplain.dat"
+#define fAllDictionaryFileName          @"AllDictionary.dat"
 
 static SCAllDictionary *allDictionary = nil;
 
@@ -86,7 +87,7 @@ static SCAllDictionary *allDictionary = nil;
 - (void)requestWithType:(SCDictionaryType)type finfish:(void(^)(NSArray *items))finfish
 {
     _type = type;                                                               // 混存外部需要的字典类型
-    NSDictionary *localData = [self readLocalDataWithKey:kAllDictionarykey];    // 获取本地字典数据
+    NSDictionary *localData = [self readLocalDataWithFileName:fAllDictionaryFileName];    // 获取本地字典数据
     
     __weak typeof(self)weakSelf = self;
     // 如果本地缓存的字典数据为空，从网络请求，并保存到本地，反之则生成字典数据对象做回调，并异步更新数据
@@ -96,7 +97,7 @@ static SCAllDictionary *allDictionary = nil;
             if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
             {
                 // 先处理数据，再保存，最后回调
-                [weakSelf saveData:responseObject withKey:kAllDictionarykey];
+                [weakSelf saveData:responseObject fileName:fAllDictionaryFileName];
                 NSArray *data = responseObject[[@(type) stringValue]];
                 [weakSelf handleDateWithData:data finfish:finfish];
             }
@@ -111,7 +112,7 @@ static SCAllDictionary *allDictionary = nil;
         
         [[SCAPIRequest manager] startGetAllDictionaryAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
-                [weakSelf saveData:responseObject withKey:kAllDictionarykey];
+                [weakSelf saveData:responseObject fileName:fAllDictionaryFileName];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         }];
         
@@ -121,7 +122,7 @@ static SCAllDictionary *allDictionary = nil;
 
 - (void)requestColorsExplain:(void(^)(NSDictionary *colors, NSDictionary *explain, NSDictionary *detail))finfish
 {
-    NSDictionary *localData = [self readLocalDataWithKey:kColorExplainKey];      // 获取颜色值本地缓存数据
+    NSDictionary *localData = [self readLocalDataWithFileName:fColorExplainFileName];      // 获取颜色值本地缓存数据
     
     __weak typeof(self)weakSelf = self;
     // 如果本地缓存的商家Flags数据为空，从网络请求，并保存到本地，反之则生成数据对象做回调，并异步更新数据
@@ -132,7 +133,7 @@ static SCAllDictionary *allDictionary = nil;
             {
                 // 先处理数据，再保存，最后回调
                 [weakSelf hanleMerchantFlagsData:responseObject];
-                [weakSelf saveData:responseObject withKey:kColorExplainKey];
+                [weakSelf saveData:responseObject fileName:fColorExplainFileName];
                 finfish(weakSelf.colors, weakSelf.explain, weakSelf.detail);
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -145,7 +146,7 @@ static SCAllDictionary *allDictionary = nil;
         [weakSelf hanleMerchantFlagsData:localData];
         
         [[SCAPIRequest manager] startFlagsColorAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [weakSelf saveData:responseObject withKey:kColorExplainKey];
+            [weakSelf saveData:responseObject fileName:fColorExplainFileName];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         }];
         

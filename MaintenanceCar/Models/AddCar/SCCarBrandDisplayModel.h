@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCObject.h"
+#import <Foundation/Foundation.h>
 
 // 车辆品牌显示数据Model
-@interface SCCarBrandDisplayModel : SCObject
+@interface SCCarBrandDisplayModel : NSObject
 
 @property (nonatomic, assign, readonly) BOOL         loadFinish;        // 数据加载标识
 @property (nonatomic, strong, readonly) NSArray      *indexTitles;      // 索引标题集合

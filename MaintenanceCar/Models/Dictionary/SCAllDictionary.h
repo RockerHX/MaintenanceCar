@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCObject.h"
+#import <Foundation/Foundation.h>
 #import "SCDictionaryItem.h"
 #import "SCServiceItem.h"
 #import "SCSpecial.h"
@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
     SCDictionaryTypeDriveHabit,                         // 驾驶习惯
 };
 
-@interface SCAllDictionary : SCObject
+@interface SCAllDictionary : NSObject
 
 @property (nonatomic, strong, readonly) NSArray   *oderTypeItems;             // 订单类型字典
 @property (nonatomic, strong, readonly) NSArray   *reservationTypeItems;      // 预约类型字典
