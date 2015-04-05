@@ -1,9 +1,7 @@
 //
 //  SCLocationManager.h
-//  MaintenanceCar
 //
-//  Created by ShiCang on 14/12/27.
-//  Copyright (c) 2014年 MaintenanceCar. All rights reserved.
+//  Copyright (c) 2014年 ShiCang. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
