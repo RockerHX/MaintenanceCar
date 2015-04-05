@@ -13,6 +13,11 @@
 #pragma mark - Public Methods
 #pragma mark -
 #pragma mark - Alert Methods
+- (void)showAlertWithMessage:(NSString *)message
+{
+    [self showAlertWithTitle:@"温馨提示" message:message];
+}
+
 - (void)showAlertWithTitle:(NSString *)title
                    message:(NSString *)message
 {
@@ -34,6 +39,12 @@
             otherButtonTitle:@"登录"];
 }
 
+- (void)checkShouldLogin
+{
+    if (![SCUserInfo share].loginStatus)
+        [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
+}
+
 - (void)showAlertWithTitle:(NSString *)title
                    message:(NSString *)message
                   delegate:(id)delegate
@@ -48,12 +59,6 @@
                                               otherButtonTitles:otherButtonTitle, nil];
     alertView.tag = tag;
     [alertView show];
-}
-
-- (void)checkShouldLogin
-{
-    if (![SCUserInfo share].loginStatus)
-        [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
 }
 
 #pragma mark - HUD Methods

@@ -17,6 +17,13 @@
 
 #pragma mark - Alert Methods
 /**
+ *  显示温馨提示警告框（警告框只有[确定]按钮）
+ *
+ *  @param message 提示信息
+ */
+- (void)showAlertWithMessage:(NSString *)message;
+
+/**
  *  显示简单提示警告框（警告框只有[确定]按钮）
  *
  *  @param title   提示标题
@@ -24,7 +31,6 @@
  */
 - (void)showAlertWithTitle:(NSString *)title
                    message:(NSString *)message;
-
 /**
  *  提示用户登录的警告框
  */
