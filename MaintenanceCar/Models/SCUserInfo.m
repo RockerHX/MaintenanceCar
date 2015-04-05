@@ -160,9 +160,9 @@ static SCUserInfo *userInfo = nil;
 - (void)userCarsReuqest:(void (^)(SCUserInfo *, BOOL))block
 {
     _block = block;
-    __weak typeof(self)weakSelf = self;
     if (self.loginStatus)
     {
+        __weak typeof(self)weakSelf = self;
         NSDictionary *parameters = @{@"user_id": self.userID};
         [[SCAPIRequest manager] startGetUserCarsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
@@ -175,7 +175,7 @@ static SCUserInfo *userInfo = nil;
     else
     {
         if (_block)
-            _block(weakSelf, NO);
+            _block(self, NO);
     }
 }
 
