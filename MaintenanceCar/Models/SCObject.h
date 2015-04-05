@@ -1,27 +1,42 @@
 //
 //  SCObject.h
-//  MaintenanceCar
 //
-//  Created by ShiCang on 15/2/3.
-//  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
+//  Copyright (c) 2015年 ShiCang. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import "SCFileManager.h"
 
-@interface SCObject : NSObject
-
-/**
- *  保存字典数据到本地
- *
- *  @param dic 字典数据
- */
-- (void)saveData:(id)data withKey:(NSString *)key;
+@interface NSObject (SCObject)
 
 /**
- *  从本地读取字典数据
+ *  保存缓存数据到本地
  *
- *  @return 字典数据
+ *  @param data 需要缓存的数据
+ *  @param path 缓存数据文件名(缓存路径Temp)
  */
-- (id)readLocalDataWithKey:(NSString *)key;
+- (BOOL)saveData:(id)data fileName:(NSString *)fileName;
+
+/**
+ *  从本地读取数据
+ *
+ *  @return 本地缓存数据
+ */
+- (id)readLocalDataWithFileName:(NSString *)fileName;
+
+/**
+ *  保存缓存数据到本地
+ *
+ *  @param data 需要缓存的数据
+ *  @param path 缓存数据路径
+ */
+- (BOOL)saveData:(id)data path:(NSString *)path;
+
+/**
+ *  从本地读取数据
+ *
+ *  @return 本地缓存数据
+ */
+- (id)readLocalDataWithPath:(NSString *)path;
 
 @end
