@@ -10,7 +10,7 @@
 #define TMP_DIRECTORY           NSTemporaryDirectory()
 #define DOCUMENTS_DIRECTORY     [HOME_DIRECTORY stringByAppendingFormat:@"/Documents"]
 #define LIBRARY_DIRECTORY       [HOME_DIRECTORY stringByAppendingFormat:@"/Library"]
-#define CACHES_DIRECTORY        [HOME_DIRECTORY stringByAppendingFormat:@"/Caches"]
+#define CACHES_DIRECTORY        [TMP_DIRECTORY stringByAppendingFormat:@"/Caches"]
 #define PICTURE_DIRECTORY       [CACHES_DIRECTORY stringByAppendingFormat:@"/Picture/"]
 #define MUSIC_DIRECTORY         [CACHES_DIRECTORY stringByAppendingFormat:@"/Muisc/"]
 #define MOVIE_DIRECTORY         [CACHES_DIRECTORY stringByAppendingFormat:@"/Movie/"]
