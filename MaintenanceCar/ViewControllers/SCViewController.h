@@ -1,9 +1,7 @@
 //
 //  SCViewController.h
-//  MaintenanceCar
 //
-//  Created by ShiCang on 15/3/2.
-//  Copyright (c) 2015年 NiceHome. All rights reserved.
+//  Copyright (c) 2015年 ShiCang. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
