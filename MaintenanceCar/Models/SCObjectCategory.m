@@ -4,7 +4,7 @@
 //  Copyright (c) 2015年 ShiCang. All rights reserved.
 //
 
-#import "SCObject.h"
+#import "SCObjectCategory.h"
 
 @implementation  NSObject (SCObject)
 

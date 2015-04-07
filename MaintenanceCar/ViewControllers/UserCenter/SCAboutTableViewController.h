@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCViewController.h"
+#import "SCViewControllerCategory.h"
 
 @interface SCAboutTableViewController : UITableViewController
 

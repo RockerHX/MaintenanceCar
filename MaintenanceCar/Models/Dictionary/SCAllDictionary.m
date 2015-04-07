@@ -7,7 +7,7 @@
 //
 
 #import "SCAllDictionary.h"
-#import "SCObject.h"
+#import "SCObjectCategory.h"
 #import "SCAPIRequest.h"
 #import "SCUserCar.h"
 

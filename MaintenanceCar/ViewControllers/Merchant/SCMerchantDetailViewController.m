@@ -24,7 +24,7 @@
 #import "SCMapViewController.h"
 #import "SCAllDictionary.h"
 #import "SCGroupProductDetailViewController.h"
-#import "SCView.h"
+#import "SCViewCategory.h"
 #import "SCCommentListViewController.h"
 
 typedef NS_ENUM(NSInteger, SCMerchantDetailCellSection) {

@@ -4,7 +4,7 @@
 //  Copyright (c) 2015年 ShiCang. All rights reserved.
 //
 
-#import "SCViewController.h"
+#import "SCViewControllerCategory.h"
 
 @implementation UIViewController (SCViewController)
 

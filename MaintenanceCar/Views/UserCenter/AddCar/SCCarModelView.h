@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCView.h"
+#import "SCViewCategory.h"
 #import "SCSelectedView.h"
 
 @class SCCar;
