@@ -41,6 +41,9 @@
         case SCCouponStateExpired:
             codeState = @"已过期";
             break;
+        case SCCouponStateRefunding:
+            codeState = @"已申请退款";
+            break;
         case SCCouponStateRefunded:
             codeState = @"已退款";
             break;

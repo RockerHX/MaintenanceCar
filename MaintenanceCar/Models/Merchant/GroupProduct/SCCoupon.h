@@ -13,6 +13,7 @@ typedef NS_ENUM(NSInteger, SCCouponState) {
     SCCouponStateUsed,
     SCCouponStateCancel,
     SCCouponStateExpired,
+    SCCouponStateRefunding,
     SCCouponStateRefunded
 };
 
