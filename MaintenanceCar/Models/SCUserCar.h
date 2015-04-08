@@ -22,4 +22,7 @@
 @property (nonatomic, strong) NSArray <Ignore>*carefulItems;            // 保养数据 - 精保
 @property (nonatomic, strong) NSArray <Ignore>*allItems;                // 保养数据 - 自选
 
+
+- (id)initWithCar:(SCCar *)car;
+
 @end

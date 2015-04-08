@@ -26,7 +26,7 @@
 @property (weak, nonatomic) IBOutlet SCCarDriveHabitsView *carDriveHabitsView;      // 驾驶习惯View
 
 @property (nonatomic, weak)          id                   <SCChangeMaintenanceDataViewControllerDelegate>delegate;
-@property (nonatomic, weak)          SCUserCar            *car;
+@property (nonatomic, strong)        SCUserCar            *car;
 
 - (IBAction)deleteCarButtonPressed;
 

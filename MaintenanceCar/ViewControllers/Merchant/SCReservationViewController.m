@@ -334,7 +334,7 @@
     [self displayDateItemWithDate:requestDate displayDate:displayDate];
 }
 
-#pragma mark - SCReservationDateViewController Delegate Methods
+#pragma mark - SCAddCarViewController Delegate Methods
 - (void)addCarSuccess:(SCCar *)car
 {
     _selectedCarID = car.user_car_id;

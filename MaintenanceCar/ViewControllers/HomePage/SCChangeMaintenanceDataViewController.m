@@ -10,6 +10,8 @@
 #import "SCUserCar.h"
 #import "SCDatePickerView.h"
 #import "SCCarDriveHabitsView.h"
+#import "SCPickerView.h"
+#import "SCAddCarViewController.h"
 
 typedef NS_ENUM(NSInteger, SCHUDType) {
     SCHUDTypeDefault,
@@ -17,7 +19,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     SCHUDTypeDeleteCar
 };
 
-@interface SCChangeMaintenanceDataViewController () <UITextFieldDelegate, SCDatePickerViewDelegate, SCCarDriveHabitsViewDelegate>
+@interface SCChangeMaintenanceDataViewController () <UITextFieldDelegate, SCDatePickerViewDelegate, SCCarDriveHabitsViewDelegate, SCPickerViewDelegate, SCAddCarViewControllerDelegate>
 
 @end
 
@@ -69,7 +71,8 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     // 购车按钮点击事件触发，收起键盘，弹出时间选择器
     [self.view endEditing:YES];
     
-    
+    SCPickerView *pickerView = [[SCPickerView alloc] initWithItems:nil type:SCPickerTypeCar delegate:self];
+    [pickerView show];
 }
 
 - (IBAction)buyCarDateButtonPressed
@@ -236,6 +239,45 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 {
     if (buttonIndex == alertView.cancelButtonIndex)
         [self startDeleteUserCarRequest];
+}
+
+#pragma mark - SCPickerView Delegate Methods
+- (void)pickerView:(SCPickerView *)pickerView didSelectRow:(NSInteger)row item:(id)item
+{
+    if ([pickerView lastItem:item])
+    {
+        if ([SCUserInfo share].loginStatus)
+        {
+            @try {
+                UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
+                SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
+                addCarViewController.delegate = self;
+                [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
+            }
+            @catch (NSException *exception) {
+                NSLog(@"SCChangeMaintenanceDataViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
+            }
+            @finally {
+                [pickerView hidde];
+            }
+        }
+        else
+            [self showShoulLoginAlert];
+    }
+    else
+    {
+        SCUserCar *car = item;
+        _car = car;
+    }
+    
+    [self viewDisplay];
+}
+
+#pragma mark - SCAddCarViewController Delegate Methods
+- (void)addCarSuccess:(SCCar *)car
+{
+    _car = [[SCUserCar alloc] initWithCar:car];
+    [self viewDisplay];
 }
 
 @end
