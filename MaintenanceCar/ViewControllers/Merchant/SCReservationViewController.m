@@ -11,8 +11,9 @@
 #import "SCPickerView.h"
 #import "SCReservationDateViewController.h"
 #import "SCAllDictionary.h"
+#import "SCAddCarViewController.h"
 
-@interface SCReservationViewController () <UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, SCPickerViewDelegate, SCReservationDateViewControllerDelegate>
+@interface SCReservationViewController () <UITextFieldDelegate, UIAlertViewDelegate, SCPickerViewDelegate, SCReservationDateViewControllerDelegate, SCAddCarViewControllerDelegate>
 {
     NSString *_selectedCarID;
     NSString *_reservationDate;
@@ -291,6 +292,8 @@
                 {
                     @try {
                         UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
+                        SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
+                        addCarViewController.delegate = self;
                         [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
                     }
                     @catch (NSException *exception) {
@@ -329,6 +332,13 @@
 {
     _reservationDate = requestDate;
     [self displayDateItemWithDate:requestDate displayDate:displayDate];
+}
+
+#pragma mark - SCReservationDateViewController Delegate Methods
+- (void)addCarSuccess:(SCCar *)car
+{
+    _selectedCarID = car.user_car_id;
+    _carLabel.text = [car.brand_name stringByAppendingString:car.model_name];
 }
 
 @end

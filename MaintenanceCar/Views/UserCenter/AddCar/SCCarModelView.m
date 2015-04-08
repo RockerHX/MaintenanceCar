@@ -26,6 +26,7 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     NSMutableArray *_carModels;             // 车辆车型数据Cache
     
     UIImageView    *_selectedColorView;     // 车辆车型列表选中背景
+    SCCarBrand     *_carBrand;
 }
 
 @end
@@ -55,6 +56,7 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     // 加载响应式控件，进行车辆车型数据请求
     [MBProgressHUD showHUDAddedTo:self animated:YES];
     
+    _carBrand = carBrand;
     [self startCarModelReuqest:carBrand];
 }
 
@@ -130,7 +132,7 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     [[SCAPIRequest manager] startUpdateCarsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            NSDictionary *defaultCarData = @{@"car_id": @"", @"model_id": carModel.model_id, @"up_time": @"", @"car_full_model": @"我不清楚/其他"};
+            NSDictionary *defaultCarData = @{@"model_id": carModel.model_id, @"car_full_model": @"我不清楚/其他", @"brand_name": _carBrand.brand_name, @"model_name": carModel.model_name};
             SCCar *defaultCar = [[SCCar alloc] initWithDictionary:defaultCarData error:nil];
             [_cars addObject:defaultCar];
             
@@ -138,6 +140,8 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
             for (NSDictionary *carData in cars)
             {
                 SCCar *car = [[SCCar alloc] initWithDictionary:carData error:nil];
+                car.brand_name = _carBrand.brand_name;
+                car.model_name = carModel.model_name;
                 [_cars addObject:car];
             }
             [_rightTableView reloadData];

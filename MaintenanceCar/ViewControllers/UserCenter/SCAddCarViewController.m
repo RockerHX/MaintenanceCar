@@ -11,7 +11,6 @@
 #import "SCCarModelView.h"
 #import "SCCollectionIndexView.h"
 #import "SCCarBrandDisplayModel.h"
-#import "SCCar.h"
 
 // 添加车辆返回操作类型
 typedef NS_ENUM(BOOL, SCAddCarStatus) {
@@ -198,7 +197,10 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
     [[SCAPIRequest manager] startAddCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
+            _car.user_car_id = responseObject[@"user_car_id"];
             [NOTIFICATION_CENTER postNotificationName:kUserCarsDataNeedReloadSuccessNotification object:nil];
+            if ([_delegate respondsToSelector:@selector(addCarSuccess:)])
+                [_delegate addCarSuccess:_car];
             [weakSelf showPromptHUDToView:weakSelf.view withText:@"添加成功！" delay:1.0f delegate:weakSelf];
         }
         else

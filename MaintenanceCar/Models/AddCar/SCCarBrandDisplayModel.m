@@ -240,10 +240,16 @@ static SCCarBrandDisplayModel *displayModel = nil;
                     [weakSelf generateCarBrandModelWithData:data];
                 }
                 else
-                    _block(nil, nil, _loadFinish);
+                {
+                    if (_block)
+                        _block(nil, nil, _loadFinish);
+                }
             }
             else
-                _block(nil, nil, _loadFinish);
+            {
+                if (_block)
+                    _block(nil, nil, _loadFinish);
+            }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             if (_block)
                 _block(nil, nil, _loadFinish);
