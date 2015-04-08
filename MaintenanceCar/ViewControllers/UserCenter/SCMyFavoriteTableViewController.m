@@ -12,6 +12,7 @@
 #import "SCMerchantDetailViewController.h"
 #import "SCReservatAlertView.h"
 #import "SCReservationViewController.h"
+#import "SCLocationManager.h"
 
 @interface SCMyFavoriteTableViewController () <SCReservatAlertViewDelegate>
 {
@@ -105,21 +106,38 @@
 {
     [super startDropDownRefreshReuqest];
     
-    [self startMerchantCollectionListRequest];
+    [self refreshCollectionListMerchantList];
 }
 
 - (void)startPullUpRefreshRequest
 {
     [super startPullUpRefreshRequest];
     
-    [self startMerchantCollectionListRequest];
+    [self refreshCollectionListMerchantList];
+}
+
+- (void)refreshCollectionListMerchantList
+{
+    __weak typeof(self) weakSelf = self;
+    [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
+        [weakSelf startMerchantCollectionListRequest:latitude longitude:longitude];
+    } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
+        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"定位失败，采用当前城市中心坐标！" delay:0.5f];
+        [weakSelf startMerchantCollectionListRequest:latitude longitude:longitude];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
+                                                            message:@"定位失败，请检查您的定位服务是否打开：设置->隐私->定位服务"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"确定"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
+    }];
 }
 
 #pragma mark - Private Methods
 /**
  *  收藏列表数据请求方法，必选参数：user_id，limit，offset
  */
-- (void)startMerchantCollectionListRequest
+- (void)startMerchantCollectionListRequest:(NSString *)latitude longitude:(NSString *)longitude
 {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
