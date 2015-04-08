@@ -319,13 +319,15 @@
                 [_dataList addObject:reservation];
             }];
             
-            [weakSelf.tableView reloadData];        // 数据配置完成，刷新商家列表
-            weakSelf.offset += MerchantListLimit;   // 偏移量请求参数递增
+            [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
+            [weakSelf readdFooter];
+            weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
         }
         else
         {
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
             [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:responseObject[@"error"] delay:0.5f];
+            [weakSelf removeFooter];
         }
         [weakSelf endRefresh];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -49,8 +49,6 @@
     
     // 为tableview添加上拉和下拉响应式控件和触发方法
     [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(startDropDownRefreshReuqest)];
-    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(startPullUpRefreshRequest)];
-    [self.tableView.footer setHidden:YES];
     [self.tableView.header beginRefreshing];
 }
 
@@ -73,10 +71,20 @@
     if (_requestType == SCRequestRefreshTypeDropDown)
     {
         [self.tableView.header endRefreshing];
-        [self.tableView.footer setHidden:NO];
     }
     else
         [self.tableView.footer endRefreshing];
+}
+
+- (void)readdFooter
+{
+    if (!self.tableView.footer)
+        [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(startPullUpRefreshRequest)];
+}
+
+- (void)removeFooter
+{
+    [self.tableView removeFooter];
 }
 
 - (void)clearListData

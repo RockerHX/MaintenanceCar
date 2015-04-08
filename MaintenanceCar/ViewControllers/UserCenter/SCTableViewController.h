@@ -49,6 +49,8 @@ typedef NS_ENUM(NSInteger, SCRequestRefreshType) {
  *  结束刷新
  */
 - (void)endRefresh;
+- (void)readdFooter;
+- (void)removeFooter;
 
 /**
  *  清空列表缓存数据
