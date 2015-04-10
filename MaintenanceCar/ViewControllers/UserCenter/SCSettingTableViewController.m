@@ -106,6 +106,7 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
     _logoutView.hidden = YES;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Alert View Delegate Methods
