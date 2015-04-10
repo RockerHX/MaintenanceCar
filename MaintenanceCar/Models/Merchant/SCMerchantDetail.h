@@ -8,7 +8,8 @@
 
 #import "SCGroupProduct.h"
 #import "SCMerchantSummary.h"
-#import "SCMerchantGroup.h"
+#import "SCMerchantProductGroup.h"
+#import "SCQuotedPriceGroup.h"
 #import "SCMerchantInfo.h"
 #import "SCCommentGroup.h"
 #import "SCComment.h"
@@ -37,6 +38,7 @@
 
 @property (nonatomic, strong)            NSDictionary <Optional>*service_items;   // 服务项目
 @property (nonatomic, strong) NSArray <Optional, SCGroupProduct>*products;        // 团购项目
+@property (nonatomic, strong)  NSArray <Optional, SCQuotedPrice>*normal_products; // 项目报价
 @property (nonatomic, strong)      NSArray <Optional, SCComment>*comments;        // 用户评价
 @property (nonatomic, strong)                 NSArray <Optional>*images;          // 商家图片
 @property (nonatomic, assign)                              BOOL collected;        // 收藏状态
@@ -47,11 +49,12 @@
 @property (nonatomic, strong, readonly) NSDictionary <Ignore>*serviceItems;       // 商家服务项目
 
 
-@property (nonatomic, strong, readonly) SCMerchantSummary <Ignore>*summary;
-@property (nonatomic, strong, readonly)   SCMerchantGroup <Ignore>*group;
-@property (nonatomic, strong, readonly)    SCMerchantInfo <Ignore>*info;
-@property (nonatomic, strong, readonly)     SCCommentMore <Ignore>*commentMore;
-@property (nonatomic, strong, readonly)    SCCommentGroup <Ignore>*commentGroup;
+@property (nonatomic, strong, readonly)      SCMerchantSummary <Ignore>*summary;
+@property (nonatomic, strong, readonly) SCMerchantProductGroup <Ignore>*productGroup;
+@property (nonatomic, strong, readonly)     SCQuotedPriceGroup <Ignore>*quotedPriceGroup;
+@property (nonatomic, strong, readonly)         SCMerchantInfo <Ignore>*info;
+@property (nonatomic, strong, readonly)          SCCommentMore <Ignore>*commentMore;
+@property (nonatomic, strong, readonly)         SCCommentGroup <Ignore>*commentGroup;
 
 @property (nonatomic, strong, readonly) NSArray <Ignore>*cellDisplayData;
 

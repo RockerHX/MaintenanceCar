@@ -38,8 +38,8 @@
 #pragma mark - Action Methods
 - (IBAction)reservationButtonPressed:(UIButton *)sender
 {
-    if (_delegate && [_delegate respondsToSelector:@selector(shouldReservation)])
-        [_delegate shouldReservation];
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldNormalReservation)])
+        [_delegate shouldNormalReservation];
 }
 
 #pragma mark - Public Methods

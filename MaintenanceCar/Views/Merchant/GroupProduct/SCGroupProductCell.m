@@ -21,12 +21,9 @@
 #pragma mark - Public Methods
 - (void)displayCellWithProduct:(SCGroupProduct *)product
 {
-    if (product)
-    {
-        _productNameLabel.text  = product.title;
-        _groupPriceLabel.text   = product.final_price;
-        _productPriceLabel.text = product.total_price;
-    }
+    _productNameLabel.text  = product.title;
+    _groupPriceLabel.text   = product.final_price;
+    _productPriceLabel.text = product.total_price;
     
     [self.contentView updateConstraintsIfNeeded];
     [self.contentView layoutIfNeeded];

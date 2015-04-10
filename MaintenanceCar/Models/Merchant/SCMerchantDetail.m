@@ -33,7 +33,9 @@
         
         _summary       = [[SCMerchantSummary alloc] initWithMerchantDetail:self];
         if (_products.count)
-            _group     = [[SCMerchantGroup alloc] initWithMerchantDetail:self];
+            _productGroup     = [[SCMerchantProductGroup alloc] initWithMerchantDetail:self];
+        if (_normal_products.count)
+            _quotedPriceGroup = [[SCQuotedPriceGroup alloc] initWithMerchantDetail:self];
         _info          = [[SCMerchantInfo alloc] initWithMerchantDetail:self];
         _commentMore = [[SCCommentMore alloc] initWithMerchantDetail:self];
         _commentGroup  = [[SCCommentGroup alloc] initWithMerchantDetail:self];
@@ -47,8 +49,10 @@
     NSMutableArray *data = [@[] mutableCopy];
     if (_summary)
         [data addObject:_summary];
-    if (_group)
-        [data addObject:_group];
+    if (_productGroup)
+        [data addObject:_productGroup];
+    if (_quotedPriceGroup)
+        [data addObject:_quotedPriceGroup];
     if (_info)
         [data addObject:_info];
     if (_commentMore)

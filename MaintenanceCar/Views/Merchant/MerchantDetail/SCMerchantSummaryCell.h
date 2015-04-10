@@ -14,7 +14,7 @@
 @protocol SCMerchantSummaryCellDelegate <NSObject>
 
 @optional
-- (void)shouldReservation;
+- (void)shouldNormalReservation;
 
 @end
 
@@ -27,7 +27,6 @@
 @property (weak, nonatomic) IBOutlet       SCStarView *starView;             // 商家星级 - 用于显示商家评分
 
 @property (nonatomic, weak)                        id  <SCMerchantSummaryCellDelegate>delegate;
-@property (nonatomic, assign)               NSInteger  index;
 
 - (void)displayCellWithSummary:(SCMerchantSummary *)detailSummary;
 

@@ -14,6 +14,7 @@
 #import "SCComment.h"
 #import "SCMerchantSummaryCell.h"
 #import "SCGroupProductCell.h"
+#import "SCQuotedPriceCell.h"
 #import "SCShowMoreProductCell.h"
 #import "SCMerchantDetailItemCell.h"
 #import "SCMerchantServiceCell.h"
@@ -33,7 +34,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     SCAlertTypeReuqestCall
 };
 
-@interface SCMerchantDetailViewController () <UIAlertViewDelegate, SCReservatAlertViewDelegate, SCMerchantSummaryCellDelegate>
+@interface SCMerchantDetailViewController () <UIAlertViewDelegate, SCReservatAlertViewDelegate, SCMerchantSummaryCellDelegate, SCQuotedPriceCellDelegate>
 {
     BOOL           _needChecked;      // 检查收藏标识
     
@@ -41,6 +42,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 @property (weak, nonatomic)    SCMerchantSummaryCell *summaryCellCell;
 @property (weak, nonatomic)       SCGroupProductCell *productCell;
+@property (weak, nonatomic)        SCQuotedPriceCell *quotedPriceCell;
 @property (weak, nonatomic) SCMerchantDetailItemCell *detailItemCell;
 @property (weak, nonatomic)            SCCommentCell *commentCell;
 
@@ -116,18 +118,35 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             ((SCMerchantSummaryCell *)cell).delegate = self;
             [(SCMerchantSummaryCell *)cell displayCellWithSummary:dataClass];
         }
-        else if ([dataClass isKindOfClass:[SCMerchantGroup class]])
+        else if ([dataClass isKindOfClass:[SCMerchantProductGroup class]])
         {
-            SCMerchantGroup *merchantGroup = dataClass;
+            SCMerchantProductGroup *merchantGroup = dataClass;
             if (merchantGroup.canOpen && (indexPath.row == merchantGroup.products.count))
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCShowMoreProductCell" forIndexPath:indexPath];
+                ((SCShowMoreProductCell *)cell).cellType = SCGroupCellTypeGroupProduct;
                 [((SCShowMoreProductCell *)cell) displayCellWithMerchantGroup:dataClass];
             }
             else
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductCell" forIndexPath:indexPath];
                 [(SCGroupProductCell *)cell displayCellWithProduct:merchantGroup.products[indexPath.row]];
+            }
+        }
+        else if ([dataClass isKindOfClass:[SCQuotedPriceGroup class]])
+        {
+            SCQuotedPriceGroup *quotedPriceGroup = dataClass;
+            if (quotedPriceGroup.canOpen && (indexPath.row == quotedPriceGroup.products.count))
+            {
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCShowMoreProductCell" forIndexPath:indexPath];
+                ((SCShowMoreProductCell *)cell).cellType = SCGroupCellTypeQuotedPrice;
+                [((SCShowMoreProductCell *)cell) displayCellWithMerchantGroup:dataClass];
+            }
+            else
+            {
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCQuotedPriceCell" forIndexPath:indexPath];
+                ((SCQuotedPriceCell *)cell).delegate = self;
+                [(SCQuotedPriceCell *)cell displayCellWithProduct:quotedPriceGroup.products[indexPath.row]];
             }
         }
         else if ([dataClass isKindOfClass:[SCMerchantInfo class]])
@@ -178,15 +197,26 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             [_summaryCellCell displayCellWithSummary:_merchantDetail.summary];
             height = [_summaryCellCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
         }
-        else if ([dataClass isKindOfClass:[SCMerchantGroup class]])
+        else if ([dataClass isKindOfClass:[SCMerchantProductGroup class]])
         {
-            SCMerchantGroup *merchantGroup = dataClass;
+            SCMerchantProductGroup *merchantGroup = dataClass;
             if (!(merchantGroup.canOpen && (indexPath.row == merchantGroup.products.count)))
             {
                 if(!_productCell)
                     _productCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductCell"];
-                [_productCell displayCellWithProduct:_merchantDetail.products[indexPath.row]];
+                [_productCell displayCellWithProduct:_merchantDetail.productGroup.products[indexPath.row]];
                 height = [_productCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            }
+        }
+        else if ([dataClass isKindOfClass:[SCQuotedPriceGroup class]])
+        {
+            SCQuotedPriceGroup *quotedPriceGroup = dataClass;
+            if (!(quotedPriceGroup.canOpen && (indexPath.row == quotedPriceGroup.products.count)))
+            {
+                if(!_quotedPriceCell)
+                    _quotedPriceCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCQuotedPriceCell"];
+                [_quotedPriceCell displayCellWithProduct:_merchantDetail.quotedPriceGroup.products[indexPath.row]];
+                height = [_quotedPriceCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
         }
         else if ([dataClass isKindOfClass:[SCMerchantInfo class]])
@@ -233,7 +263,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     }
     else if ([cell isKindOfClass:[SCShowMoreProductCell class]])
     {
-        _merchantDetail.group.isOpen = !((SCShowMoreProductCell *)cell).state;
+        if (((SCShowMoreProductCell *)cell).cellType == SCGroupCellTypeGroupProduct)
+            _merchantDetail.productGroup.isOpen = !((SCShowMoreProductCell *)cell).state;
+        else
+            _merchantDetail.quotedPriceGroup.isOpen = !((SCShowMoreProductCell *)cell).state;
         [self.tableView reloadData];
     }
     else if ([cell isKindOfClass:[SCMerchantDetailItemCell class]])
@@ -525,6 +558,18 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     }
 }
 
+#pragma mark - SCMerchantSummaryCell Delegate Methods
+- (void)shouldNormalReservation
+{
+    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
+    [reservatAlertView show];
+}
+
+#pragma mark - SCQuotedPriceCellDelegate Delegate Methods
+- (void)shouldSpecialReservation
+{
+}
+
 #pragma mark - SCReservatAlertViewDelegate Methods
 - (void)selectedWithServiceItem:(SCServiceItem *)serviceItem
 {
@@ -541,13 +586,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     }
     @finally {
     }
-}
-
-#pragma mark - SCMerchantSummaryCell Delegate Methods
-- (void)shouldReservation
-{
-    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
-    [reservatAlertView show];
 }
 
 @end
