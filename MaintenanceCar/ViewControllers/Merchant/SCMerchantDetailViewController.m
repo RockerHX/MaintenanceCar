@@ -12,7 +12,7 @@
 #import "SCMerchant.h"
 #import "SCMerchantDetail.h"
 #import "SCComment.h"
-#import "SCMerchantDetailCell.h"
+#import "SCMerchantSummaryCell.h"
 #import "SCGroupProductCell.h"
 #import "SCShowMoreProductCell.h"
 #import "SCMerchantDetailItemCell.h"
@@ -27,30 +27,19 @@
 #import "SCViewCategory.h"
 #import "SCCommentListViewController.h"
 
-typedef NS_ENUM(NSInteger, SCMerchantDetailCellSection) {
-    SCMerchantDetailCellSectionMerchantBaseInfo = 0,
-    SCMerchantDetailCellSectionPurchaseInfo,
-    SCMerchantDetailCellSectionMerchantInfo
-};
-typedef NS_ENUM(NSInteger, SCMerchantDetailCellRow) {
-    SCMerchantDetailCellRowAddress = 0,
-    SCMerchantDetailCellRowPhone,
-    SCMerchantDetailCellRowBusiness,
-    SCMerchantDetailCellRowIntroduce
-};
 typedef NS_ENUM(NSInteger, SCAlertType) {
     SCAlertTypeNeedLogin    = 100,
     SCAlertTypeReuqestError,
     SCAlertTypeReuqestCall
 };
 
-@interface SCMerchantDetailViewController () <UIAlertViewDelegate, SCReservatAlertViewDelegate, SCMerchantDetailCellDelegate>
+@interface SCMerchantDetailViewController () <UIAlertViewDelegate, SCReservatAlertViewDelegate, SCMerchantSummaryCellDelegate>
 {
     BOOL           _needChecked;      // 检查收藏标识
     
     UIView         *_blankView;
 }
-@property (weak, nonatomic)     SCMerchantDetailCell *briefIntroductionCell;
+@property (weak, nonatomic)    SCMerchantSummaryCell *summaryCellCell;
 @property (weak, nonatomic)       SCGroupProductCell *productCell;
 @property (weak, nonatomic) SCMerchantDetailItemCell *detailItemCell;
 @property (weak, nonatomic)            SCCommentCell *commentCell;
@@ -123,9 +112,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         id dataClass = _merchantDetail.cellDisplayData[indexPath.section];
         if ([dataClass isKindOfClass:[SCMerchantSummary class]])
         {
-            cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell" forIndexPath:indexPath];
-            ((SCMerchantDetailCell *)cell).delegate = self;
-            [(SCMerchantDetailCell *)cell displayCellWithSummary:dataClass];
+            cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantSummaryCell" forIndexPath:indexPath];
+            ((SCMerchantSummaryCell *)cell).delegate = self;
+            [(SCMerchantSummaryCell *)cell displayCellWithSummary:dataClass];
         }
         else if ([dataClass isKindOfClass:[SCMerchantGroup class]])
         {
@@ -184,10 +173,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         id dataClass = _merchantDetail.cellDisplayData[indexPath.section];
         if ([dataClass isKindOfClass:[SCMerchantSummary class]])
         {
-            if(!_briefIntroductionCell)
-                _briefIntroductionCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell"];
-            [_briefIntroductionCell displayCellWithSummary:_merchantDetail.summary];
-            height = [_briefIntroductionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+            if(!_summaryCellCell)
+                _summaryCellCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantSummaryCell"];
+            [_summaryCellCell displayCellWithSummary:_merchantDetail.summary];
+            height = [_summaryCellCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
         }
         else if ([dataClass isKindOfClass:[SCMerchantGroup class]])
         {
@@ -554,7 +543,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     }
 }
 
-#pragma mark - SCMerchantDetailCell Delegate Methods
+#pragma mark - SCMerchantSummaryCell Delegate Methods
 - (void)shouldReservation
 {
     SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];

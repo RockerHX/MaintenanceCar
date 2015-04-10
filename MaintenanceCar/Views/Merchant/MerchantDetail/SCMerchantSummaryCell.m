@@ -1,12 +1,12 @@
 //
-//  SCMerchantDetailCell.m
+//  SCMerchantSummaryCell.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/18.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCMerchantDetailCell.h"
+#import "SCMerchantSummaryCell.h"
 #import <HexColors/HexColor.h>
 #import "VersionConstants.h"
 #import "UIConstants.h"
@@ -14,7 +14,7 @@
 #import "SCAllDictionary.h"
 #import "SCStarView.h"
 
-@interface SCMerchantDetailCell () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface SCMerchantSummaryCell () <UICollectionViewDataSource, UICollectionViewDelegate>
 {
     NSString     *_majors;
     NSDictionary *_colors;
@@ -25,7 +25,7 @@
 
 @end
 
-@implementation SCMerchantDetailCell
+@implementation SCMerchantSummaryCell
 
 #pragma mark - Init Methods
 - (void)awakeFromNib
