@@ -31,8 +31,6 @@
         
         [self handleProducts:_products];
         
-        
-        
         _summary       = [[SCMerchantSummary alloc] initWithMerchantDetail:self];
         if (_products.count)
             _group     = [[SCMerchantGroup alloc] initWithMerchantDetail:self];
@@ -107,16 +105,6 @@
     return prompt;
 }
 
-- (void)handleProducts:(NSArray *)products
-{
-    [products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        SCGroupProduct *product = obj;
-        product.companyID       = _company_id;
-        product.merchantName    = _name;
-        product.now             = _now;
-    }];
-}
-
 - (NSArray *)handleMerchantImages
 {
     NSMutableArray *images = [NSMutableArray arrayWithArray:_images];
@@ -155,6 +143,16 @@
         [serviceItems setObject:@[@"免费检测"] forKey:@"4"];
     
     return serviceItems;
+}
+
+- (void)handleProducts:(NSArray *)products
+{
+    [products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        SCGroupProduct *product = obj;
+        product.companyID       = _company_id;
+        product.merchantName    = _name;
+        product.now             = _now;
+    }];
 }
 
 #pragma mark - Setter And Getter Methods
