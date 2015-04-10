@@ -24,7 +24,6 @@
 
 @interface SCCarModelView : SCSelectedView <UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView      *titleView;                        // 展示给用户的标题View，用户点击此栏会触发显示货关闭当前View事件
 @property (weak, nonatomic) IBOutlet UILabel     *carModelLabel;                    // 车辆车型选择显示栏，用户选择车辆型号后名称显示在此栏
 @property (weak, nonatomic) IBOutlet UITableView *leftTableView;                    // 车辆车型数据显示列表
 @property (weak, nonatomic) IBOutlet UITableView *rightTableView;                   // 车辆型号数据显示列表
