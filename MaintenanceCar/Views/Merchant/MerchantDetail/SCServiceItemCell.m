@@ -38,15 +38,15 @@
         case 2:
         {
             _ID       = @"2";
-            imageName = @"CarRepaireIcon";
-            _title    = @"维修";
+            imageName = @"CarMaintenanceIcon";
+            _title    = @"保养";
         }
             break;
         case 3:
         {
             _ID       = @"3";
-            imageName = @"CarMaintenanceIcon";
-            _title    = @"保养";
+            imageName = @"CarRepaireIcon";
+            _title    = @"维修";
         }
             break;
         case 4:
