@@ -9,7 +9,8 @@
 #ifndef MaintenanceCar_VersionConstants_h
 #define MaintenanceCar_VersionConstants_h
 
-#define APP_VERSION                     [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]
+#define APP_VERSION                     [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+#define APP_BUILD_VERSION               [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]
 
 #define CURRENT_SYSTEM_VERSION          [[UIDevice currentDevice].systemVersion floatValue]
 #define IS_IOS5                         ((CURRENT_SYSTEM_VERSION >= 5.0f && CURRENT_SYSTEM_VERSION < 6.0f) ? YES : NO)

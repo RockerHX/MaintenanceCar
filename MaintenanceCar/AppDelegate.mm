@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import <AFNetworking/UIKit+AFNetworking.h>
-#import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
+//#import <AFNetworking/UIKit+AFNetworking.h>
+//#import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 #import <Baidu-Maps-iOS-SDK/BMapKit.h>
 #import <UMengAnalytics/MobClick.h>
 #import <UMengMessage/UMessage.h>
@@ -28,7 +28,7 @@
     
 #pragma mark 网络日志
 //    [[AFNetworkActivityLogger sharedLogger] startLogging];
-    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+//    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
 
     // 设置导航条和电池条颜色
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -44,14 +44,13 @@
     // 启用[友盟反馈]
     [UMFeedback setAppkey:UMengAPPKEY];
     // 设置版本号
-    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    [MobClick setAppVersion:version];
+    [MobClick setAppVersion:APP_VERSION];
     [MobClick checkUpdate];         // 集成友盟更新
     
     // 启动[友盟统计]，采用启动发送的方式 - BATCH
-//    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"AppStore:%@", version]];
+//    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"AppStore:%@", APP_VERSION]];
 #warning @"发布时更改测试统计"
-    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"TestVersion:%@", version]];
+    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"TestVersion:%@", APP_VERSION]];
     
     //set AppKey and AppSecret
     [UMessage startWithAppkey:UMengAPPKEY launchOptions:launchOptions];
