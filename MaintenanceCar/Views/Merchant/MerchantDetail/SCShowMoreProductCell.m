@@ -7,6 +7,7 @@
 //
 
 #import "SCShowMoreProductCell.h"
+#import "SCMerchantGroup.h"
 
 @implementation SCShowMoreProductCell
 
@@ -34,10 +35,10 @@
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithProductCount:(NSInteger)productCount
+- (void)displayCellWithMerchantGroup:(SCMerchantGroup *)merchantGroup
 {
-    _productCount = productCount;
-    self.state = _state;
+    _productCount = merchantGroup.totalProductCount;
+    self.state = merchantGroup.isOpen;
 }
 
 @end

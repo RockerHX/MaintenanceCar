@@ -18,8 +18,6 @@
     self = [super initWithDictionary:dict error:err];
     if (self)
     {
-        if (_flags)
-        _merchantFlags     = [_flags componentsSeparatedByString:@","];
         [[SCAllDictionary share] generateServiceItemsWtihMerchantImtes:_service_items inspectFree:[_inspect_free boolValue]];
         
         _serverItemsPrompt = [self generateServicePrompt:_service_items];
@@ -32,8 +30,35 @@
             _time_closed = @"";
         
         [self handleProducts:_products];
+        
+        
+        
+        _summary       = [[SCMerchantSummary alloc] initWithMerchantDetail:self];
+        if (_products.count)
+            _group     = [[SCMerchantGroup alloc] initWithMerchantDetail:self];
+        _info          = [[SCMerchantInfo alloc] initWithMerchantDetail:self];
+        _commentMore = [[SCCommentMore alloc] initWithMerchantDetail:self];
+        _commentGroup  = [[SCCommentGroup alloc] initWithMerchantDetail:self];
     }
     return self;
+}
+
+#pragma mark - Setter And Getter Methods
+- (NSArray<Ignore> *)cellDisplayData
+{
+    NSMutableArray *data = [@[] mutableCopy];
+    if (_summary)
+        [data addObject:_summary];
+    if (_group)
+        [data addObject:_group];
+    if (_info)
+        [data addObject:_info];
+    if (_commentMore)
+        [data addObject:_commentMore];
+    if (_commentGroup)
+        [data addObject:_commentGroup];
+    
+    return data;
 }
 
 #pragma mark - Private Methods

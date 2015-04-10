@@ -1,0 +1,62 @@
+//
+//  SCMerchantGroup.m
+//  MaintenanceCar
+//
+//  Created by ShiCang on 15/4/9.
+//  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
+//
+
+#import "SCMerchantGroup.h"
+#import "SCMerchantDetail.h"
+
+#define MaxProductShowCount     2
+
+@implementation SCMerchantGroup
+{
+    NSArray *_productsCache;
+}
+
+#pragma mark - Init Methods
+- (instancetype)initWithMerchantDetail:(SCMerchantDetail *)detail
+{
+    self = [super initWithMerchantDetail:detail];
+    if (self)
+    {
+        _productsCache = detail.products;
+    }
+    return self;
+}
+
+#pragma mark - Setter And Getter
+- (NSInteger)displayRow
+{
+    if (self.canOpen)
+        return _isOpen ? (self.products.count + 1) : (MaxProductShowCount + 1);
+    else
+        return _productsCache.count;
+}
+
+-(NSString *)headerTitle
+{
+    return @"团购";
+}
+
+- (BOOL)canOpen
+{
+    return (_productsCache.count > MaxProductShowCount);
+}
+
+- (NSInteger)totalProductCount
+{
+    return _productsCache.count;
+}
+
+- (NSArray *)products
+{
+    if (self.canOpen)
+        return _isOpen ? _productsCache : [_productsCache objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:(NSRange){0, MaxProductShowCount}]];
+    else
+        return _productsCache;
+}
+
+@end

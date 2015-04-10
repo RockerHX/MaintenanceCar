@@ -12,7 +12,6 @@
 #import "UIConstants.h"
 #import "SCMerchantDetailFlagCell.h"
 #import "SCAllDictionary.h"
-#import "SCMerchantDetail.h"
 #import "SCStarView.h"
 
 @interface SCMerchantDetailCell () <UICollectionViewDataSource, UICollectionViewDelegate>
@@ -55,14 +54,14 @@
     }];
 }
 
-- (void)displayCellWithDetail:(SCMerchantDetail *)detail
+- (void)displayCellWithSummary:(SCMerchantSummary *)detailSummary
 {
-    _merchantNameLabel.text   = detail.name;
-    _majors                   = detail.majors;
-    _distanceLabel.text       = detail.distance;
-    _starView.value           = [@([detail.star integerValue]/2) stringValue];
-    _reservationButton.hidden = ![SCAllDictionary share].serviceItems.count;
-    [self hanleMerchantFlags:detail.merchantFlags];
+    _merchantNameLabel.text   = detailSummary.name;
+    _majors                   = detailSummary.majors;
+    _distanceLabel.text       = detailSummary.distance;
+    _starView.value           = detailSummary.star;
+    _reservationButton.hidden = detailSummary.unReserve;
+    [self hanleMerchantFlags:detailSummary.flags];
     
     [self.contentView updateConstraintsIfNeeded];
     [self.contentView layoutIfNeeded];

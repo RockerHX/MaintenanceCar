@@ -7,6 +7,10 @@
 //
 
 #import "SCGroupProduct.h"
+#import "SCMerchantSummary.h"
+#import "SCMerchantGroup.h"
+#import "SCMerchantInfo.h"
+#import "SCCommentGroup.h"
 #import "SCComment.h"
 
 // 商家详情Model
@@ -39,9 +43,16 @@
 
 @property (nonatomic, copy, readonly)       NSString <Ignore>*distance;           // 手机当前位置与商家的距离
 @property (nonatomic, copy, readonly)       NSString <Ignore>*serverItemsPrompt;  // 商家服务描述
-@property (nonatomic, strong, readonly)      NSArray <Ignore>*merchantFlags;      // 商家标签集合
 @property (nonatomic, strong, readonly)      NSArray <Ignore>*merchantImages;     // 商家图片集合
 @property (nonatomic, strong, readonly) NSDictionary <Ignore>*serviceItems;       // 商家服务项目
 
+
+@property (nonatomic, strong, readonly) SCMerchantSummary <Ignore>*summary;
+@property (nonatomic, strong, readonly)   SCMerchantGroup <Ignore>*group;
+@property (nonatomic, strong, readonly)    SCMerchantInfo <Ignore>*info;
+@property (nonatomic, strong, readonly)     SCCommentMore <Ignore>*commentMore;
+@property (nonatomic, strong, readonly)    SCCommentGroup <Ignore>*commentGroup;
+
+@property (nonatomic, strong, readonly) NSArray <Ignore>*cellDisplayData;
 
 @end

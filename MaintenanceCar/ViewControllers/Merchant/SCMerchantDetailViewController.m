@@ -47,10 +47,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 @interface SCMerchantDetailViewController () <UIAlertViewDelegate, SCReservatAlertViewDelegate, SCMerchantDetailCellDelegate>
 {
     BOOL           _needChecked;      // 检查收藏标识
-    BOOL           _hasGroupProducts;
-    BOOL           _productOpen;
-    
-    NSInteger      _productCellCount;
     
     UIView         *_blankView;
 }
@@ -106,32 +102,15 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - Table View Data Source Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return _merchantDetail ? (_hasGroupProducts ? 5: 4) : Zero;
+    return _merchantDetail.cellDisplayData.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (_merchantDetail)
     {
-        switch (section)
-        {
-            case 1:
-                return (_hasGroupProducts ? _productCellCount : 5);
-                break;
-            case 2:
-                return (_hasGroupProducts ? 5 : 1);
-                break;
-            case 3:
-                return (_hasGroupProducts ? 1 : (_merchantDetail.comments.count ? _merchantDetail.comments.count : 1));
-                break;
-            case 4:
-                return (_merchantDetail.comments.count ? _merchantDetail.comments.count : 1);
-                break;
-                
-            default:
-                return 1;
-                break;
-        }
+        id dataClass = _merchantDetail.cellDisplayData[section];
+        return [[dataClass valueForKey:@"displayRow"] integerValue];
     }
     return Zero;
 }
@@ -139,101 +118,56 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = nil;
-    
     if (_merchantDetail)
     {
-        switch (indexPath.section)
+        id dataClass = _merchantDetail.cellDisplayData[indexPath.section];
+        if ([dataClass isKindOfClass:[SCMerchantSummary class]])
         {
-            case 1:
+            cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell" forIndexPath:indexPath];
+            ((SCMerchantDetailCell *)cell).delegate = self;
+            [(SCMerchantDetailCell *)cell displayCellWithSummary:dataClass];
+        }
+        else if ([dataClass isKindOfClass:[SCMerchantGroup class]])
+        {
+            SCMerchantGroup *merchantGroup = dataClass;
+            if (merchantGroup.canOpen && (indexPath.row == merchantGroup.products.count))
             {
-                if (_hasGroupProducts)
-                {
-                    if (((indexPath.row == _merchantDetail.products.count) && _productOpen) || ((indexPath.row == 2) && !_productOpen))
-                    {
-                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCShowMoreProductCell" forIndexPath:indexPath];
-                        [((SCShowMoreProductCell *)cell) displayCellWithProductCount:_merchantDetail.products.count];
-                    }
-                    else
-                    {
-                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductCell" forIndexPath:indexPath];
-                        [(SCGroupProductCell *)cell displayCellWithProduct:_merchantDetail.products[indexPath.row]];
-                    }
-                }
-                else
-                {
-                    if (indexPath.row == 3)
-                    {
-                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantServiceCell" forIndexPath:indexPath];
-                        [(SCMerchantServiceCell *)cell displayCellWithDetail:_merchantDetail];
-                    }
-                    else
-                    {
-                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
-                        [(SCMerchantDetailItemCell *)cell displayCellWithIndex:indexPath detail:_merchantDetail];
-                    }
-                }
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCShowMoreProductCell" forIndexPath:indexPath];
+                [((SCShowMoreProductCell *)cell) displayCellWithMerchantGroup:dataClass];
             }
-                break;
-            case 2:
+            else
             {
-                if (_hasGroupProducts)
-                {
-                    if (indexPath.row == 3)
-                    {
-                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantServiceCell" forIndexPath:indexPath];
-                        [(SCMerchantServiceCell *)cell displayCellWithDetail:_merchantDetail];
-                    }
-                    else
-                    {
-                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
-                        [(SCMerchantDetailItemCell *)cell displayCellWithIndex:indexPath detail:_merchantDetail];
-                    }
-                }
-                else
-                {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCShowMoreCell" forIndexPath:indexPath];
-                    ((SCShowMoreCell *)cell).count = _merchantDetail.comments_num;
-                }
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductCell" forIndexPath:indexPath];
+                [(SCGroupProductCell *)cell displayCellWithProduct:merchantGroup.products[indexPath.row]];
             }
-                break;
-            case 3:
+        }
+        else if ([dataClass isKindOfClass:[SCMerchantInfo class]])
+        {
+            if (indexPath.row != 3)
             {
-                if (_hasGroupProducts)
-                {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCShowMoreCell" forIndexPath:indexPath];
-                    ((SCShowMoreCell *)cell).count = _merchantDetail.comments_num;
-                }
-                else
-                {
-                    if (_merchantDetail.comments.count)
-                    {
-                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCCommentCell" forIndexPath:indexPath];
-                        [(SCCommentCell *)cell displayCellWithComment:_merchantDetail.comments[indexPath.row]];
-                    }
-                    else
-                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCNoneCommentCell" forIndexPath:indexPath];
-                }
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell" forIndexPath:indexPath];
+                [(SCMerchantDetailItemCell *)cell displayCellWithItem:_merchantDetail.info.infoItems[indexPath.row]];
             }
-                break;
-            case 4:
+            else
             {
-                if (_merchantDetail.comments.count)
-                {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCCommentCell" forIndexPath:indexPath];
-                    [(SCCommentCell *)cell displayCellWithComment:_merchantDetail.comments[indexPath.row]];
-                }
-                else
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCNoneCommentCell" forIndexPath:indexPath];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantServiceCell" forIndexPath:indexPath];
+                [(SCMerchantServiceCell *)cell displayCellWithDetail:_merchantDetail];
             }
-                break;
-                
-            default:
+        }
+        else if ([dataClass isKindOfClass:[SCCommentMore class]])
+        {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"SCShowMoreCell" forIndexPath:indexPath];
+            ((SCShowMoreCell *)cell).count = _merchantDetail.comments_num;
+        }
+        else if ([dataClass isKindOfClass:[SCCommentGroup class]])
+        {
+            if (_merchantDetail.comments.count)
             {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell" forIndexPath:indexPath];
-                ((SCMerchantDetailCell *)cell).delegate = self;
-                [(SCMerchantDetailCell *)cell displayCellWithDetail:_merchantDetail];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCCommentCell" forIndexPath:indexPath];
+                [(SCCommentCell *)cell displayCellWithComment:_merchantDetail.comments[indexPath.row]];
             }
-                break;
+            else
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCNoneCommentCell" forIndexPath:indexPath];
         }
     }
     
@@ -243,151 +177,81 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = ZERO_POINT;
+    CGFloat height = 43.0f;
     CGFloat separatorHeight = 1.0f;
     if (_merchantDetail)
     {
-        switch (indexPath.section)
+        id dataClass = _merchantDetail.cellDisplayData[indexPath.section];
+        if ([dataClass isKindOfClass:[SCMerchantSummary class]])
         {
-            case 1:
+            if(!_briefIntroductionCell)
+                _briefIntroductionCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell"];
+            [_briefIntroductionCell displayCellWithSummary:_merchantDetail.summary];
+            height = [_briefIntroductionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+        }
+        else if ([dataClass isKindOfClass:[SCMerchantGroup class]])
+        {
+            SCMerchantGroup *merchantGroup = dataClass;
+            if (!(merchantGroup.canOpen && (indexPath.row == merchantGroup.products.count)))
             {
-                if (_hasGroupProducts)
-                {
-                    if (!(((indexPath.row == _merchantDetail.products.count) && _productOpen) || ((indexPath.row == 2) && !_productOpen)))
-                    {
-                        if(!_productCell)
-                            _productCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductCell"];
-                        [_productCell displayCellWithProduct:_merchantDetail.products[indexPath.row]];
-                        
-                        height = [_productCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-                    }
-                    else
-                        return 43.0f;
-                }
-                else
-                    height = [self calculatedetailItemCellHeightWithIndexPath:indexPath];
+                if(!_productCell)
+                    _productCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductCell"];
+                [_productCell displayCellWithProduct:_merchantDetail.products[indexPath.row]];
+                height = [_productCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
-                break;
-            case 2:
+        }
+        else if ([dataClass isKindOfClass:[SCMerchantInfo class]])
+        {
+            if (indexPath.row != 3)
             {
-                if (!_hasGroupProducts)
-                    return 43.0f;
-                height = [self calculatedetailItemCellHeightWithIndexPath:indexPath];
+                if(!_detailItemCell)
+                    _detailItemCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell"];
+                [_detailItemCell displayCellWithItem:_merchantDetail.info.infoItems[indexPath.row]];
+                height = [_detailItemCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
-                break;
-            case 3:
-            {
-                if (_hasGroupProducts)
-                    return 43.0f;
-                height = [self calculateCommentCellHeightWithIndexPath:indexPath];
-            }
-                break;
-            case 4:
-            {
-                height = [self calculateCommentCellHeightWithIndexPath:indexPath];
-            }
-                break;
-                
-            default:
-            {
-                if(!_briefIntroductionCell)
-                    _briefIntroductionCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailCell"];
-                [_briefIntroductionCell displayCellWithDetail:_merchantDetail];
-                
-                height = [_briefIntroductionCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-            }
-                break;
+            else
+                height = 120.0f;
+        }
+        else if ([dataClass isKindOfClass:[SCCommentGroup class]])
+        {
+            if(!_commentCell)
+                _commentCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCCommentCell"];
+            [_commentCell displayCellWithComment:_merchantDetail.commentGroup.comments[indexPath.row]];
+            height =  [_commentCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
         }
     }
     
     return height + separatorHeight;
 }
 
-- (CGFloat)calculatedetailItemCellHeightWithIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row != 3)
-    {
-        CGFloat height;
-        if(!_detailItemCell)
-            _detailItemCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCMerchantDetailItemCell"];
-        [_detailItemCell displayCellWithIndex:indexPath detail:_merchantDetail];
-        
-        height = [_detailItemCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-        return (height > 43.0f) ? height : 43.0f;
-    }
-    return 120.0f;
-}
-
-- (CGFloat)calculateCommentCellHeightWithIndexPath:(NSIndexPath *)indexPath
-{
-    if (_merchantDetail.comments.count)
-    {
-        if(!_commentCell)
-            _commentCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCCommentCell"];
-        [_commentCell displayCellWithComment:_merchantDetail.comments[indexPath.row]];
-        
-        return [_commentCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-    }
-    else
-        return 44.0f;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    switch (indexPath.section)
-    {
-        case 1:
-        {
-            if (_hasGroupProducts)
-            {
-                UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-                if ([cell isKindOfClass:[SCShowMoreProductCell class]])
-                {
-                    SCShowMoreProductCell *showMoreProductCell = (SCShowMoreProductCell *)cell;
-                    if (showMoreProductCell.state == SCSCShowMoreCellStateDown)
-                    {
-                        _productCellCount         = _merchantDetail.products.count + 1;
-                        showMoreProductCell.state = SCSCShowMoreCellStateUp;
-                        _productOpen              = YES;
-                    }
-                    else
-                    {
-                        _productCellCount         = 3;
-                        showMoreProductCell.state = SCSCShowMoreCellStateDown;
-                        _productOpen              = NO;
-                    }
-                    [self.tableView reloadData];
-                }
-                else
-                {
-                    @try {
-                        SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
-                        groupProductDetailViewController.product = _merchantDetail.products[indexPath.row];
-                        [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
-                    }
-                    @catch (NSException *exception) {
-                        NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
-                    }
-                    @finally {
-                    }
-                }
-            }
-            else
-                [self cellSelectedWithIndexPath:indexPath];
-        }
-            break;
-        case 2:
-        {
-            if (_hasGroupProducts)
-                [self cellSelectedWithIndexPath:indexPath];
-        }
-            break;
-    }
-    
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if ([cell isKindOfClass:[SCShowMoreCell class]])
+    if ([cell isKindOfClass:[SCGroupProductCell class]])
+    {
+        @try {
+            SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
+            groupProductDetailViewController.product = _merchantDetail.products[indexPath.row];
+            [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
+    }
+    else if ([cell isKindOfClass:[SCShowMoreProductCell class]])
+    {
+        _merchantDetail.group.isOpen = !((SCShowMoreProductCell *)cell).state;
+        [self.tableView reloadData];
+    }
+    else if ([cell isKindOfClass:[SCMerchantDetailItemCell class]])
+    {
+        [self cellSelectedWithIndexPath:indexPath];
+    }
+    else if ([cell isKindOfClass:[SCShowMoreCell class]])
     {
         @try {
             SCCommentListViewController *commentListViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCommentListViewController"];
@@ -446,37 +310,27 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if ((!_hasGroupProducts && (section == 2)) || !section || section == 3|| section == 4)
-        return ZERO_POINT;
-    return 30.0f;
+    id dataClass = _merchantDetail.cellDisplayData[section];
+    NSString *headerTitle = [dataClass valueForKey:@"headerTitle"];
+    return headerTitle ? 30.0f : ZERO_POINT;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    NSString *text  = @"";
-    switch (section)
+    id dataClass = _merchantDetail.cellDisplayData[section];
+    NSString *headerTitle = [dataClass valueForKey:@"headerTitle"];
+    
+    UIView *view;
+    if (headerTitle)
     {
-        case 1:
-            text = _hasGroupProducts ? @"团购" : @"商家信息";
-            break;
-        case 2:
-        {
-            if (!_hasGroupProducts)
-                return nil;
-            text = @"商家信息";
-        }
-            break;
-            
-        default:
-            return nil;
-            break;
+        view    = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 30.0f)];
+        UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, ZERO_POINT, 100.0f, 30.0f)];
+        label.font      = [UIFont systemFontOfSize:15.0f];
+        label.textColor = [UIColor grayColor];
+        label.text      = headerTitle;
+        [view addSubview:label];
+
     }
-    UIView *view    = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 30.0f)];
-    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, ZERO_POINT, 100.0f, 30.0f)];
-    label.font      = [UIFont systemFontOfSize:15.0f];
-    label.textColor = [UIColor grayColor];
-    label.text = text;
-    [view addSubview:label];
     return view;
 }
 
@@ -529,7 +383,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)displayMerchantDetail
 {
-    NSMutableArray *items = [@[] mutableCopy];
+    _collectionItem.favorited = _merchantDetail.collected;
+    NSMutableArray *items     = [@[] mutableCopy];
     for (NSDictionary *image in _merchantDetail.merchantImages)
     {
         UIImageView *carView = [[UIImageView alloc] init];
@@ -539,10 +394,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     }
     _merchantImagesView.items = items;
     [_merchantImagesView begin:nil finished:nil];
-    
-    _collectionItem.favorited = _merchantDetail.collected;
-    _hasGroupProducts         = _merchantDetail.products.count;
-    _productCellCount         = ((_merchantDetail.products.count > 2) ? 3 : _merchantDetail.products.count);
 }
 
 /**
@@ -643,13 +494,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
  */
 - (void)showRequestErrorAlert
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"商家详情获取失败"
-                                                        message:@"是否重新获取"
-                                                       delegate:self
-                                              cancelButtonTitle:@"重新获取"
-                                              otherButtonTitles:@"取消", nil];
-    alertView.tag = SCAlertTypeReuqestError;
-    [alertView show];
+    [self showAlertWithTitle:@"商家详情获取失败"
+                     message:@"是否重新获取"
+                    delegate:self
+                         tag:SCAlertTypeReuqestError
+           cancelButtonTitle:@"重新获取"
+            otherButtonTitle:@"取消"];
 }
 
 #pragma mark - Alert View Delegate Methods

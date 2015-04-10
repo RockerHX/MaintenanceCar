@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SCMerchantDetail.h"
 
 @class SCStarView;
-@class SCMerchantDetail;
 
 @protocol SCMerchantDetailCellDelegate <NSObject>
 
@@ -29,7 +29,7 @@
 @property (nonatomic, weak)                        id  <SCMerchantDetailCellDelegate>delegate;
 @property (nonatomic, assign)               NSInteger  index;
 
-- (void)displayCellWithDetail:(SCMerchantDetail *)detail;
+- (void)displayCellWithSummary:(SCMerchantSummary *)detailSummary;
 
 /**
  *  [预约]按钮点击事件方法
