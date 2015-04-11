@@ -191,7 +191,8 @@
             viewController                                             = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCServiceMerchantListViewController"];
             SCServiceMerchantListViewController *specialViewController = (SCServiceMerchantListViewController *)viewController;
             specialViewController.query                                = special.query;
-            specialViewController.title                                = special.text;
+            specialViewController.title                                = special.query;
+            specialViewController.isWash                               = YES;
             specialViewController.isOperate                            = YES;
             [self.navigationController pushViewController:specialViewController animated:YES];
         }
