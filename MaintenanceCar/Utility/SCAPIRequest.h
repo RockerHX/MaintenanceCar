@@ -55,6 +55,13 @@
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
+ *  商家列表接口请求方法(API:/company_search/operate - GET)
+ */
+- (void)startOperateMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
+                                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
  *  商家详情接口请求方法(API:/Carshop - GET)
  */
 - (void)startMerchantDetailAPIRequestWithParameters:(NSDictionary *)parameters

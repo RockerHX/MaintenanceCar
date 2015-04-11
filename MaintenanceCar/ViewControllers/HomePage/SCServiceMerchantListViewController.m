@@ -136,27 +136,29 @@
 
 - (void)refreshMerchantList
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];      // 加载响应式控件
+    [self showHUDOnViewController:self];
     
     __weak typeof(self) weakSelf = self;
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
-        [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
+        if (_isOperate)
+            [weakSelf startOperateMerchantListRequestWithLatitude:latitude longitude:longitude];
+        else
+            [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
+        [weakSelf hideHUDOnViewController:weakSelf];
         [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"定位失败，采用当前城市中心坐标!" delay:0.5f];
         [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
-                                                            message:@"定位失败，请检查您的定位服务是否打开：设置->隐私->定位服务"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"确定"
-                                                  otherButtonTitles:nil, nil];
-        [alertView show];
+        [weakSelf showAlertWithTitle:@"温馨提示" message:@"定位失败，请检查您的定位服务是否打开：设置->隐私->定位服务"];
     }];
 }
 
 - (void)upRefreshMerchantList
 {
     SCLocationManager *locationManager = [SCLocationManager share];
-    [self startMerchantListRequestWithLatitude:locationManager.latitude longitude:locationManager.longitude];
+    if (_isOperate)
+        [self startOperateMerchantListRequestWithLatitude:locationManager.latitude longitude:locationManager.longitude];
+    else
+        [self startMerchantListRequestWithLatitude:locationManager.latitude longitude:locationManager.longitude];
 }
 
 /**
@@ -175,36 +177,65 @@
                                   @"latitude": latitude};
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
-        {
-            NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
-            
-            if (list.count)
-            {
-                // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
-                [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:nil];
-                    [_merchantList addObject:merchant];
-                }];
-                [_tableView reloadData];                                   // 数据配置完成，刷新商家列表
-                _offset += MerchantListLimit;                              // 偏移量请求参数递增
-            }
-            else
-            {
-                [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"优质商家陆续添加中..." delay:0.5f];
-                [_tableView reloadData];
-            }
-            _merchantFilterView.hidden = NO;
-            [weakSelf.tableView.footer setHidden:NO];
-        }
+            [weakSelf refreshMerchantListWithListData:responseObject];
         else
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
-        [weakSelf.tableView.footer endRefreshing];
-        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];              // 请求完成，移除响应式控件
+        [weakSelf refreshFinfish];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Get merchant list request error:%@", error);
-        [weakSelf.tableView.footer endRefreshing];
-        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
+        [weakSelf refreshFinfish];
     }];
+}
+
+- (void)startOperateMerchantListRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
+{
+    __weak typeof(self) weakSelf = self;
+    // 配置请求参数
+    NSDictionary *parameters     = @{@"product_tag": _requestQuery,
+                                           @"limit": @(MerchantListLimit),
+                                          @"offset": @(_offset),
+                                          @"radius": _distanceCondition,
+                                      @"longtitude": longitude,
+                                        @"latitude": latitude};
+    [[SCAPIRequest manager] startOperateMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+            [weakSelf refreshMerchantListWithListData:responseObject];
+        else
+            NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
+        [weakSelf refreshFinfish];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Get merchant list request error:%@", error);
+        [weakSelf refreshFinfish];
+    }];
+}
+
+- (void)refreshMerchantListWithListData:(id)listData
+{
+    NSArray *list = [[listData objectForKey:@"result"] objectForKey:@"items"];
+    
+    if (list.count)
+    {
+        // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
+        [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:nil];
+            [_merchantList addObject:merchant];
+        }];
+        [_tableView reloadData];                                   // 数据配置完成，刷新商家列表
+        _offset += MerchantListLimit;                              // 偏移量请求参数递增
+    }
+    else
+    {
+        [self showHUDAlertToViewController:self.navigationController text:@"优质商家陆续添加中..." delay:0.5f];
+        [_tableView reloadData];
+    }
+    _merchantFilterView.hidden = NO;
+    [self.tableView.footer setHidden:NO];
+}
+
+- (void)refreshFinfish
+{
+    [self.tableView.footer endRefreshing];
+    [self hideHUDOnViewController:self];
 }
 
 #pragma mark - SCMerchantFilterViewDelegate Methods

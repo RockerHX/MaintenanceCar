@@ -176,33 +176,30 @@
 
 - (void)jumpToSpecialViewControllerWith:(SCSpecial *)special
 {
-    if (special.html)
-    {
-        @try {
-            SCWebViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
+    UIViewController *viewController;
+    @try {
+        if (special.html)
+        {
+            viewController                         = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
+            SCWebViewController *webViewController = (SCWebViewController *)viewController;
             webViewController.title                = special.text;
             webViewController.loadURL              = special.url;
             [self.navigationController pushViewController:webViewController animated:YES];
         }
-        @catch (NSException *exception) {
-            NSLog(@"SCHomePageViewController Go to the SCWebViewController exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
-    }
-    else
-    {
-        @try {
-            SCServiceMerchantListViewController *specialViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCServiceMerchantListViewController"];
-            specialViewController.query    = [DefaultQuery stringByAppendingFormat:@" AND %@", special.query];
-            specialViewController.title    = special.text;
+        else
+        {
+            viewController                                             = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCServiceMerchantListViewController"];
+            SCServiceMerchantListViewController *specialViewController = (SCServiceMerchantListViewController *)viewController;
+            specialViewController.query                                = special.query;
+            specialViewController.title                                = special.text;
+            specialViewController.isOperate                            = YES;
             [self.navigationController pushViewController:specialViewController animated:YES];
         }
-        @catch (NSException *exception) {
-            NSLog(@"SCHomePageViewController Go to the SCServiceMerchantListViewController exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCHomePageViewController Go to the %@ exception reasion:%@", exception.reason, [viewController class]);
+    }
+    @finally {
     }
 }
 
