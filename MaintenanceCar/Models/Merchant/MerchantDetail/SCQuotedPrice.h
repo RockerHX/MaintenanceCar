@@ -17,9 +17,7 @@
 @property (nonatomic, copy) NSString <Optional>*title;
 @property (nonatomic, copy) NSString <Optional>*content;
 @property (nonatomic, copy) NSString <Optional>*type;
-@property (nonatomic, copy) NSString <Optional>*status;
 @property (nonatomic, copy) NSString <Optional>*final_price;
 @property (nonatomic, copy) NSString <Optional>*total_price;
-@property (nonatomic, copy) NSString <Optional>*sell_count;
 
 @end

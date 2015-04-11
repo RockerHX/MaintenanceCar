@@ -23,8 +23,8 @@
 #pragma mark - Action Methods
 - (IBAction)reservationButtonPressed:(id)sender
 {
-    if (_delegate && [_delegate respondsToSelector:@selector(shouldSpecialReservation)])
-        [_delegate shouldSpecialReservation];
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldSpecialReservationWithIndex:)])
+        [_delegate shouldSpecialReservationWithIndex:self.tag];
 }
 
 #pragma mark - Public Methods

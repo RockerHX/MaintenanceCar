@@ -7,7 +7,6 @@
 //
 
 #import "SCReservationViewController.h"
-#import "SCServiceItem.h"
 #import "SCPickerView.h"
 #import "SCReservationDateViewController.h"
 #import "SCAllDictionary.h"
@@ -61,6 +60,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // 设置商家名称显示
+    _price = @"";
     _selectedCarID = @"";
     _merchantNameLabel.text = _merchant.name;
     [NOTIFICATION_CENTER addObserver:self selector:@selector(refresh) name:kUserCarsDataNeedReloadSuccessNotification object:nil];
@@ -77,21 +77,6 @@
     _remarkTextField.leftViewMode           = UITextFieldViewModeAlways;
     _remarkTextField.leftView               = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
     
-    if (!_serviceItem)
-    {
-        __weak typeof(self) weakSelf = self;
-        [[SCAllDictionary share] requestWithType:SCDictionaryTypeReservationType finfish:^(NSArray *items) {
-            for (SCDictionaryItem *item in items)
-            {
-                if ([item.dict_id isEqualToString:weakSelf.reservationType])
-                {
-                    _serviceItem = [[SCServiceItem alloc] initWithServiceID:item.dict_id serviceName:item.name];
-                    break;
-                }
-            }
-            [weakSelf refreshProjectLabel];
-        }];
-    }
     [self refreshProjectLabel];
     
     NSArray *items = [SCUserInfo share].selectedItems;
@@ -123,7 +108,7 @@
     SCPickerView *pickerView = nil;
     if (indexPath.row == 3)
         pickerView = [[SCPickerView alloc] initWithItems:nil type:SCPickerTypeCar delegate:self];
-    else if ((indexPath.row == 4) && !_isGroup)
+    else if ((indexPath.row == 4) && _canChange)
         pickerView = [[SCPickerView alloc] initWithItems:nil type:SCPickerTypeService delegate:self];
     [pickerView show];
 }
@@ -188,7 +173,8 @@
                            @"reserve_phone": _ownerPhoneNumberTextField.text,
                                  @"content": _remarkTextField.text,
                                     @"time": _reservationDate,
-                             @"user_car_id": _selectedCarID};
+                             @"user_car_id": _selectedCarID,
+                                   @"price": _price};
     [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)

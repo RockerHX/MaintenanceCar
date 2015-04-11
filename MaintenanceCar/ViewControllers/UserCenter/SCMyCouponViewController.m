@@ -12,7 +12,6 @@
 #import "SCCoupon.h"
 #import "SCCouponDetailViewController.h"
 #import "SCReservationViewController.h"
-#import "SCServiceItem.h"
 #import "SCMerchant.h"
 
 @interface SCMyCouponViewController () <SCCouponCodeCellDelegate>
@@ -152,12 +151,13 @@
 {
     // 跳转到预约页面
     @try {
+        [[SCUserInfo share] removeItems];
         SCCoupon *coupon = _dataList[index];
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.isGroup                      = YES;
+        reservationViewController.canChange                    = NO;
         reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName:coupon.company_name
                                                                             companyID:coupon.company_id];
-        reservationViewController.reservationType              = coupon.type;
+        reservationViewController.serviceItem                  = [[SCServiceItem alloc] initWithServiceID:coupon.type];
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {

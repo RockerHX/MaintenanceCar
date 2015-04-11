@@ -86,8 +86,8 @@ static SCAllDictionary *allDictionary = nil;
 #pragma mark - Public Methods
 - (void)requestWithType:(SCDictionaryType)type finfish:(void(^)(NSArray *items))finfish
 {
-    _type = type;                                                               // 混存外部需要的字典类型
-    NSDictionary *localData = [self readLocalDataWithFileName:fAllDictionaryFileName];    // 获取本地字典数据
+    _type = type;                                                                           // 缓存外部需要的字典类型
+    NSDictionary *localData = [self readLocalDataWithFileName:fAllDictionaryFileName];      // 获取本地字典数据
     
     __weak typeof(self)weakSelf = self;
     // 如果本地缓存的字典数据为空，从网络请求，并保存到本地，反之则生成字典数据对象做回调，并异步更新数据
@@ -184,15 +184,15 @@ static SCAllDictionary *allDictionary = nil;
     // 生成一个空的可变数组，根据服务项目的有无动态添加数据
     NSMutableArray *items = [@[] mutableCopy];
     if (washItmes.count)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"1" serviceName:@"洗车美容"]];
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"1"]];
     if (maintenanceItmes.count)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"2" serviceName:@"保养"]];
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"2"]];
     if (repairItems.count)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"3" serviceName:@"维修"]];
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"3"]];
     
     // 最后动态添加服务器获取到的第四个按钮数据
     if (_special && free)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"5" serviceName:_special.text]];
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"5"]];
     _serviceItems = items;
 }
 

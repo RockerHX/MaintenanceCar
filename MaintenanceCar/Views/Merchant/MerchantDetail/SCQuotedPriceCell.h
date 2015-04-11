@@ -11,7 +11,7 @@
 @protocol SCQuotedPriceCellDelegate <NSObject>
 
 @optional
-- (void)shouldSpecialReservation;
+- (void)shouldSpecialReservationWithIndex:(NSInteger)index;
 
 @end
 

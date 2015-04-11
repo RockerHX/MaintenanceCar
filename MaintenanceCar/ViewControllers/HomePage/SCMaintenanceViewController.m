@@ -503,7 +503,7 @@
     @try {
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
         reservationViewController.merchant = _recommendMerchants[index];
-        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:@"2" serviceName:@"保养"];
+        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:@"2"];
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {

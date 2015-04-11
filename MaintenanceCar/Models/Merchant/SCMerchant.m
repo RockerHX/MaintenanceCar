@@ -58,16 +58,16 @@
     // 生成一个空的可变数组，根据服务项目的有无动态添加数据
     NSMutableArray *items = [@[] mutableCopy];
     if (washItmes.count)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"1" serviceName:@"洗车美容"]];
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"1"]];
     if (maintenanceItmes.count)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"2" serviceName:@"保养"]];
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"2"]];
     if (repairItems.count)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"3" serviceName:@"维修"]];
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"3"]];
     
     SCAllDictionary *allDictionary = [SCAllDictionary share];
     // 最后动态添加服务器获取到的第四个按钮数据
     if (allDictionary.special && free)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"5" serviceName:allDictionary.special.text]];
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"5"]];
     _serviceItems = items;
 }
 

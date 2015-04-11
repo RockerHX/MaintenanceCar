@@ -220,6 +220,7 @@
 {
     // 跳转到预约页面
     @try {
+        [[SCUserInfo share] removeItems];
         SCMerchant *merchant = _dataList[_index];
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
         reservationViewController.merchant = [[SCMerchant alloc] initWithMerchantName:merchant.name

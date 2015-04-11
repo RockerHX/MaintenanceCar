@@ -317,10 +317,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     // 跳转到预约页面
     @try {
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.isGroup                      = YES;
+        reservationViewController.canChange                    = NO;
         reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName:_coupon.company_name
                                                                                                 companyID:_coupon.company_id];
-        reservationViewController.reservationType              = _coupon.type;
+        reservationViewController.serviceItem                  = [[SCServiceItem alloc] initWithServiceID:_coupon.type];
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {
