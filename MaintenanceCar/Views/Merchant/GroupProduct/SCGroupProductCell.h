@@ -16,6 +16,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *groupPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *productPriceLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *leftParenthesis;
+@property (weak, nonatomic) IBOutlet UILabel *totalPriceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *rightParenthesis;
+@property (weak, nonatomic) IBOutlet  UIView *grayLine;
+
 - (void)displayCellWithProduct:(SCGroupProduct *)product;
 
 @end

@@ -21,8 +21,12 @@
 
 @property (weak, nonatomic) IBOutlet  UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet  UILabel *priceLabel;
-@property (weak, nonatomic) IBOutlet  UILabel *totalPriceLabel;
 @property (weak, nonatomic) IBOutlet UIButton *reservationButton;
+
+@property (weak, nonatomic) IBOutlet  UILabel *leftParenthesis;
+@property (weak, nonatomic) IBOutlet  UILabel *totalPriceLabel;
+@property (weak, nonatomic) IBOutlet  UILabel *rightParenthesis;
+@property (weak, nonatomic) IBOutlet   UIView *grayLine;
 
 @property (nonatomic, weak)                id  <SCQuotedPriceCellDelegate>delegate;
 @property (nonatomic, assign)       NSInteger  index;

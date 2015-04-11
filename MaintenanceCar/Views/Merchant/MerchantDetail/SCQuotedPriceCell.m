@@ -30,9 +30,15 @@
 #pragma mark - Public Methods
 - (void)displayCellWithProduct:(SCQuotedPrice *)product
 {
-    _nameLabel.text       = product.title;
-    _priceLabel.text      = product.final_price;
-    _totalPriceLabel.text = product.total_price;
+    BOOL hidden              = [product.final_price isEqualToString:product.total_price];
+    _leftParenthesis.hidden  = hidden;
+    _totalPriceLabel.hidden  = hidden;
+    _rightParenthesis.hidden = hidden;
+    _grayLine.hidden         = hidden;
+
+    _nameLabel.text          = product.title;
+    _priceLabel.text         = product.final_price;
+    _totalPriceLabel.text    = product.total_price;
     
     [self.contentView updateConstraintsIfNeeded];
     [self.contentView layoutIfNeeded];
