@@ -121,10 +121,11 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
             [self showHUDOnViewController:self];
             __weak typeof(self)weakSelf = self;
             NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                         @"company_id": _groupProductDetail.companyID,
-                                         @"product_id": _groupProductDetail.product_id,
-                                         @"how_many": @(_productCount),
-                                         @"total_price": _totalPriceLabel.text};
+                                      @"company_id": _groupProductDetail.companyID,
+                                      @"product_id": _groupProductDetail.product_id,
+                                        @"how_many": @(_productCount),
+                                     @"total_price": _totalPriceLabel.text,
+                                          @"mobile": [SCUserInfo share].phoneNmber};
             [[SCAPIRequest manager] startGetWeiXinPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
                 {
@@ -153,11 +154,11 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
         [self showHUDOnViewController:self];
         __weak typeof(self)weakSelf = self;
         NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                     @"company_id": _groupProductDetail.companyID,
-                                     @"product_id": _groupProductDetail.product_id,
-                                     @"how_many": @(_productCount),
-                                     @"total_price": _totalPriceLabel.text,
-                                     @"mobile": [SCUserInfo share].phoneNmber};
+                                  @"company_id": _groupProductDetail.companyID,
+                                  @"product_id": _groupProductDetail.product_id,
+                                    @"how_many": @(_productCount),
+                                 @"total_price": _totalPriceLabel.text,
+                                      @"mobile": [SCUserInfo share].phoneNmber};
         [[SCAPIRequest manager] startGetAliPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
             {
