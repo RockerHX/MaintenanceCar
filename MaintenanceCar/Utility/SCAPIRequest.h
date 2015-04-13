@@ -171,14 +171,7 @@
                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  用户注册接口请求方法(API:/User - POST)
- */
-- (void)startRegisterAPIRequestWithParameters:(NSDictionary *)parameters
-                                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
-/**
- *  用户登录接口请求方法(API:/User - GET)
+ *  用户登录接口请求方法(API:/User - POST)
  */
 - (void)startLoginAPIRequestWithParameters:(NSDictionary *)parameters
                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success

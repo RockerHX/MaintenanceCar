@@ -261,18 +261,11 @@
     [self requestPOSTMethodsWithAPI:VerificationCodeAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startRegisterAPIRequestWithParameters:(NSDictionary *)parameters
-                                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-{
-    [self requestPOSTMethodsWithAPI:RegisterAPIURL parameters:parameters success:success failure:failure];
-}
-
 - (void)startLoginAPIRequestWithParameters:(NSDictionary *)parameters
                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:LoginAPIURL parameters:parameters success:success failure:failure];
+    [self requestPOSTMethodsWithAPI:LoginAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startUserLogAPIRequestWithParameters:(NSDictionary *)parameters

@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 
 #define MerchantImageDoMain @"http://cdn1.yjclw.com/"                       // 商家图片资源域名
 
-#define APIPath             @"/v1"                                          // 接口路径
+#define APIPath             @"/v2"                                          // 接口路径
 #define APIURL              [DoMain stringByAppendingString:APIPath]        // 接口链接
 #define ImagePath           @"/brand/brand_"                                // 图片资源路径
 #define ImageURL            [ImageDoMain stringByAppendingString:ImagePath] // 图片资源链接
@@ -56,9 +56,8 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define CommentAPI                  @"/Comments"                            // 评价API
 #define MerchantCommentAPI          @"/Comments/shop"                       // 商家的评价
 
-#define VerificationCodeAPI         @"/Verification"                        // 验证码获取API
-#define RegisterAPI                 @"/User"                                // 用户注册API
-#define LoginAPI                    RegisterAPI                             // 用户登录API
+#define VerificationCodeAPI         @"/User/code"                           // 验证码获取API
+#define LoginAPI                    @"/User"                                // 用户登录API
 #define UserLogAPI                  @"/Userlog"                             // 用户日志记录API
 
 #define MyReservationAPI            @"/Reservation/all"                     // 我的预约API
@@ -104,7 +103,6 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
 #define MerchantCommentAPIURL           [APIURL stringByAppendingString:MerchantCommentAPI]         // 商家评价接口URL - 用于获取商家评价列表
 
 #define VerificationCodeAPIURL          [APIURL stringByAppendingString:VerificationCodeAPI]        // 获取验证码接口URL - 用于获取短信或者语音验证码
-#define RegisterAPIURL                  [APIURL stringByAppendingString:RegisterAPI]                // 用户注册接口URL - 用于用户注册
 #define LoginAPIURL                     [APIURL stringByAppendingString:LoginAPI]                   // 用户登录接口URL - 用于用户登录
 #define UserLogAPIURL                   [APIURL stringByAppendingString:UserLogAPI]                 // 用户日志记录接口URL - 打开APP后如果用户已经登录异步调用此URL记录
 
