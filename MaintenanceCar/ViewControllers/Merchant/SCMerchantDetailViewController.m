@@ -86,6 +86,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     [self loadBlankView];
     [self.tableView reLayoutHeaderView];
+    [self.tableView reLayoutFooterView];
     // 开始数据请求
     [self startMerchantDetailRequestWithParameters];
 }

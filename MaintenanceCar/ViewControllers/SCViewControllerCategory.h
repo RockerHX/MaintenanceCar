@@ -116,5 +116,6 @@
 @interface UITableView (SCTableView)
 
 - (void)reLayoutHeaderView;
+- (void)reLayoutFooterView;
 
 @end
