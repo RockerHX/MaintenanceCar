@@ -136,9 +136,6 @@
                 if(!_unappraisalCell)
                     _unappraisalCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderUnAppraisalCell"];
                 [_unappraisalCell displayCellWithReservation:reservation];
-                // Layout the cell
-                [_unappraisalCell updateConstraintsIfNeeded];
-                [_unappraisalCell layoutIfNeeded];
                 height = [_unappraisalCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -147,9 +144,6 @@
                 if(!_appraisedCell)
                     _appraisedCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderAppraisedCell"];
                 [_appraisedCell displayCellWithReservation:reservation];
-                // Layout the cell
-                [_appraisedCell updateConstraintsIfNeeded];
-                [_appraisedCell layoutIfNeeded];
                 height = [_appraisedCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -158,9 +152,6 @@
                 if(!_unappraisalCheckCell)
                     _unappraisalCheckCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderUnAppraisalCheckCell"];
                 [_unappraisalCheckCell displayCellWithReservation:reservation];
-                // Layout the cell
-                [_unappraisalCheckCell updateConstraintsIfNeeded];
-                [_unappraisalCheckCell layoutIfNeeded];
                 height = [_unappraisalCheckCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -169,9 +160,6 @@
                 if(!_appraisedCheckCell)
                     _appraisedCheckCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderAppraisedCheckCell"];
                 [_appraisedCheckCell displayCellWithReservation:reservation];
-                // Layout the cell
-                [_appraisedCheckCell updateConstraintsIfNeeded];
-                [_appraisedCheckCell layoutIfNeeded];
                 height = [_appraisedCheckCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -181,9 +169,6 @@
                 if(!_oderNormalCell)
                     _oderNormalCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderNormalCell"];
                 [_oderNormalCell displayCellWithReservation:reservation];
-                // Layout the cell
-                [_oderNormalCell updateConstraintsIfNeeded];
-                [_oderNormalCell layoutIfNeeded];
                 height = [_oderNormalCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;

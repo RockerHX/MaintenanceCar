@@ -11,6 +11,14 @@
 #import "MicroConstants.h"
 #import "SCAPIRequest.h"
 
+#define kLoginKey               @"kLoginKey"
+#define kUserIDKey              @"kUserIDKey"
+#define kPhoneNumberKey         @"kPhoneNumberKey"
+#define kUserTokenKey           @"kUserTokenKey"
+#define kUserCarsKey            @"kUserCarsKey"
+#define kAddAliasKey            @"kAddAliasKey"
+#define kReceiveMessageKey      @"kReceiveMessageKey"
+
 typedef void(^BLOCK)(SCUserInfo *userInfo, BOOL finish);
 
 static SCUserInfo *userInfo = nil;
@@ -56,7 +64,12 @@ static SCUserInfo *userInfo = nil;
 
 - (NSString *)phoneNmber
 {
-    return self.loginStatus ? [USER_DEFAULT objectForKey:kPhoneNumberKey] : nil;
+    return self.loginStatus ? [USER_DEFAULT objectForKey:kPhoneNumberKey] : @"";
+}
+
+- (NSString *)token
+{
+    return self.loginStatus ? [USER_DEFAULT objectForKey:kUserTokenKey] : @"";
 }
 
 - (SCLoginStatus)loginStatus
@@ -118,11 +131,12 @@ static SCUserInfo *userInfo = nil;
 }
 
 #pragma mark - Public Methods
-- (void)loginSuccessWithUserID:(NSDictionary *)userData
+- (void)loginSuccessWithUserData:(NSDictionary *)userData
 {
     [USER_DEFAULT setObject:@(YES) forKey:kLoginKey];
     [USER_DEFAULT setObject:userData[@"user_id"] forKey:kUserIDKey];
     [USER_DEFAULT setObject:userData[@"phone"] forKey:kPhoneNumberKey];
+    [USER_DEFAULT setObject:userData[@"token"] forKey:kUserTokenKey];
     [USER_DEFAULT synchronize];
     
     self.receiveMessage = YES;
@@ -136,6 +150,7 @@ static SCUserInfo *userInfo = nil;
     [USER_DEFAULT setObject:@(NO) forKey:kLoginKey];
     [USER_DEFAULT removeObjectForKey:kUserIDKey];
     [USER_DEFAULT removeObjectForKey:kPhoneNumberKey];
+    [USER_DEFAULT removeObjectForKey:kUserTokenKey];
     [USER_DEFAULT removeObjectForKey:kUserCarsKey];
     [USER_DEFAULT synchronize];
 }

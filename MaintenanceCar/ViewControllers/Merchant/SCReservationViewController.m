@@ -73,7 +73,7 @@
     _ownerNameTextField.leftView            = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
     _ownerPhoneNumberTextField.leftViewMode = UITextFieldViewModeAlways;
     _ownerPhoneNumberTextField.leftView     = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
-    _ownerPhoneNumberTextField.text         = [USER_DEFAULT objectForKey:kPhoneNumberKey];
+    _ownerPhoneNumberTextField.text         = [SCUserInfo share].phoneNmber;
     _remarkTextField.leftViewMode           = UITextFieldViewModeAlways;
     _remarkTextField.leftView               = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
     
@@ -183,7 +183,7 @@
             [self showHUDAlertToViewController:self text:@"很抱歉，预约未成功，请重试!" delay:0.5f];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        if (operation.response.statusCode == SCAPIRequestStatusCodeError)
+        if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
             [self showHUDAlertToViewController:self tag:Zero text:@"预约时间已过，请重选时间!" delay:0.5f];
         else
             [self showHUDAlertToViewController:self text:@"网络异常，请重试!" delay:0.5f];

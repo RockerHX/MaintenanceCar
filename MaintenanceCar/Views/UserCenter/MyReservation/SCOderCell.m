@@ -52,6 +52,9 @@
     
     _scheduleLabel.textColor = ([reservation.status isEqualToString:@"预约已取消"] || [reservation.status isEqualToString:@"已完成"] || [reservation.status isEqualToString:@"已过期"]) ? [UIColor grayColor] : [UIColor redColor];
     _scheduleLabel.layer.borderColor = _scheduleLabel.textColor.CGColor;
+    
+    [self updateConstraintsIfNeeded];
+    [self layoutIfNeeded];
 }
 
 #pragma mark - Private Methods

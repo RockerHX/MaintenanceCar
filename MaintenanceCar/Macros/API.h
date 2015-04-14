@@ -10,12 +10,36 @@
 #define MaintenanceCar_API_h
 
 typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
-    SCAPIRequestStatusCodeGETSuccess  = 200,
-    SCAPIRequestStatusCodePOSTSuccess = 201,
-    SCAPIRequestStatusCodeError       = 404,
-    SCAPIRequestStatusCodeNotFound    = 404,
-    SCAPIRequestStatusCodeDataError   = 408,
-    SCAPIRequestStatusCodeServerError = 500
+    SCAPIRequestStatusCodeGETSuccess     = 200,
+    SCAPIRequestStatusCodePOSTSuccess    = 201,
+    
+    SCAPIRequestStatusCodeBadRequest     = 400,
+    SCAPIRequestStatusCodeNotFound       = 404,
+    SCAPIRequestStatusCodeDataError      = 408,
+    
+    SCAPIRequestStatusCodeServerError    = 500
+};
+
+typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
+    SCAPIRequestErrorCodePhoneNumberRigisted       = 2001,
+    SCAPIRequestErrorCodeVerificationCodeSendError = 2002,
+    SCAPIRequestErrorCodeVerificationCodeError     = 2003,
+    SCAPIRequestErrorCodePhoneError                = 2004,
+    SCAPIRequestErrorCodePasswordError             = 2005,
+    SCAPIRequestErrorCodeNickNameError             = 2006,
+    SCAPIRequestErrorCodeNickNameRegisted          = 2007,
+    SCAPIRequestErrorCodeThirdAuthorizeIDError     = 2008,
+    SCAPIRequestErrorCodeUnsupportAuthorizeType    = 2009,
+    SCAPIRequestErrorCodePhoneNumberNotExist       = 2010,
+    
+    SCAPIRequestErrorCodeCommunityError            = 4001,
+    SCAPIRequestErrorCodeCommunityAlreadyExists    = 4002,
+    SCAPIRequestErrorCodeCityNotExist              = 4003,
+    SCAPIRequestErrorCodeLongitudeLatitudeError    = 4004,
+    SCAPIRequestErrorCodeAreaNotExist              = 4005,
+    SCAPIRequestErrorCodeCommunitySearchError      = 4006,
+    
+    SCAPIRequestErrorCodeModeratorsNotExist        = 5001
 };
 
 #define NetWorkError        @"网络出错了，请稍后再试>_<!"

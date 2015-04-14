@@ -9,13 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "SCUserCar.h"
 
-#define kLoginKey               @"kLoginKey"
-#define kUserIDKey              @"kUserIDKey"
-#define kPhoneNumberKey         @"kPhoneNumberKey"
-#define kUserCarsKey            @"kUserCarsKey"
-#define kAddAliasKey            @"kAddAliasKey"
-#define kReceiveMessageKey      @"kReceiveMessageKey"
-
 typedef NS_ENUM(BOOL, SCLoginStatus) {
     SCLoginStatusLogin  = YES,
     SCLoginStatusLogout = NO
@@ -26,6 +19,8 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
 
 @property (nonatomic, copy, readonly)   NSString      *userID;          // 用户ID
 @property (nonatomic, copy, readonly)   NSString      *phoneNmber;      // 用户手机号
+@property (nonatomic, copy, readonly)   NSString      *token;           // 用户令牌
+@property (nonatomic, copy, readonly)   NSString      *serverDate;      // 服务器时间
 @property (nonatomic, copy, readonly)   NSArray       *cars;            // 用户私家车集合
 @property (nonatomic, assign, readonly) SCLoginStatus loginStatus;      // 登录状态
 
@@ -46,7 +41,7 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
  *
  *  @param userData 服务返回的用户数据
  */
-- (void)loginSuccessWithUserID:(NSDictionary *)userData;
+- (void)loginSuccessWithUserData:(NSDictionary *)userData;
 
 /**
  *  用户注销
