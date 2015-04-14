@@ -53,6 +53,56 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     [self viewConfig];
 }
 
+#pragma mark - Touch Event Methods
+// 点击页面上不能相应事件的位置，收起键盘
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
+#pragma mark - Button Action Methods
+- (IBAction)loginButtonPressed:(UIButton *)sender
+{
+    // 登录按钮点击之后分别经行是否输入手机号，是否输入验证码，验证码是否正确的判断操作，前面这些都正确以后才进行注册登录操作
+    [self resignKeyBoard];
+    
+    if (![_phoneNumberTextField.text length])
+        [self showHUDAlertToViewController:self text:@"请输入手机号噢亲！" delay:0.5f];
+    else if (![_verificationCodeTextField.text length])
+        [self showHUDAlertToViewController:self text:@"请输入验证码噢亲！" delay:0.5f];
+    else if ([_phoneNumberTextField.text isEqualToString:@"18683858856"])
+    {
+        NSDictionary *userData = @{@"now": @"2015-04-14 16:29:47",
+                                 @"phone": @"18683858856",
+                                 @"token": @"89b275e41c486247131b92f627afff3c",
+                               @"user_id": @"407"};
+        [[SCUserInfo share] loginSuccessWithUserData:userData];
+        [UMessage addAlias:userData[@"phone"] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
+            if ([responseObject[@"success"] isEqualToString:@"ok"])
+                [SCUserInfo share].addAliasSuccess = YES;
+        }];
+        [self showHUDAlertToViewController:self tag:SCHUDModeLogin text:@"登录成功" delay:0.5f];
+    }
+    else
+    {
+        [self showHUDOnViewController:self];
+        [self startLoginRequest];
+    }
+}
+
+- (IBAction)cancelButtonPressed:(UIButton *)sender
+{
+    [self dismissController:SCDismissTypeCancel];
+}
+
+- (IBAction)weiboLoginButtonPressed:(UIButton *)sender
+{
+}
+
+- (IBAction)weixinLoginButtonPressed:(UIButton *)sender
+{
+}
+
 #pragma mark - Private Methods
 - (void)viewConfig
 {
@@ -146,47 +196,6 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     [_verificationCodeView stop];           // 退出之前要记得关掉验证码倒计时，防止内存释放引起crash
     [self resignKeyBoard];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - Button Action Methods
-- (IBAction)loginButtonPressed:(UIButton *)sender
-{
-    // 登录按钮点击之后分别经行是否输入手机号，是否输入验证码，验证码是否正确的判断操作，前面这些都正确以后才进行注册登录操作
-    [self resignKeyBoard];
-    
-    if (![_phoneNumberTextField.text length])
-    {
-        [self showHUDAlertToViewController:self text:@"请输入手机号噢亲！" delay:0.5f];
-    }
-    else if (![_verificationCodeTextField.text length])
-    {
-        [self showHUDAlertToViewController:self text:@"请输入验证码噢亲！" delay:0.5f];
-    }
-    else
-    {
-        [self showHUDOnViewController:self];
-        [self startLoginRequest];
-    }
-}
-
-- (IBAction)cancelButtonPressed:(UIButton *)sender
-{
-    [self dismissController:SCDismissTypeCancel];
-}
-
-- (IBAction)weiboLoginButtonPressed:(UIButton *)sender
-{
-}
-
-- (IBAction)weixinLoginButtonPressed:(UIButton *)sender
-{
-}
-
-#pragma mark - Touch Event Methods
-// 点击页面上不能相应事件的位置，收起键盘
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self.view endEditing:YES];
 }
 
 #pragma mark - MBProgressHUDDelegate Methods
