@@ -34,6 +34,7 @@
 @property (nonatomic, copy) NSString <Optional>*majors;               // 专修品牌
 @property (nonatomic, copy) NSString <Optional>*star;                 // 商家星级
 @property (nonatomic, copy) NSString <Optional>*now;
+@property (nonatomic, copy) NSString <Optional>*have_comment;
 @property (nonatomic, assign)        NSInteger comments_num;          // 评价数量
 
 @property (nonatomic, strong)            NSDictionary <Optional>*service_items;   // 服务项目

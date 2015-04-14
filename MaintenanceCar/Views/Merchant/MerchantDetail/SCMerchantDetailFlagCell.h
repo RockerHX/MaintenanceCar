@@ -2,17 +2,31 @@
 //  SCMerchantDetailFlagCell.h
 //  MaintenanceCar
 //
-//  Created by ShiCang on 15/2/3.
+//  Created by ShiCang on 15/4/14.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface SCMerchantDetailFlagCell : UICollectionViewCell
+@class SCMerchantFlag;
 
-@property (weak, nonatomic) IBOutlet UILabel *flagLabel;
-@property (weak, nonatomic) IBOutlet UILabel *textLabel;
+@protocol SCMerchantDetailFlagCellDelegate <NSObject>
 
-@property (nonatomic, weak)          UIColor *color;
+@optional
+- (void)flagPressedWithMessage:(NSString *)message;
+
+@end
+
+@interface SCMerchantDetailFlagCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet      UIView *flagBgView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *flagIcon;
+@property (weak, nonatomic) IBOutlet     UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet     UILabel *promptLabel;
+
+@property (nonatomic, weak) IBOutlet          id  <SCMerchantDetailFlagCellDelegate>delegate;
+
+- (void)displayCellWithMerchangFlag:(SCMerchantFlag *)flag;
 
 @end

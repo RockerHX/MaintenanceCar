@@ -120,7 +120,7 @@ static SCAllDictionary *allDictionary = nil;
     }
 }
 
-- (void)requestColorsExplain:(void(^)(NSDictionary *colors, NSDictionary *explain, NSDictionary *detail))finfish
+- (void)requestColorsExplain:(void(^)(NSDictionary *colors, NSDictionary *explains, NSDictionary *details))finfish
 {
     NSDictionary *localData = [self readLocalDataWithFileName:fColorExplainFileName];      // 获取颜色值本地缓存数据
     
@@ -134,7 +134,7 @@ static SCAllDictionary *allDictionary = nil;
                 // 先处理数据，再保存，最后回调
                 [weakSelf hanleMerchantFlagsData:responseObject];
                 [weakSelf saveData:responseObject fileName:fColorExplainFileName];
-                finfish(weakSelf.colors, weakSelf.explain, weakSelf.detail);
+                finfish(weakSelf.colors, weakSelf.explains, weakSelf.details);
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             finfish(nil, nil, nil);
@@ -150,7 +150,7 @@ static SCAllDictionary *allDictionary = nil;
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         }];
         
-        finfish(weakSelf.colors, weakSelf.explain, weakSelf.detail);
+        finfish(weakSelf.colors, weakSelf.explains, weakSelf.details);
     }
 }
 
@@ -296,9 +296,9 @@ static SCAllDictionary *allDictionary = nil;
  */
 - (void)hanleMerchantFlagsData:(NSDictionary *)data
 {
-    _colors = data[@"color"];
-    _explain = data[@"explain"];
-    _detail = data[@"detail"];
+    _colors   = data[@"color"];
+    _explains = data[@"explain"];
+    _details  = data[@"detail"];
 }
 
 @end

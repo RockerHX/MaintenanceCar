@@ -20,13 +20,14 @@
 
 @interface SCMerchantSummaryCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet          UILabel *merchantNameLabel;    // 商家名称栏 - 用于显示商家名称
-@property (weak, nonatomic) IBOutlet          UILabel *distanceLabel;        // 商家距离栏 - 用于显示当前位置到商家的直线距离
-@property (weak, nonatomic) IBOutlet UICollectionView *flagView;             // 商家标签栏 - 用于显示商家标签
-@property (weak, nonatomic) IBOutlet         UIButton *reservationButton;    // 预约按钮
-@property (weak, nonatomic) IBOutlet       SCStarView *starView;             // 商家星级 - 用于显示商家评分
+@property (weak, nonatomic) IBOutlet            UILabel *merchantNameLabel;    // 商家名称栏 - 用于显示商家名称
+@property (weak, nonatomic) IBOutlet            UILabel *distanceLabel;        // 商家距离栏 - 用于显示当前位置到商家的直线距离
+@property (weak, nonatomic) IBOutlet           UIButton *reservationButton;    // 预约按钮
+@property (weak, nonatomic) IBOutlet         SCStarView *starView;             // 商家星级 - 用于显示商家评分
+@property (weak, nonatomic) IBOutlet             UIView *commentView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *commentViewHeight;
 
-@property (nonatomic, weak)                        id  <SCMerchantSummaryCellDelegate>delegate;
+@property (nonatomic, weak) IBOutlet                 id  <SCMerchantSummaryCellDelegate>delegate;
 
 - (void)displayCellWithSummary:(SCMerchantSummary *)detailSummary;
 

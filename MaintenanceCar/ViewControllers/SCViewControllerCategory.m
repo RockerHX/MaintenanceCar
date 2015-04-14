@@ -150,7 +150,7 @@
 - (void)reLayoutFooterView
 {
     if (IS_IPHONE_6)
-        self.tableHeaderView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 180.0f);
+        self.tableFooterView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 180.0f);
     else if (IS_IPHONE_6Plus)
         self.tableFooterView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 200.0f);
     [self.tableHeaderView needsUpdateConstraints];

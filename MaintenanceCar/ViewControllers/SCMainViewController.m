@@ -51,18 +51,14 @@
         NSString *osVersion = [UIDevice currentDevice].systemVersion;
         NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
         NSDictionary *paramters = @{@"user_id": userInfo.userID,
-                                    @"os": os,
+                                         @"os": os,
                                     @"version": appVersion,
-                                    @"os_version": osVersion};
+                                 @"os_version": osVersion};
         [[SCAPIRequest manager] startUserLogAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
-            {
                 NSLog(@"log_id:%@", responseObject[@"log_id"]);
-            }
             else
-            {
                 NSLog(@"log error:%@", responseObject);
-            }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"log error:%@", error);
         }];
