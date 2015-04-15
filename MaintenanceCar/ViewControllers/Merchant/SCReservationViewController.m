@@ -165,7 +165,8 @@
  */
 - (void)startMerchantReservationRequest
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self showHUDOnViewController:self];
+    __weak typeof(self)weakSelf = self;
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                               @"company_id": _merchant.company_id,
                                     @"type": _reservationType,
@@ -176,17 +177,22 @@
                              @"user_car_id": _selectedCarID,
                                    @"price": _price};
     [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
-            [self showHUDAlertToViewController:self tag:Zero text:@"恭喜您，已经预约成功!" delay:0.5f];
+        {
+            NSString *statusMessage = responseObject[@"status_message"];
+            if (statusMessage && ![statusMessage isKindOfClass:[NSNull class]])
+                [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:statusMessage];
+        }
         else
-            [self showHUDAlertToViewController:self text:@"很抱歉，预约未成功，请重试!" delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf text:DataError];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
-            [self showHUDAlertToViewController:self tag:Zero text:@"预约时间已过，请重选时间!" delay:0.5f];
+        [weakSelf hideHUDOnViewController:weakSelf];
+        NSString *message = operation.responseObject[@"message"];
+        if (message)
+            [weakSelf showHUDAlertToViewController:weakSelf text:message];
         else
-            [self showHUDAlertToViewController:self text:@"网络异常，请重试!" delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
     }];
 }
 
@@ -214,22 +220,22 @@
 {
     if (![_ownerNameTextField.text length])
     {
-        [self showHUDAlertToViewController:self text:@"请输入您的姓名!" delay:0.5f];
+        [self showHUDAlertToViewController:self text:@"请输入您的姓名!"];
         return NO;
     }
     else if (![_ownerPhoneNumberTextField.text length])
     {
-        [self showHUDAlertToViewController:self text:@"请输入您的手机号码!" delay:0.5f];
+        [self showHUDAlertToViewController:self text:@"请输入您的手机号码!"];
         return NO;
     }
     else if (!_reservationType)
     {
-        [self showHUDAlertToViewController:self text:@"请选择您需要预约的类型!" delay:0.5f];
+        [self showHUDAlertToViewController:self text:@"请选择您需要预约的类型!"];
         return NO;
     }
     else if (!_reservationDate)
     {
-        [self showHUDAlertToViewController:self text:@"请选择您需要预约的日期!" delay:0.5f];
+        [self showHUDAlertToViewController:self text:@"请选择您需要预约的日期!"];
         return NO;
     }
     else

@@ -61,6 +61,15 @@
 - (void)hideHUDOnViewController:(UIViewController *)viewController;
 
 /**
+ *  显示简单HUD提示（0.5s）
+ *
+ *  @param viewController 需要显示提示的View
+ *  @param text           提示文本
+ */
+- (void)showHUDAlertToViewController:(UIViewController *)viewController
+                                text:(NSString *)text;
+
+/**
  *  显示简单HUD提示
  *
  *  @param viewController 需要显示提示的View
@@ -70,6 +79,17 @@
 - (void)showHUDAlertToViewController:(UIViewController *)viewController
                                 text:(NSString *)text
                                delay:(NSTimeInterval)delay;
+
+/**
+ *  显示定制的HUD提示（显示类型请设置到tag，延时0.5s消失）
+ *
+ *  @param viewController 需要显示提示的View
+ *  @param tag            HUD显示类型
+ *  @param text           提示文本
+ */
+- (void)showHUDAlertToViewController:(UIViewController *)viewController
+                                 tag:(NSInteger)tag
+                                text:(NSString *)text;
 
 /**
  *  显示定制的HUD提示（显示类型请设置到tag）

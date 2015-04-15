@@ -315,15 +315,15 @@
                     break;
             }
             if (statusMessage && ![statusMessage isKindOfClass:[NSNull class]])
-                [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:statusMessage delay:0.5f];
+                [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:statusMessage];
         }
         [weakSelf endRefresh];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSString *message = operation.responseObject[@"message"];
         if (message)
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:message delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:message];
         else
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:NetWorkError delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:NetWorkError];
         [weakSelf endRefresh];
     }];
 }
@@ -339,19 +339,25 @@
                              @"reserve_id": ((SCReservation *)_deleteDataCache).reserve_id,
                                  @"status": @"4"};
     [[SCAPIRequest manager] startUpdateReservationAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        // 根据返回结果进行相应提示
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
             SCReservation *reservation = _deleteDataCache;
             reservation.status         = @"预约已取消";
             [weakSelf deleteFailureAtIndex:index];
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"您取消预约成功" delay:0.5f];
+            
+            NSString *statusMessage = responseObject[@"status_message"];
+            if (statusMessage && ![statusMessage isKindOfClass:[NSNull class]])
+                [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
         }
         else
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"取消预约失败，请重试！" delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf text:DataError];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf deleteFailureAtIndex:index];
-        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"取消预约失败，请重试！" delay:0.5f];
+        NSString *message = operation.responseObject[@"message"];
+        if (message)
+            [weakSelf showHUDAlertToViewController:weakSelf text:message];
+        else
+            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
     }];
 }
 

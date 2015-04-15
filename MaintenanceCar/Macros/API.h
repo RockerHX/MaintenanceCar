@@ -11,7 +11,7 @@
 
 #pragma mark - Hard Code Prompt
 #define NetWorkError        @"网络出错了，请稍后再试>_<!"
-#define DataError           @"数据出错了，后台正在处理，请稍后>_<!"
+#define DataError           @"数据出错了，正在紧张处理中，请稍后>_<!"
 
 #define DefaultQuery        @"default:'深圳'"
 
@@ -38,7 +38,6 @@
 #define MerchantCollectionAPI       @"/Collection"                          // 商家收藏API
 #define CancelCollectionAPI         @"/Collection/delete"                   // 取消商家收藏API
 #define CheckMerchantCollectionAPI  @"/Collection/user"                     // 检查商家收藏状态API
-#define MerchantReservationAPI      @"/Reservation"                         // 商家预约API
 
 #define MerchantGroupProductAPI     @"/Group_product"                       // 商家团购详情API
 #define WeiXinPayAPI                @"/wepay"                               // 微信支付API
@@ -55,6 +54,7 @@
 #define LoginAPI                    @"/User"                                // 用户登录API
 #define UserLogAPI                  @"/Userlog"                             // 用户日志记录API
 
+#define MerchantReservationAPI      @"/Reservation"                         // 商家预约API
 #define MyReservationAPI            @"/Reservation/all"                     // 我的预约API
 #define UpdateReservationAPI        @"/Reservation/update"                  // 更新预约API
 #define ReservationItemNumAPI       @"/Carshop/reservation_left"            // 预约日期数量API

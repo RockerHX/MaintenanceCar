@@ -6,6 +6,8 @@
 
 #import "SCViewControllerCategory.h"
 
+#define HUDDelay        0.5f
+
 @implementation UIViewController (SCViewController)
 
 #pragma mark - Public Methods
@@ -72,9 +74,22 @@
 
 - (void)showHUDAlertToViewController:(UIViewController *)viewController
                                 text:(NSString *)text
+{
+    [self showHUDAlertToViewController:viewController text:text delay:HUDDelay];
+}
+
+- (void)showHUDAlertToViewController:(UIViewController *)viewController
+                                text:(NSString *)text
                                delay:(NSTimeInterval)delay
 {
     [self showHUDAlertToViewController:viewController delegate:nil text:text delay:delay];
+}
+
+- (void)showHUDAlertToViewController:(UIViewController *)viewController
+                                 tag:(NSInteger)tag
+                                text:(NSString *)text
+{
+    [self showHUDAlertToViewController:viewController tag:tag text:text delay:HUDDelay];
 }
 
 - (void)showHUDAlertToViewController:(UIViewController *)viewController

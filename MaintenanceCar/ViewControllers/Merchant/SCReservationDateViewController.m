@@ -95,12 +95,11 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 - (void)startReservationItemsRequest
 {
     [self showHUDOnViewController:self];
-    
     __weak typeof(self)weakSelf = self;
     NSDictionary *parameters = @{@"company_id": _companyID,
                                        @"type": _type};
     [[SCAPIRequest manager] startGetReservationItemNumAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [weakSelf hideHUDOnViewController:self];
+        [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             _dateItmes = responseObject;
@@ -112,12 +111,14 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
             [_selectedCollectionView reloadData];
         }
         else
-            [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:NetWorkError delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:DataError];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeDataError)
-            [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:DataError delay:0.5f];
+        [weakSelf hideHUDOnViewController:weakSelf];
+        NSString *message = operation.responseObject[@"message"];
+        if (message)
+            [weakSelf showHUDAlertToViewController:weakSelf text:message];
         else
-            [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:NetWorkError delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
     }];
 }
 
@@ -290,7 +291,7 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
     // 保存成功，返回上一页
-    [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
+    [self hideHUDOnViewController:self];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
