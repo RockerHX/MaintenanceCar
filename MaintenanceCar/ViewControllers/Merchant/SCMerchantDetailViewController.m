@@ -261,7 +261,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if ([cell isKindOfClass:[SCGroupProductCell class]])
+    if ([cell isKindOfClass:[SCGroupProductCell class]] || [cell isKindOfClass:[SCQuotedPriceCell class]])
     {
         @try {
             SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
