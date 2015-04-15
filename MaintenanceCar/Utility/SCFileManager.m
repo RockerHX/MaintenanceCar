@@ -76,6 +76,11 @@
     return eroor ? YES : NO;
 }
 
++ (NSString *)pathForResource:(NSString *)name ofType:(NSString *)ext
+{
+    return [[NSBundle mainBundle] pathForResource:name ofType:ext];
+}
+
 #pragma mark -- Private Methods --
 - (BOOL)hasDirectoryAtPath:(NSString *)path
 {

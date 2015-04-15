@@ -36,4 +36,14 @@ typedef NS_ENUM(NSInteger, SCDirectory) {
  */
 - (BOOL)deleteFileWithPath:(NSString *)path;
 
+/**
+ *  获取工程内资源文件
+ *
+ *  @param name 文件名
+ *  @param ext  文件类型
+ *
+ *  @return 文件路径
+ */
++ (NSString *)pathForResource:(NSString *)name ofType:(NSString *)ext;
+
 @end

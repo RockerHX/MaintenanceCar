@@ -45,20 +45,7 @@
 #pragma mark - Setter And Getter Methods
 - (NSString *)imageName
 {
-    NSString *name;
-    if ([_flag isEqualToString:@"一"])
-        name = @"OneIcon";
-    else if ([_flag isEqualToString:@"二"])
-        name = @"TwoIcon";
-    else if ([_flag isEqualToString:@"三"])
-        name = @"ThreeIcon";
-    else if ([_flag isEqualToString:@"诚"])
-        name = @"ChengIcon";
-    else if ([_flag isEqualToString:@"综"])
-        name = @"ZongIcon";
-    else if ([_flag isEqualToString:@"专"])
-        name = @"ZhuanIcon";
-    return name;
+    return [self imageNameOfFlag:_flag];
 }
 
 @end

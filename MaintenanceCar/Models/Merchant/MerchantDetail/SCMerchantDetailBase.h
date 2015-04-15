@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "SCObjectCategory.h"
 
 @class SCMerchantDetail;
 
