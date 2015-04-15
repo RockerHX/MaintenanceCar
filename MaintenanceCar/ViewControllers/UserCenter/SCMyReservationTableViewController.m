@@ -339,18 +339,16 @@
                              @"reserve_id": ((SCReservation *)_deleteDataCache).reserve_id,
                                  @"status": @"4"};
     [[SCAPIRequest manager] startUpdateReservationAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // 根据返回结果进行相应提示
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
             SCReservation *reservation = _deleteDataCache;
             reservation.status         = @"预约已取消";
             [weakSelf deleteFailureAtIndex:index];
-            
-            NSString *statusMessage = responseObject[@"status_message"];
-            if (statusMessage && ![statusMessage isKindOfClass:[NSNull class]])
-                [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"预约取消成功" delay:0.5f];
         }
         else
-            [weakSelf showHUDAlertToViewController:weakSelf text:DataError];
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"取消预约失败，请重试！" delay:0.5f];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf deleteFailureAtIndex:index];
         NSString *message = operation.responseObject[@"message"];
