@@ -36,7 +36,7 @@
     _distanceLabel.text         = detailSummary.distance;
     _starView.value             = detailSummary.star;
     _reservationButton.hidden   = detailSummary.unReserve;
-    _commentView.hidden         = !detailSummary.have_comment;
+    _commentView.hidden         = detailSummary.have_comment;
     _commentViewHeight.constant = detailSummary.have_comment ? _commentViewHeight.constant : Zero;
     
     [self.contentView updateConstraintsIfNeeded];

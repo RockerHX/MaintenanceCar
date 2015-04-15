@@ -294,31 +294,36 @@
     [[SCAPIRequest manager] startGetMyReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            // 如果是下拉刷新数据，先清空列表，再做数据处理
-            if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
-                [weakSelf clearListData];
-            
-            // 遍历请求回来的订单数据，生成SCReservation用于订单列表显示
-            [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                SCReservation *reservation = [[SCReservation alloc] initWithDictionary:obj error:nil];
-                [_dataList addObject:reservation];
-            }];
-            
-            [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
-            [weakSelf readdFooter];
-            weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
-        }
-        else
-        {
-            NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:responseObject[@"error"] delay:0.5f];
-            [weakSelf removeFooter];
+            NSInteger statusCode = [responseObject[@"status_code"] integerValue];
+            if (!statusCode)
+            {
+                // 如果是下拉刷新数据，先清空列表，再做数据处理
+                if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
+                    [weakSelf clearListData];
+                
+                // 遍历请求回来的订单数据，生成SCReservation用于订单列表显示
+                [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    SCReservation *reservation = [[SCReservation alloc] initWithDictionary:obj error:nil];
+                    [_dataList addObject:reservation];
+                }];
+                
+                [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
+                [weakSelf readdFooter];
+                weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
+            }
+            else
+            {
+                NSString *statusMessage = responseObject[@"status_message"];
+                if (statusMessage)
+                    [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:statusMessage delay:0.5f];
+                [weakSelf removeFooter];
+            }
         }
         [weakSelf endRefresh];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Get merchant list request error:%@", error);
-        if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"您还没有下过任何订单噢！" delay:0.5f];
+        NSString *message = operation.responseObject[@"message"];
+        if (message)
+            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:message delay:0.5f];
         else
             [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:NetWorkError delay:0.5f];
         [weakSelf endRefresh];

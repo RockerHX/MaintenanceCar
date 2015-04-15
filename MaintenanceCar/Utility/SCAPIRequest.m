@@ -7,9 +7,13 @@
 //
 
 #import "SCAPIRequest.h"
+#import "SCUserInfo.h"
 
-#define CustomRequestHeaderKey        @"X-API-KEY"                  // 请求加密Key
-#define CustomRequestHeaderValue      @"SlwX20U65YMTuNRDe3fZ"       // 请求加密Value
+#define CustomRequestHeaderKey          @"X-API-KEY"                // 请求头加密Key
+#define CustomRequestHeaderValue        @"SlwX20U65YMTuNRDe3fZ"     // 请求头加密Value
+
+#define TokenRequestHeaderKey           @"token"                    // 请求头token的Key
+#define UIDRequestHeaderKey             @"uid"                      // 请求头uid的Key
 
 @interface SCAPIRequest ()
 
@@ -89,6 +93,12 @@
  */
 - (void)addHeader
 {
+    SCUserInfo *userInfo = [SCUserInfo share];
+    if (userInfo.loginStatus)
+    {
+        [self.requestSerializer setValue:userInfo.token forHTTPHeaderField:TokenRequestHeaderKey];
+        [self.requestSerializer setValue:userInfo.userID forHTTPHeaderField:UIDRequestHeaderKey];
+    }
     [self.requestSerializer setValue:CustomRequestHeaderValue forHTTPHeaderField:CustomRequestHeaderKey];
 }
 

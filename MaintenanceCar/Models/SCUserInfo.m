@@ -74,7 +74,7 @@ static SCUserInfo *userInfo = nil;
 
 - (SCLoginStatus)loginStatus
 {
-    return ([[USER_DEFAULT objectForKey:kLoginKey] boolValue] && [USER_DEFAULT objectForKey:kUserIDKey]) ? SCLoginStatusLogin : SCLoginStatusLogout;
+    return ([[USER_DEFAULT objectForKey:kLoginKey] boolValue] && [USER_DEFAULT objectForKey:kUserIDKey] && [USER_DEFAULT objectForKey:kUserTokenKey]) ? SCLoginStatusLogin : SCLoginStatusLogout;
 }
 
 - (BOOL)addAliasSuccess
