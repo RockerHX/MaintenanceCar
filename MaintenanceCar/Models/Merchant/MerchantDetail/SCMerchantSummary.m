@@ -27,10 +27,15 @@
             _colorHex = colorHex ? colorHex : @"FFFFFF";
             
             _content = details[_flag];
-            if ([_flag hasPrefix:@"专"])
+            if ([_flag hasPrefix:@"专"] && detail.majors.length)
             {
-                _prompt = detail.majors;
-                _content = [_content stringByAppendingString:[NSString stringWithFormat:@"(%@)", detail.majors]];
+                _prompt = [NSString stringWithFormat:@"专修【%@】系列", detail.majors];
+                _content = [_content stringByAppendingFormat:@"（%@）", _prompt];
+            }
+            else if ([_flag hasPrefix:@"综"] && detail.majors.length)
+            {
+                _prompt = [NSString stringWithFormat:@"该厂擅长维修【%@】系列", detail.majors];
+                _content = [_content stringByAppendingFormat:@"（%@）", _prompt];
             }
         }];
     }
