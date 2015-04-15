@@ -9,44 +9,13 @@
 #ifndef MaintenanceCar_API_h
 #define MaintenanceCar_API_h
 
-typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
-    SCAPIRequestStatusCodeGETSuccess     = 200,
-    SCAPIRequestStatusCodePOSTSuccess    = 201,
-    
-    SCAPIRequestStatusCodeBadRequest     = 400,
-    SCAPIRequestStatusCodeNotFound       = 404,
-    SCAPIRequestStatusCodeDataError      = 408,
-    
-    SCAPIRequestStatusCodeServerError    = 500
-};
-
-typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
-    SCAPIRequestErrorCodePhoneNumberRigisted       = 2001,
-    SCAPIRequestErrorCodeVerificationCodeSendError = 2002,
-    SCAPIRequestErrorCodeVerificationCodeError     = 2003,
-    SCAPIRequestErrorCodePhoneError                = 2004,
-    SCAPIRequestErrorCodePasswordError             = 2005,
-    SCAPIRequestErrorCodeNickNameError             = 2006,
-    SCAPIRequestErrorCodeNickNameRegisted          = 2007,
-    SCAPIRequestErrorCodeThirdAuthorizeIDError     = 2008,
-    SCAPIRequestErrorCodeUnsupportAuthorizeType    = 2009,
-    SCAPIRequestErrorCodePhoneNumberNotExist       = 2010,
-    
-    SCAPIRequestErrorCodeCommunityError            = 4001,
-    SCAPIRequestErrorCodeCommunityAlreadyExists    = 4002,
-    SCAPIRequestErrorCodeCityNotExist              = 4003,
-    SCAPIRequestErrorCodeLongitudeLatitudeError    = 4004,
-    SCAPIRequestErrorCodeAreaNotExist              = 4005,
-    SCAPIRequestErrorCodeCommunitySearchError      = 4006,
-    
-    SCAPIRequestErrorCodeModeratorsNotExist        = 5001
-};
-
+#pragma mark - Hard Code Prompt
 #define NetWorkError        @"网络出错了，请稍后再试>_<!"
 #define DataError           @"数据出错了，后台正在处理，请稍后>_<!"
 
 #define DefaultQuery        @"default:'深圳'"
 
+#pragma mark - API Domain
 //#define DoMain              @"https://api.yjclw.com"                        // 接口域名
 #warning @"发布时更改测试环境"
 #define DoMain              @"http://testing.yjclw.com"                     // 接口域名
@@ -55,11 +24,13 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 
 #define MerchantImageDoMain @"http://cdn1.yjclw.com/"                       // 商家图片资源域名
 
+#pragma mark - API Path
 #define APIPath             @"/v2"                                          // 接口路径
 #define APIURL              [DoMain stringByAppendingString:APIPath]        // 接口链接
 #define ImagePath           @"/brand/brand_"                                // 图片资源路径
 #define ImageURL            [ImageDoMain stringByAppendingString:ImagePath] // 图片资源链接
 
+#pragma mark - API
 #define WearthAPI                   @"/Weather"                             // 天气API
 #define SearchAPI                   @"/company_search"                      // 商家搜索API
 #define OperateSearchAPI            @"/company_search/operate"              // 运营位商家搜索API
@@ -105,7 +76,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 #define HomePageReservationAPI      @"/Reservation/latest"                  // 最新预约信息API
 #define HomePageSpecialAPI          @"/Special"                             // 首页第四个按钮数据API
 
-
+#pragma mark - API URL
 #define WearthAPIURL                    [APIURL stringByAppendingString:WearthAPI]                  // 天气接口URL - 用于主页模块获取天气信息
 #define SearchAPIURL                    [APIURL stringByAppendingString:SearchAPI]                  // 商家搜索接口URL - 用于商家搜索和筛选
 #define OperateSearchAPIURL             [APIURL stringByAppendingString:OperateSearchAPI]           // 运营位商家搜索接口URL - 用于运营位商家搜索和筛选

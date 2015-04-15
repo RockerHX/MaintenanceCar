@@ -10,6 +10,30 @@
 #import <AFNetworking/AFNetworking.h>
 #import "API.h"
 
+typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
+    SCAPIRequestStatusCodeGETSuccess     = 200,
+    SCAPIRequestStatusCodePOSTSuccess    = 201,
+    
+    SCAPIRequestStatusCodeBadRequest     = 400,
+    SCAPIRequestStatusCodeNotFound       = 404,
+    SCAPIRequestStatusCodeDataError      = 408,
+    
+    SCAPIRequestStatusCodeServerError    = 500
+};
+
+typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
+    SCAPIRequestErrorCodeNoError                   = 0,
+    // Login
+    SCAPIRequestErrorCodePhoneError                = 4001,
+    SCAPIRequestErrorCodeVerificationCodeSendError = 4002,
+    SCAPIRequestErrorCodeVerificationCodeError     = 4003,
+    SCAPIRequestErrorCodeThirdAuthorizeError       = 4004,
+    SCAPIRequestErrorCodeRefreshTokenError         = 4005,
+    // Reservation
+    SCAPIRequestErrorCodeReservationFailure        = 4006,
+    SCAPIRequestErrorCodeListNotFoundMore          = 4008
+};
+
 @interface SCAPIRequest : AFHTTPRequestOperationManager
 
 @property (nonatomic, copy) NSString *doMain;       // URL域

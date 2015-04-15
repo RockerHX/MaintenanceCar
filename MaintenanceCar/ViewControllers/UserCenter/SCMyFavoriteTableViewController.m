@@ -105,14 +105,12 @@
 - (void)startDropDownRefreshReuqest
 {
     [super startDropDownRefreshReuqest];
-    
     [self refreshCollectionListMerchantList];
 }
 
 - (void)startPullUpRefreshRequest
 {
     [super startPullUpRefreshRequest];
-    
     [self refreshCollectionListMerchantList];
 }
 
@@ -147,10 +145,6 @@
     [[SCAPIRequest manager] startGetCollectionMerchantAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            // 如果是下拉刷新数据，先清空列表，再做数据处理
-            if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
-                [weakSelf clearListData];
-            
             // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
             [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj error:nil];

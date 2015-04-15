@@ -55,23 +55,23 @@
 - (void)startDropDownRefreshReuqest
 {
     // 刷新前把数据偏移量offset设置为0，设置刷新类型，以便请求最新数据
-    self.offset = Zero;
-    self.requestType = SCRequestRefreshTypeDropDown;
+    _offset = Zero;
+    _requestType = SCRequestRefreshTypeDropDown;
+    
+    [self clearListData];
 }
 
 - (void)startPullUpRefreshRequest
 {
     // 设置刷新类型
-    self.requestType = SCRequestRefreshTypePullUp;
+    _requestType = SCRequestRefreshTypePullUp;
 }
 
 - (void)endRefresh
 {
     // 关闭上拉刷新或者下拉刷新
     if (_requestType == SCRequestRefreshTypeDropDown)
-    {
         [self.tableView.header endRefreshing];
-    }
     else
         [self.tableView.footer endRefreshing];
 }
@@ -95,6 +95,7 @@
 - (void)deleteFailureAtIndex:(NSInteger)index
 {
     self.tableView.editing = NO;                                    // 改变列表编辑状态
+    
     [_dataList insertObject:_deleteDataCache atIndex:index];        // 从数据缓存中删除某一条数据
     [self.tableView reloadData];                                    // 刷新tableview
 }

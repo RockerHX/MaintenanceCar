@@ -269,14 +269,12 @@
 - (void)startDropDownRefreshReuqest
 {
     [super startDropDownRefreshReuqest];
-    
     [self startReservationListRequest];
 }
 
 - (void)startPullUpRefreshRequest
 {
     [super startPullUpRefreshRequest];
-    
     [self startReservationListRequest];
 }
 
@@ -294,30 +292,30 @@
     [[SCAPIRequest manager] startGetMyReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            NSInteger statusCode = [responseObject[@"status_code"] integerValue];
-            if (!statusCode)
+            NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
+            NSString *statusMessage = responseObject[@"status_message"];
+            switch (statusCode)
             {
-                // 如果是下拉刷新数据，先清空列表，再做数据处理
-                if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
-                    [weakSelf clearListData];
-                
-                // 遍历请求回来的订单数据，生成SCReservation用于订单列表显示
-                [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    SCReservation *reservation = [[SCReservation alloc] initWithDictionary:obj error:nil];
-                    [_dataList addObject:reservation];
-                }];
-                
-                [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
-                [weakSelf readdFooter];
-                weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
+                case SCAPIRequestErrorCodeNoError:
+                {
+                    // 遍历请求回来的订单数据，生成SCReservation用于订单列表显示
+                    [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                        SCReservation *reservation = [[SCReservation alloc] initWithDictionary:obj error:nil];
+                        [_dataList addObject:reservation];
+                    }];
+                    
+                    [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
+                    [weakSelf readdFooter];
+                    weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
+                }
+                    break;
+                    
+                case SCAPIRequestErrorCodeListNotFoundMore:
+                    [weakSelf removeFooter];
+                    break;
             }
-            else
-            {
-                NSString *statusMessage = responseObject[@"status_message"];
-                if (statusMessage)
-                    [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:statusMessage delay:0.5f];
-                [weakSelf removeFooter];
-            }
+            if (statusMessage && ![statusMessage isKindOfClass:[NSNull class]])
+                [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:statusMessage delay:0.5f];
         }
         [weakSelf endRefresh];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -377,7 +375,7 @@
 #pragma mark - SCAppraiseViewControllerDelegate Methods
 - (void)appraiseSuccess
 {
-    [self startDropDownRefreshReuqest];
+    [self startReservationListRequest];
 }
 
 @end

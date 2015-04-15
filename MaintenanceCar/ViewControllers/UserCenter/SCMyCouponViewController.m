@@ -93,14 +93,12 @@
 - (void)startDropDownRefreshReuqest
 {
     [super startDropDownRefreshReuqest];
-    
     [self startMyCouponListRequest];
 }
 
 - (void)startPullUpRefreshRequest
 {
     [super startPullUpRefreshRequest];
-    
     [self startMyCouponListRequest];
 }
 
@@ -115,10 +113,6 @@
     [[SCAPIRequest manager] startGetMyCouponAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            // 如果是下拉刷新数据，先清空列表，再做数据处理
-            if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
-                [weakSelf clearListData];
-            
             // 遍历请求回来的商家数据，生成SCCoupon用于团购券显示
             [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];
