@@ -37,7 +37,7 @@
     _starView.value             = detailSummary.star;
     _reservationButton.hidden   = detailSummary.unReserve;
     _commentView.hidden         = detailSummary.have_comment;
-    _commentViewHeight.constant = detailSummary.have_comment ? _commentViewHeight.constant : Zero;
+    _commentViewHeight.constant = detailSummary.have_comment ? Zero : _commentViewHeight.constant;
     
     [self.contentView updateConstraintsIfNeeded];
     [self.contentView layoutIfNeeded];
