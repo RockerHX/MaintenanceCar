@@ -179,9 +179,13 @@
     [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
-            [self showHUDAlertToViewController:self tag:Zero text:@"恭喜您，预约成功!"];
+        {
+            NSString *statusMessage = responseObject[@"status_message"];
+            if (statusMessage && ![statusMessage isKindOfClass:[NSNull class]])
+                [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:statusMessage];
+        }
         else
-            [self showHUDAlertToViewController:self text:@"预约失败，请重试!"];
+            [weakSelf showHUDAlertToViewController:weakSelf text:DataError];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf hideHUDOnViewController:weakSelf];
         NSString *message = operation.responseObject[@"message"];
