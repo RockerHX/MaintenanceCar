@@ -40,10 +40,4 @@
     return data;
 }
 
-- (NSString *)imageNameOfFlag:(NSString *)flag
-{
-    NSDictionary *data = [NSDictionary dictionaryWithContentsOfFile:[NSFileManager pathForResource:@"MerchantFlagIcon" ofType:@"plist"]];
-    return data[flag];
-}
-
 @end

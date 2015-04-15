@@ -87,4 +87,13 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
  */
 - (void)hanleRepairConditions:(NSArray *)userCars;
 
+/**
+ *  获取商家Flag标签的图片文件名
+ *
+ *  @param flag 商家Flag标签名称
+ *
+ *  @return 商家Flag标签对应图片文件名
+ */
+- (NSString *)imageNameOfFlag:(NSString *)flag;
+
 @end

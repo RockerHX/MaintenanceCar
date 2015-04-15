@@ -10,6 +10,6 @@
 
 @interface SCMerchantFlagCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *textLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *icon;
 
 @end

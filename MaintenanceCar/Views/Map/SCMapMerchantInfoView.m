@@ -72,18 +72,14 @@
 //        _specialLabel.hidden = NO;
 //        _specialLabel.text   = merchant.tags;
 //    }
-//    else
+    //    else
         _specialLabel.hidden = YES;
+    _merchantFlags = merchant.merchantFlags;
     
-    [[SCAllDictionary share] requestColorsExplain:^(NSDictionary *colors, NSDictionary *explain, NSDictionary *detail) {
-        _colors        = colors;
-        _merchantFlags = merchant.merchantFlags;
-        
-        _flagViewWidthConstraint.constant = _merchantFlags.count * 16.0f;
-        [_flagView needsUpdateConstraints];
-        [_flagView layoutIfNeeded];
-        [_flagView reloadData];
-    }];
+    _flagViewWidthConstraint.constant = _merchantFlags.count * 19.0f;
+    [_flagView needsUpdateConstraints];
+    [_flagView layoutIfNeeded];
+    [_flagView reloadData];
 }
 
 #pragma mark - Collection View Data Source Methods
@@ -95,9 +91,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     SCMerchantFlagCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SCMerchantFlagCell" forIndexPath:indexPath];
-    NSString *flag = _merchantFlags[indexPath.row];
-    cell.textLabel.text = flag;
-    cell.textLabel.backgroundColor = [self iconColorWithName:flag];
+    cell.icon.image = [UIImage imageNamed:[[SCAllDictionary share] imageNameOfFlag:_merchantFlags[indexPath.row]]];
     return cell;
 }
 

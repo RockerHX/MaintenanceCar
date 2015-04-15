@@ -45,7 +45,7 @@
 #pragma mark - Setter And Getter Methods
 - (NSString *)imageName
 {
-    return [self imageNameOfFlag:_flag];
+    return [[SCAllDictionary share] imageNameOfFlag:_flag];
 }
 
 @end
