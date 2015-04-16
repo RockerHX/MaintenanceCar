@@ -20,7 +20,6 @@ typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
 typedef NS_ENUM(NSInteger, SCHUDMode) {
     SCHUDModeDefault,
     SCHUDModeSendVerificationCode,
-    SCHUDModeCompareVerificationCode,
     SCHUDModeLogin
 };
 
@@ -67,9 +66,9 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     [self resignKeyBoard];
     
     if (![_phoneNumberTextField.text length])
-        [self showHUDAlertToViewController:self text:@"请输入手机号噢亲！" delay:0.5f];
+        [self showHUDAlertToViewController:self text:@"请输入手机号噢亲！"];
     else if (![_verificationCodeTextField.text length])
-        [self showHUDAlertToViewController:self text:@"请输入验证码噢亲！" delay:0.5f];
+        [self showHUDAlertToViewController:self text:@"请输入验证码噢亲！"];
     else if ([_phoneNumberTextField.text isEqualToString:@"18683858856"])
     {
         NSDictionary *userData = @{@"now": @"2015-04-14 16:29:47",
@@ -81,7 +80,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
             if ([responseObject[@"success"] isEqualToString:@"ok"])
                 [SCUserInfo share].addAliasSuccess = YES;
         }];
-        [self showHUDAlertToViewController:self tag:SCHUDModeLogin text:@"登录成功" delay:0.5f];
+        [self showHUDAlertToViewController:self tag:SCHUDModeLogin text:@"登录成功"];
     }
     else
     {
@@ -127,7 +126,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
         }
         else
         {
-            [weakSelf showHUDAlertToViewController:weakSelf text:@"手机号不对噢亲，请仔细检查！" delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf text:@"手机号不对噢亲，请仔细检查！"];
             return NO;
         }
     }];
@@ -243,11 +242,6 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
         case SCHUDModeSendVerificationCode:
         {
             [_verificationCodeTextField becomeFirstResponder];
-        }
-            break;
-        case SCHUDModeCompareVerificationCode:
-        {
-            [self showHUDAlertToViewController:self text:@"验证码不对噢亲！" delay:0.5f];
         }
             break;
         case SCHUDModeLogin:
