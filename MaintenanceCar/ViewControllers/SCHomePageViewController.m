@@ -53,9 +53,9 @@
     if ([segue.identifier isEqualToString:@"Wash"])
     {
         SCServiceMerchantListViewController *washMerchanListViewController = segue.destinationViewController;
-        washMerchanListViewController.isWash   = YES;
-        washMerchanListViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'洗'"];
-        washMerchanListViewController.title    = @"洗车美容";
+        washMerchanListViewController.query                                = [DefaultQuery stringByAppendingString:@" AND service:'洗'"];
+        washMerchanListViewController.title                                = @"洗车美容";
+        washMerchanListViewController.noBrand                              = YES;
     }
     else if ([segue.identifier isEqualToString:@"Repair"])
     {
@@ -174,7 +174,7 @@
     [_specialButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:special.pic_url] placeholderImage:[_specialButton backgroundImageForState:UIControlStateNormal]];
 }
 
-- (void)jumpToSpecialViewControllerWith:(SCSpecial *)special
+- (void)jumpToSpecialViewControllerWith:(SCSpecial *)special isOperate:(BOOL)isOperate
 {
     UIViewController *viewController;
     @try {
@@ -191,9 +191,8 @@
             viewController                                             = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCServiceMerchantListViewController"];
             SCServiceMerchantListViewController *specialViewController = (SCServiceMerchantListViewController *)viewController;
             specialViewController.query                                = special.query;
-            specialViewController.title                                = special.query;
-            specialViewController.isWash                               = YES;
-            specialViewController.isOperate                            = YES;
+            specialViewController.title                                = special.text;
+            specialViewController.isOperate                            = isOperate;
             [self.navigationController pushViewController:specialViewController animated:YES];
         }
     }
@@ -217,13 +216,13 @@
 #pragma mark - SCADViewDelegate Methods
 - (void)shouldEnter
 {
-    [self jumpToSpecialViewControllerWith:[SCAllDictionary share].special];
+    [self jumpToSpecialViewControllerWith:[SCAllDictionary share].special isOperate:NO];
 }
 
 #pragma mark - SCHomePageDetailViewDelegate Methods
 - (void)shouldShowOperatAd:(SCSpecial *)special
 {
-    [self jumpToSpecialViewControllerWith:special];
+    [self jumpToSpecialViewControllerWith:special isOperate:YES];
 }
 
 - (void)shouldAddCar
