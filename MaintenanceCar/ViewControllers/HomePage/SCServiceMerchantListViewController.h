@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet          UITableView *tableView;           // 商家列表View
 
 @property (nonatomic, copy)                      NSString *query;
-@property (nonatomic, assign)                        BOOL  isWash;
+@property (nonatomic, assign)                        BOOL  noBrand;
 @property (nonatomic, assign)                        BOOL  isOperate;
 
 // [地图]按钮触发事件

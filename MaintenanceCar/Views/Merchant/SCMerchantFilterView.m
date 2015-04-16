@@ -50,10 +50,10 @@
 }
 
 #pragma mark - Setter And Getter Methods
-- (void)setIsWash:(BOOL)isWash
+- (void)setNoBrand:(BOOL)noBrand
 {
-    _isWash = isWash;
-    if (isWash)
+    _noBrand = noBrand;
+    if (noBrand)
     {
         _buttonWidth.constant = ZERO_POINT;
         [_repairTypeButton setTitle:@"" forState:UIControlStateNormal];
@@ -70,7 +70,6 @@
     _filterPopView.delegate = self;     // 设置弹出视图代理，以便回调方法触发
     
     self.hidden = YES;
-    self.isWash = NO;
 }
 
 - (void)viewConfig

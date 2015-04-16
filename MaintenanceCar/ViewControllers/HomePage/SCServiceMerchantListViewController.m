@@ -15,7 +15,6 @@
 #import "SCMapViewController.h"
 #import "SCMerchantFilterView.h"
 #import "SCStarView.h"
-#import "SCAllDictionary.h"
 
 @interface SCServiceMerchantListViewController () <UITableViewDelegate, UITableViewDataSource, SCMerchantFilterViewDelegate>
 {
@@ -23,6 +22,7 @@
     
     NSString       *_requestQuery;
     NSString       *_distanceCondition;
+    NSString       *_majorsCondition;
 }
 
 @property (nonatomic, assign) NSInteger      offset;        // 商家列表请求偏移量，用户上拉刷新的分页请求操作
@@ -43,7 +43,9 @@
 {
     [super viewDidAppear:animated];
     
-    _merchantFilterView.isWash = _isWash;
+    _merchantFilterView.noBrand = _noBrand;
+    if (_isOperate)
+        _merchantFilterView.otherFilterButton.enabled = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -64,6 +66,28 @@
     [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(upRefreshMerchantList)];
     [self.tableView.footer setHidden:YES];
     [self refreshMerchantList];
+}
+
+#pragma mark - Config Methods
+/**
+ *  初始化配置，列表设置，全局变量初始化都放在这里
+ */
+- (void)initConfig
+{
+    _offset                      = 0;                   // 第一次进入商家列表列表请求偏移量必须为0
+    _distanceCondition           = @(MerchantListRadius).stringValue;
+    _majorsCondition             = @"";
+    
+    _merchantList                = [@[] mutableCopy];   // 商家列表容器初始化
+    _merchantFilterView.delegate = self;
+}
+
+- (void)viewConfig
+{
+    _tableView.scrollsToTop      = YES;
+    _tableView.tableFooterView   = [[UIView alloc] init];       // 设置footer视图，防止数据不够，显示多余的列表栏
+    
+    [_merchantFilterView.otherFilterButton setTitle:self.title forState:UIControlStateNormal];
 }
 
 #pragma mark - Table View Data Source Methods
@@ -114,26 +138,6 @@
 }
 
 #pragma mark - Private Methods
-/**
- *  初始化配置，列表设置，全局变量初始化都放在这里
- */
-- (void)initConfig
-{
-    _offset                      = 0;                   // 第一次进入商家列表列表请求偏移量必须为0
-    _distanceCondition           = @(MerchantListRadius).stringValue;
-
-    _merchantList                = [@[] mutableCopy];   // 商家列表容器初始化
-    _merchantFilterView.delegate = self;
-}
-
-- (void)viewConfig
-{
-    _tableView.scrollsToTop      = YES;
-    _tableView.tableFooterView   = [[UIView alloc] init];       // 设置footer视图，防止数据不够，显示多余的列表栏
-    
-    [_merchantFilterView.otherFilterButton setTitle:self.title forState:UIControlStateNormal];
-}
-
 - (void)refreshMerchantList
 {
     [self showHUDOnViewController:self];
@@ -168,13 +172,13 @@
 {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
-    NSDictionary *parameters     = @{@"query": _requestQuery,
-                                     @"limit": @(MerchantListLimit),
-                                    @"offset": @(_offset),
-                                    @"radius": _distanceCondition,
-                                      @"flag": @"1",
-                                @"longtitude": longitude,
-                                  @"latitude": latitude};
+    NSDictionary *parameters = @{@"query": _requestQuery,
+                                 @"limit": @(MerchantListLimit),
+                                @"offset": @(_offset),
+                                @"radius": _distanceCondition,
+                                  @"flag": @"1",
+                            @"longtitude": longitude,
+                              @"latitude": latitude};
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
             [weakSelf refreshMerchantListWithListData:responseObject];
@@ -191,12 +195,13 @@
 {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
-    NSDictionary *parameters     = @{@"product_tag": _requestQuery,
-                                           @"limit": @(MerchantListLimit),
-                                          @"offset": @(_offset),
-                                          @"radius": _distanceCondition,
-                                      @"longtitude": longitude,
-                                        @"latitude": latitude};
+    NSDictionary *parameters = @{@"product_tag": _requestQuery,
+                                       @"limit": @(MerchantListLimit),
+                                      @"offset": @(_offset),
+                                      @"radius": _distanceCondition,
+                                      @"majors": _majorsCondition,
+                                  @"longtitude": longitude,
+                                    @"latitude": latitude};
     [[SCAPIRequest manager] startOperateMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
             [weakSelf refreshMerchantListWithListData:responseObject];
@@ -247,17 +252,21 @@
     _offset                   = 0;
     [_merchantList removeAllObjects];
     
-    SCAllDictionary *allDictionary = [SCAllDictionary share];
-    allDictionary.repairCondition  = @"";
-    allDictionary.otherCondition   = @"";
+    NSString *repairCondition = @"";
+    NSString *otherCondition  = @"";
     // 筛选条件，选择之后触发请求
     switch (type) {
         case SCFilterTypeRepair:
         {
-            if ([filterCondition isEqualToString:@"default"])
-                allDictionary.repairCondition = @"";
+            if (!_isOperate)
+            {
+                if ([filterCondition isEqualToString:@"default"])
+                    repairCondition = @"";
+                else
+                    repairCondition = [NSString stringWithFormat:@" AND majors:'%@'", filterCondition];
+            }
             else
-                allDictionary.repairCondition = [NSString stringWithFormat:@" AND majors:'%@'", filterCondition];
+                _majorsCondition = filterCondition;
         }
             break;
         case SCFilterTypeOther:
@@ -265,12 +274,12 @@
             if (![filterCondition isEqualToString:@"default"])
             {
                 if ([filterCondition isEqualToString:@"tag"])
-                    allDictionary.otherCondition = [NSString stringWithFormat:@" AND tags:'%@'", filterName];
+                    otherCondition = [NSString stringWithFormat:@" AND tags:'%@'", filterName];
                 else
-                    allDictionary.otherCondition = [NSString stringWithFormat:@" AND service:'%@'", filterCondition];
+                    otherCondition = [NSString stringWithFormat:@" AND service:'%@'", filterCondition];
             }
             else
-                allDictionary.otherCondition = @"";
+                otherCondition = @"";
         }
             break;
             
@@ -278,7 +287,7 @@
             _distanceCondition = [filterCondition isEqualToString:@"default"] ? @(MerchantListRadius).stringValue : filterCondition;
             break;
     }
-    _requestQuery = [NSString stringWithFormat:@"%@%@%@", _query, allDictionary.repairCondition, allDictionary.otherCondition];
+    _requestQuery = [NSString stringWithFormat:@"%@%@%@", _query, repairCondition, otherCondition];
     [self refreshMerchantList];
 }
 
