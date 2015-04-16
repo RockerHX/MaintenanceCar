@@ -186,6 +186,16 @@ static SCUserInfo *userInfo = nil;
             if (_block)
                 _block(weakSelf, NO);
         }];
+        if (_userCars.count)
+        {
+            if (_block)
+                _block(self, YES);
+        }
+        else
+        {
+            if (_block)
+                _block(self, NO);
+        }
     }
     else
     {
