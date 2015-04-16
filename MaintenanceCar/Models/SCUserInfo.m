@@ -134,9 +134,9 @@ static SCUserInfo *userInfo = nil;
 - (void)loginSuccessWithUserData:(NSDictionary *)userData
 {
     [USER_DEFAULT setObject:@(YES) forKey:kLoginKey];
-    [USER_DEFAULT setObject:userData[@"user_id"] forKey:kUserIDKey];
-    [USER_DEFAULT setObject:userData[@"phone"] forKey:kPhoneNumberKey];
-    [USER_DEFAULT setObject:userData[@"token"] forKey:kUserTokenKey];
+    [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"user_id"]] forKey:kUserIDKey];
+    [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"phone"]] forKey:kPhoneNumberKey];
+    [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"token"]] forKey:kUserTokenKey];
     [USER_DEFAULT synchronize];
     
     self.receiveMessage = YES;

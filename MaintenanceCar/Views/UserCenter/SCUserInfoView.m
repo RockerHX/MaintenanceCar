@@ -44,7 +44,7 @@
 
 - (void)changeCarData
 {
-    if (_delegate && [_delegate respondsToSelector:@selector(shouldChangeCarData:)])
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldChangeCarData:)] && [SCUserInfo share].cars.count)
         [_delegate shouldChangeCarData:_currentCar];
 }
 
@@ -58,6 +58,14 @@
     
     if (userInfo.loginStatus)
     {
+        UIImageView *carView = [[UIImageView alloc] init];
+        carView.image = [UIImage imageNamed:@"car"];
+        _userCarsView.items = @[carView];
+        
+        _carNameLabel.text = @"请在右上角添加车辆";
+        _carDataLabel.text = @"";
+        [_userCarsView begin:nil finished:nil];
+        
         __weak typeof(self)weakSelf = self;
         [userInfo userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
             if (userInfo.cars.count)
@@ -75,15 +83,6 @@
                     
                     [self displayLabelWithCar:[userInfo.cars firstObject]];
                 }
-            }
-            else
-            {
-                UIImageView *carView = [[UIImageView alloc] init];
-                carView.image = [UIImage imageNamed:@"car"];
-                _userCarsView.items = @[carView];
-                
-                _carNameLabel.text = @"请在右上角添加车辆";
-                _carDataLabel.text = @"";
             }
             
             [_userCarsView begin:^(NSInteger index) {

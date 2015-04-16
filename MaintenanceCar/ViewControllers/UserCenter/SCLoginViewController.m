@@ -145,11 +145,30 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     [[SCAPIRequest manager] startGetVerificationCodeAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
-            [weakSelf showHUDAlertToViewController:weakSelf tag:SCHUDModeSendVerificationCode text:@"验证码已发送,请注意查收" delay:0.5f];
+        {
+            NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
+            NSString *statusMessage = responseObject[@"status_message"];
+            switch (statusCode)
+            {
+                case SCAPIRequestErrorCodeNoError:
+                {
+                    [weakSelf showHUDAlertToViewController:weakSelf tag:SCHUDModeSendVerificationCode text:statusMessage];
+                }
+                    break;
+                case SCAPIRequestErrorCodePhoneError:
+                case SCAPIRequestErrorCodeVerificationCodeSendError:
+                    [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
+                    break;
+            }
+        }
         else
-            [weakSelf showHUDAlertToViewController:weakSelf text:@"获取出错，请重新获取" delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf text:@"获取出错，请重新获取"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [weakSelf showHUDAlertToViewController:weakSelf text:@"网络错误，请检查网络" delay:0.5f];
+        NSString *message = operation.responseObject[@"message"];
+        if (message)
+            [weakSelf showHUDAlertToViewController:weakSelf text:message];
+        else
+            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
         [_verificationCodeView stop];
     }];
 }
@@ -164,20 +183,36 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
                                   @"code": _verificationCodeTextField.text};
     [[SCAPIRequest manager] startLoginAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            [[SCUserInfo share] loginSuccessWithUserData:responseObject];
-            [UMessage addAlias:responseObject[@"phone"] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
-                if ([responseObject[@"success"] isEqualToString:@"ok"])
-                    [SCUserInfo share].addAliasSuccess = YES;
-            }];
-            [weakSelf showHUDAlertToViewController:weakSelf tag:SCHUDModeLogin text:@"登录成功" delay:0.5f];
+            NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
+            NSString *statusMessage = responseObject[@"status_message"];
+            switch (statusCode)
+            {
+                case SCAPIRequestErrorCodeNoError:
+                {
+                    [[SCUserInfo share] loginSuccessWithUserData:responseObject[@"data"]];
+                    [UMessage addAlias:responseObject[@"phone"] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
+                        if ([responseObject[@"success"] isEqualToString:@"ok"])
+                            [SCUserInfo share].addAliasSuccess = YES;
+                    }];
+                    [weakSelf showHUDAlertToViewController:weakSelf tag:SCHUDModeLogin text:statusMessage];
+                }
+                    break;
+                case SCAPIRequestErrorCodeVerificationCodeError:
+                    [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
+                    break;
+            }
         }
         else
-            [weakSelf showHUDAlertToViewController:weakSelf text:@"注册出错，请联系远景车联" delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf text:@"注册出错，请联系远景车联"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf hideHUDOnViewController:weakSelf];
-        [weakSelf showHUDAlertToViewController:weakSelf text:@"网络错误，请检查网络" delay:0.5f];
+        NSString *message = operation.responseObject[@"message"];
+        if (message)
+            [weakSelf showHUDAlertToViewController:weakSelf text:message];
+        else
+            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
     }];
 }
 
