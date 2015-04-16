@@ -58,13 +58,16 @@
     
     if (userInfo.loginStatus)
     {
-        UIImageView *carView = [[UIImageView alloc] init];
-        carView.image = [UIImage imageNamed:@"car"];
-        _userCarsView.items = @[carView];
-        
-        _carNameLabel.text = @"请在右上角添加车辆";
-        _carDataLabel.text = @"";
-        [_userCarsView begin:nil finished:nil];
+        if (!userInfo.cars.count)
+        {
+            UIImageView *carView = [[UIImageView alloc] init];
+            carView.image = [UIImage imageNamed:@"car"];
+            _userCarsView.items = @[carView];
+            
+            _carNameLabel.text = @"请在右上角添加车辆";
+            _carDataLabel.text = @"";
+            [_userCarsView begin:nil finished:nil];
+        }
         
         __weak typeof(self)weakSelf = self;
         [userInfo userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
