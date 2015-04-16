@@ -40,9 +40,6 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
 @property (nonatomic, strong, readonly) NSArray *repairConditions;            // 品牌筛选条件集合
 @property (nonatomic, strong, readonly) NSArray *otherConditions;             // 业务筛选条件集合
 
-@property (nonatomic, copy) NSString *repairCondition;            // 品牌筛选条件
-@property (nonatomic, copy) NSString *otherCondition;             // 业务筛选条件
-
 /**
  *  SCAllDictionary单例方法
  *

@@ -51,9 +51,6 @@ static SCAllDictionary *allDictionary = nil;
         [filterConditions setObject:repairConditions forKey:RepairConditionKey];
         [filterConditions setObject:otherConditions forKey:OtherConditionKey];
         _filterConditions = filterConditions;
-        
-        _repairCondition = @"";
-        _otherCondition  = @"";
     }
     return self;
 }
