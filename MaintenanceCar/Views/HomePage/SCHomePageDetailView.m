@@ -122,24 +122,29 @@
     }
     else
     {
-        _canTap  = YES;
+        [self handleInfoViewWithCanTap:YES];
         _promptLabel.text = @"点击加车";
     }
 }
 
 - (void)handelReservationInfo
 {
-    _canTap                    = YES;
-    _promptLabel.hidden        = YES;
-
-    _merchantNameLabel.hidden  = NO;
-    _serviceNameLabel.hidden   = NO;
-    _servicePromptLabel.hidden = NO;
-    _serviceDaysLabel.hidden   = NO;
+    [self handleInfoViewWithCanTap:NO];
 
     _merchantNameLabel.text    = _reservation.company_name;
     _serviceDaysLabel.text     = [self expiredPrompt];
     [self refreshServiceNameLabel];
+}
+
+- (void)handleInfoViewWithCanTap:(BOOL)canTap
+{
+    _canTap                    = canTap;
+    _promptLabel.hidden        = !canTap;
+    
+    _merchantNameLabel.hidden  = canTap;
+    _serviceNameLabel.hidden   = canTap;
+    _servicePromptLabel.hidden = canTap;
+    _serviceDaysLabel.hidden   = canTap;
 }
 
 - (void)refreshServiceNameLabel
@@ -227,12 +232,24 @@
         [[SCAPIRequest manager] startHomePageReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
             {
-                _reservation = [[SCReservation alloc] initWithDictionary:responseObject error:nil];
-                [weakSelf displayDetailView];
+                if ([responseObject[@"status_code"] integerValue] == SCAPIRequestErrorCodeNoError)
+                {
+                    _reservation = [[SCReservation alloc] initWithDictionary:responseObject[@"data"] error:nil];
+                    [weakSelf displayDetailView];
+                }
+                else
+                {
+                    _reservation = nil;
+                    [weakSelf getUserCar];
+                }
             }
             else
+            {
+                _reservation = nil;
                 [weakSelf getUserCar];
+            }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            _reservation = nil;
             [weakSelf getUserCar];
         }];
     }
