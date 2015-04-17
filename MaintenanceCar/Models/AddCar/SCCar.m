@@ -10,4 +10,14 @@
 
 @implementation SCCar
 
+- (id)initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err
+{
+    self = [super initWithDictionary:dict error:err];
+    if (self)
+    {
+        _car_id = @"";
+    }
+    return self;
+}
+
 @end

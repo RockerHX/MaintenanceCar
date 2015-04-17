@@ -177,12 +177,12 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 // 添加车辆确认提示
 - (void)showAlert:(SCCar *)car
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"您选择的是%@ %@", car.car_full_model, (car.up_time ? car.up_time : @"")]
-                                                        message:@"您确认添加吗？"
-                                                       delegate:self
-                                              cancelButtonTitle:@"取消"
-                                              otherButtonTitles:@"添加", nil];
-    [alertView show];
+    NSString *title;
+    if (car.car_id.length)
+        title = [NSString stringWithFormat:@"您选择的是%@ %@", car.car_full_model, (car.up_time ? car.up_time : @"")];
+    else
+        title = [NSString stringWithFormat:@"您选择的是%@ %@", car.brand_name, car.model_name];
+    [self showAlertWithTitle:title message:@"您确认添加吗？" delegate:self tag:Zero cancelButtonTitle:@"取消" otherButtonTitle:@"添加"];
 }
 
 /**
