@@ -7,12 +7,12 @@
 //
 
 #import "SCReservationViewController.h"
-#import "SCServiceItem.h"
 #import "SCPickerView.h"
 #import "SCReservationDateViewController.h"
 #import "SCAllDictionary.h"
+#import "SCAddCarViewController.h"
 
-@interface SCReservationViewController () <UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, SCPickerViewDelegate, SCReservationDateViewControllerDelegate>
+@interface SCReservationViewController () <UITextFieldDelegate, UIAlertViewDelegate, SCPickerViewDelegate, SCReservationDateViewControllerDelegate, SCAddCarViewControllerDelegate>
 {
     NSString *_selectedCarID;
     NSString *_reservationDate;
@@ -49,7 +49,7 @@
 
 - (void)dealloc
 {
-    [NOTIFICATION_CENTER removeObserver:self name:kUserCarsDataNeedReloadSuccess object:nil];
+    [NOTIFICATION_CENTER removeObserver:self name:kUserCarsDataNeedReloadSuccessNotification object:nil];
 }
 
 #pragma mark - Config Methods
@@ -60,36 +60,23 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // 设置商家名称显示
+    _price = @"";
+    _selectedCarID = @"";
     _merchantNameLabel.text = _merchant.name;
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(refresh) name:kUserCarsDataNeedReloadSuccess object:nil];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(refresh) name:kUserCarsDataNeedReloadSuccessNotification object:nil];
 }
 
 - (void)viewConfig
 {
     _reservationButton.layer.cornerRadius   = 5.0f;
     _ownerNameTextField.leftViewMode        = UITextFieldViewModeAlways;
-    _ownerNameTextField.leftView            = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
+    _ownerNameTextField.leftView            = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
     _ownerPhoneNumberTextField.leftViewMode = UITextFieldViewModeAlways;
-    _ownerPhoneNumberTextField.leftView     = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
-    _ownerPhoneNumberTextField.text         = [USER_DEFAULT objectForKey:kPhoneNumberKey];
+    _ownerPhoneNumberTextField.leftView     = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
+    _ownerPhoneNumberTextField.text         = [SCUserInfo share].phoneNmber;
     _remarkTextField.leftViewMode           = UITextFieldViewModeAlways;
-    _remarkTextField.leftView               = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 5.0f, 1.0f)];
+    _remarkTextField.leftView               = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
     
-    if (!_serviceItem)
-    {
-        __weak typeof(self) weakSelf = self;
-        [[SCAllDictionary share] requestWithType:SCDictionaryTypeReservationType finfish:^(NSArray *items) {
-            for (SCDictionaryItem *item in items)
-            {
-                if ([item.dict_id isEqualToString:weakSelf.reservationType])
-                {
-                    _serviceItem = [[SCServiceItem alloc] initWithServiceID:item.dict_id serviceName:item.name];
-                    break;
-                }
-            }
-            [weakSelf refreshProjectLabel];
-        }];
-    }
     [self refreshProjectLabel];
     
     NSArray *items = [SCUserInfo share].selectedItems;
@@ -121,7 +108,7 @@
     SCPickerView *pickerView = nil;
     if (indexPath.row == 3)
         pickerView = [[SCPickerView alloc] initWithItems:nil type:SCPickerTypeCar delegate:self];
-    else if ((indexPath.row == 4) && !_isGroup)
+    else if ((indexPath.row == 4) && _canChange)
         pickerView = [[SCPickerView alloc] initWithItems:nil type:SCPickerTypeService delegate:self];
     [pickerView show];
 }
@@ -178,7 +165,8 @@
  */
 - (void)startMerchantReservationRequest
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self showHUDOnViewController:self];
+    __weak typeof(self)weakSelf = self;
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                               @"company_id": _merchant.company_id,
                                     @"type": _reservationType,
@@ -186,19 +174,25 @@
                            @"reserve_phone": _ownerPhoneNumberTextField.text,
                                  @"content": _remarkTextField.text,
                                     @"time": _reservationDate,
-                             @"user_car_id": _selectedCarID};
+                             @"user_car_id": _selectedCarID,
+                                   @"price": _price};
     [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
-            [self showHUDAlertToViewController:self tag:Zero text:@"恭喜您，已经预约成功!" delay:0.5f];
+        {
+            NSString *statusMessage = responseObject[@"status_message"];
+            if (statusMessage && ![statusMessage isKindOfClass:[NSNull class]])
+                [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:statusMessage];
+        }
         else
-            [self showHUDAlertToViewController:self text:@"很抱歉，预约未成功，请重试!" delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf text:DataError];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        if (operation.response.statusCode == SCAPIRequestStatusCodeError)
-            [self showHUDAlertToViewController:self tag:Zero text:@"预约时间已过，请重选时间!" delay:0.5f];
+        [weakSelf hideHUDOnViewController:weakSelf];
+        NSString *message = operation.responseObject[@"message"];
+        if (message)
+            [weakSelf showHUDAlertToViewController:weakSelf text:message];
         else
-            [self showHUDAlertToViewController:self text:@"网络异常，请重试!" delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
     }];
 }
 
@@ -226,22 +220,22 @@
 {
     if (![_ownerNameTextField.text length])
     {
-        [self showHUDAlertToViewController:self text:@"请输入您的姓名!" delay:0.5f];
+        [self showHUDAlertToViewController:self text:@"请输入您的姓名!"];
         return NO;
     }
     else if (![_ownerPhoneNumberTextField.text length])
     {
-        [self showHUDAlertToViewController:self text:@"请输入您的手机号码!" delay:0.5f];
+        [self showHUDAlertToViewController:self text:@"请输入您的手机号码!"];
         return NO;
     }
     else if (!_reservationType)
     {
-        [self showHUDAlertToViewController:self text:@"请选择您需要预约的类型!" delay:0.5f];
+        [self showHUDAlertToViewController:self text:@"请选择您需要预约的类型!"];
         return NO;
     }
     else if (!_reservationDate)
     {
-        [self showHUDAlertToViewController:self text:@"请选择您需要预约的日期!" delay:0.5f];
+        [self showHUDAlertToViewController:self text:@"请选择您需要预约的日期!"];
         return NO;
     }
     else
@@ -290,6 +284,8 @@
                 {
                     @try {
                         UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
+                        SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
+                        addCarViewController.delegate = self;
                         [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
                     }
                     @catch (NSException *exception) {
@@ -328,6 +324,13 @@
 {
     _reservationDate = requestDate;
     [self displayDateItemWithDate:requestDate displayDate:displayDate];
+}
+
+#pragma mark - SCAddCarViewController Delegate Methods
+- (void)addCarSuccess:(SCCar *)car
+{
+    _selectedCarID = car.user_car_id;
+    _carLabel.text = [car.brand_name stringByAppendingString:car.model_name];
 }
 
 @end

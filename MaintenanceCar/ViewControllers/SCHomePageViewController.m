@@ -53,9 +53,9 @@
     if ([segue.identifier isEqualToString:@"Wash"])
     {
         SCServiceMerchantListViewController *washMerchanListViewController = segue.destinationViewController;
-        washMerchanListViewController.isWash   = YES;
-        washMerchanListViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'洗'"];
-        washMerchanListViewController.title    = @"洗车美容";
+        washMerchanListViewController.query                                = [DefaultQuery stringByAppendingString:@" AND service:'洗'"];
+        washMerchanListViewController.title                                = @"洗车美容";
+        washMerchanListViewController.noBrand                              = YES;
     }
     else if ([segue.identifier isEqualToString:@"Repair"])
     {
@@ -174,35 +174,32 @@
     [_specialButton setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:special.pic_url] placeholderImage:[_specialButton backgroundImageForState:UIControlStateNormal]];
 }
 
-- (void)jumpToSpecialViewControllerWith:(SCSpecial *)special
+- (void)jumpToSpecialViewControllerWith:(SCSpecial *)special isOperate:(BOOL)isOperate
 {
-    if (special.html)
-    {
-        @try {
-            SCWebViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
+    UIViewController *viewController;
+    @try {
+        if (special.html)
+        {
+            viewController                         = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
+            SCWebViewController *webViewController = (SCWebViewController *)viewController;
             webViewController.title                = special.text;
             webViewController.loadURL              = special.url;
             [self.navigationController pushViewController:webViewController animated:YES];
         }
-        @catch (NSException *exception) {
-            NSLog(@"SCHomePageViewController Go to the SCWebViewController exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
-    }
-    else
-    {
-        @try {
-            SCServiceMerchantListViewController *specialViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCServiceMerchantListViewController"];
-            specialViewController.query    = [DefaultQuery stringByAppendingFormat:@" AND %@", special.query];
-            specialViewController.title    = special.text;
+        else
+        {
+            viewController                                             = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCServiceMerchantListViewController"];
+            SCServiceMerchantListViewController *specialViewController = (SCServiceMerchantListViewController *)viewController;
+            specialViewController.query                                = special.query;
+            specialViewController.title                                = special.text;
+            specialViewController.isOperate                            = isOperate;
             [self.navigationController pushViewController:specialViewController animated:YES];
         }
-        @catch (NSException *exception) {
-            NSLog(@"SCHomePageViewController Go to the SCServiceMerchantListViewController exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCHomePageViewController Go to the %@ exception reasion:%@", exception.reason, [viewController class]);
+    }
+    @finally {
     }
 }
 
@@ -219,13 +216,13 @@
 #pragma mark - SCADViewDelegate Methods
 - (void)shouldEnter
 {
-    [self jumpToSpecialViewControllerWith:[SCAllDictionary share].special];
+    [self jumpToSpecialViewControllerWith:[SCAllDictionary share].special isOperate:NO];
 }
 
 #pragma mark - SCHomePageDetailViewDelegate Methods
 - (void)shouldShowOperatAd:(SCSpecial *)special
 {
-    [self jumpToSpecialViewControllerWith:special];
+    [self jumpToSpecialViewControllerWith:special isOperate:YES];
 }
 
 - (void)shouldAddCar

@@ -8,7 +8,9 @@
 
 #import "SCReservatAlertView.h"
 #import <MBProgressHUD/MBProgressHUD.h>
-#import "MicroCommon.h"
+#import "UIConstants.h"
+#import "MicroConstants.h"
+#import "VersionConstants.h"
 #import "AppDelegate.h"
 #import "SCAllDictionary.h"
 #import "SCReservationItemCell.h"
@@ -68,9 +70,9 @@
     {
         case SCAlertAnimationEnlarge:
         {
-            [UIView animateWithDuration:0.2f delay:DOT_COORDINATE options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            [UIView animateWithDuration:0.2f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 _alertView.transform = CGAffineTransformIdentity;
-                weakSelf.alpha = DOT_COORDINATE;
+                weakSelf.alpha = ZERO_POINT;
             } completion:^(BOOL finished) {
                 [weakSelf removeFromSuperview];
             }];
@@ -79,7 +81,7 @@
         case SCAlertAnimationMove:
         {
             [UIView animateWithDuration:0.2f animations:^{
-                weakSelf.alpha = DOT_COORDINATE;
+                weakSelf.alpha = ZERO_POINT;
             } completion:^(BOOL finished) {
                 [weakSelf removeFromSuperview];
             }];
@@ -109,7 +111,7 @@
     {
         case SCAlertAnimationEnlarge:
         {
-            [UIView animateWithDuration:0.3f delay:DOT_COORDINATE options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            [UIView animateWithDuration:0.3f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 weakSelf.alpha = 1.0f;
                 _alertView.hidden = NO;
                 _alertView.transform = CGAffineTransformMakeScale(1.15f, 1.15f);
@@ -120,14 +122,14 @@
             break;
         case SCAlertAnimationMove:
         {
-            [UIView animateWithDuration:0.2f delay:DOT_COORDINATE options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            [UIView animateWithDuration:0.2f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 weakSelf.alpha = 1.0f;
             } completion:^(BOOL finished) {
-                [UIView animateWithDuration:0.2f delay:DOT_COORDINATE options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                [UIView animateWithDuration:0.2f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseInOut animations:^{
                     _alertView.hidden = NO;
                     _alertView.transform = CGAffineTransformMakeScale(0.7f, 0.7f);
                 } completion:^(BOOL finished) {
-                    [UIView animateWithDuration:0.1f delay:DOT_COORDINATE options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                    [UIView animateWithDuration:0.1f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseInOut animations:^{
                         _alertView.transform = CGAffineTransformMakeScale(1.3f, 1.3f);
                     } completion:^(BOOL finished) {
                         [UIView animateWithDuration:0.1f animations:^{

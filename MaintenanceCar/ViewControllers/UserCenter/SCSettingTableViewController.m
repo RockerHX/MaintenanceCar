@@ -38,12 +38,6 @@
     [self viewConfig];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table View Delegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -106,6 +100,7 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
     _logoutView.hidden = YES;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Alert View Delegate Methods

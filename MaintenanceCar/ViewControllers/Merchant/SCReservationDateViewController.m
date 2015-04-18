@@ -69,8 +69,8 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 
 - (void)viewConfig
 {
-    CGFloat promptFontSize = DOT_COORDINATE;
-    CGFloat subPromptFontSize = DOT_COORDINATE;
+    CGFloat promptFontSize = ZERO_POINT;
+    CGFloat subPromptFontSize = ZERO_POINT;
     if (IS_IPHONE_6Plus)
     {
         promptFontSize = 20.0f;
@@ -95,12 +95,11 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 - (void)startReservationItemsRequest
 {
     [self showHUDOnViewController:self];
-    
     __weak typeof(self)weakSelf = self;
     NSDictionary *parameters = @{@"company_id": _companyID,
                                        @"type": _type};
     [[SCAPIRequest manager] startGetReservationItemNumAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [weakSelf hideHUDOnViewController:self];
+        [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             _dateItmes = responseObject;
@@ -112,18 +111,20 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
             [_selectedCollectionView reloadData];
         }
         else
-            [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:NetWorkError delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:DataError];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeDataError)
-            [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:DataError delay:0.5f];
+        [weakSelf hideHUDOnViewController:weakSelf];
+        NSString *message = operation.responseObject[@"message"];
+        if (message)
+            [weakSelf showHUDAlertToViewController:weakSelf text:message];
         else
-            [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:NetWorkError delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
     }];
 }
 
 - (CGFloat)itemWidthWithInde:(NSInteger)index
 {
-    CGFloat itemWidth = DOT_COORDINATE;
+    CGFloat itemWidth = ZERO_POINT;
     if (index)
     {
         if (IS_IPHONE_6Plus)
@@ -290,7 +291,7 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
     // 保存成功，返回上一页
-    [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
+    [self hideHUDOnViewController:self];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

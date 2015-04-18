@@ -20,7 +20,31 @@
 }
 
 #pragma mark - Public Methods
-- (id)initWithServiceID:(NSString *)serviceID serviceName:(NSString *)serviceName
+- (instancetype)initWithServiceID:(NSString *)serviceID
+{
+    NSString *serviceName;
+    switch ([serviceID integerValue])
+    {
+        case 1:
+            serviceName = @"洗车美容";
+            break;
+        case 2:
+            serviceName = @"保养";
+            break;
+        case 3:
+            serviceName = @"维修";
+            break;
+        case 4:
+            serviceName = @"团购";
+            break;
+        case 5:
+            serviceName = @"免费检测";
+            break;
+    }
+    return [self initWithServiceID:serviceID serviceName:serviceName];
+}
+
+- (instancetype)initWithServiceID:(NSString *)serviceID serviceName:(NSString *)serviceName
 {
     self = [super init];
     if (self) {

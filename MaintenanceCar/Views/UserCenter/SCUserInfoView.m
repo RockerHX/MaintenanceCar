@@ -7,10 +7,12 @@
 //
 
 #import "SCUserInfoView.h"
-#import "MicroCommon.h"
 #import <SCLoopScrollView/SCLoopScrollView.h>
 
 @implementation SCUserInfoView
+{
+    SCUserCar *_currentCar;
+}
 
 #pragma mark - Init Methods
 - (void)awakeFromNib
@@ -29,6 +31,21 @@
 - (void)viewConfig
 {
     _loginButton.layer.cornerRadius = 8.0f;
+    
+    [_carInfoView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeCarData)]];
+}
+
+- (void)displayLabelWithCar:(SCUserCar *)car
+{
+    _currentCar = car;
+    _carNameLabel.text = [NSString stringWithFormat:@"%@%@", _currentCar.brand_name, _currentCar.model_name];
+    _carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", _currentCar.run_distance.length ? _currentCar.run_distance : @"0"];
+}
+
+- (void)changeCarData
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldChangeCarData:)] && [SCUserInfo share].cars.count)
+        [_delegate shouldChangeCarData:_currentCar];
 }
 
 #pragma mark - Public Methods
@@ -41,6 +58,17 @@
     
     if (userInfo.loginStatus)
     {
+        if (!userInfo.cars.count)
+        {
+            UIImageView *carView = [[UIImageView alloc] init];
+            carView.image = [UIImage imageNamed:@"car"];
+            _userCarsView.items = @[carView];
+            
+            _carNameLabel.text = @"请在右上角添加车辆";
+            _carDataLabel.text = @"";
+            [_userCarsView begin:nil finished:nil];
+        }
+        
         __weak typeof(self)weakSelf = self;
         [userInfo userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
             if (userInfo.cars.count)
@@ -56,31 +84,18 @@
                     }
                     _userCarsView.items = items;
                     
-                    SCUserCar *car = [userInfo.cars firstObject];
-                    _carNameLabel.text = [NSString stringWithFormat:@"%@%@", car.brand_name, car.model_name];
-                    _carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", car.run_distance.length ? car.run_distance : @"0"];
+                    [self displayLabelWithCar:[userInfo.cars firstObject]];
                 }
-            }
-            else
-            {
-                UIImageView *carView = [[UIImageView alloc] init];
-                carView.image = [UIImage imageNamed:@"car"];
-                _userCarsView.items = @[carView];
-                
-                _carNameLabel.text = @"请在右上角添加车辆";
-                _carDataLabel.text = @"";
             }
             
             [_userCarsView begin:^(NSInteger index) {
                 if (userInfo.cars.count)
                 {
                     if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(shouldChangeCarData:)])
-                        [weakSelf.delegate shouldChangeCarData:[SCUserInfo share].cars[index]];
+                        [weakSelf.delegate shouldChangeCarData:userInfo.cars[index]];
                 }
             } finished:^(NSInteger index) {
-                SCUserCar *car = userInfo.cars[index];
-                weakSelf.carNameLabel.text = [NSString stringWithFormat:@"%@%@", car.brand_name, car.model_name];
-                weakSelf.carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", car.run_distance.length ? car.run_distance : @"0"];
+                [weakSelf displayLabelWithCar:userInfo.cars[index]];
             }];
         }];
     }

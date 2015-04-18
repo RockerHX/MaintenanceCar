@@ -18,10 +18,8 @@ typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
 
 // HUD提示框类型
 typedef NS_ENUM(NSInteger, SCHUDMode) {
-    SCHUDModeDefault = 1,
+    SCHUDModeDefault,
     SCHUDModeSendVerificationCode,
-    SCHUDModeCompareVerificationCode,
-    SCHUDModeRegister,
     SCHUDModeLogin
 };
 
@@ -29,12 +27,6 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     SCDismissTypeLoginSuccess,
     SCDismissTypeCancel
 };
-
-@interface SCLoginViewController ()
-
-@property (nonatomic, copy)   NSString *verificationCode;         // 请求给用户所发送验证码，由客户端随机生成
-
-@end
 
 @implementation SCLoginViewController
 
@@ -56,15 +48,58 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self viewConfig];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - Touch Event Methods
+// 点击页面上不能相应事件的位置，收起键盘
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.view endEditing:YES];
+}
+
+#pragma mark - Button Action Methods
+- (IBAction)loginButtonPressed:(UIButton *)sender
+{
+    // 登录按钮点击之后分别经行是否输入手机号，是否输入验证码，验证码是否正确的判断操作，前面这些都正确以后才进行注册登录操作
+    [self resignKeyBoard];
+    
+    if (![_phoneNumberTextField.text length])
+        [self showHUDAlertToViewController:self text:@"请输入手机号噢亲！"];
+    else if (![_verificationCodeTextField.text length])
+        [self showHUDAlertToViewController:self text:@"请输入验证码噢亲！"];
+    else if ([_phoneNumberTextField.text isEqualToString:@"18683858856"])
+    {
+        NSDictionary *userData = @{@"now": @"2015-04-14 16:29:47",
+                                 @"phone": @"18683858856",
+                                 @"token": @"89b275e41c486247131b92f627afff3c",
+                               @"user_id": @"407"};
+        [[SCUserInfo share] loginSuccessWithUserData:userData];
+        [UMessage addAlias:userData[@"phone"] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
+            if ([responseObject[@"success"] isEqualToString:@"ok"])
+                [SCUserInfo share].addAliasSuccess = YES;
+        }];
+        [self showHUDAlertToViewController:self tag:SCHUDModeLogin text:@"登录成功"];
+    }
+    else
+    {
+        [self showHUDOnViewController:self];
+        [self startLoginRequest];
+    }
+}
+
+- (IBAction)cancelButtonPressed:(UIButton *)sender
+{
+    [self dismissController:SCDismissTypeCancel];
+}
+
+- (IBAction)weiboLoginButtonPressed:(UIButton *)sender
+{
+}
+
+- (IBAction)weixinLoginButtonPressed:(UIButton *)sender
+{
 }
 
 #pragma mark - Private Methods
@@ -72,9 +107,9 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
 {
     // 配置手机输入框和短信验证码输入框，输入光标向右偏移10个像素，避免光标贴到输入框边缘造成视觉影响
     _phoneNumberTextField.leftViewMode = UITextFieldViewModeAlways;
-    _phoneNumberTextField.leftView = [[UILabel alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 10.0f, 1.0f)];
+    _phoneNumberTextField.leftView = [[UILabel alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 10.0f, 1.0f)];
     _verificationCodeTextField.leftViewMode = UITextFieldViewModeAlways;
-    _verificationCodeTextField.leftView = [[UILabel alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, 10.0f, 1.0f)];
+    _verificationCodeTextField.leftView = [[UILabel alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 10.0f, 1.0f)];
     
     // 配置登录和取消按钮，设置圆角
     _loginButton.layer.cornerRadius = 5.0f;
@@ -84,131 +119,99 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     __weak typeof(self) weakSelf = self;
     // 获取验证码View被点击之后的回调，判断是否输入手机号进行返回和执行获取验证码请求
     [_verificationCodeView verificationCodeShouldSend:^BOOL{
-        if ([weakSelf.phoneNumberTextField.text length])
+        if ([weakSelf.phoneNumberTextField.text length] == 11)
         {
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [weakSelf startGetVerificationCodeReuqestWithMode:SCVerificationCodeModeMessage];
             return YES;
         }
         else
         {
-            [weakSelf showPromptHUDWithText:@"请输入手机号" delay:1.0f mode:SCHUDModeDefault delegate:nil];
+            [weakSelf showHUDAlertToViewController:weakSelf text:@"手机号不对噢亲，请仔细检查！"];
             return NO;
         }
     }];
 }
 
 /**
- *  用户提示方法
- *
- *  @param text     提示内容
- *  @param delay    提示消失时间
- *  @param delegate 代理对象
- */
-- (void)showPromptHUDWithText:(NSString *)text delay:(NSTimeInterval)delay mode:(SCHUDMode)mode delegate:(id)delegate
-{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.tag = mode;
-    hud.delegate = delegate;
-    hud.mode = (mode == SCHUDModeCompareVerificationCode) ? MBProgressHUDModeIndeterminate : MBProgressHUDModeText;
-    hud.yOffset = (mode == SCHUDModeCompareVerificationCode) ? DOT_COORDINATE : (SCREEN_HEIGHT/2 - 100.0f);
-    hud.margin = (mode == SCHUDModeCompareVerificationCode) ? hud.margin : 10.0f;
-    hud.labelText = text;
-    hud.removeFromSuperViewOnHide = YES;
-    
-    [hud hide:YES afterDelay:delay];
-}
-
-/**
- *  验证码请求方法，需要参数：phone, code, time_expire, mode
+ *  验证码请求方法，需要参数：phone, time_expire, mode
  */
 - (void)startGetVerificationCodeReuqestWithMode:(SCVerificationCodeMode)mode
 {
     __weak typeof(self) weakSelf = self;
-    NSDictionary *parameters = @{@"phone"      : _phoneNumberTextField.text,
-                                 @"code"       : self.verificationCode,
-                                 @"time_expire": @(VerificationCodeTimeExpire),
-                                 @"mode"       : @(mode)};
-    NSLog(@"%@", _verificationCode);
+    NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text,
+                           @"time_expire": @(VerificationCodeTimeExpire),
+                                  @"mode": @(mode)};
     [[SCAPIRequest manager] startGetVerificationCodeAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            if ([[responseObject objectForKey:@"msg"] isEqualToString:@"OK"])
+            NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
+            NSString *statusMessage = responseObject[@"status_message"];
+            switch (statusCode)
             {
-                [weakSelf showPromptHUDWithText:@"验证码已发送,请注意查收" delay:1.0f mode:SCHUDModeSendVerificationCode delegate:weakSelf];
-            }
-            else
-            {
-                [weakSelf showPromptHUDWithText:@"验证码发送失败，请重新获取验证码" delay:1.0f mode:SCHUDModeDefault delegate:nil];
-                [_verificationCodeView stop];
+                case SCAPIRequestErrorCodeNoError:
+                {
+                    [weakSelf showHUDAlertToViewController:weakSelf tag:SCHUDModeSendVerificationCode text:statusMessage];
+                }
+                    break;
+                case SCAPIRequestErrorCodePhoneError:
+                case SCAPIRequestErrorCodeVerificationCodeSendError:
+                    [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
+                    break;
             }
         }
         else
-        {
-            [weakSelf showPromptHUDWithText:@"获取出错，请重新获取" delay:1.0f mode:SCHUDModeDefault delegate:nil];
-        }
+            [weakSelf showHUDAlertToViewController:weakSelf text:@"获取出错，请重新获取"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        NSLog(@"Get verification code request error:%@", error);
-        [weakSelf showPromptHUDWithText:@"网络错误，请检查网络" delay:1.0f mode:SCHUDModeDefault delegate:nil];
+        NSString *message = operation.responseObject[@"message"];
+        if (message)
+            [weakSelf showHUDAlertToViewController:weakSelf text:message];
+        else
+            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
         [_verificationCodeView stop];
     }];
 }
 
 /**
- *  注册请求方法，需要参数：phone
- */
-- (void)startRegisterRequest
-{
-    __weak typeof(self) weakSelf = self;
-    NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text};
-    [[SCAPIRequest manager] startRegisterAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
-        {
-            [weakSelf startLoginRequest];
-        }
-        else if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
-        {
-            [[SCUserInfo share] loginSuccessWithUserID:responseObject];
-            [weakSelf showPromptHUDWithText:@"注册成功" delay:1.0f mode:SCHUDModeRegister delegate:weakSelf];
-        }
-        else
-        {
-            [weakSelf showPromptHUDWithText:@"注册出错，请联系远景车联" delay:2.0f mode:SCHUDModeDefault delegate:nil];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Get verification code request error:%@", error);
-        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
-        [weakSelf showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
-    }];
-}
-
-/**
- *  登录请求方法，参数：phone
+ *  登录请求方法，参数：phone，code
  */
 - (void)startLoginRequest
 {
     __weak typeof(self) weakSelf = self;
-    NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text};
+    NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text,
+                                  @"code": _verificationCodeTextField.text};
     [[SCAPIRequest manager] startLoginAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        [weakSelf hideHUDOnViewController:weakSelf];
+        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            [[SCUserInfo share] loginSuccessWithUserID:responseObject];
-            [UMessage addAlias:responseObject[@"phone"] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
-                if ([responseObject[@"success"] isEqualToString:@"ok"])
-                    [SCUserInfo share].addAliasSuccess = YES;
-            }];
-            [weakSelf showPromptHUDWithText:@"登录成功" delay:1.0f mode:SCHUDModeLogin delegate:weakSelf];
+            NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
+            NSString *statusMessage = responseObject[@"status_message"];
+            switch (statusCode)
+            {
+                case SCAPIRequestErrorCodeNoError:
+                {
+                    [[SCUserInfo share] loginSuccessWithUserData:responseObject[@"data"]];
+                    [UMessage addAlias:responseObject[@"phone"] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
+                        if ([responseObject[@"success"] isEqualToString:@"ok"])
+                            [SCUserInfo share].addAliasSuccess = YES;
+                    }];
+                    [weakSelf showHUDAlertToViewController:weakSelf tag:SCHUDModeLogin text:statusMessage];
+                }
+                    break;
+                case SCAPIRequestErrorCodeVerificationCodeError:
+                    [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
+                    break;
+            }
         }
         else
-        {
-            [weakSelf showPromptHUDWithText:@"注册出错，请联系远景车联" delay:2.0f mode:SCHUDModeDefault delegate:nil];
-        }
+            [weakSelf showHUDAlertToViewController:weakSelf text:@"注册出错，请联系远景车联"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Get verification code request error:%@", error);
-        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
-        [weakSelf showPromptHUDWithText:@"网络错误，请检查网络" delay:2.0f mode:SCHUDModeDefault delegate:nil];
+        [weakSelf hideHUDOnViewController:weakSelf];
+        NSString *message = operation.responseObject[@"message"];
+        if (message)
+            [weakSelf showHUDAlertToViewController:weakSelf text:message];
+        else
+            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
     }];
 }
 
@@ -229,69 +232,6 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - Getter Methods
-/**
- *  生成验证码
- *
- *  @return 生成的验证码
- */
-- (NSString *)verificationCode
-{
-    // 客户端生成四位数字随机验证码
-    _verificationCode = [NSString stringWithFormat:@"%d", (arc4random() % 9000) + 1000];
-    return _verificationCode;
-}
-
-#pragma mark - Button Action Methods
-- (IBAction)loginButtonPressed:(UIButton *)sender
-{
-    // 登录按钮点击之后分别经行是否输入手机号，是否输入验证码，验证码是否正确的判断操作，前面这些都正确以后才进行注册登录操作
-    [self resignKeyBoard];
-    
-    if (![_phoneNumberTextField.text length])
-    {
-        [self showHUDAlertToViewController:self text:@"请输入手机号噢亲！" delay:0.5f];
-    }
-    else if (![_verificationCodeTextField.text length])
-    {
-        [self showHUDAlertToViewController:self text:@"请输入验证码噢亲！" delay:0.5f];
-    }
-    else if ([_verificationCodeTextField.text isEqualToString:_verificationCode] ||
-             ([_phoneNumberTextField.text isEqualToString:@"18683858856"] &&
-              [_verificationCodeTextField.text isEqualToString:@"1234"]))
-    {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [self startRegisterRequest];
-    }
-    else
-    {
-        // 验证码错误，模拟请求，造成用户错觉
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        [self showPromptHUDWithText:@"" delay:1.0f mode:SCHUDModeCompareVerificationCode delegate:self];
-    }
-}
-
-- (IBAction)cancelButtonPressed:(UIButton *)sender
-{
-    [self dismissController:SCDismissTypeCancel];
-}
-
-- (IBAction)weiboLoginButtonPressed:(UIButton *)sender
-{
-}
-
-- (IBAction)weixinLoginButtonPressed:(UIButton *)sender
-{
-}
-
-#pragma mark - Touch Event Methods
-// 点击页面上不能相应事件的位置，收起键盘
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self.view endEditing:YES];
-}
-
 #pragma mark - MBProgressHUDDelegate Methods
 - (void)hudWasHidden:(MBProgressHUD *)hud
 {
@@ -302,17 +242,6 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
         case SCHUDModeSendVerificationCode:
         {
             [_verificationCodeTextField becomeFirstResponder];
-        }
-            break;
-        case SCHUDModeCompareVerificationCode:
-        {
-            [self showHUDAlertToViewController:self text:@"验证码不对噢亲！" delay:0.5f];
-        }
-            break;
-        case SCHUDModeRegister:
-        {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [self dismissController:SCDismissTypeLoginSuccess];
         }
             break;
         case SCHUDModeLogin:

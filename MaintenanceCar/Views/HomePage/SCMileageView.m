@@ -7,7 +7,6 @@
 //
 
 #import "SCMileageView.h"
-#import "MicroCommon.h"
 
 #define BitsKey                 @"BitsKey"
 #define TenKey                  @"TenKey"

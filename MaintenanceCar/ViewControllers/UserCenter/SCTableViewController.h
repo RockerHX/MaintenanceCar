@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCViewController.h"
+#import "SCViewControllerCategory.h"
 #import <MJRefresh/MJRefresh.h>
 
 // 刷新操作的请求类型
@@ -49,6 +49,8 @@ typedef NS_ENUM(NSInteger, SCRequestRefreshType) {
  *  结束刷新
  */
 - (void)endRefresh;
+- (void)readdFooter;
+- (void)removeFooter;
 
 /**
  *  清空列表缓存数据

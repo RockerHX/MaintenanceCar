@@ -8,9 +8,16 @@
 
 #import "SCShowMoreCell.h"
 
-typedef NS_ENUM(NSInteger, SCSCShowMoreCellState) {
+@class SCGroupBase;
+
+typedef NS_ENUM(BOOL, SCSCShowMoreCellState) {
     SCSCShowMoreCellStateDown,
     SCSCShowMoreCellStateUp
+};
+
+typedef NS_ENUM(BOOL, SCGroupCellType) {
+    SCGroupCellTypeGroupProduct,
+    SCGroupCellTypeQuotedPrice
 };
 
 @interface SCShowMoreProductCell : SCShowMoreCell
@@ -19,7 +26,8 @@ typedef NS_ENUM(NSInteger, SCSCShowMoreCellState) {
 
 @property (nonatomic, assign)             NSInteger productCount;
 @property (nonatomic, assign) SCSCShowMoreCellState state;
+@property (nonatomic, assign)       SCGroupCellType cellType;
 
-- (void)displayCellWithProductCount:(NSInteger)productCount;
+- (void)displayCellWithMerchantGroup:(SCGroupBase *)group;
 
 @end

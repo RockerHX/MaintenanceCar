@@ -8,8 +8,16 @@
 
 #import "SCUserInfo.h"
 #import <UMengMessage/UMessage.h>
-#import "MicroCommon.h"
+#import "MicroConstants.h"
 #import "SCAPIRequest.h"
+
+#define kLoginKey               @"kLoginKey"
+#define kUserIDKey              @"kUserIDKey"
+#define kPhoneNumberKey         @"kPhoneNumberKey"
+#define kUserTokenKey           @"kUserTokenKey"
+#define kUserCarsKey            @"kUserCarsKey"
+#define kAddAliasKey            @"kAddAliasKey"
+#define kReceiveMessageKey      @"kReceiveMessageKey"
 
 typedef void(^BLOCK)(SCUserInfo *userInfo, BOOL finish);
 
@@ -56,12 +64,17 @@ static SCUserInfo *userInfo = nil;
 
 - (NSString *)phoneNmber
 {
-    return self.loginStatus ? [USER_DEFAULT objectForKey:kPhoneNumberKey] : nil;
+    return self.loginStatus ? [USER_DEFAULT objectForKey:kPhoneNumberKey] : @"";
+}
+
+- (NSString *)token
+{
+    return self.loginStatus ? [USER_DEFAULT objectForKey:kUserTokenKey] : @"";
 }
 
 - (SCLoginStatus)loginStatus
 {
-    return ([[USER_DEFAULT objectForKey:kLoginKey] boolValue] && [USER_DEFAULT objectForKey:kUserIDKey]) ? SCLoginStatusLogin : SCLoginStatusLogout;
+    return ([[USER_DEFAULT objectForKey:kLoginKey] boolValue] && [USER_DEFAULT objectForKey:kUserIDKey] && [USER_DEFAULT objectForKey:kUserTokenKey]) ? SCLoginStatusLogin : SCLoginStatusLogout;
 }
 
 - (BOOL)addAliasSuccess
@@ -118,11 +131,12 @@ static SCUserInfo *userInfo = nil;
 }
 
 #pragma mark - Public Methods
-- (void)loginSuccessWithUserID:(NSDictionary *)userData
+- (void)loginSuccessWithUserData:(NSDictionary *)userData
 {
     [USER_DEFAULT setObject:@(YES) forKey:kLoginKey];
-    [USER_DEFAULT setObject:userData[@"user_id"] forKey:kUserIDKey];
-    [USER_DEFAULT setObject:userData[@"phone"] forKey:kPhoneNumberKey];
+    [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"user_id"]] forKey:kUserIDKey];
+    [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"phone"]] forKey:kPhoneNumberKey];
+    [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"token"]] forKey:kUserTokenKey];
     [USER_DEFAULT synchronize];
     
     self.receiveMessage = YES;
@@ -136,6 +150,7 @@ static SCUserInfo *userInfo = nil;
     [USER_DEFAULT setObject:@(NO) forKey:kLoginKey];
     [USER_DEFAULT removeObjectForKey:kUserIDKey];
     [USER_DEFAULT removeObjectForKey:kPhoneNumberKey];
+    [USER_DEFAULT removeObjectForKey:kUserTokenKey];
     [USER_DEFAULT removeObjectForKey:kUserCarsKey];
     [USER_DEFAULT synchronize];
 }
@@ -160,9 +175,9 @@ static SCUserInfo *userInfo = nil;
 - (void)userCarsReuqest:(void (^)(SCUserInfo *, BOOL))block
 {
     _block = block;
-    __weak typeof(self)weakSelf = self;
     if (self.loginStatus)
     {
+        __weak typeof(self)weakSelf = self;
         NSDictionary *parameters = @{@"user_id": self.userID};
         [[SCAPIRequest manager] startGetUserCarsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
@@ -171,11 +186,21 @@ static SCUserInfo *userInfo = nil;
             if (_block)
                 _block(weakSelf, NO);
         }];
+        if (_userCars.count)
+        {
+            if (_block)
+                _block(self, YES);
+        }
+        else
+        {
+            if (_block)
+                _block(self, NO);
+        }
     }
     else
     {
         if (_block)
-            _block(weakSelf, NO);
+            _block(self, NO);
     }
 }
 

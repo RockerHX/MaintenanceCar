@@ -64,10 +64,38 @@
     [self viewConfig];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - Config Methods
+- (void)initConfig
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    // 配置百度地图
+    _mapView.frame             = self.view.bounds;          // 全屏显示
+    _mapView.buildingsEnabled  = YES;                       // 允许双指上下滑动展示3D建筑
+    _mapView.showsUserLocation = YES;                       // 显示定位图层
+    _mapView.userTrackingMode  = BMKUserTrackingModeFollow; // 定位跟随模式
+    [_mapView setRegion:_coordinateRegion animated:NO];
+    
+    if (_isMerchantMap)
+    {
+        _mapMerchantInfoView.hidden   = YES;
+        UIBarButtonItem *item = self.navigationItem.leftBarButtonItem;
+        self.navigationItem.leftBarButtonItem = self.navigationItem.rightBarButtonItem;
+        self.navigationItem.rightBarButtonItem = item;
+    }
+    else
+    {
+        _mapMerchantInfoView.delegate = self;
+    }
+    _timer = [NSTimer scheduledTimerWithTimeInterval:MAP_REFRESH_TIME_INTERVAL target:self selector:@selector(displayUserLocation) userInfo:nil repeats:YES];
+}
+
+- (void)viewConfig
+{
+    [_mapView updateLocationData:[SCLocationManager share].userLocation];   // 根据坐标在地图上显示位置
+    [_mapView addAnnotations:_annotations];                                 // 把所有的商家图钉都显示到地图上
+    
+    // 进入地图的显示列表内第一个商家的数据
+    [_mapView selectAnnotation:[_annotations firstObject] animated:YES];
+    [_mapMerchantInfoView handelWithMerchant:[_merchants firstObject]];
 }
 
 #pragma mark - Action Methods
@@ -112,39 +140,6 @@
 }
 
 #pragma mark - Private Methods
-- (void)initConfig
-{
-    // 配置百度地图
-    _mapView.frame             = self.view.bounds;          // 全屏显示
-    _mapView.buildingsEnabled  = YES;                       // 允许双指上下滑动展示3D建筑
-    _mapView.showsUserLocation = YES;                       // 显示定位图层
-    _mapView.userTrackingMode  = BMKUserTrackingModeFollow; // 定位跟随模式
-    [_mapView setRegion:_coordinateRegion animated:NO];
-    
-    if (_isMerchantMap)
-    {
-        _mapMerchantInfoView.hidden   = YES;
-        UIBarButtonItem *item = self.navigationItem.leftBarButtonItem;
-        self.navigationItem.leftBarButtonItem = self.navigationItem.rightBarButtonItem;
-        self.navigationItem.rightBarButtonItem = item;
-    }
-    else
-    {
-        _mapMerchantInfoView.delegate = self;
-    }
-    _timer = [NSTimer scheduledTimerWithTimeInterval:MAP_REFRESH_TIME_INTERVAL target:self selector:@selector(displayUserLocation) userInfo:nil repeats:YES];
-}
-
-- (void)viewConfig
-{
-    [_mapView updateLocationData:[SCLocationManager share].userLocation];   // 根据坐标在地图上显示位置
-    [_mapView addAnnotations:_annotations];                                 // 把所有的商家图钉都显示到地图上
-    
-    // 进入地图的显示列表内第一个商家的数据
-    [_mapView selectAnnotation:[_annotations firstObject] animated:YES];
-    [_mapMerchantInfoView handelWithMerchant:[_merchants firstObject]];
-}
-
 - (BMKCoordinateRegion)getRegionWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude center:(CLLocationCoordinate2D)center
 {
     BMKCoordinateRegion region = (BMKCoordinateRegion){};

@@ -118,6 +118,8 @@
         [self showAlertWithTitle:@"温馨提示" message:@"评价内容请限制在140个字以内"];
         return NO;
     }
+    else if ([textView.textInputMode.primaryLanguage isEqualToString:@"emoji"] || !textView.textInputMode.primaryLanguage)
+        return NO;
     else
         return YES;
 }

@@ -10,6 +10,30 @@
 #import <AFNetworking/AFNetworking.h>
 #import "API.h"
 
+typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
+    SCAPIRequestStatusCodeGETSuccess     = 200,
+    SCAPIRequestStatusCodePOSTSuccess    = 201,
+    
+    SCAPIRequestStatusCodeBadRequest     = 400,
+    SCAPIRequestStatusCodeNotFound       = 404,
+    SCAPIRequestStatusCodeDataError      = 408,
+    
+    SCAPIRequestStatusCodeServerError    = 500
+};
+
+typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
+    SCAPIRequestErrorCodeNoError                   = 0,
+    // Login
+    SCAPIRequestErrorCodePhoneError                = 4001,
+    SCAPIRequestErrorCodeVerificationCodeSendError = 4002,
+    SCAPIRequestErrorCodeVerificationCodeError     = 4003,
+    SCAPIRequestErrorCodeThirdAuthorizeError       = 4004,
+    SCAPIRequestErrorCodeRefreshTokenError         = 4005,
+    // Reservation
+    SCAPIRequestErrorCodeReservationFailure        = 4006,
+    SCAPIRequestErrorCodeListNotFoundMore          = 4008
+};
+
 @interface SCAPIRequest : AFHTTPRequestOperationManager
 
 @property (nonatomic, copy) NSString *doMain;       // URL域
@@ -43,9 +67,6 @@
 #pragma mark - Merchant API
 /**
  *  天气接口请求方法(API:/Weather - GET)
- *
- *  @param uccess  请求成功的block
- *  @param failure 请求失败的block
  */
 - (void)startWearthAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
@@ -56,6 +77,13 @@
 - (void)startMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  商家列表接口请求方法(API:/company_search/operate - GET)
+ */
+- (void)startOperateMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
+                                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  商家详情接口请求方法(API:/Carshop - GET)
@@ -167,14 +195,7 @@
                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  用户注册接口请求方法(API:/User - POST)
- */
-- (void)startRegisterAPIRequestWithParameters:(NSDictionary *)parameters
-                                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
-/**
- *  用户登录接口请求方法(API:/User - GET)
+ *  用户登录接口请求方法(API:/User - POST)
  */
 - (void)startLoginAPIRequestWithParameters:(NSDictionary *)parameters
                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -311,6 +332,5 @@
  */
 - (void)startHomePageSpecialAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
 
 @end

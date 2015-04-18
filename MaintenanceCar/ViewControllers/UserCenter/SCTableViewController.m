@@ -49,34 +49,42 @@
     
     // 为tableview添加上拉和下拉响应式控件和触发方法
     [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(startDropDownRefreshReuqest)];
-    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(startPullUpRefreshRequest)];
-    [self.tableView.footer setHidden:YES];
     [self.tableView.header beginRefreshing];
 }
 
 - (void)startDropDownRefreshReuqest
 {
     // 刷新前把数据偏移量offset设置为0，设置刷新类型，以便请求最新数据
-    self.offset = Zero;
-    self.requestType = SCRequestRefreshTypeDropDown;
+    _offset = Zero;
+    _requestType = SCRequestRefreshTypeDropDown;
+    
+    [self clearListData];
 }
 
 - (void)startPullUpRefreshRequest
 {
     // 设置刷新类型
-    self.requestType = SCRequestRefreshTypePullUp;
+    _requestType = SCRequestRefreshTypePullUp;
 }
 
 - (void)endRefresh
 {
     // 关闭上拉刷新或者下拉刷新
     if (_requestType == SCRequestRefreshTypeDropDown)
-    {
         [self.tableView.header endRefreshing];
-        [self.tableView.footer setHidden:NO];
-    }
     else
         [self.tableView.footer endRefreshing];
+}
+
+- (void)readdFooter
+{
+    if (!self.tableView.footer)
+        [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(startPullUpRefreshRequest)];
+}
+
+- (void)removeFooter
+{
+    [self.tableView removeFooter];
 }
 
 - (void)clearListData
@@ -87,6 +95,7 @@
 - (void)deleteFailureAtIndex:(NSInteger)index
 {
     self.tableView.editing = NO;                                    // 改变列表编辑状态
+    
     [_dataList insertObject:_deleteDataCache atIndex:index];        // 从数据缓存中删除某一条数据
     [self.tableView reloadData];                                    // 刷新tableview
 }

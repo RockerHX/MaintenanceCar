@@ -7,6 +7,7 @@
 //
 
 #import "SCShowMoreProductCell.h"
+#import "SCGroupBase.h"
 
 @implementation SCShowMoreProductCell
 
@@ -23,7 +24,7 @@
     
     if (state == SCSCShowMoreCellStateDown)
     {
-        self.promptLabel.text = [NSString stringWithFormat:@"全部%@款团购", @(_productCount)];
+        self.promptLabel.text = [NSString stringWithFormat:@"全部%@款%@", @(_productCount), (_cellType ? @"报价" : @"团购")];
         _arrowIcon.transform = CGAffineTransformIdentity;
     }
     else
@@ -34,10 +35,10 @@
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithProductCount:(NSInteger)productCount
+- (void)displayCellWithMerchantGroup:(SCGroupBase *)group
 {
-    _productCount = productCount;
-    self.state = _state;
+    _productCount = group.totalProductCount;
+    self.state = group.isOpen;
 }
 
 @end

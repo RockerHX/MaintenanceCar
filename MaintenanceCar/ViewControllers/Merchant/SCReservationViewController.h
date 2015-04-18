@@ -6,10 +6,9 @@
 //  Copyright (c) 2014年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCViewController.h"
+#import "SCViewControllerCategory.h"
 #import "SCMerchant.h"
-
-@class SCServiceItem;
+#import "SCServiceItem.h"
 
 @interface SCReservationViewController : UITableViewController
 
@@ -25,6 +24,7 @@
 @property (nonatomic, strong)      SCMerchant    *merchant;                     // 商家信息
 @property (nonatomic, strong)      SCServiceItem *serviceItem;                  // 服务项目
 @property (nonatomic, copy)             NSString *reservationType;
-@property (nonatomic, assign)               BOOL  isGroup;
+@property (nonatomic, copy)             NSString *price;
+@property (nonatomic, assign)               BOOL  canChange;
 
 @end

@@ -124,7 +124,7 @@
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = DOT_COORDINATE;
+    CGFloat height = ZERO_POINT;
     CGFloat separatorHeight = 1.0f;
     if (_dataList.count)
     {
@@ -136,9 +136,6 @@
                 if(!_unappraisalCell)
                     _unappraisalCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderUnAppraisalCell"];
                 [_unappraisalCell displayCellWithReservation:reservation];
-                // Layout the cell
-                [_unappraisalCell updateConstraintsIfNeeded];
-                [_unappraisalCell layoutIfNeeded];
                 height = [_unappraisalCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -147,9 +144,6 @@
                 if(!_appraisedCell)
                     _appraisedCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderAppraisedCell"];
                 [_appraisedCell displayCellWithReservation:reservation];
-                // Layout the cell
-                [_appraisedCell updateConstraintsIfNeeded];
-                [_appraisedCell layoutIfNeeded];
                 height = [_appraisedCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -158,9 +152,6 @@
                 if(!_unappraisalCheckCell)
                     _unappraisalCheckCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderUnAppraisalCheckCell"];
                 [_unappraisalCheckCell displayCellWithReservation:reservation];
-                // Layout the cell
-                [_unappraisalCheckCell updateConstraintsIfNeeded];
-                [_unappraisalCheckCell layoutIfNeeded];
                 height = [_unappraisalCheckCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -169,9 +160,6 @@
                 if(!_appraisedCheckCell)
                     _appraisedCheckCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderAppraisedCheckCell"];
                 [_appraisedCheckCell displayCellWithReservation:reservation];
-                // Layout the cell
-                [_appraisedCheckCell updateConstraintsIfNeeded];
-                [_appraisedCheckCell layoutIfNeeded];
                 height = [_appraisedCheckCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -181,9 +169,6 @@
                 if(!_oderNormalCell)
                     _oderNormalCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCOderNormalCell"];
                 [_oderNormalCell displayCellWithReservation:reservation];
-                // Layout the cell
-                [_oderNormalCell updateConstraintsIfNeeded];
-                [_oderNormalCell layoutIfNeeded];
                 height = [_oderNormalCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -284,14 +269,12 @@
 - (void)startDropDownRefreshReuqest
 {
     [super startDropDownRefreshReuqest];
-    
     [self startReservationListRequest];
 }
 
 - (void)startPullUpRefreshRequest
 {
     [super startPullUpRefreshRequest];
-    
     [self startReservationListRequest];
 }
 
@@ -309,31 +292,39 @@
     [[SCAPIRequest manager] startGetMyReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            // 如果是下拉刷新数据，先清空列表，再做数据处理
-            if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
-                [weakSelf clearListData];
-            
-            // 遍历请求回来的订单数据，生成SCReservation用于订单列表显示
-            [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                SCReservation *reservation = [[SCReservation alloc] initWithDictionary:obj error:nil];
-                [_dataList addObject:reservation];
-            }];
-            
-            [weakSelf.tableView reloadData];        // 数据配置完成，刷新商家列表
-            weakSelf.offset += MerchantListLimit;   // 偏移量请求参数递增
-        }
-        else
-        {
-            NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:responseObject[@"error"] delay:0.5f];
+            NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
+            NSString *statusMessage = responseObject[@"status_message"];
+            switch (statusCode)
+            {
+                case SCAPIRequestErrorCodeNoError:
+                {
+                    // 遍历请求回来的订单数据，生成SCReservation用于订单列表显示
+                    [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                        SCReservation *reservation = [[SCReservation alloc] initWithDictionary:obj error:nil];
+                        [_dataList addObject:reservation];
+                    }];
+                    
+                    [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
+                    [weakSelf readdFooter];
+                    weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
+                    statusMessage = nil;
+                }
+                    break;
+                    
+                case SCAPIRequestErrorCodeListNotFoundMore:
+                    [weakSelf removeFooter];
+                    break;
+            }
+            if (statusMessage && ![statusMessage isKindOfClass:[NSNull class]])
+                [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
         }
         [weakSelf endRefresh];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Get merchant list request error:%@", error);
-        if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"您还没有下过任何订单噢！" delay:0.5f];
+        NSString *message = operation.responseObject[@"message"];
+        if (message)
+            [weakSelf showHUDAlertToViewController:weakSelf text:message];
         else
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:NetWorkError delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
         [weakSelf endRefresh];
     }];
 }
@@ -349,19 +340,25 @@
                              @"reserve_id": ((SCReservation *)_deleteDataCache).reserve_id,
                                  @"status": @"4"};
     [[SCAPIRequest manager] startUpdateReservationAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        // 根据返回结果进行相应提示
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
             SCReservation *reservation = _deleteDataCache;
             reservation.status         = @"预约已取消";
             [weakSelf deleteFailureAtIndex:index];
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"您取消预约成功" delay:0.5f];
+            
+            NSString *statusMessage = responseObject[@"status_message"];
+            if (statusMessage && ![statusMessage isKindOfClass:[NSNull class]])
+                [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
         }
         else
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"取消预约失败，请重试！" delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf text:DataError];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf deleteFailureAtIndex:index];
-        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"取消预约失败，请重试！" delay:0.5f];
+        NSString *message = operation.responseObject[@"message"];
+        if (message)
+            [weakSelf showHUDAlertToViewController:weakSelf text:message];
+        else
+            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
     }];
 }
 
@@ -385,7 +382,7 @@
 #pragma mark - SCAppraiseViewControllerDelegate Methods
 - (void)appraiseSuccess
 {
-    [self startDropDownRefreshReuqest];
+    [self startReservationListRequest];
 }
 
 @end

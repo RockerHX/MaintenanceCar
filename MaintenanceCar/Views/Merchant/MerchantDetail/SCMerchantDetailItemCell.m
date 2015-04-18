@@ -7,8 +7,9 @@
 //
 
 #import "SCMerchantDetailItemCell.h"
-#import "MicroCommon.h"
-#import "SCMerchantDetail.h"
+#import "UIConstants.h"
+#import "MicroConstants.h"
+#import "SCMerchantInfo.h"
 
 @implementation SCMerchantDetailItemCell
 
@@ -20,46 +21,15 @@
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithIndex:(NSIndexPath *)indexPath detail:(SCMerchantDetail *)detail
+- (void)displayCellWithItem:(SCMerchantInfoItem *)infoItem
 {
-    NSString *image        = nil;
-    NSString *text         = nil;
-    CGFloat  fontSize      = 15.0f;
-    UIColor  *textColor    = [UIColor blackColor];
-    BOOL     showAccessory = NO;
-    BOOL     canSelected   = NO;
-    switch (indexPath.row)
-    {
-        case 0:
-        {
-            image         = @"MerchantAddressIcon";
-            text          = detail.address;
-            showAccessory = YES;
-            canSelected   = YES;
-        }
-            break;
-        case 1:
-        {
-            image     = @"MerchantPhoneIcon";
-            text      = detail.telephone;
-            textColor = UIColorWithRGBA(70.0f, 171.0f, 218, 1.0f);
-            canSelected   = YES;
-        }
-            break;
-        case 2:
-        {
-            image = @"merchantTimeIcon";
-            text  = [NSString stringWithFormat:@"%@ - %@", [detail.time_open substringWithRange:(NSRange){0, 5}], [detail.time_closed substringWithRange:(NSRange){0, 5}]];
-        }
-            break;
-    }
-    _icon.image = [UIImage imageNamed:image];
-    _contentLabel.text = text.length ? text : @"数据完善中...";
-    _contentLabel.font = [UIFont systemFontOfSize:fontSize];
-    _contentLabel.textColor = textColor;
-    self.accessoryType = showAccessory ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
-    self.selected = canSelected;
-    
+    _icon.image             = [UIImage imageNamed:infoItem.imageName];
+    _contentLabel.text      = infoItem.text;
+    _contentLabel.font      = [UIFont systemFontOfSize:infoItem.fontSize];
+    _contentLabel.textColor = infoItem.textColor;
+    self.accessoryType      = infoItem.accessoryType;
+    self.selected           = infoItem.canSelected;
+
     [self.contentView updateConstraintsIfNeeded];
     [self.contentView layoutIfNeeded];
 }

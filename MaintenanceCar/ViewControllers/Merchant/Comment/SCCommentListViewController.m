@@ -54,7 +54,7 @@
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = DOT_COORDINATE;
+    CGFloat height = ZERO_POINT;
     CGFloat separatorHeight = 1.0f;
     if (_dataList.count)
     {
@@ -91,14 +91,12 @@
 - (void)startDropDownRefreshReuqest
 {
     [super startDropDownRefreshReuqest];
-    
     [self startCommentListRequest];
 }
 
 - (void)startPullUpRefreshRequest
 {
     [super startPullUpRefreshRequest];
-    
     [self startCommentListRequest];
 }
 
@@ -113,10 +111,6 @@
     [[SCAPIRequest manager] startGetMerchantCommentListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            // 如果是下拉刷新数据，先清空列表，再做数据处理
-            if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
-                [weakSelf clearListData];
-            
             // 遍历请求回来的订单数据，生成SCComment用于订单列表显示
             [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 SCComment *comment = [[SCComment alloc] initWithDictionary:obj error:nil];
@@ -124,12 +118,14 @@
             }];
             
             [weakSelf.tableView reloadData];        // 数据配置完成，刷新商家列表
+            [weakSelf readdFooter];
             weakSelf.offset += MerchantListLimit;   // 偏移量请求参数递增
         }
         else
         {
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
             [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:responseObject[@"error"] delay:0.5f];
+            [weakSelf removeFooter];
         }
         [weakSelf endRefresh];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

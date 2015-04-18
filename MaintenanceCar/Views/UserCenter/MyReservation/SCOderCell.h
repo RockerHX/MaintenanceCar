@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MicroCommon.h"
+#import "AllMicroConstants.h"
 #import "SCReservation.h"
 
 @interface SCOderCell : UITableViewCell

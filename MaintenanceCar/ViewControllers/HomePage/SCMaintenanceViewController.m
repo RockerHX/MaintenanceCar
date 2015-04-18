@@ -20,8 +20,6 @@
 #import "SCChangeMaintenanceDataViewController.h"
 #import "SCServiceMerchantListViewController.h"
 
-#define MaintenanceCellReuseIdentifier   @"MaintenanceCellReuseIdentifier"
-
 @interface SCMaintenanceViewController () <SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate, SCMerchantTableViewCellDelegate>
 {
     NSInteger           _reservationButtonIndex;
@@ -138,14 +136,14 @@
 {
     if (IS_IPHONE_6Plus)
     {
-        _headerView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 280.0f);
+        _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 280.0f);
         _heightConstraint.constant = _heightConstraint.constant + 30.0f;
         [self.view needsUpdateConstraints];
         [self.view layoutIfNeeded];
     }
     else if (IS_IPHONE_6)
     {
-        _headerView.frame = CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 270.0f);
+        _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 270.0f);
         _heightConstraint.constant = _heightConstraint.constant + 15.0f;
         [self.view needsUpdateConstraints];
         [self.view layoutIfNeeded];
@@ -261,12 +259,12 @@
 - (void)startRecommendMerchantListRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
 {
     __weak typeof(self) weakSelf = self;
-    NSDictionary *parameters = @{@"query"     : @"default:'深圳' AND service:'养'",
-                                 @"limit"     : @(3),
-                                 @"offset"    : @(0),
-                                 @"radius"    : MerchantListRadius,
-                                 @"latitude"  : latitude,
-                                 @"longtitude": longitude};
+    NSDictionary *parameters = @{@"query": @"default:'深圳' AND service:'养'",
+                                 @"limit": @(3),
+                                @"offset": @(0),
+                                @"radius": @(MerchantListRadius).stringValue,
+                              @"latitude": latitude,
+                            @"longtitude": longitude};
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
@@ -505,7 +503,7 @@
     @try {
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
         reservationViewController.merchant = _recommendMerchants[index];
-        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:@"2" serviceName:@"保养"];
+        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:@"2"];
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {

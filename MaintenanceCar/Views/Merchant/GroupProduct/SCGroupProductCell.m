@@ -8,7 +8,7 @@
 
 #import "SCGroupProductCell.h"
 #import "SCGroupProduct.h"
-#import "MicroCommon.h"
+#import "UIConstants.h"
 
 @implementation SCGroupProductCell
 
@@ -21,12 +21,15 @@
 #pragma mark - Public Methods
 - (void)displayCellWithProduct:(SCGroupProduct *)product
 {
-    if (product)
-    {
-        _productNameLabel.text  = product.title;
-        _groupPriceLabel.text   = product.final_price;
-        _productPriceLabel.text = product.total_price;
-    }
+    BOOL hidden              = [product.final_price isEqualToString:product.total_price];
+    _leftParenthesis.hidden  = hidden;
+    _totalPriceLabel.hidden  = hidden;
+    _rightParenthesis.hidden = hidden;
+    _grayLine.hidden         = hidden;
+
+    _productNameLabel.text   = product.title;
+    _groupPriceLabel.text    = product.final_price;
+    _productPriceLabel.text  = product.total_price;
     
     [self.contentView updateConstraintsIfNeeded];
     [self.contentView layoutIfNeeded];

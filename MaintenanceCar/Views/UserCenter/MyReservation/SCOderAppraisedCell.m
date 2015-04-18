@@ -25,6 +25,9 @@
     
     _startView.value     = [@([reservation.comment.star integerValue]/2) stringValue];
     _appraisalLabel.text = reservation.comment.detail;
+    
+    [self updateConstraintsIfNeeded];
+    [self layoutIfNeeded];
 }
 
 @end

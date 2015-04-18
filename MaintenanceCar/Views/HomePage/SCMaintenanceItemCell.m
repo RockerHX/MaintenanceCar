@@ -7,7 +7,6 @@
 //
 
 #import "SCMaintenanceItemCell.h"
-#import "MicroCommon.h"
 
 #define LineHeight          0.5f
 

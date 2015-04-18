@@ -7,6 +7,11 @@
 //
 
 #import "SCGroupProduct.h"
+#import "SCMerchantSummary.h"
+#import "SCMerchantProductGroup.h"
+#import "SCQuotedPriceGroup.h"
+#import "SCMerchantInfo.h"
+#import "SCCommentGroup.h"
 #import "SCComment.h"
 
 // 商家详情Model
@@ -29,18 +34,29 @@
 @property (nonatomic, copy) NSString <Optional>*majors;               // 专修品牌
 @property (nonatomic, copy) NSString <Optional>*star;                 // 商家星级
 @property (nonatomic, copy) NSString <Optional>*now;
+@property (nonatomic, copy) NSString <Optional>*have_comment;
 @property (nonatomic, assign)        NSInteger comments_num;          // 评价数量
 
 @property (nonatomic, strong)            NSDictionary <Optional>*service_items;   // 服务项目
 @property (nonatomic, strong) NSArray <Optional, SCGroupProduct>*products;        // 团购项目
+@property (nonatomic, strong)  NSArray <Optional, SCQuotedPrice>*normal_products; // 项目报价
 @property (nonatomic, strong)      NSArray <Optional, SCComment>*comments;        // 用户评价
 @property (nonatomic, strong)                 NSArray <Optional>*images;          // 商家图片
 @property (nonatomic, assign)                              BOOL collected;        // 收藏状态
 
 @property (nonatomic, copy, readonly)       NSString <Ignore>*distance;           // 手机当前位置与商家的距离
-@property (nonatomic, strong, readonly)      NSArray <Ignore>*merchantFlags;      // 商家标签集合
+@property (nonatomic, copy, readonly)       NSString <Ignore>*serverItemsPrompt;  // 商家服务描述
 @property (nonatomic, strong, readonly)      NSArray <Ignore>*merchantImages;     // 商家图片集合
 @property (nonatomic, strong, readonly) NSDictionary <Ignore>*serviceItems;       // 商家服务项目
 
+
+@property (nonatomic, strong, readonly)      SCMerchantSummary <Ignore>*summary;
+@property (nonatomic, strong, readonly) SCMerchantProductGroup <Ignore>*productGroup;
+@property (nonatomic, strong, readonly)     SCQuotedPriceGroup <Ignore>*quotedPriceGroup;
+@property (nonatomic, strong, readonly)         SCMerchantInfo <Ignore>*info;
+@property (nonatomic, strong, readonly)          SCCommentMore <Ignore>*commentMore;
+@property (nonatomic, strong, readonly)         SCCommentGroup <Ignore>*commentGroup;
+
+@property (nonatomic, strong, readonly) NSArray <Ignore>*cellDisplayData;
 
 @end

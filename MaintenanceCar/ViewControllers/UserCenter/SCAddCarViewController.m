@@ -11,7 +11,6 @@
 #import "SCCarModelView.h"
 #import "SCCollectionIndexView.h"
 #import "SCCarBrandDisplayModel.h"
-#import "SCCar.h"
 
 // 添加车辆返回操作类型
 typedef NS_ENUM(BOOL, SCAddCarStatus) {
@@ -178,12 +177,12 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 // 添加车辆确认提示
 - (void)showAlert:(SCCar *)car
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"您选择的是%@ %@", car.car_full_model, (car.up_time ? car.up_time : @"")]
-                                                        message:@"您确认添加吗？"
-                                                       delegate:self
-                                              cancelButtonTitle:@"取消"
-                                              otherButtonTitles:@"添加", nil];
-    [alertView show];
+    NSString *title;
+    if (car.car_id.length)
+        title = [NSString stringWithFormat:@"您选择的是%@ %@", car.car_full_model, (car.up_time ? car.up_time : @"")];
+    else
+        title = [NSString stringWithFormat:@"您选择的是%@ %@", car.brand_name, car.model_name];
+    [self showAlertWithTitle:title message:@"您确认添加吗？" delegate:self tag:Zero cancelButtonTitle:@"取消" otherButtonTitle:@"添加"];
 }
 
 /**
@@ -198,7 +197,10 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
     [[SCAPIRequest manager] startAddCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            [NOTIFICATION_CENTER postNotificationName:kUserCarsDataNeedReloadSuccess object:nil];
+            _car.user_car_id = responseObject[@"user_car_id"];
+            [NOTIFICATION_CENTER postNotificationName:kUserCarsDataNeedReloadSuccessNotification object:nil];
+            if ([_delegate respondsToSelector:@selector(addCarSuccess:)])
+                [_delegate addCarSuccess:_car];
             [weakSelf showPromptHUDToView:weakSelf.view withText:@"添加成功！" delay:1.0f delegate:weakSelf];
         }
         else

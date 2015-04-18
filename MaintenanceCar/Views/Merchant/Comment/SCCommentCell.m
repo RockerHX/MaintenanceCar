@@ -7,7 +7,7 @@
 //
 
 #import "SCCommentCell.h"
-#import "MicroCommon.h"
+#import "UIConstants.h"
 
 @implementation SCCommentCell
 

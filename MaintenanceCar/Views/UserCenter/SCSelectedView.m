@@ -7,7 +7,7 @@
 //
 
 #import "SCSelectedView.h"
-#import "MicroCommon.h"
+#import "UIConstants.h"
 
 @interface SCSelectedView ()
 

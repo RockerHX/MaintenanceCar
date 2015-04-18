@@ -7,11 +7,12 @@
 //
 
 #import "SCCarBrandDisplayModel.h"
-#import "MicroCommon.h"
+#import "SCObjectCategory.h"
+#import "MicroConstants.h"
 #import "SCCarBrand.h"
 #import "SCAPIRequest.h"
 
-#define kCarBrandDataKey                @"kCarBrandDataKey"
+#define fCarBrandsFileName              @"CarBrands.dat"
 #define kCarBrandDataTimeIntervalKey    @"kCarBrandDataTimeIntervalKey"
 
 typedef void(^BLOCK)(NSDictionary *displayData, NSArray *indexTitles, BOOL finish);
@@ -219,7 +220,7 @@ static SCCarBrandDisplayModel *displayModel = nil;
     
     __weak typeof(self)weakSelf = self;
     // 车辆品牌显示模型初始化完毕之后先加载本地数据，再进行服务器数据同步操作
-    NSDictionary *localDate = [self readLocalDataWithKey:kCarBrandDataKey];
+    NSDictionary *localDate = [self readLocalDataWithFileName:fCarBrandsFileName];
     if (!localDate)
     {
         // 如果本地没有缓存，则用最初的时间戳请求汽车品牌数据，请求成功后先把数据缓存到本地，再进行数据结构重组，用于加车页面显示
@@ -235,14 +236,20 @@ static SCCarBrandDisplayModel *displayModel = nil;
                 if (hasData)
                 {
                     NSDictionary *data = responseObject[@"data"];
-                    [weakSelf saveData:data withKey:kCarBrandDataKey];
+                    [weakSelf saveData:data fileName:fCarBrandsFileName];
                     [weakSelf generateCarBrandModelWithData:data];
                 }
                 else
-                    _block(nil, nil, _loadFinish);
+                {
+                    if (_block)
+                        _block(nil, nil, _loadFinish);
+                }
             }
             else
-                _block(nil, nil, _loadFinish);
+            {
+                if (_block)
+                    _block(nil, nil, _loadFinish);
+            }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             if (_block)
                 _block(nil, nil, _loadFinish);
@@ -262,7 +269,7 @@ static SCCarBrandDisplayModel *displayModel = nil;
                 displayModel.dateTimeInterval = date;
                 BOOL hasData = [responseObject[@"flag"] boolValue];
                 if (hasData)
-                    [weakSelf saveData:responseObject[@"data"] withKey:kCarBrandDataKey];
+                    [weakSelf saveData:responseObject[@"data"] fileName:fCarBrandsFileName];
             }
         } failure:nil];
     }

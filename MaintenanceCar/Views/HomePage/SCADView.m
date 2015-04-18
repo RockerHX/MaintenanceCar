@@ -7,7 +7,8 @@
 //
 
 #import "SCADView.h"
-#import "MicroCommon.h"
+#import "UIConstants.h"
+#import "MicroConstants.h"
 #import "AppDelegate.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 
@@ -44,7 +45,7 @@
 #pragma mark - Private Methods
 - (void)initConfig
 {
-    self.alpha = DOT_COORDINATE;
+    self.alpha = ZERO_POINT;
 }
 
 - (void)viewConfig
@@ -58,11 +59,11 @@
 - (void)removeADView
 {
     __weak typeof(self) weakSelf = self;
-    [UIView animateWithDuration:0.2f delay:DOT_COORDINATE options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.2f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseInOut animations:^{
         weakSelf.imageView.transform    = CGAffineTransformMakeScale(0.85f, 0.85f);
         weakSelf.enterButton.transform  = CGAffineTransformMakeScale(0.85f, 0.85f);
         weakSelf.cancelButton.transform = CGAffineTransformMakeScale(0.85f, 0.85f);
-        weakSelf.alpha                  = DOT_COORDINATE;
+        weakSelf.alpha                  = ZERO_POINT;
     } completion:^(BOOL finished) {
         [weakSelf removeFromSuperview];
     }];
@@ -74,7 +75,7 @@
     [APP_DELEGATE_INSTANCE.window addSubview:self];
     
     __weak typeof(self) weakSelf = self;
-    [UIView animateWithDuration:0.3f delay:DOT_COORDINATE options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.3f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseInOut animations:^{
         weakSelf.alpha = 1.0f;
         weakSelf.imageView.transform = CGAffineTransformIdentity;
         weakSelf.enterButton.transform = CGAffineTransformIdentity;

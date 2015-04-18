@@ -7,7 +7,8 @@
 //
 
 #import "SCMerchantFilterView.h"
-#import "MicroCommon.h"
+#import "AppMicroConstants.h"
+#import "UIConstants.h"
 #import "SCFilterPopView.h"
 #import "SCAllDictionary.h"
 #import "SCUserInfo.h"
@@ -49,12 +50,12 @@
 }
 
 #pragma mark - Setter And Getter Methods
-- (void)setIsWash:(BOOL)isWash
+- (void)setNoBrand:(BOOL)noBrand
 {
-    _isWash = isWash;
-    if (isWash)
+    _noBrand = noBrand;
+    if (noBrand)
     {
-        _buttonWidth.constant = DOT_COORDINATE;
+        _buttonWidth.constant = ZERO_POINT;
         [_repairTypeButton setTitle:@"" forState:UIControlStateNormal];
     }
     else
@@ -69,7 +70,6 @@
     _filterPopView.delegate = self;     // 设置弹出视图代理，以便回调方法触发
     
     self.hidden = YES;
-    self.isWash = NO;
 }
 
 - (void)viewConfig
@@ -102,13 +102,13 @@
 // 收回筛选条件View，用户点击黑色透明部分或者选择筛选条件之后 - 带动画
 - (void)closeFilterView
 {
-    _filterPopView.contentViewHeightConstraint.constant = DOT_COORDINATE;
+    _filterPopView.contentViewHeightConstraint.constant = ZERO_POINT;
     [_filterPopView.contentView needsUpdateConstraints];
     [UIView animateWithDuration:0.3f animations:^{
         [_filterPopView.contentView layoutIfNeeded];
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.2f animations:^{
-            _filterPopView.alpha = DOT_COORDINATE;
+            _filterPopView.alpha = ZERO_POINT;
         } completion:^(BOOL finished) {
             _heightConstraint.constant = MerchantFilterViewUnPopHeight;
             _filterPopView.alpha = 1.0f;

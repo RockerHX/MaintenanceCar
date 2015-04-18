@@ -7,7 +7,7 @@
 //
 
 #import "SCCoupon.h"
-#import "MicroCommon.h"
+#import "UIConstants.h"
 
 @implementation SCCoupon
 

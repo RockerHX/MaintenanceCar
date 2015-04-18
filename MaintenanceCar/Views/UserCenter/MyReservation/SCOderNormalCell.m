@@ -16,6 +16,9 @@
     [super displayCellWithReservation:reservation];
     
     _reservationDateLabel.text = reservation.reserve_time;
+    
+    [self updateConstraintsIfNeeded];
+    [self layoutIfNeeded];
 }
 
 @end

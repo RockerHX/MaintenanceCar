@@ -7,7 +7,8 @@
 //
 
 #import "SCDatePickerView.h"
-#import "MicroCommon.h"
+#import "UIConstants.h"
+#import "MicroConstants.h"
 #import "AppDelegate.h"
 
 @implementation SCDatePickerView
@@ -35,7 +36,7 @@
 {
     // 添加单机手势，初始化数据
     [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addGestureRecognizer)]];
-    self.alpha = DOT_COORDINATE;
+    self.alpha = ZERO_POINT;
 }
 
 -(void)dateChanged:(UIDatePicker *)datePicker
@@ -58,7 +59,7 @@
     // 关闭动画
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.2f animations:^{
-        weakSelf.alpha = DOT_COORDINATE;
+        weakSelf.alpha = ZERO_POINT;
     } completion:^(BOOL finished) {
         [weakSelf removeFromSuperview];
     }];
@@ -72,13 +73,13 @@
     [APP_DELEGATE_INSTANCE.window addSubview:self];
     _bottomConstraint.constant = _bottomConstraint.constant / 8;
     [_containerView needsUpdateConstraints];
-    [UIView animateWithDuration:0.15f delay:DOT_COORDINATE options:UIViewAnimationOptionCurveEaseIn animations:^{
+    [UIView animateWithDuration:0.15f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseIn animations:^{
         weakSelf.alpha = 0.2f;
         [weakSelf.containerView layoutIfNeeded];
     } completion:^(BOOL finished) {
-        _bottomConstraint.constant = DOT_COORDINATE;
+        _bottomConstraint.constant = ZERO_POINT;
         [_containerView needsUpdateConstraints];
-        [UIView animateWithDuration:0.15f delay:DOT_COORDINATE options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [UIView animateWithDuration:0.15f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseOut animations:^{
             weakSelf.alpha = 1.0f;
             [weakSelf.containerView layoutIfNeeded];
         } completion:nil];

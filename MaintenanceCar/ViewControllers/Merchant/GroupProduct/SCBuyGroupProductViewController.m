@@ -121,10 +121,11 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
             [self showHUDOnViewController:self];
             __weak typeof(self)weakSelf = self;
             NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                         @"company_id": _groupProductDetail.companyID,
-                                         @"product_id": _groupProductDetail.product_id,
-                                         @"how_many": @(_productCount),
-                                         @"total_price": _totalPriceLabel.text};
+                                      @"company_id": _groupProductDetail.companyID,
+                                      @"product_id": _groupProductDetail.product_id,
+                                        @"how_many": @(_productCount),
+                                     @"total_price": _totalPriceLabel.text,
+                                          @"mobile": [SCUserInfo share].phoneNmber};
             [[SCAPIRequest manager] startGetWeiXinPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
                 {
@@ -133,9 +134,10 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                     _groupProductDetail.outTradeNo = _weiXinPayOder.out_trade_no;
                     [weakSelf sendWeiXinPay:_weiXinPayOder];
                 }
+                else
+                    [weakSelf oderFailure];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                [weakSelf hideHUDOnViewController:weakSelf];
-                [weakSelf showHUDAlertToViewController:weakSelf text:@"下单失败，请重试..." delay:0.5f];
+                [weakSelf oderFailure];
             }];
         }
         else
@@ -152,11 +154,11 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
         [self showHUDOnViewController:self];
         __weak typeof(self)weakSelf = self;
         NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                     @"company_id": _groupProductDetail.companyID,
-                                     @"product_id": _groupProductDetail.product_id,
-                                     @"how_many": @(_productCount),
-                                     @"total_price": _totalPriceLabel.text,
-                                     @"mobile": [SCUserInfo share].phoneNmber};
+                                  @"company_id": _groupProductDetail.companyID,
+                                  @"product_id": _groupProductDetail.product_id,
+                                    @"how_many": @(_productCount),
+                                 @"total_price": _totalPriceLabel.text,
+                                      @"mobile": [SCUserInfo share].phoneNmber};
         [[SCAPIRequest manager] startGetAliPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
             {
@@ -165,9 +167,10 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                 _groupProductDetail.outTradeNo = _aliPayOder.out_trade_no;
                 [weakSelf sendAliPay:_aliPayOder];
             }
+            else
+                [weakSelf oderFailure];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [weakSelf hideHUDOnViewController:weakSelf];
-            [weakSelf showHUDAlertToViewController:weakSelf text:@"下单失败，请重试..." delay:0.5f];
+            [weakSelf oderFailure];
         }];
     }
     else
@@ -175,9 +178,17 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 }
 
 #pragma mark - Private Methods
+- (void)oderFailure
+{
+    [self hideHUDOnViewController:self];
+    [self showHUDAlertToViewController:self text:@"下单失败，请重试..." delay:1.0f];
+}
+
 - (void)weiXinPaySuccess
 {
-    [self startGenerateGroupProductRequest];
+    [self showHUDAlertToViewController:self.navigationController text:@"恭喜您团购成功！" delay:0.5f];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    [NOTIFICATION_CENTER postNotificationName:kGenerateCouponSuccessNotification object:nil];
 }
 
 - (void)weiXinPayFailure
@@ -190,7 +201,11 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
     switch ([reslut[@"resultStatus"] integerValue])
     {
         case SCAliPayCodePaySuccess:
-            [self startGenerateGroupProductRequest];
+        {
+            [self showPromptWithText:@"支付成功"];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            [NOTIFICATION_CENTER postNotificationName:kGenerateCouponSuccessNotification object:nil];
+        }
             break;
         case SCAliPayCodePayProcessing:
             [self showPromptWithText:@"交易进行中"];
@@ -229,7 +244,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
     request.prepayId  = oder.prepayid;
     request.package   = oder.package;
     request.nonceStr  = oder.noncestr;
-    request.timeStamp = oder.timestamp;
+    request.timeStamp = (UInt32)oder.timestamp;
     request.sign      = oder.sign;
     [WXApi sendReq:request];
 }
@@ -239,39 +254,6 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
     __weak typeof(self)weakSelf = self;
     [[AlipaySDK defaultService] payOrder:[oder requestString] fromScheme:@"com.YJCL.XiuYang" callback:^(NSDictionary *resultDic) {
         [weakSelf alipayResult:resultDic];
-    }];
-}
-
-- (void)startGenerateGroupProductRequest
-{
-    __weak typeof(self) weakSelf = self;
-    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                              @"company_id": _groupProductDetail.companyID,
-                              @"product_id": _groupProductDetail.product_id,
-                                 @"content": _groupProductDetail.title,
-                               @"old_price": _groupProductDetail.total_price,
-                                   @"price": _groupProductDetail.final_price,
-                             @"limit_begin": _groupProductDetail.limit_begin,
-                               @"limit_end": _groupProductDetail.limit_end,
-                                @"how_many": @(_productCount),
-                                  @"mobile": [USER_DEFAULT objectForKey:kPhoneNumberKey],
-                                @"order_id": _groupProductDetail.outTradeNo};
-    [[SCAPIRequest manager] startGenerateGroupProductAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
-        {
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"恭喜您团购成功！" delay:0.5f];
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            [NOTIFICATION_CENTER postNotificationName:kGenerateCouponSuccessNotification object:nil];
-        }
-        else
-            [weakSelf showGenerateCouponFailureAlert];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
-            [weakSelf showGenerateCouponFailureAlert];
-        else
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:NetWorkError delay:0.5f];
     }];
 }
 

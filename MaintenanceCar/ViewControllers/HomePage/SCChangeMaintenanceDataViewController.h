@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCViewController.h"
+#import "SCViewControllerCategory.h"
 
 @class SCUserCar;
 @class SCCarDriveHabitsView;
@@ -26,7 +26,7 @@
 @property (weak, nonatomic) IBOutlet SCCarDriveHabitsView *carDriveHabitsView;      // 驾驶习惯View
 
 @property (nonatomic, weak)          id                   <SCChangeMaintenanceDataViewControllerDelegate>delegate;
-@property (nonatomic, weak)          SCUserCar            *car;
+@property (nonatomic, strong)        SCUserCar            *car;
 
 - (IBAction)deleteCarButtonPressed;
 

@@ -12,7 +12,6 @@
 #import "SCCoupon.h"
 #import "SCCouponDetailViewController.h"
 #import "SCReservationViewController.h"
-#import "SCServiceItem.h"
 #import "SCMerchant.h"
 
 @interface SCMyCouponViewController () <SCCouponCodeCellDelegate>
@@ -94,14 +93,12 @@
 - (void)startDropDownRefreshReuqest
 {
     [super startDropDownRefreshReuqest];
-    
     [self startMyCouponListRequest];
 }
 
 - (void)startPullUpRefreshRequest
 {
     [super startPullUpRefreshRequest];
-    
     [self startMyCouponListRequest];
 }
 
@@ -116,23 +113,21 @@
     [[SCAPIRequest manager] startGetMyCouponAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            // 如果是下拉刷新数据，先清空列表，再做数据处理
-            if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
-                [weakSelf clearListData];
-            
             // 遍历请求回来的商家数据，生成SCCoupon用于团购券显示
             [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];
                 [_dataList addObject:coupon];
             }];
             
-            [weakSelf.tableView reloadData];                // 数据配置完成，刷新商家列表
-            weakSelf.offset += MerchantListLimit;           // 偏移量请求参数递增
+            [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
+            [weakSelf readdFooter];
+            weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
         }
         else
         {
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
             [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:responseObject[@"error"] delay:0.5f];
+            [weakSelf removeFooter];
         }
         [weakSelf endRefresh];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -150,12 +145,13 @@
 {
     // 跳转到预约页面
     @try {
+        [[SCUserInfo share] removeItems];
         SCCoupon *coupon = _dataList[index];
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.isGroup                      = YES;
+        reservationViewController.canChange                    = NO;
         reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName:coupon.company_name
                                                                             companyID:coupon.company_id];
-        reservationViewController.reservationType              = coupon.type;
+        reservationViewController.serviceItem                  = [[SCServiceItem alloc] initWithServiceID:coupon.type];
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {

@@ -12,6 +12,7 @@
 #import "SCMerchantDetailViewController.h"
 #import "SCReservatAlertView.h"
 #import "SCReservationViewController.h"
+#import "SCLocationManager.h"
 
 @interface SCMyFavoriteTableViewController () <SCReservatAlertViewDelegate>
 {
@@ -104,22 +105,37 @@
 - (void)startDropDownRefreshReuqest
 {
     [super startDropDownRefreshReuqest];
-    
-    [self startMerchantCollectionListRequest];
+    [self refreshCollectionListMerchantList];
 }
 
 - (void)startPullUpRefreshRequest
 {
     [super startPullUpRefreshRequest];
-    
-    [self startMerchantCollectionListRequest];
+    [self refreshCollectionListMerchantList];
+}
+
+- (void)refreshCollectionListMerchantList
+{
+    __weak typeof(self) weakSelf = self;
+    [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
+        [weakSelf startMerchantCollectionListRequest:latitude longitude:longitude];
+    } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
+        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"定位失败，采用当前城市中心坐标！" delay:0.5f];
+        [weakSelf startMerchantCollectionListRequest:latitude longitude:longitude];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
+                                                            message:@"定位失败，请检查您的定位服务是否打开：设置->隐私->定位服务"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"确定"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
+    }];
 }
 
 #pragma mark - Private Methods
 /**
  *  收藏列表数据请求方法，必选参数：user_id，limit，offset
  */
-- (void)startMerchantCollectionListRequest
+- (void)startMerchantCollectionListRequest:(NSString *)latitude longitude:(NSString *)longitude
 {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
@@ -129,10 +145,6 @@
     [[SCAPIRequest manager] startGetCollectionMerchantAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            // 如果是下拉刷新数据，先清空列表，再做数据处理
-            if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
-                [weakSelf clearListData];
-            
             // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
             [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj error:nil];
@@ -140,12 +152,14 @@
             }];
             
             [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
+            [weakSelf readdFooter];
             weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
         }
         else
         {
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
             [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:responseObject[@"error"] delay:0.5f];
+            [weakSelf removeFooter];
         }
         [weakSelf endRefresh];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -200,6 +214,7 @@
 {
     // 跳转到预约页面
     @try {
+        [[SCUserInfo share] removeItems];
         SCMerchant *merchant = _dataList[_index];
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
         reservationViewController.merchant = [[SCMerchant alloc] initWithMerchantName:merchant.name

@@ -7,7 +7,7 @@
 //
 
 #import "SCAllDictionary.h"
-#import "MicroCommon.h"
+#import "SCObjectCategory.h"
 #import "SCAPIRequest.h"
 #import "SCUserCar.h"
 
@@ -19,8 +19,8 @@
 #define RepairConditionKey              @"RepairCondition"
 #define OtherConditionKey               @"OtherCondition"
 
-#define kColorExplainKey        @"kColorExplainKey"
-#define kAllDictionarykey       @"kAllDictionarykey"
+#define fColorExplainFileName           @"ColorExplain.dat"
+#define fAllDictionaryFileName          @"AllDictionary.dat"
 
 static SCAllDictionary *allDictionary = nil;
 
@@ -51,9 +51,6 @@ static SCAllDictionary *allDictionary = nil;
         [filterConditions setObject:repairConditions forKey:RepairConditionKey];
         [filterConditions setObject:otherConditions forKey:OtherConditionKey];
         _filterConditions = filterConditions;
-        
-        _repairCondition = @"";
-        _otherCondition  = @"";
     }
     return self;
 }
@@ -86,8 +83,8 @@ static SCAllDictionary *allDictionary = nil;
 #pragma mark - Public Methods
 - (void)requestWithType:(SCDictionaryType)type finfish:(void(^)(NSArray *items))finfish
 {
-    _type = type;                                                               // 混存外部需要的字典类型
-    NSDictionary *localData = [self readLocalDataWithKey:kAllDictionarykey];    // 获取本地字典数据
+    _type = type;                                                                           // 缓存外部需要的字典类型
+    NSDictionary *localData = [self readLocalDataWithFileName:fAllDictionaryFileName];      // 获取本地字典数据
     
     __weak typeof(self)weakSelf = self;
     // 如果本地缓存的字典数据为空，从网络请求，并保存到本地，反之则生成字典数据对象做回调，并异步更新数据
@@ -97,7 +94,7 @@ static SCAllDictionary *allDictionary = nil;
             if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
             {
                 // 先处理数据，再保存，最后回调
-                [weakSelf saveData:responseObject withKey:kAllDictionarykey];
+                [weakSelf saveData:responseObject fileName:fAllDictionaryFileName];
                 NSArray *data = responseObject[[@(type) stringValue]];
                 [weakSelf handleDateWithData:data finfish:finfish];
             }
@@ -112,7 +109,7 @@ static SCAllDictionary *allDictionary = nil;
         
         [[SCAPIRequest manager] startGetAllDictionaryAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
-                [weakSelf saveData:responseObject withKey:kAllDictionarykey];
+                [weakSelf saveData:responseObject fileName:fAllDictionaryFileName];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         }];
         
@@ -120,9 +117,9 @@ static SCAllDictionary *allDictionary = nil;
     }
 }
 
-- (void)requestColorsExplain:(void(^)(NSDictionary *colors, NSDictionary *explain, NSDictionary *detail))finfish
+- (void)requestColorsExplain:(void(^)(NSDictionary *colors, NSDictionary *explains, NSDictionary *details))finfish
 {
-    NSDictionary *localData = [self readLocalDataWithKey:kColorExplainKey];      // 获取颜色值本地缓存数据
+    NSDictionary *localData = [self readLocalDataWithFileName:fColorExplainFileName];      // 获取颜色值本地缓存数据
     
     __weak typeof(self)weakSelf = self;
     // 如果本地缓存的商家Flags数据为空，从网络请求，并保存到本地，反之则生成数据对象做回调，并异步更新数据
@@ -133,8 +130,8 @@ static SCAllDictionary *allDictionary = nil;
             {
                 // 先处理数据，再保存，最后回调
                 [weakSelf hanleMerchantFlagsData:responseObject];
-                [weakSelf saveData:responseObject withKey:kColorExplainKey];
-                finfish(weakSelf.colors, weakSelf.explain, weakSelf.detail);
+                [weakSelf saveData:responseObject fileName:fColorExplainFileName];
+                finfish(weakSelf.colors, weakSelf.explains, weakSelf.details);
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             finfish(nil, nil, nil);
@@ -146,11 +143,11 @@ static SCAllDictionary *allDictionary = nil;
         [weakSelf hanleMerchantFlagsData:localData];
         
         [[SCAPIRequest manager] startFlagsColorAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [weakSelf saveData:responseObject withKey:kColorExplainKey];
+            [weakSelf saveData:responseObject fileName:fColorExplainFileName];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         }];
         
-        finfish(weakSelf.colors, weakSelf.explain, weakSelf.detail);
+        finfish(weakSelf.colors, weakSelf.explains, weakSelf.details);
     }
 }
 
@@ -184,15 +181,15 @@ static SCAllDictionary *allDictionary = nil;
     // 生成一个空的可变数组，根据服务项目的有无动态添加数据
     NSMutableArray *items = [@[] mutableCopy];
     if (washItmes.count)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"1" serviceName:@"洗车美容"]];
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"1"]];
     if (maintenanceItmes.count)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"2" serviceName:@"保养"]];
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"2"]];
     if (repairItems.count)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"3" serviceName:@"维修"]];
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"3"]];
     
     // 最后动态添加服务器获取到的第四个按钮数据
     if (_special && free)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"5" serviceName:_special.text]];
+        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"5"]];
     _serviceItems = items;
 }
 
@@ -214,6 +211,12 @@ static SCAllDictionary *allDictionary = nil;
         NSString *displayName = [@"专修" stringByAppendingString:brandName];
         [repairConditions addObject:@{@"DisplayName": displayName, @"RequestValue": brandName}];
     }
+}
+
+- (NSString *)imageNameOfFlag:(NSString *)flag
+{
+    NSDictionary *data = [NSDictionary dictionaryWithContentsOfFile:[NSFileManager pathForResource:@"MerchantFlagIcon" ofType:@"plist"]];
+    return data[flag];
 }
 
 #pragma mark - Private Methods
@@ -296,9 +299,9 @@ static SCAllDictionary *allDictionary = nil;
  */
 - (void)hanleMerchantFlagsData:(NSDictionary *)data
 {
-    _colors = data[@"color"];
-    _explain = data[@"explain"];
-    _detail = data[@"detail"];
+    _colors   = data[@"color"];
+    _explains = data[@"explain"];
+    _details  = data[@"detail"];
 }
 
 @end

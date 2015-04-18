@@ -1,18 +1,21 @@
 platform :ios, '7.0'
 
-pod 'AFNetworking',             '~> 2.5.2'
-pod 'JSONModel',                '~> 1.0.2'
-pod 'MBProgressHUD',            '~> 0.9.1'
-pod 'MJRefresh',                '~> 1.4.1'
-pod 'CSStickyHeaderFlowLayout', '~> 0.2.4'
-pod 'HexColors',                '~> 2.2.1'
-pod 'SCLoopScrollView',         '~> 0.1'
+pod 'AFNetworking'
+pod 'AFNetworkActivityLogger'
+pod 'JSONModel'
+pod 'MBProgressHUD'
+pod 'MJRefresh'
+pod 'CSStickyHeaderFlowLayout'
+pod 'HexColors'
+pod 'DateTools'
+pod 'IQKeyboardManager'
+pod 'SCLoopScrollView'
 
 # ********************** 第三方SDK **********************
-# 友盟统计SDK
-pod 'UMengMessage',             '~> 1.1.0.2'
-pod 'UMengAnalytics',           '~> 3.4.4'
-
-pod 'Baidu-Maps-iOS-SDK',       '~> 2.6.0'
-
-pod 'Weixin',                   '~> 1.5'
+# 友盟SDK
+pod 'UMengMessage'
+pod 'UMengAnalytics'
+# 百度地图SDK
+pod 'Baidu-Maps-iOS-SDK'
+# 微信SDK
+pod 'Weixin'

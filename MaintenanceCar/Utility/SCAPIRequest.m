@@ -7,8 +7,13 @@
 //
 
 #import "SCAPIRequest.h"
-#define CustomRequestHeaderKey        @"X-API-KEY"                  // 请求加密Key
-#define CustomRequestHeaderValue      @"SlwX20U65YMTuNRDe3fZ"       // 请求加密Value
+#import "SCUserInfo.h"
+
+#define CustomRequestHeaderKey          @"X-API-KEY"                // 请求头加密Key
+#define CustomRequestHeaderValue        @"SlwX20U65YMTuNRDe3fZ"     // 请求头加密Value
+
+#define TokenRequestHeaderKey           @"token"                    // 请求头token的Key
+#define UIDRequestHeaderKey             @"uid"                      // 请求头uid的Key
 
 @interface SCAPIRequest ()
 
@@ -88,6 +93,12 @@
  */
 - (void)addHeader
 {
+    SCUserInfo *userInfo = [SCUserInfo share];
+    if (userInfo.loginStatus)
+    {
+        [self.requestSerializer setValue:userInfo.token forHTTPHeaderField:TokenRequestHeaderKey];
+        [self.requestSerializer setValue:userInfo.userID forHTTPHeaderField:UIDRequestHeaderKey];
+    }
     [self.requestSerializer setValue:CustomRequestHeaderValue forHTTPHeaderField:CustomRequestHeaderKey];
 }
 
@@ -127,6 +138,7 @@
     [self POST:api parameters:parameters success:success failure:failure];
 }
 
+#pragma mark - Merchant API
 - (void)startWearthAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
@@ -134,12 +146,18 @@
     [self requestGETMethodsWithAPI:WearthAPIURL parameters:parameters success:success failure:failure];
 }
 
-#pragma mark - Merchant API
 - (void)startMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:SearchAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startOperateMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
+                                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:OperateSearchAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startMerchantDetailAPIRequestWithParameters:(NSDictionary *)parameters
@@ -253,18 +271,11 @@
     [self requestPOSTMethodsWithAPI:VerificationCodeAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startRegisterAPIRequestWithParameters:(NSDictionary *)parameters
-                                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-{
-    [self requestPOSTMethodsWithAPI:RegisterAPIURL parameters:parameters success:success failure:failure];
-}
-
 - (void)startLoginAPIRequestWithParameters:(NSDictionary *)parameters
                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:LoginAPIURL parameters:parameters success:success failure:failure];
+    [self requestPOSTMethodsWithAPI:LoginAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startUserLogAPIRequestWithParameters:(NSDictionary *)parameters

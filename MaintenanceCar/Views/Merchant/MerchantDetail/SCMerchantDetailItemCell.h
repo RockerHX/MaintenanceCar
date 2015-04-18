@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class SCMerchantDetail;
+@class SCMerchantInfoItem;
 
 @interface SCMerchantDetailItemCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *icon;
 @property (weak, nonatomic) IBOutlet     UILabel *contentLabel;
 
-- (void)displayCellWithIndex:(NSIndexPath *)indexPath detail:(SCMerchantDetail *)detail;
+- (void)displayCellWithItem:(SCMerchantInfoItem *)infoItem;
 
 @end

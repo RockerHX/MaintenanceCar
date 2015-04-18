@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, SCFilterType) {
 @interface SCMerchantFilterView : UIView
 
 @property (nonatomic, weak)                          id <SCMerchantFilterViewDelegate>delegate;
-@property (nonatomic, assign)                      BOOL isWash;
+@property (nonatomic, assign)                      BOOL noBrand;
 
 
 @property (weak, nonatomic) IBOutlet    SCFilterPopView *filterPopView;         // 筛选弹出View，展示筛选条件

@@ -129,7 +129,7 @@
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = DOT_COORDINATE;
+    CGFloat height = ZERO_POINT;
     CGFloat separatorHeight = 1.0f;
     if (_detail)
     {
@@ -181,7 +181,7 @@
 {
     if (section == 1 || section == 2)
         return 30.0f;
-    return DOT_COORDINATE;
+    return ZERO_POINT;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -200,8 +200,8 @@
             return nil;
             break;
     }
-    UIView *view    = [[UIView alloc] initWithFrame:CGRectMake(DOT_COORDINATE, DOT_COORDINATE, SCREEN_WIDTH, 30.0f)];
-    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, DOT_COORDINATE, 100.0f, 30.0f)];
+    UIView *view    = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 30.0f)];
+    UILabel *label  = [[UILabel alloc] initWithFrame:CGRectMake(14.0f, ZERO_POINT, 100.0f, 30.0f)];
     label.font      = [UIFont systemFontOfSize:15.0f];
     label.textColor = [UIColor grayColor];
     [view addSubview:label];
@@ -256,7 +256,8 @@
 {
     NSMutableArray *items = [@[] mutableCopy];
     UIImageView *carView  = [[UIImageView alloc] init];
-    [carView setImageWithURL:[NSURL URLWithString:_detail.img1]
+    NSString *imageURL = [NSString stringWithFormat:@"%@%@", MerchantImageDoMain, _detail.img1 ? _detail.img1 : [NSString stringWithFormat:@"%@_1.jpg", _detail.companyID]];
+    [carView setImageWithURL:[NSURL URLWithString:imageURL]
             placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
     [items addObject:carView];
     _merchanImagesView.items = items;
@@ -266,16 +267,21 @@
 #pragma mark - SCGroupProductCellDelegate Methods
 - (void)shouldShowBuyProductView
 {
-    @try {
-        SCBuyGroupProductViewController *buyGroupProductViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCBuyGroupProductViewController"];
-        buyGroupProductViewController.groupProductDetail = _detail;
-        [self.navigationController pushViewController:buyGroupProductViewController animated:YES];
+    if ([SCUserInfo share].loginStatus)
+    {
+        @try {
+            SCBuyGroupProductViewController *buyGroupProductViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCBuyGroupProductViewController"];
+            buyGroupProductViewController.groupProductDetail = _detail;
+            [self.navigationController pushViewController:buyGroupProductViewController animated:YES];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"SCGroupProductDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
+        }
+        @finally {
+        }
     }
-    @catch (NSException *exception) {
-        NSLog(@"SCGroupProductDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    else
+        [self showShoulLoginAlert];
 }
 
 #pragma mark - SCGroupProductMerchantCell Delegate Methods
@@ -301,6 +307,7 @@
                                          cancelButtonTitle:@"取消"
                                          otherButtonTitles:[phones firstObject], nil];
         }
+        alertView.tag = 1;
         [alertView show];
     }
 }
@@ -308,11 +315,19 @@
 #pragma mark - Alert View Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSArray *phones = [_detail.telephone componentsSeparatedByString:@" "];
-    if (buttonIndex == 1)
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones firstObject]]]];
-    else if (buttonIndex == 2)
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones lastObject]]]];
+    if (alertView.tag)
+    {
+        NSArray *phones = [_detail.telephone componentsSeparatedByString:@" "];
+        if (buttonIndex == 1)
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones firstObject]]]];
+        else if (buttonIndex == 2)
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones lastObject]]]];
+    }
+    else
+    {
+        if (buttonIndex != alertView.cancelButtonIndex)
+            [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
+    }
 }
 
 @end

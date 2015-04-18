@@ -10,6 +10,8 @@
 #import "SCUserCar.h"
 #import "SCDatePickerView.h"
 #import "SCCarDriveHabitsView.h"
+#import "SCPickerView.h"
+#import "SCAddCarViewController.h"
 
 typedef NS_ENUM(NSInteger, SCHUDType) {
     SCHUDTypeDefault,
@@ -17,7 +19,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     SCHUDTypeDeleteCar
 };
 
-@interface SCChangeMaintenanceDataViewController () <UITextFieldDelegate, SCDatePickerViewDelegate, SCCarDriveHabitsViewDelegate>
+@interface SCChangeMaintenanceDataViewController () <UITextFieldDelegate, SCDatePickerViewDelegate, SCCarDriveHabitsViewDelegate, SCPickerViewDelegate, SCAddCarViewControllerDelegate>
 
 @end
 
@@ -33,6 +35,26 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     [self viewDisplay];
 }
 
+#pragma mark - Config Methods
+- (void)initConfig
+{
+    [_userCarLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeCar)]];
+    [_buyCarDateLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buyCarDateButtonPressed)]];
+}
+
+- (void)viewConfig
+{
+    // 配置页面元素，设置圆角
+    _userCarLabel.layer.borderWidth     = 1.0f;
+    _userCarLabel.layer.borderColor     = [UIColor lightGrayColor].CGColor;
+    
+    _mileageTextField.layer.borderWidth = 1.0f;
+    _mileageTextField.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
+    _buyCarDateLabel.layer.borderWidth  = 1.0f;
+    _buyCarDateLabel.layer.borderColor  = [UIColor lightGrayColor].CGColor;
+}
+
 #pragma mark - Action Methods
 - (IBAction)deleteCarButtonPressed
 {
@@ -44,38 +66,27 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
             otherButtonTitle:@"取消"];
 }
 
+- (void)changeCar
+{
+    // 购车按钮点击事件触发，收起键盘，弹出时间选择器
+    [self.view endEditing:YES];
+    
+    SCPickerView *pickerView = [[SCPickerView alloc] initWithItems:nil type:SCPickerTypeCar delegate:self];
+    [pickerView show];
+}
+
 - (IBAction)buyCarDateButtonPressed
 {
     // 购车按钮点击事件触发，收起键盘，弹出时间选择器
     [self.view endEditing:YES];
     
     SCDatePickerView *datePicker = [[SCDatePickerView alloc] initWithDelegate:self mode:UIDatePickerModeDate];
-    datePicker.datePicker.minimumDate = [NSDate dateWithTimeIntervalSince1970:DOT_COORDINATE];
+    datePicker.datePicker.minimumDate = [NSDate dateWithTimeIntervalSince1970:ZERO_POINT];
     datePicker.datePicker.maximumDate = [NSDate date];
     [datePicker show];                                    
 }
 
 #pragma mark - Private Methods
-- (void)initConfig
-{
-    // 初始化的时候加入单击手势，用于页面点击收起数字键盘
-    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer)]];
-    [self.buyCarDateLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buyCarDateButtonPressed)]];
-}
-
-- (void)viewConfig
-{
-    // 配置页面元素，设置圆角
-    _userCarLabel.layer.borderWidth     = 1.0f;
-    _userCarLabel.layer.borderColor     = [UIColor lightGrayColor].CGColor;
-
-    _mileageTextField.layer.borderWidth = 1.0f;
-    _mileageTextField.layer.borderColor = [UIColor lightGrayColor].CGColor;
-
-    _buyCarDateLabel.layer.borderWidth  = 1.0f;
-    _buyCarDateLabel.layer.borderColor  = [UIColor lightGrayColor].CGColor;
-}
-
 - (void)viewDisplay
 {
     // 刷新页面数据
@@ -88,28 +99,20 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 }
 
 /**
- *  页面单击手势事件
- */
-- (void)tapGestureRecognizer
-{
-    [self.view endEditing:YES];
-}
-
-/**
  *  车辆数据更新请求，参数：user_id, user_car_id必选，其他可选参数见API文档
  */
 - (void)startUpdateUserCarRequest
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self showHUDOnViewController:self];
     
-    __weak typeof(self) weakSelf = self;
-    NSDictionary *parameters =               @{@"user_id": [SCUserInfo share].userID,
-                                           @"user_car_id": _car.user_car_id,
-                                              @"model_id": _car.model_id,
-                                          @"buy_car_year": _car.buy_car_year,
-                                         @"buy_car_month": _car.buy_car_month,
-                                          @"run_distance": _car.run_distance,
-                                                 @"habit": _car.habit};
+    __weak typeof(self)weakSelf = self;
+    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                             @"user_car_id": _car.user_car_id,
+                                @"model_id": _car.model_id,
+                            @"buy_car_year": _car.buy_car_year,
+                           @"buy_car_month": _car.buy_car_month,
+                            @"run_distance": _car.run_distance,
+                                   @"habit": _car.habit};
     [[SCAPIRequest manager] startUpdateUserCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
@@ -119,16 +122,16 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
             }];
         }
         else
-            [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
+            [weakSelf hideHUDOnViewController:weakSelf];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
+        [weakSelf hideHUDOnViewController:weakSelf];
         [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"数据保存失败，请重试！" delay:0.5f];
     }];
 }
 
 - (void)startDeleteUserCarRequest
 {
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [self showHUDOnViewController:self.navigationController];
     
     __weak typeof(self) weakSelf = self;
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
@@ -140,14 +143,14 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
                 if (finish)
                 {
                     [weakSelf showHUDAlertToViewController:weakSelf tag:SCHUDTypeDeleteCar text:@"删除成功！" delay:0.5f];
-                    [NOTIFICATION_CENTER postNotificationName:kUserCarsDataNeedReloadSuccess object:nil];
+                    [NOTIFICATION_CENTER postNotificationName:kUserCarsDataNeedReloadSuccessNotification object:nil];
                 }
             }];
         }
         else
-            [MBProgressHUD hideAllHUDsForView:weakSelf.view animated:YES];
+            [weakSelf hideHUDOnViewController:weakSelf.navigationController];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
+        [weakSelf hideHUDOnViewController:weakSelf.navigationController];
         [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"车辆删除失败，请重试！" delay:0.5f];
     }];
 }
@@ -218,18 +221,15 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
             if (_delegate && [_delegate respondsToSelector:@selector(dataSaveSuccess)])
                 [_delegate dataSaveSuccess];
             // 保存成功，返回上一页
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [self hideHUDOnViewController:self];
             [self.navigationController popViewControllerAnimated:YES];
         }
             break;
         case SCHUDTypeDeleteCar:
         {
-            [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
+            [self hideHUDOnViewController:self.navigationController];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }
-            break;
-            
-        default:
             break;
     }
 }
@@ -239,6 +239,45 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 {
     if (buttonIndex == alertView.cancelButtonIndex)
         [self startDeleteUserCarRequest];
+}
+
+#pragma mark - SCPickerView Delegate Methods
+- (void)pickerView:(SCPickerView *)pickerView didSelectRow:(NSInteger)row item:(id)item
+{
+    if ([pickerView lastItem:item])
+    {
+        if ([SCUserInfo share].loginStatus)
+        {
+            @try {
+                UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
+                SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
+                addCarViewController.delegate = self;
+                [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
+            }
+            @catch (NSException *exception) {
+                NSLog(@"SCChangeMaintenanceDataViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
+            }
+            @finally {
+                [pickerView hidde];
+            }
+        }
+        else
+            [self showShoulLoginAlert];
+    }
+    else
+    {
+        SCUserCar *car = item;
+        _car = car;
+    }
+    
+    [self viewDisplay];
+}
+
+#pragma mark - SCAddCarViewController Delegate Methods
+- (void)addCarSuccess:(SCCar *)car
+{
+    _car = [[SCUserCar alloc] initWithCar:car];
+    [self viewDisplay];
 }
 
 @end
