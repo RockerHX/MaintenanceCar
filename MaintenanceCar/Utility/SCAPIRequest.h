@@ -209,6 +209,12 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
                                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+/**
+ *  刷新Token接口请求方法(API:/User/refresh/ - POST)
+ */
+- (void)startRefreshTokenAPIRequestWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 #pragma mark - Reservation Reuqest
 /**
  *  商家预约接口请求方法(API:/Reservation - POST)

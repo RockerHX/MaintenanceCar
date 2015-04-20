@@ -8,6 +8,7 @@
 
 #import "SCUserInfo.h"
 #import <UMengMessage/UMessage.h>
+#import <DateTools/DateTools.h>
 #import "MicroConstants.h"
 #import "SCAPIRequest.h"
 
@@ -15,6 +16,7 @@
 #define kUserIDKey              @"kUserIDKey"
 #define kPhoneNumberKey         @"kPhoneNumberKey"
 #define kUserTokenKey           @"kUserTokenKey"
+#define kTokenRefreshDateKey    @"kTokenRefreshDateKey"
 #define kUserCarsKey            @"kUserCarsKey"
 #define kAddAliasKey            @"kAddAliasKey"
 #define kReceiveMessageKey      @"kReceiveMessageKey"
@@ -137,6 +139,7 @@ static SCUserInfo *userInfo = nil;
     [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"user_id"]] forKey:kUserIDKey];
     [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"phone"]] forKey:kPhoneNumberKey];
     [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"token"]] forKey:kUserTokenKey];
+    [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"now"]] forKey:kTokenRefreshDateKey];
     [USER_DEFAULT synchronize];
     
     self.receiveMessage = YES;
@@ -152,6 +155,24 @@ static SCUserInfo *userInfo = nil;
     [USER_DEFAULT removeObjectForKey:kPhoneNumberKey];
     [USER_DEFAULT removeObjectForKey:kUserTokenKey];
     [USER_DEFAULT removeObjectForKey:kUserCarsKey];
+    [USER_DEFAULT synchronize];
+}
+
+- (BOOL)needRefreshToken
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:8]];
+    NSString *date = [USER_DEFAULT objectForKey:kTokenRefreshDateKey];
+    NSDate *tokenDate = [formatter dateFromString:date];
+    
+    double hour = [tokenDate hoursEarlierThan:[NSDate date]];
+    return (hour > 24);
+}
+
+- (void)refreshTokenDate
+{
+    [USER_DEFAULT setObject:[[NSDate date] formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"] forKey:kTokenRefreshDateKey];
     [USER_DEFAULT synchronize];
 }
 

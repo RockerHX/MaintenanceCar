@@ -285,6 +285,12 @@
     [self requestPOSTMethodsWithAPI:UserLogAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startRefreshTokenAPIRequestWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:RefreshTokenAPIURL parameters:nil success:success failure:failure];
+}
+
 #pragma mark - Reservation Reuqest
 - (void)startMerchantReservationAPIRequestWithParameters:(NSDictionary *)parameters
                                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success

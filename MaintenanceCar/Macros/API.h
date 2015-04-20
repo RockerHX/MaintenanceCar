@@ -53,6 +53,7 @@
 #define VerificationCodeAPI         @"/User/code"                           // 验证码获取API
 #define LoginAPI                    @"/User"                                // 用户登录API
 #define UserLogAPI                  @"/Userlog"                             // 用户日志记录API
+#define RefreshTokenAPI             @"/User/refresh/"                       // 刷新Token的API
 
 #define MerchantReservationAPI      @"/Reservation"                         // 商家预约API
 #define MyReservationAPI            @"/Reservation/all"                     // 我的预约API
@@ -100,6 +101,7 @@
 #define VerificationCodeAPIURL          [APIURL stringByAppendingString:VerificationCodeAPI]        // 获取验证码接口URL - 用于获取短信或者语音验证码
 #define LoginAPIURL                     [APIURL stringByAppendingString:LoginAPI]                   // 用户登录接口URL - 用于用户登录
 #define UserLogAPIURL                   [APIURL stringByAppendingString:UserLogAPI]                 // 用户日志记录接口URL - 打开APP后如果用户已经登录异步调用此URL记录
+#define RefreshTokenAPIURL              [APIURL stringByAppendingString:RefreshTokenAPI]            // 刷新Token接口URL - 刷新token过期时间
 
 #define MyReservationAPIURL             [APIURL stringByAppendingString:MyReservationAPI]           // 商家预约接口URL - 用于商家预约项目
 #define UpdateReservationAPIURL         [APIURL stringByAppendingString:UpdateReservationAPI]       // 更新预约接口URL - 用于用户取消预约项目

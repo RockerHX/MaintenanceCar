@@ -47,6 +47,8 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
  *  用户注销
  */
 - (void)logout;
+- (BOOL)needRefreshToken;
+- (void)refreshTokenDate;
 
 - (void)userCarsReuqest:(void(^)(SCUserInfo *userInfo, BOOL finish))block;
 
