@@ -15,6 +15,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
     SCAPIRequestStatusCodePOSTSuccess    = 201,
     
     SCAPIRequestStatusCodeBadRequest     = 400,
+    SCAPIRequestStatusCodeTokenError     = 403,
     SCAPIRequestStatusCodeNotFound       = 404,
     SCAPIRequestStatusCodeDataError      = 408,
     

@@ -188,11 +188,7 @@
             [weakSelf showHUDAlertToViewController:weakSelf text:DataError];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf hideHUDOnViewController:weakSelf];
-        NSString *message = operation.responseObject[@"message"];
-        if (message)
-            [weakSelf showHUDAlertToViewController:weakSelf text:message];
-        else
-            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
+        [weakSelf hanleFailureResponseWtihOperation:operation];
     }];
 }
 

@@ -320,11 +320,7 @@
         }
         [weakSelf endRefresh];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSString *message = operation.responseObject[@"message"];
-        if (message)
-            [weakSelf showHUDAlertToViewController:weakSelf text:message];
-        else
-            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
+        [weakSelf hanleFailureResponseWtihOperation:operation];
         [weakSelf endRefresh];
     }];
 }
@@ -354,11 +350,7 @@
             [weakSelf showHUDAlertToViewController:weakSelf text:DataError];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf deleteFailureAtIndex:index];
-        NSString *message = operation.responseObject[@"message"];
-        if (message)
-            [weakSelf showHUDAlertToViewController:weakSelf text:message];
-        else
-            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
+        [weakSelf hanleFailureResponseWtihOperation:operation];
     }];
 }
 

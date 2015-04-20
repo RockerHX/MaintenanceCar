@@ -29,6 +29,7 @@
  */
 - (void)showAlertWithTitle:(NSString *)title
                    message:(NSString *)message;
+
 /**
  *  提示用户登录的警告框
  */
@@ -129,6 +130,8 @@
                                   tag:(NSInteger)tag
                                  text:(NSString *)text
                                 delay:(NSTimeInterval)delay;
+
+- (void)hanleFailureResponseWtihOperation:(AFHTTPRequestOperation *)operation;
 
 @end
 
