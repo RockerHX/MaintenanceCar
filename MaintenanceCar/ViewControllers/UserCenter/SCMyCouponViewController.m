@@ -113,29 +113,34 @@
     [[SCAPIRequest manager] startGetMyCouponAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            // 遍历请求回来的商家数据，生成SCCoupon用于团购券显示
-            [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];
-                [_dataList addObject:coupon];
-            }];
-            
-            [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
-            [weakSelf readdFooter];
-            weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
-        }
-        else
-        {
-            NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:responseObject[@"error"] delay:0.5f];
-            [weakSelf removeFooter];
+            NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
+            NSString *statusMessage = responseObject[@"status_message"];
+            switch (statusCode)
+            {
+                case SCAPIRequestErrorCodeNoError:
+                {
+                    // 遍历请求回来的订单数据，生成SCReservation用于订单列表显示
+                    [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                        SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];
+                        [_dataList addObject:coupon];
+                    }];
+                    
+                    [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
+                    [weakSelf readdFooter];
+                    weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
+                }
+                    break;
+                    
+                case SCAPIRequestErrorCodeListNotFoundMore:
+                    [weakSelf removeFooter];
+                    break;
+            }
+            if (![statusMessage isEqualToString:@"success"])
+                [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
         }
         [weakSelf endRefresh];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Get merchant list request error:%@", error);
-        if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"您还没有购买过过任何团购券噢！" delay:0.5f];
-        else
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:NetWorkError delay:0.5f];
+        [weakSelf hanleFailureResponseWtihOperation:operation];
         [weakSelf endRefresh];
     }];
 }
