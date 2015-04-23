@@ -14,7 +14,7 @@ typedef NS_ENUM(NSInteger, SCRequestRefreshType) {
     SCRequestRefreshTypePullUp
 };
 
-@interface SCNavigationTableViewController : UIViewController
+@interface SCNavigationTableViewController : UIViewController <SCNavigationTabDelegate>
 {
     id              _deleteDataCache;    // 删除数据的缓存
     NSMutableArray *_dataList;           // 列表数据缓存
