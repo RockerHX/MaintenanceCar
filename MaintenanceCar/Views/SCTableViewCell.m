@@ -26,7 +26,7 @@
     CGFloat separatorHeight = 1.0f;
     [self updateConstraintsIfNeeded];
     [self layoutIfNeeded];
-    return [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + separatorHeight + 20.0f;
+    return [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + separatorHeight + 10.0f;
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "SCMyOderCell.h"
+#import "VersionConstants.h"
 
 @implementation SCMyOderCell
 {
@@ -18,6 +19,7 @@
 {
     // 设置商家名称栏预算宽度，以便计算整个cell的动态高度
     _merchantNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 40.0f;
+    _nextStateDateLabel.preferredMaxLayoutWidth = IS_IPHONE_6Plus ? 120.0f : (IS_IPHONE_6 ? 100.0f : 80.0f);
 }
 
 #pragma mark - Action Methods
@@ -58,12 +60,12 @@
     _nextStateNameLabel.text     = oder.nextStateName;
     
     // 根据后端给的订单状态的数据来设置状态图标是否显示
-    if (oder.previousStateDate && oder.previousStateName)
+    if (oder.previousStateDate.length || oder.previousStateName.length)
     {
         _previousStateIcon.hidden = NO;
         _previousStateLine.hidden = NO;
     }
-    if (oder.nextStateDate && oder.nextStateName)
+    if (oder.nextStateDate.length || oder.nextStateName.length)
     {
         _nextStateIcon.hidden = NO;
         _nextStateLine.hidden = NO;

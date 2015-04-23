@@ -18,17 +18,17 @@
 
 + (JSONKeyMapper *)keyMapper
 {
-    return [[JSONKeyMapper alloc] initWithDictionary:@{@"reserveID": @"reserve_id",
-                                                    @"carModelName": @"car_model_name",
-                                                     @"serviceName": @"service_name",
-                                                    @"merchantName": @"name",
-                                               @"previousStateDate": @"previous_time",
-                                               @"previousStateName": @"previous_name",
-                                                @"currentStateDate": @"current_time",
-                                                @"currentStateName": @"current_name",
-                                                   @"nextStateDate": @"next_time",
-                                                   @"nextStateName": @"next_name",
-                                                @"merchantTelphone": @"telephone"}];
+    return [[JSONKeyMapper alloc] initWithDictionary:@{@"reserve_id": @"reserveID",
+                                                   @"car_model_name": @"carModelName",
+                                                        @"type_name": @"serviceName",
+                                                             @"name": @"merchantName",
+                                                    @"previous_time": @"previousStateDate",
+                                                    @"previous_name": @"previousStateName",
+                                                     @"current_time": @"currentStateDate",
+                                                     @"current_name": @"currentStateName",
+                                                        @"next_time": @"nextStateDate",
+                                                        @"next_name": @"nextStateName",
+                                                        @"telephone": @"merchantTelphone"}];
 }
 
 #pragma mark - Setter And Getter Methods
