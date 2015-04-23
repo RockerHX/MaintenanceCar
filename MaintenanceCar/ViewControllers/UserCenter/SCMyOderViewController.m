@@ -45,7 +45,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMyOderCell" forIndexPath:indexPath];
+    SCMyOderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMyOderCell" forIndexPath:indexPath];
+    [cell displayCellWithReservation:nil index:indexPath.row];
     return cell;
 }
 
@@ -56,7 +57,7 @@
     CGFloat separatorHeight = 1.0f;
     if(!_myOderCell)
         _myOderCell = [tableView dequeueReusableCellWithIdentifier:@"SCMyOderCell"];
-    height = [_myOderCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    height = [_myOderCell displayCellWithReservation:nil index:indexPath.row];
     
     return height + separatorHeight + 20.0f;
 }

@@ -181,7 +181,7 @@
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
             NSString *statusMessage = responseObject[@"status_message"];
-            if (statusMessage && ![statusMessage isKindOfClass:[NSNull class]])
+            if (![statusMessage isEqualToString:@"success"])
                 [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:statusMessage];
         }
         else
