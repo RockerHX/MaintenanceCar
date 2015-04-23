@@ -8,6 +8,11 @@
 
 #import "SCNavigationTableViewController.h"
 
+typedef NS_ENUM(NSInteger, SCMyOderReuqest) {
+    SCMyOderReuqestProgress,
+    SCMyOderReuqestFinished
+};
+
 @interface SCMyOderViewController : SCNavigationTableViewController <UITableViewDataSource, UITableViewDelegate>
 
 @end

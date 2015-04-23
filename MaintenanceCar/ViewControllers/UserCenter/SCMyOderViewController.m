@@ -12,6 +12,7 @@
 @interface SCMyOderViewController () <SCMyOderCellDelegate>
 {
     SCMyProgressOderCell *_myProgressOderCell;
+    SCMyOderReuqest       _myOderRequest;
 }
 
 @end
@@ -79,59 +80,106 @@
 - (void)startDropDownRefreshReuqest
 {
     [super startDropDownRefreshReuqest];
-    [self startReservationListRequest];
+    [self startOdersReuqest];
 }
 
 - (void)startPullUpRefreshRequest
 {
     [super startPullUpRefreshRequest];
-    [self startReservationListRequest];
+    [self startOdersReuqest];
+}
+
+- (void)startOdersReuqest
+{
+    switch (_myOderRequest)
+    {
+        case SCMyOderReuqestProgress:
+            [self startProgressOdersRequest];
+            break;
+        case SCMyOderReuqestFinished:
+            [self startFinishedOdersRequest];
+            break;
+    }
 }
 
 #pragma mark - Private Methods
 /**
- *  预约列表数据请求方法，必选参数：user_id，limit，offset
+ *  进行中的列表数据请求方法，必选参数：user_id，limit，offset
  */
-- (void)startReservationListRequest
+- (void)startProgressOdersRequest
+{
+    __weak typeof(self) weakSelf = self;
+    // 配置请求参数
+    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                                 @"limit": @(MerchantListLimit),
+                                 @"offset" : @(self.offset)};
+    [[SCAPIRequest manager] startMyProgressOdersAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [weakSelf requestSuccessWithOperation:operation responseObject:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [weakSelf requestFailureWithOperation:operation];
+    }];
+}
+
+/**
+ *  已完成的列表数据请求方法，必选参数：user_id，limit，offset
+ */
+- (void)startFinishedOdersRequest
 {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                    @"limit": @(MerchantListLimit),
                                  @"offset" : @(self.offset)};
-    [[SCAPIRequest manager] startMyOdersAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
-        {
-            NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
-            NSString *statusMessage = responseObject[@"status_message"];
-            switch (statusCode)
-            {
-                case SCAPIRequestErrorCodeNoError:
-                {
-                    // 遍历请求回来的订单数据，生成SCReservation用于订单列表显示
-                    [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                        SCMyProgressOder *oder = [[SCMyProgressOder alloc] initWithDictionary:obj error:nil];
-                        [_dataList addObject:oder];
-                    }];
-                    
-                    [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
-                    [weakSelf readdFooter];
-                    weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
-                }
-                    break;
-                    
-                case SCAPIRequestErrorCodeListNotFoundMore:
-                    [weakSelf removeFooter];
-                    break;
-            }
-            if (![statusMessage isEqualToString:@"success"])
-                [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
-        }
-        [weakSelf endRefresh];
+    [[SCAPIRequest manager] startMyFinishedOdersAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [weakSelf requestSuccessWithOperation:operation responseObject:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [weakSelf hanleFailureResponseWtihOperation:operation];
-        [weakSelf endRefresh];
+        [weakSelf requestFailureWithOperation:operation];
     }];
+}
+
+- (void)requestSuccessWithOperation:(AFHTTPRequestOperation *)operation responseObject:(id)responseObject
+{
+    if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+    {
+        NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
+        NSString *statusMessage = responseObject[@"status_message"];
+        switch (statusCode)
+        {
+            case SCAPIRequestErrorCodeNoError:
+            {
+                // 遍历请求回来的订单数据，生成SCReservation用于订单列表显示
+                [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    SCMyProgressOder *oder = [[SCMyProgressOder alloc] initWithDictionary:obj error:nil];
+                    [_dataList addObject:oder];
+                }];
+                
+                [self.tableView reloadData];                    // 数据配置完成，刷新商家列表
+                [self readdFooter];
+                self.offset += MerchantListLimit;               // 偏移量请求参数递增
+            }
+                break;
+                
+            case SCAPIRequestErrorCodeListNotFoundMore:
+                [self removeFooter];
+                break;
+        }
+        if (![statusMessage isEqualToString:@"success"])
+            [self showHUDAlertToViewController:self text:statusMessage];
+    }
+    [self endRefresh];
+}
+
+- (void)requestFailureWithOperation:(AFHTTPRequestOperation *)operation
+{
+    [self hanleFailureResponseWtihOperation:operation];
+    [self endRefresh];
+}
+
+#pragma mark - SCNavigationTabDelegate Methods
+- (void)didSelectedItemAtIndex:(NSInteger)index
+{
+    _myOderRequest = index;
+    [self restartDropDownRefreshRequest];
 }
 
 #pragma mark - SCMyOderCellDelegate Methods
