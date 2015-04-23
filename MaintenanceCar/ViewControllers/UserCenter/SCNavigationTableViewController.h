@@ -7,8 +7,7 @@
 
 #import "SCViewControllerCategory.h"
 #import <MJRefresh/MJRefresh.h>
-
-@class SCNavigationTab;
+#import "SCNavigationTab.h"
 
 typedef NS_ENUM(NSInteger, SCRequestRefreshType) {
     SCRequestRefreshTypeDropDown,
@@ -24,21 +23,24 @@ typedef NS_ENUM(NSInteger, SCRequestRefreshType) {
 @property (weak, nonatomic) IBOutlet SCNavigationTab *navigationTab;
 @property (weak, nonatomic) IBOutlet     UITableView *tableView;
 
-@property (nonatomic, assign)                 BOOL showTrashItem;
-@property (nonatomic, assign)            NSInteger page;           // 商家列表请求偏移量，用户上拉刷新的分页请求操作
+@property (nonatomic, assign)            NSInteger offset;         // 商家列表请求偏移量，用户上拉刷新的分页请求操作
 @property (nonatomic, assign) SCRequestRefreshType requestType;    // 请求类型，是上拉刷新还是下拉刷新
 
+// 配置方法
 - (void)initConfig;
 - (void)viewConfig;
 
+// 刷新请求方法
 - (void)restartDropDownRefreshRequest;
 - (void)startDropDownRefreshReuqest;
 - (void)startPullUpRefreshRequest;
 
+// 结束刷新方法
 - (void)endRefresh;
 - (void)readdFooter;
 - (void)removeFooter;
 
+// 清除数据方法
 - (void)clearListData;
 - (void)deleteFailureAtIndex:(NSInteger)index;
 

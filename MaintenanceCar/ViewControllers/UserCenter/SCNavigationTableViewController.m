@@ -22,11 +22,6 @@
 }
 
 #pragma mark - Private Methods
-- (void)changeListEditStatus
-{
-    // 改变列表编辑状态
-    self.tableView.editing = !self.tableView.editing;
-}
 
 #pragma mark - Public Methods
 - (void)initConfig
@@ -36,16 +31,9 @@
 
 - (void)viewConfig
 {
-    // 添加编辑列表的按钮
-    if (_showTrashItem)
-    {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
-                                                                                               target:self
-                                                                                               action:@selector(changeListEditStatus)];
-    }
     self.tableView.tableFooterView = [[UIView alloc] init];         // 为tableview添加空白尾部，以免没有数据显示时有很多条纹
     
-    // 为tableview添加上拉和下拉响应式控件和触发方法
+    // 为tableview添加下拉响应式控件和触发方法
     [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(startDropDownRefreshReuqest)];
     [self.tableView.header beginRefreshing];
 }
@@ -62,7 +50,7 @@
 {
     [self clearListData];
     
-    self.page = 1;
+    self.offset = 1;
     self.requestType = SCRequestRefreshTypeDropDown;
 }
 
