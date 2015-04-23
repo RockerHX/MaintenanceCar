@@ -15,14 +15,15 @@
 
 #define DefaultQuery        @"default:'深圳'"
 
+
 #pragma mark - API Domain
 //#define DoMain              @"https://api.yjclw.com"                        // 接口域名
 #warning @"发布时更改测试环境"
 #define DoMain              @"http://testing.yjclw.com"                     // 接口域名
 #define ImageDoMain         @"http://static.yjclw.com"                      // 图片资源域名
 #define InspectionURL       @"http://mobile.yjclw.com/Inspection"           // 检测进度
-
 #define MerchantImageDoMain @"http://cdn1.yjclw.com/"                       // 商家图片资源域名
+
 
 #pragma mark - API Path
 #define APIPath             @"/v2"                                          // 接口路径
@@ -77,6 +78,11 @@
 #define HomePageReservationAPI      @"/Reservation/latest"                  // 最新预约信息API
 #define HomePageSpecialAPI          @"/Special"                             // 首页第四个按钮数据API
 
+
+#pragma mark - V2
+#define MyOderAPI                   @"/Reservation/doing"                   // 我的订单API
+
+
 #pragma mark - API URL
 #define WearthAPIURL                    [APIURL stringByAppendingString:WearthAPI]                  // 天气接口URL - 用于主页模块获取天气信息
 #define SearchAPIURL                    [APIURL stringByAppendingString:SearchAPI]                  // 商家搜索接口URL - 用于商家搜索和筛选
@@ -124,5 +130,9 @@
 #define OperatADAPIURL                  [APIURL stringByAppendingString:OperatADAPI]                // 首页运营位接口URL - 用于首页运营位数据
 #define HomePageReservationAPIURL       [APIURL stringByAppendingString:HomePageReservationAPI]     // 最新预约信息接口URL - 用于首页获取
 #define HomePageSpecialAPIURL           [APIURL stringByAppendingString:HomePageSpecialAPI]         // 首页第四个按钮数据接口URL
+
+
+#pragma mark - V2
+#define MyOderAPIURL                    [APIURL stringByAppendingString:MyOderAPI]                  // 我的订单接口URL - 用于我的订单数据获取
 
 #endif
