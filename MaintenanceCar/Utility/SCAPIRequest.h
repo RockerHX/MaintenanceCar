@@ -348,9 +348,9 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 /**
  *  我的订单接口请求方法(API:/Reservation/doing - GET)
  */
-- (void)startMyOdersAPIRequestSuccess:(NSDictionary *)parameters
-                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startMyOdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 
 @end

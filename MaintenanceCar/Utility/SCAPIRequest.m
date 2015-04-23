@@ -422,9 +422,9 @@
 
 #pragma mark - V2 API
 #pragma mark - User Center API
-- (void)startMyOdersAPIRequestSuccess:(NSDictionary *)parameters
-                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startMyOdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:MyOderAPIURL parameters:parameters success:success failure:failure];
 }
