@@ -41,7 +41,7 @@
 @property (weak, nonatomic) IBOutlet      UIView *nextStateLine;            // 订单下个状态图标
 @property (weak, nonatomic) IBOutlet UIImageView *nextStateIcon;            // 订单下个状态线条
 
-@property (nonatomic, weak) id<SCMyOderCellDelegate>delegate;
+@property (nonatomic, weak) IBOutlet id<SCMyOderCellDelegate>delegate;
 
 /**
  *  刷新进行中订单数据

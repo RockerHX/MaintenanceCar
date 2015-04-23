@@ -23,9 +23,10 @@
 #pragma mark - Public Methods
 - (CGFloat)layoutSizeFittingSize
 {
+    CGFloat separatorHeight = 1.0f;
     [self updateConstraintsIfNeeded];
     [self layoutIfNeeded];
-    return [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    return [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + separatorHeight + 20.0f;
 }
 
 @end

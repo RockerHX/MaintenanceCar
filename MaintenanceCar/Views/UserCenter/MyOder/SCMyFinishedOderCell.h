@@ -7,6 +7,7 @@
 //
 
 #import "SCMyOderCell.h"
+#import "SCMyFinishedOder.h"
 
 @class SCStarView;
 
