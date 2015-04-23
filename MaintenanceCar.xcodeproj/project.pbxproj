@@ -36,6 +36,9 @@
 		4841CECD1A6BE5C300DA36FC /* SCUserCar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CECC1A6BE5C300DA36FC /* SCUserCar.m */; };
 		48534A601AE89B0D000665A4 /* SCMyOder.m in Sources */ = {isa = PBXBuildFile; fileRef = 48534A5F1AE89B0D000665A4 /* SCMyOder.m */; };
 		48534A631AE8A7F5000665A4 /* SCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48534A621AE8A7F5000665A4 /* SCTableViewCell.m */; };
+		48534A661AE8E140000665A4 /* SCMyFinishedOder.m in Sources */ = {isa = PBXBuildFile; fileRef = 48534A651AE8E140000665A4 /* SCMyFinishedOder.m */; };
+		48534A691AE8E166000665A4 /* SCMyProgressOder.m in Sources */ = {isa = PBXBuildFile; fileRef = 48534A681AE8E166000665A4 /* SCMyProgressOder.m */; };
+		48534A6C1AE8E184000665A4 /* SCMyProgressOderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48534A6B1AE8E184000665A4 /* SCMyProgressOderCell.m */; };
 		48647C671AB1369E00810974 /* SCUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 48647C661AB1369E00810974 /* SCUtility.m */; };
 		48661B761A5E6627007F92A7 /* FilterConditions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 48661B751A5E6627007F92A7 /* FilterConditions.plist */; };
 		4866F8B61AAB32ED008E195C /* SCGroupProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F8B11AAB32ED008E195C /* SCGroupProduct.m */; };
@@ -242,6 +245,12 @@
 		48534A5F1AE89B0D000665A4 /* SCMyOder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMyOder.m; sourceTree = "<group>"; };
 		48534A611AE8A7F5000665A4 /* SCTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCTableViewCell.h; sourceTree = "<group>"; };
 		48534A621AE8A7F5000665A4 /* SCTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCTableViewCell.m; sourceTree = "<group>"; };
+		48534A641AE8E140000665A4 /* SCMyFinishedOder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMyFinishedOder.h; sourceTree = "<group>"; };
+		48534A651AE8E140000665A4 /* SCMyFinishedOder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMyFinishedOder.m; sourceTree = "<group>"; };
+		48534A671AE8E166000665A4 /* SCMyProgressOder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMyProgressOder.h; sourceTree = "<group>"; };
+		48534A681AE8E166000665A4 /* SCMyProgressOder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMyProgressOder.m; sourceTree = "<group>"; };
+		48534A6A1AE8E184000665A4 /* SCMyProgressOderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMyProgressOderCell.h; sourceTree = "<group>"; };
+		48534A6B1AE8E184000665A4 /* SCMyProgressOderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMyProgressOderCell.m; sourceTree = "<group>"; };
 		48647C651AB1369E00810974 /* SCUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCUtility.h; sourceTree = "<group>"; };
 		48647C661AB1369E00810974 /* SCUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCUtility.m; sourceTree = "<group>"; };
 		48661B751A5E6627007F92A7 /* FilterConditions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FilterConditions.plist; sourceTree = "<group>"; };
@@ -667,6 +676,10 @@
 			children = (
 				48534A5E1AE89B0D000665A4 /* SCMyOder.h */,
 				48534A5F1AE89B0D000665A4 /* SCMyOder.m */,
+				48534A671AE8E166000665A4 /* SCMyProgressOder.h */,
+				48534A681AE8E166000665A4 /* SCMyProgressOder.m */,
+				48534A641AE8E140000665A4 /* SCMyFinishedOder.h */,
+				48534A651AE8E140000665A4 /* SCMyFinishedOder.m */,
 			);
 			path = MyOder;
 			sourceTree = "<group>";
@@ -1055,6 +1068,8 @@
 			children = (
 				48720E101AE50F1E002D435F /* SCMyOderCell.h */,
 				48720E111AE50F1E002D435F /* SCMyOderCell.m */,
+				48534A6A1AE8E184000665A4 /* SCMyProgressOderCell.h */,
+				48534A6B1AE8E184000665A4 /* SCMyProgressOderCell.m */,
 				48E611231AE6828C000F65F0 /* SCMyFinishedOderCell.h */,
 				48E611241AE6828C000F65F0 /* SCMyFinishedOderCell.m */,
 			);
@@ -1521,7 +1536,9 @@
 				4866F9F21AAD96F7008E195C /* SCCoupon.m in Sources */,
 				4866F91B1AACBD2D008E195C /* SCReservationViewController.m in Sources */,
 				4866F9AD1AACBD89008E195C /* SCSelectedCell.m in Sources */,
+				48534A661AE8E140000665A4 /* SCMyFinishedOder.m in Sources */,
 				4866F9261AACBD2D008E195C /* SCMyFavoriteTableViewController.m in Sources */,
+				48534A691AE8E166000665A4 /* SCMyProgressOder.m in Sources */,
 				48720E121AE50F1E002D435F /* SCMyOderCell.m in Sources */,
 				48E611251AE6828C000F65F0 /* SCMyFinishedOderCell.m in Sources */,
 				48647C671AB1369E00810974 /* SCUtility.m in Sources */,
@@ -1558,6 +1575,7 @@
 				482AC9931AB5C7E8001574EF /* SCCommentCell.m in Sources */,
 				486967AB1AD77CE500C3F7A6 /* SCCommentGroup.m in Sources */,
 				4866F9BF1AACBD89008E195C /* SCSelectedView.m in Sources */,
+				48534A6C1AE8E184000665A4 /* SCMyProgressOderCell.m in Sources */,
 				4866F9151AACBD2D008E195C /* SCBuyGroupProductViewController.m in Sources */,
 				4866F9171AACBD2D008E195C /* SCGroupProductDetailViewController.m in Sources */,
 				48FB70CA1AA5A58300AF4AD9 /* SCSpecial.m in Sources */,
