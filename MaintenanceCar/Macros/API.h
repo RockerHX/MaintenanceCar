@@ -17,9 +17,9 @@
 
 
 #pragma mark - API Domain
-//#define DoMain              @"https://api.yjclw.com"                        // 接口域名
+#define DoMain              @"https://api.yjclw.com"                        // 接口域名
 #warning @"发布时更改测试环境"
-#define DoMain              @"http://testing.yjclw.com"                     // 接口域名
+//#define DoMain              @"http://testing.yjclw.com"                     // 接口域名
 #define ImageDoMain         @"http://static.yjclw.com"                      // 图片资源域名
 #define InspectionURL       @"http://mobile.yjclw.com/Inspection"           // 检测进度
 #define MerchantImageDoMain @"http://cdn1.yjclw.com/"                       // 商家图片资源域名
@@ -131,7 +131,7 @@
 
 
 #define OperatADAPIURL                  [V1APIURL stringByAppendingString:OperatADAPI]                // 首页运营位接口URL - 用于首页运营位数据
-#define HomePageReservationAPIURL       [V1APIURL stringByAppendingString:HomePageReservationAPI]     // 最新预约信息接口URL - 用于首页获取
+#define HomePageReservationAPIURL       [V2APIURL stringByAppendingString:HomePageReservationAPI]     // 最新预约信息接口URL - 用于首页获取
 #define HomePageSpecialAPIURL           [V1APIURL stringByAppendingString:HomePageSpecialAPI]         // 首页第四个按钮数据接口URL
 
 
