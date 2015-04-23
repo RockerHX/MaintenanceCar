@@ -9,6 +9,8 @@
 #import "SCNavigationTab.h"
 #import "AppMicroConstants.h"
 
+#define AnmationDuration        0.2f
+
 @implementation SCNavigationTab
 {
     UIButton *_preButton;
@@ -17,6 +19,7 @@
 #pragma mark - Init Methods
 - (void)awakeFromNib
 {
+    _anmationDuration = 0.2f;
     _preButton = _firstButton;
 }
 
@@ -57,7 +60,7 @@
 - (void)buttonPressedWithButton:(UIButton *)button
 {
     [_preButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    [UIView animateWithDuration:0.3f animations:^{
+    [UIView animateWithDuration:_anmationDuration animations:^{
         _line.x = button.x;
         _line.width  = button.width;
     }];

@@ -25,6 +25,8 @@
 
 @property (nonatomic, weak) IBOutlet id<SCNavigationTabDelegate>delegate;
 
+@property (nonatomic, assign) CGFloat anmationDuration;
+
 - (IBAction)firstButtonPressed:(UIButton *)button;
 - (IBAction)secondButtonPressed:(UIButton *)button;
 - (IBAction)thirdButtonPressed:(UIButton *)button;
