@@ -71,6 +71,7 @@
     _reservationButton.layer.cornerRadius   = 5.0f;
     _ownerNameTextField.leftViewMode        = UITextFieldViewModeAlways;
     _ownerNameTextField.leftView            = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
+    _ownerNameTextField.text                = [SCUserInfo share].ownerName;
     _ownerPhoneNumberTextField.leftViewMode = UITextFieldViewModeAlways;
     _ownerPhoneNumberTextField.leftView     = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
     _ownerPhoneNumberTextField.text         = [SCUserInfo share].phoneNmber;
@@ -182,7 +183,10 @@
         {
             NSString *statusMessage = responseObject[@"status_message"];
             if (![statusMessage isEqualToString:@"success"])
+            {
+                [[SCUserInfo share] saveOwnerName:_ownerNameTextField.text];
                 [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:statusMessage];
+            }
         }
         else
             [weakSelf showHUDAlertToViewController:weakSelf text:DataError];

@@ -17,6 +17,7 @@
 #define kPhoneNumberKey         @"kPhoneNumberKey"
 #define kUserTokenKey           @"kUserTokenKey"
 #define kTokenRefreshDateKey    @"kTokenRefreshDateKey"
+#define kOwnerNameKey           @"kOwnerNameKey"
 #define kUserCarsKey            @"kUserCarsKey"
 #define kAddAliasKey            @"kAddAliasKey"
 #define kReceiveMessageKey      @"kReceiveMessageKey"
@@ -72,6 +73,11 @@ static SCUserInfo *userInfo = nil;
 - (NSString *)token
 {
     return self.loginStatus ? [USER_DEFAULT objectForKey:kUserTokenKey] : @"";
+}
+
+- (NSString *)ownerName
+{
+    return self.loginStatus ? [USER_DEFAULT objectForKey:kOwnerNameKey] : @"";
 }
 
 - (SCLoginStatus)loginStatus
@@ -143,6 +149,12 @@ static SCUserInfo *userInfo = nil;
     [USER_DEFAULT synchronize];
     
     self.receiveMessage = YES;
+}
+
+- (void)saveOwnerName:(NSString *)name
+{
+    [USER_DEFAULT setObject:name forKey:kOwnerNameKey];
+    [USER_DEFAULT synchronize];
 }
 
 - (void)logout
