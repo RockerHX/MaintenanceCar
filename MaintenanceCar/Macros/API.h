@@ -82,7 +82,8 @@
 
 
 #pragma mark - V2
-#define MyOderAPI                   @"/Reservation/doing"                   // 我的订单API
+#define MyProgressOderAPI           @"/Reservation/doing"                   // 我的进行中订单API
+#define MyFinishedOderAPI           @"/Reservation/done"                    // 我的已完成订单API
 
 
 #pragma mark - API URL
@@ -135,6 +136,7 @@
 
 
 #pragma mark - V2
-#define MyOderAPIURL                    [V2APIURL stringByAppendingString:MyOderAPI]                  // 我的订单接口URL - 用于我的订单数据获取
+#define MyProgressOderAPIURL            [V2APIURL stringByAppendingString:MyProgressOderAPI]          // 我的进行中订单接口URL - 用于进行中订单数据获取
+#define MyFinishedOderAPIURL            [V2APIURL stringByAppendingString:MyFinishedOderAPI]          // 我的已完成订单接口URL - 用于已完成订单数据获取
 
 #endif

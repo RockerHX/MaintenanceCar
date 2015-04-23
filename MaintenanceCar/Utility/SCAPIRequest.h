@@ -346,11 +346,18 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 #pragma mark - V2 API
 #pragma mark - User Center API
 /**
- *  我的订单接口请求方法(API:/Reservation/doing - GET)
+ *  我的进行中订单接口请求方法(API:/Reservation/doing - GET)
  */
-- (void)startMyOdersAPIRequestWithParameters:(NSDictionary *)parameters
-                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startMyProgressOdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  我的已完成订单接口请求方法(API:/Reservation/done - GET)
+ */
+- (void)startMyFinishedOdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 
 @end
