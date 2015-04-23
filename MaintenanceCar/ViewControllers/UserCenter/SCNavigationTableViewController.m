@@ -50,7 +50,7 @@
 {
     [self clearListData];
     
-    self.offset = 1;
+    self.offset = 0;
     self.requestType = SCRequestRefreshTypeDropDown;
 }
 
