@@ -106,13 +106,13 @@
 #define CommentAPIURL                   [V1APIURL stringByAppendingString:CommentAPI]                 // 评价接口URL - 用于添加评价
 #define MerchantCommentAPIURL           [V1APIURL stringByAppendingString:MerchantCommentAPI]         // 商家评价接口URL - 用于获取商家评价列表
 
-#define VerificationCodeAPIURL          [V1APIURL stringByAppendingString:VerificationCodeAPI]        // 获取验证码接口URL - 用于获取短信或者语音验证码
-#define LoginAPIURL                     [V1APIURL stringByAppendingString:LoginAPI]                   // 用户登录接口URL - 用于用户登录
-#define UserLogAPIURL                   [V1APIURL stringByAppendingString:UserLogAPI]                 // 用户日志记录接口URL - 打开APP后如果用户已经登录异步调用此URL记录
-#define RefreshTokenAPIURL              [V1APIURL stringByAppendingString:RefreshTokenAPI]            // 刷新Token接口URL - 刷新token过期时间
+#define VerificationCodeAPIURL          [V2APIURL stringByAppendingString:VerificationCodeAPI]        // 获取验证码接口URL - 用于获取短信或者语音验证码
+#define LoginAPIURL                     [V2APIURL stringByAppendingString:LoginAPI]                   // 用户登录接口URL - 用于用户登录
+#define UserLogAPIURL                   [V2APIURL stringByAppendingString:UserLogAPI]                 // 用户日志记录接口URL - 打开APP后如果用户已经登录异步调用此URL记录
+#define RefreshTokenAPIURL              [V2APIURL stringByAppendingString:RefreshTokenAPI]            // 刷新Token接口URL - 刷新token过期时间
 
 #define MerchantReservationAPIURL       [V2APIURL stringByAppendingString:MerchantReservationAPI]     // 商家预约接口URL - 用于商家预约项目
-#define MyReservationAPIURL             [V2APIURL stringByAppendingString:MyReservationAPI]           // 商家预约接口URL - 用于商家预约项目
+#define MyReservationAPIURL             [V2APIURL stringByAppendingString:MyReservationAPI]           // 我的预约接口URL - 用于商家预约项目
 #define UpdateReservationAPIURL         [V2APIURL stringByAppendingString:UpdateReservationAPI]       // 更新预约接口URL - 用于用户取消预约项目
 #define ReservationItemNumAPIURL        [V2APIURL stringByAppendingString:ReservationItemNumAPI]      // 预约日期数量接口URL - 用于获取预约项目数量
 

@@ -150,9 +150,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
             switch (statusCode)
             {
                 case SCAPIRequestErrorCodeNoError:
-                {
                     [weakSelf showHUDAlertToViewController:weakSelf tag:SCHUDModeSendVerificationCode text:statusMessage];
-                }
                     break;
                 case SCAPIRequestErrorCodePhoneError:
                 case SCAPIRequestErrorCodeVerificationCodeSendError:
