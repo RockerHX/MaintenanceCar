@@ -60,6 +60,48 @@
     [self performSelector:@selector(viewConfig) withObject:nil afterDelay:0.1f];
 }
 
+#pragma mark - Config Methods
+- (void)initConfig
+{
+    _checkData          = [@{} mutableCopy];
+    _recommendMerchants = [@[] mutableCopy];
+    _currentCar         = [[SCUserInfo share].cars firstObject];
+}
+
+- (void)viewConfig
+{
+    if (IS_IPHONE_6Plus)
+    {
+        _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 280.0f);
+        _heightConstraint.constant = _heightConstraint.constant + 30.0f;
+        [self.view needsUpdateConstraints];
+        [self.view layoutIfNeeded];
+    }
+    else if (IS_IPHONE_6)
+    {
+        _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 270.0f);
+        _heightConstraint.constant = _heightConstraint.constant + 15.0f;
+        [self.view needsUpdateConstraints];
+        [self.view layoutIfNeeded];
+    }
+    else
+    {
+        _buyCarLabel.font     = [UIFont systemFontOfSize:12.0f];
+        _buyCarTimeLabel.font = [UIFont systemFontOfSize:13.0f];
+        _driveCarLabel.font   = [UIFont systemFontOfSize:12.0f];
+        _driveHabitLabel.font = [UIFont systemFontOfSize:13.0f];
+    }
+    
+    NSArray *userCars = [SCUserInfo share].cars;
+    if (userCars.count)
+    {
+        _nextButton.enabled = (userCars.count > 1) ? YES : NO;
+        [self startDataRequest];
+    }
+    else
+        [self showHUDAlertToViewController:self tag:Zero text:@"暂无车辆，请您添加" delay:0.5f];
+}
+
 #pragma mark - Navigation
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -122,49 +164,6 @@
 }
 
 #pragma mark - Private Methods
-- (void)initConfig
-{
-    _checkData                    = [@{} mutableCopy];
-    _recommendMerchants           = [@[] mutableCopy];
-    
-    _currentCar                   = [[SCUserInfo share].cars firstObject];
-    _maintenanceTypeView.delegate = self;
-}
-
-- (void)viewConfig
-{
-    if (IS_IPHONE_6Plus)
-    {
-        _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 280.0f);
-        _heightConstraint.constant = _heightConstraint.constant + 30.0f;
-        [self.view needsUpdateConstraints];
-        [self.view layoutIfNeeded];
-    }
-    else if (IS_IPHONE_6)
-    {
-        _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 270.0f);
-        _heightConstraint.constant = _heightConstraint.constant + 15.0f;
-        [self.view needsUpdateConstraints];
-        [self.view layoutIfNeeded];
-    }
-    else
-    {
-        _buyCarLabel.font     = [UIFont systemFontOfSize:12.0f];
-        _buyCarTimeLabel.font = [UIFont systemFontOfSize:13.0f];
-        _driveCarLabel.font   = [UIFont systemFontOfSize:12.0f];
-        _driveHabitLabel.font = [UIFont systemFontOfSize:13.0f];
-    }
-    
-    NSArray *userCars = [SCUserInfo share].cars;
-    if (userCars.count)
-    {
-        _nextButton.enabled = (userCars.count > 1) ? YES : NO;
-        [self startDataRequest];
-    }
-    else
-        [self showHUDAlertToViewController:self tag:Zero text:@"暂无车辆，请您添加" delay:0.5f];
-}
-
 - (void)displayMaintenanceView
 {
     SCUserCar *userCar                   = _currentCar;

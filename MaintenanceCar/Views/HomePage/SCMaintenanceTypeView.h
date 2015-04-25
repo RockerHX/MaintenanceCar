@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet SCMaintenanceTypeItem *accurateItem;
 @property (weak, nonatomic) IBOutlet SCMaintenanceTypeItem *selfItem;
 
-@property (nonatomic, weak)          id                    <SCMaintenanceTypeViewDelegate>delegate;
-@property (nonatomic, assign)        SCMaintenanceType     maintenanceType;
+@property (nonatomic, weak) IBOutlet                    id  <SCMaintenanceTypeViewDelegate>delegate;
+@property (nonatomic, assign)            SCMaintenanceType  maintenanceType;
 
 @end
