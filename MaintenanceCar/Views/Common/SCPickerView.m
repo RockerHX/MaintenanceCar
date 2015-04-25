@@ -11,15 +11,20 @@
 #import "UIConstants.h"
 #import "AppDelegate.h"
 
-@interface SCPickerView ()
+@implementation SCPickerView
 {
     id _item;            // 选择数据Cache
 }
 
-@end
+#pragma mark - Action Methods
+- (IBAction)enterButtonPressed:(id)sender
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(pickerView:didSelectRow:item:)])
+        [_delegate pickerView:self didSelectRow:[self indexOfItem:_item] item:(_item ? _item : [_pickerItmes firstObject])];
+    [self removePickerView];
+}
 
-@implementation SCPickerView
-
+#pragma mark - Init Methods
 - (id)initWithItems:(NSArray *)items type:(SCPickerType)type delegate:(id<SCPickerViewDelegate>)delegate
 {
     // 从Xib加载View
@@ -122,17 +127,7 @@
 
 - (void)addGestureRecognizer
 {
-    // 空白区域被点击之后触发回调，为选择取选择器默认数据，关闭时间筛选器
-    if (_item)
-    {
-        if (_delegate && [_delegate respondsToSelector:@selector(pickerView:didSelectRow:item:)])
-            [_delegate pickerView:self didSelectRow:[self indexOfItem:_item] item:_item];
-    }
-    else
-    {
-        if (_delegate && [_delegate respondsToSelector:@selector(pickerView:didSelectRow:item:)])
-            [_delegate pickerView:self didSelectRow:[self indexOfItem:_item] item:[_pickerItmes firstObject]];
-    }
+    // 空白区域被点击之后关闭筛选器
     [self removePickerView];
 }
 
