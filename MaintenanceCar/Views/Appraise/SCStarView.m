@@ -39,7 +39,7 @@
 {
     NSInteger showValue = [value integerValue]/2;
     _value = @(showValue).stringValue;
-    _startValue = _value;
+    _startValue = value;
     NSInteger star = showValue;
     
     switch (star)

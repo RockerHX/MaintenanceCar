@@ -81,7 +81,7 @@
     NSDictionary *paramters = @{@"user_id": [SCUserInfo share].userID,
                              @"company_id": _oder.companyID,
                              @"reserve_id": _oder.reserveID,
-                                   @"star": @([_starView.startValue integerValue]*2),
+                                   @"star": _starView.startValue,
                                  @"detail": _textView.text};
     [[SCAPIRequest manager] startCommentAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];

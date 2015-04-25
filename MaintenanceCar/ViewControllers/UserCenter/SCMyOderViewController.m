@@ -10,8 +10,14 @@
 #import "SCMyOderCell.h"
 #import "SCAppraiseViewController.h"
 
+typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
+    SCMyOderAlertTypeCallMerchant,
+    SCMyOderAlertTypeAppraiseAlert
+};
+
 @interface SCMyOderViewController () <SCMyOderCellDelegate, SCAppraiseViewControllerDelegate>
 {
+    SCMyOder        *_oder;
     SCMyOderCell    *_myOderCell;
     SCMyOderReuqest  _myOderRequest;
 }
@@ -48,12 +54,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCMyOderCell *cell = nil;
+    SCMyOderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMyOderCell" forIndexPath:indexPath];;
     if (_dataList.count)
-    {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"SCMyOderCell" forIndexPath:indexPath];
         [cell displayCellWithReservation:_dataList[indexPath.row] index:indexPath.row];
-    }
     return cell;
 }
 
@@ -174,6 +177,22 @@
     [self endRefresh];
 }
 
+- (void)pushToAppraiseViewController
+{
+    // 跳转到评论页面
+    @try {
+        SCAppraiseViewController *appraiseViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAppraiseViewController"];
+        appraiseViewController.delegate                  = self;
+        appraiseViewController.oder                      = _oder;
+        [self.navigationController pushViewController:appraiseViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCMyReservationTableViewController Go to the SCAppraiseViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
+}
+
 #pragma mark - SCNavigationTabDelegate Methods
 - (void)didSelectedItemAtIndex:(NSInteger)index
 {
@@ -184,36 +203,39 @@
 #pragma mark - SCMyOderCellDelegate Methods
 - (void)shouldCallMerchantWithPhone:(NSString *)phone
 {
-    [self showAlertWithTitle:@"是否拨打商家电话？" message:phone delegate:self tag:Zero cancelButtonTitle:@"取消" otherButtonTitle:@"拨打"];
+    [self showAlertWithTitle:@"是否拨打商家电话？" message:phone delegate:self tag:SCMyOderAlertTypeCallMerchant cancelButtonTitle:@"取消" otherButtonTitle:@"拨打"];
 }
 
 - (void)shouldAppraiseWithOder:(SCMyOder *)oder
 {
-    // 跳转到评论页面
-    @try {
-        SCAppraiseViewController *appraiseViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAppraiseViewController"];
-        appraiseViewController.delegate                  = self;
-        appraiseViewController.oder                      = oder;
-        [self.navigationController pushViewController:appraiseViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMyReservationTableViewController Go to the SCAppraiseViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    _oder = oder;
+    if (_myOderRequest == SCMyOderReuqestProgress)
+        [self showAlertWithTitle:@"确认要评价进行中的订单吗？" message:@"进行中订单被评价后会被自动标记为已完成，我确认这个订单实际已经完成" delegate:self tag:SCMyOderAlertTypeAppraiseAlert cancelButtonTitle:@"取消" otherButtonTitle:@"继续评价"];
+    else
+        [self pushToAppraiseViewController];
 }
 
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex != alertView.cancelButtonIndex)
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", alertView.message]]];
+    switch (alertView.tag)
+    {
+        case SCMyOderAlertTypeCallMerchant:
+        {
+            if (buttonIndex != alertView.cancelButtonIndex)
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", alertView.message]]];
+        }
+            break;
+        case SCMyOderAlertTypeAppraiseAlert:
+            [self pushToAppraiseViewController];
+            break;
+    }
 }
 
 #pragma mark - SCAppraiseViewControllerDelegate Methods
 - (void)appraiseSuccess
 {
-    [self startOdersReuqest];
+    [self startDropDownRefreshReuqest];
 }
 
 @end
