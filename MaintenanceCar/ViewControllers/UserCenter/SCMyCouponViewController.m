@@ -12,7 +12,6 @@
 #import "SCCoupon.h"
 #import "SCCouponDetailViewController.h"
 #import "SCReservationViewController.h"
-#import "SCMerchant.h"
 
 @interface SCMyCouponViewController () <SCCouponCodeCellDelegate>
 

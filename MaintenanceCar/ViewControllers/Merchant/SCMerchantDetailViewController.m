@@ -9,7 +9,6 @@
 #import "SCMerchantDetailViewController.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import <SCLoopScrollView/SCLoopScrollView.h>
-#import "SCMerchant.h"
 #import "SCMerchantDetail.h"
 #import "SCComment.h"
 #import "SCMerchantSummaryCell.h"

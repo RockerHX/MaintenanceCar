@@ -14,7 +14,6 @@
 #import "SCMerchantDetailViewController.h"
 #import "SCReservationViewController.h"
 #import "SCUserCar.h"
-#import "SCMerchant.h"
 #import "SCMileageView.h"
 #import "SCAllDictionary.h"
 #import "SCChangeMaintenanceDataViewController.h"

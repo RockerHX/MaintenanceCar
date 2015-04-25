@@ -7,7 +7,6 @@
 //
 
 #import "SCMyFavoriteTableViewController.h"
-#import "SCMerchant.h"
 #import "SCMerchantTableViewCell.h"
 #import "SCMerchantDetailViewController.h"
 #import "SCReservatAlertView.h"

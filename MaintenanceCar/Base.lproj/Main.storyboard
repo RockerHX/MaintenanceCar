@@ -7221,13 +7221,13 @@
                                             <segue destination="XXo-bc-Mhp" kind="push" id="QOh-tr-yno"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="60" id="d5p-5e-HT2">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="113" id="d5p-5e-HT2">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d5p-5e-HT2" id="urh-05-1xf">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="备注:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XkU-aI-E1W">
-                                                    <rect key="frame" x="15" y="10" width="44" height="39.5"/>
+                                                    <rect key="frame" x="15" y="10" width="44" height="92"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="44" id="Rt7-AY-hVf"/>
                                                     </constraints>
@@ -7235,24 +7235,21 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="如有任何需求，我们会尽量满足" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="iYq-BJ-DhF">
-                                                    <rect key="frame" x="59" y="8" width="253" height="43.5"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SG8-GH-w9N" customClass="SCTextView">
+                                                    <rect key="frame" x="59" y="8" width="253" height="96"/>
                                                     <color key="backgroundColor" white="0.90000000000000002" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                                    <connections>
-                                                        <outlet property="delegate" destination="A9F-HT-Ix5" id="ury-er-879"/>
-                                                    </connections>
-                                                </textField>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="iYq-BJ-DhF" firstAttribute="top" secondItem="urh-05-1xf" secondAttribute="topMargin" id="FuR-4D-40x"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="SG8-GH-w9N" secondAttribute="bottom" id="01D-7U-aY1"/>
+                                                <constraint firstItem="SG8-GH-w9N" firstAttribute="leading" secondItem="XkU-aI-E1W" secondAttribute="trailing" id="Izd-ya-koL"/>
                                                 <constraint firstItem="XkU-aI-E1W" firstAttribute="top" secondItem="urh-05-1xf" secondAttribute="topMargin" constant="2" id="UMF-9t-FPJ"/>
                                                 <constraint firstItem="XkU-aI-E1W" firstAttribute="leading" secondItem="urh-05-1xf" secondAttribute="leading" constant="15" id="VHe-gZ-NtN"/>
-                                                <constraint firstItem="iYq-BJ-DhF" firstAttribute="leading" secondItem="XkU-aI-E1W" secondAttribute="trailing" id="aOh-So-Dyi"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="iYq-BJ-DhF" secondAttribute="bottom" id="fBP-mP-GiU"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="SG8-GH-w9N" secondAttribute="trailing" id="VaH-o3-cSE"/>
+                                                <constraint firstItem="SG8-GH-w9N" firstAttribute="top" secondItem="urh-05-1xf" secondAttribute="topMargin" id="gbb-xX-Ihk"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="XkU-aI-E1W" secondAttribute="bottom" constant="2" id="i2M-J0-iKA"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="iYq-BJ-DhF" secondAttribute="trailing" id="nCd-15-OTr"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -7273,13 +7270,13 @@
                         <outlet property="merchantNameLabel" destination="zbL-hI-5IT" id="fiM-bu-lo5"/>
                         <outlet property="ownerNameTextField" destination="pO0-t0-5jT" id="bje-Kk-0nk"/>
                         <outlet property="ownerPhoneNumberTextField" destination="uf0-bv-czZ" id="mGU-5N-4Xb"/>
-                        <outlet property="remarkTextField" destination="iYq-BJ-DhF" id="IZG-9B-hNp"/>
+                        <outlet property="remarkTextField" destination="SG8-GH-w9N" id="g3u-uR-cdo"/>
                         <outlet property="reservationButton" destination="kpC-Rd-kor" id="hhr-dA-7Gi"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UmI-AI-Bih" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1525.5999999999999" y="222.94"/>
+            <point key="canvasLocation" x="1525" y="222"/>
         </scene>
         <!--发现-->
         <scene sceneID="ndG-Ia-hcR">

@@ -18,7 +18,6 @@
 #import "SCBuyGroupProductViewController.h"
 #import "SCCommentListViewController.h"
 #import "SCReservationViewController.h"
-#import "SCMerchant.h"
 #import <SCLoopScrollView/SCLoopScrollView.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
 

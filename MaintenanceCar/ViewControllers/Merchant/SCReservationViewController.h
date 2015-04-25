@@ -10,6 +10,8 @@
 #import "SCMerchant.h"
 #import "SCServiceItem.h"
 
+@class SCTextView;
+
 @interface SCReservationViewController : UITableViewController
 
 @property (weak, nonatomic) IBOutlet     UILabel *merchantNameLabel;            // 商家名称栏
@@ -19,13 +21,13 @@
 @property (weak, nonatomic) IBOutlet     UILabel *categoryLabel;                // 类别栏
 @property (weak, nonatomic) IBOutlet     UILabel *itemLabel;                    // 项目栏
 @property (weak, nonatomic) IBOutlet     UILabel *dateLabel;                    // 日期显示栏
-@property (weak, nonatomic) IBOutlet UITextField *remarkTextField;              // 其他需求输入栏
+@property (weak, nonatomic) IBOutlet  SCTextView *remarkTextField;              // 其他需求输入栏
 @property (weak, nonatomic) IBOutlet    UIButton *reservationButton;            // 预约按钮
 
-@property (nonatomic, strong)      SCMerchant    *merchant;                     // 商家信息
+@property (nonatomic, strong)         SCMerchant *merchant;                     // 商家信息
 @property (nonatomic, strong)      SCServiceItem *serviceItem;                  // 服务项目
-@property (nonatomic, copy)             NSString *reservationType;
-@property (nonatomic, copy)             NSString *price;
+@property (nonatomic, strong)           NSString *reservationType;
+@property (nonatomic, strong)           NSString *price;
 @property (nonatomic, assign)               BOOL  canChange;
 
 @end

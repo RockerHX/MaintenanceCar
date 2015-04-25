@@ -7,6 +7,7 @@
 //
 
 #import "SCReservationViewController.h"
+#import "SCTextView.h"
 #import "SCPickerView.h"
 #import "SCReservationDateViewController.h"
 #import "SCAllDictionary.h"
@@ -75,8 +76,7 @@
     _ownerPhoneNumberTextField.leftViewMode = UITextFieldViewModeAlways;
     _ownerPhoneNumberTextField.leftView     = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
     _ownerPhoneNumberTextField.text         = [SCUserInfo share].phoneNmber;
-    _remarkTextField.leftViewMode           = UITextFieldViewModeAlways;
-    _remarkTextField.leftView               = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
+    _remarkTextField.placeholderText        = @"您有什么需求请在此写下，我们会尽力满足！";
     
     [self refreshProjectLabel];
     
