@@ -36,8 +36,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 @interface SCMerchantDetailViewController () <UIAlertViewDelegate, SCReservatAlertViewDelegate, SCMerchantSummaryCellDelegate, SCMerchantDetailFlagCellDelegate, SCQuotedPriceCellDelegate>
 {
-    BOOL           _needChecked;      // 检查收藏标识
-    UIView         *_blankView;
+    BOOL    _needChecked;      // 检查收藏标识
+    UIView *_blankView;
 }
 @property (weak, nonatomic)    SCMerchantSummaryCell *summaryCellCell;
 @property (weak, nonatomic)       SCGroupProductCell *productCell;
@@ -446,13 +446,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             [weakSelf displayMerchantDetail];
             
             [weakSelf.tableView reloadData];
+            [self removeBlankView];
         }
         else
             [weakSelf showRequestErrorAlert];
-        [self removeBlankView];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf showRequestErrorAlert];
-        [self removeBlankView];
     }];
 }
 
