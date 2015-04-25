@@ -13,8 +13,12 @@
 
 @interface SCMyFinishedOderCell : SCMyOderCell
 
-@property (weak, nonatomic) IBOutlet SCStarView *starView;
-@property (weak, nonatomic) IBOutlet   UIButton *appraiseButton;
+@property (weak, nonatomic) IBOutlet            UILabel *starPromptLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *starPromptLabelTopHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *starPromptLabelHeight;
+@property (weak, nonatomic) IBOutlet         SCStarView *starView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *starViewHeight;
+@property (weak, nonatomic) IBOutlet           UIButton *appraiseButton;
 
 - (IBAction)appraiseButtonPressed:(id)sender;
 

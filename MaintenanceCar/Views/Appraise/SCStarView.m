@@ -37,9 +37,10 @@
 // 根据星级数来显示对应星级图片
 - (void)setValue:(NSString *)value
 {
-    _value = value;
-    _startValue = value;
-    NSInteger star = [value integerValue];
+    NSInteger showValue = [value integerValue]/2;
+    _value = @(showValue).stringValue;
+    _startValue = _value;
+    NSInteger star = showValue;
     
     switch (star)
     {

@@ -56,7 +56,7 @@
                   placeholderImage:[UIImage imageNamed:@"MerchantIconDefault"]];
     _merchantNameLabel.text = merchant.name;
     _distanceLabel.text     = merchant.distance;
-    _starView.value         = [@([merchant.star integerValue]/2) stringValue];
+    _starView.value         = merchant.star;
     
 //    if (merchant.tags.length)
 //    {

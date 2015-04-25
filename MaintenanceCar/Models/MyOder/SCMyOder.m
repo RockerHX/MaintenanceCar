@@ -28,7 +28,8 @@
                                                      @"current_name": @"currentStateName",
                                                         @"next_time": @"nextStateDate",
                                                         @"next_name": @"nextStateName",
-                                                        @"telephone": @"merchantTelphone"}];
+                                                        @"telephone": @"merchantTelphone",
+                                                      @"can_comment": @"canComment"}];
 }
 
 #pragma mark - Setter And Getter Methods

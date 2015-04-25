@@ -8,10 +8,12 @@
 
 #import "SCMyOderViewController.h"
 #import "SCMyProgressOderCell.h"
+#import "SCMyFinishedOderCell.h"
 
 @interface SCMyOderViewController () <SCMyOderCellDelegate>
 {
     SCMyProgressOderCell *_myProgressOderCell;
+    SCMyFinishedOderCell *_myFinishedOderCell;
     SCMyOderReuqest       _myOderRequest;
 }
 
@@ -47,11 +49,27 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCMyOderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMyProgressOderCell" forIndexPath:indexPath];
+    SCMyOderCell *cell = nil;
     if (_dataList.count)
     {
-        SCMyProgressOder *myProgressOder = _dataList[indexPath.row];
-        [cell displayCellWithReservation:myProgressOder index:indexPath.row];
+        switch (_myOderRequest)
+        {
+            case SCMyOderReuqestFinished:
+            {
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCMyFinishedOderCell" forIndexPath:indexPath];
+                SCMyProgressOder *myProgressOder = _dataList[indexPath.row];
+                [cell displayCellWithReservation:myProgressOder index:indexPath.row];
+            }
+                break;
+                
+            default:
+            {
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCMyProgressOderCell" forIndexPath:indexPath];
+                SCMyProgressOder *myProgressOder = _dataList[indexPath.row];
+                [cell displayCellWithReservation:myProgressOder index:indexPath.row];
+            }
+                break;
+        }
     }
     return cell;
 }
@@ -62,10 +80,25 @@
     CGFloat height;
     if (_dataList.count)
     {
-        SCMyProgressOder *myProgressOder = _dataList[indexPath.row];
-        if(!_myProgressOderCell)
-            _myProgressOderCell = [tableView dequeueReusableCellWithIdentifier:@"SCMyProgressOderCell"];
-        height = [_myProgressOderCell displayCellWithReservation:myProgressOder index:indexPath.row];
+        SCMyOder *oder = _dataList[indexPath.row];
+        switch (_myOderRequest)
+        {
+            case SCMyOderReuqestFinished:
+            {
+                if(!_myFinishedOderCell)
+                    _myFinishedOderCell = [tableView dequeueReusableCellWithIdentifier:@"SCMyFinishedOderCell"];
+                height = [_myFinishedOderCell displayCellWithReservation:oder index:indexPath.row];
+            }
+                break;
+                
+            default:
+            {
+                if(!_myProgressOderCell)
+                    _myProgressOderCell = [tableView dequeueReusableCellWithIdentifier:@"SCMyProgressOderCell"];
+                height = [_myProgressOderCell displayCellWithReservation:oder index:indexPath.row];
+            }
+                break;
+        }
     }
     
     return height;
@@ -147,11 +180,25 @@
         {
             case SCAPIRequestErrorCodeNoError:
             {
-                // 遍历请求回来的订单数据，生成SCReservation用于订单列表显示
-                [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    SCMyProgressOder *oder = [[SCMyProgressOder alloc] initWithDictionary:obj error:nil];
-                    [_dataList addObject:oder];
-                }];
+                switch (_myOderRequest)
+                {
+                    case SCMyOderReuqestProgress:
+                    {
+                        [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                            SCMyProgressOder *oder = [[SCMyProgressOder alloc] initWithDictionary:obj error:nil];
+                            [_dataList addObject:oder];
+                        }];
+                    }
+                        break;
+                    case SCMyOderReuqestFinished:
+                    {
+                        [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                            SCMyFinishedOder *oder = [[SCMyFinishedOder alloc] initWithDictionary:obj error:nil];
+                            [_dataList addObject:oder];
+                        }];
+                    }
+                        break;
+                }
                 
                 [self.tableView reloadData];                    // 数据配置完成，刷新商家列表
                 [self readdFooter];

@@ -22,6 +22,8 @@
 @property (nonatomic, strong) NSString *nextStateDate;          // 下个进度时间
 @property (nonatomic, strong) NSString *nextStateName;          // 下个进度名称
 @property (nonatomic, strong) NSString *merchantTelphone;       // 商家电话
+@property (nonatomic, strong) NSString *star;                   // 商家评星
+@property (nonatomic, assign)     BOOL  canComment;             // 是否能评论
 
 @property (nonatomic, strong, readonly) NSString <Ignore>*typeImageName;      // 订单类型的提示图片名称
 
