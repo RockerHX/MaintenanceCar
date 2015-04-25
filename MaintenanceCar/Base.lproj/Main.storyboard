@@ -7094,7 +7094,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t1t-Ai-TQK" id="AFH-Sv-5iY">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="项目:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Omc-MO-h3U">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="类别:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Omc-MO-h3U">
                                                     <rect key="frame" x="15" y="10" width="44" height="39.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="44" id="pJ6-cS-cmN"/>
@@ -7129,6 +7129,49 @@
                                                 <constraint firstItem="ia3-iX-TKT" firstAttribute="leading" secondItem="vN6-EX-8YY" secondAttribute="trailing" id="rnm-Xh-WBN"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="ia3-iX-TKT" secondAttribute="trailing" constant="2" id="t1Y-OZ-gLg"/>
                                                 <constraint firstItem="vN6-EX-8YY" firstAttribute="leading" secondItem="Omc-MO-h3U" secondAttribute="trailing" id="zBi-kG-rfZ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="60" id="Onh-h3-Nt9">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Onh-h3-Nt9" id="L5A-m7-B5a">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="项目:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pbr-yi-Okl">
+                                                    <rect key="frame" x="15" y="10" width="44" height="39.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="44" id="dhJ-jJ-lQz"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IQz-4g-6Qr">
+                                                    <rect key="frame" x="64" y="10" width="246" height="39.5"/>
+                                                    <color key="backgroundColor" white="0.90000000000000002" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rhl-e1-NJr">
+                                                    <rect key="frame" x="59" y="10" width="5" height="39.5"/>
+                                                    <color key="backgroundColor" white="0.90000000000000002" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="5" id="xPP-Ci-Ds5"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="IQz-4g-6Qr" secondAttribute="trailing" constant="2" id="1MF-bR-X6F"/>
+                                                <constraint firstItem="IQz-4g-6Qr" firstAttribute="top" secondItem="L5A-m7-B5a" secondAttribute="topMargin" constant="2" id="F7W-2N-BAf"/>
+                                                <constraint firstItem="pbr-yi-Okl" firstAttribute="leading" secondItem="L5A-m7-B5a" secondAttribute="leading" constant="15" id="LjT-gw-l75"/>
+                                                <constraint firstItem="IQz-4g-6Qr" firstAttribute="centerY" secondItem="Rhl-e1-NJr" secondAttribute="centerY" id="UgG-Lc-8VR"/>
+                                                <constraint firstItem="IQz-4g-6Qr" firstAttribute="height" secondItem="Rhl-e1-NJr" secondAttribute="height" id="Y67-BH-Qff"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="pbr-yi-Okl" secondAttribute="bottom" constant="2" id="ZJJ-IP-Wwl"/>
+                                                <constraint firstItem="IQz-4g-6Qr" firstAttribute="leading" secondItem="Rhl-e1-NJr" secondAttribute="trailing" id="k5v-iq-7ID"/>
+                                                <constraint firstItem="Rhl-e1-NJr" firstAttribute="leading" secondItem="pbr-yi-Okl" secondAttribute="trailing" id="qtH-Gi-SJI"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="IQz-4g-6Qr" secondAttribute="bottom" constant="2" id="sDq-lz-3VG"/>
+                                                <constraint firstItem="pbr-yi-Okl" firstAttribute="top" secondItem="L5A-m7-B5a" secondAttribute="topMargin" constant="2" id="vHJ-SO-as1"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -7224,11 +7267,12 @@
                     <navigationItem key="navigationItem" title="预约" id="PJg-NH-0Xm"/>
                     <connections>
                         <outlet property="carLabel" destination="N3z-tM-bPR" id="H2H-zZ-4gV"/>
+                        <outlet property="categoryLabel" destination="ia3-iX-TKT" id="Qdf-vq-xkw"/>
                         <outlet property="dateLabel" destination="0rk-Hp-B7W" id="dfE-Ka-BDy"/>
+                        <outlet property="itemLabel" destination="IQz-4g-6Qr" id="ujD-47-w7n"/>
                         <outlet property="merchantNameLabel" destination="zbL-hI-5IT" id="fiM-bu-lo5"/>
                         <outlet property="ownerNameTextField" destination="pO0-t0-5jT" id="bje-Kk-0nk"/>
                         <outlet property="ownerPhoneNumberTextField" destination="uf0-bv-czZ" id="mGU-5N-4Xb"/>
-                        <outlet property="projectLabel" destination="ia3-iX-TKT" id="EXU-KA-hy3"/>
                         <outlet property="remarkTextField" destination="iYq-BJ-DhF" id="IZG-9B-hNp"/>
                         <outlet property="reservationButton" destination="kpC-Rd-kor" id="hhr-dA-7Gi"/>
                     </connections>

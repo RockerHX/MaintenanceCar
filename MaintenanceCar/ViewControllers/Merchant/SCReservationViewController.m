@@ -148,8 +148,8 @@
 
 - (void)refreshProjectLabel
 {
-    _projectLabel.text = _serviceItem.service_name;
-    _reservationType   = _serviceItem.service_id;
+    _categoryLabel.text = _serviceItem.service_name;
+    _reservationType    = _serviceItem.service_id;
 }
 
 /**
@@ -309,8 +309,8 @@
         case SCPickerTypeService:
         {
             SCServiceItem *serviceItem = item;
-            _reservationType   = serviceItem.service_id;
-            _projectLabel.text = serviceItem.service_name;
+            _reservationType           = serviceItem.service_id;
+            _categoryLabel.text        = serviceItem.service_name;
         }
             break;
             
