@@ -106,31 +106,31 @@
 - (IBAction)starFirstButton:(id)sender
 {
     if (_enabled)
-        self.value = @"1";
+        self.value = @"2";
 }
 
 - (IBAction)starSecondButton:(id)sender
 {
     if (_enabled)
-        self.value = @"2";
+        self.value = @"4";
 }
 
 - (IBAction)starThirdButton:(id)sender
 {
     if (_enabled)
-        self.value = @"3";
+        self.value = @"6";
 }
 
 - (IBAction)starFourthButton:(id)sender
 {
     if (_enabled)
-        self.value = @"4";
+        self.value = @"8";
 }
 
 - (IBAction)starFifthButton:(id)sender
 {
     if (_enabled)
-        self.value = @"5";
+        self.value = @"10";
 }
 
 #pragma mark - Private Methods

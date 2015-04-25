@@ -1,15 +1,15 @@
 //
-//  SCPlaceholderTextView.m
+//  SCTextView.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/3/14.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCPlaceholderTextView.h"
+#import "SCTextView.h"
 #import "UIConstants.h"
 
-@implementation SCPlaceholderTextView
+@implementation SCTextView
 
 #pragma mark - Init And Dealloc Methods
 - (void)awakeFromNib

@@ -1,5 +1,5 @@
 //
-//  SCPlaceholderTextView.h
+//  SCTextView.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/3/14.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SCPlaceholderTextView : UITextView
+@interface SCTextView : UITextView
 {
     UILabel *_placeholderLabel;
 }
