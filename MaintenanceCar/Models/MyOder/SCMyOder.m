@@ -19,6 +19,7 @@
 + (JSONKeyMapper *)keyMapper
 {
     return [[JSONKeyMapper alloc] initWithDictionary:@{@"reserve_id": @"reserveID",
+                                                       @"company_id": @"companyID",
                                                    @"car_model_name": @"carModelName",
                                                         @"type_name": @"serviceName",
                                                              @"name": @"merchantName",

@@ -20,7 +20,16 @@
  */
 - (void)shouldCallMerchantWithPhone:(NSString *)phone;
 
+/**
+ *  评论按钮点击回调方法，评论订单
+ *
+ *  @param oder 订单信息
+ */
+- (void)shouldAppraiseWithOder:(SCMyOder *)oder;
+
 @end
+
+@class SCStarView;
 
 @interface SCMyOderCell : SCTableViewCell
 
@@ -41,7 +50,16 @@
 @property (weak, nonatomic) IBOutlet      UIView *nextStateLine;            // 订单下个状态图标
 @property (weak, nonatomic) IBOutlet UIImageView *nextStateIcon;            // 订单下个状态线条
 
+@property (weak, nonatomic) IBOutlet            UILabel *starPromptLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *starPromptLabelTopHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *starPromptLabelHeight;
+@property (weak, nonatomic) IBOutlet         SCStarView *starView;
+@property (weak, nonatomic) IBOutlet           UIButton *appraiseButton;
+
 @property (nonatomic, weak) IBOutlet id<SCMyOderCellDelegate>delegate;
+
+- (IBAction)callMerchantButtonPressed:(id)sender;
+- (IBAction)appraiseButtonPressed:(id)sender;
 
 /**
  *  刷新进行中订单数据
@@ -52,7 +70,5 @@
  *  @return 刷新后cell的高度
  */
 - (CGFloat)displayCellWithReservation:(SCMyOder *)oder index:(NSInteger)index;
-
-- (IBAction)callMerchantButtonPressed:(id)sender;
 
 @end

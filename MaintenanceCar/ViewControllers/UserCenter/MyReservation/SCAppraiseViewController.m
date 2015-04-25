@@ -7,13 +7,9 @@
 //
 
 #import "SCAppraiseViewController.h"
-#import "SCReservation.h"
+#import "SCMyOder.h"
 #import "SCStarView.h"
-#import "SCPlaceholderTextView.h"
-
-@interface SCAppraiseViewController () <UITextViewDelegate>
-
-@end
+#import "SCTextView.h"
 
 @implementation SCAppraiseViewController
 
@@ -44,8 +40,6 @@
 - (void)initConfig
 {
     _starView.enabled = YES;
-    
-    _textView.delegate = self;
     _textView.placeholderText = @"请输入评价内容...";
     // 初始化的时候加入单击手势，用于页面点击收起数字键盘
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer)]];
@@ -75,9 +69,9 @@
 #pragma mark - Private Methods
 - (void)displayView
 {
-    _merchantNameLabel.text = _reservation.name;
-    _serviceLabel.text = _reservation.type;
-    _dateLabel.text = _reservation.create_time;
+    _merchantNameLabel.text = _oder.merchantName;
+    _serviceLabel.text      = _oder.serviceName;
+    _dateLabel.text         = _oder.currentStateDate;
 }
 
 - (void)startCommentRequest
@@ -85,8 +79,8 @@
     [self showHUDOnViewController:self];
     __weak typeof(self)weakSelf = self;
     NSDictionary *paramters = @{@"user_id": [SCUserInfo share].userID,
-                             @"company_id": _reservation.company_id,
-                             @"reserve_id": _reservation.reserve_id,
+                             @"company_id": _oder.companyID,
+                             @"reserve_id": _oder.reserveID,
                                    @"star": @([_starView.startValue integerValue]*2),
                                  @"detail": _textView.text};
     [[SCAPIRequest manager] startCommentAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {

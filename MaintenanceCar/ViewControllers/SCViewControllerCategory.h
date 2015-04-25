@@ -11,6 +11,11 @@
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
 
+typedef NS_ENUM(NSInteger, SCRequestRefreshType) {
+    SCRequestRefreshTypeDropDown,
+    SCRequestRefreshTypePullUp
+};
+
 @interface UIViewController (SCViewController) <UIAlertViewDelegate, MBProgressHUDDelegate>
 
 #pragma mark - Alert Methods

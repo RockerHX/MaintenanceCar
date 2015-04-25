@@ -360,7 +360,6 @@
     @try {
         SCAppraiseViewController *appraiseViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAppraiseViewController"];
         appraiseViewController.delegate = self;
-        appraiseViewController.reservation = reservation;
         [self.navigationController pushViewController:appraiseViewController animated:YES];
     }
     @catch (NSException *exception) {

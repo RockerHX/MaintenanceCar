@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSString *type;                   // 订单类型
 @property (nonatomic, strong) NSString *reserveID;              // 预约ID
+@property (nonatomic, strong) NSString *companyID;              // 预约ID
 @property (nonatomic, strong) NSString *carModelName;           // 车辆车型
 @property (nonatomic, strong) NSString *serviceName;            // 预约名称
 @property (nonatomic, strong) NSString *merchantName;           // 商家名称

@@ -15,20 +15,20 @@
 
 @end
 
+@class SCMyOder;
 @class SCStarView;
-@class SCReservation;
-@class SCPlaceholderTextView;
+@class SCTextView;
 
-@interface SCAppraiseViewController : UITableViewController
+@interface SCAppraiseViewController : UITableViewController <UITextViewDelegate>
 
-@property (nonatomic, weak) IBOutlet               UILabel *merchantNameLabel;
-@property (nonatomic, weak) IBOutlet               UILabel *serviceLabel;
-@property (nonatomic, weak) IBOutlet               UILabel *dateLabel;
-@property (nonatomic, weak) IBOutlet            SCStarView *starView;
-@property (nonatomic, weak) IBOutlet SCPlaceholderTextView *textView;
+@property (nonatomic, weak) IBOutlet    UILabel *merchantNameLabel;
+@property (nonatomic, weak) IBOutlet    UILabel *serviceLabel;
+@property (nonatomic, weak) IBOutlet    UILabel *dateLabel;
+@property (nonatomic, weak) IBOutlet SCStarView *starView;
+@property (nonatomic, weak) IBOutlet SCTextView *textView;
 
-@property (nonatomic, weak)            id <SCAppraiseViewControllerDelegate>delegate;
-@property (nonatomic, weak) SCReservation *reservation;
+@property (nonatomic, weak)       id  <SCAppraiseViewControllerDelegate>delegate;
+@property (nonatomic, weak) SCMyOder *oder;
 
 - (IBAction)commitAppraiseButtonPressed:(id)sender;
 

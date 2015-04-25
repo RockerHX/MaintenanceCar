@@ -7,14 +7,13 @@
 //
 
 #import "SCMyOderViewController.h"
-#import "SCMyProgressOderCell.h"
-#import "SCMyFinishedOderCell.h"
+#import "SCMyOderCell.h"
+#import "SCAppraiseViewController.h"
 
-@interface SCMyOderViewController () <SCMyOderCellDelegate>
+@interface SCMyOderViewController () <SCMyOderCellDelegate, SCAppraiseViewControllerDelegate>
 {
-    SCMyProgressOderCell *_myProgressOderCell;
-    SCMyFinishedOderCell *_myFinishedOderCell;
-    SCMyOderReuqest       _myOderRequest;
+    SCMyOderCell    *_myOderCell;
+    SCMyOderReuqest  _myOderRequest;
 }
 
 @end
@@ -52,24 +51,8 @@
     SCMyOderCell *cell = nil;
     if (_dataList.count)
     {
-        switch (_myOderRequest)
-        {
-            case SCMyOderReuqestFinished:
-            {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"SCMyFinishedOderCell" forIndexPath:indexPath];
-                SCMyProgressOder *myProgressOder = _dataList[indexPath.row];
-                [cell displayCellWithReservation:myProgressOder index:indexPath.row];
-            }
-                break;
-                
-            default:
-            {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"SCMyProgressOderCell" forIndexPath:indexPath];
-                SCMyProgressOder *myProgressOder = _dataList[indexPath.row];
-                [cell displayCellWithReservation:myProgressOder index:indexPath.row];
-            }
-                break;
-        }
+        cell = [tableView dequeueReusableCellWithIdentifier:@"SCMyOderCell" forIndexPath:indexPath];
+        [cell displayCellWithReservation:_dataList[indexPath.row] index:indexPath.row];
     }
     return cell;
 }
@@ -80,25 +63,9 @@
     CGFloat height;
     if (_dataList.count)
     {
-        SCMyOder *oder = _dataList[indexPath.row];
-        switch (_myOderRequest)
-        {
-            case SCMyOderReuqestFinished:
-            {
-                if(!_myFinishedOderCell)
-                    _myFinishedOderCell = [tableView dequeueReusableCellWithIdentifier:@"SCMyFinishedOderCell"];
-                height = [_myFinishedOderCell displayCellWithReservation:oder index:indexPath.row];
-            }
-                break;
-                
-            default:
-            {
-                if(!_myProgressOderCell)
-                    _myProgressOderCell = [tableView dequeueReusableCellWithIdentifier:@"SCMyProgressOderCell"];
-                height = [_myProgressOderCell displayCellWithReservation:oder index:indexPath.row];
-            }
-                break;
-        }
+        if(!_myOderCell)
+            _myOderCell = [tableView dequeueReusableCellWithIdentifier:@"SCMyOderCell"];
+        height = [_myOderCell displayCellWithReservation:_dataList[indexPath.row] index:indexPath.row];
     }
     
     return height;
@@ -180,25 +147,10 @@
         {
             case SCAPIRequestErrorCodeNoError:
             {
-                switch (_myOderRequest)
-                {
-                    case SCMyOderReuqestProgress:
-                    {
-                        [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                            SCMyProgressOder *oder = [[SCMyProgressOder alloc] initWithDictionary:obj error:nil];
-                            [_dataList addObject:oder];
-                        }];
-                    }
-                        break;
-                    case SCMyOderReuqestFinished:
-                    {
-                        [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                            SCMyFinishedOder *oder = [[SCMyFinishedOder alloc] initWithDictionary:obj error:nil];
-                            [_dataList addObject:oder];
-                        }];
-                    }
-                        break;
-                }
+                [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    SCMyOder *oder = [[SCMyOder alloc] initWithDictionary:obj error:nil];
+                    [_dataList addObject:oder];
+                }];
                 
                 [self.tableView reloadData];                    // 数据配置完成，刷新商家列表
                 [self readdFooter];
@@ -235,11 +187,33 @@
     [self showAlertWithTitle:@"是否拨打商家电话？" message:phone delegate:self tag:Zero cancelButtonTitle:@"取消" otherButtonTitle:@"拨打"];
 }
 
+- (void)shouldAppraiseWithOder:(SCMyOder *)oder
+{
+    // 跳转到评论页面
+    @try {
+        SCAppraiseViewController *appraiseViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAppraiseViewController"];
+        appraiseViewController.delegate                  = self;
+        appraiseViewController.oder                      = oder;
+        [self.navigationController pushViewController:appraiseViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCMyReservationTableViewController Go to the SCAppraiseViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
+}
+
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != alertView.cancelButtonIndex)
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", alertView.message]]];
+}
+
+#pragma mark - SCAppraiseViewControllerDelegate Methods
+- (void)appraiseSuccess
+{
+    [self startOdersReuqest];
 }
 
 @end
