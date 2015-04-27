@@ -53,6 +53,8 @@
     SCCouponState state = SCCouponStateUnUse;
     switch ([_status integerValue])
     {
+        case 0:
+            state = SCCouponStateUnUse;
         case 1:
             state = SCCouponStateUsed;
             break;
@@ -67,7 +69,7 @@
             break;
             
         default:
-            state = [self expired] ? SCCouponStateExpired : SCCouponStateUnUse;
+            state = [self expired] ? SCCouponStateExpired : SCCouponStateUnknown;
             break;
     }
     return state;

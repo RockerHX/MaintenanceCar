@@ -32,6 +32,9 @@
     NSString *codeState = nil;
     switch (coupon.state)
     {
+        case SCCouponStateUnknown:
+            codeState = @"未使用";
+            break;
         case SCCouponStateUsed:
             codeState = @"已使用";
             break;
@@ -42,14 +45,14 @@
             codeState = @"已过期";
             break;
         case SCCouponStateRefunding:
-            codeState = @"已申请退款";
+            codeState = @"退款中";
             break;
         case SCCouponStateRefunded:
             codeState = @"已退款";
             break;
             
         default:
-            codeState = @"未使用";
+            codeState = @"-";
             break;
     }
     return codeState;

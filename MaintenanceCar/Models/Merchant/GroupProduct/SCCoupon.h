@@ -14,7 +14,8 @@ typedef NS_ENUM(NSInteger, SCCouponState) {
     SCCouponStateCancel,
     SCCouponStateExpired,
     SCCouponStateRefunding,
-    SCCouponStateRefunded
+    SCCouponStateRefunded,
+    SCCouponStateUnknown
 };
 
 @interface SCCoupon : JSONModel
