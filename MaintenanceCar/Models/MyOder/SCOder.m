@@ -22,8 +22,8 @@
              @"company_id": @"companyID",
          @"car_model_name": @"carModelName",
               @"type_name": @"serviceName",
-                   @"name": @"merchantName",
-              @"telephone": @"merchantTelphone"};
+           @"company_name": @"merchantName",
+      @"company_telephone": @"merchantTelphone"};
 }
 
 #pragma mark - Setter And Getter Methods
