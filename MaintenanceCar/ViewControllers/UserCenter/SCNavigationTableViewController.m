@@ -41,6 +41,7 @@
 - (void)restartDropDownRefreshRequest
 {
     [self removeFooter];
+    [self removeRefreshFooter];
     [self clearListData];
     [self.tableView reloadData];
     [self.tableView.header beginRefreshing];
@@ -67,15 +68,27 @@
         [self.tableView.footer endRefreshing];
 }
 
-- (void)readdFooter
+- (void)readdRefreshFooter
 {
     if (!self.tableView.footer)
         [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(startPullUpRefreshRequest)];
 }
 
-- (void)removeFooter
+- (void)removeRefreshFooter
 {
     [self.tableView removeFooter];
+}
+
+- (void)addFooter
+{
+    UIView *footer                 = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 10.0f)];
+    footer.backgroundColor         = [UIColor clearColor];
+    self.tableView.tableFooterView = footer;
+}
+
+- (void)removeFooter
+{
+    self.tableView.tableFooterView = nil;
 }
 
 - (void)clearListData

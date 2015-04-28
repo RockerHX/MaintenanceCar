@@ -32,7 +32,9 @@
 
 // 结束刷新方法
 - (void)endRefresh;
-- (void)readdFooter;
+- (void)readdRefreshFooter;
+- (void)removeRefreshFooter;
+- (void)addFooter;
 - (void)removeFooter;
 
 // 清除数据方法

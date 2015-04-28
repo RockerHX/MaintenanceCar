@@ -163,13 +163,16 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
                 }];
                 
                 [self.tableView reloadData];                    // 数据配置完成，刷新商家列表
-                [self readdFooter];
+                [self readdRefreshFooter];
                 self.offset += MerchantListLimit;               // 偏移量请求参数递增
             }
                 break;
                 
             case SCAPIRequestErrorCodeListNotFoundMore:
-                [self removeFooter];
+            {
+                [self addFooter];
+                [self removeRefreshFooter];
+            }
                 break;
         }
         if (![statusMessage isEqualToString:@"success"])
