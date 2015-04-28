@@ -10,4 +10,50 @@
 
 @implementation SCOder
 
+#pragma mark - Class Methods
++ (BOOL)propertyIsOptional:(NSString*)propertyName
+{
+    return YES;
+}
+
++ (NSDictionary *)baseKeyMapper;
+{
+    return @{@"reserve_id": @"reserveID",
+             @"company_id": @"companyID",
+         @"car_model_name": @"carModelName",
+              @"type_name": @"serviceName",
+                   @"name": @"merchantName",
+              @"telephone": @"merchantTelphone"};
+}
+
+#pragma mark - Setter And Getter Methods
+- (NSString<Ignore> *)typeImageName
+{
+    NSString *imageName;
+    NSInteger type = [_type integerValue];
+    switch (type)
+    {
+        case 1:
+            imageName = @"OderIcon-XiChe";
+            break;
+        case 2:
+            imageName = @"OderIcon-BaoYang";
+            break;
+        case 3:
+            imageName = @"OderIcon-WeiXiu";
+            break;
+        case 4:
+            imageName = @"OderIcon-MeiRong";
+            break;
+        case 5:
+            imageName = @"OderIcon-JianCe";
+            break;
+            
+        default:
+            imageName = @"OderIcon-ZuiXin";
+            break;
+    }
+    return imageName;
+}
+
 @end

@@ -11,15 +11,11 @@
 #import "SCStarView.h"
 
 @implementation SCMyOderCell
-{
-    SCMyOder *_oder;
-}
 
 #pragma mark - Init Methods
 - (void)awakeFromNib
 {
-    // 设置商家名称栏预算宽度，以便计算整个cell的动态高度
-    _merchantNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 40.0f;
+    [super awakeFromNib];
     _nextStateDateLabel.preferredMaxLayoutWidth = IS_IPHONE_6Plus ? 120.0f : (IS_IPHONE_6 ? 100.0f : 80.0f);
 }
 
@@ -72,18 +68,18 @@
 }
 
 #pragma mark - Public Methods
-- (CGFloat)displayCellWithReservation:(SCMyOder *)oder index:(NSInteger)index
+- (CGFloat)displayCellWithOder:(SCMyOder *)oder index:(NSInteger)index
 {
     // 设置订单数据，刷新cell
-    _oder = oder;
+    _oder    = oder;
     self.tag = index;
     [self restoreCell];
     
-    _serviceTypeIcon.image = [UIImage imageNamed:oder.typeImageName];
-    _carModelLabel.text = oder.carModelName;
-    _serviceNameLabel.text = oder.serviceName;
-    _merchantNameLabel.text = oder.merchantName;
-    
+    self.serviceTypeIcon.image   = [UIImage imageNamed:oder.typeImageName];
+    self.carModelLabel.text      = oder.carModelName;
+    self.serviceNameLabel.text   = oder.serviceName;
+    self.merchantNameLabel.text  = oder.merchantName;
+
     _previousStateDateLabel.text = oder.previousStateDate;
     _previousStateNameLabel.text = oder.previousStateName;
     _currentStateDateLabel.text  = oder.currentStateDate;

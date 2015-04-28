@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCTableViewCell.h"
+#import "SCOderCell.h"
 #import "UIConstants.h"
 #import "SCMyOder.h"
 
@@ -31,12 +31,10 @@
 
 @class SCStarView;
 
-@interface SCMyOderCell : SCTableViewCell
-
-@property (weak, nonatomic) IBOutlet UIImageView *serviceTypeIcon;          // 服务类型图标
-@property (weak, nonatomic) IBOutlet     UILabel *carModelLabel;            // 车辆车型栏
-@property (weak, nonatomic) IBOutlet     UILabel *serviceNameLabel;         // 服务名称栏
-@property (weak, nonatomic) IBOutlet     UILabel *merchantNameLabel;        // 商家名称栏
+@interface SCMyOderCell : SCOderCell
+{
+    SCMyOder *_oder;
+}
 
 @property (weak, nonatomic) IBOutlet     UILabel *previousStateDateLabel;   // 订单上个状态时间栏
 @property (weak, nonatomic) IBOutlet     UILabel *previousStateNameLabel;   // 订单上个状态名称栏
@@ -62,13 +60,13 @@
 - (IBAction)appraiseButtonPressed:(id)sender;
 
 /**
- *  刷新进行中订单数据
+ *  刷新订单数据
  *
  *  @param oder  订单数据模型
  *  @param index cell所在row
  *
  *  @return 刷新后cell的高度
  */
-- (CGFloat)displayCellWithReservation:(SCMyOder *)oder index:(NSInteger)index;
+- (CGFloat)displayCellWithOder:(SCMyOder *)oder index:(NSInteger)index;
 
 @end
