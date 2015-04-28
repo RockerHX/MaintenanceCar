@@ -436,4 +436,11 @@
     [self requestGETMethodsWithAPI:MyFinishedOderAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startMyOderDetailAPIRequestWithParameters:(NSDictionary *)parameters
+                                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MyOderDetailAPIURL parameters:parameters success:success failure:failure];
+}
+
 @end
