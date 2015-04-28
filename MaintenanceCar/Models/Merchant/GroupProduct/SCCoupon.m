@@ -50,11 +50,12 @@
 
 - (SCCouponState)couponState
 {
-    SCCouponState state = SCCouponStateUnUse;
+    SCCouponState state;
     switch ([_status integerValue])
     {
         case 0:
             state = SCCouponStateUnUse;
+            break;
         case 1:
             state = SCCouponStateUsed;
             break;

@@ -20,19 +20,19 @@
     _merchantNameLabel.text = coupon.company_name;
     _couponPriceLabel.text  = coupon.final_price;
     _productPriceLabel.text = coupon.total_price;
-    _couponStateLabel.text  = [self codeStateWithCoupon:coupon];
+    _couponStateLabel.text  = [self codeStateWithCoupon:coupon.state];
     
     _codeLine.hidden = (coupon.state == SCCouponStateUnUse);
     self.codeLabel.textColor = (coupon.state == SCCouponStateUnUse) ? [UIColor orangeColor] : [UIColor lightGrayColor];
 }
 
 #pragma mark - Private Methods
-- (NSString *)codeStateWithCoupon:(SCCoupon *)coupon
+- (NSString *)codeStateWithCoupon:(SCCouponState)state
 {
-    NSString *codeState = nil;
-    switch (coupon.state)
+    NSString *codeState;
+    switch (state)
     {
-        case SCCouponStateUnknown:
+        case SCCouponStateUnUse:
             codeState = @"未使用";
             break;
         case SCCouponStateUsed:
