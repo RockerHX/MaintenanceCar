@@ -1,5 +1,5 @@
 //
-//  SCOderCell.h
+//  SCReservationOderCell.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/11.
@@ -10,7 +10,7 @@
 #import "AllMicroConstants.h"
 #import "SCReservation.h"
 
-@interface SCOderCell : UITableViewCell
+@interface SCReservationOderCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *merchantNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *reservationTypeLabel;

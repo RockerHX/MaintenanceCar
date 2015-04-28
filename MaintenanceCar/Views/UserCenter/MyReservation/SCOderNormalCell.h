@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCOderCell.h"
+#import "SCReservationOderCell.h"
 
-@interface SCOderNormalCell : SCOderCell
+@interface SCOderNormalCell : SCReservationOderCell
 
 @property (weak, nonatomic) IBOutlet UILabel *reservationDateLabel;
 

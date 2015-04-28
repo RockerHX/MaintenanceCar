@@ -58,7 +58,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCOderCell *cell = nil;
+    SCReservationOderCell *cell = nil;
     SCReservation *reservation = _dataList[indexPath.row];
     switch ([reservation oderType])
     {

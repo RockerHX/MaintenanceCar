@@ -1,14 +1,14 @@
 //
-//  SCOderCell.m
+//  SCReservationOderCell.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/11.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCOderCell.h"
+#import "SCReservationOderCell.h"
 
-@implementation SCOderCell
+@implementation SCReservationOderCell
 
 #pragma mark - Init Methods
 - (void)awakeFromNib

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCOderCell.h"
+#import "SCReservationOderCell.h"
 
 @protocol SCOderUnAppraisalCellDelegate <NSObject>
 
@@ -15,7 +15,7 @@
 
 @end
 
-@interface SCOderUnAppraisalCell : SCOderCell
+@interface SCOderUnAppraisalCell : SCReservationOderCell
 
 @property (weak, nonatomic) IBOutlet UIButton *appraiseButton;
 
