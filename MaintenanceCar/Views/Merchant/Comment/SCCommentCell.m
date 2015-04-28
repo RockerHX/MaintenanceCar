@@ -13,8 +13,6 @@
 
 - (void)awakeFromNib
 {
-    // Initialization code
-    
     _commentDateLabel.layer.borderColor = [UIColor orangeColor].CGColor;
     _commentDateLabel.layer.borderWidth = 1.0f;
     
@@ -24,9 +22,8 @@
 #pragma mark - Public Methods
 - (void)displayCellWithComment:(SCComment *)comment
 {
-//    [_userIcon setImageWithURL:<#(NSString *)#> defaultImage:<#(NSString *)#>]
     _userNameLabel.text    = [NSString stringWithFormat:@"修养车主（%@）", comment.phone];
-    _starView.value        = [@([comment.star integerValue]/2) stringValue];
+    _starView.value        = comment.star;
     _commentDateLabel.text = comment.create_time;
     _contentLabel.text     = comment.detail;
     

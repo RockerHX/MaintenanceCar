@@ -138,6 +138,8 @@
     [self POST:api parameters:parameters success:success failure:failure];
 }
 
+
+#pragma mark - V1 API
 #pragma mark - Merchant API
 - (void)startWearthAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
@@ -285,6 +287,12 @@
     [self requestPOSTMethodsWithAPI:UserLogAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startRefreshTokenAPIRequestWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:RefreshTokenAPIURL parameters:nil success:success failure:failure];
+}
+
 #pragma mark - Reservation Reuqest
 - (void)startMerchantReservationAPIRequestWithParameters:(NSDictionary *)parameters
                                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -409,6 +417,23 @@
                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:HomePageSpecialAPIURL parameters:nil success:success failure:failure];
+}
+
+
+#pragma mark - V2 API
+#pragma mark - User Center API
+- (void)startMyProgressOdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MyProgressOderAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startMyFinishedOdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MyFinishedOderAPIURL parameters:parameters success:success failure:failure];
 }
 
 @end

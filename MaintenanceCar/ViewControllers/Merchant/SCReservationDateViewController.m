@@ -114,11 +114,7 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
             [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:DataError];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf hideHUDOnViewController:weakSelf];
-        NSString *message = operation.responseObject[@"message"];
-        if (message)
-            [weakSelf showHUDAlertToViewController:weakSelf text:message];
-        else
-            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
+        [weakSelf hanleFailureResponseWtihOperation:operation];
     }];
 }
 

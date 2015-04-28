@@ -15,6 +15,7 @@ typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
     SCAPIRequestStatusCodePOSTSuccess    = 201,
     
     SCAPIRequestStatusCodeBadRequest     = 400,
+    SCAPIRequestStatusCodeTokenError     = 403,
     SCAPIRequestStatusCodeNotFound       = 404,
     SCAPIRequestStatusCodeDataError      = 408,
     
@@ -64,6 +65,8 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
                           path:(NSString *)path
                            api:(NSString *)api;
 
+
+#pragma mark - V1 API
 #pragma mark - Merchant API
 /**
  *  天气接口请求方法(API:/Weather - GET)
@@ -208,6 +211,12 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
                                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+/**
+ *  刷新Token接口请求方法(API:/User/refresh/ - POST)
+ */
+- (void)startRefreshTokenAPIRequestWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 #pragma mark - Reservation Reuqest
 /**
  *  商家预约接口请求方法(API:/Reservation - POST)
@@ -332,5 +341,23 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
  */
 - (void)startHomePageSpecialAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+
+#pragma mark - V2 API
+#pragma mark - User Center API
+/**
+ *  我的进行中订单接口请求方法(API:/Reservation/doing - GET)
+ */
+- (void)startMyProgressOdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  我的已完成订单接口请求方法(API:/Reservation/done - GET)
+ */
+- (void)startMyFinishedOdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 
 @end

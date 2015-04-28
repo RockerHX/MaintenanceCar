@@ -124,6 +124,23 @@
     [hud hide:YES afterDelay:delay];
 }
 
+- (void)hanleFailureResponseWtihOperation:(AFHTTPRequestOperation *)operation
+{
+    NSString *message = operation.responseObject[@"message"];
+    if (message)
+    {
+        if (operation.response.statusCode == SCAPIRequestStatusCodeTokenError)
+        {
+            [[SCUserInfo share] logout];
+            [self showShoulReLoginAlert];
+        }
+        else
+            [self showHUDAlertToViewController:self text:message];
+    }
+    else
+        [self showHUDAlertToViewController:self text:NetWorkError];
+}
+
 #pragma mark - Private Methods
 #pragma mark -
 - (MBProgressHUD *)showHUDToViewController:(UIViewController *)viewController
@@ -140,9 +157,33 @@
 {
     MBProgressHUD *hud = [self showHUDToViewController:viewController text:text];
     hud.mode           = MBProgressHUDModeText;
-    hud.yOffset        = SCREEN_HEIGHT/2 - 100.0f;
+    hud.yOffset        = SCREEN_HEIGHT/2 - 110.0f;
     hud.margin         = 10.0f;
     return hud;
+}
+
+- (void)showShoulReLoginAlert
+{
+    [self showAlertWithTitle:@"您有一段时间没有使用修养了，为了您的安全考虑，请您重新登录"
+                     message:nil
+                    delegate:self
+                         tag:Zero
+           cancelButtonTitle:@"取消"
+            otherButtonTitle:@"登录"];
+}
+
+#pragma mark - Alert View Delegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (alertView.tag)
+    {
+        case Zero:
+        {
+            if (buttonIndex != alertView.cancelButtonIndex)
+                [self checkShouldLogin];
+        }
+            break;
+    }
 }
 
 @end

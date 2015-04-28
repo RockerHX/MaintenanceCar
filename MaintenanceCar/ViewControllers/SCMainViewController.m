@@ -55,6 +55,18 @@
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"log error:%@", error);
         }];
+        
+        if ([userInfo needRefreshToken])
+        {
+            [[SCAPIRequest manager] startRefreshTokenAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+                if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+                {
+                    NSInteger errorCode = [responseObject[@"status_code"] integerValue];
+                    if (!errorCode)
+                        [userInfo refreshTokenDate];
+                }
+            } failure:nil];
+        }
     }
 }
 

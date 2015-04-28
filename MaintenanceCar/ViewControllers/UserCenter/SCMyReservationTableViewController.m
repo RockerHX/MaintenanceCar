@@ -287,7 +287,7 @@
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                 @"limit"  : @(MerchantListLimit),
+                                   @"limit": @(MerchantListLimit),
                                  @"offset" : @(self.offset)};
     [[SCAPIRequest manager] startGetMyReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
@@ -307,7 +307,6 @@
                     [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
                     [weakSelf readdFooter];
                     weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
-                    statusMessage = nil;
                 }
                     break;
                     
@@ -315,16 +314,12 @@
                     [weakSelf removeFooter];
                     break;
             }
-            if (statusMessage && ![statusMessage isKindOfClass:[NSNull class]])
+            if (![statusMessage isEqualToString:@"success"])
                 [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
         }
         [weakSelf endRefresh];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSString *message = operation.responseObject[@"message"];
-        if (message)
-            [weakSelf showHUDAlertToViewController:weakSelf text:message];
-        else
-            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
+        [weakSelf hanleFailureResponseWtihOperation:operation];
         [weakSelf endRefresh];
     }];
 }
@@ -347,18 +342,14 @@
             [weakSelf deleteFailureAtIndex:index];
             
             NSString *statusMessage = responseObject[@"status_message"];
-            if (statusMessage && ![statusMessage isKindOfClass:[NSNull class]])
+            if (![statusMessage isEqualToString:@"success"])
                 [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
         }
         else
             [weakSelf showHUDAlertToViewController:weakSelf text:DataError];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf deleteFailureAtIndex:index];
-        NSString *message = operation.responseObject[@"message"];
-        if (message)
-            [weakSelf showHUDAlertToViewController:weakSelf text:message];
-        else
-            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
+        [weakSelf hanleFailureResponseWtihOperation:operation];
     }];
 }
 

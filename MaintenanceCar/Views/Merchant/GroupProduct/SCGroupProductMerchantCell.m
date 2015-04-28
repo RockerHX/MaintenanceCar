@@ -16,7 +16,6 @@
 #pragma mark - Init Methods
 - (void)awakeFromNib
 {
-    // Initialization code
     CGFloat layoutWidth = SCREEN_WIDTH - 70.0f;
     _nameLabel.preferredMaxLayoutWidth = layoutWidth;
     _addressLabel.preferredMaxLayoutWidth = layoutWidth;
@@ -33,7 +32,7 @@
 - (void)displayCellWithDetial:(SCGroupProductDetail *)detail
 {
     _nameLabel.text = detail.merchantName;
-    _starView.value = [@([detail.star integerValue]/2) stringValue];
+    _starView.value = detail.star;
     _distanceLabel.text = detail.distance;
     _addressLabel.text = detail.address;
     [self.contentView updateConstraintsIfNeeded];
