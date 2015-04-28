@@ -228,17 +228,17 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch (alertView.tag)
+    if (buttonIndex != alertView.cancelButtonIndex)
     {
-        case SCMyOderAlertTypeCallMerchant:
+        switch (alertView.tag)
         {
-            if (buttonIndex != alertView.cancelButtonIndex)
+            case SCMyOderAlertTypeCallMerchant:
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", alertView.message]]];
+                break;
+            case SCMyOderAlertTypeAppraiseAlert:
+                [self pushToAppraiseViewController];
+                break;
         }
-            break;
-        case SCMyOderAlertTypeAppraiseAlert:
-            [self pushToAppraiseViewController];
-            break;
     }
 }
 
