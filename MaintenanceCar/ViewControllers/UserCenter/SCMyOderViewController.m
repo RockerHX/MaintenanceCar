@@ -51,7 +51,7 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
 {
     SCMyOderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMyOderCell" forIndexPath:indexPath];;
     if (_dataList.count)
-        [cell displayCellWithReservation:_dataList[indexPath.row] index:indexPath.row];
+        [cell displayCellWithOder:_dataList[indexPath.row] index:indexPath.row];
     return cell;
 }
 
@@ -63,7 +63,7 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     {
         if(!_myOderCell)
             _myOderCell = [tableView dequeueReusableCellWithIdentifier:@"SCMyOderCell"];
-        height = [_myOderCell displayCellWithReservation:_dataList[indexPath.row] index:indexPath.row];
+        height = [_myOderCell displayCellWithOder:_dataList[indexPath.row] index:indexPath.row];
     }
     
     return height;
@@ -74,7 +74,9 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     @try {
+        SCMyOder *oder = _dataList[indexPath.row];
         SCMyOderDetailViewController *myOderDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyOderDetailViewController"];
+        myOderDetailViewController.reserveID = oder.reserveID;
         [self.navigationController pushViewController:myOderDetailViewController animated:YES];
     }
     @catch (NSException *exception) {
@@ -82,7 +84,6 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     }
     @finally {
     }
-    
 }
 
 #pragma mark - Public Methods
