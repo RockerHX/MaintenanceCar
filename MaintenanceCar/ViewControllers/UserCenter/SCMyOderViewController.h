@@ -13,6 +13,14 @@ typedef NS_ENUM(NSInteger, SCMyOderReuqest) {
     SCMyOderReuqestFinished
 };
 
+@class SCMyOder;
+@class SCMyOderCell;
+
 @interface SCMyOderViewController : SCNavigationTableViewController <UITableViewDataSource, UITableViewDelegate>
+{
+    SCMyOder        *_oder;
+    SCMyOderCell    *_myOderCell;
+    SCMyOderReuqest  _myOderRequest;
+}
 
 @end

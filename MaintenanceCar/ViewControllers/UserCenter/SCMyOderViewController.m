@@ -9,6 +9,7 @@
 #import "SCMyOderViewController.h"
 #import "SCMyOderCell.h"
 #import "SCAppraiseViewController.h"
+#import "SCMyOderDetailViewController.h"
 
 typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     SCMyOderAlertTypeCallMerchant,
@@ -16,12 +17,6 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
 };
 
 @interface SCMyOderViewController () <SCMyOderCellDelegate, SCAppraiseViewControllerDelegate>
-{
-    SCMyOder        *_oder;
-    SCMyOderCell    *_myOderCell;
-    SCMyOderReuqest  _myOderRequest;
-}
-
 @end
 
 @implementation SCMyOderViewController
@@ -77,6 +72,17 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    @try {
+        SCMyOderDetailViewController *myOderDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyOderDetailViewController"];
+        [self.navigationController pushViewController:myOderDetailViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCMyOderViewController Go to the SCMyOderDetailViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
+    
 }
 
 #pragma mark - Public Methods
@@ -187,7 +193,7 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
         [self.navigationController pushViewController:appraiseViewController animated:YES];
     }
     @catch (NSException *exception) {
-        NSLog(@"SCMyReservationTableViewController Go to the SCAppraiseViewController exception reasion:%@", exception.reason);
+        NSLog(@"SCMyOderViewController Go to the SCAppraiseViewController exception reasion:%@", exception.reason);
     }
     @finally {
     }
