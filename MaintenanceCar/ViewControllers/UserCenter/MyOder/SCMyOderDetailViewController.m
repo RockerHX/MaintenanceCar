@@ -191,7 +191,13 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
 - (void)displayDetailViewController
 {
     [self.tableView reloadData];
-    self.navigationItem.rightBarButtonItem = _detail.canCancel ? [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(showCancelAlert)] : nil;
+    self.navigationItem.rightBarButtonItem = _detail.canCancel ? [self rightBarButtonItem] : nil;
+}
+
+- (UIBarButtonItem *)rightBarButtonItem
+{
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"MoreIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(showCancelAlert)];
+    return item;
 }
 
 - (void)showCancelAlert
