@@ -61,7 +61,7 @@
     {
         _name         = detail.name;
         _distance     = detail.distance;
-        _star         = [@([detail.star integerValue]/2) stringValue];
+        _star         = detail.star;
         _flags        = [detail.flags componentsSeparatedByString:@","];
         _unReserve    = ![SCAllDictionary share].serviceItems.count;
         _have_comment = [detail.have_comment integerValue];
