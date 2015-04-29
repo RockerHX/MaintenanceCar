@@ -16,7 +16,7 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     SCMyOderAlertTypeAppraiseAlert
 };
 
-@interface SCMyOderViewController () <SCMyOderCellDelegate, SCAppraiseViewControllerDelegate>
+@interface SCMyOderViewController () <SCMyOderCellDelegate, SCAppraiseViewControllerDelegate, SCMyOderDetailViewControllerDelegate>
 @end
 
 @implementation SCMyOderViewController
@@ -76,6 +76,7 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     @try {
         SCMyOder *oder = _dataList[indexPath.row];
         SCMyOderDetailViewController *myOderDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyOderDetailViewController"];
+        myOderDetailViewController.delegate  = self;
         myOderDetailViewController.reserveID = oder.reserveID;
         [self.navigationController pushViewController:myOderDetailViewController animated:YES];
     }
@@ -244,6 +245,12 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
 
 #pragma mark - SCAppraiseViewControllerDelegate Methods
 - (void)appraiseSuccess
+{
+    [self startDropDownRefreshReuqest];
+}
+
+#pragma mark - SCMyOderDetailViewControllerDelegate Methods
+- (void)shouldRefresh
 {
     [self startDropDownRefreshReuqest];
 }

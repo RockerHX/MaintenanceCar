@@ -39,6 +39,12 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[个人中心] - 订单详情"];
+    
+    if (_needRefresh)
+    {
+        if (_delegate && [_delegate respondsToSelector:@selector(shouldRefresh)])
+            [_delegate shouldRefresh];
+    }
 }
 
 - (void)viewDidLoad
@@ -214,6 +220,7 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
             {
                 case SCAPIRequestErrorCodeNoError:
                 {
+                    _needRefresh = YES;
                     [weakSelf.tableView.header beginRefreshing];
                 }
                     break;

@@ -8,13 +8,22 @@
 
 #import "SCTableViewController.h"
 
+@protocol SCMyOderDetailViewControllerDelegate <NSObject>
+
+@optional
+- (void)shouldRefresh;
+
+@end
+
 @class SCMyOderDetail;
 
 @interface SCMyOderDetailViewController : SCTableViewController
 {
+    BOOL            _needRefresh;
     SCMyOderDetail *_detail;
 }
 
+@property (nonatomic, weak)         id  <SCMyOderDetailViewControllerDelegate>delegate;
 @property (nonatomic, strong) NSString *reserveID;
 
 @end
