@@ -8,8 +8,6 @@
 
 #import "SCDatePickerView.h"
 #import "UIConstants.h"
-#import "MicroConstants.h"
-#import "AppDelegate.h"
 
 @implementation SCDatePickerView
 
@@ -17,7 +15,7 @@
 {
     // 从Xib加载View
     self = [[[NSBundle mainBundle] loadNibNamed:@"SCDatePickerView" owner:self options:nil] firstObject];
-    self.frame = APP_DELEGATE_INSTANCE.window.bounds;
+    self.frame = [UIApplication sharedApplication].keyWindow.bounds;
     
     // 设置代理，初始化数据
     _delegate = delegate;
@@ -39,7 +37,7 @@
     self.alpha = ZERO_POINT;
 }
 
--(void)dateChanged:(UIDatePicker *)datePicker
+- (void)dateChanged:(UIDatePicker *)datePicker
 {
     // 数据一旦有改变就进行回调，以便筛选栏进行显示
     if (_delegate && [_delegate respondsToSelector:@selector(datePickerSelectedFinish:mode:)])
@@ -70,7 +68,7 @@
 {
     // 显示动画
     __weak typeof(self) weakSelf = self;
-    [APP_DELEGATE_INSTANCE.window addSubview:self];
+    [[UIApplication sharedApplication].keyWindow addSubview:self];
     _bottomConstraint.constant = _bottomConstraint.constant / 8;
     [_containerView needsUpdateConstraints];
     [UIView animateWithDuration:0.15f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseIn animations:^{

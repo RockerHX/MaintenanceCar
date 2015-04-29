@@ -7,9 +7,7 @@
 //
 
 #import "SCPickerView.h"
-#import "MicroConstants.h"
 #import "UIConstants.h"
-#import "AppDelegate.h"
 
 @implementation SCPickerView
 {
@@ -29,7 +27,7 @@
 {
     // 从Xib加载View
     self = [[[NSBundle mainBundle] loadNibNamed:@"SCPickerView" owner:self options:nil] firstObject];
-    self.frame = APP_DELEGATE_INSTANCE.window.bounds;
+    self.frame = [UIApplication sharedApplication].keyWindow.bounds;
     
     // 设置代理，初始化数据
     _picker.dataSource = self;
@@ -147,7 +145,7 @@
 {
     // 显示动画
     __weak typeof(self) weakSelf = self;
-    [APP_DELEGATE_INSTANCE.window addSubview:self];
+    [[UIApplication sharedApplication].keyWindow addSubview:self];
     _bottomConstraint.constant = _bottomConstraint.constant / 8;
     [_containerView needsUpdateConstraints];
     [UIView animateWithDuration:0.15f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseIn animations:^{

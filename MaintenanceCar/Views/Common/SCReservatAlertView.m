@@ -9,9 +9,7 @@
 #import "SCReservatAlertView.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "UIConstants.h"
-#import "MicroConstants.h"
 #import "VersionConstants.h"
-#import "AppDelegate.h"
 #import "SCAllDictionary.h"
 #import "SCReservationItemCell.h"
 
@@ -33,7 +31,7 @@
 - (id)initWithDelegate:(id<SCReservatAlertViewDelegate>)delegate animation:(SCAlertAnimation)anmation
 {
     self = [[[NSBundle mainBundle] loadNibNamed:@"SCReservatAlertView" owner:self options:nil] firstObject];
-    self.frame = APP_DELEGATE_INSTANCE.window.bounds;
+    self.frame = [UIApplication sharedApplication].keyWindow.bounds;
     _delegate = delegate;
     _animation = anmation;
     
@@ -106,7 +104,7 @@
 - (void)show
 {
     __weak typeof(self) weakSelf = self;
-    [APP_DELEGATE_INSTANCE.window addSubview:self];
+    [[UIApplication sharedApplication].keyWindow addSubview:self];
     switch (_animation)
     {
         case SCAlertAnimationEnlarge:
