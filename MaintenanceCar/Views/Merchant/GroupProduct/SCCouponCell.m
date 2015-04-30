@@ -50,6 +50,9 @@
         case SCCouponStateRefunded:
             codeState = @"已退款";
             break;
+        case SCCouponStateReserved:
+            codeState = @"已预约";
+            break;
             
         default:
             codeState = @"-";
