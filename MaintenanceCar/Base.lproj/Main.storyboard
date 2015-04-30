@@ -865,7 +865,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="512-i1-Dew">
-                                            <rect key="frame" x="262" y="40" width="50" height="24"/>
+                                            <rect key="frame" x="258" y="40" width="50" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="24" id="3HJ-MD-fKP"/>
                                                 <constraint firstAttribute="width" constant="50" id="KlK-mF-Dh4"/>
@@ -887,7 +887,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已退款" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EOp-9p-NHn">
-                                            <rect key="frame" x="266" y="65" width="42" height="17"/>
+                                            <rect key="frame" x="262" y="65" width="42" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -902,6 +902,7 @@
                                     </subviews>
                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
+                                        <constraint firstItem="512-i1-Dew" firstAttribute="centerX" secondItem="EOp-9p-NHn" secondAttribute="centerX" id="2JS-oy-8L9"/>
                                         <constraint firstItem="gvl-I5-2Xa" firstAttribute="centerY" secondItem="YZw-zD-D1g" secondAttribute="centerY" id="4nm-FT-YDr"/>
                                         <constraint firstItem="Ru8-r4-5kw" firstAttribute="leading" secondItem="iQX-rJ-EHY" secondAttribute="trailing" id="5Qj-mI-IgC"/>
                                         <constraint firstItem="wSP-Qc-ff5" firstAttribute="leading" secondItem="vFm-37-ADK" secondAttribute="trailing" id="6gf-dG-4R0"/>
@@ -911,7 +912,6 @@
                                         <constraint firstItem="iQX-rJ-EHY" firstAttribute="top" secondItem="8eQ-5Z-ux1" secondAttribute="top" constant="12" id="CYH-sK-vWy"/>
                                         <constraint firstItem="512-i1-Dew" firstAttribute="centerY" secondItem="Yf4-JI-ibe" secondAttribute="centerY" id="E1s-HT-qiX"/>
                                         <constraint firstItem="b6i-24-6hr" firstAttribute="leading" secondItem="vFm-37-ADK" secondAttribute="leading" id="GO7-Ep-9Uw"/>
-                                        <constraint firstItem="EOp-9p-NHn" firstAttribute="centerX" secondItem="512-i1-Dew" secondAttribute="centerX" id="J8F-jP-ctO"/>
                                         <constraint firstItem="NzU-nr-2CT" firstAttribute="leading" secondItem="gvl-I5-2Xa" secondAttribute="leading" constant="-4" id="JSj-uZ-Sae"/>
                                         <constraint firstItem="c8h-gU-dLD" firstAttribute="leading" secondItem="8eQ-5Z-ux1" secondAttribute="leading" id="KjO-7K-yOg"/>
                                         <constraint firstItem="YZw-zD-D1g" firstAttribute="leading" secondItem="iQX-rJ-EHY" secondAttribute="leading" id="LgK-Bs-5Hb"/>
@@ -919,13 +919,13 @@
                                         <constraint firstItem="Yf4-JI-ibe" firstAttribute="top" secondItem="iQX-rJ-EHY" secondAttribute="bottom" constant="8" id="P9d-Ub-iw7"/>
                                         <constraint firstItem="iQX-rJ-EHY" firstAttribute="centerY" secondItem="Ru8-r4-5kw" secondAttribute="centerY" id="RfB-Uh-w5X"/>
                                         <constraint firstAttribute="trailing" secondItem="Ru8-r4-5kw" secondAttribute="trailing" constant="8" id="Scb-PW-YJE"/>
-                                        <constraint firstItem="512-i1-Dew" firstAttribute="trailing" secondItem="8eQ-5Z-ux1" secondAttribute="trailingMargin" id="Yr4-C9-6QY"/>
                                         <constraint firstItem="iQX-rJ-EHY" firstAttribute="leading" secondItem="8eQ-5Z-ux1" secondAttribute="leading" constant="6" id="ZD8-Oy-q7U"/>
                                         <constraint firstItem="vFm-37-ADK" firstAttribute="leading" secondItem="KSH-iJ-GeH" secondAttribute="trailing" constant="16" id="ZYr-ak-ZgL"/>
                                         <constraint firstItem="wSP-Qc-ff5" firstAttribute="centerY" secondItem="KSH-iJ-GeH" secondAttribute="centerY" id="arc-He-DEi"/>
                                         <constraint firstAttribute="trailing" secondItem="c8h-gU-dLD" secondAttribute="trailing" id="bWM-iQ-MQw"/>
                                         <constraint firstItem="Yf4-JI-ibe" firstAttribute="centerY" secondItem="KSH-iJ-GeH" secondAttribute="centerY" constant="1" id="caU-U7-qId"/>
                                         <constraint firstItem="KSH-iJ-GeH" firstAttribute="leading" secondItem="Yf4-JI-ibe" secondAttribute="trailing" id="eA1-Ps-nH0"/>
+                                        <constraint firstAttribute="trailing" secondItem="EOp-9p-NHn" secondAttribute="trailing" constant="16" id="gP2-8U-rEN"/>
                                         <constraint firstItem="gvl-I5-2Xa" firstAttribute="leading" secondItem="YZw-zD-D1g" secondAttribute="trailing" constant="8" id="j4U-WV-luI"/>
                                         <constraint firstItem="KSH-iJ-GeH" firstAttribute="centerY" secondItem="vFm-37-ADK" secondAttribute="centerY" id="jkT-1r-2Gh"/>
                                         <constraint firstItem="Yf4-JI-ibe" firstAttribute="leading" secondItem="iQX-rJ-EHY" secondAttribute="leading" id="jyv-eg-NhV"/>
@@ -943,6 +943,7 @@
                                     <outlet property="productNameLabel" destination="iQX-rJ-EHY" id="xx8-Ul-F5j"/>
                                     <outlet property="productPriceLabel" destination="wSP-Qc-ff5" id="M56-8b-Hj0"/>
                                     <outlet property="reservationButton" destination="512-i1-Dew" id="XfI-dX-aSX"/>
+                                    <outlet property="reservationButtonWidith" destination="KlK-mF-Dh4" id="0sL-h2-nTq"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

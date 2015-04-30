@@ -7,20 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class SCCoupon;
+#import "SCCoupon.h"
 
 @protocol SCCouponCodeCellDelegate <NSObject>
 
 @optional
 - (void)couponShouldReservationWithIndex:(NSInteger)index;
+- (void)couponShouldShowWithIndex:(NSInteger)index;
 
 @end
 
 @interface SCCouponCodeCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet  UILabel *codeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *reservationButton;
+@property (weak, nonatomic) IBOutlet            UILabel *codeLabel;
+@property (weak, nonatomic) IBOutlet           UIButton *reservationButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *reservationButtonWidith;
 
 @property (nonatomic, weak)                id  <SCCouponCodeCellDelegate>delegate;
 @property (nonatomic, assign)       NSInteger  index;
