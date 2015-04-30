@@ -16,6 +16,10 @@ typedef NS_ENUM(NSInteger, SCRequestRefreshType) {
     SCRequestRefreshTypePullUp
 };
 
+typedef NS_ENUM(NSUInteger, SCViewControllerAlertType) {
+    SCViewControllerAlertTypeNeedLogin = 1000
+};
+
 @interface UIViewController (SCViewController) <UIAlertViewDelegate, MBProgressHUDDelegate>
 
 #pragma mark - Alert Methods

@@ -243,6 +243,9 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
             case SCMyOderAlertTypeAppraiseAlert:
                 [self pushToAppraiseViewController];
                 break;
+            case SCViewControllerAlertTypeNeedLogin:
+                [self checkShouldLogin];
+                break;
         }
     }
 }

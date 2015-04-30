@@ -13,7 +13,7 @@
 #import "SCAllDictionary.h"
 #import "SCAddCarViewController.h"
 
-@interface SCReservationViewController () <UITextFieldDelegate, UIAlertViewDelegate, SCPickerViewDelegate, SCReservationDateViewControllerDelegate, SCAddCarViewControllerDelegate>
+@interface SCReservationViewController () <UITextFieldDelegate, SCPickerViewDelegate, SCReservationDateViewControllerDelegate, SCAddCarViewControllerDelegate>
 {
     NSString *_selectedCarID;
     NSString *_reservationDate;
@@ -120,14 +120,7 @@
     [self closeAllKeyboard];
     // 检查是否登录，已登录进行预约请求，反之则弹出登录提示框跳转到登录页面
     if (![SCUserInfo share].loginStatus)
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登录"
-                                                            message:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:@"取消"
-                                                  otherButtonTitles:@"登录", nil];
-        [alertView show];
-    }
+        [self showShoulLoginAlert];
     else if ([self checkeParamterIntegrity])
         [self startMerchantReservationRequest];
 }
@@ -240,13 +233,6 @@
     }
     else
         return YES;
-}
-
-#pragma mark - Alert View Delegate Methods
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex != alertView.cancelButtonIndex)
-        [self checkShouldLogin];
 }
 
 #pragma mark - Text Field Delegate Methods

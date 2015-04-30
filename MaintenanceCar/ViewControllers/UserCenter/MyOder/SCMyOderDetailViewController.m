@@ -277,6 +277,9 @@ typedef NS_ENUM(NSUInteger, SCMyOderDetailMenuType) {
             case SCMyOderAlertDetailTypeCancelReserve:
                 [self startCancelReservationRequest];
                 break;
+            case SCViewControllerAlertTypeNeedLogin:
+                [self checkShouldLogin];
+                break;
         }
     }
 }
