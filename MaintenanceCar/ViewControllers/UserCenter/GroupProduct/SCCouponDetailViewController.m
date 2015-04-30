@@ -107,7 +107,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCodeCell" forIndexPath:indexPath];
                 (((SCCouponCell *)cell)).delegate = self;
-                [(SCCouponCell *)cell displayCellWithCoupon:_coupon];
+                [(SCCouponCell *)cell displayCellWithCoupon:_coupon index:Zero];
             }
                 break;
             case 2:

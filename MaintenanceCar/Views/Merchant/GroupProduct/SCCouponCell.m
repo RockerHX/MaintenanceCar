@@ -12,9 +12,9 @@
 @implementation SCCouponCell
 
 #pragma mark - Public Methods
-- (void)displayCellWithCoupon:(SCCoupon *)coupon
+- (void)displayCellWithCoupon:(SCCoupon *)coupon index:(NSInteger)index
 {
-    [super displayCellWithCoupon:coupon];
+    [super displayCellWithCoupon:coupon index:index];
     
     _productNameLabel.text  = [coupon.title stringByAppendingString:@":"];
     _merchantNameLabel.text = coupon.company_name;

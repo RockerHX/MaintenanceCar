@@ -27,18 +27,19 @@
     if (_coupon.state == SCCouponStateUnUse)
     {
         if (_delegate && [_delegate respondsToSelector:@selector(couponShouldReservationWithIndex:)])
-            [_delegate couponShouldReservationWithIndex:_index];
+            [_delegate couponShouldReservationWithIndex:self.tag];
     }
-    else if (_coupon.state != SCCouponStateReserved)
+    else if (_coupon.state == SCCouponStateReserved)
     {
         if (_delegate && [_delegate respondsToSelector:@selector(couponShouldShowWithIndex:)])
-            [_delegate couponShouldShowWithIndex:_index];
+            [_delegate couponShouldShowWithIndex:self.tag];
     }
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithCoupon:(SCCoupon *)coupon
+- (void)displayCellWithCoupon:(SCCoupon *)coupon index:(NSInteger)index
 {
+    self.tag = index;
     _coupon = coupon;
     _codeLabel.text = coupon.code;
     

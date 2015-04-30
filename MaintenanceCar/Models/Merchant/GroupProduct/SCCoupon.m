@@ -17,6 +17,7 @@
     self = [super initWithDictionary:dict error:err];
     if (self)
     {
+        _group_ticket_id = _group_ticket_id ? _group_ticket_id : @"";
         _state = [self couponState];
     }
     return self;
@@ -66,7 +67,13 @@
             state = SCCouponStateExpired;
             break;
         case 4:
+            state = SCCouponStateRefunding;
+            break;
+        case 5:
             state = SCCouponStateRefunded;
+            break;
+        case 6:
+            state = SCCouponStateReserved;
             break;
             
         default:

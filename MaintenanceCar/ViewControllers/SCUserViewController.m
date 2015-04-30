@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     SCUserCenterRowMyReservation,
 };
 
-@interface SCUserViewController () <SCUserInfoViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
+@interface SCUserViewController () <SCUserInfoViewDelegate, SCChangeMaintenanceDataViewControllerDelegate, SCMyCouponViewControllerDelegate>
 
 @end
 
@@ -128,6 +128,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 - (void)pushToMyCouponViewController
 {
     SCMyCouponViewController *myCouponViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyCouponViewController"];
+    myCouponViewController.delegate = self;
     [self pushToSubViewControllerWithController:myCouponViewController];
 }
 
@@ -185,6 +186,12 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 - (void)dataSaveSuccess
 {
     [_userInfoView refresh];
+}
+
+#pragma mark - SCMyCouponViewControllerDelegate Methods
+- (void)shouldShowOderList
+{
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:Zero inSection:Zero]];
 }
 
 @end

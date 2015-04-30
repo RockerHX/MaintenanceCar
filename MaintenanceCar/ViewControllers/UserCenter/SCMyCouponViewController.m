@@ -9,12 +9,10 @@
 #import "SCMyCouponViewController.h"
 #import "SCCouponHeaderView.h"
 #import "SCCouponCell.h"
-#import "SCCoupon.h"
 #import "SCCouponDetailViewController.h"
 #import "SCReservationViewController.h"
 
-@interface SCMyCouponViewController () <SCCouponCodeCellDelegate>
-
+@interface SCMyCouponViewController () <SCCouponCodeCellDelegate, SCReservationViewControllerDelegate>
 @end
 
 @implementation SCMyCouponViewController
@@ -49,7 +47,7 @@
 {
     SCCouponCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCell" forIndexPath:indexPath];
     cell.delegate      = self;
-    [cell displayCellWithCoupon:_dataList[indexPath.row]];
+    [cell displayCellWithCoupon:_dataList[indexPath.row] index:indexPath.row];
     
     return cell;
 }
@@ -158,10 +156,12 @@
         [[SCUserInfo share] removeItems];
         SCCoupon *coupon = _dataList[index];
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
+        reservationViewController.delegate                     = self;
         reservationViewController.canChange                    = NO;
         reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName:coupon.company_name
-                                                                            companyID:coupon.company_id];
+                                                                                                companyID:coupon.company_id];
         reservationViewController.serviceItem                  = [[SCServiceItem alloc] initWithServiceID:coupon.type];
+        reservationViewController.coupon                       = _dataList[index];
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {
@@ -169,6 +169,19 @@
     }
     @finally {
     }
+}
+
+- (void)couponShouldShowWithIndex:(NSInteger)index
+{
+    [self.navigationController popViewControllerAnimated:NO];
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldShowOderList)])
+        [_delegate shouldShowOderList];
+}
+
+#pragma mark - SCReservationViewControllerDelegate Methods
+- (void)reservationSuccess
+{
+    [self startDropDownRefreshReuqest];
 }
 
 @end

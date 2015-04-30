@@ -8,6 +8,15 @@
 
 #import "SCTableViewController.h"
 
+@protocol SCMyCouponViewControllerDelegate <NSObject>
+
+@optional
+- (void)shouldShowOderList;
+
+@end
+
 @interface SCMyCouponViewController : SCTableViewController
+
+@property (nonatomic, weak) id <SCMyCouponViewControllerDelegate>delegate;
 
 @end

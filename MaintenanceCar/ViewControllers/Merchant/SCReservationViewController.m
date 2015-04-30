@@ -13,14 +13,7 @@
 #import "SCAllDictionary.h"
 #import "SCAddCarViewController.h"
 
-@interface SCReservationViewController () <UITextFieldDelegate, SCPickerViewDelegate, SCReservationDateViewControllerDelegate, SCAddCarViewControllerDelegate>
-{
-    NSString *_selectedCarID;
-    NSString *_reservationDate;
-}
-
-- (IBAction)reservationButtonPressed:(UIButton *)sender;
-
+@interface SCReservationViewController () <SCPickerViewDelegate, SCReservationDateViewControllerDelegate, SCAddCarViewControllerDelegate>
 @end
 
 @implementation SCReservationViewController
@@ -141,22 +134,12 @@
 
 - (void)refreshProjectLabel
 {
-    _categoryLabel.text = _serviceItem.service_name;
     _reservationType    = _serviceItem.service_id;
+    _categoryLabel.text = _serviceItem.service_name;
+    if (_coupon)
+        _itemLabel.text = _coupon.title;
 }
 
-/**
- *  商家预约请求方法，参数：user_id, company_id, type, reserve_name, reserve_phone, content, time, user_car_id
- *  user_id:        用户 ID
- *  company_id:     商家 ID, 通过这个 ID 可以获取商家详细信息
- *  type:           1,2,3,4 对应 洗养修团
- *  reserve_name:   XXX
- *  reserve_phone:  电话
- *  content:        预约内容
- *  time:           预约时段,  如 2014-12-13 10:00:00 代表的时间段是当天10点到11点
- *  user_car_id:    可选. 用户已经添加的私家车 id
- *  返回:            reserve_id和友盟推送返回信息
- */
 - (void)startMerchantReservationRequest
 {
     [self showHUDOnViewController:self];
@@ -169,6 +152,7 @@
                                  @"content": _remarkTextField.text,
                                     @"time": _reservationDate,
                              @"user_car_id": _selectedCarID,
+                         @"group_ticket_id": _coupon.group_ticket_id,
                                    @"price": _price};
     [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
@@ -177,6 +161,9 @@
             NSString *statusMessage = responseObject[@"status_message"];
             if (![statusMessage isEqualToString:@"success"])
             {
+                if (_delegate && [_delegate respondsToSelector:@selector(reservationSuccess)])
+                    [_delegate reservationSuccess];
+                
                 [[SCUserInfo share] saveOwnerName:_ownerNameTextField.text];
                 [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:statusMessage];
             }

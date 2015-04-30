@@ -24,10 +24,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *reservationButtonWidith;
 
 @property (nonatomic, weak)                id  <SCCouponCodeCellDelegate>delegate;
-@property (nonatomic, assign)       NSInteger  index;
 
 - (IBAction)reservationButtonPressed:(id)sender;
 
-- (void)displayCellWithCoupon:(SCCoupon *)coupon;
+- (void)displayCellWithCoupon:(SCCoupon *)coupon index:(NSInteger)index;
 
 @end
