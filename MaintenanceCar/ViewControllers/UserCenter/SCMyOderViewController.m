@@ -158,20 +158,24 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
         {
             case SCAPIRequestErrorCodeNoError:
             {
+                if (self.requestType == SCRequestRefreshTypeDropDown)
+                    [self clearListData];
                 [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                     SCMyOder *oder = [[SCMyOder alloc] initWithDictionary:obj error:nil];
                     [_dataList addObject:oder];
                 }];
                 
-                [self.tableView reloadData];                    // 数据配置完成，刷新商家列表
-                [self readdRefreshFooter];
                 self.offset += MerchantListLimit;               // 偏移量请求参数递增
+                [self.tableView reloadData];                    // 数据配置完成，刷新商家列表
+                [self addRefreshHeader];
+                [self addRefreshFooter];
             }
                 break;
                 
             case SCAPIRequestErrorCodeListNotFoundMore:
             {
                 [self addFooter];
+                [self addRefreshHeader];
                 [self removeRefreshFooter];
             }
                 break;

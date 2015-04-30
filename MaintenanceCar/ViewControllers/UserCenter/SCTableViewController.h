@@ -43,8 +43,10 @@
  *  结束刷新
  */
 - (void)endRefresh;
-- (void)readdFooter;
-- (void)removeFooter;
+- (void)addRefreshHeader;
+- (void)removeRefreshHeader;
+- (void)addRefreshFooter;
+- (void)removeRefreshFooter;
 
 /**
  *  清空列表缓存数据

@@ -144,21 +144,25 @@
     [[SCAPIRequest manager] startGetCollectionMerchantAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
+            if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
+                [weakSelf clearListData];
             // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
             [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj error:nil];
                 [_dataList addObject:merchant];
             }];
             
-            [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
-            [weakSelf readdFooter];
             weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
+            [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
+            [weakSelf addRefreshHeader];
+            [weakSelf addRefreshFooter];
         }
         else
         {
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
             [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:responseObject[@"error"] delay:0.5f];
-            [weakSelf removeFooter];
+            [weakSelf addRefreshHeader];
+            [weakSelf removeRefreshFooter];
         }
         [weakSelf endRefresh];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -118,20 +118,26 @@
             {
                 case SCAPIRequestErrorCodeNoError:
                 {
-                    // 遍历请求回来的订单数据，生成SCReservation用于订单列表显示
+                    if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
+                        [weakSelf clearListData];
+                    // 遍历请求回来的订单数据，生成SCCoupon用于团购券列表显示
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                         SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];
                         [_dataList addObject:coupon];
                     }];
                     
-                    [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
-                    [weakSelf readdFooter];
                     weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
+                    [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
+                    [weakSelf addRefreshHeader];
+                    [weakSelf addRefreshFooter];
                 }
                     break;
                     
                 case SCAPIRequestErrorCodeListNotFoundMore:
-                    [weakSelf removeFooter];
+                {
+                    [weakSelf addRefreshHeader];
+                    [weakSelf removeRefreshFooter];
+                }
                     break;
             }
             if (![statusMessage isEqualToString:@"success"])

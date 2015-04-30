@@ -34,7 +34,7 @@
     self.tableView.tableFooterView = [[UIView alloc] init];         // 为tableview添加空白尾部，以免没有数据显示时有很多条纹
     
     // 为tableview添加下拉响应式控件和触发方法
-    [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(startDropDownRefreshReuqest)];
+    [self addRefreshHeader];
     [self.tableView.header beginRefreshing];
 }
 
@@ -42,21 +42,26 @@
 {
     [self removeFooter];
     [self removeRefreshFooter];
+    
     [self clearListData];
     [self.tableView reloadData];
+    
+    [self addRefreshHeader];
     [self.tableView.header beginRefreshing];
 }
 
 - (void)startDropDownRefreshReuqest
 {
-    [self clearListData];
+    [self removeFooter];
+    [self removeRefreshFooter];
     
-    self.offset = 0;
+    self.offset = Zero;
     self.requestType = SCRequestRefreshTypeDropDown;
 }
 
 - (void)startPullUpRefreshRequest
 {
+    [self removeRefreshHeader];
     self.requestType = SCRequestRefreshTypePullUp;
 }
 
@@ -68,7 +73,18 @@
         [self.tableView.footer endRefreshing];
 }
 
-- (void)readdRefreshFooter
+- (void)addRefreshHeader
+{
+    if (!self.tableView.header)
+        [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(startDropDownRefreshReuqest)];
+}
+
+- (void)removeRefreshHeader
+{
+    [self.tableView removeHeader];
+}
+
+- (void)addRefreshFooter
 {
     if (!self.tableView.footer)
         [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(startPullUpRefreshRequest)];
@@ -81,9 +97,12 @@
 
 - (void)addFooter
 {
-    UIView *footer                 = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 10.0f)];
-    footer.backgroundColor         = [UIColor clearColor];
-    self.tableView.tableFooterView = footer;
+    if (!self.tableView.tableFooterView)
+    {
+        UIView *footer                 = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 10.0f)];
+        footer.backgroundColor         = [UIColor clearColor];
+        self.tableView.tableFooterView = footer;
+    }
 }
 
 - (void)removeFooter
