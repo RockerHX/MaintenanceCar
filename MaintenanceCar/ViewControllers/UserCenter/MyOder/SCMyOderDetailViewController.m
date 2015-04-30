@@ -10,10 +10,15 @@
 #import "SCMyOderDetailInfoCell.h"
 #import "SCMyOderDetailPromptCell.h"
 #import "SCMyOderDetailProgressCell.h"
+#import "SCMoreMenu.h"
 
-typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
-    SCMyOderAlertTypeCallMerchant,
-    SCMyOderAlertTypeCancelReserve
+typedef NS_ENUM(NSUInteger, SCMyOderDetailAlertType) {
+    SCMyOderAlertDetailTypeCallMerchant,
+    SCMyOderAlertDetailTypeCancelReserve
+};
+
+typedef NS_ENUM(NSUInteger, SCMyOderDetailMenuType) {
+    SCMyOderDetailMenuTypeCancelReservetion
 };
 
 @interface SCMyOderDetailViewController () <SCMyOderDetailInfoCellDelegate>
@@ -202,7 +207,19 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
 
 - (void)showCancelAlert
 {
-    [self showAlertWithTitle:@"您确定要取消此订单吗？" message:nil delegate:self tag:SCMyOderAlertTypeCancelReserve cancelButtonTitle:@"算了" otherButtonTitle:@"取消"];
+    __weak typeof(self)weakSelf = self;
+    SCMoreMenu *moreMenu = [[SCMoreMenu alloc] initWithTitles:@[@"取消订单"] images:nil];
+    [moreMenu show:^(NSInteger selectedIndex) {
+        switch (selectedIndex)
+        {
+            case SCMyOderDetailMenuTypeCancelReservetion:
+                [weakSelf showAlertWithTitle:@"您确定要取消此订单吗？" message:nil delegate:self tag:SCMyOderAlertDetailTypeCancelReserve cancelButtonTitle:@"否" otherButtonTitle:@"是"];
+                break;
+                
+            default:
+                break;
+        }
+    }];
 }
 
 /**
@@ -254,10 +271,10 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     {
         switch (alertView.tag)
         {
-            case SCMyOderAlertTypeCallMerchant:
+            case SCMyOderAlertDetailTypeCallMerchant:
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", alertView.message]]];
                 break;
-            case SCMyOderAlertTypeCancelReserve:
+            case SCMyOderAlertDetailTypeCancelReserve:
                 [self startCancelReservationRequest];
                 break;
         }
