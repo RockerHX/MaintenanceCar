@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     SCUserCenterRowMyReservation,
 };
 
-@interface SCUserViewController () <SCUserInfoViewDelegate, SCChangeMaintenanceDataViewControllerDelegate, SCMyCouponViewControllerDelegate>
+@interface SCUserViewController () <SCUserInfoViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
 
 @end
 
@@ -61,6 +61,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 #pragma mark - Private Methods
 - (void)initConfig
 {
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(showMyOderList) name:kShowCouponNotification object:nil];
     [NOTIFICATION_CENTER addObserver:self selector:@selector(pushToMyCouponViewController) name:kGenerateCouponSuccessNotification object:nil];
     [NOTIFICATION_CENTER addObserver:_userInfoView selector:@selector(refresh) name:kUserCarsDataNeedReloadSuccessNotification object:nil];
 }
@@ -128,8 +129,12 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 - (void)pushToMyCouponViewController
 {
     SCMyCouponViewController *myCouponViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyCouponViewController"];
-    myCouponViewController.delegate = self;
     [self pushToSubViewControllerWithController:myCouponViewController];
+}
+
+- (void)showMyOderList
+{
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:Zero inSection:Zero]];
 }
 
 #pragma mark - Alert View Delegate Methods
@@ -186,12 +191,6 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 - (void)dataSaveSuccess
 {
     [_userInfoView refresh];
-}
-
-#pragma mark - SCMyCouponViewControllerDelegate Methods
-- (void)shouldShowOderList
-{
-    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:Zero inSection:Zero]];
 }
 
 @end

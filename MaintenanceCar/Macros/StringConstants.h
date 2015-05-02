@@ -20,6 +20,7 @@ FOUNDATION_EXPORT NSString *const kUserLoginSuccessNotification;                
 FOUNDATION_EXPORT NSString *const kWeiXinPaySuccessNotification;                    // 微信支付成功的通知
 FOUNDATION_EXPORT NSString *const kWeiXinPayFailureNotification;                    // 微信支付失败的通知
 FOUNDATION_EXPORT NSString *const kGenerateCouponSuccessNotification;               // 生成团购券成功的通知
+FOUNDATION_EXPORT NSString *const kShowCouponNotification;                          // 查看团购券的通知
 
 #pragma mark - App Custom Constant
 FOUNDATION_EXPORT NSString *const MerchantCellReuseIdentifier;

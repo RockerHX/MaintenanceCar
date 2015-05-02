@@ -148,7 +148,7 @@
     }];
 }
 
-#pragma mark - SCCouponCodeCell Delegate Methods
+#pragma mark - SCCouponCodeCellDelegate Methods
 - (void)couponShouldReservationWithIndex:(NSInteger)index
 {
     // 跳转到预约页面
@@ -173,9 +173,8 @@
 
 - (void)couponShouldShowWithIndex:(NSInteger)index
 {
-    [self.navigationController popViewControllerAnimated:NO];
-    if (_delegate && [_delegate respondsToSelector:@selector(shouldShowOderList)])
-        [_delegate shouldShowOderList];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    [NOTIFICATION_CENTER postNotificationName:kShowCouponNotification object:nil];
 }
 
 #pragma mark - SCReservationViewControllerDelegate Methods

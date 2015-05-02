@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     SCAlertTypeCall
 };
 
-@interface SCCouponDetailViewController () <SCCouponCodeCellDelegate, SCGroupProductMerchantCellDelegate, UIAlertViewDelegate>
+@interface SCCouponDetailViewController () <SCCouponCodeCellDelegate, SCGroupProductMerchantCellDelegate, SCReservationViewControllerDelegate>
 {
     SCGroupProductDetail *_detail;
 }
@@ -310,23 +310,32 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     }
 }
 
-#pragma mark - SCCouponCodeCell Delegate Methods
+#pragma mark - SCCouponCodeCellDelegate Methods
 - (void)couponShouldReservationWithIndex:(NSInteger)index
 {
     // 跳转到预约页面
     @try {
+        [[SCUserInfo share] removeItems];
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
+        reservationViewController.delegate                     = self;
         reservationViewController.canChange                    = NO;
         reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName:_coupon.company_name
                                                                                                 companyID:_coupon.company_id];
         reservationViewController.serviceItem                  = [[SCServiceItem alloc] initWithServiceID:_coupon.type];
+        reservationViewController.coupon                       = _coupon;
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {
-        NSLog(@"SCCouponDetailViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
     }
     @finally {
     }
+}
+
+- (void)couponShouldShowWithIndex:(NSInteger)index
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    [NOTIFICATION_CENTER postNotificationName:kShowCouponNotification object:nil];
 }
 
 #pragma mark - SCGroupProductMerchantCell Delegate Methods
