@@ -10,6 +10,12 @@
 
 @implementation SCMyOderDetailInfoCell
 
+#pragma mark - Init Methods
+- (void)awakeFromNib
+{
+    _remarkLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 75.0f;
+}
+
 #pragma mark - Action Methods
 - (IBAction)callMerchantButtonPressed:(id)sender
 {
