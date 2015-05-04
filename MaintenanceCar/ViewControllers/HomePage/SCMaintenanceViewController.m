@@ -111,6 +111,7 @@
         SCServiceMerchantListViewController *maintenanceViewController = segue.destinationViewController;
         maintenanceViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'养'"];
         maintenanceViewController.title    = @"保养";
+        maintenanceViewController.type     = @"2";
     }
 }
 
@@ -400,7 +401,8 @@
     {
         // 根据选中的商家，取到其商家ID，跳转到商家页面进行详情展示
         SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
-        merchantDetialViewControler.merchant = (SCMerchant *)_recommendMerchants[indexPath.row];
+        merchantDetialViewControler.merchant                        = (SCMerchant *)_recommendMerchants[indexPath.row];
+        merchantDetialViewControler.type                            = @"2";
         [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
     }
 }
@@ -500,8 +502,8 @@
     // 跳转到预约页面
     @try {
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.merchant = _recommendMerchants[index];
-        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:@"2"];
+        reservationViewController.merchant                     = _recommendMerchants[index];
+        reservationViewController.serviceItem                  = [[SCServiceItem alloc] initWithServiceID:@"2"];
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {

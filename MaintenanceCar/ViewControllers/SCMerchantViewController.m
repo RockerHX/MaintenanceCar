@@ -99,7 +99,8 @@
     
     // 根据选中的商家，取到其商家ID，跳转到商家页面进行详情展示
     SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMerchantDetailViewController"];
-    merchantDetialViewControler.merchant = _merchantList[indexPath.row];
+    merchantDetialViewControler.merchant                        = _merchantList[indexPath.row];
+    merchantDetialViewControler.canSelectedReserve              = YES;
     [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
 }
 

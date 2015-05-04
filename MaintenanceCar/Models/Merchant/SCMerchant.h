@@ -22,7 +22,6 @@
 
 @property (nonatomic, strong) NSDictionary <Optional>*service_items;        // 服务项目
 
-
 @property (nonatomic, copy, readonly)   NSString <Ignore>*distance;         // 手机当前位置与商家的距离
 @property (nonatomic, strong, readonly)  NSArray <Ignore>*serviceItems;     // 服务项目
 @property (nonatomic, strong, readonly)  NSArray <Ignore>*merchantFlags;    // 商家标签集合

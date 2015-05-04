@@ -90,7 +90,8 @@
     // 跳转到预约页面
     @try {
         SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
-        merchantDetialViewControler.merchant = (SCMerchant *)_dataList[indexPath.row];
+        merchantDetialViewControler.merchant                        = (SCMerchant *)_dataList[indexPath.row];
+        merchantDetialViewControler.canSelectedReserve              = YES;
         [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
     }
     @catch (NSException *exception) {

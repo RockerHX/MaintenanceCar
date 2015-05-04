@@ -15,6 +15,7 @@
 @property (nonatomic, copy)   NSString <Optional>*url;                // 网页地址
 @property (nonatomic, copy)   NSString <Optional>*query;              // 查询条件
 @property (nonatomic, copy)   NSString <Optional>*post_pic;           // 展示图片地址
+@property (nonatomic, copy)   NSString <Optional>*type;
 @property (nonatomic, assign) BOOL                html;               // 是否是网页
 
 @end

@@ -136,6 +136,7 @@
 {
     _reservationType    = _serviceItem.service_id;
     _categoryLabel.text = _serviceItem.service_name;
+    _itemLabel.text     = _serviceItem.service_name;
     if (_coupon)
         _itemLabel.text = _coupon.title;
     if (_quotedPrice)

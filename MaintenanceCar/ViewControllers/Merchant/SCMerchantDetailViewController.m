@@ -275,7 +275,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
             groupProductDetailViewController.price   = price;
             [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
-            
         }
         else if ([cell isKindOfClass:[SCShowMoreProductCell class]])
         {
@@ -593,8 +592,16 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - SCMerchantSummaryCellDelegate Methods
 - (void)shouldNormalReservation
 {
-    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
-    [reservatAlertView show];
+    if (_canSelectedReserve)
+    {
+        SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
+        [reservatAlertView show];
+    }
+    else
+    {
+        [[SCUserInfo share] removeItems];
+        [self pushToReservationViewControllerWithServiceItem:[[SCServiceItem alloc] initWithServiceID:_type] canChange:YES price:nil];
+    }
 }
 
 #pragma mark - SCMerchantDetailFlagCellDelegate Methods
@@ -609,10 +616,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     SCQuotedPrice *price = _merchantDetail.quotedPriceGroup.products[index];
     price.merchantName   = _merchantDetail.name;
     price.companyID      = _merchantDetail.company_id;
-    
-    SCUserInfo *userInfo = [SCUserInfo share];
-    [userInfo removeItems];
-    [userInfo addMaintenanceItem:price.title];
     
     [self pushToReservationViewControllerWithServiceItem:[[SCServiceItem alloc] initWithServiceID:price.type] canChange:NO price:price];
 }
