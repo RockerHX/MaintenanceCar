@@ -17,7 +17,6 @@
     self = [super initWithDictionary:dict error:err];
     if (self)
     {
-        _group_ticket_id = _group_ticket_id ? _group_ticket_id : @"";
         _state = [self couponState];
     }
     return self;

@@ -155,7 +155,7 @@
                                  @"content": _remarkTextField.text,
                                     @"time": _reservationDate,
                              @"user_car_id": _selectedCarID,
-                         @"group_ticket_id": _coupon.group_ticket_id,
+                         @"group_ticket_id": _coupon ? _coupon.group_ticket_id : @"",
                                    @"price": _quotedPrice ? _quotedPrice.final_price : @""};
     [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
