@@ -12,6 +12,7 @@
 #import "SCCoupon.h"
 
 @class SCTextView;
+@class SCQuotedPrice;
 
 @protocol SCReservationViewControllerDelegate <NSObject>
 
@@ -41,7 +42,7 @@
 @property (nonatomic, strong)    SCMerchant *merchant;                  // 商家信息
 @property (nonatomic, strong) SCServiceItem *serviceItem;               // 服务项目
 @property (nonatomic, strong)      SCCoupon *coupon;                    // 团购券数据
-@property (nonatomic, strong)      NSString *price;
+@property (nonatomic, strong) SCQuotedPrice *quotedPrice;
 @property (nonatomic, assign)          BOOL  canChange;
 
 - (IBAction)reservationButtonPressed:(UIButton *)sender;

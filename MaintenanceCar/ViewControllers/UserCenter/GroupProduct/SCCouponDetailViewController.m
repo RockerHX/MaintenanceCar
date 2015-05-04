@@ -318,7 +318,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         [[SCUserInfo share] removeItems];
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
         reservationViewController.delegate                     = self;
-        reservationViewController.canChange                    = NO;
         reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName:_coupon.company_name
                                                                                                 companyID:_coupon.company_id];
         reservationViewController.serviceItem                  = [[SCServiceItem alloc] initWithServiceID:_coupon.type];

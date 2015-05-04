@@ -10,21 +10,14 @@
 
 @implementation SCQuotedPrice
 
-//- (id)initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err
-//{
-//    @try {
-//        self = [super initWithDictionary:dict error:err];
-//        if (self)
-//        {
-//            
-//        }
-//    }
-//    @catch (NSException *exception) {
-//        NSLog(@"%@", exception.reason);
-//    }
-//    @finally {
-//    }
-//    return self;
-//}
+- (id)initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err
+{
+    self = [super initWithDictionary:dict error:err];
+    if (self)
+    {
+        _final_price = _final_price ? _final_price : @"";
+    }
+    return self;
+}
 
 @end

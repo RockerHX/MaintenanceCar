@@ -12,6 +12,7 @@
 #import "SCReservationDateViewController.h"
 #import "SCAllDictionary.h"
 #import "SCAddCarViewController.h"
+#import "SCQuotedPrice.h"
 
 @interface SCReservationViewController () <SCPickerViewDelegate, SCReservationDateViewControllerDelegate, SCAddCarViewControllerDelegate>
 @end
@@ -54,7 +55,6 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // 设置商家名称显示
-    _price = @"";
     _selectedCarID = @"";
     _merchantNameLabel.text = _merchant.name;
     [NOTIFICATION_CENTER addObserver:self selector:@selector(refresh) name:kUserCarsDataNeedReloadSuccessNotification object:nil];
@@ -138,6 +138,8 @@
     _categoryLabel.text = _serviceItem.service_name;
     if (_coupon)
         _itemLabel.text = _coupon.title;
+    if (_quotedPrice)
+        _itemLabel.text = _quotedPrice.title;
 }
 
 - (void)startMerchantReservationRequest
@@ -153,7 +155,7 @@
                                     @"time": _reservationDate,
                              @"user_car_id": _selectedCarID,
                          @"group_ticket_id": _coupon.group_ticket_id,
-                                   @"price": _price};
+                                   @"price": _quotedPrice ? _quotedPrice.final_price : @""};
     [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)

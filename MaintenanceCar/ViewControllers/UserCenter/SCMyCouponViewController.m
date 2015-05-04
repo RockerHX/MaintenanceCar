@@ -156,7 +156,6 @@
         SCCoupon *coupon = _dataList[index];
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
         reservationViewController.delegate                     = self;
-        reservationViewController.canChange                    = NO;
         reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName:coupon.company_name
                                                                                                 companyID:coupon.company_id];
         reservationViewController.serviceItem                  = [[SCServiceItem alloc] initWithServiceID:coupon.type];

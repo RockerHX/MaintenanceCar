@@ -261,12 +261,21 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     
     @try {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        if ([cell isKindOfClass:[SCGroupProductCell class]] || [cell isKindOfClass:[SCQuotedPriceCell class]])
+        if ([cell isKindOfClass:[SCGroupProductCell class]])
         {
             SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
             groupProductDetailViewController.product = [cell isKindOfClass:[SCGroupProductCell class]] ? _merchantDetail.products[indexPath.row] : nil;
-            groupProductDetailViewController.price   = [cell isKindOfClass:[SCQuotedPriceCell class]] ? _merchantDetail.normal_products[indexPath.row] : nil;
             [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
+        }
+        if ([cell isKindOfClass:[SCQuotedPriceCell class]])
+        {
+            SCQuotedPrice *price = _merchantDetail.quotedPriceGroup.products[indexPath.row];
+            price.merchantName   = _merchantDetail.name;
+            price.companyID      = _merchantDetail.company_id;
+            SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
+            groupProductDetailViewController.price   = price;
+            [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
+            
         }
         else if ([cell isKindOfClass:[SCShowMoreProductCell class]])
         {
@@ -529,7 +538,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             otherButtonTitle:@"取消"];
 }
 
-- (void)pushToReservationViewControllerWithServiceItem:(SCServiceItem *)serviceItem canChange:(BOOL)canChange price:(NSString *)price
+- (void)pushToReservationViewControllerWithServiceItem:(SCServiceItem *)serviceItem canChange:(BOOL)canChange price:(SCQuotedPrice *)price
 {
     // 跳转到预约页面
     @try {
@@ -537,7 +546,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName:_merchantDetail.name companyID:_merchantDetail.company_id];
         reservationViewController.serviceItem                  = serviceItem;
         reservationViewController.canChange                    = canChange;
-        reservationViewController.price                        = price;
+        reservationViewController.quotedPrice                  = price;
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {
@@ -598,13 +607,14 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (void)shouldSpecialReservationWithIndex:(NSInteger)index
 {
     SCQuotedPrice *price = _merchantDetail.quotedPriceGroup.products[index];
-    NSString *type = price.type;
+    price.merchantName   = _merchantDetail.name;
+    price.companyID      = _merchantDetail.company_id;
     
     SCUserInfo *userInfo = [SCUserInfo share];
     [userInfo removeItems];
     [userInfo addMaintenanceItem:price.title];
     
-    [self pushToReservationViewControllerWithServiceItem:[[SCServiceItem alloc] initWithServiceID:type] canChange:NO price:price.final_price];
+    [self pushToReservationViewControllerWithServiceItem:[[SCServiceItem alloc] initWithServiceID:price.type] canChange:NO price:price];
 }
 
 #pragma mark - SCReservatAlertViewDelegate Methods

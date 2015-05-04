@@ -20,4 +20,7 @@
 @property (nonatomic, copy) NSString <Optional>*final_price;
 @property (nonatomic, copy) NSString <Optional>*total_price;
 
+@property (nonatomic, copy) NSString <Ignore>*companyID;
+@property (nonatomic, copy) NSString <Ignore>*merchantName;
+
 @end

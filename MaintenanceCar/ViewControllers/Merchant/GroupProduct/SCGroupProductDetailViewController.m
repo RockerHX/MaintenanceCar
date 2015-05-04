@@ -7,6 +7,8 @@
 //
 
 #import "SCGroupProductDetailViewController.h"
+#import <SCLoopScrollView/SCLoopScrollView.h>
+#import <AFNetworking/UIImageView+AFNetworking.h>
 #import "SCBuyGroupProductCell.h"
 #import "SCGroupProductMerchantCell.h"
 #import "SCGroupProductDetailCell.h"
@@ -14,8 +16,7 @@
 #import "SCCommentCell.h"
 #import "SCBuyGroupProductViewController.h"
 #import "SCCommentListViewController.h"
-#import <SCLoopScrollView/SCLoopScrollView.h>
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import "SCReservationViewController.h"
 
 @interface SCGroupProductDetailViewController () <SCBuyGroupProductCellDelegate, SCGroupProductMerchantCellDelegate>
 {
@@ -291,7 +292,21 @@
 
 - (void)shouldReserveProduct
 {
-    
+    // 跳转到预约页面
+    @try {
+        [[SCUserInfo share] removeItems];
+        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
+        reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName: _price.merchantName
+                                                                                                companyID: _price.companyID];
+        reservationViewController.serviceItem                  = [[SCServiceItem alloc] initWithServiceID:_price.type];
+        reservationViewController.quotedPrice                  = _price;
+        [self.navigationController pushViewController:reservationViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
 }
 
 #pragma mark - SCGroupProductMerchantCell Delegate Methods
