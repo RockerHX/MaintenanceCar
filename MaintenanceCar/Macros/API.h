@@ -104,8 +104,8 @@
 #define CouponDetailAPIURL              [V1APIURL stringByAppendingString:CouponDetailAPI]            // 团购券详情接口URL - 用于获取团购券详情
 #define CouponRefundAPIURL              [V1APIURL stringByAppendingString:CouponRefundAPI]            // 团购券退款的接口URL - 用于团购券详情申请退款
 
-#define CommentAPIURL                   [V1APIURL stringByAppendingString:CommentAPI]                 // 评价接口URL - 用于添加评价
-#define MerchantCommentAPIURL           [V1APIURL stringByAppendingString:MerchantCommentAPI]         // 商家评价接口URL - 用于获取商家评价列表
+#define CommentAPIURL                   [V2APIURL stringByAppendingString:CommentAPI]                 // 评价接口URL - 用于添加评价
+#define MerchantCommentAPIURL           [V2APIURL stringByAppendingString:MerchantCommentAPI]         // 商家评价接口URL - 用于获取商家评价列表
 
 #define VerificationCodeAPIURL          [V2APIURL stringByAppendingString:VerificationCodeAPI]        // 获取验证码接口URL - 用于获取短信或者语音验证码
 #define LoginAPIURL                     [V2APIURL stringByAppendingString:LoginAPI]                   // 用户登录接口URL - 用于用户登录

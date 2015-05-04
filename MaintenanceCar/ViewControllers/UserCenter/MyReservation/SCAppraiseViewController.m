@@ -86,12 +86,16 @@
     [[SCAPIRequest manager] startCommentAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController delegate:weakSelf text:@"评价成功！" delay:0.5f];
-        else
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"评价失败，请重试！" delay:0.5f];
+        {
+            NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
+            NSString *statusMessage = responseObject[@"status_message"];
+            if (statusCode == SCAPIRequestErrorCodeNoError)
+                [weakSelf showHUDAlertToViewController:weakSelf.navigationController delegate:weakSelf text:statusMessage delay:0.5f];
+            else if (![statusMessage isEqualToString:@"success"])
+                [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:statusMessage];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [weakSelf hideHUDOnViewController:weakSelf];
-        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"评价失败，请重试！" delay:0.5f];
+        [weakSelf hanleFailureResponseWtihOperation:operation];
     }];
 }
 

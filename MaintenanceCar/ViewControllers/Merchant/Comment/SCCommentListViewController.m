@@ -106,38 +106,45 @@
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
     NSDictionary *parameters = @{@"company_id": _companyID,
-                                 @"limit"  : @(MerchantListLimit),
-                                 @"offset" : @(self.offset)};
+                                      @"limit": @(MerchantListLimit),
+                                     @"offset": @(self.offset)};
     [[SCAPIRequest manager] startGetMerchantCommentListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
-                [weakSelf clearListData];
-            // 遍历请求回来的订单数据，生成SCComment用于订单列表显示
-            [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                SCComment *comment = [[SCComment alloc] initWithDictionary:obj error:nil];
-                [_dataList addObject:comment];
-            }];
-            
-            weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
-            [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
-            [weakSelf addRefreshHeader];
-            [weakSelf addRefreshFooter];
-        }
-        else
-        {
-            NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:responseObject[@"error"] delay:0.5f];
-            [weakSelf addRefreshHeader];
-            [weakSelf removeRefreshFooter];
+            NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
+            NSString *statusMessage = responseObject[@"status_message"];
+            switch (statusCode)
+            {
+                case SCAPIRequestErrorCodeNoError:
+                {
+                    if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
+                        [weakSelf clearListData];
+                    // 遍历请求回来的订单数据，生成SCComment用于订单列表显示
+                    [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                        SCComment *comment = [[SCComment alloc] initWithDictionary:obj error:nil];
+                        [_dataList addObject:comment];
+                    }];
+                    
+                    weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
+                    [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
+                    [weakSelf addRefreshHeader];
+                    [weakSelf addRefreshFooter];
+                }
+                    break;
+                    
+                case SCAPIRequestErrorCodeListNotFoundMore:
+                {
+                    [weakSelf addRefreshHeader];
+                    [weakSelf removeRefreshFooter];
+                }
+                    break;
+            }
+            if (![statusMessage isEqualToString:@"success"])
+                [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
         }
         [weakSelf endRefresh];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Get merchant list request error:%@", error);
-        if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"该商家暂时还没有任何评价噢！" delay:0.5f];
-        else
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:NetWorkError delay:0.5f];
+        [weakSelf hanleFailureResponseWtihOperation:operation];
         [weakSelf endRefresh];
     }];
 }
