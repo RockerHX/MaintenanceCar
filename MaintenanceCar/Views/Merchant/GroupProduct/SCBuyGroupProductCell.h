@@ -7,13 +7,14 @@
 //
 
 #import "SCGroupProductCell.h"
-
-@class SCGroupProductDetail;
+#import "SCGroupProductDetail.h"
+#import "SCQuotedPrice.h"
 
 @protocol SCBuyGroupProductCellDelegate <NSObject>
 
 @optional
 - (void)shouldShowBuyProductView;
+- (void)shouldReserveProduct;
 
 @end
 
@@ -26,5 +27,6 @@
 - (IBAction)bugProductButtonPressed:(id)sender;
 
 - (void)displayCellWithDetail:(SCGroupProductDetail *)detail;
+- (void)displayCellWithPrice:(SCQuotedPrice *)price;
 
 @end

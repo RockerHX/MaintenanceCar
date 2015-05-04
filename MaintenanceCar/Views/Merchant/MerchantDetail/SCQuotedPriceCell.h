@@ -33,6 +33,6 @@
 
 - (IBAction)reservationButtonPressed:(id)sender;
 
-- (void)displayCellWithProduct:(SCQuotedPrice *)product;
+- (void)displayCellWithPrice:(SCQuotedPrice *)price;
 
 @end

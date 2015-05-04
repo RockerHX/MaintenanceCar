@@ -9,12 +9,14 @@
 #import "SCViewControllerCategory.h"
 
 @class SCGroupProduct;
+@class SCQuotedPrice;
 @class SCLoopScrollView;
 
 @interface SCGroupProductDetailViewController : UITableViewController
 
 @property (weak, nonatomic) IBOutlet SCLoopScrollView *merchanImagesView;
 
-@property (nonatomic, copy) SCGroupProduct *product;
+@property (nonatomic, strong) SCGroupProduct *product;
+@property (nonatomic, strong)  SCQuotedPrice *price;
 
 @end

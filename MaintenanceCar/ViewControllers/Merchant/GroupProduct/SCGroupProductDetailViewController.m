@@ -7,7 +7,6 @@
 //
 
 #import "SCGroupProductDetailViewController.h"
-#import "SCGroupProductDetail.h"
 #import "SCBuyGroupProductCell.h"
 #import "SCGroupProductMerchantCell.h"
 #import "SCGroupProductDetailCell.h"
@@ -18,7 +17,7 @@
 #import <SCLoopScrollView/SCLoopScrollView.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
 
-@interface SCGroupProductDetailViewController () <SCBuyGroupProductCellDelegate, SCGroupProductMerchantCellDelegate, UIAlertViewDelegate>
+@interface SCGroupProductDetailViewController () <SCBuyGroupProductCellDelegate, SCGroupProductMerchantCellDelegate>
 {
     SCGroupProductDetail *_detail;
 }
@@ -117,7 +116,10 @@
             default:
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCBuyGroupProductCell" forIndexPath:indexPath];
-                [(SCBuyGroupProductCell *)cell displayCellWithDetail:_detail];
+                if (_price)
+                    [(SCBuyGroupProductCell *)cell displayCellWithPrice:_price];
+                else
+                    [(SCBuyGroupProductCell *)cell displayCellWithDetail:_detail];
             }
                 break;
         }
@@ -163,7 +165,10 @@
             {
                 if(!_productCell)
                     _productCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCBuyGroupProductCell"];
-                [_productCell displayCellWithDetail:_detail];
+                if (_price)
+                    [_productCell displayCellWithPrice:_price];
+                else
+                    [_productCell displayCellWithDetail:_detail];
                 height = [_productCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -193,7 +198,7 @@
             text = @"商家信息";
             break;
         case 2:
-            text = @"团购详情";
+            text = _price ? @"商品详情" : @"团购详情";
             break;
             
         default:
@@ -234,12 +239,12 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     __weak typeof(self)weakSelf = self;
-    NSDictionary *parameters = @{@"product_id": _product.product_id};
+    NSDictionary *parameters = @{@"product_id": _price ? _price.product_id : _product.product_id};
     [[SCAPIRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            _detail = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
-            _detail.companyID = _product.companyID;
+            _detail              = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
+            _detail.companyID    = _product.companyID;
             _detail.merchantName = _product.merchantName;
             _detail.serviceDate  = _product.now;
             
@@ -282,6 +287,11 @@
     }
     else
         [self showShoulLoginAlert];
+}
+
+- (void)shouldReserveProduct
+{
+    
 }
 
 #pragma mark - SCGroupProductMerchantCell Delegate Methods

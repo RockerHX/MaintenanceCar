@@ -7,7 +7,6 @@
 //
 
 #import "SCMyCouponViewController.h"
-#import "SCCouponHeaderView.h"
 #import "SCCouponCell.h"
 #import "SCCouponDetailViewController.h"
 #import "SCReservationViewController.h"

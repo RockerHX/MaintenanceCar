@@ -155,7 +155,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                 SCQuotedPriceCell *quotedPriceCell = (SCQuotedPriceCell *)cell;
                 quotedPriceCell.delegate = self;
                 quotedPriceCell.tag = indexPath.row;
-                [quotedPriceCell displayCellWithProduct:quotedPriceGroup.products[indexPath.row]];
+                [quotedPriceCell displayCellWithPrice:quotedPriceGroup.products[indexPath.row]];
             }
         }
         else if ([dataClass isKindOfClass:[SCMerchantInfo class]])
@@ -227,7 +227,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             {
                 if(!_quotedPriceCell)
                     _quotedPriceCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCQuotedPriceCell"];
-                [_quotedPriceCell displayCellWithProduct:_merchantDetail.quotedPriceGroup.products[indexPath.row]];
+                [_quotedPriceCell displayCellWithPrice:_merchantDetail.quotedPriceGroup.products[indexPath.row]];
                 height = [_quotedPriceCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
         }
@@ -259,44 +259,38 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if ([cell isKindOfClass:[SCGroupProductCell class]] || [cell isKindOfClass:[SCQuotedPriceCell class]])
-    {
-        @try {
+    @try {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        if ([cell isKindOfClass:[SCGroupProductCell class]] || [cell isKindOfClass:[SCQuotedPriceCell class]])
+        {
             SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
-            groupProductDetailViewController.product = _merchantDetail.products[indexPath.row];
+            groupProductDetailViewController.product = [cell isKindOfClass:[SCGroupProductCell class]] ? _merchantDetail.products[indexPath.row] : nil;
+            groupProductDetailViewController.price   = [cell isKindOfClass:[SCQuotedPriceCell class]] ? _merchantDetail.normal_products[indexPath.row] : nil;
             [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
         }
-        @catch (NSException *exception) {
-            NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
+        else if ([cell isKindOfClass:[SCShowMoreProductCell class]])
+        {
+            if (((SCShowMoreProductCell *)cell).cellType == SCGroupCellTypeGroupProduct)
+                _merchantDetail.productGroup.isOpen = !((SCShowMoreProductCell *)cell).state;
+            else
+                _merchantDetail.quotedPriceGroup.isOpen = !((SCShowMoreProductCell *)cell).state;
+            [self.tableView reloadData];
         }
-        @finally {
+        else if ([cell isKindOfClass:[SCMerchantDetailItemCell class]])
+        {
+            [self cellSelectedWithIndexPath:indexPath];
         }
-    }
-    else if ([cell isKindOfClass:[SCShowMoreProductCell class]])
-    {
-        if (((SCShowMoreProductCell *)cell).cellType == SCGroupCellTypeGroupProduct)
-            _merchantDetail.productGroup.isOpen = !((SCShowMoreProductCell *)cell).state;
-        else
-            _merchantDetail.quotedPriceGroup.isOpen = !((SCShowMoreProductCell *)cell).state;
-        [self.tableView reloadData];
-    }
-    else if ([cell isKindOfClass:[SCMerchantDetailItemCell class]])
-    {
-        [self cellSelectedWithIndexPath:indexPath];
-    }
-    else if ([cell isKindOfClass:[SCShowMoreCell class]])
-    {
-        @try {
+        else if ([cell isKindOfClass:[SCShowMoreCell class]])
+        {
             SCCommentListViewController *commentListViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCommentListViewController"];
             commentListViewController.companyID = _merchantDetail.company_id;
             [self.navigationController pushViewController:commentListViewController animated:YES];
         }
-        @catch (NSException *exception) {
-            NSLog(@"SCMerchantDetailViewController Go to the SCCommentListViewController exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCMerchantDetailViewController Go to the SubViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
     }
 }
 

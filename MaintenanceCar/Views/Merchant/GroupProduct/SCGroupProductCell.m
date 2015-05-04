@@ -28,8 +28,8 @@
     _grayLine.hidden         = hidden;
 
     _productNameLabel.text   = product.title;
-    _groupPriceLabel.text    = product.final_price;
-    _productPriceLabel.text  = product.total_price;
+    _priceLabel.text         = product.final_price;
+    _totalPriceLabel.text    = product.total_price;
     
     [self.contentView updateConstraintsIfNeeded];
     [self.contentView layoutIfNeeded];
