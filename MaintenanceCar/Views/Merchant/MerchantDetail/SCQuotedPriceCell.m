@@ -37,6 +37,7 @@
     _grayLine.hidden         = hidden;
 
     _nameLabel.text          = price.title;
+    _promptLabel.text        = hidden ? @"报价" : @"修养价";
     _priceLabel.text         = price.final_price;
     _totalPriceLabel.text    = price.total_price;
     

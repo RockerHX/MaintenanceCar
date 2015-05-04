@@ -20,6 +20,7 @@
 @interface SCQuotedPriceCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet  UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet  UILabel *promptLabel;
 @property (weak, nonatomic) IBOutlet  UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UIButton *reservationButton;
 
