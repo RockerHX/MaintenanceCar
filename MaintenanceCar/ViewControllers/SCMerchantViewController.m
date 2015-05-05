@@ -63,7 +63,7 @@
 {
     _query             = DefaultQuery;
     _offset            = 0;                     // 第一次进入商家列表列表请求偏移量必须为0
-    _distanceCondition = @(MerchantListRadius).stringValue;
+    _distanceCondition = @(SearchRadius).stringValue;
     
     _merchantList      = [@[] mutableCopy];     // 商家列表容器初始化
 }
@@ -163,7 +163,7 @@
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
     NSDictionary *parameters = @{@"query": _query,
-                                 @"limit": @(MerchantListLimit),
+                                 @"limit": @(SearchLimit),
                                 @"offset": @(_offset),
                                 @"radius": _distanceCondition,
                                   @"flag": @"1",
@@ -182,7 +182,7 @@
                 }];
                 [_tableView reloadData];                // 数据配置完成，刷新商家列表
                 [weakSelf readdFooter];
-                _offset += MerchantListLimit;           // 偏移量请求参数递增
+                _offset += SearchLimit;           // 偏移量请求参数递增
             }
             else
             {
@@ -237,7 +237,7 @@
             break;
             
         default:
-            _distanceCondition = [filterCondition isEqualToString:@"default"] ? @(MerchantListRadius).stringValue : filterCondition;
+            _distanceCondition = [filterCondition isEqualToString:@"default"] ? @(SearchRadius).stringValue : filterCondition;
             break;
     }
     _query = [NSString stringWithFormat:@"%@%@%@", DefaultQuery, repairCondition, otherCondition];

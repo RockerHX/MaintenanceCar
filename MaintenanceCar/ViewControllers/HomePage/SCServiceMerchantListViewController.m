@@ -18,14 +18,13 @@
 
 @interface SCServiceMerchantListViewController () <UITableViewDelegate, UITableViewDataSource, SCMerchantFilterViewDelegate>
 {
-    NSMutableArray *_merchantList;
+    NSInteger       _offset;            // 商家列表请求偏移量，用户上拉刷新的分页请求操作
+    NSMutableArray *_merchants;         // 商家数据集合
     
     NSString       *_requestQuery;
     NSString       *_distanceCondition;
     NSString       *_majorsCondition;
 }
-
-@property (nonatomic, assign) NSInteger      offset;        // 商家列表请求偏移量，用户上拉刷新的分页请求操作
 
 @end
 
@@ -75,11 +74,10 @@
 - (void)initConfig
 {
     _offset                      = 0;                   // 第一次进入商家列表列表请求偏移量必须为0
-    _distanceCondition           = @(MerchantListRadius).stringValue;
+    _distanceCondition           = @(SearchRadius).stringValue;
     _majorsCondition             = @"";
     
-    _merchantList                = [@[] mutableCopy];   // 商家列表容器初始化
-    _merchantFilterView.delegate = self;
+    _merchants                   = [@[] mutableCopy];   // 商家列表容器初始化
 }
 
 - (void)viewConfig
@@ -93,14 +91,14 @@
 #pragma mark - Table View Data Source Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _merchantList.count;
+    return _merchants.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SCMerchantListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMerchantListCell" forIndexPath:indexPath];
     // 刷新商家列表，设置相关数据
-    [cell handelWithMerchant:_merchantList[indexPath.row]];
+    [cell handelWithMerchant:_merchants[indexPath.row]];
     
     return cell;
 }
@@ -113,7 +111,7 @@
     
     // 根据选中的商家，取到其商家ID，跳转到商家页面进行详情展示
     SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMerchantDetailViewController"];
-    merchantDetialViewControler.merchant                        = _merchantList[indexPath.row];
+    merchantDetialViewControler.merchant                        = _merchants[indexPath.row];
     merchantDetialViewControler.type                            = _type;
     [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
 }
@@ -121,12 +119,12 @@
 #pragma mark - Action Methods
 - (IBAction)mapItemPressed:(UIBarButtonItem *)sender
 {
-    if (_merchantList.count)
+    if (_merchants.count)
     {
         // 地图按钮被点击，跳转到地图页面
         UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
         SCMapViewController *mapViewController = (SCMapViewController *)mapNavigationController.topViewController;
-        mapViewController.merchants = _merchantList;
+        mapViewController.merchants = _merchants;
         mapNavigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         [self presentViewController:mapNavigationController animated:YES completion:nil];
     }
@@ -174,7 +172,7 @@
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
     NSDictionary *parameters = @{@"query": _requestQuery,
-                                 @"limit": @(MerchantListLimit),
+                                 @"limit": @(SearchLimit),
                                 @"offset": @(_offset),
                                 @"radius": _distanceCondition,
                                   @"flag": @"1",
@@ -197,7 +195,7 @@
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
     NSDictionary *parameters = @{@"product_tag": _requestQuery,
-                                       @"limit": @(MerchantListLimit),
+                                       @"limit": @(SearchLimit),
                                       @"offset": @(_offset),
                                       @"radius": _distanceCondition,
                                       @"majors": _majorsCondition,
@@ -224,10 +222,10 @@
         // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
         [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:nil];
-            [_merchantList addObject:merchant];
+            [_merchants addObject:merchant];
         }];
         [_tableView reloadData];                                   // 数据配置完成，刷新商家列表
-        _offset += MerchantListLimit;                              // 偏移量请求参数递增
+        _offset += SearchLimit;                              // 偏移量请求参数递增
     }
     else
     {
@@ -251,7 +249,7 @@
     NSString *filterCondition = item[RequestValueKey];
 
     _offset                   = 0;
-    [_merchantList removeAllObjects];
+    [_merchants removeAllObjects];
     
     NSString *repairCondition = @"";
     NSString *otherCondition  = @"";
@@ -285,7 +283,7 @@
             break;
             
         default:
-            _distanceCondition = [filterCondition isEqualToString:@"default"] ? @(MerchantListRadius).stringValue : filterCondition;
+            _distanceCondition = [filterCondition isEqualToString:@"default"] ? @(SearchRadius).stringValue : filterCondition;
             break;
     }
     _requestQuery = [NSString stringWithFormat:@"%@%@%@", _query, repairCondition, otherCondition];

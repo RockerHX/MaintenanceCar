@@ -122,7 +122,7 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                 @"limit": @(MerchantListLimit),
+                                 @"limit": @(SearchLimit),
                                  @"offset" : @(self.offset)};
     [[SCAPIRequest manager] startMyProgressOdersAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf requestSuccessWithOperation:operation responseObject:responseObject];
@@ -139,7 +139,7 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                   @"limit": @(MerchantListLimit),
+                                   @"limit": @(SearchLimit),
                                  @"offset" : @(self.offset)};
     [[SCAPIRequest manager] startMyFinishedOdersAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf requestSuccessWithOperation:operation responseObject:responseObject];
@@ -165,7 +165,7 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
                     [_dataList addObject:oder];
                 }];
                 
-                self.offset += MerchantListLimit;               // 偏移量请求参数递增
+                self.offset += SearchLimit;               // 偏移量请求参数递增
                 [self.tableView reloadData];                    // 数据配置完成，刷新商家列表
                 [self addRefreshHeader];
                 [self addRefreshFooter];

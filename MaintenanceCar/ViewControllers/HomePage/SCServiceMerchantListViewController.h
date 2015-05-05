@@ -8,6 +8,13 @@
 
 #import "SCViewControllerCategory.h"
 
+typedef NS_ENUM(NSUInteger, SCSearchType) {
+    SCSearchTypeWash,
+    SCSearchTypeMaintenance,
+    SCSearchTypeRepair,
+    SCSearchTypeOperate
+};
+
 @class SCMerchantFilterView;
 
 @interface SCServiceMerchantListViewController : UIViewController
@@ -19,6 +26,8 @@
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, assign)     BOOL  noBrand;
 @property (nonatomic, assign)     BOOL  isOperate;
+
+@property (nonatomic, assign) SCSearchType searchType;
 
 // [地图]按钮触发事件
 - (IBAction)mapItemPressed:(UIBarButtonItem *)sender;

@@ -139,7 +139,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
 {
     __weak typeof(self) weakSelf = self;
     NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text,
-                           @"time_expire": @(VerificationCodeTimeExpire),
+                           @"time_expire": @(CodeExpire),
                                   @"mode": @(mode)};
     [[SCAPIRequest manager] startGetVerificationCodeAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;

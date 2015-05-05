@@ -27,10 +27,7 @@ typedef NS_ENUM(NSInteger, SCFilterType) {
 
 @interface SCMerchantFilterView : UIView
 
-@property (nonatomic, weak)                          id <SCMerchantFilterViewDelegate>delegate;
-@property (nonatomic, assign)                      BOOL noBrand;
-
-
+@property (nonatomic, weak) IBOutlet                 id  <SCMerchantFilterViewDelegate>delegate;
 @property (weak, nonatomic) IBOutlet    SCFilterPopView *filterPopView;         // 筛选弹出View，展示筛选条件
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *heightConstraint;      // 商家筛选View(SCMerchantFilterView)的高度约束条件
 
@@ -38,6 +35,8 @@ typedef NS_ENUM(NSInteger, SCFilterType) {
 @property (nonatomic, weak) IBOutlet           UIButton *repairTypeButton;      // [保养类型]筛选按钮
 @property (nonatomic, weak) IBOutlet           UIButton *otherFilterButton;     // [其他]条件筛选按钮
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonWidth;
+
+@property (nonatomic, assign) BOOL noBrand;
 
 // [距离]筛选按钮点击触发事件
 - (IBAction)distanceButtonPressed:(UIButton *)sender;

@@ -104,7 +104,7 @@
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                 @"limit"  : @(MerchantListLimit),
+                                 @"limit"  : @(SearchLimit),
                                  @"offset" : @(self.offset)};
     [[SCAPIRequest manager] startGetMyCouponAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
@@ -123,7 +123,7 @@
                         [_dataList addObject:coupon];
                     }];
                     
-                    weakSelf.offset += MerchantListLimit;               // 偏移量请求参数递增
+                    weakSelf.offset += SearchLimit;               // 偏移量请求参数递增
                     [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
                     [weakSelf addRefreshHeader];
                     [weakSelf addRefreshFooter];
