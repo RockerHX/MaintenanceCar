@@ -14,6 +14,7 @@
 - (void)awakeFromNib
 {
     _remarkLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 75.0f;
+    self.merchantNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 102.0f;
 }
 
 #pragma mark - Action Methods

@@ -13,6 +13,7 @@
 #pragma mark - Setter And Getter Methods
 - (void)setFrame:(CGRect)frame
 {
+    // V2卡片设计
     frame.origin.x = 10.0f;
     frame.origin.y = frame.origin.y + 10.0f;
     frame.size.width = frame.size.width - 20.0f;

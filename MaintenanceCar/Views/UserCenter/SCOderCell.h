@@ -8,6 +8,7 @@
 
 #import "SCTableViewCell.h"
 
+// V2订单基类
 @interface SCOderCell : SCTableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *serviceTypeIcon;          // 服务类型图标

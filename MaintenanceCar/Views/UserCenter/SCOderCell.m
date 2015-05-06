@@ -10,10 +10,4 @@
 
 @implementation SCOderCell
 
-#pragma mark - Init Methods
-- (void)awakeFromNib
-{
-    _merchantNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 40.0f;
-}
-
 @end
