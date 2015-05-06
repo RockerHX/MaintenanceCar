@@ -65,28 +65,41 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
                           path:(NSString *)path
                            api:(NSString *)api;
 
+/**
+ *  通用的GET请求方法
+ *
+ *  @param api        完整的API请求链接
+ *  @param parameters 请求的参数集合
+ *  @param uccess     请求成功的回调
+ *  @param failure    请求失败的回调
+ */
+- (void)requestGETMethodsWithAPI:(NSString *)api
+                      parameters:(NSDictionary *)parameters
+                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  通用的POST请求方法
+ *
+ *  @param api        完整的API请求链接
+ *  @param parameters 请求的参数集合
+ *  @param uccess     请求成功的回调
+ *  @param failure    请求失败的回调
+ */
+- (void)requestPOSTMethodsWithAPI:(NSString *)api
+                       parameters:(NSDictionary *)parameters
+                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 
 #pragma mark - V1 API
 #pragma mark - Merchant API
-/**
- *  天气接口请求方法(API:/Weather - GET)
- */
-- (void)startWearthAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
 /**
  *  商家列表接口请求方法(API:/company_search - GET)
  */
 - (void)startMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
-/**
- *  商家列表接口请求方法(API:/company_search/operate - GET)
- */
-- (void)startOperateMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
-                                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  商家详情接口请求方法(API:/Carshop - GET)

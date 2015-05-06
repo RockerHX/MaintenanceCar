@@ -34,9 +34,11 @@
 #define ImageURL            [ImageDoMain stringByAppendingString:ImagePath] // 图片资源链接
 
 #pragma mark - API
-#define WearthAPI                   @"/Weather"                             // 天气API
 #define SearchAPI                   @"/company_search"                      // 商家搜索API
-#define OperateSearchAPI            @"/company_search/operate"              // 运营位商家搜索API
+#define SearchWashAPI               @"/company_search/wash"                 // 洗车美容商户搜索API
+#define SearchMaintanceAPI          @"/company_search/maintance"            // 保养商户搜索API
+#define SearchRepairAPI             @"/company_search/repair"               // 维修商户搜索API
+#define SearchOperateAPI            @"/company_search/operate"              // 运营位商家搜索API
 #define MerchantDetailAPI           @"/Carshop"                             // 商家详情API
 #define MerchantCollectionAPI       @"/Collection"                          // 商家收藏API
 #define CancelCollectionAPI         @"/Collection/delete"                   // 取消商家收藏API
@@ -88,9 +90,11 @@
 
 
 #pragma mark - API URL
-#define WearthAPIURL                    [V1APIURL stringByAppendingString:WearthAPI]                  // 天气接口URL - 用于主页模块获取天气信息
 #define SearchAPIURL                    [V1APIURL stringByAppendingString:SearchAPI]                  // 商家搜索接口URL - 用于商家搜索和筛选
-#define OperateSearchAPIURL             [V1APIURL stringByAppendingString:OperateSearchAPI]           // 运营位商家搜索接口URL - 用于运营位商家搜索和筛选
+#define SearchWashAPIURL                [V1APIURL stringByAppendingString:SearchWashAPI]              // 洗车美容商户搜索接口URL - 用于搜索洗车美容商户
+#define SearchMaintanceAPIURL           [V1APIURL stringByAppendingString:SearchMaintanceAPI]         // 保养商户搜索接口URL - 用于搜索保养商户
+#define SearchRepairAPIURL              [V1APIURL stringByAppendingString:SearchRepairAPI]            // 维修商户搜索接口URL - 用于搜索维修商户
+#define SearchOperateAPIURL             [V1APIURL stringByAppendingString:SearchOperateAPI]           // 运营位商家搜索接口URL - 用于运营位商家搜索和筛选
 #define MerchantDetailAPIURL            [V1APIURL stringByAppendingString:MerchantDetailAPI]          // 商家详情接口URL - 用于获取短信或者语音验证码
 #define MerchantCollectionAPIURL        [V1APIURL stringByAppendingString:MerchantCollectionAPI]      // 商家收藏接口URL - 用于商家收藏和获取商家收藏
 #define CancelCollectionAPIURL          [V1APIURL stringByAppendingString:CancelCollectionAPI]        // 取消商家收藏接口URL - 用于商家详情页面取消收藏或者个人中心页面删除收藏

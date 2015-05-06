@@ -1,12 +1,12 @@
 //
-//  SCMerchantFilterView.m
+//  SCSearchFilterView.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/8.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCMerchantFilterView.h"
+#import "SCSearchFilterView.h"
 #import "AppMicroConstants.h"
 #import "UIConstants.h"
 #import "SCFilterPopView.h"
@@ -16,14 +16,14 @@
 #define MerchantFilterViewUnPopHeight   60.0f
 #define MerchantFilterViewPopHeight     SCREEN_HEIGHT - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT
 
-@interface SCMerchantFilterView () <SCFilterPopViewDelegate>
+@interface SCSearchFilterView () <SCFilterPopViewDelegate>
 {
     SCFilterType _filterType;
 }
 
 @end
 
-@implementation SCMerchantFilterView
+@implementation SCSearchFilterView
 
 #pragma mark - Init Methods
 - (void)awakeFromNib
@@ -38,15 +38,15 @@
     [self popFilterViewWtihType:SCFilterTypeDistance];
 }
 
-- (IBAction)repairTypeButtonPressed:(UIButton *)sender
+- (IBAction)majorButtonPressed:(UIButton *)sender
 {
     [[SCAllDictionary share] hanleRepairConditions:[SCUserInfo share].cars];
-    [self popFilterViewWtihType:SCFilterTypeRepair];
+    [self popFilterViewWtihType:SCFilterTypeMajor];
 }
 
-- (IBAction)otherFilterButtonPressed:(UIButton *)sender
+- (IBAction)serviceButtonPressed:(UIButton *)sender
 {
-    [self popFilterViewWtihType:SCFilterTypeOther];
+    [self popFilterViewWtihType:SCFilterTypeService];
 }
 
 #pragma mark - Setter And Getter Methods
@@ -56,19 +56,18 @@
     if (noBrand)
     {
         _buttonWidth.constant = ZERO_POINT;
-        [_repairTypeButton setTitle:@"" forState:UIControlStateNormal];
+        [_majorButton setTitle:@"" forState:UIControlStateNormal];
     }
     else
         _buttonWidth.constant = (SCREEN_WIDTH - 60.0f)/3;
-    [_repairTypeButton needsUpdateConstraints];
-    [_repairTypeButton layoutIfNeeded];
+    [_majorButton needsUpdateConstraints];
+    [_majorButton layoutIfNeeded];
 }
 
 #pragma mark - Private Methods
 - (void)initConfig
 {
     _filterPopView.delegate = self;     // 设置弹出视图代理，以便回调方法触发
-    
     self.hidden = YES;
 }
 
@@ -83,10 +82,10 @@
     NSArray *filterItems = nil;
     switch (type)
     {
-        case SCFilterTypeRepair:
+        case SCFilterTypeMajor:
             filterItems = allDictionary.repairConditions;
             break;
-        case SCFilterTypeOther:
+        case SCFilterTypeService:
             filterItems = allDictionary.otherConditions;
             break;
             
@@ -129,11 +128,11 @@
     
     switch (_filterType)
     {
-        case SCFilterTypeRepair:
-            [_repairTypeButton setTitle:filterName forState:UIControlStateNormal];
+        case SCFilterTypeMajor:
+            [_majorButton setTitle:filterName forState:UIControlStateNormal];
             break;
-        case SCFilterTypeOther:
-            [_otherFilterButton setTitle:filterName forState:UIControlStateNormal];
+        case SCFilterTypeService:
+            [_serviceButton setTitle:filterName forState:UIControlStateNormal];
             break;
             
         default:

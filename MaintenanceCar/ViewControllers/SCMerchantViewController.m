@@ -13,10 +13,10 @@
 #import "SCLocationManager.h"
 #import "SCMerchantDetailViewController.h"
 #import "SCMapViewController.h"
-#import "SCMerchantFilterView.h"
+#import "SCSearchFilterView.h"
 #import "SCStarView.h"
 
-@interface SCMerchantViewController () <UITableViewDelegate, UITableViewDataSource, SCMerchantFilterViewDelegate>
+@interface SCMerchantViewController () <UITableViewDelegate, UITableViewDataSource, SCSearchFilterViewDelegate>
 {
     NSMutableArray *_merchantList;
     
@@ -62,18 +62,17 @@
 - (void)initConfig
 {
     _query             = DefaultQuery;
-    _offset            = 0;                     // 第一次进入商家列表列表请求偏移量必须为0
+    _offset            = 0;                             // 第一次进入商家列表列表请求偏移量必须为0
     _distanceCondition = @(SearchRadius).stringValue;
     
-    _merchantList      = [@[] mutableCopy];     // 商家列表容器初始化
+    _merchantList      = [@[] mutableCopy];             // 商家列表容器初始化
 }
 
 - (void)viewConfig
 {
-    _merchantFilterView.delegate = self;
-    _merchantFilterView.hidden   = NO;
-    _tableView.scrollsToTop      = YES;
-    _tableView.tableFooterView   = [[UIView alloc] init];       // 设置footer视图，防止数据不够，显示多余的列表栏
+    _searchFilterView.hidden   = NO;
+    _tableView.scrollsToTop    = YES;
+    _tableView.tableFooterView = [[UIView alloc] init];     // 设置footer视图，防止数据不够，显示多余的列表栏
 }
 
 #pragma mark - Table View Data Source Methods
@@ -214,7 +213,7 @@
     NSString *otherCondition  = @"";
     // 筛选条件，选择之后触发请求
     switch (type) {
-        case SCFilterTypeRepair:
+        case SCFilterTypeMajor:
         {
             if ([filterCondition isEqualToString:@"default"])
                 repairCondition = @"";
@@ -222,7 +221,7 @@
                 repairCondition = [NSString stringWithFormat:@" AND majors:'%@'", filterCondition];
         }
             break;
-        case SCFilterTypeOther:
+        case SCFilterTypeService:
         {
             if (![filterCondition isEqualToString:@"default"])
             {

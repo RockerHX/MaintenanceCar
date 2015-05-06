@@ -13,17 +13,16 @@
 #import "SCLocationManager.h"
 #import "SCMerchantDetailViewController.h"
 #import "SCMapViewController.h"
-#import "SCMerchantFilterView.h"
+#import "SCSearchFilterView.h"
 #import "SCStarView.h"
 
-@interface SCServiceMerchantListViewController () <UITableViewDelegate, UITableViewDataSource, SCMerchantFilterViewDelegate>
+@interface SCServiceMerchantListViewController () <UITableViewDelegate, UITableViewDataSource, SCSearchFilterViewDelegate>
 {
     NSInteger       _offset;            // 商家列表请求偏移量，用户上拉刷新的分页请求操作
     NSMutableArray *_merchants;         // 商家数据集合
     
-    NSString       *_requestQuery;
-    NSString       *_distanceCondition;
-    NSString       *_majorsCondition;
+    NSString       *_distance;
+    NSString       *_majors;
 }
 
 @end
@@ -42,9 +41,7 @@
 {
     [super viewDidAppear:animated];
     
-    _merchantFilterView.noBrand = _noBrand;
-    if (_isOperate)
-        _merchantFilterView.otherFilterButton.enabled = NO;
+    _searchFilterView.noBrand = _noBrand;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -73,11 +70,12 @@
  */
 - (void)initConfig
 {
-    _offset                      = 0;                   // 第一次进入商家列表列表请求偏移量必须为0
-    _distanceCondition           = @(SearchRadius).stringValue;
-    _majorsCondition             = @"";
-    
-    _merchants                   = [@[] mutableCopy];   // 商家列表容器初始化
+    // 搜索列表请求参数初始化配置
+    _offset    = Zero;                          // 第一次进入商家列表列表请求偏移量必须为0
+    _distance  = @(SearchRadius).stringValue;
+    _majors    = @"";
+
+    _merchants = [@[] mutableCopy];             // 商家列表容器初始化
 }
 
 - (void)viewConfig
@@ -85,7 +83,8 @@
     _tableView.scrollsToTop      = YES;
     _tableView.tableFooterView   = [[UIView alloc] init];       // 设置footer视图，防止数据不够，显示多余的列表栏
     
-    [_merchantFilterView.otherFilterButton setTitle:self.title forState:UIControlStateNormal];
+    [_searchFilterView.serviceButton setTitle:self.title forState:UIControlStateNormal];
+    [_searchFilterView.serviceButton setTitle:self.title forState:UIControlStateDisabled];
 }
 
 #pragma mark - Table View Data Source Methods
@@ -110,9 +109,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     // 根据选中的商家，取到其商家ID，跳转到商家页面进行详情展示
-    SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMerchantDetailViewController"];
-    merchantDetialViewControler.merchant                        = _merchants[indexPath.row];
-    merchantDetialViewControler.type                            = _type;
+    SCMerchantDetailViewController *merchantDetialViewControler = STORY_BOARD_VIEW_CONTROLLER(@"SCMerchantDetailViewController");
+    merchantDetialViewControler.merchant = _merchants[indexPath.row];
+    merchantDetialViewControler.type     = _type;
     [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
 }
 
@@ -122,18 +121,12 @@
     if (_merchants.count)
     {
         // 地图按钮被点击，跳转到地图页面
-        UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
-        SCMapViewController *mapViewController = (SCMapViewController *)mapNavigationController.topViewController;
-        mapViewController.merchants = _merchants;
+        UINavigationController *mapNavigationController = STORY_BOARD_VIEW_CONTROLLER(@"SCMapViewNavigationController");
+        SCMapViewController *mapViewController       = (SCMapViewController *)mapNavigationController.topViewController;
+        mapViewController.merchants                  = _merchants;
         mapNavigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         [self presentViewController:mapNavigationController animated:YES completion:nil];
     }
-}
-
-- (void)setQuery:(NSString *)query
-{
-    _query = query;
-    _requestQuery = query;
 }
 
 #pragma mark - Private Methods
@@ -143,97 +136,85 @@
     
     __weak typeof(self) weakSelf = self;
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
-        if (_isOperate)
-            [weakSelf startOperateMerchantListRequestWithLatitude:latitude longitude:longitude];
-        else
-            [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
+        [weakSelf startMerchantsRequestWithLatitude:latitude longitude:longitude];
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
         [weakSelf hideHUDOnViewController:weakSelf];
-        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"定位失败，采用当前城市中心坐标!" delay:0.5f];
-        [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
+        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"定位失败，采用当前城市中心坐标!"];
         [weakSelf showAlertWithTitle:@"温馨提示" message:@"定位失败，请检查您的定位服务是否打开：设置->隐私->定位服务"];
+        [weakSelf startMerchantsRequestWithLatitude:latitude longitude:longitude];
     }];
+}
+
+- (void)startMerchantsRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
+{
+    NSString *apiURL = nil;
+    switch (_searchType)
+    {
+        case SCSearchTypeWash:
+            apiURL = SearchWashAPIURL;
+            break;
+        case SCSearchTypeMaintenance:
+            apiURL = SearchMaintanceAPIURL;
+            break;
+        case SCSearchTypeRepair:
+            apiURL = SearchRepairAPIURL;
+            break;
+        case SCSearchTypeOperate:
+            apiURL = SearchOperateAPIURL;
+            break;
+            
+        default:
+            break;
+    }
+    [self startMerchantsRequestWithAPIURL:apiURL latitude:latitude longitude:longitude];
 }
 
 - (void)upRefreshMerchantList
 {
-    SCLocationManager *locationManager = [SCLocationManager share];
-    if (_isOperate)
-        [self startOperateMerchantListRequestWithLatitude:locationManager.latitude longitude:locationManager.longitude];
-    else
-        [self startMerchantListRequestWithLatitude:locationManager.latitude longitude:locationManager.longitude];
+    SCLocationManager *manager = [SCLocationManager share];
+    [self startMerchantsRequestWithLatitude:manager.latitude longitude:manager.longitude];
 }
 
-/**
- *  商家列表数据请求方法，参数：query, limit, offset, radius, longtitude, latitude
- */
-- (void)startMerchantListRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
+- (void)startMerchantsRequestWithAPIURL:(NSString *)apiURL latitude:(NSString *)latitude longitude:(NSString *)longitude
 {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
-    NSDictionary *parameters = @{@"query": _requestQuery,
-                                 @"limit": @(SearchLimit),
+    NSDictionary *parameters = @{@"limit": @(SearchLimit),
                                 @"offset": @(_offset),
-                                @"radius": _distanceCondition,
-                                  @"flag": @"1",
                             @"longtitude": longitude,
-                              @"latitude": latitude};
-    [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                              @"latitude": latitude,
+                           @"product_tag": self.title,
+                                @"radius": _distance,
+                                @"majors": _majors};
+    [[SCAPIRequest manager] requestGETMethodsWithAPI:apiURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
-            [weakSelf refreshMerchantListWithListData:responseObject];
+        {
+            NSArray *list = responseObject[@"result"][@"items"];
+            if (list.count)
+            {
+                // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
+                [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:nil];
+                    [_merchants addObject:merchant];
+                }];
+                [_tableView reloadData];                             // 数据配置完成，刷新商家列表
+                _offset += SearchLimit;                              // 偏移量请求参数递增
+            }
+            else
+            {
+                [self showHUDAlertToViewController:self.navigationController text:@"优质商家陆续添加中..." delay:0.5f];
+                [_tableView reloadData];
+            }
+            _searchFilterView.hidden = NO;
+            [self.tableView.footer setHidden:NO];
+        }
         else
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
         [weakSelf refreshFinfish];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Get merchant list request error:%@", error);
+        NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
         [weakSelf refreshFinfish];
     }];
-}
-
-- (void)startOperateMerchantListRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
-{
-    __weak typeof(self) weakSelf = self;
-    // 配置请求参数
-    NSDictionary *parameters = @{@"product_tag": _requestQuery,
-                                       @"limit": @(SearchLimit),
-                                      @"offset": @(_offset),
-                                      @"radius": _distanceCondition,
-                                      @"majors": _majorsCondition,
-                                  @"longtitude": longitude,
-                                    @"latitude": latitude};
-    [[SCAPIRequest manager] startOperateMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
-            [weakSelf refreshMerchantListWithListData:responseObject];
-        else
-            NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
-        [weakSelf refreshFinfish];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Get merchant list request error:%@", error);
-        [weakSelf refreshFinfish];
-    }];
-}
-
-- (void)refreshMerchantListWithListData:(id)listData
-{
-    NSArray *list = [[listData objectForKey:@"result"] objectForKey:@"items"];
-    
-    if (list.count)
-    {
-        // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
-        [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:nil];
-            [_merchants addObject:merchant];
-        }];
-        [_tableView reloadData];                                   // 数据配置完成，刷新商家列表
-        _offset += SearchLimit;                              // 偏移量请求参数递增
-    }
-    else
-    {
-        [self showHUDAlertToViewController:self.navigationController text:@"优质商家陆续添加中..." delay:0.5f];
-        [_tableView reloadData];
-    }
-    _merchantFilterView.hidden = NO;
-    [self.tableView.footer setHidden:NO];
 }
 
 - (void)refreshFinfish
@@ -245,48 +226,20 @@
 #pragma mark - SCMerchantFilterViewDelegate Methods
 - (void)didSelectedFilterCondition:(id)item type:(SCFilterType)type
 {
-    NSString *filterName      = item[DisplayNameKey];
-    NSString *filterCondition = item[RequestValueKey];
+    NSString *filter = item[RequestValueKey];
 
-    _offset                   = 0;
+    _offset = Zero;
     [_merchants removeAllObjects];
     
-    NSString *repairCondition = @"";
-    NSString *otherCondition  = @"";
     // 筛选条件，选择之后触发请求
     switch (type) {
-        case SCFilterTypeRepair:
-        {
-            if (!_isOperate)
-            {
-                if ([filterCondition isEqualToString:@"default"])
-                    repairCondition = @"";
-                else
-                    repairCondition = [NSString stringWithFormat:@" AND majors:'%@'", filterCondition];
-            }
-            else
-                _majorsCondition = filterCondition;
-        }
+        case SCFilterTypeMajor:
+            _majors = [filter isEqualToString:@"default"] ? @"" : filter;
             break;
-        case SCFilterTypeOther:
-        {
-            if (![filterCondition isEqualToString:@"default"])
-            {
-                if ([filterCondition isEqualToString:@"tag"])
-                    otherCondition = [NSString stringWithFormat:@" AND tags:'%@'", filterName];
-                else
-                    otherCondition = [NSString stringWithFormat:@" AND service:'%@'", filterCondition];
-            }
-            else
-                otherCondition = @"";
-        }
-            break;
-            
         default:
-            _distanceCondition = [filterCondition isEqualToString:@"default"] ? @(SearchRadius).stringValue : filterCondition;
+            _distance = [filter isEqualToString:@"default"] ? @(SearchRadius).stringValue : filter;
             break;
     }
-    _requestQuery = [NSString stringWithFormat:@"%@%@%@", _query, repairCondition, otherCondition];
     [self refreshMerchantList];
 }
 

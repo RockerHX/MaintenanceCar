@@ -109,9 +109,9 @@
     if ([segue.identifier isEqualToString:@"Maintenance"])
     {
         SCServiceMerchantListViewController *maintenanceViewController = segue.destinationViewController;
-        maintenanceViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'养'"];
-        maintenanceViewController.title    = @"保养";
-        maintenanceViewController.type     = @"2";
+        maintenanceViewController.title      = @"保养";
+        maintenanceViewController.type       = @"2";
+        maintenanceViewController.searchType = SCSearchTypeMaintenance;
     }
 }
 

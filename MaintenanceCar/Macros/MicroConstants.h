@@ -10,10 +10,11 @@
 #define MaintenanceCar_MicroCommons_h
 
 #pragma mark - System Framework Singleton Define
-#define APP_DELEGATE_INSTANCE           ((AppDelegate*)([UIApplication sharedApplication].delegate))
-#define USER_DEFAULT                    [NSUserDefaults standardUserDefaults]
-#define STORY_BOARD(Name)               [UIStoryboard storyboardWithName:Name bundle:nil]
-#define NOTIFICATION_CENTER             [NSNotificationCenter defaultCenter]
+#define APP_DELEGATE_INSTANCE               ((AppDelegate*)([UIApplication sharedApplication].delegate))
+#define USER_DEFAULT                        [NSUserDefaults standardUserDefaults]
+#define STORY_BOARD(Name)                   [UIStoryboard storyboardWithName:Name bundle:nil]
+#define STORY_BOARD_VIEW_CONTROLLER(Name)   [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:Name]
+#define NOTIFICATION_CENTER                 [NSNotificationCenter defaultCenter]
 
 
 #ifdef DEBUG

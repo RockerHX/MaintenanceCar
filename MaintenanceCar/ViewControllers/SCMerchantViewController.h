@@ -8,12 +8,12 @@
 
 #import "SCViewControllerCategory.h"
 
-@class SCMerchantFilterView;
+@class SCSearchFilterView;
 
 @interface SCMerchantViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet SCMerchantFilterView *merchantFilterView;  // 商家列表的筛选View
-@property (weak, nonatomic) IBOutlet UITableView          *tableView;           // 商家列表View
+@property (weak, nonatomic) IBOutlet SCSearchFilterView *searchFilterView;      // 商家列表的筛选View
+@property (weak, nonatomic) IBOutlet UITableView        *tableView;             // 商家列表View
 
 // [地图]按钮触发事件
 - (IBAction)mapItemPressed:(UIBarButtonItem *)sender;

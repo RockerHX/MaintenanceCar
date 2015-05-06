@@ -102,14 +102,7 @@
     [self.requestSerializer setValue:CustomRequestHeaderValue forHTTPHeaderField:CustomRequestHeaderKey];
 }
 
-/**
- *  通用的GET请求方法
- *
- *  @param api        完整的API请求链接
- *  @param parameters 请求的参数集合
- *  @param uccess     请求成功的block
- *  @param failure    请求失败的block
- */
+#pragma mark - Request Methods
 - (void)requestGETMethodsWithAPI:(NSString *)api
                       parameters:(NSDictionary *)parameters
                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -120,14 +113,6 @@
     [self GET:api parameters:parameters success:success failure:failure];
 }
 
-/**
- *  通用的POST请求方法
- *
- *  @param api        完整的API请求链接
- *  @param parameters 请求的参数集合
- *  @param uccess     请求成功的block
- *  @param failure    请求失败的block
- */
 - (void)requestPOSTMethodsWithAPI:(NSString *)api
                       parameters:(NSDictionary *)parameters
                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -141,25 +126,11 @@
 
 #pragma mark - V1 API
 #pragma mark - Merchant API
-- (void)startWearthAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    NSDictionary *parameters = @{@"location": @"深圳"};
-    [self requestGETMethodsWithAPI:WearthAPIURL parameters:parameters success:success failure:failure];
-}
-
 - (void)startMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:SearchAPIURL parameters:parameters success:success failure:failure];
-}
-
-- (void)startOperateMerchantListAPIRequestWithParameters:(NSDictionary *)parameters
-                                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    [self requestGETMethodsWithAPI:OperateSearchAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startMerchantDetailAPIRequestWithParameters:(NSDictionary *)parameters
