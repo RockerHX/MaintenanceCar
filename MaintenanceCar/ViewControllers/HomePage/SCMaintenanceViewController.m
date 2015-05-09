@@ -221,6 +221,7 @@
             }
             [weakSelf displayMaintenanceView];
             [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationMiddle];
+            [weakSelf startRecommendMerchantRequest];
         }
         else
             [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:NetWorkError delay:0.5f];
@@ -258,7 +259,7 @@
 - (void)startRecommendMerchantListRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
 {
     __weak typeof(self) weakSelf = self;
-    NSDictionary *parameters = @{@"query": @"default:'深圳' AND service:'养'",
+    NSDictionary *parameters = @{@"query": [NSString stringWithFormat:@"default:'深圳' AND service:'养' AND majors:'%@'", _currentCar.brand_name],
                                  @"limit": @(3),
                                 @"offset": @(0),
                                 @"radius": @(SearchRadius).stringValue,
@@ -269,6 +270,7 @@
         {
             NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
             // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
+            [_recommendMerchants removeAllObjects];
             for (NSDictionary *data in list)
             {
                 NSError *error       = nil;
