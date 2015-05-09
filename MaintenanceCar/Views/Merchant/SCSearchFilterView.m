@@ -59,7 +59,7 @@
         [_majorButton setTitle:@"" forState:UIControlStateNormal];
     }
     else
-        _buttonWidth.constant = (SCREEN_WIDTH - 60.0f)/3;
+        _buttonWidth.constant = (SCREEN_WIDTH - 24.0f)/3;
     [_majorButton needsUpdateConstraints];
     [_majorButton layoutIfNeeded];
 }
