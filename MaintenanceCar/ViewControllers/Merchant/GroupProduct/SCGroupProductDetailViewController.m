@@ -14,7 +14,7 @@
 #import "SCGroupProductDetailCell.h"
 #import "SCShowMoreCell.h"
 #import "SCCommentCell.h"
-#import "SCBuyGroupProductViewController.h"
+#import "SCOderPayViewController.h"
 #import "SCCommentListViewController.h"
 #import "SCReservationViewController.h"
 
@@ -260,14 +260,9 @@
 
 - (void)dispalyDetialView
 {
-    NSMutableArray *items = [@[] mutableCopy];
-    UIImageView *carView  = [[UIImageView alloc] init];
-    NSString *imageURL = [NSString stringWithFormat:@"%@%@", MerchantImageDoMain, _detail.img1 ? _detail.img1 : [NSString stringWithFormat:@"%@_1.jpg", _detail.companyID]];
-    [carView setImageWithURL:[NSURL URLWithString:imageURL]
-            placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
-    [items addObject:carView];
-    _merchanImagesView.items = items;
-    [_merchanImagesView begin:nil finished:nil];
+    _merchanImagesView.defaultImage = [UIImage imageNamed:@"MerchantImageDefault"];
+    _merchanImagesView.images = @[[NSString stringWithFormat:@"%@%@", MerchantImageDoMain, _detail.img1 ? _detail.img1 : [NSString stringWithFormat:@"%@_1.jpg", _detail.companyID]]];
+    [_merchanImagesView show:nil finished:nil];
 }
 
 #pragma mark - SCGroupProductCellDelegate Methods

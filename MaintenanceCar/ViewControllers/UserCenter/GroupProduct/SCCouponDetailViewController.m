@@ -15,7 +15,7 @@
 #import "SCGroupProductDetailCell.h"
 #import "SCShowMoreCell.h"
 #import "SCCommentCell.h"
-#import "SCBuyGroupProductViewController.h"
+#import "SCOderPayViewController.h"
 #import "SCCommentListViewController.h"
 #import "SCReservationViewController.h"
 #import <SCLoopScrollView/SCLoopScrollView.h>
@@ -286,13 +286,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)dispalyDetialView
 {
-    NSMutableArray *items = [@[] mutableCopy];
-    UIImageView *carView  = [[UIImageView alloc] init];
-    [carView setImageWithURL:[NSURL URLWithString:_detail.img1]
-            placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
-    [items addObject:carView];
-    _couponImagesView.items = items;
-    [_couponImagesView begin:nil finished:nil];
+    _couponImagesView.defaultImage = [UIImage imageNamed:@"MerchantImageDefault"];
+    _couponImagesView.images = @[_detail.img1];
+    [_couponImagesView show:nil finished:nil];
 }
 
 #pragma mark - SCGroupProductCellDelegate Methods

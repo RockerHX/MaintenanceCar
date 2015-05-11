@@ -420,16 +420,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (void)displayMerchantDetail
 {
     _collectionItem.favorited = _merchantDetail.collected;
-    NSMutableArray *items     = [@[] mutableCopy];
+    NSMutableArray *images     = [@[] mutableCopy];
     for (NSDictionary *image in _merchantDetail.merchantImages)
-    {
-        UIImageView *carView = [[UIImageView alloc] init];
-        [carView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", MerchantImageDoMain, image[@"name"]]]
-                placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
-        [items addObject:carView];
-    }
-    _merchantImagesView.items = items;
-    [_merchantImagesView begin:nil finished:nil];
+        [images addObject:[NSString stringWithFormat:@"%@%@", MerchantImageDoMain, image[@"name"]]];
+    _merchantImagesView.defaultImage = [UIImage imageNamed:@"MerchantImageDefault"];
+    _merchantImagesView.images = images;
+    [_merchantImagesView show:nil finished:nil];
 }
 
 /**
