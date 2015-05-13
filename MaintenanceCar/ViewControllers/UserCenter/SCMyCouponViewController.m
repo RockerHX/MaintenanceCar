@@ -72,17 +72,10 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    @try {
-        SCCoupon *coupon = _dataList[indexPath.row];
-        SCCouponDetailViewController *couponDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCouponDetailViewController"];
-        couponDetailViewController.coupon = coupon;
-        [self.navigationController pushViewController:couponDetailViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMyCouponViewController Go to the SCCouponDetailViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    SCCoupon *coupon = _dataList[indexPath.row];
+    SCCouponDetailViewController *couponDetailViewController = USERCENTER_VIEW_CONTROLLER(@"SCCouponDetailViewController");
+    couponDetailViewController.coupon = coupon;
+    [self.navigationController pushViewController:couponDetailViewController animated:YES];
 }
 
 #pragma mark - Public Methods
@@ -151,22 +144,15 @@
 - (void)couponShouldReservationWithIndex:(NSInteger)index
 {
     // 跳转到预约页面
-    @try {
-        [[SCUserInfo share] removeItems];
-        SCCoupon *coupon = _dataList[index];
-        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.delegate                     = self;
-        reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName:coupon.company_name
-                                                                                                companyID:coupon.company_id];
-        reservationViewController.serviceItem                  = [[SCServiceItem alloc] initWithServiceID:coupon.type];
-        reservationViewController.coupon                       = _dataList[index];
-        [self.navigationController pushViewController:reservationViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    [[SCUserInfo share] removeItems];
+    SCCoupon *coupon = _dataList[index];
+    SCReservationViewController *reservationViewController = MAIN_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
+    reservationViewController.delegate    = self;
+    reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:coupon.company_name
+                                                                           companyID:coupon.company_id];
+    reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:coupon.type];
+    reservationViewController.coupon      = _dataList[index];
+    [self.navigationController pushViewController:reservationViewController animated:YES];
 }
 
 - (void)couponShouldShowWithIndex:(NSInteger)index

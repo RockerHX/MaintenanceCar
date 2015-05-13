@@ -14,6 +14,8 @@
 
 @property (weak, nonatomic) IBOutlet SCUserInfoView *userInfoView;     // 用户信息View
 
+// [设置]按钮点击事件
+- (IBAction)settingItemPressed:(UIBarButtonItem *)sender;
 // [添加车辆]按钮点击事件
 - (IBAction)addCarItemPressed:(UIBarButtonItem *)sender;
 

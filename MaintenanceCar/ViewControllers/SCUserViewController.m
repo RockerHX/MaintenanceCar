@@ -84,13 +84,13 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
             {
                 case SCUserCenterRowMyOrder:
                 {
-                    SCMyOderViewController *myOderViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyOderViewController"];
+                    SCMyOderViewController *myOderViewController = USERCENTER_VIEW_CONTROLLER(@"SCMyOderViewController");
                     [self pushToSubViewControllerWithController:myOderViewController];
                 }
                     break;
                 case SCUserCenterRowMyCollection:
                 {
-                    SCMyFavoriteTableViewController *myFavoriteTableViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyFavoriteTableViewController"];
+                    SCMyFavoriteTableViewController *myFavoriteTableViewController = USERCENTER_VIEW_CONTROLLER(@"SCMyFavoriteTableViewController");
                     myFavoriteTableViewController.showTrashItem = YES;
                     [self pushToSubViewControllerWithController:myFavoriteTableViewController];
                 }
@@ -128,7 +128,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 
 - (void)pushToMyCouponViewController
 {
-    SCMyCouponViewController *myCouponViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyCouponViewController"];
+    SCMyCouponViewController *myCouponViewController = USERCENTER_VIEW_CONTROLLER(@"SCMyCouponViewController");
     [self pushToSubViewControllerWithController:myCouponViewController];
 }
 
@@ -147,13 +147,19 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     }
 }
 
+// [设置]按钮被点击，跳转到App设置页面
+- (IBAction)settingItemPressed:(UIBarButtonItem *)sender
+{
+    [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCSettingTableViewController")];
+}
+
 // [添加车辆]按钮被点击，跳转到添加车辆页面
 - (IBAction)addCarItemPressed:(UIBarButtonItem *)sender
 {
     if ([SCUserInfo share].loginStatus)
     {
         @try {
-            UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
+            UINavigationController *addCarViewNavigationControler = MAIN_VIEW_CONTROLLER(@"SCAddCarViewNavigationController");
             [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
         }
         @catch (NSException *exception) {
@@ -175,7 +181,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 - (void)shouldChangeCarData:(SCUserCar *)userCar
 {
     @try {
-        SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCChangeMaintenanceDataViewController"];
+        SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = MAIN_VIEW_CONTROLLER(@"SCChangeMaintenanceDataViewController");
         changeMaintenanceDataViewController.delegate = self;
         changeMaintenanceDataViewController.car = userCar;
         [self.navigationController pushViewController:changeMaintenanceDataViewController animated:YES];

@@ -77,7 +77,7 @@
     SCUserInfo *userInfo = [SCUserInfo share];
     if (userInfo.loginStatus)
     {
-        UIViewController *viewController = STORY_BOARD_VIEW_CONTROLLER(@"MaintenanceViewController");
+        UIViewController *viewController = MAIN_VIEW_CONTROLLER(@"MaintenanceViewController");
         [self.navigationController pushViewController:viewController animated:YES];
     }
     else
@@ -140,14 +140,14 @@
 {
     if (special.html)
     {
-        SCWebViewController *webViewController = (SCWebViewController *)STORY_BOARD_VIEW_CONTROLLER(@"SCWebViewController");
+        SCWebViewController *webViewController = MAIN_VIEW_CONTROLLER(@"SCWebViewController");
         webViewController.title   = special.text;
         webViewController.loadURL = special.url;
         [self.navigationController pushViewController:webViewController animated:YES];
     }
     else
     {
-        SCServiceMerchantListViewController *specialViewController = STORY_BOARD_VIEW_CONTROLLER(@"SCServiceMerchantListViewController");
+        SCServiceMerchantListViewController *specialViewController = MAIN_VIEW_CONTROLLER(@"SCServiceMerchantListViewController");
         specialViewController.title      = special.text;
         specialViewController.type       = special.type;
         specialViewController.searchType = SCSearchTypeOperate;
@@ -177,13 +177,13 @@
 
 - (void)shouldAddCar
 {
-    UINavigationController *navigationControler = STORY_BOARD_VIEW_CONTROLLER(@"SCAddCarViewNavigationController");
+    UINavigationController *navigationControler = MAIN_VIEW_CONTROLLER(@"SCAddCarViewNavigationController");
     [self presentViewController:navigationControler animated:YES completion:nil];
 }
 
 - (void)shouldChangeCarData:(SCUserCar *)userCar
 {
-    SCChangeMaintenanceDataViewController *viewController = STORY_BOARD_VIEW_CONTROLLER(@"SCChangeMaintenanceDataViewController");
+    SCChangeMaintenanceDataViewController *viewController = MAIN_VIEW_CONTROLLER(@"SCChangeMaintenanceDataViewController");
     viewController.car = userCar;
     [self.navigationController pushViewController:viewController animated:YES];
 }

@@ -109,7 +109,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     // 根据选中的商家，取到其商家ID，跳转到商家页面进行详情展示
-    SCMerchantDetailViewController *merchantDetialViewControler = STORY_BOARD_VIEW_CONTROLLER(@"SCMerchantDetailViewController");
+    SCMerchantDetailViewController *merchantDetialViewControler = MAIN_VIEW_CONTROLLER(@"SCMerchantDetailViewController");
     merchantDetialViewControler.merchant = _merchants[indexPath.row];
     merchantDetialViewControler.type     = _type;
     [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
@@ -121,7 +121,7 @@
     if (_merchants.count)
     {
         // 地图按钮被点击，跳转到地图页面
-        UINavigationController *mapNavigationController = STORY_BOARD_VIEW_CONTROLLER(@"SCMapViewNavigationController");
+        UINavigationController *mapNavigationController = MAIN_VIEW_CONTROLLER(@"SCMapViewNavigationController");
         SCMapViewController *mapViewController       = (SCMapViewController *)mapNavigationController.topViewController;
         mapViewController.merchants                  = _merchants;
         mapNavigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;

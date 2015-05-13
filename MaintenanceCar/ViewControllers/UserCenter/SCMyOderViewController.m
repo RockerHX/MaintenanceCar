@@ -111,7 +111,7 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     @try {
-        SCMyOderDetailViewController *myOderDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyOderDetailViewController"];
+        SCMyOderDetailViewController *myOderDetailViewController = USERCENTER_VIEW_CONTROLLER(@"SCMyOderDetailViewController");
         myOderDetailViewController.delegate  = self;
         myOderDetailViewController.reserveID = ((SCMyOder *)[self dataList][indexPath.row]).reserveID;
         [self.navigationController pushViewController:myOderDetailViewController animated:YES];
@@ -243,7 +243,7 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
 {
     // 跳转到评论页面
     @try {
-        SCAppraiseViewController *appraiseViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAppraiseViewController"];
+        SCAppraiseViewController *appraiseViewController = USERCENTER_VIEW_CONTROLLER(@"SCAppraiseViewController");
         appraiseViewController.delegate                  = self;
         appraiseViewController.oder                      = _oder;
         [self.navigationController pushViewController:appraiseViewController animated:YES];

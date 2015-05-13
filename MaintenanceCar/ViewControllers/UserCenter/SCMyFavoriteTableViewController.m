@@ -87,18 +87,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    // 跳转到预约页面
-    @try {
-        SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
-        merchantDetialViewControler.merchant                        = (SCMerchant *)_dataList[indexPath.row];
-        merchantDetialViewControler.canSelectedReserve              = YES;
-        [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMyFavoriteTableViewController Go to the SCMerchantDetailViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    SCMerchantDetailViewController *merchantDetialViewControler = MAIN_VIEW_CONTROLLER(MerchantDetailViewControllerStoryBoardID);
+    merchantDetialViewControler.merchant           = (SCMerchant *)_dataList[indexPath.row];
+    merchantDetialViewControler.canSelectedReserve = YES;
+    [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
 }
 
 #pragma mark - Public Methods
@@ -217,20 +209,13 @@
 - (void)selectedWithServiceItem:(SCServiceItem *)serviceItem
 {
     // 跳转到预约页面
-    @try {
-        [[SCUserInfo share] removeItems];
-        SCMerchant *merchant = _dataList[_index];
-        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.merchant = [[SCMerchant alloc] initWithMerchantName:merchant.name
-                                                                            companyID:merchant.company_id];
-        reservationViewController.serviceItem = serviceItem;
-        [self.navigationController pushViewController:reservationViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    [[SCUserInfo share] removeItems];
+    SCMerchant *merchant = _dataList[_index];
+    SCReservationViewController *reservationViewController = MAIN_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
+    reservationViewController.merchant = [[SCMerchant alloc] initWithMerchantName:merchant.name
+                                                                        companyID:merchant.company_id];
+    reservationViewController.serviceItem = serviceItem;
+    [self.navigationController pushViewController:reservationViewController animated:YES];
 }
 
 @end

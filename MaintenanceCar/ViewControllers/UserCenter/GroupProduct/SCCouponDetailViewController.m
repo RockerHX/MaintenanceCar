@@ -247,7 +247,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     if ([cell isKindOfClass:[SCShowMoreCell class]])
     {
         @try {
-            SCCommentListViewController *commentListViewController = STORY_BOARD_VIEW_CONTROLLER(@"SCCommentListViewController");
+            SCCommentListViewController *commentListViewController = MAIN_VIEW_CONTROLLER(@"SCCommentListViewController");
             commentListViewController.companyID = _detail.companyID;
             [self.navigationController pushViewController:commentListViewController animated:YES];
         }
@@ -294,7 +294,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (void)shouldShowBuyProductView
 {
     @try {
-        SCOderPayViewController *oderPayViewController = STORY_BOARD_VIEW_CONTROLLER(@"SCOderPayViewController");
+        SCOderPayViewController *oderPayViewController = MAIN_VIEW_CONTROLLER(@"SCOderPayViewController");
         oderPayViewController.groupProductDetail = _detail;
         [self.navigationController pushViewController:oderPayViewController animated:YES];
     }
@@ -311,12 +311,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     // 跳转到预约页面
     @try {
         [[SCUserInfo share] removeItems];
-        SCReservationViewController *reservationViewController = STORY_BOARD_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
-        reservationViewController.delegate                     = self;
-        reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName:_coupon.company_name
+        SCReservationViewController *reservationViewController = MAIN_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
+        reservationViewController.delegate    = self;
+        reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:_coupon.company_name
                                                                                                 companyID:_coupon.company_id];
-        reservationViewController.serviceItem                  = [[SCServiceItem alloc] initWithServiceID:_coupon.type];
-        reservationViewController.coupon                       = _coupon;
+        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:_coupon.type];
+        reservationViewController.coupon      = _coupon;
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {

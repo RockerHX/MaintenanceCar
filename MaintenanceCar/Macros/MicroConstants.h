@@ -13,7 +13,8 @@
 #define APP_DELEGATE_INSTANCE               ((AppDelegate*)([UIApplication sharedApplication].delegate))
 #define USER_DEFAULT                        [NSUserDefaults standardUserDefaults]
 #define STORY_BOARD(Name)                   [UIStoryboard storyboardWithName:Name bundle:nil]
-#define STORY_BOARD_VIEW_CONTROLLER(Name)   [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:Name]
+#define MAIN_VIEW_CONTROLLER(Name)          [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:Name]
+#define USERCENTER_VIEW_CONTROLLER(Name)    [STORY_BOARD(@"UserCenter") instantiateViewControllerWithIdentifier:Name]
 #define NOTIFICATION_CENTER                 [NSNotificationCenter defaultCenter]
 
 

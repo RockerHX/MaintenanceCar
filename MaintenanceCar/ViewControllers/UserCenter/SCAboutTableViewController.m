@@ -60,18 +60,11 @@
                 url = [MobClick getAdURL];
             if ([url length])
             {
-                @try {
-                    SCWebViewController *webViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCWebViewController"];
-                    webViewController.title = @"精彩推荐";
-                    webViewController.loadURL = url;
-                    [self.navigationController pushViewController:webViewController animated:YES];
-                }
-                @catch (NSException *exception) {
-                    NSLog(@"SCAboutTableViewController Go to the SCWebViewController exception reasion:%@", exception.reason);
-                }
-                @finally {
-                    [self performSelectorInBackground:@selector(getURL) withObject:nil];
-                }
+                SCWebViewController *webViewController = MAIN_VIEW_CONTROLLER(@"SCWebViewController");
+                webViewController.title = @"精彩推荐";
+                webViewController.loadURL = url;
+                [self.navigationController pushViewController:webViewController animated:YES];
+                [self performSelectorInBackground:@selector(getURL) withObject:nil];
             }
         }
             break;

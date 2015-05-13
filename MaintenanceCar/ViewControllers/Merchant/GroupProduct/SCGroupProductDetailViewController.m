@@ -222,7 +222,7 @@
     if ([cell isKindOfClass:[SCShowMoreCell class]])
     {
         @try {
-            SCCommentListViewController *commentListViewController = STORY_BOARD_VIEW_CONTROLLER(@"SCCommentListViewController");
+            SCCommentListViewController *commentListViewController = MAIN_VIEW_CONTROLLER(@"SCCommentListViewController");
             commentListViewController.companyID = _detail.companyID;
             [self.navigationController pushViewController:commentListViewController animated:YES];
         }
@@ -271,7 +271,7 @@
     if ([SCUserInfo share].loginStatus)
     {
         @try {
-            SCOderPayViewController *viewController = STORY_BOARD_VIEW_CONTROLLER(@"SCOderPayViewController");
+            SCOderPayViewController *viewController = MAIN_VIEW_CONTROLLER(@"SCOderPayViewController");
             viewController.groupProductDetail = _detail;
             [self.navigationController pushViewController:viewController animated:YES];
         }
@@ -290,11 +290,11 @@
     // 跳转到预约页面
     @try {
         [[SCUserInfo share] removeItems];
-        SCReservationViewController *reservationViewController = STORY_BOARD_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
-        reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName: _price.merchantName
+        SCReservationViewController *reservationViewController = MAIN_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
+        reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName: _price.merchantName
                                                                                                 companyID: _price.companyID];
-        reservationViewController.serviceItem                  = [[SCServiceItem alloc] initWithServiceID:_price.type];
-        reservationViewController.quotedPrice                  = _price;
+        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:_price.type];
+        reservationViewController.quotedPrice = _price;
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {
