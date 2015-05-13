@@ -199,6 +199,7 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
 
 - (void)requestSuccessWithOperation:(AFHTTPRequestOperation *)operation responseObject:(id)responseObject
 {
+    [self endRefresh];
     if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
     {
         NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
@@ -215,9 +216,7 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
                 }];
                 
                 self.offset += SearchLimit;               // 偏移量请求参数递增
-                [self.tableView reloadData];              // 数据配置完成，刷新商家列表
-                [self addRefreshHeader];
-                [self addRefreshFooter];
+                [self reloadList];
             }
                 break;
                 
@@ -232,7 +231,6 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
         if (![statusMessage isEqualToString:@"success"])
             [self showHUDAlertToViewController:self text:statusMessage];
     }
-    [self endRefresh];
 }
 
 - (void)requestFailureWithOperation:(AFHTTPRequestOperation *)operation
@@ -257,17 +255,27 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     }
 }
 
+- (void)reloadList
+{
+    CATransition *transition = [CATransition animation];
+    transition.type = kCATransitionReveal;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.fillMode = kCAFillModeForwards;
+    transition.duration = 0.3f;
+    transition.subtype = kCATransitionFromBottom;
+    [[self.tableView layer] addAnimation:transition forKey:@"UITableViewReloadDataAnimationKey"];
+    [self.tableView reloadData];
+    [self addRefreshHeader];
+    [self addRefreshFooter];
+}
+
 #pragma mark - SCNavigationTabDelegate Methods
 - (void)didSelectedItemAtIndex:(NSInteger)index
 {
     _myOderRequest = index;
     
     if ([self dataList].count)
-    {
-        [self.tableView reloadData];
-        [self addRefreshHeader];
-        [self addRefreshFooter];
-    }
+        [self reloadList];
     else
         [self.tableView.header beginRefreshing];
 }
