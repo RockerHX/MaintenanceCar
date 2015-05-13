@@ -177,7 +177,7 @@
 
 - (void)shouldAddCar
 {
-    UINavigationController *navigationControler = MAIN_VIEW_CONTROLLER(@"SCAddCarViewNavigationController");
+    UINavigationController *navigationControler = USERCENTER_VIEW_CONTROLLER(@"SCAddCarViewNavigationController");
     [self presentViewController:navigationControler animated:YES completion:nil];
 }
 

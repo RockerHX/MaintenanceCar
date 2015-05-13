@@ -151,7 +151,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 {
     if ([SCUserInfo share].loginStatus)
     {
-        UINavigationController *addCarViewNavigationControler = MAIN_VIEW_CONTROLLER(@"SCAddCarViewNavigationController");
+        UINavigationController *addCarViewNavigationControler = USERCENTER_VIEW_CONTROLLER(@"SCAddCarViewNavigationController");
         [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
     }
     else

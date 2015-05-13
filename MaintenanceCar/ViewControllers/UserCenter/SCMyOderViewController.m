@@ -250,6 +250,7 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     transition.subtype = kCATransitionFromBottom;
     [[self.tableView layer] addAnimation:transition forKey:@"UITableViewReloadDataAnimationKey"];
     [self.tableView reloadData];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Zero inSection:Zero] atScrollPosition:UITableViewScrollPositionNone animated:NO];
     [self addRefreshHeader];
     [self addRefreshFooter];
 }
