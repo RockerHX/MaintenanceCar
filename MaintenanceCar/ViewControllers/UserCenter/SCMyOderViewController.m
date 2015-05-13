@@ -110,17 +110,10 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    @try {
-        SCMyOderDetailViewController *myOderDetailViewController = USERCENTER_VIEW_CONTROLLER(@"SCMyOderDetailViewController");
-        myOderDetailViewController.delegate  = self;
-        myOderDetailViewController.reserveID = ((SCMyOder *)[self dataList][indexPath.row]).reserveID;
-        [self.navigationController pushViewController:myOderDetailViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMyOderViewController Go to the SCMyOderDetailViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    SCMyOderDetailViewController *myOderDetailViewController = USERCENTER_VIEW_CONTROLLER(@"SCMyOderDetailViewController");
+    myOderDetailViewController.delegate  = self;
+    myOderDetailViewController.reserveID = ((SCMyOder *)[self dataList][indexPath.row]).reserveID;
+    [self.navigationController pushViewController:myOderDetailViewController animated:YES];
 }
 
 #pragma mark - Public Methods
@@ -241,18 +234,10 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
 
 - (void)pushToAppraiseViewController
 {
-    // 跳转到评论页面
-    @try {
-        SCAppraiseViewController *appraiseViewController = USERCENTER_VIEW_CONTROLLER(@"SCAppraiseViewController");
-        appraiseViewController.delegate                  = self;
-        appraiseViewController.oder                      = _oder;
-        [self.navigationController pushViewController:appraiseViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMyOderViewController Go to the SCAppraiseViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    SCAppraiseViewController *appraiseViewController = USERCENTER_VIEW_CONTROLLER(@"SCAppraiseViewController");
+    appraiseViewController.delegate                  = self;
+    appraiseViewController.oder                      = _oder;
+    [self.navigationController pushViewController:appraiseViewController animated:YES];
 }
 
 - (void)reloadList

@@ -79,36 +79,29 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     // 检查用户是否登录，在进行相应页面跳转
     if ([SCUserInfo share].loginStatus)
     {
-        @try {
-            switch (indexPath.row)
+        switch (indexPath.row)
+        {
+            case SCUserCenterRowMyOrder:
             {
-                case SCUserCenterRowMyOrder:
-                {
-                    SCMyOderViewController *myOderViewController = USERCENTER_VIEW_CONTROLLER(@"SCMyOderViewController");
-                    [self pushToSubViewControllerWithController:myOderViewController];
-                }
-                    break;
-                case SCUserCenterRowMyCollection:
-                {
-                    SCMyFavoriteTableViewController *myFavoriteTableViewController = USERCENTER_VIEW_CONTROLLER(@"SCMyFavoriteTableViewController");
-                    myFavoriteTableViewController.showTrashItem = YES;
-                    [self pushToSubViewControllerWithController:myFavoriteTableViewController];
-                }
-                    break;
-                case SCUserCenterRowMyCoupon:
-                {
-                    [self pushToMyCouponViewController];
-                }
-                    break;
-                    
-                default:
-                    break;
+                SCMyOderViewController *myOderViewController = USERCENTER_VIEW_CONTROLLER(@"SCMyOderViewController");
+                [self pushToSubViewControllerWithController:myOderViewController];
             }
-        }
-        @catch (NSException *exception) {
-            NSLog(@"User Center Push Controller Error:%@", exception.reason);
-        }
-        @finally {
+                break;
+            case SCUserCenterRowMyCollection:
+            {
+                SCMyFavoriteTableViewController *myFavoriteTableViewController = USERCENTER_VIEW_CONTROLLER(@"SCMyFavoriteTableViewController");
+                myFavoriteTableViewController.showTrashItem = YES;
+                [self pushToSubViewControllerWithController:myFavoriteTableViewController];
+            }
+                break;
+            case SCUserCenterRowMyCoupon:
+            {
+                [self pushToMyCouponViewController];
+            }
+                break;
+                
+            default:
+                break;
         }
     }
     else
@@ -158,15 +151,8 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 {
     if ([SCUserInfo share].loginStatus)
     {
-        @try {
-            UINavigationController *addCarViewNavigationControler = MAIN_VIEW_CONTROLLER(@"SCAddCarViewNavigationController");
-            [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
+        UINavigationController *addCarViewNavigationControler = MAIN_VIEW_CONTROLLER(@"SCAddCarViewNavigationController");
+        [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
     }
     else
         [self showShoulLoginAlert];
@@ -180,17 +166,10 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 
 - (void)shouldChangeCarData:(SCUserCar *)userCar
 {
-    @try {
-        SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = MAIN_VIEW_CONTROLLER(@"SCChangeMaintenanceDataViewController");
-        changeMaintenanceDataViewController.delegate = self;
-        changeMaintenanceDataViewController.car = userCar;
-        [self.navigationController pushViewController:changeMaintenanceDataViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCHomePageViewController Go to the SCChangeMaintenanceDataViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = MAIN_VIEW_CONTROLLER(@"SCChangeMaintenanceDataViewController");
+    changeMaintenanceDataViewController.delegate = self;
+    changeMaintenanceDataViewController.car = userCar;
+    [self.navigationController pushViewController:changeMaintenanceDataViewController animated:YES];
 }
 
 #pragma mark - SCChangeMaintenanceDataViewControllerDelegate Methods
