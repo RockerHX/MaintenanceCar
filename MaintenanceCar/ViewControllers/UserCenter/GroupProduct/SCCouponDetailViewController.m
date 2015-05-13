@@ -286,8 +286,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)dispalyDetialView
 {
-    _couponImagesView.defaultImage = [UIImage imageNamed:@"MerchantImageDefault"];
-    _couponImagesView.images = @[_detail.img1];
+    _couponImagesView.images = @[[UIImage imageNamed:@"MerchantImageDefault"]];
     [_couponImagesView show:nil finished:nil];
 }
 
