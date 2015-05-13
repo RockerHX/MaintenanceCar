@@ -222,7 +222,7 @@
     if ([cell isKindOfClass:[SCShowMoreCell class]])
     {
         @try {
-            SCCommentListViewController *commentListViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCommentListViewController"];
+            SCCommentListViewController *commentListViewController = STORY_BOARD_VIEW_CONTROLLER(@"SCCommentListViewController");
             commentListViewController.companyID = _detail.companyID;
             [self.navigationController pushViewController:commentListViewController animated:YES];
         }
@@ -271,9 +271,9 @@
     if ([SCUserInfo share].loginStatus)
     {
         @try {
-            SCBuyGroupProductViewController *buyGroupProductViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCBuyGroupProductViewController"];
-            buyGroupProductViewController.groupProductDetail = _detail;
-            [self.navigationController pushViewController:buyGroupProductViewController animated:YES];
+            SCOderPayViewController *viewController = STORY_BOARD_VIEW_CONTROLLER(@"SCOderPayViewController");
+            viewController.groupProductDetail = _detail;
+            [self.navigationController pushViewController:viewController animated:YES];
         }
         @catch (NSException *exception) {
             NSLog(@"SCGroupProductDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
@@ -290,7 +290,7 @@
     // 跳转到预约页面
     @try {
         [[SCUserInfo share] removeItems];
-        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
+        SCReservationViewController *reservationViewController = STORY_BOARD_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
         reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName: _price.merchantName
                                                                                                 companyID: _price.companyID];
         reservationViewController.serviceItem                  = [[SCServiceItem alloc] initWithServiceID:_price.type];
