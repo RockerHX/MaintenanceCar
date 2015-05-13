@@ -106,13 +106,13 @@
 #define COCOAPODS_POD_AVAILABLE_SCLoopScrollView
 #define COCOAPODS_VERSION_MAJOR_SCLoopScrollView 0
 #define COCOAPODS_VERSION_MINOR_SCLoopScrollView 4
-#define COCOAPODS_VERSION_PATCH_SCLoopScrollView 0
+#define COCOAPODS_VERSION_PATCH_SCLoopScrollView 1
 
 // UMengAnalytics
 #define COCOAPODS_POD_AVAILABLE_UMengAnalytics
 #define COCOAPODS_VERSION_MAJOR_UMengAnalytics 3
-#define COCOAPODS_VERSION_MINOR_UMengAnalytics 4
-#define COCOAPODS_VERSION_PATCH_UMengAnalytics 6
+#define COCOAPODS_VERSION_MINOR_UMengAnalytics 5
+#define COCOAPODS_VERSION_PATCH_UMengAnalytics 8
 
 // UMengMessage
 #define COCOAPODS_POD_AVAILABLE_UMengMessage
