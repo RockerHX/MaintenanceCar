@@ -41,29 +41,66 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     [super viewDidLoad];
 }
 
+#pragma mark - Config Methods
+- (void)initConfig
+{
+    _progressDataList = [@[] mutableCopy];
+    _finishedDateList = [@[] mutableCopy];
+}
+
+#pragma mark - Setter And Getter Methods
+- (void)setOffset:(NSInteger)offset
+{
+    switch (_myOderRequest)
+    {
+        case SCMyOderReuqestProgress:
+            _progressOffset = offset;
+            break;
+        case SCMyOderReuqestFinished:
+            _finishedOffset = offset;
+            break;
+    }
+}
+
+- (NSInteger)offset
+{
+    switch (_myOderRequest)
+    {
+        case SCMyOderReuqestProgress:
+            return _progressOffset;
+            break;
+        case SCMyOderReuqestFinished:
+            return _finishedOffset;
+            break;
+    }
+}
+
 #pragma mark - Table View Data Source Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataList.count;
+    return [self dataList].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCMyOderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMyOderCell" forIndexPath:indexPath];;
-    if (_dataList.count)
-        [cell displayCellWithOder:_dataList[indexPath.row] index:indexPath.row];
+    SCMyOderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCMyOderCell" forIndexPath:indexPath];
+    
+    NSArray *dataList = [self dataList];
+    if (dataList.count)
+        [cell displayCellWithOder:dataList[indexPath.row] index:indexPath.row];
     return cell;
 }
 
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height;
-    if (_dataList.count)
+    CGFloat height = ZERO_POINT;
+    NSArray *dataList = [self dataList];
+    if (dataList.count)
     {
         if(!_myOderCell)
             _myOderCell = [tableView dequeueReusableCellWithIdentifier:@"SCMyOderCell"];
-        height = [_myOderCell displayCellWithOder:_dataList[indexPath.row] index:indexPath.row];
+        height = [_myOderCell displayCellWithOder:dataList[indexPath.row] index:indexPath.row];
     }
     
     return height;
@@ -74,10 +111,9 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     @try {
-        SCMyOder *oder = _dataList[indexPath.row];
         SCMyOderDetailViewController *myOderDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyOderDetailViewController"];
         myOderDetailViewController.delegate  = self;
-        myOderDetailViewController.reserveID = oder.reserveID;
+        myOderDetailViewController.reserveID = ((SCMyOder *)[self dataList][indexPath.row]).reserveID;
         [self.navigationController pushViewController:myOderDetailViewController animated:YES];
     }
     @catch (NSException *exception) {
@@ -102,28 +138,45 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
 
 - (void)startOdersReuqest
 {
+    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                                   @"limit": @(SearchLimit),
+                                 @"offset" : @(self.offset)};
     switch (_myOderRequest)
     {
         case SCMyOderReuqestProgress:
-            [self startProgressOdersRequest];
+            [self startProgressOdersRequestWithParameters:parameters];
             break;
         case SCMyOderReuqestFinished:
-            [self startFinishedOdersRequest];
+            [self startFinishedOdersRequestWithParameters:parameters];
             break;
     }
 }
 
+- (void)clearListData
+{
+    [[self dataList] removeAllObjects];
+}
+
 #pragma mark - Private Methods
+- (NSMutableArray *)dataList
+{
+    switch (_myOderRequest)
+    {
+        case SCMyOderReuqestProgress:
+            return _progressDataList;
+            break;
+        case SCMyOderReuqestFinished:
+            return _finishedDateList;
+            break;
+    }
+}
+
 /**
  *  进行中的列表数据请求方法，必选参数：user_id，limit，offset
  */
-- (void)startProgressOdersRequest
+- (void)startProgressOdersRequestWithParameters:(NSDictionary *)parameters
 {
     __weak typeof(self) weakSelf = self;
-    // 配置请求参数
-    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                 @"limit": @(SearchLimit),
-                                 @"offset" : @(self.offset)};
     [[SCAPIRequest manager] startMyProgressOdersAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf requestSuccessWithOperation:operation responseObject:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -134,13 +187,9 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
 /**
  *  已完成的列表数据请求方法，必选参数：user_id，limit，offset
  */
-- (void)startFinishedOdersRequest
+- (void)startFinishedOdersRequestWithParameters:(NSDictionary *)parameters
 {
     __weak typeof(self) weakSelf = self;
-    // 配置请求参数
-    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                   @"limit": @(SearchLimit),
-                                 @"offset" : @(self.offset)};
     [[SCAPIRequest manager] startMyFinishedOdersAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf requestSuccessWithOperation:operation responseObject:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -162,11 +211,11 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
                     [self clearListData];
                 [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                     SCMyOder *oder = [[SCMyOder alloc] initWithDictionary:obj error:nil];
-                    [_dataList addObject:oder];
+                    [[self dataList] addObject:oder];
                 }];
                 
                 self.offset += SearchLimit;               // 偏移量请求参数递增
-                [self.tableView reloadData];                    // 数据配置完成，刷新商家列表
+                [self.tableView reloadData];              // 数据配置完成，刷新商家列表
                 [self addRefreshHeader];
                 [self addRefreshFooter];
             }
@@ -212,7 +261,15 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
 - (void)didSelectedItemAtIndex:(NSInteger)index
 {
     _myOderRequest = index;
-    [self restartDropDownRefreshRequest];
+    
+    if ([self dataList].count)
+    {
+        [self.tableView reloadData];
+        [self addRefreshHeader];
+        [self addRefreshFooter];
+    }
+    else
+        [self.tableView.header beginRefreshing];
 }
 
 #pragma mark - SCMyOderCellDelegate Methods

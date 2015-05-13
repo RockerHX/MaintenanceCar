@@ -21,6 +21,11 @@ typedef NS_ENUM(NSInteger, SCMyOderReuqest) {
     SCMyOder        *_oder;
     SCMyOderCell    *_myOderCell;
     SCMyOderReuqest  _myOderRequest;
+    
+    NSInteger        _progressOffset;
+    NSInteger        _finishedOffset;
+    NSMutableArray  *_progressDataList;
+    NSMutableArray  *_finishedDateList;
 }
 
 @end
