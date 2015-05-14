@@ -1,14 +1,14 @@
 //
-//  SCCouponDetailViewController.m
+//  SCGroupTicketDetailViewController.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/3/9.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCCouponDetailViewController.h"
+#import "SCGroupTicketDetailViewController.h"
 #import "SCGroupProductDetail.h"
-#import "SCGroupCouponCell.h"
+#import "SCGroupTicketCell.h"
 #import "SCBuyGroupProductCell.h"
 #import "SCGroupProductMerchantCell.h"
 #import "SCGroupProductDetailCell.h"
@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     SCAlertTypeCall
 };
 
-@interface SCCouponDetailViewController () <SCCouponCodeCellDelegate, SCGroupProductMerchantCellDelegate, SCReservationViewControllerDelegate>
+@interface SCGroupTicketDetailViewController () <SCGroupTicketCodeCellDelegate, SCGroupProductMerchantCellDelegate, SCReservationViewControllerDelegate>
 {
     SCGroupProductDetail *_detail;
 }
@@ -35,7 +35,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 @end
 
-@implementation SCCouponDetailViewController
+@implementation SCGroupTicketDetailViewController
 
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated
@@ -68,9 +68,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)viewConfig
 {
-    self.tableView.tableFooterView = [_coupon expired] ? nil : _refundView;
+    self.tableView.tableFooterView = [_ticket expired] ? nil : _refundView;
     [self.tableView reLayoutHeaderView];
-    [self startCouponDetailRequest];
+    [self startTicketDetailRequest];
 }
 
 #pragma mark - Action Methods
@@ -104,9 +104,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         {
             case 1:
             {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCodeCell" forIndexPath:indexPath];
-                (((SCGroupCouponCell *)cell)).delegate = self;
-                [(SCGroupCouponCell *)cell displayCellWithCoupon:_coupon index:Zero];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupTicketCell" forIndexPath:indexPath];
+                (((SCGroupTicketCell *)cell)).delegate = self;
+                [(SCGroupTicketCell *)cell displayCellWithTicket:_ticket index:Zero];
             }
                 break;
             case 2:
@@ -245,33 +245,26 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell isKindOfClass:[SCShowMoreCell class]])
     {
-        @try {
-            SCCommentListViewController *commentListViewController = MAIN_VIEW_CONTROLLER(@"SCCommentListViewController");
-            commentListViewController.companyID = _detail.companyID;
-            [self.navigationController pushViewController:commentListViewController animated:YES];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"SCCouponDetailViewController Go to the SCCommentListViewController exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
+        SCCommentListViewController *commentListViewController = MAIN_VIEW_CONTROLLER(@"SCCommentListViewController");
+        commentListViewController.companyID = _detail.companyID;
+        [self.navigationController pushViewController:commentListViewController animated:YES];
     }
 }
 
 #pragma mark - Private Methods
-- (void)startCouponDetailRequest
+- (void)startTicketDetailRequest
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     __weak typeof(self)weakSelf = self;
-    NSDictionary *parameters = @{@"product_id": _coupon.product_id};
+    NSDictionary *parameters = @{@"product_id": _ticket.product_id};
     [[SCAPIRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             _detail              = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
-            _detail.companyID    = _coupon.company_id;
-            _detail.merchantName = _coupon.company_name;
-            _detail.serviceDate  = _coupon.now;
+            _detail.companyID    = _ticket.company_id;
+            _detail.merchantName = _ticket.company_name;
+            _detail.serviceDate  = _ticket.now;
             
             [weakSelf dispalyDetialView];
             [weakSelf.tableView reloadData];
@@ -285,37 +278,30 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)dispalyDetialView
 {
-    _couponImagesView.images = @[[UIImage imageNamed:@"MerchantImageDefault"]];
-    [_couponImagesView show:nil finished:nil];
+    _ticketImagesView.images = @[[UIImage imageNamed:@"MerchantImageDefault"]];
+    [_ticketImagesView show:nil finished:nil];
 }
 
 #pragma mark - SCGroupProductCellDelegate Methods
 - (void)shouldShowBuyProductView
 {
-    @try {
-        SCOderPayViewController *oderPayViewController = MAIN_VIEW_CONTROLLER(@"SCOderPayViewController");
-        oderPayViewController.groupProductDetail = _detail;
-        [self.navigationController pushViewController:oderPayViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCCouponDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    SCOderPayViewController *oderPayViewController = MAIN_VIEW_CONTROLLER(@"SCOderPayViewController");
+    oderPayViewController.groupProductDetail = _detail;
+    [self.navigationController pushViewController:oderPayViewController animated:YES];
 }
 
-#pragma mark - SCCouponCodeCellDelegate Methods
-- (void)couponShouldReservationWithIndex:(NSInteger)index
+#pragma mark - SCTicketCodeCellDelegate Methods
+- (void)ticketShouldReservationWithIndex:(NSInteger)index
 {
     // 跳转到预约页面
     @try {
         [[SCUserInfo share] removeItems];
         SCReservationViewController *reservationViewController = MAIN_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
         reservationViewController.delegate    = self;
-        reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:_coupon.company_name
-                                                                                                companyID:_coupon.company_id];
-        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:_coupon.type];
-        reservationViewController.groupCoupon = _coupon;
+        reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:_ticket.company_name
+                                                                               companyID:_ticket.company_id];
+        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:_ticket.type];
+        reservationViewController.groupTicket = _ticket;
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {
@@ -325,10 +311,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     }
 }
 
-- (void)couponShouldShowWithIndex:(NSInteger)index
+- (void)ticketShouldShowWithIndex:(NSInteger)index
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
-    [NOTIFICATION_CENTER postNotificationName:kShowCouponNotification object:nil];
+    [NOTIFICATION_CENTER postNotificationName:kShowTicketNotification object:nil];
 }
 
 #pragma mark - SCGroupProductMerchantCell Delegate Methods
@@ -369,8 +355,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             [self showHUDOnViewController:self.navigationController];
             __weak typeof(self)weakSelf = self;
             NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                         @"group_ticket_id": _coupon.group_ticket_id};
-            [[SCAPIRequest manager] startGroupCouponRefundAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                 @"group_ticket_id": _ticket.group_ticket_id};
+            [[SCAPIRequest manager] startGroupTicketRefundAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 [weakSelf hideHUDOnViewController:weakSelf.navigationController];
                 if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
                     [weakSelf showHUDAlertToViewController:weakSelf.navigationController delegate:weakSelf text:@"退款成功" delay:0.5f];

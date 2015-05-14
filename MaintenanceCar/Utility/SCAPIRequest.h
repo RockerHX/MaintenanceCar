@@ -159,24 +159,16 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  生成团购券接口请求方法(API:/Group_ticket - POST)
- */
-
-- (void)startGenerateGroupProductAPIRequestWithParameters:(NSDictionary *)parameters
-                                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
-/**
  *  团购券列表接口请求方法(API:/Group_ticket/all - GET)
  */
-- (void)startGroupCouponsAPIRequestWithParameters:(NSDictionary *)parameters
+- (void)startGroupTicketsAPIRequestWithParameters:(NSDictionary *)parameters
                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  团购券退款接口请求方法(API:/wepay/refund - POST)
  */
-- (void)startGroupCouponRefundAPIRequestWithParameters:(NSDictionary *)parameters
+- (void)startGroupTicketRefundAPIRequestWithParameters:(NSDictionary *)parameters
                                                success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
@@ -230,13 +222,6 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 - (void)startMerchantReservationAPIRequestWithParameters:(NSDictionary *)parameters
                                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
-/**
- *  我的预约接口请求方法(API:/Reservation/all - GET)
- */
-- (void)startGetMyReservationAPIRequestWithParameters:(NSDictionary *)parameters
-                                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  更新预约接口请求方法(API:/Reservation/update - POST)

@@ -214,8 +214,7 @@ typedef NS_ENUM(NSUInteger, SCOderAlertType) {
                 {
                     self.tableView.hidden = NO;
                     self.promptView.hidden = YES;
-                    if ([self dataList].count > 2)
-                        [self addRefreshFooter];
+                    [self displayRefreshFooter];
                 }
                 else
                 {
@@ -271,6 +270,14 @@ typedef NS_ENUM(NSUInteger, SCOderAlertType) {
     [self.tableView setContentOffset:CGPointMake(ZERO_POINT, ZERO_POINT)];
 }
 
+- (void)displayRefreshFooter
+{
+    if ([self dataList].count > 2)
+        [self addRefreshFooter];
+    else
+        [self removeRefreshFooter];
+}
+
 #pragma mark - SCNavigationTabDelegate Methods
 - (void)didSelectedItemAtIndex:(NSInteger)index title:(NSString *)title
 {
@@ -278,13 +285,16 @@ typedef NS_ENUM(NSUInteger, SCOderAlertType) {
     _promptLabel.text = title;
     self.tableView.hidden = NO;
     self.promptView.hidden = YES;
-    if (![self dataList].count)
+    if ([self dataList].count)
+    {
+        [self displayRefreshFooter];
+        [self reloadListWithAnimation:YES];
+    }
+    else
     {
         [self.tableView reloadData];
         [self.tableView.header beginRefreshing];
     }
-    else
-        [self reloadListWithAnimation:YES];
 }
 
 #pragma mark - SCOderCellDelegate Methods

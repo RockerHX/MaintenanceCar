@@ -1,15 +1,15 @@
 //
-//  SCGroupCoupon.m
+//  SCGroupTicket.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/3/9.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCGroupCoupon.h"
+#import "SCGroupTicket.h"
 #import "UIConstants.h"
 
-@implementation SCGroupCoupon
+@implementation SCGroupTicket
 
 #pragma mark - Init Methods
 - (id)initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err
@@ -17,7 +17,7 @@
     self = [super initWithDictionary:dict error:err];
     if (self)
     {
-        _state = [self couponState];
+        _state = [self ticketState];
     }
     return self;
 }
@@ -48,35 +48,35 @@
     return expiredInterval;
 }
 
-- (SCGroupCouponState)couponState
+- (SCGroupTicketState)ticketState
 {
-    SCGroupCouponState state;
+    SCGroupTicketState state;
     switch ([_status integerValue])
     {
         case 0:
-            state = SCGroupCouponStateUnUse;
+            state = SCGroupTicketStateUnUse;
             break;
         case 1:
-            state = SCGroupCouponStateUsed;
+            state = SCGroupTicketStateUsed;
             break;
         case 2:
-            state = SCGroupCouponStateCancel;
+            state = SCGroupTicketStateCancel;
             break;
         case 3:
-            state = SCGroupCouponStateExpired;
+            state = SCGroupTicketStateExpired;
             break;
         case 4:
-            state = SCGroupCouponStateRefunding;
+            state = SCGroupTicketStateRefunding;
             break;
         case 5:
-            state = SCGroupCouponStateRefunded;
+            state = SCGroupTicketStateRefunded;
             break;
         case 6:
-            state = SCGroupCouponStateReserved;
+            state = SCGroupTicketStateReserved;
             break;
             
         default:
-            state = [self expired] ? SCGroupCouponStateExpired : SCGroupCouponStateUnknown;
+            state = [self expired] ? SCGroupTicketStateExpired : SCGroupTicketStateUnknown;
             break;
     }
     return state;

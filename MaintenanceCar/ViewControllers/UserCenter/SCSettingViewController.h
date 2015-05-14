@@ -1,5 +1,5 @@
 //
-//  SCSettingTableViewController.h
+//  SCSettingViewController.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/13.
@@ -8,7 +8,7 @@
 
 #import "SCViewControllerCategory.h"
 
-@interface SCSettingTableViewController : UITableViewController
+@interface SCSettingViewController : UITableViewController
 
 @property (weak, nonatomic) IBOutlet UISwitch *appMessageSwitch;        // 消息开关
 

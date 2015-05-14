@@ -1,19 +1,15 @@
 //
-//  SCSettingTableViewController.m
+//  SCSettingViewController.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/13.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCSettingTableViewController.h"
+#import "SCSettingViewController.h"
 #import "UMFeedback.h"
 
-@interface SCSettingTableViewController () <UIAlertViewDelegate>
-
-@end
-
-@implementation SCSettingTableViewController
+@implementation SCSettingViewController
 
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated

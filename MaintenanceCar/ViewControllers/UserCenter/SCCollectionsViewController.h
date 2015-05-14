@@ -1,5 +1,5 @@
 //
-//  SCCollectionsTableViewController.h
+//  SCCollectionsViewController.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/5.
@@ -8,6 +8,6 @@
 
 #import "SCTableViewController.h"
 
-@interface SCCollectionsTableViewController : SCTableViewController
+@interface SCCollectionsViewController : SCTableViewController
 
 @end

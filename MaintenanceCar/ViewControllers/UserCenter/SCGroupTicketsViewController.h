@@ -1,5 +1,5 @@
 //
-//  SCGroupCouponsViewController.h
+//  SCGroupTicketsViewController.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/3/4.
@@ -8,6 +8,6 @@
 
 #import "SCTableViewController.h"
 
-@interface SCGroupCouponsViewController : SCTableViewController
+@interface SCGroupTicketsViewController : SCTableViewController
 
 @end

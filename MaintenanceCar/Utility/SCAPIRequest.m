@@ -190,25 +190,18 @@
     [self requestPOSTMethodsWithAPI:AliPayAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startGenerateGroupProductAPIRequestWithParameters:(NSDictionary *)parameters
-                                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    [self requestPOSTMethodsWithAPI:GenerateCouponAPIURL parameters:parameters success:success failure:failure];
-}
-
-- (void)startGroupCouponsAPIRequestWithParameters:(NSDictionary *)parameters
+- (void)startGroupTicketsAPIRequestWithParameters:(NSDictionary *)parameters
                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:GroupCouponsAPIURL parameters:parameters success:success failure:failure];
+    [self requestGETMethodsWithAPI:GroupTicketsAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startGroupCouponRefundAPIRequestWithParameters:(NSDictionary *)parameters
+- (void)startGroupTicketRefundAPIRequestWithParameters:(NSDictionary *)parameters
                                                success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestPOSTMethodsWithAPI:GroupCouponRefundAPIURL parameters:parameters success:success failure:failure];
+    [self requestPOSTMethodsWithAPI:GroupTicketRefundAPIURL parameters:parameters success:success failure:failure];
 }
 
 #pragma mark - Comment API
@@ -263,13 +256,6 @@
                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestPOSTMethodsWithAPI:MerchantReservationAPIURL parameters:parameters success:success failure:failure];
-}
-
-- (void)startGetMyReservationAPIRequestWithParameters:(NSDictionary *)parameters
-                                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    [self requestGETMethodsWithAPI:MyReservationAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startUpdateReservationAPIRequestWithParameters:(NSDictionary *)parameters

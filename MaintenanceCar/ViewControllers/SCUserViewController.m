@@ -8,14 +8,14 @@
 
 #import "SCUserViewController.h"
 #import "SCLoginViewController.h"
-#import "SCCollectionsTableViewController.h"
+#import "SCCollectionsViewController.h"
 #import "SCUserInfoView.h"
 #import "SCChangeMaintenanceDataViewController.h"
 
 typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     SCUserCenterRowOrders = 0,
     SCUserCenterRowCollections,
-    SCUserCenterRowGroupCoupons,
+    SCUserCenterRowGroupTickets,
     SCUserCenterRowCoupons
 };
 
@@ -58,8 +58,8 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 #pragma mark - Private Methods
 - (void)initConfig
 {
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(showMyOderList) name:kShowCouponNotification object:nil];
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(pushToGroupCouponsViewController) name:kGenerateCouponSuccessNotification object:nil];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(showMyOderList) name:kShowTicketNotification object:nil];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(pushToGroupTicketsViewController) name:kGenerateTicketSuccessNotification object:nil];
     [NOTIFICATION_CENTER addObserver:_userInfoView selector:@selector(refresh) name:kUserCarsDataNeedReloadSuccessNotification object:nil];
 }
 
@@ -83,13 +83,13 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
                 break;
             case SCUserCenterRowCollections:
             {
-                SCCollectionsTableViewController *collectionsTableViewController = USERCENTER_VIEW_CONTROLLER(@"SCCollectionsTableViewController");
-                collectionsTableViewController.showTrashItem = YES;
-                [self pushToSubViewControllerWithController:collectionsTableViewController];
+                SCCollectionsViewController *collectionsViewController = USERCENTER_VIEW_CONTROLLER(@"SCCollectionsViewController");
+                collectionsViewController.showTrashItem = YES;
+                [self pushToSubViewControllerWithController:collectionsViewController];
             }
                 break;
-            case SCUserCenterRowGroupCoupons:
-                [self pushToGroupCouponsViewController];
+            case SCUserCenterRowGroupTickets:
+                [self pushToGroupTicketsViewController];
                 break;
                 
             case SCUserCenterRowCoupons:
@@ -112,9 +112,9 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (void)pushToGroupCouponsViewController
+- (void)pushToGroupTicketsViewController
 {
-    [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCGroupCouponsViewController")];
+    [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCGroupTicketsViewController")];
 }
 
 - (void)showMyOderList

@@ -7,16 +7,16 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--我的团购券-->
+        <!--团购券-->
         <scene sceneID="HPc-8C-GxE">
             <objects>
-                <tableViewController storyboardIdentifier="SCGroupCouponsViewController" hidesBottomBarWhenPushed="YES" id="F4F-t6-gLt" customClass="SCGroupCouponsViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SCGroupTicketsViewController" hidesBottomBarWhenPushed="YES" id="F4F-t6-gLt" customClass="SCGroupTicketsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="96" sectionHeaderHeight="22" sectionFooterHeight="22" id="0cS-xb-n5V">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SCGroupCouponCell" rowHeight="96" id="a4w-Fj-Ikr" customClass="SCGroupCouponCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SCGroupTicketCell" rowHeight="96" id="a4w-Fj-Ikr" customClass="SCGroupTicketCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a4w-Fj-Ikr" id="rsg-8b-Nsh">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -149,13 +149,13 @@
                                 <connections>
                                     <outlet property="codeLabel" destination="Xer-bb-q5g" id="xYU-VW-2Jp"/>
                                     <outlet property="codeLine" destination="3Bs-NH-oaY" id="Gme-xp-iLp"/>
-                                    <outlet property="couponPriceLabel" destination="BNv-Iq-KiL" id="gw2-JS-yvd"/>
-                                    <outlet property="couponStateLabel" destination="CuO-34-Rq5" id="cj2-CI-PF4"/>
                                     <outlet property="merchantNameLabel" destination="A68-u6-TeM" id="4xd-5z-I2K"/>
                                     <outlet property="productNameLabel" destination="4PT-oK-Oy5" id="gZr-ib-zND"/>
                                     <outlet property="productPriceLabel" destination="wyz-3P-fFJ" id="ToM-Pc-mft"/>
                                     <outlet property="reservationButton" destination="0D1-vg-Txq" id="00q-gn-RgP"/>
                                     <outlet property="reservationButtonWidith" destination="BRJ-hU-7eA" id="DqD-3Z-U07"/>
+                                    <outlet property="ticketPriceLabel" destination="BNv-Iq-KiL" id="ETt-NG-gDs"/>
+                                    <outlet property="ticketStateLabel" destination="CuO-34-Rq5" id="e1U-t2-Kvy"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -164,16 +164,16 @@
                             <outlet property="delegate" destination="F4F-t6-gLt" id="ZbX-Ev-Hjf"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="我的团购券" id="W3n-O5-FIW"/>
+                    <navigationItem key="navigationItem" title="团购券" id="W3n-O5-FIW"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vcX-28-17J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-233" y="2829"/>
         </scene>
-        <!--我的收藏-->
+        <!--收藏-->
         <scene sceneID="sqU-D0-pne">
             <objects>
-                <tableViewController storyboardIdentifier="SCCollectionsTableViewController" hidesBottomBarWhenPushed="YES" id="vD4-bY-7LX" customClass="SCCollectionsTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SCCollectionsViewController" hidesBottomBarWhenPushed="YES" id="vD4-bY-7LX" customClass="SCCollectionsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" id="eyg-Qi-TAj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -330,12 +330,8 @@
                             <outlet property="delegate" destination="vD4-bY-7LX" id="hpu-Fb-TvY"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="我的收藏" id="4mR-rB-gax">
-                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="pBR-Sy-tx7">
-                            <connections>
-                                <action selector="deleteFavoriteMerchant:" destination="vD4-bY-7LX" id="1oR-6q-KEM"/>
-                            </connections>
-                        </barButtonItem>
+                    <navigationItem key="navigationItem" title="收藏" id="4mR-rB-gax">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="pBR-Sy-tx7"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="74H-Sf-R7T" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -563,7 +559,7 @@
         <!--设置-->
         <scene sceneID="fIT-9c-iRL">
             <objects>
-                <tableViewController storyboardIdentifier="SCSettingTableViewController" hidesBottomBarWhenPushed="YES" id="wy3-MM-fy9" customClass="SCSettingTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SCSettingViewController" hidesBottomBarWhenPushed="YES" id="wy3-MM-fy9" customClass="SCSettingViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="SlS-b2-U2C">
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1129,7 +1125,7 @@
             </objects>
             <point key="canvasLocation" x="194" y="1531"/>
         </scene>
-        <!--我的订单-->
+        <!--订单-->
         <scene sceneID="rbz-ky-mdY">
             <objects>
                 <viewController storyboardIdentifier="SCOdersViewController" hidesBottomBarWhenPushed="YES" id="4MI-Zl-Ar7" customClass="SCOdersViewController" sceneMemberID="viewController">
@@ -1606,7 +1602,7 @@
                             <constraint firstItem="6hL-PT-ojJ" firstAttribute="top" secondItem="0bY-rh-zq6" secondAttribute="bottom" id="w1C-G5-Lo4"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="我的订单" id="wIY-sl-pIc"/>
+                    <navigationItem key="navigationItem" title="订单" id="wIY-sl-pIc"/>
                     <connections>
                         <outlet property="navigationTab" destination="6hL-PT-ojJ" id="lNQ-5P-px3"/>
                         <outlet property="promptLabel" destination="r2p-hX-zWW" id="AMc-TG-NgM"/>
@@ -1621,7 +1617,7 @@
         <!--团购券-->
         <scene sceneID="Rz0-r1-icg">
             <objects>
-                <tableViewController storyboardIdentifier="SCCouponDetailViewController" id="kBj-vJ-cxE" customClass="SCCouponDetailViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SCGroupTicketDetailViewController" id="kBj-vJ-cxE" customClass="SCGroupTicketDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Zld-fU-DDO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1755,7 +1751,7 @@
                                     <outlet property="totalPriceLabel" destination="wYU-wx-wdD" id="LuX-f6-Kq9"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCCouponCodeCell" rowHeight="44" id="cfG-Qu-v7M" customClass="SCCouponCodeCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCGroupTicketCodeCell" rowHeight="44" id="cfG-Qu-v7M" customClass="SCGroupTicketCodeCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cfG-Qu-v7M" id="7t3-R6-ykC">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -2209,8 +2205,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="团购券" id="KdD-LH-i1I"/>
                     <connections>
-                        <outlet property="couponImagesView" destination="rlu-y3-pjT" id="3C1-4X-SVk"/>
                         <outlet property="refundView" destination="cUv-0y-ZAm" id="lmQ-u2-yvj"/>
+                        <outlet property="ticketImagesView" destination="rlu-y3-pjT" id="OBE-MZ-mzo"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lgm-XY-5T7" userLabel="First Responder" sceneMemberID="firstResponder"/>

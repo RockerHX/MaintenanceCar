@@ -47,9 +47,8 @@
 #define MerchantGroupProductAPI     @"/Group_product"                       // 商家团购详情API
 #define WeiXinPayAPI                @"/wepay"                               // 微信支付API
 #define AliPayAPI                   @"/zhipay"                              // 支付宝钱包API
-#define GenerateCouponAPI           @"/Group_ticket"                        // 生成团购券API
-#define GroupCouponsAPI              @"/Group_ticket/all"                    // 团购券API
-#define GroupCouponRefundAPI        @"/wepay/refund"                        // 团购券退款的API
+#define GroupTicketsAPI             @"/Group_ticket/all"                    // 团购券API
+#define GroupTicketRefundAPI        @"/wepay/refund"                        // 团购券退款的API
 
 #define CommentAPI                  @"/Comments"                            // 评价API
 #define MerchantCommentAPI          @"/Comments/shop"                       // 商家的评价
@@ -60,7 +59,6 @@
 #define RefreshTokenAPI             @"/User/refresh/"                       // 刷新Token的API
 
 #define MerchantReservationAPI      @"/Reservation"                         // 商家预约API
-#define MyReservationAPI            @"/Reservation/all"                     // 我的预约API
 #define UpdateReservationAPI        @"/Reservation/update"                  // 更新预约API
 #define ReservationItemNumAPI       @"/Carshop/reservation_left"            // 预约日期数量API
 
@@ -107,9 +105,8 @@
 #define MerchantGroupProductAPIURL      [V1APIURL stringByAppendingString:MerchantGroupProductAPI]    // 商家团购详情接口URL - 用于商家团购项目
 #define WeiXinPayAPIURL                 [V1APIURL stringByAppendingString:WeiXinPayAPI]               // 微信支付订单接口URL - 用于团购支付时获取微信支付订单信息
 #define AliPayAPIURL                    [V1APIURL stringByAppendingString:AliPayAPI]                  // 支付宝钱包支付订单接口URL - 用于团购支付时获取支付宝钱包订单信息
-#define GenerateCouponAPIURL            [V1APIURL stringByAppendingString:GenerateCouponAPI]          // 生成团购券接口URL - 用于付款成功后生成团购券
-#define GroupCouponsAPIURL              [V2APIURL stringByAppendingString:GroupCouponsAPI]            // 团购券列表接口URL - 用于获取用户所有团购券列表
-#define GroupCouponRefundAPIURL         [V1APIURL stringByAppendingString:GroupCouponRefundAPI]       // 团购券退款的接口URL - 用于团购券详情申请退款
+#define GroupTicketsAPIURL              [V2APIURL stringByAppendingString:GroupTicketsAPI]            // 团购券列表接口URL - 用于获取用户所有团购券列表
+#define GroupTicketRefundAPIURL         [V1APIURL stringByAppendingString:GroupTicketRefundAPI]       // 团购券退款的接口URL - 用于团购券详情申请退款
 
 #define CommentAPIURL                   [V2APIURL stringByAppendingString:CommentAPI]                 // 评价接口URL - 用于添加评价
 #define MerchantCommentAPIURL           [V2APIURL stringByAppendingString:MerchantCommentAPI]         // 商家评价接口URL - 用于获取商家评价列表
@@ -120,7 +117,6 @@
 #define RefreshTokenAPIURL              [V2APIURL stringByAppendingString:RefreshTokenAPI]            // 刷新Token接口URL - 刷新token过期时间
 
 #define MerchantReservationAPIURL       [V2APIURL stringByAppendingString:MerchantReservationAPI]     // 商家预约接口URL - 用于商家预约项目
-#define MyReservationAPIURL             [V2APIURL stringByAppendingString:MyReservationAPI]           // 我的预约接口URL - 用于商家预约项目
 #define UpdateReservationAPIURL         [V2APIURL stringByAppendingString:UpdateReservationAPI]       // 更新预约接口URL - 用于用户取消预约项目
 #define ReservationItemNumAPIURL        [V2APIURL stringByAppendingString:ReservationItemNumAPI]      // 预约日期数量接口URL - 用于获取预约项目数量
 

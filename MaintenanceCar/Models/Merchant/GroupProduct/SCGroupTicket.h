@@ -1,5 +1,5 @@
 //
-//  SCGroupCoupon.h
+//  SCGroupTicket.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/3/9.
@@ -8,18 +8,18 @@
 
 #import "JSONModel.h"
 
-typedef NS_ENUM(NSInteger, SCGroupCouponState) {
-    SCGroupCouponStateUnUse,
-    SCGroupCouponStateUsed,
-    SCGroupCouponStateCancel,
-    SCGroupCouponStateExpired,
-    SCGroupCouponStateRefunding,
-    SCGroupCouponStateRefunded,
-    SCGroupCouponStateReserved,
-    SCGroupCouponStateUnknown
+typedef NS_ENUM(NSInteger, SCGroupTicketState) {
+    SCGroupTicketStateUnUse,
+    SCGroupTicketStateUsed,
+    SCGroupTicketStateCancel,
+    SCGroupTicketStateExpired,
+    SCGroupTicketStateRefunding,
+    SCGroupTicketStateRefunded,
+    SCGroupTicketStateReserved,
+    SCGroupTicketStateUnknown
 };
 
-@interface SCGroupCoupon : JSONModel
+@interface SCGroupTicket : JSONModel
 
 @property (nonatomic, copy) NSString <Optional>*group_ticket_id;
 @property (nonatomic, copy) NSString <Optional>*company_id;
@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, SCGroupCouponState) {
 @property (nonatomic, copy) NSString <Optional>*company_name;
 @property (nonatomic, copy) NSString <Optional>*now;
 
-@property (nonatomic, assign, readonly) SCGroupCouponState state;
+@property (nonatomic, assign, readonly) SCGroupTicketState state;
 
 - (BOOL)expired;
 - (NSString *)expiredPrompt;

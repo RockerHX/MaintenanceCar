@@ -1,18 +1,18 @@
 //
-//  SCCollectionsTableViewController.m
+//  SCCollectionsViewController.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/5.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCCollectionsTableViewController.h"
+#import "SCCollectionsViewController.h"
 #import "SCMerchantTableViewCell.h"
 #import "SCMerchantDetailViewController.h"
 #import "SCReservationViewController.h"
 #import "SCLocationManager.h"
 
-@implementation SCCollectionsTableViewController
+@implementation SCCollectionsViewController
 
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated

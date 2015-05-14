@@ -197,7 +197,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 {
     [self showHUDAlertToViewController:self.navigationController text:@"恭喜您团购成功！" delay:0.5f];
     [self.navigationController popToRootViewControllerAnimated:YES];
-    [NOTIFICATION_CENTER postNotificationName:kGenerateCouponSuccessNotification object:nil];
+    [NOTIFICATION_CENTER postNotificationName:kGenerateTicketSuccessNotification object:nil];
 }
 
 - (void)weiXinPayFailure
@@ -213,7 +213,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
         {
             [self showPromptWithText:@"支付成功"];
             [self.navigationController popToRootViewControllerAnimated:YES];
-            [NOTIFICATION_CENTER postNotificationName:kGenerateCouponSuccessNotification object:nil];
+            [NOTIFICATION_CENTER postNotificationName:kGenerateTicketSuccessNotification object:nil];
         }
             break;
         case SCAliPayCodePayProcessing:
@@ -267,7 +267,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
     }];
 }
 
-- (void)showGenerateCouponFailureAlert
+- (void)showGenerateTicketFailureAlert
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
                                                         message:@"您的网络好像出问题了，请您检查网络，重新购买。之前支付的款项将在3天内自动退回您的银行卡！"

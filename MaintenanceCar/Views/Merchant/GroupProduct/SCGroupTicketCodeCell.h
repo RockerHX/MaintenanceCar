@@ -1,5 +1,5 @@
 //
-//  SCCouponCodeCell.h
+//  SCGroupTicketCodeCell.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/3/10.
@@ -7,26 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SCGroupCoupon.h"
+#import "SCGroupTicket.h"
 
-@protocol SCCouponCodeCellDelegate <NSObject>
+@protocol SCGroupTicketCodeCellDelegate <NSObject>
 
 @optional
-- (void)couponShouldReservationWithIndex:(NSInteger)index;
-- (void)couponShouldShowWithIndex:(NSInteger)index;
+- (void)ticketShouldReservationWithIndex:(NSInteger)index;
+- (void)ticketShouldShowWithIndex:(NSInteger)index;
 
 @end
 
-@interface SCCouponCodeCell : UITableViewCell
+@interface SCGroupTicketCodeCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet            UILabel *codeLabel;
 @property (weak, nonatomic) IBOutlet           UIButton *reservationButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *reservationButtonWidith;
 
-@property (nonatomic, weak)                id  <SCCouponCodeCellDelegate>delegate;
+@property (nonatomic, weak)                id  <SCGroupTicketCodeCellDelegate>delegate;
 
 - (IBAction)reservationButtonPressed:(id)sender;
 
-- (void)displayCellWithCoupon:(SCGroupCoupon *)coupon index:(NSInteger)index;
+- (void)displayCellWithTicket:(SCGroupTicket *)ticket index:(NSInteger)index;
 
 @end

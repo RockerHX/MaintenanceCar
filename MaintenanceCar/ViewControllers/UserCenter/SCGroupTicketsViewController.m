@@ -1,20 +1,20 @@
 //
-//  SCGroupCouponsViewController.m
+//  SCGroupTicketsViewController.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/3/4.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCGroupCouponsViewController.h"
-#import "SCGroupCouponCell.h"
-#import "SCCouponDetailViewController.h"
+#import "SCGroupTicketsViewController.h"
+#import "SCGroupTicketCell.h"
+#import "SCGroupTicketDetailViewController.h"
 #import "SCReservationViewController.h"
 
-@interface SCGroupCouponsViewController () <SCCouponCodeCellDelegate, SCReservationViewControllerDelegate>
+@interface SCGroupTicketsViewController () <SCGroupTicketCodeCellDelegate, SCReservationViewControllerDelegate>
 @end
 
-@implementation SCGroupCouponsViewController
+@implementation SCGroupTicketsViewController
 
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated
@@ -44,17 +44,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCGroupCouponCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupCouponCell" forIndexPath:indexPath];
-    cell.delegate      = self;
-    [cell displayCellWithCoupon:_dataList[indexPath.row] index:indexPath.row];
+    SCGroupTicketCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupTicketCell" forIndexPath:indexPath];
+    cell.delegate = self;
+    [cell displayCellWithTicket:_dataList[indexPath.row] index:indexPath.row];
     
     return cell;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCGroupCoupon *coupon = _dataList[indexPath.row];
-    return ![coupon expired];
+    SCGroupTicket *ticket = _dataList[indexPath.row];
+    return ![ticket expired];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -64,42 +64,42 @@
 #pragma mark - Table View Delegate Methods
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCGroupCoupon *coupon = _dataList[indexPath.row];
-    return [coupon expiredPrompt];
+    SCGroupTicket *ticket = _dataList[indexPath.row];
+    return [ticket expiredPrompt];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    SCGroupCoupon *coupon = _dataList[indexPath.row];
-    SCCouponDetailViewController *couponDetailViewController = USERCENTER_VIEW_CONTROLLER(@"SCCouponDetailViewController");
-    couponDetailViewController.coupon = coupon;
-    [self.navigationController pushViewController:couponDetailViewController animated:YES];
+    SCGroupTicket *ticket = _dataList[indexPath.row];
+    SCGroupTicketDetailViewController *groupTicketDetailViewController = USERCENTER_VIEW_CONTROLLER(@"SCGroupTicketDetailViewController");
+    groupTicketDetailViewController.ticket = ticket;
+    [self.navigationController pushViewController:groupTicketDetailViewController animated:YES];
 }
 
 #pragma mark - Public Methods
 - (void)startDropDownRefreshReuqest
 {
     [super startDropDownRefreshReuqest];
-    [self startMyCouponListRequest];
+    [self startGroupTicketsListRequest];
 }
 
 - (void)startPullUpRefreshRequest
 {
     [super startPullUpRefreshRequest];
-    [self startMyCouponListRequest];
+    [self startGroupTicketsListRequest];
 }
 
 #pragma mark - Private Methods
-- (void)startMyCouponListRequest
+- (void)startGroupTicketsListRequest
 {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                    @"limit": @(SearchLimit),
                                   @"offset": @(self.offset)};
-    [[SCAPIRequest manager] startGroupCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startGroupTicketsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
@@ -110,10 +110,10 @@
                 {
                     if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
                         [weakSelf clearListData];
-                    // 遍历请求回来的订单数据，生成SCCoupon用于团购券列表显示
+                    // 遍历请求回来的订单数据，生成SCGroupTicket用于团购券列表显示
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                        SCGroupCoupon *coupon = [[SCGroupCoupon alloc] initWithDictionary:obj error:nil];
-                        [_dataList addObject:coupon];
+                        SCGroupTicket *ticket = [[SCGroupTicket alloc] initWithDictionary:obj error:nil];
+                        [_dataList addObject:ticket];
                     }];
                     
                     weakSelf.offset += SearchLimit;               // 偏移量请求参数递增
@@ -140,25 +140,25 @@
     }];
 }
 
-#pragma mark - SCCouponCodeCellDelegate Methods
-- (void)couponShouldReservationWithIndex:(NSInteger)index
+#pragma mark - SCTicketCodeCellDelegate Methods
+- (void)ticketShouldReservationWithIndex:(NSInteger)index
 {
     // 跳转到预约页面
     [[SCUserInfo share] removeItems];
-    SCGroupCoupon *coupon = _dataList[index];
+    SCGroupTicket *ticket = _dataList[index];
     SCReservationViewController *reservationViewController = MAIN_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
     reservationViewController.delegate    = self;
-    reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:coupon.company_name
-                                                                           companyID:coupon.company_id];
-    reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:coupon.type];
-    reservationViewController.groupCoupon = _dataList[index];
+    reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:ticket.company_name
+                                                                           companyID:ticket.company_id];
+    reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:ticket.type];
+    reservationViewController.groupTicket = _dataList[index];
     [self.navigationController pushViewController:reservationViewController animated:YES];
 }
 
-- (void)couponShouldShowWithIndex:(NSInteger)index
+- (void)ticketShouldShowWithIndex:(NSInteger)index
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
-    [NOTIFICATION_CENTER postNotificationName:kShowCouponNotification object:nil];
+    [NOTIFICATION_CENTER postNotificationName:kShowTicketNotification object:nil];
 }
 
 #pragma mark - SCReservationViewControllerDelegate Methods
