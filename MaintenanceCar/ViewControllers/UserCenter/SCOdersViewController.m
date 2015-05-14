@@ -170,7 +170,7 @@ typedef NS_ENUM(NSUInteger, SCOderAlertType) {
 - (void)startProgressOdersRequestWithParameters:(NSDictionary *)parameters
 {
     __weak typeof(self) weakSelf = self;
-    [[SCAPIRequest manager] startMyProgressOdersAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startProgressOdersAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf requestSuccessWithOperation:operation responseObject:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf requestFailureWithOperation:operation];
@@ -183,7 +183,7 @@ typedef NS_ENUM(NSUInteger, SCOderAlertType) {
 - (void)startFinishedOdersRequestWithParameters:(NSDictionary *)parameters
 {
     __weak typeof(self) weakSelf = self;
-    [[SCAPIRequest manager] startMyFinishedOdersAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startFinishedOdersAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf requestSuccessWithOperation:operation responseObject:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf requestFailureWithOperation:operation];

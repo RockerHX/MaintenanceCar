@@ -53,7 +53,7 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCCoupon *coupon = _dataList[indexPath.row];
+    SCGroupCoupon *coupon = _dataList[indexPath.row];
     return ![coupon expired];
 }
 
@@ -64,7 +64,7 @@
 #pragma mark - Table View Delegate Methods
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCCoupon *coupon = _dataList[indexPath.row];
+    SCGroupCoupon *coupon = _dataList[indexPath.row];
     return [coupon expiredPrompt];
 }
 
@@ -72,7 +72,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    SCCoupon *coupon = _dataList[indexPath.row];
+    SCGroupCoupon *coupon = _dataList[indexPath.row];
     SCCouponDetailViewController *couponDetailViewController = USERCENTER_VIEW_CONTROLLER(@"SCCouponDetailViewController");
     couponDetailViewController.coupon = coupon;
     [self.navigationController pushViewController:couponDetailViewController animated:YES];
@@ -97,9 +97,9 @@
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                 @"limit"  : @(SearchLimit),
-                                 @"offset" : @(self.offset)};
-    [[SCAPIRequest manager] startGetMyCouponAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   @"limit": @(SearchLimit),
+                                  @"offset": @(self.offset)};
+    [[SCAPIRequest manager] startGroupCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
@@ -112,7 +112,7 @@
                         [weakSelf clearListData];
                     // 遍历请求回来的订单数据，生成SCCoupon用于团购券列表显示
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                        SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];
+                        SCGroupCoupon *coupon = [[SCGroupCoupon alloc] initWithDictionary:obj error:nil];
                         [_dataList addObject:coupon];
                     }];
                     
@@ -145,13 +145,13 @@
 {
     // 跳转到预约页面
     [[SCUserInfo share] removeItems];
-    SCCoupon *coupon = _dataList[index];
+    SCGroupCoupon *coupon = _dataList[index];
     SCReservationViewController *reservationViewController = MAIN_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
     reservationViewController.delegate    = self;
     reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:coupon.company_name
                                                                            companyID:coupon.company_id];
     reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:coupon.type];
-    reservationViewController.coupon      = _dataList[index];
+    reservationViewController.groupCoupon = _dataList[index];
     [self.navigationController pushViewController:reservationViewController animated:YES];
 }
 

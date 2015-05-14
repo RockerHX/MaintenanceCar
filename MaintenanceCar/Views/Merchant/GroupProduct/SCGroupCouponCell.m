@@ -7,12 +7,12 @@
 //
 
 #import "SCGroupCouponCell.h"
-#import "SCCoupon.h"
+#import "SCGroupCoupon.h"
 
 @implementation SCGroupCouponCell
 
 #pragma mark - Public Methods
-- (void)displayCellWithCoupon:(SCCoupon *)coupon index:(NSInteger)index
+- (void)displayCellWithCoupon:(SCGroupCoupon *)coupon index:(NSInteger)index
 {
     [super displayCellWithCoupon:coupon index:index];
     
@@ -22,35 +22,35 @@
     _productPriceLabel.text = coupon.total_price;
     _couponStateLabel.text  = [self codeStateWithCoupon:coupon.state];
     
-    _codeLine.hidden = (coupon.state == SCCouponStateUnUse);
-    self.codeLabel.textColor = (coupon.state == SCCouponStateUnUse) ? [UIColor orangeColor] : [UIColor lightGrayColor];
+    _codeLine.hidden = (coupon.state == SCGroupCouponStateUnUse);
+    self.codeLabel.textColor = (coupon.state == SCGroupCouponStateUnUse) ? [UIColor orangeColor] : [UIColor lightGrayColor];
 }
 
 #pragma mark - Private Methods
-- (NSString *)codeStateWithCoupon:(SCCouponState)state
+- (NSString *)codeStateWithCoupon:(SCGroupCouponState)state
 {
     NSString *codeState;
     switch (state)
     {
-        case SCCouponStateUnUse:
+        case SCGroupCouponStateUnUse:
             codeState = @"未使用";
             break;
-        case SCCouponStateUsed:
+        case SCGroupCouponStateUsed:
             codeState = @"已使用";
             break;
-        case SCCouponStateCancel:
+        case SCGroupCouponStateCancel:
             codeState = @"已取消";
             break;
-        case SCCouponStateExpired:
+        case SCGroupCouponStateExpired:
             codeState = @"已过期";
             break;
-        case SCCouponStateRefunding:
+        case SCGroupCouponStateRefunding:
             codeState = @"退款中";
             break;
-        case SCCouponStateRefunded:
+        case SCGroupCouponStateRefunded:
             codeState = @"已退款";
             break;
-        case SCCouponStateReserved:
+        case SCGroupCouponStateReserved:
             codeState = @"已预约";
             break;
             

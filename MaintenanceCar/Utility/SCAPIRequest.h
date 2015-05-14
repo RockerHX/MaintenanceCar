@@ -167,25 +167,18 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
                                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  我的团购券列表接口请求方法(API:/Group_ticket/all - GET)
+ *  团购券列表接口请求方法(API:/Group_ticket/all - GET)
  */
-- (void)startGetMyCouponAPIRequestWithParameters:(NSDictionary *)parameters
-                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startGroupCouponsAPIRequestWithParameters:(NSDictionary *)parameters
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  团购券详情接口请求方法(API:/Group_ticket - GET)
+ *  团购券退款接口请求方法(API:/wepay/refund - POST)
  */
-- (void)startGetCouponDetailAPIRequestWithParameters:(NSDictionary *)parameters
-                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
-/**
- *  团购券详情接口请求方法(API:/wepay/refund - POST)
- */
-- (void)startCouponRefundAPIRequestWithParameters:(NSDictionary *)parameters
-                                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startGroupCouponRefundAPIRequestWithParameters:(NSDictionary *)parameters
+                                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - Comment API
 /**
@@ -359,49 +352,49 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 #pragma mark - V2 API
 #pragma mark - User Center API
 /**
- *  我的进行中订单接口请求方法(API:/Reservation/doing - GET)
+ *  进行中订单接口请求方法(API:/Reservation/doing - GET)
  */
-- (void)startMyProgressOdersAPIRequestWithParameters:(NSDictionary *)parameters
-                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startProgressOdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  我的已完成订单接口请求方法(API:/Reservation/done - GET)
+ *  已完成订单接口请求方法(API:/Reservation/done - GET)
  */
-- (void)startMyFinishedOdersAPIRequestWithParameters:(NSDictionary *)parameters
-                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startFinishedOdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  订单详情接口请求方法(API:/Reservation - GET)
  */
-- (void)startMyOderDetailAPIRequestWithParameters:(NSDictionary *)parameters
+- (void)startOderDetailAPIRequestWithParameters:(NSDictionary *)parameters
+                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  有效优惠券接口请求方法(API:/get_effective_coupon - GET)
+ */
+- (void)startValidCouponsAPIRequestWithParameters:(NSDictionary *)parameters
                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  我的有效优惠券接口请求方法(API:/get_effective_coupon - GET)
+ *  无效优惠券接口请求方法(API:/get_invalid_coupon - GET)
  */
-- (void)startMyValidCouponsAPIRequestWithParameters:(NSDictionary *)parameters
+- (void)startInvalidCouponsAPIRequestWithParameters:(NSDictionary *)parameters
                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  我的无效优惠券接口请求方法(API:/get_invalid_coupon - GET)
- */
-- (void)startMyInvalidCouponsAPIRequestWithParameters:(NSDictionary *)parameters
-                                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
-/**
- *  我的无效优惠券接口请求方法(API:/add_coupon - POST)
+ *  添加优惠券接口请求方法(API:/add_coupon - POST)
  */
 - (void)startAddCouponAPIRequestWithParameters:(NSDictionary *)parameters
                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  我的无效优惠券接口请求方法(API:/use_coupon - POST)
+ *  使用优惠券接口请求方法(API:/use_coupon - POST)
  */
 - (void)startUseCouponAPIRequestWithParameters:(NSDictionary *)parameters
                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success

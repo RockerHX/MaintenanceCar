@@ -1,15 +1,15 @@
 //
-//  SCCoupon.m
+//  SCGroupCoupon.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/3/9.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCCoupon.h"
+#import "SCGroupCoupon.h"
 #import "UIConstants.h"
 
-@implementation SCCoupon
+@implementation SCGroupCoupon
 
 #pragma mark - Init Methods
 - (id)initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err
@@ -48,35 +48,35 @@
     return expiredInterval;
 }
 
-- (SCCouponState)couponState
+- (SCGroupCouponState)couponState
 {
-    SCCouponState state;
+    SCGroupCouponState state;
     switch ([_status integerValue])
     {
         case 0:
-            state = SCCouponStateUnUse;
+            state = SCGroupCouponStateUnUse;
             break;
         case 1:
-            state = SCCouponStateUsed;
+            state = SCGroupCouponStateUsed;
             break;
         case 2:
-            state = SCCouponStateCancel;
+            state = SCGroupCouponStateCancel;
             break;
         case 3:
-            state = SCCouponStateExpired;
+            state = SCGroupCouponStateExpired;
             break;
         case 4:
-            state = SCCouponStateRefunding;
+            state = SCGroupCouponStateRefunding;
             break;
         case 5:
-            state = SCCouponStateRefunded;
+            state = SCGroupCouponStateRefunded;
             break;
         case 6:
-            state = SCCouponStateReserved;
+            state = SCGroupCouponStateReserved;
             break;
             
         default:
-            state = [self expired] ? SCCouponStateExpired : SCCouponStateUnknown;
+            state = [self expired] ? SCGroupCouponStateExpired : SCGroupCouponStateUnknown;
             break;
     }
     return state;

@@ -7,7 +7,6 @@
 //
 
 #import "SCCouponDetailViewController.h"
-#import "SCCoupon.h"
 #import "SCGroupProductDetail.h"
 #import "SCGroupCouponCell.h"
 #import "SCBuyGroupProductCell.h"
@@ -316,7 +315,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:_coupon.company_name
                                                                                                 companyID:_coupon.company_id];
         reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:_coupon.type];
-        reservationViewController.coupon      = _coupon;
+        reservationViewController.groupCoupon = _coupon;
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {
@@ -371,7 +370,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             __weak typeof(self)weakSelf = self;
             NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                          @"group_ticket_id": _coupon.group_ticket_id};
-            [[SCAPIRequest manager] startCouponRefundAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [[SCAPIRequest manager] startGroupCouponRefundAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 [weakSelf hideHUDOnViewController:weakSelf.navigationController];
                 if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
                     [weakSelf showHUDAlertToViewController:weakSelf.navigationController delegate:weakSelf text:@"退款成功" delay:0.5f];

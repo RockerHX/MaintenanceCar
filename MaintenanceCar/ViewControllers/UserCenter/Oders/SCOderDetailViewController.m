@@ -167,7 +167,7 @@ typedef NS_ENUM(NSUInteger, SCOderDetailMenuType) {
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                               @"reserve_id": _reserveID};
-    [[SCAPIRequest manager] startMyOderDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startOderDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];

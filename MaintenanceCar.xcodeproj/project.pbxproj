@@ -99,8 +99,7 @@
 		4866F9BF1AACBD89008E195C /* SCSelectedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F98F1AACBD89008E195C /* SCSelectedView.m */; };
 		4866F9C01AACBD89008E195C /* SCUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F9911AACBD89008E195C /* SCUserInfoView.m */; };
 		4866F9EF1AAD9068008E195C /* SCGroupCouponCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F9EE1AAD9068008E195C /* SCGroupCouponCell.m */; };
-		4866F9F21AAD96F7008E195C /* SCCoupon.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F9F11AAD96F7008E195C /* SCCoupon.m */; };
-		4866F9FF1AAE0EAE008E195C /* SCCouponDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F9FE1AAE0EAE008E195C /* SCCouponDetail.m */; };
+		4866F9F21AAD96F7008E195C /* SCGroupCoupon.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F9F11AAD96F7008E195C /* SCGroupCoupon.m */; };
 		4866FA1E1AAED9B2008E195C /* SCCouponCodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866FA1D1AAED9B2008E195C /* SCCouponCodeCell.m */; };
 		4869679C1AD6A63900C3F7A6 /* SCMerchantSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4869679B1AD6A63900C3F7A6 /* SCMerchantSummary.m */; };
 		4869679F1AD6BBB800C3F7A6 /* SCMerchantGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4869679E1AD6BBB800C3F7A6 /* SCMerchantGroup.m */; };
@@ -363,10 +362,8 @@
 		4866F9911AACBD89008E195C /* SCUserInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCUserInfoView.m; sourceTree = "<group>"; };
 		4866F9ED1AAD9068008E195C /* SCGroupCouponCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGroupCouponCell.h; sourceTree = "<group>"; };
 		4866F9EE1AAD9068008E195C /* SCGroupCouponCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGroupCouponCell.m; sourceTree = "<group>"; };
-		4866F9F01AAD96F7008E195C /* SCCoupon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCoupon.h; sourceTree = "<group>"; };
-		4866F9F11AAD96F7008E195C /* SCCoupon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCoupon.m; sourceTree = "<group>"; };
-		4866F9FD1AAE0EAE008E195C /* SCCouponDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCouponDetail.h; sourceTree = "<group>"; };
-		4866F9FE1AAE0EAE008E195C /* SCCouponDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCouponDetail.m; sourceTree = "<group>"; };
+		4866F9F01AAD96F7008E195C /* SCGroupCoupon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGroupCoupon.h; sourceTree = "<group>"; };
+		4866F9F11AAD96F7008E195C /* SCGroupCoupon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGroupCoupon.m; sourceTree = "<group>"; };
 		4866FA1C1AAED9B2008E195C /* SCCouponCodeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCouponCodeCell.h; sourceTree = "<group>"; };
 		4866FA1D1AAED9B2008E195C /* SCCouponCodeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCouponCodeCell.m; sourceTree = "<group>"; };
 		4869679A1AD6A63900C3F7A6 /* SCMerchantSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMerchantSummary.h; sourceTree = "<group>"; };
@@ -682,10 +679,8 @@
 				4866F8B51AAB32ED008E195C /* SCWeiXinPayOder.m */,
 				480445B41AC5616B004C20B9 /* SCAliPayOrder.h */,
 				480445B51AC5616B004C20B9 /* SCAliPayOrder.m */,
-				4866F9F01AAD96F7008E195C /* SCCoupon.h */,
-				4866F9F11AAD96F7008E195C /* SCCoupon.m */,
-				4866F9FD1AAE0EAE008E195C /* SCCouponDetail.h */,
-				4866F9FE1AAE0EAE008E195C /* SCCouponDetail.m */,
+				4866F9F01AAD96F7008E195C /* SCGroupCoupon.h */,
+				4866F9F11AAD96F7008E195C /* SCGroupCoupon.m */,
 			);
 			path = GroupProduct;
 			sourceTree = "<group>";
@@ -1090,6 +1085,13 @@
 			path = Oders;
 			sourceTree = "<group>";
 		};
+		489AA22A1B050B3B00EDB86C /* Coupons */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Coupons;
+			sourceTree = "<group>";
+		};
 		48AE95B01A50F52700A8A4B3 /* ThirdLibrary */ = {
 			isa = PBXGroup;
 			children = (
@@ -1173,6 +1175,7 @@
 		48EC70501A442ACB003CE3FD /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				489AA22A1B050B3B00EDB86C /* Coupons */,
 				489AA2201B04F35E00EDB86C /* Oders */,
 				48FB70A61AA5A58300AF4AD9 /* AddCar */,
 				48FB70AF1AA5A58300AF4AD9 /* Dictionary */,
@@ -1526,13 +1529,12 @@
 				489AA2271B04F35E00EDB86C /* SCOder.m in Sources */,
 				482AC9881AB587F7001574EF /* SCShowMoreCell.m in Sources */,
 				486967A81AD6DF7F00C3F7A6 /* SCMerchantDetailBase.m in Sources */,
-				4866F9FF1AAE0EAE008E195C /* SCCouponDetail.m in Sources */,
 				4866F9921AACBD89008E195C /* SCDatePickerView.m in Sources */,
 				482AC96F1AB1DBF3001574EF /* SCComment.m in Sources */,
 				48FB70C51AA5A58300AF4AD9 /* SCCarBrand.m in Sources */,
 				4866F91C1AACBD2D008E195C /* SCHomePageViewController.m in Sources */,
 				4866F9AE1AACBD89008E195C /* SCCollectionItem.m in Sources */,
-				4866F9F21AAD96F7008E195C /* SCCoupon.m in Sources */,
+				4866F9F21AAD96F7008E195C /* SCGroupCoupon.m in Sources */,
 				489AA1F11B04DCB900EDB86C /* SCCouponCell.m in Sources */,
 				4866F91B1AACBD2D008E195C /* SCReservationViewController.m in Sources */,
 				4866F9AD1AACBD89008E195C /* SCSelectedCell.m in Sources */,

@@ -137,8 +137,8 @@
     _reservationType    = _serviceItem.service_id;
     _categoryLabel.text = _serviceItem.service_name;
     _itemLabel.text     = _serviceItem.service_name;
-    if (_coupon)
-        _itemLabel.text = _coupon.title;
+    if (_groupCoupon)
+        _itemLabel.text = _groupCoupon.title;
     if (_quotedPrice)
         _itemLabel.text = _quotedPrice.title;
 }
@@ -155,7 +155,7 @@
                                  @"content": _remarkTextField.text,
                                     @"time": _reservationDate,
                              @"user_car_id": _selectedCarID,
-                         @"group_ticket_id": _coupon ? _coupon.group_ticket_id : @"",
+                         @"group_ticket_id": _groupCoupon ? _groupCoupon.group_ticket_id : @"",
                                    @"price": _quotedPrice ? _quotedPrice.final_price : @""};
     [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SCCoupon.h"
+#import "SCGroupCoupon.h"
 
 @protocol SCCouponCodeCellDelegate <NSObject>
 
@@ -27,6 +27,6 @@
 
 - (IBAction)reservationButtonPressed:(id)sender;
 
-- (void)displayCellWithCoupon:(SCCoupon *)coupon index:(NSInteger)index;
+- (void)displayCellWithCoupon:(SCGroupCoupon *)coupon index:(NSInteger)index;
 
 @end

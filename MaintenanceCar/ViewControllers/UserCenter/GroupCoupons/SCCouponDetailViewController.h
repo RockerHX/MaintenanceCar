@@ -8,7 +8,7 @@
 
 #import "SCViewControllerCategory.h"
 
-@class SCCoupon;
+@class SCGroupCoupon;
 @class SCLoopScrollView;
 
 @protocol SCCouponDetailViewControllerDelegate <NSObject>
@@ -23,8 +23,8 @@
 @property (weak, nonatomic) IBOutlet SCLoopScrollView *couponImagesView;
 @property (weak, nonatomic) IBOutlet           UIView *refundView;
 
-@property (nonatomic, weak)       id  <SCCouponDetailViewControllerDelegate>delegate;
-@property (nonatomic, weak) SCCoupon *coupon;
+@property (nonatomic, weak)            id  <SCCouponDetailViewControllerDelegate>delegate;
+@property (nonatomic, weak) SCGroupCoupon *coupon;
 
 - (IBAction)refundButtonPressed:(id)sender;
 

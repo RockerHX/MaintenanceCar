@@ -197,25 +197,18 @@
     [self requestPOSTMethodsWithAPI:GenerateCouponAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startGetMyCouponAPIRequestWithParameters:(NSDictionary *)parameters
-                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    [self requestGETMethodsWithAPI:MyGroupProductAPIURL parameters:parameters success:success failure:failure];
-}
-
-- (void)startGetCouponDetailAPIRequestWithParameters:(NSDictionary *)parameters
-                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    [self requestGETMethodsWithAPI:CouponDetailAPIURL parameters:parameters success:success failure:failure];
-}
-
-- (void)startCouponRefundAPIRequestWithParameters:(NSDictionary *)parameters
+- (void)startGroupCouponsAPIRequestWithParameters:(NSDictionary *)parameters
                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestPOSTMethodsWithAPI:CouponRefundAPIURL parameters:parameters success:success failure:failure];
+    [self requestGETMethodsWithAPI:GroupCouponsAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startGroupCouponRefundAPIRequestWithParameters:(NSDictionary *)parameters
+                                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:GroupCouponRefundAPIURL parameters:parameters success:success failure:failure];
 }
 
 #pragma mark - Comment API
@@ -393,39 +386,39 @@
 
 #pragma mark - V2 API
 #pragma mark - User Center API
-- (void)startMyProgressOdersAPIRequestWithParameters:(NSDictionary *)parameters
-                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startProgressOdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:MyProgressOderAPIURL parameters:parameters success:success failure:failure];
+    [self requestGETMethodsWithAPI:ProgressOdersAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startMyFinishedOdersAPIRequestWithParameters:(NSDictionary *)parameters
-                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startFinishedOdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:MyFinishedOderAPIURL parameters:parameters success:success failure:failure];
+    [self requestGETMethodsWithAPI:FinishedOdersAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startMyOderDetailAPIRequestWithParameters:(NSDictionary *)parameters
+- (void)startOderDetailAPIRequestWithParameters:(NSDictionary *)parameters
+                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:OderDetailAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startValidCouponsAPIRequestWithParameters:(NSDictionary *)parameters
                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:MyOderDetailAPIURL parameters:parameters success:success failure:failure];
+    [self requestGETMethodsWithAPI:ValidCouponsAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startMyValidCouponsAPIRequestWithParameters:(NSDictionary *)parameters
+- (void)startInvalidCouponsAPIRequestWithParameters:(NSDictionary *)parameters
                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:MyValidCouponsAPIURL parameters:parameters success:success failure:failure];
-}
-
-- (void)startMyInvalidCouponsAPIRequestWithParameters:(NSDictionary *)parameters
-                                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    [self requestGETMethodsWithAPI:MyInvalidCouponsAPIURL parameters:parameters success:success failure:failure];
+    [self requestGETMethodsWithAPI:InvalidCouponsAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startAddCouponAPIRequestWithParameters:(NSDictionary *)parameters

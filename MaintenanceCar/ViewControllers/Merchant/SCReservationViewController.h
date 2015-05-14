@@ -9,7 +9,7 @@
 #import "SCViewControllerCategory.h"
 #import "SCMerchant.h"
 #import "SCServiceItem.h"
-#import "SCCoupon.h"
+#import "SCGroupCoupon.h"
 
 @class SCTextView;
 @class SCQuotedPrice;
@@ -41,7 +41,7 @@
 @property (nonatomic, weak)              id  <SCReservationViewControllerDelegate>delegate;
 @property (nonatomic, strong)    SCMerchant *merchant;                  // 商家信息
 @property (nonatomic, strong) SCServiceItem *serviceItem;               // 服务项目
-@property (nonatomic, strong)      SCCoupon *coupon;                    // 团购券数据
+@property (nonatomic, strong) SCGroupCoupon *groupCoupon;               // 团购券数据
 @property (nonatomic, strong) SCQuotedPrice *quotedPrice;
 @property (nonatomic, assign)          BOOL  canChange;
 

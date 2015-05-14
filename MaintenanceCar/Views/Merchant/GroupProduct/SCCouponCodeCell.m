@@ -10,7 +10,7 @@
 
 @implementation SCCouponCodeCell
 {
-    SCCoupon* _coupon;
+    SCGroupCoupon *_coupon;
 }
 
 #pragma mark - Init Methods
@@ -24,12 +24,12 @@
 #pragma mark - Action Methods
 - (IBAction)reservationButtonPressed:(id)sender
 {
-    if (_coupon.state == SCCouponStateUnUse)
+    if (_coupon.state == SCGroupCouponStateUnUse)
     {
         if (_delegate && [_delegate respondsToSelector:@selector(couponShouldReservationWithIndex:)])
             [_delegate couponShouldReservationWithIndex:self.tag];
     }
-    else if (_coupon.state == SCCouponStateReserved)
+    else if (_coupon.state == SCGroupCouponStateReserved)
     {
         if (_delegate && [_delegate respondsToSelector:@selector(couponShouldShowWithIndex:)])
             [_delegate couponShouldShowWithIndex:self.tag];
@@ -37,7 +37,7 @@
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithCoupon:(SCCoupon *)coupon index:(NSInteger)index
+- (void)displayCellWithCoupon:(SCGroupCoupon *)coupon index:(NSInteger)index
 {
     self.tag = index;
     _coupon = coupon;
@@ -46,8 +46,8 @@
     BOOL hidden = NO;
     switch (coupon.state)
     {
-        case SCCouponStateUnUse:
-        case SCCouponStateReserved:
+        case SCGroupCouponStateUnUse:
+        case SCGroupCouponStateReserved:
             break;
             
         default:
@@ -57,12 +57,12 @@
     _reservationButton.hidden = [coupon expired] || hidden;
     
     NSString *buttonTitle = nil;
-    if (coupon.state == SCCouponStateReserved)
+    if (coupon.state == SCGroupCouponStateReserved)
     {
         buttonTitle = @"查看预约";
         _reservationButtonWidith.constant = 70.0f;
     }
-    else if (coupon.state == SCCouponStateUnUse)
+    else if (coupon.state == SCGroupCouponStateUnUse)
         buttonTitle = @"预约";
     [_reservationButton setTitle:buttonTitle forState:UIControlStateNormal];
 }
