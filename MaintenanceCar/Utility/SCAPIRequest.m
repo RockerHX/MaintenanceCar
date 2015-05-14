@@ -428,4 +428,18 @@
     [self requestGETMethodsWithAPI:MyInvalidCouponsAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startAddCouponAPIRequestWithParameters:(NSDictionary *)parameters
+                                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:AddCouponAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startUseCouponAPIRequestWithParameters:(NSDictionary *)parameters
+                                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:UseCouponAPIURL parameters:parameters success:success failure:failure];
+}
+
 @end

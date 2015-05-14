@@ -393,5 +393,19 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
                                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+/**
+ *  我的无效优惠券接口请求方法(API:/add_coupon - POST)
+ */
+- (void)startAddCouponAPIRequestWithParameters:(NSDictionary *)parameters
+                                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  我的无效优惠券接口请求方法(API:/use_coupon - POST)
+ */
+- (void)startUseCouponAPIRequestWithParameters:(NSDictionary *)parameters
+                                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 
 @end
