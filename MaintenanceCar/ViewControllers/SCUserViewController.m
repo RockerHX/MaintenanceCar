@@ -18,8 +18,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     SCUserCenterRowMyOrder = 0,
     SCUserCenterRowMyCollection,
     SCUserCenterRowMyCoupon,
-    SCUserCenterRowMyCustomers,
-    SCUserCenterRowMyReservation,
+    MyCoupon
 };
 
 @interface SCUserViewController () <SCUserInfoViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
@@ -100,7 +99,8 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
             }
                 break;
                 
-            default:
+            case MyCoupon:
+                [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"MyCoupon")];
                 break;
         }
     }

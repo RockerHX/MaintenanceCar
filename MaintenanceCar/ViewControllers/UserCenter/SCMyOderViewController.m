@@ -209,12 +209,27 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
                 }];
                 
                 self.offset += SearchLimit;               // 偏移量请求参数递增
-                [self reloadList];
+                [self addRefreshHeader];
+                if ([self dataList].count)
+                {
+                    self.tableView.hidden = NO;
+                    self.promptView.hidden = YES;
+                    if ([self dataList].count > 2)
+                        [self addRefreshFooter];
+                }
+                else
+                {
+                    self.tableView.hidden = YES;
+                    self.promptView.hidden = NO;
+                    [self removeRefreshFooter];
+                }
+                [self reloadListWithAnimation:(self.requestType == SCRequestRefreshTypeDropDown)];
             }
                 break;
                 
             case SCAPIRequestErrorCodeListNotFoundMore:
             {
+                [self.tableView reloadData];
                 [self addFooter];
                 [self addRefreshHeader];
                 [self removeRefreshFooter];
@@ -240,30 +255,36 @@ typedef NS_ENUM(NSUInteger, SCMyOderAlertType) {
     [self.navigationController pushViewController:appraiseViewController animated:YES];
 }
 
-- (void)reloadList
+- (void)reloadListWithAnimation:(BOOL)animation
 {
-    CATransition *transition = [CATransition animation];
-    transition.type = kCATransitionReveal;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    transition.fillMode = kCAFillModeForwards;
-    transition.duration = 0.3f;
-    transition.subtype = kCATransitionFromBottom;
-    [[self.tableView layer] addAnimation:transition forKey:@"UITableViewReloadDataAnimationKey"];
+    if (animation)
+    {
+        CATransition *transition = [CATransition animation];
+        transition.type = kCATransitionReveal;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.fillMode = kCAFillModeForwards;
+        transition.duration = 0.3f;
+        transition.subtype = kCATransitionFromBottom;
+        [[self.tableView layer] addAnimation:transition forKey:@"UITableViewReloadDataAnimationKey"];
+    }
     [self.tableView reloadData];
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Zero inSection:Zero] atScrollPosition:UITableViewScrollPositionNone animated:NO];
-    [self addRefreshHeader];
-    [self addRefreshFooter];
+    [self.tableView setContentOffset:CGPointMake(ZERO_POINT, ZERO_POINT)];
 }
 
 #pragma mark - SCNavigationTabDelegate Methods
-- (void)didSelectedItemAtIndex:(NSInteger)index
+- (void)didSelectedItemAtIndex:(NSInteger)index title:(NSString *)title
 {
     _myOderRequest = index;
-    
-    if ([self dataList].count)
-        [self reloadList];
-    else
+    _promptLabel.text = title;
+    self.tableView.hidden = NO;
+    self.promptView.hidden = YES;
+    if (![self dataList].count)
+    {
+        [self.tableView reloadData];
         [self.tableView.header beginRefreshing];
+    }
+    else
+        [self reloadListWithAnimation:YES];
 }
 
 #pragma mark - SCMyOderCellDelegate Methods

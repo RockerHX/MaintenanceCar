@@ -70,8 +70,6 @@ typedef NS_ENUM(NSUInteger, SCMyOderDetailMenuType) {
 {
     [super viewConfig];
     
-    self.view.backgroundColor      = UIColorWithRGBA(236.0f, 240.0f, 243.0f, 1.0f);
-
     UIView *footer                 = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 40.0f)];
     footer.backgroundColor         = [UIColor clearColor];
     self.tableView.tableFooterView = footer;

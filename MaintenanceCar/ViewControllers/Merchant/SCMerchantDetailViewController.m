@@ -272,9 +272,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             SCQuotedPrice *price = _merchantDetail.quotedPriceGroup.products[indexPath.row];
             price.merchantName   = _merchantDetail.name;
             price.companyID      = _merchantDetail.company_id;
-            SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
-            groupProductDetailViewController.price   = price;
-            [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
+            SCGroupProductDetailViewController *priceDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
+            priceDetailViewController.title = @"商品详情";
+            priceDetailViewController.price = price;
+            [self.navigationController pushViewController:priceDetailViewController animated:YES];
         }
         else if ([cell isKindOfClass:[SCShowMoreProductCell class]])
         {

@@ -65,8 +65,8 @@
         _line.width  = button.width;
     }];
     
-    if (_delegate && [_delegate respondsToSelector:@selector(didSelectedItemAtIndex:)])
-        [_delegate didSelectedItemAtIndex:button.tag];
+    if (_delegate && [_delegate respondsToSelector:@selector(didSelectedItemAtIndex:title:)])
+        [_delegate didSelectedItemAtIndex:button.tag title:button.currentTitle];
     
     _preButton = button;
 }

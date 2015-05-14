@@ -28,4 +28,7 @@ typedef NS_ENUM(NSInteger, SCMyOderReuqest) {
     NSMutableArray  *_finishedDateList;
 }
 
+@property (weak, nonatomic) IBOutlet  UIView *promptView;
+@property (weak, nonatomic) IBOutlet UILabel *promptLabel;
+
 @end
