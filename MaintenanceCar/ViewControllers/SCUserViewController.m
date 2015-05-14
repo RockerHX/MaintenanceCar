@@ -8,17 +8,15 @@
 
 #import "SCUserViewController.h"
 #import "SCLoginViewController.h"
-#import "SCMyFavoriteTableViewController.h"
-#import "SCMyOderViewController.h"
-#import "SCMyCouponViewController.h"
+#import "SCCollectionsTableViewController.h"
 #import "SCUserInfoView.h"
 #import "SCChangeMaintenanceDataViewController.h"
 
 typedef NS_ENUM(NSInteger, SCUserCenterRow) {
-    SCUserCenterRowMyOrder = 0,
-    SCUserCenterRowMyCollection,
-    SCUserCenterRowMyCoupon,
-    MyCoupon
+    SCUserCenterRowOrders = 0,
+    SCUserCenterRowCollections,
+    SCUserCenterRowGroupCoupons,
+    SCUserCenterRowCoupons
 };
 
 @interface SCUserViewController () <SCUserInfoViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
@@ -61,7 +59,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 - (void)initConfig
 {
     [NOTIFICATION_CENTER addObserver:self selector:@selector(showMyOderList) name:kShowCouponNotification object:nil];
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(pushToMyCouponViewController) name:kGenerateCouponSuccessNotification object:nil];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(pushToGroupCouponsViewController) name:kGenerateCouponSuccessNotification object:nil];
     [NOTIFICATION_CENTER addObserver:_userInfoView selector:@selector(refresh) name:kUserCarsDataNeedReloadSuccessNotification object:nil];
 }
 
@@ -80,27 +78,22 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     {
         switch (indexPath.row)
         {
-            case SCUserCenterRowMyOrder:
+            case SCUserCenterRowOrders:
+                [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCOdersViewController")];
+                break;
+            case SCUserCenterRowCollections:
             {
-                SCMyOderViewController *myOderViewController = USERCENTER_VIEW_CONTROLLER(@"SCMyOderViewController");
-                [self pushToSubViewControllerWithController:myOderViewController];
+                SCCollectionsTableViewController *collectionsTableViewController = USERCENTER_VIEW_CONTROLLER(@"SCCollectionsTableViewController");
+                collectionsTableViewController.showTrashItem = YES;
+                [self pushToSubViewControllerWithController:collectionsTableViewController];
             }
                 break;
-            case SCUserCenterRowMyCollection:
-            {
-                SCMyFavoriteTableViewController *myFavoriteTableViewController = USERCENTER_VIEW_CONTROLLER(@"SCMyFavoriteTableViewController");
-                myFavoriteTableViewController.showTrashItem = YES;
-                [self pushToSubViewControllerWithController:myFavoriteTableViewController];
-            }
-                break;
-            case SCUserCenterRowMyCoupon:
-            {
-                [self pushToMyCouponViewController];
-            }
+            case SCUserCenterRowGroupCoupons:
+                [self pushToGroupCouponsViewController];
                 break;
                 
-            case MyCoupon:
-                [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"MyCoupon")];
+            case SCUserCenterRowCoupons:
+                [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCCouponsViewController")];
                 break;
         }
     }
@@ -119,10 +112,9 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (void)pushToMyCouponViewController
+- (void)pushToGroupCouponsViewController
 {
-    SCMyCouponViewController *myCouponViewController = USERCENTER_VIEW_CONTROLLER(@"SCMyCouponViewController");
-    [self pushToSubViewControllerWithController:myCouponViewController];
+    [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCGroupCouponsViewController")];
 }
 
 - (void)showMyOderList

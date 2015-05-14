@@ -73,18 +73,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    @try {
-//        SCCoupon *coupon = _dataList[indexPath.row];
-//        SCCouponDetailViewController *couponDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCouponDetailViewController"];
-//        couponDetailViewController.coupon = coupon;
-//        [self.navigationController pushViewController:couponDetailViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMyCouponViewController Go to the SCCouponDetailViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
 }
 
 #pragma mark - Public Methods
