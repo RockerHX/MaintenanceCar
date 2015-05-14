@@ -88,6 +88,9 @@
 #define MyFinishedOderAPI           @"/Reservation/done"                    // 我的已完成订单API
 #define MyOderDetailAPI             @"/Reservation"                         // 订单详情API
 
+#define MyValidCouponsAPI           @"/get_effective_coupon"                // 我的有效优惠券API
+#define MyInvalidCouponsAPI         @"/get_invalid_coupon"                  // 我的无效优惠券API
+
 
 #pragma mark - API URL
 #define SearchAPIURL                    [V1APIURL stringByAppendingString:SearchAPI]                  // 商家搜索接口URL - 用于商家搜索和筛选
@@ -144,5 +147,8 @@
 #define MyProgressOderAPIURL            [V2APIURL stringByAppendingString:MyProgressOderAPI]          // 我的进行中订单接口URL - 用于进行中订单数据获取
 #define MyFinishedOderAPIURL            [V2APIURL stringByAppendingString:MyFinishedOderAPI]          // 我的已完成订单接口URL - 用于已完成订单数据获取
 #define MyOderDetailAPIURL              [V2APIURL stringByAppendingString:MyOderDetailAPI]            // 订单详情接口URL - 用于订单详情数据获取
+
+#define MyValidCouponsAPIURL            [V2APIURL stringByAppendingString:MyValidCouponsAPI]          // 我的有效优惠券接口URL - 用于获取用户所有有效优惠券
+#define MyInvalidCouponsAPIURL          [V2APIURL stringByAppendingString:MyInvalidCouponsAPI]        // 我的无效优惠券接口URL - 用于获取用户所有无效优惠券
 
 #endif

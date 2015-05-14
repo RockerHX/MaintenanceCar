@@ -414,4 +414,18 @@
     [self requestGETMethodsWithAPI:MyOderDetailAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startMyValidCouponsAPIRequestWithParameters:(NSDictionary *)parameters
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MyValidCouponsAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startMyInvalidCouponsAPIRequestWithParameters:(NSDictionary *)parameters
+                                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:MyInvalidCouponsAPIURL parameters:parameters success:success failure:failure];
+}
+
 @end
