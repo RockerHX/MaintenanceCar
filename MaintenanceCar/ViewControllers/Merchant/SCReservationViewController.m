@@ -161,15 +161,16 @@
         [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
+            NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
-            if (![statusMessage isEqualToString:@"success"])
+            if (statusCode == SCAPIRequestErrorCodeNoError)
             {
                 if (_delegate && [_delegate respondsToSelector:@selector(reservationSuccess)])
                     [_delegate reservationSuccess];
-                
-                [[SCUserInfo share] saveOwnerName:_ownerNameTextField.text];
                 [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:statusMessage];
             }
+            [[SCUserInfo share] saveOwnerName:_ownerNameTextField.text];
+            [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
         }
         else
             [weakSelf showHUDAlertToViewController:weakSelf text:DataError];

@@ -97,8 +97,8 @@ typedef void(^Block)(NSInteger selectedIndex);
     CGContextAddLineToPoint(context, arrowPoint.x, arrowPoint.y);
     CGContextAddLineToPoint(context, arrowPoint.x + ARROW_HEIGHT - 6.0f, ARROW_HEIGHT);
     CGContextClosePath(context);                                                            //路径结束标志，不写默认封闭
-    [_menuColor setFill];                                                                 //设置填充色
-    [_menuColor setStroke];                                                               //设置边框颜色
+    [_menuColor setFill];                                                                   //设置填充色
+    [_menuColor setStroke];                                                                 //设置边框颜色
     CGContextDrawPath(context, kCGPathFillStroke);                                          //绘制路径path
 }
 

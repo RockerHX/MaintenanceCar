@@ -15,8 +15,9 @@
 #pragma mark - Init Methods
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     _nextStateDateLabel.preferredMaxLayoutWidth = IS_IPHONE_6Plus ? 120.0f : (IS_IPHONE_6 ? 100.0f : 80.0f);
-    self.merchantNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 30.0f;
+    self.merchantNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 50.0f;
 }
 
 #pragma mark - Action Methods

@@ -137,10 +137,16 @@ typedef NS_ENUM(NSUInteger, SCOderAlertType) {
     switch (_odersRequest)
     {
         case SCOdersReuqestProgress:
+        {
+            self.navigationTab.secondButton.enabled = NO;
             [self startProgressOdersRequestWithParameters:parameters];
+        }
             break;
         case SCOdersReuqestFinished:
+        {
+            self.navigationTab.firstButton.enabled = NO;
             [self startFinishedOdersRequestWithParameters:parameters];
+        }
             break;
     }
 }
@@ -235,8 +241,17 @@ typedef NS_ENUM(NSUInteger, SCOderAlertType) {
             }
                 break;
         }
-        if (![statusMessage isEqualToString:@"success"])
+        if (statusMessage.length)
             [self showHUDAlertToViewController:self text:statusMessage];
+    }
+    switch (_odersRequest)
+    {
+        case SCOdersReuqestProgress:
+            self.navigationTab.secondButton.enabled = YES;
+            break;
+        case SCOdersReuqestFinished:
+            self.navigationTab.firstButton.enabled = YES;
+            break;
     }
 }
 

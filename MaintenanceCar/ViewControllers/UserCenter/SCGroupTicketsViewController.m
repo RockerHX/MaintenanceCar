@@ -130,7 +130,7 @@
                 }
                     break;
             }
-            if (![statusMessage isEqualToString:@"success"])
+            if (statusMessage.length)
                 [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
         }
         [weakSelf endRefresh];

@@ -9,6 +9,8 @@
 #import "SCOderDetailProgressCell.h"
 #import "SCOderDetail.h"
 
+#define SHADOW_OFFSET   0.5f
+
 typedef NS_ENUM(NSUInteger, SCOderDetailProgressState) {
     SCOderDetailProgressStateUnStart,
     SCOderDetailProgressStateDoing,
@@ -20,7 +22,7 @@ typedef NS_ENUM(NSUInteger, SCOderDetailProgressState) {
 #pragma mark - Setter And Getter Methods
 - (void)setFrame:(CGRect)frame
 {
-    frame.size.height = frame.size.height + 30.0f;
+    frame.size.height = frame.size.height + 10.0f;
     [super setFrame:frame];
 }
 
@@ -73,14 +75,30 @@ typedef NS_ENUM(NSUInteger, SCOderDetailProgressState) {
 #pragma mark - Public Methods
 - (CGFloat)displayCellWithDetail:(SCOderDetail *)detail index:(NSInteger)index
 {
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(ZERO_POINT, -SHADOW_OFFSET*4)];
+    [path addLineToPoint:CGPointMake(ZERO_POINT, SELF_HEIGHT)];
+    [path addLineToPoint:CGPointMake(SHADOW_OFFSET*2, SELF_HEIGHT - SHADOW_OFFSET*6)];
+    [path addLineToPoint:CGPointMake(SELF_WIDTH - SHADOW_OFFSET*2, SELF_HEIGHT - SHADOW_OFFSET*6)];
+    [path addLineToPoint:CGPointMake(SELF_WIDTH, SELF_HEIGHT + SHADOW_OFFSET*4)];
+    [path addLineToPoint:CGPointMake(SELF_WIDTH, -SHADOW_OFFSET*4)];
+    [path addLineToPoint:CGPointMake(SELF_WIDTH - SHADOW_OFFSET*2, SHADOW_OFFSET*6)];
+    [path addLineToPoint:CGPointMake(SHADOW_OFFSET*2, SHADOW_OFFSET*6)];
+    self.layer.shadowPath = path.CGPath;
+    self.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+    self.layer.shadowOffset = CGSizeMake(SHADOW_OFFSET, SHADOW_OFFSET);
+    self.layer.shadowOpacity = 1.0f;
+    self.layer.shadowRadius = 1.0f;
     SCOderDetailProgress *progress = detail.processes[index];
-    
     [self restoreProgressState];
     [self displayProgressState:progress.flag];
     if (!index)
         _upLine.hidden = YES;
     else if (index == (detail.processes.count-1))
+    {
+        self.layer.shadowPath = nil;
         _downLine.hidden = YES;
+    }
     
     _dateLabel.text = progress.date;
     _nameLabel.text = progress.name;

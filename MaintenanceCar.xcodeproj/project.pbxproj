@@ -131,6 +131,9 @@
 		489AA2281B04F35E00EDB86C /* SCOderDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 489AA2241B04F35E00EDB86C /* SCOderDetail.m */; };
 		489AA2291B04F35E00EDB86C /* SCOderBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 489AA2261B04F35E00EDB86C /* SCOderBase.m */; };
 		489AA22E1B05156B00EDB86C /* SCGroupTicketDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 489AA22D1B05156B00EDB86C /* SCGroupTicketDetailViewController.m */; };
+		489AA2311B058EE700EDB86C /* SCCoupon.m in Sources */ = {isa = PBXBuildFile; fileRef = 489AA2301B058EE700EDB86C /* SCCoupon.m */; };
+		489AA2351B05943900EDB86C /* SCCouponDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 489AA2341B05943900EDB86C /* SCCouponDetailViewController.m */; };
+		489AA2381B05DA1E00EDB86C /* SCInvalidCouponsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 489AA2371B05DA1E00EDB86C /* SCInvalidCouponsViewController.m */; };
 		489D74851ADE599900BD8022 /* MerchantFlagIcon.plist in Resources */ = {isa = PBXBuildFile; fileRef = 489D74841ADE599900BD8022 /* MerchantFlagIcon.plist */; };
 		48AB35DC1A517CAB00BFBC77 /* SCUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 48AB35DB1A517CAB00BFBC77 /* SCUserInfo.m */; };
 		48B63E611AF0CFD000E91B48 /* SCReservationItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B63E5F1AF0CFD000E91B48 /* SCReservationItemCell.m */; };
@@ -431,6 +434,12 @@
 		489AA2261B04F35E00EDB86C /* SCOderBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCOderBase.m; sourceTree = "<group>"; };
 		489AA22C1B05156B00EDB86C /* SCGroupTicketDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGroupTicketDetailViewController.h; sourceTree = "<group>"; };
 		489AA22D1B05156B00EDB86C /* SCGroupTicketDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGroupTicketDetailViewController.m; sourceTree = "<group>"; };
+		489AA22F1B058EE700EDB86C /* SCCoupon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCoupon.h; sourceTree = "<group>"; };
+		489AA2301B058EE700EDB86C /* SCCoupon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCoupon.m; sourceTree = "<group>"; };
+		489AA2331B05943900EDB86C /* SCCouponDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCouponDetailViewController.h; sourceTree = "<group>"; };
+		489AA2341B05943900EDB86C /* SCCouponDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCouponDetailViewController.m; sourceTree = "<group>"; };
+		489AA2361B05DA1E00EDB86C /* SCInvalidCouponsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCInvalidCouponsViewController.h; sourceTree = "<group>"; };
+		489AA2371B05DA1E00EDB86C /* SCInvalidCouponsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCInvalidCouponsViewController.m; sourceTree = "<group>"; };
 		489D74841ADE599900BD8022 /* MerchantFlagIcon.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MerchantFlagIcon.plist; sourceTree = "<group>"; };
 		48AB35DA1A517CAB00BFBC77 /* SCUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCUserInfo.h; sourceTree = "<group>"; };
 		48AB35DB1A517CAB00BFBC77 /* SCUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCUserInfo.m; sourceTree = "<group>"; };
@@ -752,6 +761,7 @@
 		4866F8FF1AACBD2D008E195C /* UserCenter */ = {
 			isa = PBXGroup;
 			children = (
+				489AA2321B05942500EDB86C /* Coupons */,
 				489AA22B1B05156B00EDB86C /* GroupTickets */,
 				489AA2121B04EA7700EDB86C /* Oders */,
 				489AA1E61B04D91600EDB86C /* Setting */,
@@ -1044,10 +1054,10 @@
 				489AA1F41B04DCCD00EDB86C /* SCOderCell.m */,
 				489AA1F51B04DCCD00EDB86C /* SCOderDetailInfoCell.h */,
 				489AA1F61B04DCCD00EDB86C /* SCOderDetailInfoCell.m */,
-				489AA1F71B04DCCD00EDB86C /* SCOderDetailProgressCell.h */,
-				489AA1F81B04DCCD00EDB86C /* SCOderDetailProgressCell.m */,
 				489AA1F91B04DCCD00EDB86C /* SCOderDetailPromptCell.h */,
 				489AA1FA1B04DCCD00EDB86C /* SCOderDetailPromptCell.m */,
+				489AA1F71B04DCCD00EDB86C /* SCOderDetailProgressCell.h */,
+				489AA1F81B04DCCD00EDB86C /* SCOderDetailProgressCell.m */,
 			);
 			path = Oders;
 			sourceTree = "<group>";
@@ -1079,6 +1089,8 @@
 		489AA22A1B050B3B00EDB86C /* Coupons */ = {
 			isa = PBXGroup;
 			children = (
+				489AA22F1B058EE700EDB86C /* SCCoupon.h */,
+				489AA2301B058EE700EDB86C /* SCCoupon.m */,
 			);
 			path = Coupons;
 			sourceTree = "<group>";
@@ -1090,6 +1102,17 @@
 				489AA22D1B05156B00EDB86C /* SCGroupTicketDetailViewController.m */,
 			);
 			path = GroupTickets;
+			sourceTree = "<group>";
+		};
+		489AA2321B05942500EDB86C /* Coupons */ = {
+			isa = PBXGroup;
+			children = (
+				489AA2361B05DA1E00EDB86C /* SCInvalidCouponsViewController.h */,
+				489AA2371B05DA1E00EDB86C /* SCInvalidCouponsViewController.m */,
+				489AA2331B05943900EDB86C /* SCCouponDetailViewController.h */,
+				489AA2341B05943900EDB86C /* SCCouponDetailViewController.m */,
+			);
+			path = Coupons;
 			sourceTree = "<group>";
 		};
 		48AE95B01A50F52700A8A4B3 /* ThirdLibrary */ = {
@@ -1508,6 +1531,7 @@
 				482AC9991AB5FD24001574EF /* SCShowMoreProductCell.m in Sources */,
 				4866F9BB1AACBD89008E195C /* SCCollectionReusableView.m in Sources */,
 				48738A641ACE42400028FC13 /* StringConstants.m in Sources */,
+				489AA2381B05DA1E00EDB86C /* SCInvalidCouponsViewController.m in Sources */,
 				4866F9A11AACBD89008E195C /* SCMaintenanceTypeItem.m in Sources */,
 				48B63E651AF0D58A00E91B48 /* SCMoreMenu.m in Sources */,
 				48FB70C71AA5A58300AF4AD9 /* SCCarModel.m in Sources */,
@@ -1539,6 +1563,7 @@
 				4866F91B1AACBD2D008E195C /* SCReservationViewController.m in Sources */,
 				4866F9AD1AACBD89008E195C /* SCSelectedCell.m in Sources */,
 				4866F9261AACBD2D008E195C /* SCCollectionsViewController.m in Sources */,
+				489AA2311B058EE700EDB86C /* SCCoupon.m in Sources */,
 				48647C671AB1369E00810974 /* SCUtility.m in Sources */,
 				48F639D61AD1A526005267E2 /* SCFileManager.m in Sources */,
 				4866F9B71AACBD89008E195C /* SCCarBrandCollectionViewCell.m in Sources */,
@@ -1584,6 +1609,7 @@
 				4866F9231AACBD2D008E195C /* SCAddCarViewController.m in Sources */,
 				4866F9AB1AACBD89008E195C /* SCMerchantDetailItemCell.m in Sources */,
 				4866F9AF1AACBD89008E195C /* SCFilterPopView.m in Sources */,
+				489AA2351B05943900EDB86C /* SCCouponDetailViewController.m in Sources */,
 				48720E0E1AE5060B002D435F /* SCOdersViewController.m in Sources */,
 				486967AE1AD801AE00C3F7A6 /* SCQuotedPriceCell.m in Sources */,
 				48FB70CB1AA5A58300AF4AD9 /* SCServiceItem.m in Sources */,
