@@ -48,9 +48,9 @@
     [MobClick checkUpdate];                 // 集成友盟更新
     
     // 启动[友盟统计]，采用启动发送的方式 - BATCH
-    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"AppStore:%@", APP_VERSION]];
+//    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"AppStore:%@", APP_VERSION]];
 #warning @"发布时更改测试统计"
-//    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"TestVersion:%@", APP_VERSION]];
+    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"TestVersion:%@", APP_VERSION]];
     
     //set AppKey and AppSecret
     [UMessage startWithAppkey:UMengAPPKEY launchOptions:launchOptions];
