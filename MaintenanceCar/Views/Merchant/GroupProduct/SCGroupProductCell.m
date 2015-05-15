@@ -28,7 +28,7 @@
     _grayLine.hidden         = hidden;
 
     _productNameLabel.text   = product.title;
-    _priceLabel.text         = product.final_price;
+    _priceBeginLabel.text    = product.final_price;
     _totalPriceLabel.text    = product.total_price;
     
     [self.contentView updateConstraintsIfNeeded];

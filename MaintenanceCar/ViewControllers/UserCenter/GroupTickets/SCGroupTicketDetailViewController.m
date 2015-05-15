@@ -8,7 +8,7 @@
 
 #import "SCGroupTicketDetailViewController.h"
 #import "SCGroupProductDetail.h"
-#import "SCGroupTicketCell.h"
+#import "SCGroupTicketCodeCell.h"
 #import "SCBuyGroupProductCell.h"
 #import "SCGroupProductMerchantCell.h"
 #import "SCGroupProductDetailCell.h"
@@ -104,9 +104,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         {
             case 1:
             {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupTicketCell" forIndexPath:indexPath];
-                (((SCGroupTicketCell *)cell)).delegate = self;
-                [(SCGroupTicketCell *)cell displayCellWithTicket:_ticket index:Zero];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupTicketCodeCell" forIndexPath:indexPath];
+                (((SCGroupTicketCodeCell *)cell)).delegate = self;
+                [(SCGroupTicketCodeCell *)cell displayCellWithTicket:_ticket index:Zero];
             }
                 break;
             case 2:

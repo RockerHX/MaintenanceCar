@@ -13,7 +13,10 @@
 @interface SCGroupProductCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *productNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *priceBeginLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceIntervalLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceEndLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *leftParenthesis;
 @property (weak, nonatomic) IBOutlet UILabel *totalPriceLabel;

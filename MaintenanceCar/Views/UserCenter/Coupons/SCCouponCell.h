@@ -7,12 +7,15 @@
 //
 
 #import "SCTableViewCell.h"
+#import "SCCoupon.h"
 
 @interface SCCouponCell : SCTableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *promptLabel;
-@property (weak, nonatomic) IBOutlet UILabel *validityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *validDateLabel;
+
+- (CGFloat)displayCellWithCoupon:(SCCoupon *)coupon;
 
 @end

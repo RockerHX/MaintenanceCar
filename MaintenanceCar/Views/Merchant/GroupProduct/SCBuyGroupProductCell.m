@@ -40,7 +40,7 @@
 - (void)displayCellWithDetail:(SCGroupProductDetail *)detail
 {
     self.productNameLabel.text = detail.title;
-    self.priceLabel.text       = detail.final_price;
+    self.priceBeginLabel.text       = detail.final_price;
     self.totalPriceLabel.text  = detail.total_price;
 
     _bugProductButton.enabled  = [detail canBug];
@@ -53,16 +53,27 @@
 - (void)displayCellWithPrice:(SCQuotedPrice *)price
 {
     _canReserve = YES;
-    BOOL hidden                  = [price.final_price isEqualToString:price.total_price];
+    BOOL hidden = NO;
+    if ([price.price_begin integerValue] && [price.price_end integerValue])
+    {
+        hidden = YES;
+        self.priceIntervalLabel.hidden = !hidden;
+        self.priceEndLabel.hidden      = !hidden;
+        self.priceBeginLabel.text      = price.price_begin;
+        self.priceEndLabel.text        = price.price_end;
+    }
+    else
+    {
+        hidden = [price.final_price isEqualToString:price.total_price];
+        self.priceBeginLabel.text  = price.final_price;
+        self.totalPriceLabel.text  = price.total_price;
+    }
+    
     self.leftParenthesis.hidden  = hidden;
     self.totalPriceLabel.hidden  = hidden;
     self.rightParenthesis.hidden = hidden;
     self.grayLine.hidden         = hidden;
-
     self.productNameLabel.text   = price.title;
-    self.priceLabel.text         = price.final_price;
-    self.totalPriceLabel.text    = price.total_price;
-    
     [_bugProductButton setTitle:@"预约" forState:UIControlStateNormal];
     
     [self.contentView updateConstraintsIfNeeded];

@@ -1,18 +1,18 @@
 //
-//  SCInvalidCouponsViewController.m
+//  SCCouponDetailViewController.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/5/15.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCInvalidCouponsViewController.h"
+#import "SCCouponDetailViewController.h"
 
-@interface SCInvalidCouponsViewController ()
+@interface SCCouponDetailViewController ()
 
 @end
 
-@implementation SCInvalidCouponsViewController
+@implementation SCCouponDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
