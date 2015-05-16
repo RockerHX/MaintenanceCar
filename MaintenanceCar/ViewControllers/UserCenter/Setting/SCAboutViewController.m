@@ -1,24 +1,20 @@
 //
-//  SCAboutTableViewController.m
+//  SCAboutViewController.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/2/10.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCAboutTableViewController.h"
+#import "SCAboutViewController.h"
 #import "SCWebViewController.h"
 
 #define kADURLKey       @"kADURLKey"
 
-@interface SCAboutTableViewController () <UIAlertViewDelegate>
+@implementation SCAboutViewController
 {
     NSDictionary *_updateInfo;
 }
-
-@end
-
-@implementation SCAboutTableViewController
 
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated

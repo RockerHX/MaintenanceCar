@@ -118,7 +118,7 @@
 		489AA1DB1B0352E900EDB86C /* UserCenter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 489AA1DA1B0352E900EDB86C /* UserCenter.storyboard */; };
 		489AA1DE1B0356C700EDB86C /* SCWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 489AA1DD1B0356C700EDB86C /* SCWebViewController.m */; };
 		489AA1E51B04D7FD00EDB86C /* SCCouponsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 489AA1E41B04D7FD00EDB86C /* SCCouponsViewController.m */; };
-		489AA1E91B04D91600EDB86C /* SCAboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 489AA1E81B04D91600EDB86C /* SCAboutTableViewController.m */; };
+		489AA1E91B04D91600EDB86C /* SCAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 489AA1E81B04D91600EDB86C /* SCAboutViewController.m */; };
 		489AA1F11B04DCB900EDB86C /* SCCouponCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 489AA1F01B04DCB900EDB86C /* SCCouponCell.m */; };
 		489AA1FB1B04DCCD00EDB86C /* SCOderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 489AA1F41B04DCCD00EDB86C /* SCOderCell.m */; };
 		489AA1FC1B04DCCD00EDB86C /* SCOderDetailInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 489AA1F61B04DCCD00EDB86C /* SCOderDetailInfoCell.m */; };
@@ -408,8 +408,8 @@
 		489AA1DD1B0356C700EDB86C /* SCWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCWebViewController.m; sourceTree = "<group>"; };
 		489AA1E31B04D7FD00EDB86C /* SCCouponsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCouponsViewController.h; sourceTree = "<group>"; };
 		489AA1E41B04D7FD00EDB86C /* SCCouponsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCouponsViewController.m; sourceTree = "<group>"; };
-		489AA1E71B04D91600EDB86C /* SCAboutTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAboutTableViewController.h; sourceTree = "<group>"; };
-		489AA1E81B04D91600EDB86C /* SCAboutTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAboutTableViewController.m; sourceTree = "<group>"; };
+		489AA1E71B04D91600EDB86C /* SCAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAboutViewController.h; sourceTree = "<group>"; };
+		489AA1E81B04D91600EDB86C /* SCAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAboutViewController.m; sourceTree = "<group>"; };
 		489AA1EF1B04DCB900EDB86C /* SCCouponCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCouponCell.h; sourceTree = "<group>"; };
 		489AA1F01B04DCB900EDB86C /* SCCouponCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCouponCell.m; sourceTree = "<group>"; };
 		489AA1F31B04DCCD00EDB86C /* SCOderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCOderCell.h; sourceTree = "<group>"; };
@@ -1030,8 +1030,8 @@
 		489AA1E61B04D91600EDB86C /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				489AA1E71B04D91600EDB86C /* SCAboutTableViewController.h */,
-				489AA1E81B04D91600EDB86C /* SCAboutTableViewController.m */,
+				489AA1E71B04D91600EDB86C /* SCAboutViewController.h */,
+				489AA1E81B04D91600EDB86C /* SCAboutViewController.m */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -1541,7 +1541,7 @@
 				48DF20691ABB20C2009708F8 /* GPSTransform.c in Sources */,
 				4866F91A1AACBD2D008E195C /* SCReservationDateViewController.m in Sources */,
 				489AA22E1B05156B00EDB86C /* SCGroupTicketDetailViewController.m in Sources */,
-				489AA1E91B04D91600EDB86C /* SCAboutTableViewController.m in Sources */,
+				489AA1E91B04D91600EDB86C /* SCAboutViewController.m in Sources */,
 				4866F8B61AAB32ED008E195C /* SCGroupProduct.m in Sources */,
 				4866F9291AACBD2D008E195C /* SCTableViewController.m in Sources */,
 				48B63E611AF0CFD000E91B48 /* SCReservationItemCell.m in Sources */,

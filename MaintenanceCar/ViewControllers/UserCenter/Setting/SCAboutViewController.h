@@ -1,5 +1,5 @@
 //
-//  SCAboutTableViewController.h
+//  SCAboutViewController.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/2/10.
@@ -8,7 +8,7 @@
 
 #import "SCViewControllerCategory.h"
 
-@interface SCAboutTableViewController : UITableViewController
+@interface SCAboutViewController : UITableViewController
 
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 @property (weak, nonatomic) IBOutlet     UILabel *versionLabel;

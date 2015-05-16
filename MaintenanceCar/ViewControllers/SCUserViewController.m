@@ -135,7 +135,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 // [设置]按钮被点击，跳转到App设置页面
 - (IBAction)settingItemPressed:(UIBarButtonItem *)sender
 {
-    [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCSettingTableViewController")];
+    [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCSettingViewController")];
 }
 
 // [添加车辆]按钮被点击，跳转到添加车辆页面

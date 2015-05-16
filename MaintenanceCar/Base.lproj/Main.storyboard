@@ -209,6 +209,37 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="YJ6-Rx-6Ky">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YJ6-Rx-6Ky" id="KT7-wV-frN">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CouponsIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Keu-p7-iiK">
+                                                    <rect key="frame" x="18" y="8" width="59.5" height="59.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="Keu-p7-iiK" secondAttribute="height" multiplier="1:1" id="n4t-w1-yGX"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的优惠券" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sb9-Of-cuV">
+                                                    <rect key="frame" x="97.5" y="18" width="180" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="XKe-Hq-u68"/>
+                                                        <constraint firstAttribute="width" constant="180" id="yOH-WW-b79"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Sb9-Of-cuV" firstAttribute="centerY" secondItem="Keu-p7-iiK" secondAttribute="centerY" id="4CA-ME-c6X"/>
+                                                <constraint firstItem="Keu-p7-iiK" firstAttribute="leading" secondItem="KT7-wV-frN" secondAttribute="leadingMargin" constant="10" id="EAp-Gb-Q5Z"/>
+                                                <constraint firstItem="Sb9-Of-cuV" firstAttribute="leading" secondItem="Keu-p7-iiK" secondAttribute="trailing" constant="20" id="cWS-C3-RJY"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Keu-p7-iiK" secondAttribute="bottom" id="cux-r2-dMK"/>
+                                                <constraint firstItem="Keu-p7-iiK" firstAttribute="top" secondItem="KT7-wV-frN" secondAttribute="topMargin" id="gKq-ok-UQR"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -5618,6 +5649,7 @@
         <image name="CenterBar" width="29" height="36"/>
         <image name="CheckButton" width="33" height="33"/>
         <image name="CollectionsIcon" width="60" height="60"/>
+        <image name="CouponsIcon" width="60" height="60"/>
         <image name="DateButton" width="23" height="23"/>
         <image name="DistanceIcon" width="15" height="15"/>
         <image name="DownArrow-Gray" width="15" height="8"/>
