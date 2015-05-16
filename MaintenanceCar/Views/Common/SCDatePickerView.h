@@ -25,8 +25,8 @@
 
 @property (nonatomic, weak) id<SCDatePickerViewDelegate>delegate;
 
-@property (weak, nonatomic) IBOutlet UIDatePicker       *datePicker;        // 时间选择器
-@property (weak, nonatomic) IBOutlet UIView             *containerView;     // 容器View
+@property (weak, nonatomic) IBOutlet       UIDatePicker *datePicker;        // 时间选择器
+@property (weak, nonatomic) IBOutlet             UIView *containerView;     // 容器View
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;  // 时间选择器到View下边距约束条件
 
 /**

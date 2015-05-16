@@ -9,11 +9,6 @@
 #import <MJRefresh/MJRefresh.h>
 #import "SCNavigationTab.h"
 
-typedef NS_ENUM(NSInteger, SCRequestRefreshType) {
-    SCRequestRefreshTypeDropDown,
-    SCRequestRefreshTypePullUp
-};
-
 @interface SCNavigationTableViewController : UIViewController <SCNavigationTabDelegate>
 {
     id              _deleteDataCache;    // 删除数据的缓存
@@ -37,7 +32,11 @@ typedef NS_ENUM(NSInteger, SCRequestRefreshType) {
 
 // 结束刷新方法
 - (void)endRefresh;
-- (void)readdFooter;
+- (void)addRefreshHeader;
+- (void)removeRefreshHeader;
+- (void)addRefreshFooter;
+- (void)removeRefreshFooter;
+- (void)addFooter;
 - (void)removeFooter;
 
 // 清除数据方法

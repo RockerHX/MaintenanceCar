@@ -7,24 +7,27 @@
 //
 
 #import "SCPickerView.h"
-#import "MicroConstants.h"
 #import "UIConstants.h"
-#import "AppDelegate.h"
 
-@interface SCPickerView ()
+@implementation SCPickerView
 {
     id _item;            // 选择数据Cache
 }
 
-@end
+#pragma mark - Action Methods
+- (IBAction)enterButtonPressed:(id)sender
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(pickerView:didSelectRow:item:)])
+        [_delegate pickerView:self didSelectRow:[self indexOfItem:_item] item:(_item ? _item : [_pickerItmes firstObject])];
+    [self removePickerView];
+}
 
-@implementation SCPickerView
-
+#pragma mark - Init Methods
 - (id)initWithItems:(NSArray *)items type:(SCPickerType)type delegate:(id<SCPickerViewDelegate>)delegate
 {
     // 从Xib加载View
     self = [[[NSBundle mainBundle] loadNibNamed:@"SCPickerView" owner:self options:nil] firstObject];
-    self.frame = APP_DELEGATE_INSTANCE.window.bounds;
+    self.frame = [UIApplication sharedApplication].keyWindow.bounds;
     
     // 设置代理，初始化数据
     _picker.dataSource = self;
@@ -122,17 +125,7 @@
 
 - (void)addGestureRecognizer
 {
-    // 空白区域被点击之后触发回调，为选择取选择器默认数据，关闭时间筛选器
-    if (_item)
-    {
-        if (_delegate && [_delegate respondsToSelector:@selector(pickerView:didSelectRow:item:)])
-            [_delegate pickerView:self didSelectRow:[self indexOfItem:_item] item:_item];
-    }
-    else
-    {
-        if (_delegate && [_delegate respondsToSelector:@selector(pickerView:didSelectRow:item:)])
-            [_delegate pickerView:self didSelectRow:[self indexOfItem:_item] item:[_pickerItmes firstObject]];
-    }
+    // 空白区域被点击之后关闭筛选器
     [self removePickerView];
 }
 
@@ -152,7 +145,7 @@
 {
     // 显示动画
     __weak typeof(self) weakSelf = self;
-    [APP_DELEGATE_INSTANCE.window addSubview:self];
+    [[UIApplication sharedApplication].keyWindow addSubview:self];
     _bottomConstraint.constant = _bottomConstraint.constant / 8;
     [_containerView needsUpdateConstraints];
     [UIView animateWithDuration:0.15f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseIn animations:^{

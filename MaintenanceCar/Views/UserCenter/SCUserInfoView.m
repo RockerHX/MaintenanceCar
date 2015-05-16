@@ -60,13 +60,10 @@
     {
         if (!userInfo.cars.count)
         {
-            UIImageView *carView = [[UIImageView alloc] init];
-            carView.image = [UIImage imageNamed:@"car"];
-            _userCarsView.items = @[carView];
-            
+            _userCarsView.defaultImage = [UIImage imageNamed:@"car"];
             _carNameLabel.text = @"请在右上角添加车辆";
             _carDataLabel.text = @"";
-            [_userCarsView begin:nil finished:nil];
+            [_userCarsView show:nil finished:nil];
         }
         
         __weak typeof(self)weakSelf = self;
@@ -75,20 +72,12 @@
             {
                 if (!_userCarsView.hidden && userInfo.cars.count)
                 {
-                    NSMutableArray *items = [@[] mutableCopy];
-                    for (NSInteger index = 0; index < userInfo.cars.count; index++)
-                    {
-                        UIImageView *carView = [[UIImageView alloc] init];
-                        carView.image        = [UIImage imageNamed:@"car"];
-                        [items addObject:carView];
-                    }
-                    _userCarsView.items = items;
-                    
+                    _userCarsView.images = @[[UIImage imageNamed:@"car"], [UIImage imageNamed:@"car"]];
                     [self displayLabelWithCar:[userInfo.cars firstObject]];
                 }
             }
             
-            [_userCarsView begin:^(NSInteger index) {
+            [_userCarsView show:^(NSInteger index) {
                 if (userInfo.cars.count)
                 {
                     if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(shouldChangeCarData:)])

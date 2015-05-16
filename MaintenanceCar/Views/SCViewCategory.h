@@ -10,6 +10,9 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "UIConstants.h"
 
+#define SELF_WIDTH        (self.frame.size.width)       // 获取屏幕宽度
+#define SELF_HEIGHT       (self.frame.size.height)      // 获取屏幕高度
+
 @interface UIView (SCView)
 
 - (CGPoint)origin;

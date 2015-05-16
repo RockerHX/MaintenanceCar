@@ -7,19 +7,14 @@
 //
 
 #import "SCReservationViewController.h"
+#import "SCTextView.h"
 #import "SCPickerView.h"
 #import "SCReservationDateViewController.h"
 #import "SCAllDictionary.h"
 #import "SCAddCarViewController.h"
+#import "SCQuotedPrice.h"
 
-@interface SCReservationViewController () <UITextFieldDelegate, UIAlertViewDelegate, SCPickerViewDelegate, SCReservationDateViewControllerDelegate, SCAddCarViewControllerDelegate>
-{
-    NSString *_selectedCarID;
-    NSString *_reservationDate;
-}
-
-- (IBAction)reservationButtonPressed:(UIButton *)sender;
-
+@interface SCReservationViewController () <SCPickerViewDelegate, SCReservationDateViewControllerDelegate, SCAddCarViewControllerDelegate>
 @end
 
 @implementation SCReservationViewController
@@ -60,7 +55,6 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // 设置商家名称显示
-    _price = @"";
     _selectedCarID = @"";
     _merchantNameLabel.text = _merchant.name;
     [NOTIFICATION_CENTER addObserver:self selector:@selector(refresh) name:kUserCarsDataNeedReloadSuccessNotification object:nil];
@@ -75,8 +69,7 @@
     _ownerPhoneNumberTextField.leftViewMode = UITextFieldViewModeAlways;
     _ownerPhoneNumberTextField.leftView     = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
     _ownerPhoneNumberTextField.text         = [SCUserInfo share].phoneNmber;
-    _remarkTextField.leftViewMode           = UITextFieldViewModeAlways;
-    _remarkTextField.leftView               = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
+    _remarkTextField.placeholderText        = @"您有什么需求请在此写下，我们会尽力满足！";
     
     [self refreshProjectLabel];
     
@@ -120,14 +113,7 @@
     [self closeAllKeyboard];
     // 检查是否登录，已登录进行预约请求，反之则弹出登录提示框跳转到登录页面
     if (![SCUserInfo share].loginStatus)
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"您还没有登录"
-                                                            message:nil
-                                                           delegate:self
-                                                  cancelButtonTitle:@"取消"
-                                                  otherButtonTitles:@"登录", nil];
-        [alertView show];
-    }
+        [self showShoulLoginAlert];
     else if ([self checkeParamterIntegrity])
         [self startMerchantReservationRequest];
 }
@@ -148,22 +134,15 @@
 
 - (void)refreshProjectLabel
 {
-    _projectLabel.text = _serviceItem.service_name;
-    _reservationType   = _serviceItem.service_id;
+    _reservationType    = _serviceItem.service_id;
+    _categoryLabel.text = _serviceItem.service_name;
+    _itemLabel.text     = _serviceItem.service_name;
+    if (_groupTicket)
+        _itemLabel.text = _groupTicket.title;
+    if (_quotedPrice)
+        _itemLabel.text = _quotedPrice.title;
 }
 
-/**
- *  商家预约请求方法，参数：user_id, company_id, type, reserve_name, reserve_phone, content, time, user_car_id
- *  user_id:        用户 ID
- *  company_id:     商家 ID, 通过这个 ID 可以获取商家详细信息
- *  type:           1,2,3,4 对应 洗养修团
- *  reserve_name:   XXX
- *  reserve_phone:  电话
- *  content:        预约内容
- *  time:           预约时段,  如 2014-12-13 10:00:00 代表的时间段是当天10点到11点
- *  user_car_id:    可选. 用户已经添加的私家车 id
- *  返回:            reserve_id和友盟推送返回信息
- */
 - (void)startMerchantReservationRequest
 {
     [self showHUDOnViewController:self];
@@ -176,17 +155,22 @@
                                  @"content": _remarkTextField.text,
                                     @"time": _reservationDate,
                              @"user_car_id": _selectedCarID,
-                                   @"price": _price};
+                         @"group_ticket_id": _groupTicket ? _groupTicket.group_ticket_id : @"",
+                                   @"price": _quotedPrice ? _quotedPrice.final_price : @""};
     [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
+            NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
-            if (![statusMessage isEqualToString:@"success"])
+            if (statusCode == SCAPIRequestErrorCodeNoError)
             {
-                [[SCUserInfo share] saveOwnerName:_ownerNameTextField.text];
+                if (_delegate && [_delegate respondsToSelector:@selector(reservationSuccess)])
+                    [_delegate reservationSuccess];
                 [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:statusMessage];
             }
+            [[SCUserInfo share] saveOwnerName:_ownerNameTextField.text];
+            [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
         }
         else
             [weakSelf showHUDAlertToViewController:weakSelf text:DataError];
@@ -240,13 +224,6 @@
     }
     else
         return YES;
-}
-
-#pragma mark - Alert View Delegate Methods
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex != alertView.cancelButtonIndex)
-        [self checkShouldLogin];
 }
 
 #pragma mark - Text Field Delegate Methods
@@ -309,8 +286,8 @@
         case SCPickerTypeService:
         {
             SCServiceItem *serviceItem = item;
-            _reservationType   = serviceItem.service_id;
-            _projectLabel.text = serviceItem.service_name;
+            _reservationType           = serviceItem.service_id;
+            _categoryLabel.text        = serviceItem.service_name;
         }
             break;
             

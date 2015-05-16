@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
     SCCollectionViewTypeSelected
 };
 
-@interface SCReservationDateViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate>
+@interface SCReservationDateViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 {
     NSDictionary *_dateItmes;
     NSArray      *_dateKeys;
@@ -273,12 +273,12 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
             _requestDate = [NSString stringWithFormat:@"%@ %@", date, time];
             _displayDate = [self getPeriodWithDate:date time:time];
             
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否预约"
-                                                                message:[_displayDate stringByAppendingString:@"这个时间段?"]
-                                                               delegate:self
-                                                      cancelButtonTitle:@"取消"
-                                                      otherButtonTitles:@"确认", nil];
-            [alertView show];
+            [self showAlertWithTitle:@"确认预约"
+                             message:[_displayDate stringByAppendingString:@"这个时间段吗?"]
+                            delegate:self
+                                 tag:Zero
+                   cancelButtonTitle:@"取消"
+                    otherButtonTitle:@"确认"];
         }
     }
 }
@@ -296,9 +296,19 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 {
     if (buttonIndex != alertView.cancelButtonIndex)
     {
-        if (_delegate && [_delegate respondsToSelector:@selector(reservationDateSelectedFinish:displayDate:)])
-            [_delegate reservationDateSelectedFinish:_requestDate displayDate:_displayDate];
-        [self.navigationController popViewControllerAnimated:YES];
+        switch (alertView.tag)
+        {
+            case Zero:
+            {
+                if (_delegate && [_delegate respondsToSelector:@selector(reservationDateSelectedFinish:displayDate:)])
+                    [_delegate reservationDateSelectedFinish:_requestDate displayDate:_displayDate];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+                break;
+            case SCViewControllerAlertTypeNeedLogin:
+                [self checkShouldLogin];
+                break;
+        }
     }
 }
 

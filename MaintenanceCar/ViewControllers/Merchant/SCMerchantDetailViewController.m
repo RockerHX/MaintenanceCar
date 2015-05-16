@@ -9,7 +9,6 @@
 #import "SCMerchantDetailViewController.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import <SCLoopScrollView/SCLoopScrollView.h>
-#import "SCMerchant.h"
 #import "SCMerchantDetail.h"
 #import "SCComment.h"
 #import "SCMerchantSummaryCell.h"
@@ -37,8 +36,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 @interface SCMerchantDetailViewController () <UIAlertViewDelegate, SCReservatAlertViewDelegate, SCMerchantSummaryCellDelegate, SCMerchantDetailFlagCellDelegate, SCQuotedPriceCellDelegate>
 {
-    BOOL           _needChecked;      // 检查收藏标识
-    UIView         *_blankView;
+    BOOL    _needChecked;      // 检查收藏标识
+    UIView *_blankView;
 }
 @property (weak, nonatomic)    SCMerchantSummaryCell *summaryCellCell;
 @property (weak, nonatomic)       SCGroupProductCell *productCell;
@@ -156,7 +155,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                 SCQuotedPriceCell *quotedPriceCell = (SCQuotedPriceCell *)cell;
                 quotedPriceCell.delegate = self;
                 quotedPriceCell.tag = indexPath.row;
-                [quotedPriceCell displayCellWithProduct:quotedPriceGroup.products[indexPath.row]];
+                [quotedPriceCell displayCellWithPrice:quotedPriceGroup.products[indexPath.row]];
             }
         }
         else if ([dataClass isKindOfClass:[SCMerchantInfo class]])
@@ -228,7 +227,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             {
                 if(!_quotedPriceCell)
                     _quotedPriceCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCQuotedPriceCell"];
-                [_quotedPriceCell displayCellWithProduct:_merchantDetail.quotedPriceGroup.products[indexPath.row]];
+                [_quotedPriceCell displayCellWithPrice:_merchantDetail.quotedPriceGroup.products[indexPath.row]];
                 height = [_quotedPriceCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
         }
@@ -260,44 +259,47 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if ([cell isKindOfClass:[SCGroupProductCell class]] || [cell isKindOfClass:[SCQuotedPriceCell class]])
-    {
-        @try {
+    @try {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        if ([cell isKindOfClass:[SCGroupProductCell class]])
+        {
             SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
-            groupProductDetailViewController.product = _merchantDetail.products[indexPath.row];
+            groupProductDetailViewController.product = [cell isKindOfClass:[SCGroupProductCell class]] ? _merchantDetail.products[indexPath.row] : nil;
             [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
         }
-        @catch (NSException *exception) {
-            NSLog(@"SCMerchantDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
+        if ([cell isKindOfClass:[SCQuotedPriceCell class]])
+        {
+            SCQuotedPrice *price = _merchantDetail.quotedPriceGroup.products[indexPath.row];
+            price.merchantName   = _merchantDetail.name;
+            price.companyID      = _merchantDetail.company_id;
+            SCGroupProductDetailViewController *priceDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
+            priceDetailViewController.title = @"商品详情";
+            priceDetailViewController.price = price;
+            [self.navigationController pushViewController:priceDetailViewController animated:YES];
         }
-        @finally {
+        else if ([cell isKindOfClass:[SCShowMoreProductCell class]])
+        {
+            if (((SCShowMoreProductCell *)cell).cellType == SCGroupCellTypeGroupProduct)
+                _merchantDetail.productGroup.isOpen = !((SCShowMoreProductCell *)cell).state;
+            else
+                _merchantDetail.quotedPriceGroup.isOpen = !((SCShowMoreProductCell *)cell).state;
+            [self.tableView reloadData];
         }
-    }
-    else if ([cell isKindOfClass:[SCShowMoreProductCell class]])
-    {
-        if (((SCShowMoreProductCell *)cell).cellType == SCGroupCellTypeGroupProduct)
-            _merchantDetail.productGroup.isOpen = !((SCShowMoreProductCell *)cell).state;
-        else
-            _merchantDetail.quotedPriceGroup.isOpen = !((SCShowMoreProductCell *)cell).state;
-        [self.tableView reloadData];
-    }
-    else if ([cell isKindOfClass:[SCMerchantDetailItemCell class]])
-    {
-        [self cellSelectedWithIndexPath:indexPath];
-    }
-    else if ([cell isKindOfClass:[SCShowMoreCell class]])
-    {
-        @try {
+        else if ([cell isKindOfClass:[SCMerchantDetailItemCell class]])
+        {
+            [self cellSelectedWithIndexPath:indexPath];
+        }
+        else if ([cell isKindOfClass:[SCShowMoreCell class]])
+        {
             SCCommentListViewController *commentListViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCommentListViewController"];
             commentListViewController.companyID = _merchantDetail.company_id;
             [self.navigationController pushViewController:commentListViewController animated:YES];
         }
-        @catch (NSException *exception) {
-            NSLog(@"SCMerchantDetailViewController Go to the SCCommentListViewController exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCMerchantDetailViewController Go to the SubViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
     }
 }
 
@@ -419,16 +421,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (void)displayMerchantDetail
 {
     _collectionItem.favorited = _merchantDetail.collected;
-    NSMutableArray *items     = [@[] mutableCopy];
+    NSMutableArray *images     = [@[] mutableCopy];
     for (NSDictionary *image in _merchantDetail.merchantImages)
-    {
-        UIImageView *carView = [[UIImageView alloc] init];
-        [carView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", MerchantImageDoMain, image[@"name"]]]
-                placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
-        [items addObject:carView];
-    }
-    _merchantImagesView.items = items;
-    [_merchantImagesView begin:nil finished:nil];
+        [images addObject:[NSString stringWithFormat:@"%@%@", MerchantImageDoMain, image[@"name"]]];
+    _merchantImagesView.defaultImage = [UIImage imageNamed:@"MerchantImageDefault"];
+    _merchantImagesView.images = images;
+    [_merchantImagesView show:nil finished:nil];
 }
 
 /**
@@ -447,13 +445,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             [weakSelf displayMerchantDetail];
             
             [weakSelf.tableView reloadData];
+            [self removeBlankView];
         }
         else
             [weakSelf showRequestErrorAlert];
-        [self removeBlankView];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf showRequestErrorAlert];
-        [self removeBlankView];
     }];
 }
 
@@ -537,7 +534,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             otherButtonTitle:@"取消"];
 }
 
-- (void)pushToReservationViewControllerWithServiceItem:(SCServiceItem *)serviceItem canChange:(BOOL)canChange price:(NSString *)price
+- (void)pushToReservationViewControllerWithServiceItem:(SCServiceItem *)serviceItem canChange:(BOOL)canChange price:(SCQuotedPrice *)price
 {
     // 跳转到预约页面
     @try {
@@ -545,7 +542,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName:_merchantDetail.name companyID:_merchantDetail.company_id];
         reservationViewController.serviceItem                  = serviceItem;
         reservationViewController.canChange                    = canChange;
-        reservationViewController.price                        = price;
+        reservationViewController.quotedPrice                  = price;
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {
@@ -592,8 +589,16 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - SCMerchantSummaryCellDelegate Methods
 - (void)shouldNormalReservation
 {
-    SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
-    [reservatAlertView show];
+    if (_canSelectedReserve)
+    {
+        SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
+        [reservatAlertView show];
+    }
+    else
+    {
+        [[SCUserInfo share] removeItems];
+        [self pushToReservationViewControllerWithServiceItem:[[SCServiceItem alloc] initWithServiceID:_type] canChange:YES price:nil];
+    }
 }
 
 #pragma mark - SCMerchantDetailFlagCellDelegate Methods
@@ -606,13 +611,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (void)shouldSpecialReservationWithIndex:(NSInteger)index
 {
     SCQuotedPrice *price = _merchantDetail.quotedPriceGroup.products[index];
-    NSString *type = price.type;
+    price.merchantName   = _merchantDetail.name;
+    price.companyID      = _merchantDetail.company_id;
     
-    SCUserInfo *userInfo = [SCUserInfo share];
-    [userInfo removeItems];
-    [userInfo addMaintenanceItem:price.title];
-    
-    [self pushToReservationViewControllerWithServiceItem:[[SCServiceItem alloc] initWithServiceID:type] canChange:NO price:price.final_price];
+    [self pushToReservationViewControllerWithServiceItem:[[SCServiceItem alloc] initWithServiceID:price.type] canChange:NO price:price];
 }
 
 #pragma mark - SCReservatAlertViewDelegate Methods

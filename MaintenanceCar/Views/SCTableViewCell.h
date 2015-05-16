@@ -8,6 +8,7 @@
 
 #import "SCViewCategory.h"
 
+// V2卡片Cell基类
 @interface SCTableViewCell : UITableViewCell
 
 /**

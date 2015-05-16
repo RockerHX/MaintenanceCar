@@ -13,7 +13,7 @@ typedef BOOL(^BLOCK)(void);
 
 #define TIME_OUT_FLAG               1                                       // 倒计时结束时间
 #define TIME_INTERVAL               1.0f                                    // 倒计时时间间隔
-#define COUNT_DOWN_TIME_DURATION    VerificationCodeTimeExpire * 60 + 30    // 倒计时结束时间
+#define COUNT_DOWN_TIME_DURATION    CodeExpire * 60 + 30    // 倒计时结束时间
 #define TEXT_PROMPT                 @"获取验证码"                             // SCVerificationCodeView提示
 
 @interface SCVerificationCodeView ()

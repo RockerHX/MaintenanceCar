@@ -45,7 +45,7 @@
     [UMFeedback setAppkey:UMengAPPKEY];
     // 设置版本号
     [MobClick setAppVersion:APP_VERSION];
-    [MobClick checkUpdate];         // 集成友盟更新
+    [MobClick checkUpdate];                 // 集成友盟更新
     
     // 启动[友盟统计]，采用启动发送的方式 - BATCH
 //    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"AppStore:%@", APP_VERSION]];

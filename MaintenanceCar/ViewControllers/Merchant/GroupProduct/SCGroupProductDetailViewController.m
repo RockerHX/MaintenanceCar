@@ -7,18 +7,18 @@
 //
 
 #import "SCGroupProductDetailViewController.h"
-#import "SCGroupProductDetail.h"
+#import <SCLoopScrollView/SCLoopScrollView.h>
+#import <AFNetworking/UIImageView+AFNetworking.h>
 #import "SCBuyGroupProductCell.h"
 #import "SCGroupProductMerchantCell.h"
 #import "SCGroupProductDetailCell.h"
 #import "SCShowMoreCell.h"
 #import "SCCommentCell.h"
-#import "SCBuyGroupProductViewController.h"
+#import "SCOderPayViewController.h"
 #import "SCCommentListViewController.h"
-#import <SCLoopScrollView/SCLoopScrollView.h>
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import "SCReservationViewController.h"
 
-@interface SCGroupProductDetailViewController () <SCBuyGroupProductCellDelegate, SCGroupProductMerchantCellDelegate, UIAlertViewDelegate>
+@interface SCGroupProductDetailViewController () <SCBuyGroupProductCellDelegate, SCGroupProductMerchantCellDelegate>
 {
     SCGroupProductDetail *_detail;
 }
@@ -117,7 +117,10 @@
             default:
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCBuyGroupProductCell" forIndexPath:indexPath];
-                [(SCBuyGroupProductCell *)cell displayCellWithDetail:_detail];
+                if (_price)
+                    [(SCBuyGroupProductCell *)cell displayCellWithPrice:_price];
+                else
+                    [(SCBuyGroupProductCell *)cell displayCellWithDetail:_detail];
             }
                 break;
         }
@@ -163,7 +166,10 @@
             {
                 if(!_productCell)
                     _productCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCBuyGroupProductCell"];
-                [_productCell displayCellWithDetail:_detail];
+                if (_price)
+                    [_productCell displayCellWithPrice:_price];
+                else
+                    [_productCell displayCellWithDetail:_detail];
                 height = [_productCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
                 break;
@@ -193,7 +199,7 @@
             text = @"商家信息";
             break;
         case 2:
-            text = @"团购详情";
+            text = _price ? @"商品详情" : @"团购详情";
             break;
             
         default:
@@ -216,7 +222,7 @@
     if ([cell isKindOfClass:[SCShowMoreCell class]])
     {
         @try {
-            SCCommentListViewController *commentListViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCommentListViewController"];
+            SCCommentListViewController *commentListViewController = MAIN_VIEW_CONTROLLER(@"SCCommentListViewController");
             commentListViewController.companyID = _detail.companyID;
             [self.navigationController pushViewController:commentListViewController animated:YES];
         }
@@ -234,12 +240,12 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     __weak typeof(self)weakSelf = self;
-    NSDictionary *parameters = @{@"product_id": _product.product_id};
+    NSDictionary *parameters = @{@"product_id": _price ? _price.product_id : _product.product_id};
     [[SCAPIRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            _detail = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
-            _detail.companyID = _product.companyID;
+            _detail              = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
+            _detail.companyID    = _product.companyID;
             _detail.merchantName = _product.merchantName;
             _detail.serviceDate  = _product.now;
             
@@ -254,14 +260,9 @@
 
 - (void)dispalyDetialView
 {
-    NSMutableArray *items = [@[] mutableCopy];
-    UIImageView *carView  = [[UIImageView alloc] init];
-    NSString *imageURL = [NSString stringWithFormat:@"%@%@", MerchantImageDoMain, _detail.img1 ? _detail.img1 : [NSString stringWithFormat:@"%@_1.jpg", _detail.companyID]];
-    [carView setImageWithURL:[NSURL URLWithString:imageURL]
-            placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
-    [items addObject:carView];
-    _merchanImagesView.items = items;
-    [_merchanImagesView begin:nil finished:nil];
+    _merchanImagesView.defaultImage = [UIImage imageNamed:@"MerchantImageDefault"];
+    _merchanImagesView.images = @[[NSString stringWithFormat:@"%@%@", MerchantImageDoMain, _detail.img1 ? _detail.img1 : [NSString stringWithFormat:@"%@_1.jpg", _detail.companyID]]];
+    [_merchanImagesView show:nil finished:nil];
 }
 
 #pragma mark - SCGroupProductCellDelegate Methods
@@ -270,9 +271,9 @@
     if ([SCUserInfo share].loginStatus)
     {
         @try {
-            SCBuyGroupProductViewController *buyGroupProductViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCBuyGroupProductViewController"];
-            buyGroupProductViewController.groupProductDetail = _detail;
-            [self.navigationController pushViewController:buyGroupProductViewController animated:YES];
+            SCOderPayViewController *viewController = MAIN_VIEW_CONTROLLER(@"SCOderPayViewController");
+            viewController.groupProductDetail = _detail;
+            [self.navigationController pushViewController:viewController animated:YES];
         }
         @catch (NSException *exception) {
             NSLog(@"SCGroupProductDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
@@ -282,6 +283,25 @@
     }
     else
         [self showShoulLoginAlert];
+}
+
+- (void)shouldReserveProduct
+{
+    // 跳转到预约页面
+    @try {
+        [[SCUserInfo share] removeItems];
+        SCReservationViewController *reservationViewController = MAIN_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
+        reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName: _price.merchantName
+                                                                                                companyID: _price.companyID];
+        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:_price.type];
+        reservationViewController.quotedPrice = _price;
+        [self.navigationController pushViewController:reservationViewController animated:YES];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
+    }
+    @finally {
+    }
 }
 
 #pragma mark - SCGroupProductMerchantCell Delegate Methods

@@ -11,7 +11,7 @@
 @protocol SCNavigationTabDelegate <NSObject>
 
 @optional
-- (void)didSelectedItemAtIndex:(NSInteger)index;
+- (void)didSelectedItemAtIndex:(NSInteger)index title:(NSString *)title;
 
 @end
 

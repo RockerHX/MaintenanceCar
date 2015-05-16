@@ -14,7 +14,6 @@
 #import "SCMerchantDetailViewController.h"
 #import "SCReservationViewController.h"
 #import "SCUserCar.h"
-#import "SCMerchant.h"
 #import "SCMileageView.h"
 #import "SCAllDictionary.h"
 #import "SCChangeMaintenanceDataViewController.h"
@@ -61,6 +60,48 @@
     [self performSelector:@selector(viewConfig) withObject:nil afterDelay:0.1f];
 }
 
+#pragma mark - Config Methods
+- (void)initConfig
+{
+    _checkData          = [@{} mutableCopy];
+    _recommendMerchants = [@[] mutableCopy];
+    _currentCar         = [[SCUserInfo share].cars firstObject];
+}
+
+- (void)viewConfig
+{
+    if (IS_IPHONE_6Plus)
+    {
+        _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 280.0f);
+        _heightConstraint.constant = _heightConstraint.constant + 30.0f;
+        [self.view needsUpdateConstraints];
+        [self.view layoutIfNeeded];
+    }
+    else if (IS_IPHONE_6)
+    {
+        _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 270.0f);
+        _heightConstraint.constant = _heightConstraint.constant + 15.0f;
+        [self.view needsUpdateConstraints];
+        [self.view layoutIfNeeded];
+    }
+    else
+    {
+        _buyCarLabel.font     = [UIFont systemFontOfSize:12.0f];
+        _buyCarTimeLabel.font = [UIFont systemFontOfSize:13.0f];
+        _driveCarLabel.font   = [UIFont systemFontOfSize:12.0f];
+        _driveHabitLabel.font = [UIFont systemFontOfSize:13.0f];
+    }
+    
+    NSArray *userCars = [SCUserInfo share].cars;
+    if (userCars.count)
+    {
+        _nextButton.enabled = (userCars.count > 1) ? YES : NO;
+        [self startDataRequest];
+    }
+    else
+        [self showHUDAlertToViewController:self tag:Zero text:@"暂无车辆，请您添加" delay:0.5f];
+}
+
 #pragma mark - Navigation
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -68,8 +109,9 @@
     if ([segue.identifier isEqualToString:@"Maintenance"])
     {
         SCServiceMerchantListViewController *maintenanceViewController = segue.destinationViewController;
-        maintenanceViewController.query    = [DefaultQuery stringByAppendingString:@" AND service:'养'"];
-        maintenanceViewController.title    = @"保养";
+        maintenanceViewController.title      = @"保养";
+        maintenanceViewController.type       = @"2";
+        maintenanceViewController.searchType = SCSearchTypeMaintenance;
     }
 }
 
@@ -123,49 +165,6 @@
 }
 
 #pragma mark - Private Methods
-- (void)initConfig
-{
-    _checkData                    = [@{} mutableCopy];
-    _recommendMerchants           = [@[] mutableCopy];
-    
-    _currentCar                   = [[SCUserInfo share].cars firstObject];
-    _maintenanceTypeView.delegate = self;
-}
-
-- (void)viewConfig
-{
-    if (IS_IPHONE_6Plus)
-    {
-        _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 280.0f);
-        _heightConstraint.constant = _heightConstraint.constant + 30.0f;
-        [self.view needsUpdateConstraints];
-        [self.view layoutIfNeeded];
-    }
-    else if (IS_IPHONE_6)
-    {
-        _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 270.0f);
-        _heightConstraint.constant = _heightConstraint.constant + 15.0f;
-        [self.view needsUpdateConstraints];
-        [self.view layoutIfNeeded];
-    }
-    else
-    {
-        _buyCarLabel.font     = [UIFont systemFontOfSize:12.0f];
-        _buyCarTimeLabel.font = [UIFont systemFontOfSize:13.0f];
-        _driveCarLabel.font   = [UIFont systemFontOfSize:12.0f];
-        _driveHabitLabel.font = [UIFont systemFontOfSize:13.0f];
-    }
-    
-    NSArray *userCars = [SCUserInfo share].cars;
-    if (userCars.count)
-    {
-        _nextButton.enabled = (userCars.count > 1) ? YES : NO;
-        [self startDataRequest];
-    }
-    else
-        [self showHUDAlertToViewController:self tag:Zero text:@"暂无车辆，请您添加" delay:0.5f];
-}
-
 - (void)displayMaintenanceView
 {
     SCUserCar *userCar                   = _currentCar;
@@ -222,6 +221,7 @@
             }
             [weakSelf displayMaintenanceView];
             [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationMiddle];
+            [weakSelf startRecommendMerchantRequest];
         }
         else
             [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:NetWorkError delay:0.5f];
@@ -259,10 +259,10 @@
 - (void)startRecommendMerchantListRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
 {
     __weak typeof(self) weakSelf = self;
-    NSDictionary *parameters = @{@"query": @"default:'深圳' AND service:'养'",
+    NSDictionary *parameters = @{@"query": [NSString stringWithFormat:@"default:'深圳' AND service:'养' AND majors:'%@'", _currentCar.brand_name],
                                  @"limit": @(3),
                                 @"offset": @(0),
-                                @"radius": @(MerchantListRadius).stringValue,
+                                @"radius": @(SearchRadius).stringValue,
                               @"latitude": latitude,
                             @"longtitude": longitude};
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -270,6 +270,7 @@
         {
             NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
             // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
+            [_recommendMerchants removeAllObjects];
             for (NSDictionary *data in list)
             {
                 NSError *error       = nil;
@@ -402,7 +403,8 @@
     {
         // 根据选中的商家，取到其商家ID，跳转到商家页面进行详情展示
         SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
-        merchantDetialViewControler.merchant = (SCMerchant *)_recommendMerchants[indexPath.row];
+        merchantDetialViewControler.merchant                        = (SCMerchant *)_recommendMerchants[indexPath.row];
+        merchantDetialViewControler.type                            = @"2";
         [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
     }
 }
@@ -502,8 +504,8 @@
     // 跳转到预约页面
     @try {
         SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.merchant = _recommendMerchants[index];
-        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:@"2"];
+        reservationViewController.merchant                     = _recommendMerchants[index];
+        reservationViewController.serviceItem                  = [[SCServiceItem alloc] initWithServiceID:@"2"];
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {

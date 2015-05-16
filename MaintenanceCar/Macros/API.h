@@ -34,9 +34,11 @@
 #define ImageURL            [ImageDoMain stringByAppendingString:ImagePath] // 图片资源链接
 
 #pragma mark - API
-#define WearthAPI                   @"/Weather"                             // 天气API
 #define SearchAPI                   @"/company_search"                      // 商家搜索API
-#define OperateSearchAPI            @"/company_search/operate"              // 运营位商家搜索API
+#define SearchWashAPI               @"/company_search/wash"                 // 洗车美容商户搜索API
+#define SearchMaintanceAPI          @"/company_search/maintance"            // 保养商户搜索API
+#define SearchRepairAPI             @"/company_search/repair"               // 维修商户搜索API
+#define SearchOperateAPI            @"/company_search/operate"              // 运营位商家搜索API
 #define MerchantDetailAPI           @"/Carshop"                             // 商家详情API
 #define MerchantCollectionAPI       @"/Collection"                          // 商家收藏API
 #define CancelCollectionAPI         @"/Collection/delete"                   // 取消商家收藏API
@@ -45,10 +47,8 @@
 #define MerchantGroupProductAPI     @"/Group_product"                       // 商家团购详情API
 #define WeiXinPayAPI                @"/wepay"                               // 微信支付API
 #define AliPayAPI                   @"/zhipay"                              // 支付宝钱包API
-#define GenerateCouponAPI           @"/Group_ticket"                        // 生成团购券API
-#define MyGroupProductAPI           @"/Group_ticket/all"                    // 我的团购券列表API
-#define CouponDetailAPI             GenerateCouponAPI                       // 团购券详情API
-#define CouponRefundAPI             @"/wepay/refund"                        // 团购券退款的API
+#define GroupTicketsAPI             @"/Group_ticket/all"                    // 团购券API
+#define GroupTicketRefundAPI        @"/wepay/refund"                        // 团购券退款的API
 
 #define CommentAPI                  @"/Comments"                            // 评价API
 #define MerchantCommentAPI          @"/Comments/shop"                       // 商家的评价
@@ -59,7 +59,6 @@
 #define RefreshTokenAPI             @"/User/refresh/"                       // 刷新Token的API
 
 #define MerchantReservationAPI      @"/Reservation"                         // 商家预约API
-#define MyReservationAPI            @"/Reservation/all"                     // 我的预约API
 #define UpdateReservationAPI        @"/Reservation/update"                  // 更新预约API
 #define ReservationItemNumAPI       @"/Carshop/reservation_left"            // 预约日期数量API
 
@@ -82,14 +81,22 @@
 
 
 #pragma mark - V2
-#define MyProgressOderAPI           @"/Reservation/doing"                   // 我的进行中订单API
-#define MyFinishedOderAPI           @"/Reservation/done"                    // 我的已完成订单API
+#define ProgressOdersAPI            @"/Reservation/doing"                   // 我的进行中订单API
+#define FinishedOdersAPI            @"/Reservation/done"                    // 我的已完成订单API
+#define OderDetailAPI               @"/Reservation"                         // 订单详情API
+
+#define ValidCouponsAPI             @"/coupon/get_effective_coupon"         // 有效优惠券API
+#define InvalidCouponsAPI           @"/coupon/get_invalid_coupon"           // 无效优惠券API
+#define AddCouponAPI                @"/coupon/add_coupon"                   // 添加优惠券API
+#define UseCouponAPI                @"/coupon/use_coupon"                   // 使用优惠券API
 
 
 #pragma mark - API URL
-#define WearthAPIURL                    [V1APIURL stringByAppendingString:WearthAPI]                  // 天气接口URL - 用于主页模块获取天气信息
 #define SearchAPIURL                    [V1APIURL stringByAppendingString:SearchAPI]                  // 商家搜索接口URL - 用于商家搜索和筛选
-#define OperateSearchAPIURL             [V1APIURL stringByAppendingString:OperateSearchAPI]           // 运营位商家搜索接口URL - 用于运营位商家搜索和筛选
+#define SearchWashAPIURL                [V1APIURL stringByAppendingString:SearchWashAPI]              // 洗车美容商户搜索接口URL - 用于搜索洗车美容商户
+#define SearchMaintanceAPIURL           [V1APIURL stringByAppendingString:SearchMaintanceAPI]         // 保养商户搜索接口URL - 用于搜索保养商户
+#define SearchRepairAPIURL              [V1APIURL stringByAppendingString:SearchRepairAPI]            // 维修商户搜索接口URL - 用于搜索维修商户
+#define SearchOperateAPIURL             [V1APIURL stringByAppendingString:SearchOperateAPI]           // 运营位商家搜索接口URL - 用于运营位商家搜索和筛选
 #define MerchantDetailAPIURL            [V1APIURL stringByAppendingString:MerchantDetailAPI]          // 商家详情接口URL - 用于获取短信或者语音验证码
 #define MerchantCollectionAPIURL        [V1APIURL stringByAppendingString:MerchantCollectionAPI]      // 商家收藏接口URL - 用于商家收藏和获取商家收藏
 #define CancelCollectionAPIURL          [V1APIURL stringByAppendingString:CancelCollectionAPI]        // 取消商家收藏接口URL - 用于商家详情页面取消收藏或者个人中心页面删除收藏
@@ -98,13 +105,11 @@
 #define MerchantGroupProductAPIURL      [V1APIURL stringByAppendingString:MerchantGroupProductAPI]    // 商家团购详情接口URL - 用于商家团购项目
 #define WeiXinPayAPIURL                 [V1APIURL stringByAppendingString:WeiXinPayAPI]               // 微信支付订单接口URL - 用于团购支付时获取微信支付订单信息
 #define AliPayAPIURL                    [V1APIURL stringByAppendingString:AliPayAPI]                  // 支付宝钱包支付订单接口URL - 用于团购支付时获取支付宝钱包订单信息
-#define GenerateCouponAPIURL            [V1APIURL stringByAppendingString:GenerateCouponAPI]          // 生成团购券接口URL - 用于付款成功后生成团购券
-#define MyGroupProductAPIURL            [V2APIURL stringByAppendingString:MyGroupProductAPI]          // 我的团购券列表接口URL - 用于获取用户所有团购券列表
-#define CouponDetailAPIURL              [V1APIURL stringByAppendingString:CouponDetailAPI]            // 团购券详情接口URL - 用于获取团购券详情
-#define CouponRefundAPIURL              [V1APIURL stringByAppendingString:CouponRefundAPI]            // 团购券退款的接口URL - 用于团购券详情申请退款
+#define GroupTicketsAPIURL              [V2APIURL stringByAppendingString:GroupTicketsAPI]            // 团购券列表接口URL - 用于获取用户所有团购券列表
+#define GroupTicketRefundAPIURL         [V1APIURL stringByAppendingString:GroupTicketRefundAPI]       // 团购券退款的接口URL - 用于团购券详情申请退款
 
-#define CommentAPIURL                   [V1APIURL stringByAppendingString:CommentAPI]                 // 评价接口URL - 用于添加评价
-#define MerchantCommentAPIURL           [V1APIURL stringByAppendingString:MerchantCommentAPI]         // 商家评价接口URL - 用于获取商家评价列表
+#define CommentAPIURL                   [V2APIURL stringByAppendingString:CommentAPI]                 // 评价接口URL - 用于添加评价
+#define MerchantCommentAPIURL           [V2APIURL stringByAppendingString:MerchantCommentAPI]         // 商家评价接口URL - 用于获取商家评价列表
 
 #define VerificationCodeAPIURL          [V2APIURL stringByAppendingString:VerificationCodeAPI]        // 获取验证码接口URL - 用于获取短信或者语音验证码
 #define LoginAPIURL                     [V2APIURL stringByAppendingString:LoginAPI]                   // 用户登录接口URL - 用于用户登录
@@ -112,7 +117,6 @@
 #define RefreshTokenAPIURL              [V2APIURL stringByAppendingString:RefreshTokenAPI]            // 刷新Token接口URL - 刷新token过期时间
 
 #define MerchantReservationAPIURL       [V2APIURL stringByAppendingString:MerchantReservationAPI]     // 商家预约接口URL - 用于商家预约项目
-#define MyReservationAPIURL             [V2APIURL stringByAppendingString:MyReservationAPI]           // 我的预约接口URL - 用于商家预约项目
 #define UpdateReservationAPIURL         [V2APIURL stringByAppendingString:UpdateReservationAPI]       // 更新预约接口URL - 用于用户取消预约项目
 #define ReservationItemNumAPIURL        [V2APIURL stringByAppendingString:ReservationItemNumAPI]      // 预约日期数量接口URL - 用于获取预约项目数量
 
@@ -136,7 +140,13 @@
 
 
 #pragma mark - V2
-#define MyProgressOderAPIURL            [V2APIURL stringByAppendingString:MyProgressOderAPI]          // 我的进行中订单接口URL - 用于进行中订单数据获取
-#define MyFinishedOderAPIURL            [V2APIURL stringByAppendingString:MyFinishedOderAPI]          // 我的已完成订单接口URL - 用于已完成订单数据获取
+#define ProgressOdersAPIURL             [V2APIURL stringByAppendingString:ProgressOdersAPI]           // 进行中订单接口URL - 用于进行中订单数据获取
+#define FinishedOdersAPIURL             [V2APIURL stringByAppendingString:FinishedOdersAPI]           // 已完成订单接口URL - 用于已完成订单数据获取
+#define OderDetailAPIURL                [V2APIURL stringByAppendingString:OderDetailAPI]              // 订单详情接口URL - 用于订单详情数据获取
+
+#define ValidCouponsAPIURL              [V2APIURL stringByAppendingString:ValidCouponsAPI]            // 有效优惠券接口URL - 用于获取用户所有有效优惠券
+#define InvalidCouponsAPIURL            [V2APIURL stringByAppendingString:InvalidCouponsAPI]          // 无效优惠券接口URL - 用于获取用户所有无效优惠券
+#define AddCouponAPIURL                 [V2APIURL stringByAppendingString:AddCouponAPI]               // 添加优惠券接口URL - 用于输入优惠码兑换可用优惠券
+#define UseCouponAPIURL                 [V2APIURL stringByAppendingString:UseCouponAPI]               // 使用优惠券接口URL - 用于优惠券消费
 
 #endif

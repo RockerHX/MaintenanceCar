@@ -82,26 +82,16 @@
 
 - (void)refreshOperatAD
 {
-    NSMutableArray *items = [@[] mutableCopy];
+    NSMutableArray *images = [@[] mutableCopy];
     if (_opratADs.count)
     {
         for (SCSpecial *special in _opratADs)
-        {
-            UIImageView *view = [[UIImageView alloc] init];
-            [view setImageWithURL:[NSURL URLWithString:special.pic_url] placeholderImage:[UIImage imageNamed:@"MerchantImageDefault"]];
-            [items addObject:view];
-        }
-    }
-    else
-    {
-        UIImageView *view    = [[UIImageView alloc] init];
-        view.image           = [UIImage imageNamed:@"MerchantImageDefault"];
-        view.backgroundColor = [UIColor redColor];
-        [items addObject:view];
+            [images addObject:special.pic_url];
     }
     
-    _operatADView.items = items;
-    [_operatADView begin:^(NSInteger index) {
+    _operatADView.defaultImage = [UIImage imageNamed:@"MerchantImageDefault"];
+    _operatADView.images = images;
+    [_operatADView show:^(NSInteger index) {
         if (_opratADs.count)
         {
             if (_delegate && [_delegate respondsToSelector:@selector(shouldShowOperatAd:)])

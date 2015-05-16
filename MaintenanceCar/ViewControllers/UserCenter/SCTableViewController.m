@@ -47,42 +47,51 @@
     }
     self.tableView.tableFooterView = [[UIView alloc] init];         // 为tableview添加空白尾部，以免没有数据显示时有很多条纹
     
-    // 为tableview添加上拉和下拉响应式控件和触发方法
-    [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(startDropDownRefreshReuqest)];
+    // 为tableview添加下拉响应式控件和触发方法
+    [self addRefreshHeader];
     [self.tableView.header beginRefreshing];
 }
 
 - (void)startDropDownRefreshReuqest
 {
-    // 刷新前把数据偏移量offset设置为0，设置刷新类型，以便请求最新数据
-    _offset = Zero;
-    _requestType = SCRequestRefreshTypeDropDown;
+    [self removeRefreshFooter];
     
-    [self clearListData];
+    self.offset = Zero;
+    self.requestType = SCRequestRefreshTypeDropDown;
 }
 
 - (void)startPullUpRefreshRequest
 {
-    // 设置刷新类型
-    _requestType = SCRequestRefreshTypePullUp;
+    [self removeRefreshHeader];
+    self.requestType = SCRequestRefreshTypePullUp;
 }
 
 - (void)endRefresh
 {
-    // 关闭上拉刷新或者下拉刷新
     if (_requestType == SCRequestRefreshTypeDropDown)
         [self.tableView.header endRefreshing];
     else
         [self.tableView.footer endRefreshing];
 }
 
-- (void)readdFooter
+- (void)addRefreshHeader
+{
+    if (!self.tableView.header)
+        [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(startDropDownRefreshReuqest)];
+}
+
+- (void)removeRefreshHeader
+{
+    [self.tableView removeHeader];
+}
+
+- (void)addRefreshFooter
 {
     if (!self.tableView.footer)
         [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(startPullUpRefreshRequest)];
 }
 
-- (void)removeFooter
+- (void)removeRefreshFooter
 {
     [self.tableView removeFooter];
 }

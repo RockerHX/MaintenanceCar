@@ -21,14 +21,15 @@ typedef NS_ENUM(NSInteger, SCPickerType) {
 
 @interface SCPickerView : UIView <UIPickerViewDataSource, UIPickerViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIPickerView       *picker;            // 时间选择器
-@property (weak, nonatomic) IBOutlet UIView             *containerView;     // 容器View
+@property (weak, nonatomic) IBOutlet       UIPickerView *picker;            // 时间选择器
+@property (weak, nonatomic) IBOutlet             UIView *containerView;     // 容器View
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;  // 时间选择器到View下边距约束条件
 
-
-@property (nonatomic, weak)    id<SCPickerViewDelegate> delegate;
+@property (nonatomic, weak)                          id  <SCPickerViewDelegate>delegate;
 @property (nonatomic, strong, readonly)         NSArray *pickerItmes;       // 选择器数据Cache
 @property (nonatomic, assign, readonly)    SCPickerType type;               // 选择器类型
+
+- (IBAction)enterButtonPressed:(id)sender;
 
 /**
  *  选择器View初始化方法

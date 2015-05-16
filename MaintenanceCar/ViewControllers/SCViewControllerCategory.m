@@ -34,7 +34,7 @@
     [self showAlertWithTitle:@"您还没有登录"
                      message:nil
                     delegate:self
-                         tag:Zero
+                         tag:SCViewControllerAlertTypeNeedLogin
            cancelButtonTitle:@"取消"
             otherButtonTitle:@"登录"];
 }
@@ -130,10 +130,7 @@
     if (message)
     {
         if (operation.response.statusCode == SCAPIRequestStatusCodeTokenError)
-        {
-            [[SCUserInfo share] logout];
             [self showShoulReLoginAlert];
-        }
         else
             [self showHUDAlertToViewController:self text:message];
     }
@@ -164,10 +161,11 @@
 
 - (void)showShoulReLoginAlert
 {
+    [[SCUserInfo share] logout];
     [self showAlertWithTitle:@"您有一段时间没有使用修养了，为了您的安全考虑，请您重新登录"
                      message:nil
                     delegate:self
-                         tag:Zero
+                         tag:SCViewControllerAlertTypeNeedLogin
            cancelButtonTitle:@"取消"
             otherButtonTitle:@"登录"];
 }
@@ -175,14 +173,14 @@
 #pragma mark - Alert View Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch (alertView.tag)
+    if (buttonIndex != alertView.cancelButtonIndex)
     {
-        case Zero:
+        switch (alertView.tag)
         {
-            if (buttonIndex != alertView.cancelButtonIndex)
+            case SCViewControllerAlertTypeNeedLogin:
                 [self checkShouldLogin];
+                break;
         }
-            break;
     }
 }
 

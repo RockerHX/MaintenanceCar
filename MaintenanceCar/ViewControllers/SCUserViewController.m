@@ -8,18 +8,15 @@
 
 #import "SCUserViewController.h"
 #import "SCLoginViewController.h"
-#import "SCMyFavoriteTableViewController.h"
-#import "SCMyReservationTableViewController.h"
-#import "SCMyCouponViewController.h"
+#import "SCCollectionsViewController.h"
 #import "SCUserInfoView.h"
 #import "SCChangeMaintenanceDataViewController.h"
 
 typedef NS_ENUM(NSInteger, SCUserCenterRow) {
-    SCUserCenterRowMyOrder = 0,
-    SCUserCenterRowMyCollection,
-    SCUserCenterRowMyCoupon,
-    SCUserCenterRowMyCustomers,
-    SCUserCenterRowMyReservation,
+    SCUserCenterRowOrders = 0,
+    SCUserCenterRowCollections,
+    SCUserCenterRowGroupTickets,
+    SCUserCenterRowCoupons
 };
 
 @interface SCUserViewController () <SCUserInfoViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
@@ -61,7 +58,8 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 #pragma mark - Private Methods
 - (void)initConfig
 {
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(pushToMyCouponViewController) name:kGenerateCouponSuccessNotification object:nil];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(showMyOderList) name:kShowTicketNotification object:nil];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(pushToGroupTicketsViewController) name:kGenerateTicketSuccessNotification object:nil];
     [NOTIFICATION_CENTER addObserver:_userInfoView selector:@selector(refresh) name:kUserCarsDataNeedReloadSuccessNotification object:nil];
 }
 
@@ -78,36 +76,25 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     // 检查用户是否登录，在进行相应页面跳转
     if ([SCUserInfo share].loginStatus)
     {
-        @try {
-            switch (indexPath.row)
+        switch (indexPath.row)
+        {
+            case SCUserCenterRowOrders:
+                [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCOdersViewController")];
+                break;
+            case SCUserCenterRowCollections:
             {
-                case SCUserCenterRowMyOrder:
-                {
-                    SCMyReservationTableViewController *myReservationTableViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyReservationTableViewController"];
-                    [self pushToSubViewControllerWithController:myReservationTableViewController];
-                }
-                    break;
-                case SCUserCenterRowMyCollection:
-                {
-                    SCMyFavoriteTableViewController *myFavoriteTableViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyFavoriteTableViewController"];
-                    myFavoriteTableViewController.showTrashItem = YES;
-                    [self pushToSubViewControllerWithController:myFavoriteTableViewController];
-                }
-                    break;
-                case SCUserCenterRowMyCoupon:
-                {
-                    [self pushToMyCouponViewController];
-                }
-                    break;
-                    
-                default:
-                    break;
+                SCCollectionsViewController *collectionsViewController = USERCENTER_VIEW_CONTROLLER(@"SCCollectionsViewController");
+                collectionsViewController.showTrashItem = YES;
+                [self pushToSubViewControllerWithController:collectionsViewController];
             }
-        }
-        @catch (NSException *exception) {
-            NSLog(@"User Center Push Controller Error:%@", exception.reason);
-        }
-        @finally {
+                break;
+            case SCUserCenterRowGroupTickets:
+                [self pushToGroupTicketsViewController];
+                break;
+                
+            case SCUserCenterRowCoupons:
+                [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCCouponsViewController")];
+                break;
         }
     }
     else
@@ -125,10 +112,14 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (void)pushToMyCouponViewController
+- (void)pushToGroupTicketsViewController
 {
-    SCMyCouponViewController *myCouponViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMyCouponViewController"];
-    [self pushToSubViewControllerWithController:myCouponViewController];
+    [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCGroupTicketsViewController")];
+}
+
+- (void)showMyOderList
+{
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:Zero inSection:Zero]];
 }
 
 #pragma mark - Alert View Delegate Methods
@@ -141,20 +132,19 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     }
 }
 
+// [设置]按钮被点击，跳转到App设置页面
+- (IBAction)settingItemPressed:(UIBarButtonItem *)sender
+{
+    [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCSettingViewController")];
+}
+
 // [添加车辆]按钮被点击，跳转到添加车辆页面
 - (IBAction)addCarItemPressed:(UIBarButtonItem *)sender
 {
     if ([SCUserInfo share].loginStatus)
     {
-        @try {
-            UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
-            [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
+        UINavigationController *addCarViewNavigationControler = USERCENTER_VIEW_CONTROLLER(@"SCAddCarViewNavigationController");
+        [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
     }
     else
         [self showShoulLoginAlert];
@@ -168,17 +158,10 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 
 - (void)shouldChangeCarData:(SCUserCar *)userCar
 {
-    @try {
-        SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCChangeMaintenanceDataViewController"];
-        changeMaintenanceDataViewController.delegate = self;
-        changeMaintenanceDataViewController.car = userCar;
-        [self.navigationController pushViewController:changeMaintenanceDataViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCHomePageViewController Go to the SCChangeMaintenanceDataViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = MAIN_VIEW_CONTROLLER(@"SCChangeMaintenanceDataViewController");
+    changeMaintenanceDataViewController.delegate = self;
+    changeMaintenanceDataViewController.car = userCar;
+    [self.navigationController pushViewController:changeMaintenanceDataViewController animated:YES];
 }
 
 #pragma mark - SCChangeMaintenanceDataViewControllerDelegate Methods

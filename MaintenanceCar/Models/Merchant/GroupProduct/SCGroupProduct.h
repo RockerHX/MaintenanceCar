@@ -22,7 +22,7 @@
 @property (nonatomic, copy) NSString <Optional>*sell_count;
 @property (nonatomic, copy) NSString <Optional>*now;
 
-@property (nonatomic, copy) NSString <Optional>*companyID;
-@property (nonatomic, copy) NSString <Optional>*merchantName;
+@property (nonatomic, copy) NSString <Ignore>*companyID;
+@property (nonatomic, copy) NSString <Ignore>*merchantName;
 
 @end

@@ -9,12 +9,6 @@
 #import "SCViewControllerCategory.h"
 #import <MJRefresh/MJRefresh.h>
 
-// 刷新操作的请求类型
-typedef NS_ENUM(NSInteger, SCRequestRefreshType) {
-    SCRequestRefreshTypeDropDown,
-    SCRequestRefreshTypePullUp
-};
-
 @interface SCTableViewController : UITableViewController
 {
     id              _deleteDataCache;    // 删除数据的缓存
@@ -49,8 +43,10 @@ typedef NS_ENUM(NSInteger, SCRequestRefreshType) {
  *  结束刷新
  */
 - (void)endRefresh;
-- (void)readdFooter;
-- (void)removeFooter;
+- (void)addRefreshHeader;
+- (void)removeRefreshHeader;
+- (void)addRefreshFooter;
+- (void)removeRefreshFooter;
 
 /**
  *  清空列表缓存数据
