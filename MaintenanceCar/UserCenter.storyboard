@@ -353,7 +353,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3zV-oE-V4e">
                                 <rect key="frame" x="0.0" y="140" width="320" height="428"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <view key="tableFooterView" hidden="YES" contentMode="scaleToFill" id="pnm-Ur-cLf">
+                                <view key="tableFooterView" contentMode="scaleToFill" id="pnm-Ur-cLf">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
@@ -647,6 +647,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="amountLabel" destination="WWy-CI-zSP" id="QcQ-Ns-V4Y"/>
+                                            <outlet property="couponBgView" destination="Npx-RF-7Rw" id="zGD-zL-YDs"/>
                                             <outlet property="promptLabel" destination="wJf-td-nEA" id="EuR-Ma-SSD"/>
                                             <outlet property="titleLabel" destination="v2u-CK-gVx" id="gwS-RM-LV1"/>
                                             <outlet property="validDateLabel" destination="jUt-wq-wrm" id="ajt-oi-bOp"/>
@@ -784,6 +785,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="amountLabel" destination="Uaq-fv-l5w" id="VrE-bC-jAI"/>
+                                    <outlet property="couponBgView" destination="6yP-yr-YQQ" id="Bfk-P0-8xO"/>
                                     <outlet property="promptLabel" destination="yyD-M4-hXZ" id="p70-E5-OaJ"/>
                                     <outlet property="titleLabel" destination="Xvl-Pz-qwO" id="hVR-df-g7t"/>
                                     <outlet property="validDateLabel" destination="wNd-zp-S05" id="S3Y-Ju-WbN"/>

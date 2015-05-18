@@ -13,5 +13,6 @@
 @interface SCCouponDetailViewController : UITableViewController
 
 @property (nonatomic, strong) SCCoupon *coupon;
+@property (nonatomic, assign)     BOOL  couponCanNotUse;
 
 @end

@@ -23,11 +23,24 @@ typedef NS_ENUM(NSUInteger, SCCouponDetailRow) {
     SCCouponDetailRuleCell *_ruleCell;
 }
 
+#pragma mark - View Controller Life Cycle
+- (void)viewWillAppear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"[优惠券] - 详情"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // 用户行为统计，页面停留时间
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"[优惠券] - 详情"];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-//    [self.tableView reloadData];
 }
 
 #pragma mark - Table View Data Source Methods
@@ -47,6 +60,7 @@ static NSInteger rowNumber = 3;
             case SCCouponDetailRowCoupon:
             {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCell" forIndexPath:indexPath];
+                ((SCCouponCell *)cell).canNotUse = _couponCanNotUse;
                 [(SCCouponCell *)cell displayCellWithCoupon:_coupon];
             }
                 break;

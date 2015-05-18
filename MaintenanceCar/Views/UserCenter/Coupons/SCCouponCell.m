@@ -10,12 +10,25 @@
 
 @implementation SCCouponCell
 
+#pragma mark - Init Methods
 - (void)awakeFromNib
 {
     [super awakeFromNib];
     _promptLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 56.0f;
 }
 
+#pragma mark - Setter And Getter Methods
+- (void)setCanNotUse:(BOOL)canNotUse
+{
+    _canNotUse = canNotUse;
+    if (canNotUse)
+    {
+        _couponBgView.image = [_couponBgView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [_couponBgView setTintColor:[UIColor grayColor]];
+    }
+}
+
+#pragma mark - Public Methods
 - (CGFloat)displayCellWithCoupon:(SCCoupon *)coupon
 {
     _titleLabel.text     = coupon.title;
