@@ -57,7 +57,7 @@
             if ([url length])
             {
                 SCWebViewController *webViewController = MAIN_VIEW_CONTROLLER(@"SCWebViewController");
-                webViewController.title = @"精彩推荐";
+                webViewController.title = @"爱淘宝";
                 webViewController.loadURL = url;
                 [self.navigationController pushViewController:webViewController animated:YES];
                 [self performSelectorInBackground:@selector(getURL) withObject:nil];

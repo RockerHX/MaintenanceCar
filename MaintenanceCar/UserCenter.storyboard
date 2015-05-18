@@ -353,7 +353,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3zV-oE-V4e">
                                 <rect key="frame" x="0.0" y="140" width="320" height="428"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="pnm-Ur-cLf">
+                                <view key="tableFooterView" hidden="YES" contentMode="scaleToFill" id="pnm-Ur-cLf">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
@@ -508,7 +508,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="llk-tu-7gU">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="llk-tu-7gU">
                                         <rect key="frame" x="195" y="86" width="105" height="30"/>
                                         <state key="normal" title="优惠券使用规则">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -660,6 +660,17 @@
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d8D-H5-auQ">
                                 <rect key="frame" x="0.0" y="20" width="320" height="40"/>
+                                <subviews>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a7h-Id-OHe">
+                                        <rect key="frame" x="195" y="5" width="105" height="30"/>
+                                        <state key="normal" title="优惠券使用规则">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="ruleButtonPressed" destination="0HK-iX-dat" eventType="touchUpInside" id="pc3-eR-Lz4"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="70R-AR-NjY"/>
@@ -670,23 +681,12 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a7h-Id-OHe">
-                                <rect key="frame" x="195" y="25" width="105" height="30"/>
-                                <state key="normal" title="优惠券使用规则">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="ruleButtonPressed" destination="0HK-iX-dat" eventType="touchUpInside" id="pc3-eR-Lz4"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="a7h-Id-OHe" secondAttribute="trailing" constant="20" id="5xS-1f-GDE"/>
                             <constraint firstItem="cZX-0Y-pWH" firstAttribute="leading" secondItem="B80-1w-v5P" secondAttribute="leading" constant="20" id="9J7-NS-ea7"/>
                             <constraint firstItem="d8D-H5-auQ" firstAttribute="leading" secondItem="B80-1w-v5P" secondAttribute="leading" id="CO9-6H-vv1"/>
                             <constraint firstItem="dhP-GX-Qwr" firstAttribute="top" secondItem="QO9-Zl-xaQ" secondAttribute="bottom" id="CiM-zi-0mT"/>
-                            <constraint firstItem="a7h-Id-OHe" firstAttribute="centerY" secondItem="cZX-0Y-pWH" secondAttribute="centerY" id="JNT-gX-ZJd"/>
                             <constraint firstItem="QO9-Zl-xaQ" firstAttribute="leading" secondItem="B80-1w-v5P" secondAttribute="leading" id="Kka-n9-JEY"/>
                             <constraint firstItem="QO9-Zl-xaQ" firstAttribute="top" secondItem="d8D-H5-auQ" secondAttribute="bottom" id="Vgk-1n-hG3"/>
                             <constraint firstItem="d8D-H5-auQ" firstAttribute="top" secondItem="vmX-nA-UBT" secondAttribute="bottom" id="W8G-mL-w8o"/>
@@ -712,9 +712,9 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="fuu-ug-G1X">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SCCouponCell" rowHeight="139" id="bsA-YW-zYB" customClass="SCCouponCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCCouponCell" rowHeight="139" id="bsA-YW-zYB" customClass="SCCouponCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bsA-YW-zYB" id="5ne-Jy-709">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -789,7 +789,7 @@
                                     <outlet property="validDateLabel" destination="wNd-zp-S05" id="S3Y-Ju-WbN"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="MyV-99-JMB" customClass="SCTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SCCouponDetailShowMoreMerchantsCell" id="MyV-99-JMB" customClass="SCCouponDetailShowMoreMerchantsCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MyV-99-JMB" id="Tus-os-Wy6">
@@ -808,7 +808,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="116" id="FEF-1G-q1K" customClass="SCTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCCouponDetailRuleCell" rowHeight="116" id="FEF-1G-q1K" customClass="SCCouponDetailRuleCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FEF-1G-q1K" id="RVR-sR-H4R">
@@ -834,10 +834,14 @@
                                         <constraint firstItem="F10-L7-Xg7" firstAttribute="leading" secondItem="RVR-sR-H4R" secondAttribute="leading" id="GE6-bq-q9f"/>
                                         <constraint firstItem="2Vd-kF-QDX" firstAttribute="top" secondItem="RVR-sR-H4R" secondAttribute="top" constant="8" id="GeM-PH-xrF"/>
                                         <constraint firstAttribute="trailing" secondItem="F10-L7-Xg7" secondAttribute="trailing" id="VN7-BO-YmM"/>
-                                        <constraint firstAttribute="bottom" secondItem="F10-L7-Xg7" secondAttribute="bottom" constant="8" id="jkr-Pf-dBT"/>
+                                        <constraint firstAttribute="bottom" secondItem="F10-L7-Xg7" secondAttribute="bottom" priority="750" constant="8" id="jkr-Pf-dBT"/>
                                         <constraint firstItem="F10-L7-Xg7" firstAttribute="top" secondItem="2Vd-kF-QDX" secondAttribute="bottom" constant="8" id="ygv-2R-2Ra"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="ruleLabel" destination="F10-L7-Xg7" id="xOj-BI-2xB"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -1061,7 +1065,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gXK-UX-2XH" id="fzg-Vp-8YV">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="精彩推荐" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oz2-Q7-jZi">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="爱淘宝" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oz2-Q7-jZi">
                                                     <rect key="frame" x="14" y="8" width="298" height="27.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

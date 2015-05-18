@@ -10,6 +10,8 @@
 		4803EB061ABCB2AB001AD4F9 /* SCMerchantServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4803EB051ABCB2AB001AD4F9 /* SCMerchantServiceCell.m */; };
 		4803EB091ABCB688001AD4F9 /* SCServiceItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4803EB081ABCB688001AD4F9 /* SCServiceItemCell.m */; };
 		480445B61AC5616B004C20B9 /* SCAliPayOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 480445B51AC5616B004C20B9 /* SCAliPayOrder.m */; };
+		480754181B09CC8F00DB2433 /* SCCouponDetailShowMoreMerchantsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 480754171B09CC8F00DB2433 /* SCCouponDetailShowMoreMerchantsCell.m */; };
+		4807541B1B09CCCB00DB2433 /* SCCouponDetailRuleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4807541A1B09CCCB00DB2433 /* SCCouponDetailRuleCell.m */; };
 		481D94C41AC6B330005F3DD7 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 481D94621AC6B330005F3DD7 /* AlipaySDK.bundle */; };
 		481D94C51AC6B330005F3DD7 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 481D94631AC6B330005F3DD7 /* AlipaySDK.framework */; };
 		4820DA3E1A63FE5000129D39 /* SCCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4820DA3D1A63FE5000129D39 /* SCCoreDataManager.m */; };
@@ -196,6 +198,10 @@
 		4803EB081ABCB688001AD4F9 /* SCServiceItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCServiceItemCell.m; sourceTree = "<group>"; };
 		480445B41AC5616B004C20B9 /* SCAliPayOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAliPayOrder.h; sourceTree = "<group>"; };
 		480445B51AC5616B004C20B9 /* SCAliPayOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAliPayOrder.m; sourceTree = "<group>"; };
+		480754161B09CC8F00DB2433 /* SCCouponDetailShowMoreMerchantsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCouponDetailShowMoreMerchantsCell.h; sourceTree = "<group>"; };
+		480754171B09CC8F00DB2433 /* SCCouponDetailShowMoreMerchantsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCouponDetailShowMoreMerchantsCell.m; sourceTree = "<group>"; };
+		480754191B09CCCB00DB2433 /* SCCouponDetailRuleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCouponDetailRuleCell.h; sourceTree = "<group>"; };
+		4807541A1B09CCCB00DB2433 /* SCCouponDetailRuleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCouponDetailRuleCell.m; sourceTree = "<group>"; };
 		481D94621AC6B330005F3DD7 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		481D94631AC6B330005F3DD7 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		4820DA3C1A63FE5000129D39 /* SCCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCoreDataManager.h; sourceTree = "<group>"; };
@@ -540,6 +546,17 @@
 				6BF7DC11E8E03D2E33EF3C43 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		480754151B09CC1100DB2433 /* CouponDetail */ = {
+			isa = PBXGroup;
+			children = (
+				480754161B09CC8F00DB2433 /* SCCouponDetailShowMoreMerchantsCell.h */,
+				480754171B09CC8F00DB2433 /* SCCouponDetailShowMoreMerchantsCell.m */,
+				480754191B09CCCB00DB2433 /* SCCouponDetailRuleCell.h */,
+				4807541A1B09CCCB00DB2433 /* SCCouponDetailRuleCell.m */,
+			);
+			path = CouponDetail;
 			sourceTree = "<group>";
 		};
 		481D94611AC6B330005F3DD7 /* AliPay2.2.1 */ = {
@@ -1039,6 +1056,7 @@
 		489AA1EE1B04DCB900EDB86C /* Coupons */ = {
 			isa = PBXGroup;
 			children = (
+				480754151B09CC1100DB2433 /* CouponDetail */,
 				489AA1EF1B04DCB900EDB86C /* SCCouponCell.h */,
 				489AA1F01B04DCB900EDB86C /* SCCouponCell.m */,
 			);
@@ -1494,6 +1512,7 @@
 				486967B71AD80E6000C3F7A6 /* SCGroupBase.m in Sources */,
 				4866F9A91AACBD89008E195C /* SCMerchantSummaryCell.m in Sources */,
 				4866F9141AACBD2D008E195C /* SCServiceMerchantListViewController.m in Sources */,
+				480754181B09CC8F00DB2433 /* SCCouponDetailShowMoreMerchantsCell.m in Sources */,
 				4858206A1AFA0B2E005B1705 /* SCProductOderPaySummaryCell.m in Sources */,
 				48FB70C61AA5A58300AF4AD9 /* SCCarBrandDisplayModel.m in Sources */,
 				482B57DC1A43CB7700E47962 /* AppDelegate.mm in Sources */,
@@ -1530,6 +1549,7 @@
 				4866F91E1AACBD2D008E195C /* SCMerchantViewController.m in Sources */,
 				482AC9991AB5FD24001574EF /* SCShowMoreProductCell.m in Sources */,
 				4866F9BB1AACBD89008E195C /* SCCollectionReusableView.m in Sources */,
+				4807541B1B09CCCB00DB2433 /* SCCouponDetailRuleCell.m in Sources */,
 				48738A641ACE42400028FC13 /* StringConstants.m in Sources */,
 				489AA2381B05DA1E00EDB86C /* SCInvalidCouponsViewController.m in Sources */,
 				4866F9A11AACBD89008E195C /* SCMaintenanceTypeItem.m in Sources */,

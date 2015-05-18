@@ -15,6 +15,7 @@
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *prompt;
 @property (nonatomic, copy) NSString *amount;
+@property (nonatomic, copy) NSString *needMin;
 @property (nonatomic, copy) NSString *validDate;
 @property (nonatomic, copy) NSString *memo;
 

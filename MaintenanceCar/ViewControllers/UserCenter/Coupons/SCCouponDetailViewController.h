@@ -8,6 +8,10 @@
 
 #import "SCViewControllerCategory.h"
 
+@class SCCoupon;
+
 @interface SCCouponDetailViewController : UITableViewController
+
+@property (nonatomic, strong) SCCoupon *coupon;
 
 @end

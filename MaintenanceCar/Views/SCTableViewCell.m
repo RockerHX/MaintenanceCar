@@ -14,6 +14,7 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+    
     self.layer.shadowColor = [UIColor lightGrayColor].CGColor;
     self.layer.shadowOffset = CGSizeMake(0.5f, 0.5f);
     self.layer.shadowOpacity = 1.0f;

@@ -63,7 +63,11 @@
 - (IBAction)exchangeButtonPressed
 {
     if (_codeField.text.length > Zero)
+    {
+        _codeField.text = @"";
+        [_codeField resignFirstResponder];
         [self startAddCouponRequest];
+    }
     else
         [self showHUDAlertToViewController:self text:@"请输入优惠券再兑换"];
 }
@@ -115,6 +119,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     SCCouponDetailViewController *couponDetailViewController = USERCENTER_VIEW_CONTROLLER(@"SCCouponDetailViewController");
+    couponDetailViewController.coupon = _coupons[indexPath.row];
     [self.navigationController pushViewController:couponDetailViewController animated:YES];
 }
 
@@ -159,7 +164,8 @@
     [self showHUDOnViewController:self];
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
-    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID};
+    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                                    @"code": _codeField.text};
     [[SCAPIRequest manager] startAddCouponAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)

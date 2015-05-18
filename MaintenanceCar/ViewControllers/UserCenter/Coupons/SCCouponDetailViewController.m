@@ -7,94 +7,104 @@
 //
 
 #import "SCCouponDetailViewController.h"
+#import "SCCouponCell.h"
+#import "SCCouponDetailShowMoreMerchantsCell.h"
+#import "SCCouponDetailRuleCell.h"
 
-@interface SCCouponDetailViewController ()
-
-@end
+typedef NS_ENUM(NSUInteger, SCCouponDetailRow) {
+    SCCouponDetailRowCoupon,
+    SCCouponDetailRowShowMoreMerchants,
+    SCCouponDetailRowRule,
+};
 
 @implementation SCCouponDetailViewController
+{
+    SCCouponCell           *_couponCell;
+    SCCouponDetailRuleCell *_ruleCell;
+}
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+//    [self.tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - Table View Data Source Methods
+static NSInteger rowNumber = 3;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _coupon ? rowNumber : Zero;
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
-}
-
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = nil;
+    if (_coupon)
+    {
+        switch (indexPath.row)
+        {
+            case SCCouponDetailRowCoupon:
+            {
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCell" forIndexPath:indexPath];
+                [(SCCouponCell *)cell displayCellWithCoupon:_coupon];
+            }
+                break;
+            case SCCouponDetailRowRule:
+            {
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponDetailRuleCell" forIndexPath:indexPath];
+                [(SCCouponCell *)cell displayCellWithCoupon:_coupon];
+            }
+                break;
+                
+            default:
+                cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponDetailShowMoreMerchantsCell" forIndexPath:indexPath];
+                break;
+        }
+    }
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+#pragma mark - Table View Delegate Methods
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat height = Zero;
+    if (_coupon)
+    {
+        switch (indexPath.row)
+        {
+            case SCCouponDetailRowCoupon:
+            {
+                if(!_couponCell)
+                    _couponCell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCell"];
+                height = [_couponCell displayCellWithCoupon:_coupon];
+            }
+                break;
+            case SCCouponDetailRowRule:
+            {
+                if(!_ruleCell)
+                    _ruleCell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponDetailRuleCell"];
+                height = [_ruleCell displayCellWithCoupon:_coupon];
+            }
+                break;
+                
+            default:
+                height = 60.0f;
+                break;
+        }
+    }
+    
+    return height;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.row == SCCouponDetailRowShowMoreMerchants)
+    {
+        
+    }
 }
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
