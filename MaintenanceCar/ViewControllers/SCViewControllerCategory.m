@@ -127,7 +127,7 @@
 - (void)hanleFailureResponseWtihOperation:(AFHTTPRequestOperation *)operation
 {
     NSString *message = operation.responseObject[@"message"];
-    if (message)
+    if (message.length)
     {
         if (operation.response.statusCode == SCAPIRequestStatusCodeTokenError)
             [self showShoulReLoginAlert];

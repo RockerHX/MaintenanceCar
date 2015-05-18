@@ -8,7 +8,6 @@
 
 #import "SCCollectionsViewController.h"
 #import "SCMerchantTableViewCell.h"
-#import "SCMerchantDetailViewController.h"
 #import "SCReservationViewController.h"
 #import "SCLocationManager.h"
 
@@ -80,6 +79,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SCMerchantDetailViewController *merchantDetialViewControler = MAIN_VIEW_CONTROLLER(MerchantDetailViewControllerStoryBoardID);
+    merchantDetialViewControler.delegate           = self;
     merchantDetialViewControler.merchant           = (SCMerchant *)_dataList[indexPath.row];
     merchantDetialViewControler.canSelectedReserve = YES;
     [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
@@ -126,36 +126,43 @@
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                  @"limit"  : @(SearchLimit),
                                  @"offset" : @(self.offset)};
-    [[SCAPIRequest manager] startGetCollectionMerchantAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startCollectionsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [weakSelf endRefresh];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
-                [weakSelf clearListData];
-            // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
-            [responseObject enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj error:nil];
-                [_dataList addObject:merchant];
-            }];
-            
-            weakSelf.offset += SearchLimit;               // 偏移量请求参数递增
-            [weakSelf.tableView reloadData];                    // 数据配置完成，刷新商家列表
-            [weakSelf addRefreshHeader];
-            [weakSelf addRefreshFooter];
+            NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
+            NSString *statusMessage = responseObject[@"status_message"];
+            switch (statusCode)
+            {
+                case SCAPIRequestErrorCodeNoError:
+                {
+                    if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
+                        [weakSelf clearListData];
+                    [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                        SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj error:nil];
+                        [_dataList addObject:merchant];
+                    }];
+                    
+                    weakSelf.offset += SearchLimit;                 // 偏移量请求参数递增
+                    [weakSelf.tableView reloadData];                // 数据配置完成，刷新商家列表
+                    [weakSelf addRefreshHeader];
+                    [weakSelf addRefreshFooter];
+                }
+                    break;
+                    
+                case SCAPIRequestErrorCodeListNotFoundMore:
+                {
+                    [weakSelf.tableView reloadData];
+                    [weakSelf addRefreshHeader];
+                    [weakSelf removeRefreshFooter];
+                }
+                    break;
+            }
+            if (statusMessage.length)
+                [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
         }
-        else
-        {
-            NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:responseObject[@"error"] delay:0.5f];
-            [weakSelf addRefreshHeader];
-            [weakSelf removeRefreshFooter];
-        }
-        [weakSelf endRefresh];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Get merchant list request error:%@", error);
-        if (operation.response.statusCode == SCAPIRequestStatusCodeNotFound)
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"您还没有收藏过任何店铺噢！" delay:0.5f];
-        else
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:NetWorkError delay:0.5f];
+        [weakSelf hanleFailureResponseWtihOperation:operation];
         [weakSelf endRefresh];
     }];
 }
@@ -183,6 +190,12 @@
         [weakSelf deleteFailureAtIndex:index];
         [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"删除失败，请检查网络！" delay:0.5f];
     }];
+}
+
+#pragma mark - SCMerchantDetailViewControllerDelegate Methods
+- (void)cancelCollectionSuccess
+{
+    [self.tableView.header beginRefreshing];
 }
 
 @end

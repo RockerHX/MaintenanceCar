@@ -32,7 +32,10 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
     SCAPIRequestErrorCodeRefreshTokenError         = 4005,
     // Reservation
     SCAPIRequestErrorCodeReservationFailure        = 4006,
-    SCAPIRequestErrorCodeListNotFoundMore          = 4008
+    SCAPIRequestErrorCodeListNotFoundMore          = 4008,
+    // Collection
+    SCAPIRequestErrorCodeCancelCollectionFailure   = 4012,
+    SCAPIRequestErrorCodeCollectionFailure         = 4013
 };
 
 @interface SCAPIRequest : AFHTTPRequestOperationManager
@@ -118,9 +121,9 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 /**
  *  获取收藏商家接口请求方法(API:/Collection - GET)
  */
-- (void)startGetCollectionMerchantAPIRequestWithParameters:(NSDictionary *)parameters
-                                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startCollectionsAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  取消收藏商家接口请求方法(API:/Collection/delete - GET)
@@ -128,13 +131,6 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 - (void)startCancelCollectionAPIRequestWithParameters:(NSDictionary *)parameters
                                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
-/**
- *  检查商家是否收藏接口请求方法(API:/Collection/user - GET)
- */
-- (void)startCheckMerchantCollectionStutasAPIRequestWithParameters:(NSDictionary *)parameters
-                                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - Group Product API
 /**

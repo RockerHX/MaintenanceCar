@@ -33,6 +33,10 @@
 {
     self.tableView.tableFooterView = [[UIView alloc] init];         // 为tableview添加空白尾部，以免没有数据显示时有很多条纹
     
+    _navigationTab.layer.shadowColor = [UIColor grayColor].CGColor;
+    _navigationTab.layer.shadowOpacity = 1.0f;
+    _navigationTab.layer.shadowRadius = 4.0f;
+    
     // 为tableview添加下拉响应式控件和触发方法
     [self addRefreshHeader];
     [self.tableView.header beginRefreshing];

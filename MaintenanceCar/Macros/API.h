@@ -40,9 +40,6 @@
 #define SearchRepairAPI             @"/company_search/repair"               // 维修商户搜索API
 #define SearchOperateAPI            @"/company_search/operate"              // 运营位商家搜索API
 #define MerchantDetailAPI           @"/Carshop"                             // 商家详情API
-#define MerchantCollectionAPI       @"/Collection"                          // 商家收藏API
-#define CancelCollectionAPI         @"/Collection/delete"                   // 取消商家收藏API
-#define CheckMerchantCollectionAPI  @"/Collection/user"                     // 检查商家收藏状态API
 
 #define MerchantGroupProductAPI     @"/Group_product"                       // 商家团购详情API
 #define WeiXinPayAPI                @"/wepay"                               // 微信支付API
@@ -90,6 +87,9 @@
 #define AddCouponAPI                @"/coupon/add_coupon"                   // 添加优惠券API
 #define UseCouponAPI                @"/coupon/use_coupon"                   // 使用优惠券API
 
+#define MerchantCollectionAPI       @"/Collection"                          // 商家收藏API
+#define CancelCollectionAPI         @"/Collection/delete"                   // 取消商家收藏API
+
 
 #pragma mark - API URL
 #define SearchAPIURL                    [V1APIURL stringByAppendingString:SearchAPI]                  // 商家搜索接口URL - 用于商家搜索和筛选
@@ -98,9 +98,6 @@
 #define SearchRepairAPIURL              [V1APIURL stringByAppendingString:SearchRepairAPI]            // 维修商户搜索接口URL - 用于搜索维修商户
 #define SearchOperateAPIURL             [V1APIURL stringByAppendingString:SearchOperateAPI]           // 运营位商家搜索接口URL - 用于运营位商家搜索和筛选
 #define MerchantDetailAPIURL            [V1APIURL stringByAppendingString:MerchantDetailAPI]          // 商家详情接口URL - 用于获取短信或者语音验证码
-#define MerchantCollectionAPIURL        [V1APIURL stringByAppendingString:MerchantCollectionAPI]      // 商家收藏接口URL - 用于商家收藏和获取商家收藏
-#define CancelCollectionAPIURL          [V1APIURL stringByAppendingString:CancelCollectionAPI]        // 取消商家收藏接口URL - 用于商家详情页面取消收藏或者个人中心页面删除收藏
-#define CheckMerchantCollectionAPIURL   [V1APIURL stringByAppendingString:CheckMerchantCollectionAPI] // 检查商家收藏状态接口URL - 用于商家详情页面检查商家收藏状态
 
 #define MerchantGroupProductAPIURL      [V1APIURL stringByAppendingString:MerchantGroupProductAPI]    // 商家团购详情接口URL - 用于商家团购项目
 #define WeiXinPayAPIURL                 [V1APIURL stringByAppendingString:WeiXinPayAPI]               // 微信支付订单接口URL - 用于团购支付时获取微信支付订单信息
@@ -148,5 +145,8 @@
 #define InvalidCouponsAPIURL            [V2APIURL stringByAppendingString:InvalidCouponsAPI]          // 无效优惠券接口URL - 用于获取用户所有无效优惠券
 #define AddCouponAPIURL                 [V2APIURL stringByAppendingString:AddCouponAPI]               // 添加优惠券接口URL - 用于输入优惠码兑换可用优惠券
 #define UseCouponAPIURL                 [V2APIURL stringByAppendingString:UseCouponAPI]               // 使用优惠券接口URL - 用于优惠券消费
+
+#define MerchantCollectionAPIURL        [V2APIURL stringByAppendingString:MerchantCollectionAPI]      // 商家收藏接口URL - 用于商家收藏和获取商家收藏
+#define CancelCollectionAPIURL          [V2APIURL stringByAppendingString:CancelCollectionAPI]        // 取消商家收藏接口URL - 用于商家详情页面取消收藏或者个人中心页面删除收藏
 
 #endif

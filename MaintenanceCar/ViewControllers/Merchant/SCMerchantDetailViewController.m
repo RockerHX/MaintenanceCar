@@ -34,11 +34,11 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     SCAlertTypeReuqestCall
 };
 
-@interface SCMerchantDetailViewController () <UIAlertViewDelegate, SCReservatAlertViewDelegate, SCMerchantSummaryCellDelegate, SCMerchantDetailFlagCellDelegate, SCQuotedPriceCellDelegate>
+@interface SCMerchantDetailViewController () <SCReservatAlertViewDelegate, SCMerchantSummaryCellDelegate, SCMerchantDetailFlagCellDelegate, SCQuotedPriceCellDelegate>
 {
-    BOOL    _needChecked;      // 检查收藏标识
     UIView *_blankView;
 }
+
 @property (weak, nonatomic)    SCMerchantSummaryCell *summaryCellCell;
 @property (weak, nonatomic)       SCGroupProductCell *productCell;
 @property (weak, nonatomic)        SCQuotedPriceCell *quotedPriceCell;
@@ -54,10 +54,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[商家] - 商家详情"];
-    
-    // 从登录页面登录成功后返回到当前页面并请求登录用户的当前商家收藏状态
-    if ([SCUserInfo share].loginStatus && _needChecked)
-        [self startCheckMerchantCollectionStutasRequest];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -78,7 +74,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - Config Methods
 - (void)initConfig
 {
-    _needChecked = YES;
 }
 
 - (void)viewConfig
@@ -378,7 +373,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     if ([SCUserInfo share].loginStatus)
     {
         if (sender.favorited)
-            [self startUnCollectionMerchantRequest];
+            [self startCancelCollectionMerchantRequest];
         else
             [self startCollectionMerchantRequest];
         sender.favorited = !sender.favorited;
@@ -455,24 +450,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 }
 
 /**
- *  检查商家详情接口，需要参数:company_id，user_id
- */
-- (void)startCheckMerchantCollectionStutasRequest
-{
-    if ([SCUserInfo share].loginStatus)
-    {
-        NSDictionary *paramters = @{@"company_id": _merchant.company_id,
-                                       @"user_id": [SCUserInfo share].userID};
-        [[SCAPIRequest manager] startCheckMerchantCollectionStutasAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            _collectionItem.favorited = (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            _collectionItem.favorited = NO;
-        }];
-    }
-    _needChecked = NO;
-}
-
-/**
  *  收藏商家，需要参数：company_id，user_id，type_id
  */
 - (void)startCollectionMerchantRequest
@@ -482,42 +459,50 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                                    @"user_id": [SCUserInfo share].userID,
                                    @"type_id": @"1"};
     [[SCAPIRequest manager] startMerchantCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+        NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
+        NSString *statusMessage = responseObject[@"status_message"];
+        switch (statusCode)
         {
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"收藏成功" delay:0.5f];
+            case SCAPIRequestErrorCodeCollectionFailure:
+                _collectionItem.favorited = NO;
+                break;
         }
-        else
-        {
-            _collectionItem.favorited = NO;
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"收藏失败，请重试！" delay:0.5f];
-        }
+        if (statusMessage.length)
+            [self showHUDAlertToViewController:self text:statusMessage];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         _collectionItem.favorited = NO;
-        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"收藏失败，请检查网络！" delay:0.5f];
+        [weakSelf hanleFailureResponseWtihOperation:operation];
     }];
 }
 
 /**
  *  取消收藏商家，需要参数：company_id，user_id
  */
-- (void)startUnCollectionMerchantRequest
+- (void)startCancelCollectionMerchantRequest
 {
     __weak typeof(self) weakSelf = self;
     NSDictionary *paramters = @{@"company_id": _merchantDetail.company_id,
                                    @"user_id": [SCUserInfo share].userID};
     [[SCAPIRequest manager] startCancelCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
+        NSString *statusMessage = responseObject[@"status_message"];
+        switch (statusCode)
         {
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"取消收藏成功" delay:0.5f];
+            case SCAPIRequestErrorCodeNoError:
+            {
+                if (_delegate && [_delegate respondsToSelector:@selector(cancelCollectionSuccess)])
+                    [_delegate cancelCollectionSuccess];
+            }
+                break;
+            case SCAPIRequestErrorCodeCancelCollectionFailure:
+                _collectionItem.favorited = YES;
+                break;
         }
-        else
-        {
-            _collectionItem.favorited = YES;
-            [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"取消收藏失败，请重试！" delay:0.5f];
-        }
+        if (statusMessage.length)
+            [self showHUDAlertToViewController:self text:statusMessage];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         _collectionItem.favorited = YES;
-        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"取消收藏失败，请检查网络！" delay:0.5f];
+        [weakSelf hanleFailureResponseWtihOperation:operation];
     }];
 }
 
@@ -560,10 +545,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         case SCAlertTypeNeedLogin:
         {
             if (buttonIndex != alertView.cancelButtonIndex)
-            {
-                _needChecked = YES;
                 [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
-            }
         }
             break;
         case SCAlertTypeReuqestError:

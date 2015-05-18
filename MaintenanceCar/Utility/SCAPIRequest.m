@@ -147,9 +147,9 @@
     [self requestPOSTMethodsWithAPI:MerchantCollectionAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startGetCollectionMerchantAPIRequestWithParameters:(NSDictionary *)parameters
-                                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startCollectionsAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:MerchantCollectionAPIURL parameters:parameters success:success failure:failure];
 }
@@ -159,13 +159,6 @@
                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestPOSTMethodsWithAPI:CancelCollectionAPIURL parameters:parameters success:success failure:failure];
-}
-
-- (void)startCheckMerchantCollectionStutasAPIRequestWithParameters:(NSDictionary *)parameters
-                                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    [self requestGETMethodsWithAPI:CheckMerchantCollectionAPIURL parameters:parameters success:success failure:failure];
 }
 
 #pragma mark - Group Product API
