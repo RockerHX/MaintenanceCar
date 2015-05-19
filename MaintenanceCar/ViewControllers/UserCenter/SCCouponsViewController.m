@@ -64,7 +64,6 @@
 {
     if (_codeField.text.length > Zero)
     {
-        _codeField.text = @"";
         [_codeField resignFirstResponder];
         [self startAddCouponRequest];
     }
@@ -176,6 +175,7 @@
             {
                 case SCAPIRequestErrorCodeNoError:
                 {
+                    _codeField.text = @"";
                     [_coupons removeAllObjects];
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                         SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];

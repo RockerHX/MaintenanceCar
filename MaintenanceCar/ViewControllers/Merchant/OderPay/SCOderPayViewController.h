@@ -8,6 +8,11 @@
 
 #import "SCViewControllerCategory.h"
 
+typedef NS_ENUM(NSUInteger, SCOderPayType) {
+    SCOderPayTypeGroupProduct,
+    SCOderPayTypeGeneralMerchandise
+};
+
 @class SCGroupProductDetail;
 
 @interface SCOderPayViewController : UITableViewController
@@ -23,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *weiXinPayButton;
 @property (weak, nonatomic) IBOutlet UIButton *aliPayButton;
 
+@property (nonatomic, assign)        SCOderPayType  oderPayType;
 @property (nonatomic, strong) SCGroupProductDetail *groupProductDetail;
 
 - (IBAction)cutButtonPressed:(id)sender;

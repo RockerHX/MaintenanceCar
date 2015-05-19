@@ -7,7 +7,6 @@
 //
 
 #import "SCOderBaseCell.h"
-#import "UIConstants.h"
 #import "SCOder.h"
 
 @protocol SCOderCellDelegate <NSObject>

@@ -1,14 +1,14 @@
 //
-//  SCOderDetailInfoCell.m
+//  SCOderDetailSummaryCell.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/4/28.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCOderDetailInfoCell.h"
+#import "SCOderDetailSummaryCell.h"
 
-@implementation SCOderDetailInfoCell
+@implementation SCOderDetailSummaryCell
 
 #pragma mark - Init Methods
 - (void)awakeFromNib

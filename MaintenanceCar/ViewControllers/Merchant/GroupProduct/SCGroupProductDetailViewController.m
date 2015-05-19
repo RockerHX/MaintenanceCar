@@ -270,16 +270,9 @@
 {
     if ([SCUserInfo share].loginStatus)
     {
-        @try {
-            SCOderPayViewController *viewController = MAIN_VIEW_CONTROLLER(@"SCOderPayViewController");
-            viewController.groupProductDetail = _detail;
-            [self.navigationController pushViewController:viewController animated:YES];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"SCGroupProductDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
+        SCOderPayViewController *viewController = MAIN_VIEW_CONTROLLER(@"SCOderPayViewController");
+        viewController.groupProductDetail = _detail;
+        [self.navigationController pushViewController:viewController animated:YES];
     }
     else
         [self showShoulLoginAlert];
@@ -288,20 +281,13 @@
 - (void)shouldReserveProduct
 {
     // 跳转到预约页面
-    @try {
-        [[SCUserInfo share] removeItems];
-        SCReservationViewController *reservationViewController = MAIN_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
-        reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName: _price.merchantName
-                                                                                                companyID: _price.companyID];
-        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:_price.type];
-        reservationViewController.quotedPrice = _price;
-        [self.navigationController pushViewController:reservationViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    [[SCUserInfo share] removeItems];
+    SCReservationViewController *reservationViewController = MAIN_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
+    reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName: _price.merchantName
+                                                                           companyID: _price.companyID];
+    reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:_price.type];
+    reservationViewController.quotedPrice = _price;
+    [self.navigationController pushViewController:reservationViewController animated:YES];
 }
 
 #pragma mark - SCGroupProductMerchantCell Delegate Methods

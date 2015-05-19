@@ -1,5 +1,5 @@
 //
-//  SCOderDetailInfoCell.h
+//  SCOderDetailSummaryCell.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/4/28.
@@ -9,7 +9,7 @@
 #import "SCOderBaseCell.h"
 #import "SCOderDetail.h"
 
-@protocol SCOderDetailInfoCellDelegate <NSObject>
+@protocol SCOderDetailSummaryCellDelegate <NSObject>
 
 @optional
 /**
@@ -21,7 +21,7 @@
 
 @end
 
-@interface SCOderDetailInfoCell : SCOderBaseCell
+@interface SCOderDetailSummaryCell : SCOderBaseCell
 {
     SCOderDetail *_detail;
 }
@@ -32,7 +32,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *reservePhoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *remarkLabel;
 
-@property (nonatomic, weak) IBOutlet id<SCOderDetailInfoCellDelegate>delegate;
+@property (nonatomic, weak) IBOutlet id<SCOderDetailSummaryCellDelegate>delegate;
 
 - (IBAction)callMerchantButtonPressed:(id)sender;
 

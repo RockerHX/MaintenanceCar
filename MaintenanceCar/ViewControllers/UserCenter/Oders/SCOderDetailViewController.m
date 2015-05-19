@@ -7,10 +7,12 @@
 //
 
 #import "SCOderDetailViewController.h"
-#import "SCOderDetailInfoCell.h"
+#import "SCOderDetailSummaryCell.h"
+#import "SCOderDetailPayCell.h"
 #import "SCOderDetailPromptCell.h"
 #import "SCOderDetailProgressCell.h"
 #import "SCMoreMenu.h"
+#import "SCOderPayViewController.h"
 
 typedef NS_ENUM(NSUInteger, SCOderDetailAlertType) {
     SCOderAlertDetailTypeCallMerchant,
@@ -21,9 +23,9 @@ typedef NS_ENUM(NSUInteger, SCOderDetailMenuType) {
     SCOderDetailMenuTypeCancelReservetion
 };
 
-@interface SCOderDetailViewController () <SCOderDetailInfoCellDelegate>
+@interface SCOderDetailViewController () <SCOderDetailSummaryCellDelegate, SCOderDetailPayCellDelegate>
 {
-    SCOderDetailInfoCell     *_oderDetailInfoCell;
+    SCOderDetailSummaryCell  *_oderDetailSummaryCell;
     SCOderDetailProgressCell *_oderDetailProgressCell;
 }
 
@@ -83,7 +85,7 @@ typedef NS_ENUM(NSUInteger, SCOderDetailMenuType) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _detail ? (section ? _detail.processes.count + 1 : 1) : Zero;
+    return _detail ? (section ? _detail.processes.count + 1 : 2) : Zero;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -107,8 +109,16 @@ typedef NS_ENUM(NSUInteger, SCOderDetailMenuType) {
                 
             default:
             {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderDetailInfoCell" forIndexPath:indexPath];
-                [(SCOderDetailInfoCell *)cell displayCellWithDetail:_detail];
+                if (!indexPath.row)
+                {
+                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderDetailSummaryCell" forIndexPath:indexPath];
+                    [(SCOderDetailSummaryCell *)cell displayCellWithDetail:_detail];
+                }
+                else
+                {
+                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCOderDetailPayCell" forIndexPath:indexPath];
+                    [(SCOderDetailPayCell *)cell displayCellWithDetail:_detail];
+                }
             }
                 break;
         }
@@ -139,9 +149,14 @@ typedef NS_ENUM(NSUInteger, SCOderDetailMenuType) {
                 
             default:
             {
-                if(!_oderDetailInfoCell)
-                    _oderDetailInfoCell = [tableView dequeueReusableCellWithIdentifier:@"SCOderDetailInfoCell"];
-                height = [_oderDetailInfoCell displayCellWithDetail:_detail];
+                if (!indexPath.row)
+                {
+                    if(!_oderDetailSummaryCell)
+                        _oderDetailSummaryCell = [tableView dequeueReusableCellWithIdentifier:@"SCOderDetailSummaryCell"];
+                    height = [_oderDetailSummaryCell displayCellWithDetail:_detail];
+                }
+                else
+                    height = 87.0f;
             }
                 break;
         }
@@ -256,7 +271,7 @@ typedef NS_ENUM(NSUInteger, SCOderDetailMenuType) {
     }];
 }
 
-#pragma mark - SCOderDetailInfoCellDelegate Methods
+#pragma mark - SCOderDetailSummaryCellDelegate Methods
 - (void)shouldCallMerchantWithPhone:(NSString *)phone
 {
     [self showAlertWithTitle:@"是否拨打商家电话？" message:phone delegate:self tag:Zero cancelButtonTitle:@"取消" otherButtonTitle:@"拨打"];
@@ -280,6 +295,14 @@ typedef NS_ENUM(NSUInteger, SCOderDetailMenuType) {
                 break;
         }
     }
+}
+
+#pragma mark - SCOderDetailPayCellDelegate Methods
+- (void)userWantToPayForOder
+{
+    SCOderPayViewController *oderPayViewController = USERCENTER_VIEW_CONTROLLER(@"SCOderPayViewController");
+    oderPayViewController.oderPayType = SCOderPayTypeGeneralMerchandise;
+    [self.navigationController pushViewController:oderPayViewController animated:YES];
 }
 
 @end

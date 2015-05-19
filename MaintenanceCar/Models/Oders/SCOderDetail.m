@@ -14,6 +14,20 @@
 
 @implementation SCOderDetail
 
+#pragma mark - Init Methods
+- (instancetype)initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err
+{
+    self = [super initWithDictionary:dict error:err];
+    if (self)
+    {
+        if ([_price doubleValue])
+            _price = [_price stringByAppendingString:@"元"];
+        else
+            _price = @"待确定";
+    }
+    return self;
+}
+
 #pragma mark - Class Methods
 + (JSONKeyMapper *)keyMapper
 {
