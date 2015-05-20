@@ -18,5 +18,6 @@
 @property (nonatomic, copy) NSString *needMin;
 @property (nonatomic, copy) NSString *validDate;
 @property (nonatomic, copy) NSString *memo;
+@property (nonatomic, assign) BOOL current;
 
 @end

@@ -188,6 +188,11 @@
             }
             if (statusMessage.length)
                 [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
+            [_coupons enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                SCCoupon *coupon = obj;
+                if (coupon.current)
+                    [weakSelf showAlertWithTitle:@"兑换成功" message:[NSString stringWithFormat:@"%@（%@），有效期至%@。请按优惠券使用规则使用。", coupon.title, coupon.prompt, coupon.validDate]];
+            }];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf hanleFailureResponseWtihOperation:operation];
