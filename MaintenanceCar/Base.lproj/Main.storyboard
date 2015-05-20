@@ -249,12 +249,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="个人中心" id="vJo-BW-IoN">
-                        <barButtonItem key="leftBarButtonItem" image="SetupButton" id="J2O-V9-K5D">
+                        <barButtonItem key="leftBarButtonItem" image="SettingIcon" id="J2O-V9-K5D">
                             <connections>
                                 <action selector="settingItemPressed:" destination="FgE-ku-k2t" id="NMS-Od-i4d"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="AddButton" id="Ylm-dv-gak">
+                        <barButtonItem key="rightBarButtonItem" image="AddCarIcon" id="Ylm-dv-gak">
                             <connections>
                                 <action selector="addCarItemPressed:" destination="FgE-ku-k2t" id="0RH-tW-2hh"/>
                             </connections>
@@ -280,7 +280,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的手机号" minimumFontSize="17" background="PhoneNumberTextField" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="bl5-mD-hdI">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的手机号" minimumFontSize="17" background="PhoneNumberBG" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="bl5-mD-hdI">
                                 <rect key="frame" x="20" y="20" width="280" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="m2z-RX-zyB"/>
@@ -288,12 +288,12 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad" enablesReturnKeyAutomatically="YES"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入验证码" minimumFontSize="17" background="VerificationCodeTextField" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="rTx-28-xOW">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入验证码" minimumFontSize="17" background="VerificationCodeBG-TextField" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="rTx-28-xOW">
                                 <rect key="frame" x="20" y="80" width="180" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="VerificationCodeButton" translatesAutoresizingMaskIntoConstraints="NO" id="rL5-Nv-zag">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="VerificationCodeBG-Button" translatesAutoresizingMaskIntoConstraints="NO" id="rL5-Nv-zag">
                                 <rect key="frame" x="200" y="80" width="100" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="5A3-BO-Xo4"/>
@@ -368,7 +368,7 @@
                                     <constraint firstAttribute="height" constant="60" id="Npa-VY-gU8"/>
                                     <constraint firstAttribute="width" constant="60" id="uIQ-SL-f4Z"/>
                                 </constraints>
-                                <state key="normal" image="SinaLoginButton">
+                                <state key="normal" image="SinaLoginIcon">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -377,7 +377,7 @@
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nek-pm-0F3">
                                 <rect key="frame" x="180" y="330" width="60" height="60"/>
-                                <state key="normal" image="WeiXinLoginButton">
+                                <state key="normal" image="WeiXinLoginIcon">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -515,7 +515,7 @@
         <scene sceneID="sA9-3G-hGq">
             <objects>
                 <navigationController id="4em-1g-qKQ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="我" image="UserIconUnselected" id="A4l-9c-4hF">
+                    <tabBarItem key="tabBarItem" title="我" image="UserIcon-Unselected" id="A4l-9c-4hF">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-2"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="J44-69-gTX">
@@ -534,7 +534,7 @@
         <scene sceneID="Hm6-9R-WxA">
             <objects>
                 <navigationController id="eRZ-xA-4ot" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="首页" image="HomePageIconUnselected" id="iZB-5n-y5Q">
+                    <tabBarItem key="tabBarItem" title="首页" image="HomePageIcon-Unselected" id="iZB-5n-y5Q">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-2"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="9Jp-hs-YlA">
@@ -579,7 +579,7 @@
                                                 <constraint firstAttribute="width" constant="24" id="Ca7-Id-wGd"/>
                                                 <constraint firstAttribute="height" constant="24" id="eer-3j-EMf"/>
                                             </constraints>
-                                            <state key="normal" backgroundImage="arrowhead-right">
+                                            <state key="normal" backgroundImage="ArrowIcon-Right">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
@@ -592,7 +592,7 @@
                                                 <constraint firstAttribute="width" constant="24" id="tnv-ok-Fiz"/>
                                                 <constraint firstAttribute="height" constant="24" id="u0a-XN-wwO"/>
                                             </constraints>
-                                            <state key="normal" backgroundImage="arrowhead-left">
+                                            <state key="normal" backgroundImage="ArrowIcon-Left">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
@@ -610,28 +610,34 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LrH-4N-bnv" customClass="SCMileageView">
                                             <rect key="frame" x="20" y="52" width="280" height="93"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottom-frame" translatesAutoresizingMaskIntoConstraints="NO" id="MLV-et-mSc">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CarDigitalBG" translatesAutoresizingMaskIntoConstraints="NO" id="MLV-et-mSc">
                                                     <rect key="frame" x="0.0" y="0.0" width="280" height="93"/>
                                                     <gestureRecognizers/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="the-digital-frame" translatesAutoresizingMaskIntoConstraints="NO" id="YUB-ba-PbM">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CarDigitalIcon" translatesAutoresizingMaskIntoConstraints="NO" id="YUB-ba-PbM">
                                                     <rect key="frame" x="12" y="10" width="36" height="57"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="the-digital-frame" translatesAutoresizingMaskIntoConstraints="NO" id="235-TZ-Dlc">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CarDigitalIcon" translatesAutoresizingMaskIntoConstraints="NO" id="235-TZ-Dlc">
                                                     <rect key="frame" x="56" y="10" width="36" height="57"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="the-digital-frame" translatesAutoresizingMaskIntoConstraints="NO" id="b2Q-Eh-z61">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CarDigitalIcon" translatesAutoresizingMaskIntoConstraints="NO" id="b2Q-Eh-z61">
                                                     <rect key="frame" x="100" y="10" width="36" height="57"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="the-digital-frame" translatesAutoresizingMaskIntoConstraints="NO" id="ofe-AL-fKh">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CarDigitalIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ofe-AL-fKh">
                                                     <rect key="frame" x="144" y="10" width="36" height="57"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="the-digital-frame" translatesAutoresizingMaskIntoConstraints="NO" id="HoI-h7-FmU">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CarDigitalIcon" translatesAutoresizingMaskIntoConstraints="NO" id="HoI-h7-FmU">
                                                     <rect key="frame" x="188" y="10" width="36" height="57"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="the-digital-frame" translatesAutoresizingMaskIntoConstraints="NO" id="lfU-6H-sjw">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CarDigitalIcon" translatesAutoresizingMaskIntoConstraints="NO" id="lfU-6H-sjw">
                                                     <rect key="frame" x="232" y="10" width="36" height="57"/>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWO-KG-p6v">
+                                                    <rect key="frame" x="12" y="10" width="36" height="57"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b2c-rC-im5">
                                                     <rect key="frame" x="56" y="10" width="36" height="57"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
@@ -669,12 +675,6 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWO-KG-p6v">
-                                                    <rect key="frame" x="12" y="10" width="36" height="57"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -747,8 +747,8 @@
                                                 <outletCollection property="gestureRecognizers" destination="1wi-Ic-JPv" appends="YES" id="WqC-qy-xXg"/>
                                             </connections>
                                         </view>
-                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车辆登记日期:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XnY-uv-OUx">
-                                            <rect key="frame" x="10" y="157" width="95" height="20"/>
+                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="登记日期:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XnY-uv-OUx">
+                                            <rect key="frame" x="10" y="157" width="65" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="vW9-eA-aK9"/>
                                             </constraints>
@@ -757,7 +757,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2005年1月" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AEC-c0-XAO">
-                                            <rect key="frame" x="109" y="155" width="73" height="24"/>
+                                            <rect key="frame" x="79" y="155" width="73" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="24" id="amY-9D-dra"/>
                                             </constraints>
@@ -789,7 +789,7 @@
                                                 <constraint firstAttribute="width" constant="18" id="B8q-HB-eWo"/>
                                                 <constraint firstAttribute="height" constant="18" id="PWq-Co-ZKg"/>
                                             </constraints>
-                                            <state key="normal" backgroundImage="pen"/>
+                                            <state key="normal" backgroundImage="ChangeCarDataIcon"/>
                                             <connections>
                                                 <action selector="infoViewPressed:" destination="ARc-A9-Ntw" eventType="touchUpInside" id="ok3-zD-4fq"/>
                                             </connections>
@@ -842,7 +842,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z15-ku-oBa" customClass="SCMaintenanceTypeItem">
                                             <rect key="frame" x="41" y="13" width="68" height="24"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="the-radio-uncheck" translatesAutoresizingMaskIntoConstraints="NO" id="mBX-jG-oZ9">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CycleIcon-Uncheck" translatesAutoresizingMaskIntoConstraints="NO" id="mBX-jG-oZ9">
                                                     <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="mBX-jG-oZ9" secondAttribute="height" multiplier="1:1" id="SbH-kC-GGt"/>
@@ -876,7 +876,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KoC-ju-Tm2" customClass="SCMaintenanceTypeItem">
                                             <rect key="frame" x="191" y="13" width="68" height="24"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="the-radio-pitch-on" translatesAutoresizingMaskIntoConstraints="NO" id="s7x-Sp-5jk">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CycleIcon-Check" translatesAutoresizingMaskIntoConstraints="NO" id="s7x-Sp-5jk">
                                                     <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="s7x-Sp-5jk" secondAttribute="height" multiplier="1:1" id="fky-GU-4ef"/>
@@ -973,7 +973,7 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RaF-lq-mSq" id="14L-fk-6f5">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check-box-uncheck" translatesAutoresizingMaskIntoConstraints="NO" id="n9Z-q9-Cba">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CheckBox-Uncheck" translatesAutoresizingMaskIntoConstraints="NO" id="n9Z-q9-Cba">
                                             <rect key="frame" x="28" y="10" width="24" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="24" id="7Sy-fu-wG6"/>
@@ -1323,7 +1323,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DTS-vI-iRZ" customClass="SCDriveHabitsItem">
                                     <rect key="frame" x="40" y="46" width="240" height="50"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CheckButton" translatesAutoresizingMaskIntoConstraints="NO" id="c2G-5E-uyh">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CheckIcon" translatesAutoresizingMaskIntoConstraints="NO" id="c2G-5E-uyh">
                                             <rect key="frame" x="2" y="2" width="46" height="46"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="c2G-5E-uyh" secondAttribute="height" multiplier="1:1" id="cI8-Tj-Ued"/>
@@ -1366,7 +1366,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pye-TV-9ra" customClass="SCDriveHabitsItem">
                                     <rect key="frame" x="40" y="104" width="240" height="50"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UnCheckButton" translatesAutoresizingMaskIntoConstraints="NO" id="nPN-Y1-B1D">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UnCheckIcon" translatesAutoresizingMaskIntoConstraints="NO" id="nPN-Y1-B1D">
                                             <rect key="frame" x="2" y="2" width="46" height="46"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="nPN-Y1-B1D" secondAttribute="height" multiplier="1:1" id="rMV-qF-rZs"/>
@@ -1407,7 +1407,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hdb-zk-Jvc" customClass="SCDriveHabitsItem">
                                     <rect key="frame" x="40" y="162" width="240" height="50"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UnCheckButton" translatesAutoresizingMaskIntoConstraints="NO" id="kMF-RK-3t4">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UnCheckIcon" translatesAutoresizingMaskIntoConstraints="NO" id="kMF-RK-3t4">
                                             <rect key="frame" x="2" y="2" width="46" height="46"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="kMF-RK-3t4" secondAttribute="height" multiplier="1:1" id="SFr-va-kPF"/>
@@ -1605,7 +1605,7 @@
                                                         <constraint firstAttribute="height" constant="23" id="PeT-0i-C83"/>
                                                         <constraint firstAttribute="width" constant="23" id="ymf-RO-MHN"/>
                                                     </constraints>
-                                                    <state key="normal" backgroundImage="DateButton">
+                                                    <state key="normal" backgroundImage="DateIcon">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -1959,25 +1959,25 @@
                                 <rect key="frame" x="0.0" y="227" width="320" height="227.5"/>
                                 <color key="backgroundColor" red="0.97647058823529409" green="0.98039215686274506" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="the-divider1" translatesAutoresizingMaskIntoConstraints="NO" id="PZd-XM-vAB">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Line-V" translatesAutoresizingMaskIntoConstraints="NO" id="PZd-XM-vAB">
                                 <rect key="frame" x="158" y="235" width="3" height="86"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="3" id="IQ0-F6-VB1"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="the-divider1" translatesAutoresizingMaskIntoConstraints="NO" id="5NB-Sf-M3C">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Line-V" translatesAutoresizingMaskIntoConstraints="NO" id="5NB-Sf-M3C">
                                 <rect key="frame" x="158" y="361" width="3" height="83.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="3" id="xPb-13-bcL"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="the-divider2" translatesAutoresizingMaskIntoConstraints="NO" id="ndD-rb-7j2">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Line-H" translatesAutoresizingMaskIntoConstraints="NO" id="ndD-rb-7j2">
                                 <rect key="frame" x="180" y="340" width="120" height="3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="3" id="9B5-h2-uHn"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="the-divider2" translatesAutoresizingMaskIntoConstraints="NO" id="DtR-7s-wRk">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Line-H" translatesAutoresizingMaskIntoConstraints="NO" id="DtR-7s-wRk">
                                 <rect key="frame" x="20" y="340" width="120" height="3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="3" id="EbJ-fj-48F"/>
@@ -1989,7 +1989,7 @@
                                     <constraint firstAttribute="width" secondItem="EDl-JE-VXE" secondAttribute="height" multiplier="1:1" id="BQR-c4-aI2"/>
                                     <constraint firstAttribute="width" constant="120" id="FpS-Fg-yQA"/>
                                 </constraints>
-                                <state key="normal" backgroundImage="CarRepaireIcon">
+                                <state key="normal" backgroundImage="RepaireIcon">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -2010,7 +2010,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="seO-zz-eie" secondAttribute="height" multiplier="1:1" id="u2r-dR-o88"/>
                                 </constraints>
-                                <state key="normal" backgroundImage="CarMaintenanceIcon">
+                                <state key="normal" backgroundImage="MaintenanceIcon">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -2028,7 +2028,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Yiz-t6-7bE" secondAttribute="height" multiplier="1:1" id="ViF-EQ-1Qz"/>
                                 </constraints>
-                                <state key="normal" backgroundImage="CarWashIcon">
+                                <state key="normal" backgroundImage="WashIcon">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -2046,7 +2046,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="xSZ-nH-oC4" secondAttribute="height" multiplier="1:1" id="UeS-lH-5q4"/>
                                 </constraints>
-                                <state key="normal" backgroundImage="GroupPurchaseIcon">
+                                <state key="normal" backgroundImage="OtherIcon">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -4781,7 +4781,7 @@
         <scene sceneID="ndG-Ia-hcR">
             <objects>
                 <navigationController id="yyw-cV-1ce" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="发现" image="MerchantListIconUnselected" id="930-t8-W6i">
+                    <tabBarItem key="tabBarItem" title="发现" image="FoundIcon-Unselected" id="930-t8-W6i">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-2"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UUP-xF-IyO">
@@ -5321,49 +5321,49 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AddButton" width="21" height="21"/>
+        <image name="AddCarIcon" width="21" height="21"/>
+        <image name="ArrowIcon-Left" width="18" height="18"/>
+        <image name="ArrowIcon-Right" width="18" height="18"/>
         <image name="ArrowIcon-Yellow" width="9" height="16"/>
         <image name="CallButton" width="30" height="30"/>
-        <image name="CarMaintenanceIcon" width="81" height="81"/>
-        <image name="CarRepaireIcon" width="81" height="81"/>
-        <image name="CarWashIcon" width="81" height="81"/>
-        <image name="CenterBar" width="29" height="36"/>
-        <image name="CheckButton" width="33" height="33"/>
+        <image name="CarDigitalBG" width="312" height="93"/>
+        <image name="CarDigitalIcon" width="42" height="57"/>
+        <image name="CenterBar" width="108" height="36"/>
+        <image name="ChangeCarDataIcon" width="18" height="18"/>
+        <image name="CheckBox-Uncheck" width="24" height="24"/>
+        <image name="CheckIcon" width="33" height="33"/>
         <image name="CollectionsIcon" width="60" height="60"/>
         <image name="CouponsIcon" width="60" height="60"/>
-        <image name="DateButton" width="23" height="23"/>
+        <image name="CycleIcon-Check" width="24" height="24"/>
+        <image name="CycleIcon-Uncheck" width="24" height="24"/>
+        <image name="DateIcon" width="23" height="23"/>
         <image name="DistanceIcon" width="15" height="15"/>
         <image name="DownArrow-Gray" width="15" height="8"/>
         <image name="FooterAD" width="320" height="160"/>
-        <image name="GroupPurchaseIcon" width="81" height="81"/>
+        <image name="FoundIcon-Unselected" width="24" height="24"/>
         <image name="GroupTicketsIcon" width="60" height="60"/>
-        <image name="HomePageIconUnselected" width="24" height="24"/>
-        <image name="LeftBar" width="29" height="36"/>
+        <image name="HomePageIcon-Unselected" width="24" height="24"/>
+        <image name="LeftBar" width="111" height="36"/>
+        <image name="Line-H" width="152" height="3"/>
+        <image name="Line-V" width="3" height="120"/>
+        <image name="MaintenanceIcon" width="81" height="81"/>
         <image name="MerchantBusinessIcon" width="21" height="21"/>
         <image name="MerchantIconDefault" width="80" height="80"/>
-        <image name="MerchantListIconUnselected" width="24" height="24"/>
         <image name="OrdersIcon" width="60" height="60"/>
-        <image name="PhoneNumberTextField" width="327" height="69"/>
-        <image name="RightBar" width="41" height="36"/>
-        <image name="SetupButton" width="21" height="21"/>
-        <image name="SinaLoginButton" width="60" height="60"/>
+        <image name="OtherIcon" width="81" height="81"/>
+        <image name="PhoneNumberBG" width="327" height="69"/>
+        <image name="RepaireIcon" width="81" height="81"/>
+        <image name="RightBar" width="108" height="36"/>
+        <image name="SettingIcon" width="21" height="21"/>
+        <image name="SinaLoginIcon" width="60" height="60"/>
         <image name="Star-Unlight" width="24" height="28"/>
-        <image name="UnCheckButton" width="33" height="33"/>
+        <image name="UnCheckIcon" width="33" height="33"/>
         <image name="UnFavoriteIcon" width="21" height="21"/>
-        <image name="UserIconUnselected" width="24" height="24"/>
-        <image name="VerificationCodeButton" width="108" height="69"/>
-        <image name="VerificationCodeTextField" width="219" height="69"/>
-        <image name="WeiXinLoginButton" width="60" height="60"/>
-        <image name="arrowhead-left" width="18" height="18"/>
-        <image name="arrowhead-right" width="18" height="18"/>
-        <image name="bottom-frame" width="312" height="93"/>
-        <image name="check-box-uncheck" width="24" height="24"/>
-        <image name="pen" width="18" height="18"/>
-        <image name="the-digital-frame" width="42" height="57"/>
-        <image name="the-divider1" width="3" height="21"/>
-        <image name="the-divider2" width="21" height="3"/>
-        <image name="the-radio-pitch-on" width="24" height="24"/>
-        <image name="the-radio-uncheck" width="24" height="24"/>
+        <image name="UserIcon-Unselected" width="24" height="24"/>
+        <image name="VerificationCodeBG-Button" width="108" height="69"/>
+        <image name="VerificationCodeBG-TextField" width="219" height="69"/>
+        <image name="WashIcon" width="81" height="81"/>
+        <image name="WeiXinLoginIcon" width="60" height="60"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

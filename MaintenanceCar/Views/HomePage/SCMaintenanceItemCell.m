@@ -16,9 +16,9 @@
 - (void)changCheckStatus:(BOOL)status
 {
     if (status)
-        _checkBox.image = [UIImage imageNamed:@"check-box-pitch-on"];
+        _checkBox.image = [UIImage imageNamed:@"CheckBox-Check"];
     else
-        _checkBox.image = [UIImage imageNamed:@"check-box-uncheck"];
+        _checkBox.image = [UIImage imageNamed:@"CheckBox-Uncheck"];
 }
 
 #pragma mark - Setter And Getter

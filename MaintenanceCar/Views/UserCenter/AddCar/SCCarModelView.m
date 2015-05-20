@@ -78,7 +78,7 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     
     // 设置选中背景
     _selectedColorView = [[UIImageView alloc] init];
-    _selectedColorView.image = [UIImage imageNamed:@"CellSelectedBgView"];
+    _selectedColorView.image = [UIImage imageNamed:@"CellSelectedBG"];
 }
 
 /**

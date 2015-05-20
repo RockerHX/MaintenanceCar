@@ -108,6 +108,12 @@
 #define COCOAPODS_VERSION_MINOR_SCLoopScrollView 4
 #define COCOAPODS_VERSION_PATCH_SCLoopScrollView 1
 
+// SCNumberKeyBoard
+#define COCOAPODS_POD_AVAILABLE_SCNumberKeyBoard
+#define COCOAPODS_VERSION_MAJOR_SCNumberKeyBoard 0
+#define COCOAPODS_VERSION_MINOR_SCNumberKeyBoard 1
+#define COCOAPODS_VERSION_PATCH_SCNumberKeyBoard 1
+
 // UITableView+FDTemplateLayoutCell
 #define COCOAPODS_POD_AVAILABLE_UITableView_FDTemplateLayoutCell
 #define COCOAPODS_VERSION_MAJOR_UITableView_FDTemplateLayoutCell 1

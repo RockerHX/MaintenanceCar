@@ -10,6 +10,7 @@ pod 'HexColors'
 pod 'DateTools'
 pod 'IQKeyboardManager'
 pod 'SCLoopScrollView'
+pod 'SCNumberKeyBoard'
 pod 'UITableView+FDTemplateLayoutCell'
 
 # ********************** 第三方SDK **********************

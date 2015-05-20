@@ -7,8 +7,8 @@
 //
 
 #import "SCOderPayGroupProductSummaryCell.h"
-#import "SCNumberKeyBoard.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
+#import <SCNumberKeyBoard/SCNumberKeyBoard.h>
 
 @implementation SCOderPayGroupProductSummaryCell
 

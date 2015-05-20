@@ -164,8 +164,8 @@
 - (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
 {
     [mapView selectAnnotation:view.annotation animated:YES];
-    _preAnnotationView.image = [UIImage imageNamed:@"map-red"];
-    view.image = [UIImage imageNamed:@"map-blue"];
+    _preAnnotationView.image = [UIImage imageNamed:@"MapPinIcon-Red"];
+    view.image = [UIImage imageNamed:@"MapPinIcon-Blue"];
     // 刷新商家数据
     for (SCMerchant *merchant in _merchants)
     {

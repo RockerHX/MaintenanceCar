@@ -60,7 +60,7 @@
     {
         if (!userInfo.cars.count)
         {
-            _userCarsView.defaultImage = [UIImage imageNamed:@"car"];
+            _userCarsView.defaultImage = [UIImage imageNamed:@"UserCarBG"];
             _carNameLabel.text = @"请在右上角添加车辆";
             _carDataLabel.text = @"";
             [_userCarsView show:nil finished:nil];
@@ -72,7 +72,7 @@
             {
                 if (!_userCarsView.hidden && userInfo.cars.count)
                 {
-                    _userCarsView.images = @[[UIImage imageNamed:@"car"], [UIImage imageNamed:@"car"]];
+                    _userCarsView.images = @[[UIImage imageNamed:@"UserCarBG"], [UIImage imageNamed:@"UserCarBG"]];
                     [self displayLabelWithCar:[userInfo.cars firstObject]];
                 }
             }

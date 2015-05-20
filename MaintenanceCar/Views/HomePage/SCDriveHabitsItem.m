@@ -26,12 +26,12 @@
 
 - (void)selected
 {
-    _checkBox.image = [UIImage imageNamed:@"CheckButton"];
+    _checkBox.image = [UIImage imageNamed:@"CheckIcon"];
 }
 
 - (void)unSelected
 {
-    _checkBox.image = [UIImage imageNamed:@"UnCheckButton"];
+    _checkBox.image = [UIImage imageNamed:@"UnCheckIcon"];
 }
 
 @end
