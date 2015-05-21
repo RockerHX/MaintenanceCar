@@ -25,5 +25,6 @@
 
 @property (nonatomic, weak)         id  <SCOderDetailViewControllerDelegate>delegate;
 @property (nonatomic, strong) NSString *reserveID;
+@property (nonatomic, assign)     BOOL  canPay;
 
 @end

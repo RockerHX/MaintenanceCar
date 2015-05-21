@@ -12,7 +12,7 @@
 #import "SCOderDetailPromptCell.h"
 #import "SCOderDetailProgressCell.h"
 #import "SCMoreMenu.h"
-#import "SCOderPayViewController.h"
+#import "SCPayViewController.h"
 
 typedef NS_ENUM(NSUInteger, SCOderDetailAlertType) {
     SCOderAlertDetailTypeCallMerchant,
@@ -85,7 +85,7 @@ typedef NS_ENUM(NSUInteger, SCOderDetailMenuType) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _detail ? (section ? _detail.processes.count + 1 : 2) : Zero;
+    return _detail ? (section ? _detail.processes.count + 1 : (_canPay ? 2 : 1)) : Zero;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -300,9 +300,9 @@ typedef NS_ENUM(NSUInteger, SCOderDetailMenuType) {
 #pragma mark - SCOderDetailPayCellDelegate Methods
 - (void)userWantToPayForOder
 {
-    SCOderPayViewController *oderPayViewController = USERCENTER_VIEW_CONTROLLER(@"SCOderPayViewController");
-    oderPayViewController.oderPayType = SCOderPayTypeGeneralMerchandise;
-    [self.navigationController pushViewController:oderPayViewController animated:YES];
+    SCPayViewController *payViewController = [SCPayViewController instance];
+    payViewController.oderPayType = SCOderPayTypeGeneralMerchandise;
+    [self.navigationController pushViewController:payViewController animated:YES];
 }
 
 @end

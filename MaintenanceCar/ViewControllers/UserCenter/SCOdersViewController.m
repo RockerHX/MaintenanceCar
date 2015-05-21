@@ -113,6 +113,7 @@ typedef NS_ENUM(NSUInteger, SCOderAlertType) {
     SCOderDetailViewController *oderDetailViewController = USERCENTER_VIEW_CONTROLLER(@"SCOderDetailViewController");
     oderDetailViewController.delegate  = self;
     oderDetailViewController.reserveID = ((SCOder *)[self dataList][indexPath.row]).reserveID;
+    oderDetailViewController.canPay    = (_odersRequest == SCOdersReuqestProgress);
     [self.navigationController pushViewController:oderDetailViewController animated:YES];
 }
 
