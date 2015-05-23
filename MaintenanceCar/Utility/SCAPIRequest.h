@@ -141,20 +141,6 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
                                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  获取微信支付订单信息接口请求方法(API:/wepay - POST)
- */
-- (void)startGetWeiXinPayOrderAPIRequestWithParameters:(NSDictionary *)parameters
-                                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
-/**
- *  获取支付宝钱包订单信息接口请求方法(API:/zhipay - POST)
- */
-- (void)startGetAliPayOrderAPIRequestWithParameters:(NSDictionary *)parameters
-                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
-/**
  *  团购券列表接口请求方法(API:/Group_ticket/all - GET)
  */
 - (void)startGroupTicketsAPIRequestWithParameters:(NSDictionary *)parameters
@@ -167,6 +153,35 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 - (void)startGroupTicketRefundAPIRequestWithParameters:(NSDictionary *)parameters
                                                success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark - Pay API
+/**
+ *  获取微信支付下单信息接口请求方法(API:/wepay - POST)
+ */
+- (void)startWeiXinOderAPIRequestWithParameters:(NSDictionary *)parameters
+                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  获取微信支付买单信息接口请求方法(API:/wepay/custom - POST)
+ */
+- (void)startWeiXinPayOderAPIRequestWithParameters:(NSDictionary *)parameters
+                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  获取支付宝下单信息接口请求方法(API:/zhipay - POST)
+ */
+- (void)startAliOderAPIRequestWithParameters:(NSDictionary *)parameters
+                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  获取支付宝买单信息接口请求方法(API:/zhipay/custom - POST)
+ */
+- (void)startAliPayOderAPIRequestWithParameters:(NSDictionary *)parameters
+                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - Comment API
 /**

@@ -31,7 +31,6 @@
 
 @property (nonatomic, strong)            NSArray <Optional>*des;
 @property (nonatomic, strong) NSArray <Optional, SCComment>*comments;
-@property (nonatomic, copy)             NSString <Optional>*outTradeNo;
 @property (nonatomic, copy)             NSString <Optional>*serviceDate;
 @property (nonatomic, copy, readonly)   NSString   <Ignore>*distance;         // 手机当前位置与商家的距离
 

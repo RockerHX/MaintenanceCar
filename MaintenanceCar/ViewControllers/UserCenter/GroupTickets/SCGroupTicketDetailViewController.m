@@ -14,7 +14,7 @@
 #import "SCGroupProductDetailCell.h"
 #import "SCShowMoreCell.h"
 #import "SCCommentCell.h"
-#import "SCOderPayViewController.h"
+#import "SCPayOderViewController.h"
 #import "SCCommentListViewController.h"
 #import "SCReservationViewController.h"
 #import <SCLoopScrollView/SCLoopScrollView.h>
@@ -285,9 +285,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - SCGroupProductCellDelegate Methods
 - (void)shouldShowBuyProductView
 {
-    SCOderPayViewController *oderPayViewController = MAIN_VIEW_CONTROLLER(@"SCOderPayViewController");
-    oderPayViewController.groupProductDetail = _detail;
-    [self.navigationController pushViewController:oderPayViewController animated:YES];
+    SCPayOderViewController *payOderViewController = [SCPayOderViewController instance];
+    payOderViewController.groupProduct = _detail;
+    [self.navigationController pushViewController:payOderViewController animated:YES];
 }
 
 #pragma mark - SCTicketCodeCellDelegate Methods
@@ -296,7 +296,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     // 跳转到预约页面
     @try {
         [[SCUserInfo share] removeItems];
-        SCReservationViewController *reservationViewController = MAIN_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
+        SCReservationViewController *reservationViewController = [SCReservationViewController instance];
         reservationViewController.delegate    = self;
         reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:_ticket.company_name
                                                                                companyID:_ticket.company_id];

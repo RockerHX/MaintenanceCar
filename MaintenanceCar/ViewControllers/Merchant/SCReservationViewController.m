@@ -42,6 +42,12 @@
     [self viewConfig];
 }
 
+#pragma mark - Init Methods
++ (instancetype)instance
+{
+    return MAIN_VIEW_CONTROLLER(@"SCReservationViewController");
+}
+
 - (void)dealloc
 {
     [NOTIFICATION_CENTER removeObserver:self name:kUserCarsDataNeedReloadSuccessNotification object:nil];

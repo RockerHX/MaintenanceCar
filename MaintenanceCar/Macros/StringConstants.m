@@ -29,4 +29,3 @@ NSString *const RequestValueKey                            = @"RequestValue";
 NSString *const MerchantCellReuseIdentifier                = @"SCMerchantTableViewCell";
 
 NSString *const MerchantDetailViewControllerStoryBoardID   = @"SCMerchantDetailViewController";
-NSString *const ReservationViewControllerStoryBoardID      = @"SCReservationViewController";

@@ -169,20 +169,6 @@
     [self requestGETMethodsWithAPI:MerchantGroupProductAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startGetWeiXinPayOrderAPIRequestWithParameters:(NSDictionary *)parameters
-                                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    [self requestPOSTMethodsWithAPI:WeiXinPayAPIURL parameters:parameters success:success failure:failure];
-}
-
-- (void)startGetAliPayOrderAPIRequestWithParameters:(NSDictionary *)parameters
-                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    [self requestPOSTMethodsWithAPI:AliPayAPIURL parameters:parameters success:success failure:failure];
-}
-
 - (void)startGroupTicketsAPIRequestWithParameters:(NSDictionary *)parameters
                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
@@ -197,10 +183,36 @@
     [self requestPOSTMethodsWithAPI:GroupTicketRefundAPIURL parameters:parameters success:success failure:failure];
 }
 
+#pragma mark - Pay API
+- (void)startWeiXinOderAPIRequestWithParameters:(NSDictionary *)parameters
+                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:WeiXinOderAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startWeiXinPayOderAPIRequestWithParameters:(NSDictionary *)parameters
+                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:WeiXinPayOderAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startAliOderAPIRequestWithParameters:(NSDictionary *)parameters
+                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:AliOderAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startAliPayOderAPIRequestWithParameters:(NSDictionary *)parameters
+                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestPOSTMethodsWithAPI:AliPayOderAPIURL parameters:parameters success:success failure:failure];
+}
+
 #pragma mark - Comment API
-/**
- *  团购券详情接口请求方法(API:/Group_ticket - GET)
- */
 - (void)startCommentAPIRequestWithParameters:(NSDictionary *)parameters
                                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure

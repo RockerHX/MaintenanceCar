@@ -146,7 +146,7 @@
     // 跳转到预约页面
     [[SCUserInfo share] removeItems];
     SCGroupTicket *ticket = _dataList[index];
-    SCReservationViewController *reservationViewController = MAIN_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
+    SCReservationViewController *reservationViewController = [SCReservationViewController instance];
     reservationViewController.delegate    = self;
     reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:ticket.company_name
                                                                            companyID:ticket.company_id];

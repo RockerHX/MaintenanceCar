@@ -14,7 +14,7 @@
 #import "SCGroupProductDetailCell.h"
 #import "SCShowMoreCell.h"
 #import "SCCommentCell.h"
-#import "SCOderPayViewController.h"
+#import "SCPayOderViewController.h"
 #import "SCCommentListViewController.h"
 #import "SCReservationViewController.h"
 
@@ -270,9 +270,9 @@
 {
     if ([SCUserInfo share].loginStatus)
     {
-        SCOderPayViewController *viewController = MAIN_VIEW_CONTROLLER(@"SCOderPayViewController");
-        viewController.groupProductDetail = _detail;
-        [self.navigationController pushViewController:viewController animated:YES];
+        SCPayOderViewController *payOderViewController = [SCPayOderViewController instance];
+        payOderViewController.groupProduct = _detail;
+        [self.navigationController pushViewController:payOderViewController animated:YES];
     }
     else
         [self showShoulLoginAlert];
@@ -282,7 +282,7 @@
 {
     // 跳转到预约页面
     [[SCUserInfo share] removeItems];
-    SCReservationViewController *reservationViewController = MAIN_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
+    SCReservationViewController *reservationViewController = [SCReservationViewController instance];
     reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName: _price.merchantName
                                                                            companyID: _price.companyID];
     reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:_price.type];

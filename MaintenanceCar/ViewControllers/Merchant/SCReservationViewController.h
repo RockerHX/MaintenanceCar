@@ -47,4 +47,6 @@
 
 - (IBAction)reservationButtonPressed:(UIButton *)sender;
 
++ (instancetype)instance;
+
 @end

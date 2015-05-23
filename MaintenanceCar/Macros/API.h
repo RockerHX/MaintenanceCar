@@ -42,8 +42,6 @@
 #define MerchantDetailAPI           @"/Carshop"                             // 商家详情API
 
 #define MerchantGroupProductAPI     @"/Group_product"                       // 商家团购详情API
-#define WeiXinPayAPI                @"/wepay"                               // 微信支付API
-#define AliPayAPI                   @"/zhipay"                              // 支付宝钱包API
 #define GroupTicketsAPI             @"/Group_ticket/all"                    // 团购券API
 #define GroupTicketRefundAPI        @"/wepay/refund"                        // 团购券退款的API
 
@@ -90,6 +88,11 @@
 #define MerchantCollectionAPI       @"/Collection"                          // 商家收藏API
 #define CancelCollectionAPI         @"/Collection/delete"                   // 取消商家收藏API
 
+#define WeiXinOderAPI               @"/wepay"                               // 微信支付下单API
+#define WeiXinPayOderAPI            @"/wepay/custom"                        // 微信支付买单API
+#define AliOderAPI                  @"/zhipay"                              // 支付宝下单API
+#define AliPayOderAPI               @"/zhipay/custom"                       // 支付宝买单API
+
 
 #pragma mark - API URL
 #define SearchAPIURL                    [V1APIURL stringByAppendingString:SearchAPI]                  // 商家搜索接口URL - 用于商家搜索和筛选
@@ -100,8 +103,6 @@
 #define MerchantDetailAPIURL            [V1APIURL stringByAppendingString:MerchantDetailAPI]          // 商家详情接口URL - 用于获取短信或者语音验证码
 
 #define MerchantGroupProductAPIURL      [V1APIURL stringByAppendingString:MerchantGroupProductAPI]    // 商家团购详情接口URL - 用于商家团购项目
-#define WeiXinPayAPIURL                 [V1APIURL stringByAppendingString:WeiXinPayAPI]               // 微信支付订单接口URL - 用于团购支付时获取微信支付订单信息
-#define AliPayAPIURL                    [V1APIURL stringByAppendingString:AliPayAPI]                  // 支付宝钱包支付订单接口URL - 用于团购支付时获取支付宝钱包订单信息
 #define GroupTicketsAPIURL              [V2APIURL stringByAppendingString:GroupTicketsAPI]            // 团购券列表接口URL - 用于获取用户所有团购券列表
 #define GroupTicketRefundAPIURL         [V1APIURL stringByAppendingString:GroupTicketRefundAPI]       // 团购券退款的接口URL - 用于团购券详情申请退款
 
@@ -130,7 +131,6 @@
 #define FlagsColorExplainAPIURL         [V1APIURL stringByAppendingString:FlagsColorExplainAPI]       // 获取商家对应Flag颜色值接口URL
 #define MerchantTagsAPIURL              [V1APIURL stringByAppendingString:MerchantTagsAPI]            // 获取商家对应Tag标签接口URL
 
-
 #define OperatADAPIURL                  [V1APIURL stringByAppendingString:OperatADAPI]                // 首页运营位接口URL - 用于首页运营位数据
 #define HomePageReservationAPIURL       [V2APIURL stringByAppendingString:HomePageReservationAPI]     // 最新预约信息接口URL - 用于首页获取
 #define HomePageSpecialAPIURL           [V1APIURL stringByAppendingString:HomePageSpecialAPI]         // 首页第四个按钮数据接口URL
@@ -148,5 +148,10 @@
 
 #define MerchantCollectionAPIURL        [V2APIURL stringByAppendingString:MerchantCollectionAPI]      // 商家收藏接口URL - 用于商家收藏和获取商家收藏
 #define CancelCollectionAPIURL          [V2APIURL stringByAppendingString:CancelCollectionAPI]        // 取消商家收藏接口URL - 用于商家详情页面取消收藏或者个人中心页面删除收藏
+
+#define WeiXinOderAPIURL                 [V2APIURL stringByAppendingString:WeiXinOderAPI]             // 微信支付下单接口URL - 用于团购支付时获取微信支付下单信息
+#define WeiXinPayOderAPIURL             [V2APIURL stringByAppendingString:WeiXinPayOderAPI]           // 微信支付买单接口URL - 用于团购支付时获取微信支付买单信息
+#define AliOderAPIURL                    [V2APIURL stringByAppendingString:AliOderAPI]                // 支付宝下单接口URL - 用于团购支付时获取支付宝下单信息
+#define AliPayOderAPIURL                [V2APIURL stringByAppendingString:AliPayOderAPI]              // 支付宝买单接口URL - 用于团购支付时获取支付宝买单信息
 
 #endif

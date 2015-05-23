@@ -503,9 +503,9 @@
 {
     // 跳转到预约页面
     @try {
-        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.merchant                     = _recommendMerchants[index];
-        reservationViewController.serviceItem                  = [[SCServiceItem alloc] initWithServiceID:@"2"];
+        SCReservationViewController *reservationViewController = [SCReservationViewController instance];
+        reservationViewController.merchant    = _recommendMerchants[index];
+        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:@"2"];
         [self.navigationController pushViewController:reservationViewController animated:YES];
     }
     @catch (NSException *exception) {

@@ -522,19 +522,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (void)pushToReservationViewControllerWithServiceItem:(SCServiceItem *)serviceItem canChange:(BOOL)canChange price:(SCQuotedPrice *)price
 {
     // 跳转到预约页面
-    @try {
-        SCReservationViewController *reservationViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:ReservationViewControllerStoryBoardID];
-        reservationViewController.merchant                     = [[SCMerchant alloc] initWithMerchantName:_merchantDetail.name companyID:_merchantDetail.company_id];
-        reservationViewController.serviceItem                  = serviceItem;
-        reservationViewController.canChange                    = canChange;
-        reservationViewController.quotedPrice                  = price;
-        [self.navigationController pushViewController:reservationViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    SCReservationViewController *reservationViewController = [SCReservationViewController instance];
+    reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:_merchantDetail.name companyID:_merchantDetail.company_id];
+    reservationViewController.serviceItem = serviceItem;
+    reservationViewController.canChange   = canChange;
+    reservationViewController.quotedPrice = price;
+    [self.navigationController pushViewController:reservationViewController animated:YES];
 }
 
 #pragma mark - Alert View Delegate Methods
