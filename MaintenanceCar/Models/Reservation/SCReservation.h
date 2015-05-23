@@ -9,22 +9,22 @@
 #import "JSONModel.h"
 #import "SCComment.h"
 
-typedef NS_ENUM(NSInteger, SCOderType) {
-    SCOderTypeNormal,
-    SCOderTypeUnAppraisal,
-    SCOderTypeUnAppraisalCheck,
-    SCOderTypeAppraised,
-    SCOderTypeAppraisedCheck
+typedef NS_ENUM(NSInteger, SCOrderType) {
+    SCOrderTypeNormal,
+    SCOrderTypeUnAppraisal,
+    SCOrderTypeUnAppraisalCheck,
+    SCOrderTypeAppraised,
+    SCOrderTypeAppraisedCheck
 };
 
-typedef NS_ENUM(NSInteger, SCOderStatus) {
-    SCOderStatusMerchantConfirming,
-    SCOderStatusServationSuccess,
-    SCOderStatusMerchantUnAccepted,
-    SCOderStatusInProgress,
-    SCOderStatusServationCancel,
-    SCOderStatusCompleted,
-    SCOderStatusExpired
+typedef NS_ENUM(NSInteger, SCOrderStatus) {
+    SCOrderStatusMerchantConfirming,
+    SCOrderStatusServationSuccess,
+    SCOrderStatusMerchantUnAccepted,
+    SCOrderStatusInProgress,
+    SCOrderStatusServationCancel,
+    SCOrderStatusCompleted,
+    SCOrderStatusExpired
 };
 
 // 预约数据Model
@@ -48,12 +48,12 @@ typedef NS_ENUM(NSInteger, SCOderStatus) {
 @property (nonatomic, copy)  NSString <Optional>*update_time;           // 用户预约更新时间
 @property (nonatomic, copy) SCComment <Optional>*comment;               // 评价详情
 
-@property (nonatomic, assign, readonly) SCOderStatus oderStatus;
-@property (nonatomic, copy, readonly)      NSString *getCarDays;
+@property (nonatomic, assign, readonly) SCOrderStatus  orderStatus;
+@property (nonatomic, copy, readonly)        NSString *getCarDays;
 
 - (BOOL)canUnReservation;
 - (BOOL)canShowResult;
 - (BOOL)isAppraised;
-- (SCOderType)oderType;
+- (SCOrderType)orderType;
 
 @end

@@ -184,32 +184,32 @@
 }
 
 #pragma mark - Pay API
-- (void)startWeiXinOderAPIRequestWithParameters:(NSDictionary *)parameters
-                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startWeiXinOrderAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestPOSTMethodsWithAPI:WeiXinOderAPIURL parameters:parameters success:success failure:failure];
+    [self requestPOSTMethodsWithAPI:WeiXinOrderAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startWeiXinPayOderAPIRequestWithParameters:(NSDictionary *)parameters
-                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startWeiXinPayOrderAPIRequestWithParameters:(NSDictionary *)parameters
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestPOSTMethodsWithAPI:WeiXinPayOderAPIURL parameters:parameters success:success failure:failure];
+    [self requestPOSTMethodsWithAPI:WeiXinPayOrderAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startAliOderAPIRequestWithParameters:(NSDictionary *)parameters
-                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startAliOrderAPIRequestWithParameters:(NSDictionary *)parameters
+                                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestPOSTMethodsWithAPI:AliOderAPIURL parameters:parameters success:success failure:failure];
+    [self requestPOSTMethodsWithAPI:AliOrderAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startAliPayOderAPIRequestWithParameters:(NSDictionary *)parameters
-                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startAliPayOrderAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestPOSTMethodsWithAPI:AliPayOderAPIURL parameters:parameters success:success failure:failure];
+    [self requestPOSTMethodsWithAPI:AliPayOrderAPIURL parameters:parameters success:success failure:failure];
 }
 
 #pragma mark - Comment API
@@ -377,25 +377,25 @@
 
 #pragma mark - V2 API
 #pragma mark - User Center API
-- (void)startProgressOdersAPIRequestWithParameters:(NSDictionary *)parameters
-                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startProgressOrdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:ProgressOdersAPIURL parameters:parameters success:success failure:failure];
+    [self requestGETMethodsWithAPI:ProgressOrdersAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startFinishedOdersAPIRequestWithParameters:(NSDictionary *)parameters
-                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startFinishedOrdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:FinishedOdersAPIURL parameters:parameters success:success failure:failure];
+    [self requestGETMethodsWithAPI:FinishedOrdersAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startOderDetailAPIRequestWithParameters:(NSDictionary *)parameters
-                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)startOrderDetailAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self requestGETMethodsWithAPI:OderDetailAPIURL parameters:parameters success:success failure:failure];
+    [self requestGETMethodsWithAPI:OrderDetailAPIURL parameters:parameters success:success failure:failure];
 }
 
 - (void)startValidCouponsAPIRequestWithParameters:(NSDictionary *)parameters

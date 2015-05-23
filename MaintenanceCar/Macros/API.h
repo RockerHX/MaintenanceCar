@@ -76,9 +76,9 @@
 
 
 #pragma mark - V2
-#define ProgressOdersAPI            @"/Reservation/doing"                   // 我的进行中订单API
-#define FinishedOdersAPI            @"/Reservation/done"                    // 我的已完成订单API
-#define OderDetailAPI               @"/Reservation"                         // 订单详情API
+#define ProgressOrdersAPI           @"/Reservation/doing"                   // 我的进行中订单API
+#define FinishedOrdersAPI           @"/Reservation/done"                    // 我的已完成订单API
+#define OrderDetailAPI              @"/Reservation"                         // 订单详情API
 
 #define ValidCouponsAPI             @"/coupon/get_effective_coupon"         // 有效优惠券API
 #define InvalidCouponsAPI           @"/coupon/get_invalid_coupon"           // 无效优惠券API
@@ -88,10 +88,10 @@
 #define MerchantCollectionAPI       @"/Collection"                          // 商家收藏API
 #define CancelCollectionAPI         @"/Collection/delete"                   // 取消商家收藏API
 
-#define WeiXinOderAPI               @"/wepay"                               // 微信支付下单API
-#define WeiXinPayOderAPI            @"/wepay/custom"                        // 微信支付买单API
-#define AliOderAPI                  @"/zhipay"                              // 支付宝下单API
-#define AliPayOderAPI               @"/zhipay/custom"                       // 支付宝买单API
+#define WeiXinOrderAPI              @"/wepay"                               // 微信支付下单API
+#define WeiXinPayOrderAPI           @"/wepay/custom"                        // 微信支付买单API
+#define AliOrderAPI                 @"/zhipay"                              // 支付宝下单API
+#define AliPayOrderAPI              @"/zhipay/custom"                       // 支付宝买单API
 
 
 #pragma mark - API URL
@@ -137,9 +137,9 @@
 
 
 #pragma mark - V2
-#define ProgressOdersAPIURL             [V2APIURL stringByAppendingString:ProgressOdersAPI]           // 进行中订单接口URL - 用于进行中订单数据获取
-#define FinishedOdersAPIURL             [V2APIURL stringByAppendingString:FinishedOdersAPI]           // 已完成订单接口URL - 用于已完成订单数据获取
-#define OderDetailAPIURL                [V2APIURL stringByAppendingString:OderDetailAPI]              // 订单详情接口URL - 用于订单详情数据获取
+#define ProgressOrdersAPIURL            [V2APIURL stringByAppendingString:ProgressOrdersAPI]          // 进行中订单接口URL - 用于进行中订单数据获取
+#define FinishedOrdersAPIURL            [V2APIURL stringByAppendingString:FinishedOrdersAPI]          // 已完成订单接口URL - 用于已完成订单数据获取
+#define OrderDetailAPIURL               [V2APIURL stringByAppendingString:OrderDetailAPI]             // 订单详情接口URL - 用于订单详情数据获取
 
 #define ValidCouponsAPIURL              [V2APIURL stringByAppendingString:ValidCouponsAPI]            // 有效优惠券接口URL - 用于获取用户所有有效优惠券
 #define InvalidCouponsAPIURL            [V2APIURL stringByAppendingString:InvalidCouponsAPI]          // 无效优惠券接口URL - 用于获取用户所有无效优惠券
@@ -149,9 +149,9 @@
 #define MerchantCollectionAPIURL        [V2APIURL stringByAppendingString:MerchantCollectionAPI]      // 商家收藏接口URL - 用于商家收藏和获取商家收藏
 #define CancelCollectionAPIURL          [V2APIURL stringByAppendingString:CancelCollectionAPI]        // 取消商家收藏接口URL - 用于商家详情页面取消收藏或者个人中心页面删除收藏
 
-#define WeiXinOderAPIURL                 [V2APIURL stringByAppendingString:WeiXinOderAPI]             // 微信支付下单接口URL - 用于团购支付时获取微信支付下单信息
-#define WeiXinPayOderAPIURL             [V2APIURL stringByAppendingString:WeiXinPayOderAPI]           // 微信支付买单接口URL - 用于团购支付时获取微信支付买单信息
-#define AliOderAPIURL                    [V2APIURL stringByAppendingString:AliOderAPI]                // 支付宝下单接口URL - 用于团购支付时获取支付宝下单信息
-#define AliPayOderAPIURL                [V2APIURL stringByAppendingString:AliPayOderAPI]              // 支付宝买单接口URL - 用于团购支付时获取支付宝买单信息
+#define WeiXinOrderAPIURL               [V2APIURL stringByAppendingString:WeiXinOrderAPI]             // 微信支付下单接口URL - 用于团购支付时获取微信支付下单信息
+#define WeiXinPayOrderAPIURL            [V2APIURL stringByAppendingString:WeiXinPayOrderAPI]          // 微信支付买单接口URL - 用于团购支付时获取微信支付买单信息
+#define AliOrderAPIURL                  [V2APIURL stringByAppendingString:AliOrderAPI]                // 支付宝下单接口URL - 用于团购支付时获取支付宝下单信息
+#define AliPayOrderAPIURL               [V2APIURL stringByAppendingString:AliPayOrderAPI]             // 支付宝买单接口URL - 用于团购支付时获取支付宝买单信息
 
 #endif

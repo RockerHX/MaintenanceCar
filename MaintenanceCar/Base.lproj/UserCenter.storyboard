@@ -1103,19 +1103,19 @@
         <!--订单详情-->
         <scene sceneID="9EM-Pq-FpI">
             <objects>
-                <tableViewController storyboardIdentifier="SCOderDetailViewController" id="515-oj-D6x" customClass="SCOderDetailViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SCOrderDetailViewController" id="515-oj-D6x" customClass="SCOrderDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="lnS-jd-LmQ">
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCOderDetailSummaryCell" rowHeight="244" id="eqX-Rz-8DW" customClass="SCOderDetailSummaryCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCOrderDetailSummaryCell" rowHeight="244" id="eqX-Rz-8DW" customClass="SCOrderDetailSummaryCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eqX-Rz-8DW" id="nf6-Ss-m4L">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OderIcon-ZuiXin" translatesAutoresizingMaskIntoConstraints="NO" id="T4j-Zs-4Mv">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OrderIcon-ZuiXin" translatesAutoresizingMaskIntoConstraints="NO" id="T4j-Zs-4Mv">
                                             <rect key="frame" x="268" y="0.0" width="52" height="52"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="52" id="aeg-vW-FFt"/>
@@ -1299,7 +1299,7 @@
                                     <outlet property="carModelLabel" destination="Ebu-fN-sAa" id="dgN-WL-Ewo"/>
                                     <outlet property="delegate" destination="515-oj-D6x" id="St6-67-XSW"/>
                                     <outlet property="merchantNameLabel" destination="1gB-Z2-FZM" id="hGl-AQ-9oR"/>
-                                    <outlet property="oderDateLabel" destination="ZyU-51-BjK" id="VHg-SL-TRw"/>
+                                    <outlet property="orderDateLabel" destination="ZyU-51-BjK" id="fnR-i6-XJe"/>
                                     <outlet property="remarkLabel" destination="BNS-G5-6jw" id="059-ug-bWk"/>
                                     <outlet property="reservePhoneLabel" destination="mAe-Fh-dEk" id="VN1-Pr-vps"/>
                                     <outlet property="reserveUserLabel" destination="H9e-A4-eVE" id="tsn-rz-Bjk"/>
@@ -1307,7 +1307,7 @@
                                     <outlet property="serviceTypeIcon" destination="T4j-Zs-4Mv" id="H51-oN-vVH"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCOderDetailPayCell" rowHeight="87" id="mn6-6Q-EUo" customClass="SCOderDetailPayCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCOrderDetailPayCell" rowHeight="87" id="mn6-6Q-EUo" customClass="SCOrderDetailPayCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mn6-6Q-EUo" id="mDt-Dk-bXO">
@@ -1344,7 +1344,7 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <action selector="payOderButtonPressed" destination="mn6-6Q-EUo" eventType="touchUpInside" id="QJt-mh-5ff"/>
+                                                <action selector="payOrderButtonPressed" destination="mn6-6Q-EUo" eventType="touchUpInside" id="Tzt-U8-Koq"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -1366,7 +1366,7 @@
                                     <outlet property="priceLabel" destination="KV8-Hd-eoN" id="roJ-7t-r82"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCOderDetailPromptCell" rowHeight="55" id="YFP-ZB-obw" customClass="SCOderDetailPromptCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCOrderDetailPromptCell" rowHeight="55" id="YFP-ZB-obw" customClass="SCOrderDetailPromptCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YFP-ZB-obw" id="MqL-hp-XCI">
@@ -1385,7 +1385,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCOderDetailProgressCell" rowHeight="50" id="g3y-eK-8Xe" customClass="SCOderDetailProgressCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCOrderDetailProgressCell" rowHeight="50" id="g3y-eK-8Xe" customClass="SCOrderDetailProgressCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g3y-eK-8Xe" id="Mhb-qv-tmh">
@@ -1488,7 +1488,7 @@
         <!--订单-->
         <scene sceneID="rbz-ky-mdY">
             <objects>
-                <viewController storyboardIdentifier="SCOdersViewController" hidesBottomBarWhenPushed="YES" id="4MI-Zl-Ar7" customClass="SCOdersViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SCOrdersViewController" hidesBottomBarWhenPushed="YES" id="4MI-Zl-Ar7" customClass="SCOrdersViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0bY-rh-zq6"/>
                         <viewControllerLayoutGuide type="bottom" id="nE9-dV-xT7"/>
@@ -1551,13 +1551,13 @@
                                 <rect key="frame" x="0.0" y="70" width="320" height="498"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SCOderCell" rowHeight="259" id="oOy-Vi-mBS" customClass="SCOderCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SCOrderCell" rowHeight="259" id="oOy-Vi-mBS" customClass="SCOrderCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oOy-Vi-mBS" id="bzP-Si-UhG">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OderIcon-ZuiXin" translatesAutoresizingMaskIntoConstraints="NO" id="sVu-wA-TiY">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OrderIcon-ZuiXin" translatesAutoresizingMaskIntoConstraints="NO" id="sVu-wA-TiY">
                                                     <rect key="frame" x="268" y="0.0" width="52" height="52"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="52" id="kCX-uM-cOg"/>
@@ -3194,7 +3194,7 @@
         <!--买单-->
         <scene sceneID="HoV-M0-1zT">
             <objects>
-                <tableViewController storyboardIdentifier="SCPayOderViewController" id="yZs-RG-kAK" customClass="SCPayOderViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SCPayOrderViewController" id="yZs-RG-kAK" customClass="SCPayOrderViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="183" sectionHeaderHeight="22" sectionFooterHeight="22" id="dGY-Vy-mlp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3205,7 +3205,7 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCPayOderGroupProductSummaryCell" rowHeight="150" id="hvz-1m-SIq" customClass="SCPayOderGroupProductSummaryCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCPayOrderGroupProductSummaryCell" rowHeight="150" id="hvz-1m-SIq" customClass="SCPayOrderGroupProductSummaryCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hvz-1m-SIq" id="pjm-S1-dCk">
@@ -3341,7 +3341,7 @@
                                     <outlet property="serviceNameLabel" destination="zsv-i5-yof" id="8A7-G5-xly"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCPayOderMerchandiseSummaryCell" rowHeight="176" id="JhJ-T9-7ec" customClass="SCPayOderMerchandiseSummaryCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCPayOrderMerchandiseSummaryCell" rowHeight="176" id="JhJ-T9-7ec" customClass="SCPayOrderMerchandiseSummaryCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JhJ-T9-7ec" id="E0K-yw-2AJ">
@@ -3440,7 +3440,7 @@
                                     <outlet property="serviceNameLabel" destination="i4X-3y-Mel" id="ZTF-jr-bhL"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCPayOderEnterCodeCell" rowHeight="60" id="xyT-uN-DqJ" customClass="SCPayOderEnterCodeCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCPayOrderEnterCodeCell" rowHeight="60" id="xyT-uN-DqJ" customClass="SCPayOrderEnterCodeCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xyT-uN-DqJ" id="Szn-0e-JpQ">
@@ -3473,7 +3473,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCPayOderCouponCell" rowHeight="44" id="DNe-1I-ROE" customClass="SCPayOderCouponCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCPayOrderCouponCell" rowHeight="44" id="DNe-1I-ROE" customClass="SCPayOrderCouponCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DNe-1I-ROE" id="HMM-XZ-7ub">
@@ -3506,7 +3506,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCPayOderResultCell" rowHeight="154" id="SkZ-LQ-FhL" customClass="SCPayOderResultCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCPayOrderResultCell" rowHeight="154" id="SkZ-LQ-FhL" customClass="SCPayOrderResultCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SkZ-LQ-FhL" id="ut0-GH-nqK">
@@ -3693,7 +3693,7 @@
         <image name="Line-Solid-V" width="2" height="4"/>
         <image name="LogoIcon" width="160" height="160"/>
         <image name="MerchantIconDefault" width="80" height="80"/>
-        <image name="OderIcon-ZuiXin" width="52" height="52"/>
+        <image name="OrderIcon-ZuiXin" width="52" height="52"/>
         <image name="Star-Unlight" width="24" height="28"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

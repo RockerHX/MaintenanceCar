@@ -32,43 +32,43 @@
         case 1:
         {
             schedule    = @"预约成功";
-            _oderStatus = SCOderStatusServationSuccess;
+            _orderStatus = SCOrderStatusServationSuccess;
         }
             break;
         case 2:
         {
             schedule    = @"商家未接受";
-            _oderStatus = SCOderStatusMerchantUnAccepted;
+            _orderStatus = SCOrderStatusMerchantUnAccepted;
         }
             break;
         case 3:
         {
             schedule    = @"业务进行中";
-            _oderStatus = SCOderStatusInProgress;
+            _orderStatus = SCOrderStatusInProgress;
         }
             break;
         case 4:
         {
             schedule    = @"预约已取消";
-            _oderStatus = SCOderStatusServationCancel;
+            _orderStatus = SCOrderStatusServationCancel;
         }
             break;
         case 5:
         {
             schedule    = @"已完成";
-            _oderStatus = SCOderStatusCompleted;
+            _orderStatus = SCOrderStatusCompleted;
         }
             break;
         case 6:
         {
             schedule    = @"已过期";
-            _oderStatus = SCOderStatusExpired;
+            _orderStatus = SCOrderStatusExpired;
         }
             break;
         default:
         {
             schedule    = @"商家确认中";
-            _oderStatus = SCOderStatusMerchantConfirming;
+            _orderStatus = SCOrderStatusMerchantConfirming;
         }
             break;
     }
@@ -78,12 +78,12 @@
 #pragma mark - Public Methods
 - (BOOL)canUnReservation
 {
-    return ((_oderStatus == SCOderStatusMerchantConfirming) || (_oderStatus == SCOderStatusServationSuccess));
+    return ((_orderStatus == SCOrderStatusMerchantConfirming) || (_orderStatus == SCOrderStatusServationSuccess));
 }
 
 - (BOOL)canShowResult
 {
-    return [_type isEqualToString:@"免费检测"] && (_oderStatus == SCOderStatusCompleted);
+    return [_type isEqualToString:@"免费检测"] && (_orderStatus == SCOrderStatusCompleted);
 }
 
 - (BOOL)isAppraised
@@ -91,17 +91,17 @@
     return _comment.detail.length ? YES : NO;
 }
 
-- (SCOderType)oderType
+- (SCOrderType)orderType
 {
-    if ((_oderStatus == SCOderStatusInProgress) || (_oderStatus == SCOderStatusCompleted))
+    if ((_orderStatus == SCOrderStatusInProgress) || (_orderStatus == SCOrderStatusCompleted))
     {
         if ([self canShowResult])
-            return [self isAppraised] ? SCOderTypeAppraisedCheck : SCOderTypeUnAppraisalCheck;
+            return [self isAppraised] ? SCOrderTypeAppraisedCheck : SCOrderTypeUnAppraisalCheck;
         else
-            return [self isAppraised] ? SCOderTypeAppraised : SCOderTypeUnAppraisal;
+            return [self isAppraised] ? SCOrderTypeAppraised : SCOrderTypeUnAppraisal;
     }
     else
-        return SCOderTypeNormal;
+        return SCOrderTypeNormal;
 }
 
 @end

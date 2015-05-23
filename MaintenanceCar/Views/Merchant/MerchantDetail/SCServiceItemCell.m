@@ -31,28 +31,28 @@
         case 1:
         {
             _ID       = @"1";
-            imageName = @"CarWashIcon";
+            imageName = @"WashIcon";
             _title    = @"洗车美容";
         }
             break;
         case 2:
         {
             _ID       = @"2";
-            imageName = @"CarMaintenanceIcon";
+            imageName = @"MaintenanceIcon";
             _title    = @"保养";
         }
             break;
         case 3:
         {
             _ID       = @"3";
-            imageName = @"CarRepaireIcon";
+            imageName = @"RepaireIcon";
             _title    = @"维修";
         }
             break;
         case 4:
         {
             _ID       = @"4";
-            imageName = @"GroupPurchaseIcon";
+            imageName = @"OtherIcon";
             _title    = @"免费检测";
         }
             break;

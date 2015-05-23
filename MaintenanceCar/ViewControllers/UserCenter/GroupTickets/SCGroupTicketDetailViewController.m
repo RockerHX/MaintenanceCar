@@ -14,7 +14,7 @@
 #import "SCGroupProductDetailCell.h"
 #import "SCShowMoreCell.h"
 #import "SCCommentCell.h"
-#import "SCPayOderViewController.h"
+#import "SCPayOrderViewController.h"
 #import "SCCommentListViewController.h"
 #import "SCReservationViewController.h"
 #import <SCLoopScrollView/SCLoopScrollView.h>
@@ -285,9 +285,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - SCGroupProductCellDelegate Methods
 - (void)shouldShowBuyProductView
 {
-    SCPayOderViewController *payOderViewController = [SCPayOderViewController instance];
-    payOderViewController.groupProduct = _detail;
-    [self.navigationController pushViewController:payOderViewController animated:YES];
+    SCPayOrderViewController *payOrderViewController = [SCPayOrderViewController instance];
+    payOrderViewController.groupProduct = _detail;
+    [self.navigationController pushViewController:payOrderViewController animated:YES];
 }
 
 #pragma mark - SCTicketCodeCellDelegate Methods
