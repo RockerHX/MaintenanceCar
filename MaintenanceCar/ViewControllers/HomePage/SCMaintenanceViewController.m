@@ -17,7 +17,7 @@
 #import "SCMileageView.h"
 #import "SCAllDictionary.h"
 #import "SCChangeMaintenanceDataViewController.h"
-#import "SCServiceMerchantListViewController.h"
+#import "SCServiceMerchantsViewController.h"
 
 @interface SCMaintenanceViewController () <SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate, SCMerchantTableViewCellDelegate>
 {
@@ -108,7 +108,7 @@
 {
     if ([segue.identifier isEqualToString:@"Maintenance"])
     {
-        SCServiceMerchantListViewController *maintenanceViewController = segue.destinationViewController;
+        SCServiceMerchantsViewController *maintenanceViewController = segue.destinationViewController;
         maintenanceViewController.title      = @"保养";
         maintenanceViewController.type       = @"2";
         maintenanceViewController.searchType = SCSearchTypeMaintenance;

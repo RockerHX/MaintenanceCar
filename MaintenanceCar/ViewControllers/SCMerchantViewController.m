@@ -8,7 +8,6 @@
 
 #import "SCMerchantViewController.h"
 #import <MJRefresh/MJRefresh.h>
-#import "SCMerchant.h"
 #import "SCMerchantListCell.h"
 #import "SCLocationManager.h"
 #import "SCMerchantDetailViewController.h"
@@ -18,13 +17,11 @@
 
 @interface SCMerchantViewController () <UITableViewDelegate, UITableViewDataSource, SCSearchFilterViewDelegate>
 {
-    NSMutableArray *_merchantList;
-    
+    NSInteger       _offset;
     NSString       *_query;
     NSString       *_distanceCondition;
+    NSMutableArray *_merchantList;
 }
-
-@property (nonatomic, assign) NSInteger      offset;        // 商家列表请求偏移量，用户上拉刷新的分页请求操作
 
 @end
 
@@ -131,20 +128,14 @@
 
 - (void)refreshMerchantList
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];      // 加载响应式控件
-    
+    [self showHUDOnViewController:self];
     __weak typeof(self) weakSelf = self;
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
         [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
-        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"定位失败，采用当前城市中心坐标！" delay:0.5f];
+        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"定位失败，采用当前城市中心坐标!"];
+        [weakSelf showAlertWithMessage:@"定位失败，请检查您的定位服务是否打开：设置->隐私->定位服务"];
         [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
-                                                            message:@"定位失败，请检查您的定位服务是否打开：设置->隐私->定位服务"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"确定"
-                                                  otherButtonTitles:nil, nil];
-        [alertView show];
     }];
 }
 
@@ -169,6 +160,7 @@
                               @"latitude": latitude,
                             @"longtitude": longitude};
     [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
@@ -192,11 +184,9 @@
         else
             NSLog(@"status code error:%@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode]);
         [weakSelf.tableView.footer endRefreshing];
-        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];              // 请求完成，移除响应式控件
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Get merchant list request error:%@", error);
         [weakSelf.tableView.footer endRefreshing];
-        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
+        [weakSelf hideHUDOnViewController:weakSelf];
     }];
 }
 

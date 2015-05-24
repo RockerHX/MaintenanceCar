@@ -11,7 +11,7 @@
 #import "SCHomePageDetailView.h"
 #import "SCAllDictionary.h"
 #import "SCWebViewController.h"
-#import "SCServiceMerchantListViewController.h"
+#import "SCServiceMerchantsViewController.h"
 #import "SCADView.h"
 #import "SCChangeMaintenanceDataViewController.h"
 #import "SCReservationViewController.h"
@@ -51,7 +51,7 @@
 {
     if ([segue.identifier isEqualToString:@"Wash"])
     {
-        SCServiceMerchantListViewController *washViewController = segue.destinationViewController;
+        SCServiceMerchantsViewController *washViewController = segue.destinationViewController;
         washViewController.title      = @"洗车美容";
         washViewController.type       = @"1";
         washViewController.noBrand    = YES;
@@ -59,7 +59,7 @@
     }
     else if ([segue.identifier isEqualToString:@"Repair"])
     {
-        SCServiceMerchantListViewController *repairViewController = segue.destinationViewController;
+        SCServiceMerchantsViewController *repairViewController = segue.destinationViewController;
         repairViewController.title      = @"维修";
         repairViewController.type       = @"3";
         repairViewController.searchType = SCSearchTypeRepair;
@@ -147,7 +147,7 @@
     }
     else
     {
-        SCServiceMerchantListViewController *specialViewController = MAIN_VIEW_CONTROLLER(@"SCServiceMerchantListViewController");
+        SCServiceMerchantsViewController *specialViewController = [SCServiceMerchantsViewController instance];
         specialViewController.title      = special.text;
         specialViewController.type       = special.type;
         specialViewController.searchType = SCSearchTypeOperate;

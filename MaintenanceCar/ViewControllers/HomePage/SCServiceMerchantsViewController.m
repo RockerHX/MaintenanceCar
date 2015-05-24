@@ -1,12 +1,12 @@
 //
-//  SCServiceMerchantListViewController.m
+//  SCServiceMerchantsViewController.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/2/2.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCServiceMerchantListViewController.h"
+#import "SCServiceMerchantsViewController.h"
 #import <MJRefresh/MJRefresh.h>
 #import "SCMerchant.h"
 #import "SCMerchantListCell.h"
@@ -16,7 +16,7 @@
 #import "SCSearchFilterView.h"
 #import "SCStarView.h"
 
-@interface SCServiceMerchantListViewController () <UITableViewDelegate, UITableViewDataSource, SCSearchFilterViewDelegate>
+@interface SCServiceMerchantsViewController () <UITableViewDelegate, UITableViewDataSource, SCSearchFilterViewDelegate>
 {
     NSInteger       _offset;            // 商家列表请求偏移量，用户上拉刷新的分页请求操作
     NSMutableArray *_merchants;         // 商家数据集合
@@ -27,7 +27,7 @@
 
 @end
 
-@implementation SCServiceMerchantListViewController
+@implementation SCServiceMerchantsViewController
 
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated
@@ -62,6 +62,12 @@
     [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(upRefreshMerchantList)];
     [self.tableView.footer setHidden:YES];
     [self refreshMerchantList];
+}
+
+#pragma mark - Init Methods
++ (instancetype)instance
+{
+    return MAIN_VIEW_CONTROLLER(@"SCServiceMerchantsViewController");
 }
 
 #pragma mark - Config Methods

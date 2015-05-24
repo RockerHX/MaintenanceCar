@@ -12,7 +12,6 @@
 #import "MicroConstants.h"
 #import "SCAPIRequest.h"
 #import "SCStarView.h"
-#import "SCMerchant.h"
 #import "SCMerchantFlagCell.h"
 #import "SCAllDictionary.h"
 #import "API.h"

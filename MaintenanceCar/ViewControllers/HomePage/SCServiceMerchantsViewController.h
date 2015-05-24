@@ -1,5 +1,5 @@
 //
-//  SCServiceMerchantListViewController.h
+//  SCServiceMerchantsViewController.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/2/2.
@@ -17,7 +17,7 @@ typedef NS_ENUM(NSUInteger, SCSearchType) {
 
 @class SCSearchFilterView;
 
-@interface SCServiceMerchantListViewController : UIViewController
+@interface SCServiceMerchantsViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet SCSearchFilterView *searchFilterView;      // 商家列表的筛选View
 @property (weak, nonatomic) IBOutlet        UITableView *tableView;             // 商家列表View
@@ -29,5 +29,7 @@ typedef NS_ENUM(NSUInteger, SCSearchType) {
 
 // [地图]按钮触发事件
 - (IBAction)mapItemPressed:(UIBarButtonItem *)sender;
+
++ (instancetype)instance;
 
 @end
