@@ -369,32 +369,39 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  有效优惠券接口请求方法(API:/get_effective_coupon - GET)
+ *  有效优惠券接口请求方法(API:/coupon/get_effective_coupon - GET)
  */
 - (void)startValidCouponsAPIRequestWithParameters:(NSDictionary *)parameters
                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  无效优惠券接口请求方法(API:/get_invalid_coupon - GET)
+ *  无效优惠券接口请求方法(API:/coupon/get_invalid_coupon - GET)
  */
 - (void)startInvalidCouponsAPIRequestWithParameters:(NSDictionary *)parameters
                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  添加优惠券接口请求方法(API:/add_coupon - POST)
+ *  添加优惠券接口请求方法(API:/coupon/add_coupon - POST)
  */
 - (void)startAddCouponAPIRequestWithParameters:(NSDictionary *)parameters
                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  使用优惠券接口请求方法(API:/use_coupon - POST)
+ *  使用优惠券接口请求方法(API:/coupon/use_coupon - POST)
  */
 - (void)startUseCouponAPIRequestWithParameters:(NSDictionary *)parameters
                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  优惠券商家接口请求方法(API:/coupon/shop_list - POST)
+ */
+- (void)startCouponMerchantsAPIRequestWithParameters:(NSDictionary *)parameters
+                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 
 @end

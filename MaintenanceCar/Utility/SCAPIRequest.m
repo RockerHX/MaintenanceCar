@@ -426,4 +426,11 @@
     [self requestPOSTMethodsWithAPI:UseCouponAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startCouponMerchantsAPIRequestWithParameters:(NSDictionary *)parameters
+                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:CouponMerchantsAPIURL parameters:parameters success:success failure:failure];
+}
+
 @end

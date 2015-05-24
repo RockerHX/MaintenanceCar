@@ -84,6 +84,7 @@
 #define InvalidCouponsAPI           @"/coupon/get_invalid_coupon"           // 无效优惠券API
 #define AddCouponAPI                @"/coupon/add_coupon"                   // 添加优惠券API
 #define UseCouponAPI                @"/coupon/use_coupon"                   // 使用优惠券API
+#define CouponMerchantsAPI          @"/coupon/shop_list"                    // 优惠券商家API
 
 #define MerchantCollectionAPI       @"/Collection"                          // 商家收藏API
 #define CancelCollectionAPI         @"/Collection/delete"                   // 取消商家收藏API
@@ -145,6 +146,7 @@
 #define InvalidCouponsAPIURL            [V2APIURL stringByAppendingString:InvalidCouponsAPI]          // 无效优惠券接口URL - 用于获取用户所有无效优惠券
 #define AddCouponAPIURL                 [V2APIURL stringByAppendingString:AddCouponAPI]               // 添加优惠券接口URL - 用于输入优惠码兑换可用优惠券
 #define UseCouponAPIURL                 [V2APIURL stringByAppendingString:UseCouponAPI]               // 使用优惠券接口URL - 用于优惠券消费
+#define CouponMerchantsAPIURL           [V2APIURL stringByAppendingString:CouponMerchantsAPI]         // 优惠券商家接口URL - 用于根据优惠券码获取能够使用的商户列表
 
 #define MerchantCollectionAPIURL        [V2APIURL stringByAppendingString:MerchantCollectionAPI]      // 商家收藏接口URL - 用于商家收藏和获取商家收藏
 #define CancelCollectionAPIURL          [V2APIURL stringByAppendingString:CancelCollectionAPI]        // 取消商家收藏接口URL - 用于商家详情页面取消收藏或者个人中心页面删除收藏
