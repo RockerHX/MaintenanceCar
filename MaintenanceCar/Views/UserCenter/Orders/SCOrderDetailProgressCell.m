@@ -9,8 +9,6 @@
 #import "SCOrderDetailProgressCell.h"
 #import "SCOrderDetail.h"
 
-#define SHADOW_OFFSET   0.5f
-
 typedef NS_ENUM(NSUInteger, SCOrderDetailProgressState) {
     SCOrderDetailProgressStateUnStart,
     SCOrderDetailProgressStateDoing,

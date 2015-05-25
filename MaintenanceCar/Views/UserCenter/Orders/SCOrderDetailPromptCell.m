@@ -8,8 +8,6 @@
 
 #import "SCOrderDetailPromptCell.h"
 
-#define SHADOW_OFFSET   0.5f
-
 @implementation SCOrderDetailPromptCell
 
 #pragma mark - Setter And Getter Methods
