@@ -73,7 +73,7 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailProgressState) {
 }
 
 #pragma mark - Public Methods
-- (CGFloat)displayCellWithDetail:(SCOrderDetail *)detail index:(NSInteger)index
+- (void)displayCellWithDetail:(SCOrderDetail *)detail index:(NSInteger)index
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(ZERO_POINT, -SHADOW_OFFSET*4)];
@@ -103,8 +103,6 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailProgressState) {
     
     _dateLabel.text = progress.date;
     _nameLabel.text = progress.name;
-    
-    return [self layoutSizeFittingSize];
 }
 
 @end

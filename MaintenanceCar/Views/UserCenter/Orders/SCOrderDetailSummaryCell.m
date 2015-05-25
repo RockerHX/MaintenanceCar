@@ -26,7 +26,7 @@
 }
 
 #pragma mark - Public Methods
-- (CGFloat)displayCellWithDetail:(SCOrderDetail *)detail
+- (void)displayCellWithDetail:(SCOrderDetail *)detail
 {
     // 设置订单数据，刷新cell
     _detail = detail;
@@ -41,8 +41,6 @@
     _reserveUserLabel.text      = detail.reserveUser;
     _reservePhoneLabel.text     = detail.reservePhone;
     _remarkLabel.text           = detail.remark;
-    
-    return [self layoutSizeFittingSize];
 }
 
 @end

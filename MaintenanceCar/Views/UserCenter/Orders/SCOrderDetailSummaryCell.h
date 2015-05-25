@@ -43,6 +43,6 @@
  *
  *  @return 刷新后cell的高度
  */
-- (CGFloat)displayCellWithDetail:(SCOrderDetail *)detail;
+- (void)displayCellWithDetail:(SCOrderDetail *)detail;
 
 @end

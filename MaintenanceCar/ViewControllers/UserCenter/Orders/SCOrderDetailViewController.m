@@ -24,11 +24,6 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
 };
 
 @interface SCOrderDetailViewController () <SCOrderDetailSummaryCellDelegate, SCOrderDetailPayCellDelegate>
-{
-    SCOrderDetailSummaryCell  *_orderDetailSummaryCell;
-    SCOrderDetailProgressCell *_orderDetailProgressCell;
-}
-
 @end
 
 @implementation SCOrderDetailViewController
@@ -57,23 +52,15 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self initConfig];
-    [self viewConfig];
 }
 
 #pragma mark - Config Methods
-- (void)initConfig
-{
-    [super initConfig];
-}
-
 - (void)viewConfig
 {
     [super viewConfig];
     
-    UIView *footer                 = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 40.0f)];
-    footer.backgroundColor         = [UIColor clearColor];
+    UIView *footer         = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 40.0f)];
+    footer.backgroundColor = [UIColor clearColor];
     self.tableView.tableFooterView = footer;
 }
 
@@ -95,19 +82,7 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
     {
         switch (indexPath.section)
         {
-            case 1:
-            {
-                if (indexPath.row)
-                {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCOrderDetailProgressCell" forIndexPath:indexPath];
-                    [(SCOrderDetailProgressCell *)cell displayCellWithDetail:_detail index:(indexPath.row-1)];
-                }
-                else
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCOrderDetailPromptCell" forIndexPath:indexPath];
-            }
-                break;
-                
-            default:
+            case 0:
             {
                 if (!indexPath.row)
                 {
@@ -121,6 +96,17 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
                 }
             }
                 break;
+            case 1:
+            {
+                if (indexPath.row)
+                {
+                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCOrderDetailProgressCell" forIndexPath:indexPath];
+                    [(SCOrderDetailProgressCell *)cell displayCellWithDetail:_detail index:(indexPath.row-1)];
+                }
+                else
+                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCOrderDetailPromptCell" forIndexPath:indexPath];
+            }
+                break;
         }
     }
     return cell;
@@ -129,34 +115,37 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height;
+    CGFloat height = ZERO_POINT;
     if (_detail)
     {
         switch (indexPath.section)
         {
+            case 0:
+            {
+                if (!indexPath.row)
+                {
+                    return [tableView fd_heightForCellWithIdentifier:@"SCOrderDetailSummaryCell" cacheByIndexPath:indexPath configuration:^(SCOrderDetailSummaryCell *cell) {
+                        [cell displayCellWithDetail:_detail];
+                    }];
+                }
+                else
+                {
+                    return [tableView fd_heightForCellWithIdentifier:@"SCOrderDetailPayCell" cacheByIndexPath:indexPath configuration:^(SCOrderDetailPayCell *cell) {
+                        [cell displayCellWithDetail:_detail];
+                    }];
+                }
+            }
+                break;
             case 1:
             {
                 if (indexPath.row)
                 {
-                    if(!_orderDetailProgressCell)
-                        _orderDetailProgressCell = [tableView dequeueReusableCellWithIdentifier:@"SCOrderDetailProgressCell"];
-                    height = [_orderDetailProgressCell displayCellWithDetail:_detail index:(indexPath.row-1)];
+                    return [tableView fd_heightForCellWithIdentifier:@"SCOrderDetailProgressCell" cacheByIndexPath:indexPath configuration:^(SCOrderDetailProgressCell *cell) {
+                        [cell displayCellWithDetail:_detail index:(indexPath.row-1)];
+                    }];
                 }
                 else
-                    height = 43.0f;
-            }
-                break;
-                
-            default:
-            {
-                if (!indexPath.row)
-                {
-                    if(!_orderDetailSummaryCell)
-                        _orderDetailSummaryCell = [tableView dequeueReusableCellWithIdentifier:@"SCOrderDetailSummaryCell"];
-                    height = [_orderDetailSummaryCell displayCellWithDetail:_detail];
-                }
-                else
-                    height = 87.0f;
+                    height = 44.0f;
             }
                 break;
         }
@@ -169,14 +158,14 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
 - (void)startDropDownRefreshReuqest
 {
     [super startDropDownRefreshReuqest];
-    [self startMyOrderDetailRequest];
+    [self startOrderDetailRequest];
 }
 
 #pragma mark - Private Methods
 /**
  *  订单详情数据请求方法，必选参数：user_id，reserve_id
  */
-- (void)startMyOrderDetailRequest
+- (void)startOrderDetailRequest
 {
     __weak typeof(self) weakSelf = self;
     // 配置请求参数

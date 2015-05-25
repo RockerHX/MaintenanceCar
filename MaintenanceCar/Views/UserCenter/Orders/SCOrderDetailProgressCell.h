@@ -27,6 +27,6 @@
  *
  *  @return 刷新后cell的高度
  */
-- (CGFloat)displayCellWithDetail:(SCOrderDetail *)detail index:(NSInteger)index;
+- (void)displayCellWithDetail:(SCOrderDetail *)detail index:(NSInteger)index;
 
 @end

@@ -38,6 +38,7 @@
                                   @"reserve_phone": @"reservePhone",
                                         @"content": @"remark",
                                      @"can_cancel": @"canCancel",
+                                        @"can_pay": @"canPay",
                                         @"process": @"processes"}];
     return [[JSONKeyMapper alloc] initWithDictionary:dic];
 }
