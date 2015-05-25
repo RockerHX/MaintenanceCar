@@ -68,13 +68,13 @@
         
         __weak typeof(self)weakSelf = self;
         [userInfo userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
-            if (userInfo.cars.count)
+            if (!_userCarsView.hidden && userInfo.cars.count)
             {
-                if (!_userCarsView.hidden && userInfo.cars.count)
-                {
-                    _userCarsView.images = @[[UIImage imageNamed:@"UserCarBG"], [UIImage imageNamed:@"UserCarBG"]];
-                    [self displayLabelWithCar:[userInfo.cars firstObject]];
-                }
+                NSMutableArray *images = @[].mutableCopy;
+                for (NSInteger index = 0; index < userInfo.cars.count; index++)
+                    [images addObject:[UIImage imageNamed:@"UserCarBG"]];
+                _userCarsView.images = images;
+                [self displayLabelWithCar:[userInfo.cars firstObject]];
             }
             
             [_userCarsView show:^(NSInteger index) {

@@ -106,7 +106,7 @@
 #define COCOAPODS_POD_AVAILABLE_SCLoopScrollView
 #define COCOAPODS_VERSION_MAJOR_SCLoopScrollView 0
 #define COCOAPODS_VERSION_MINOR_SCLoopScrollView 4
-#define COCOAPODS_VERSION_PATCH_SCLoopScrollView 1
+#define COCOAPODS_VERSION_PATCH_SCLoopScrollView 2
 
 // SCNumberKeyBoard
 #define COCOAPODS_POD_AVAILABLE_SCNumberKeyBoard

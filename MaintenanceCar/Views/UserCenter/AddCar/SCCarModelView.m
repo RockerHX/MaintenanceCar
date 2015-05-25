@@ -132,7 +132,11 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     [[SCAPIRequest manager] startUpdateCarsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            NSDictionary *defaultCarData = @{@"model_id": carModel.model_id, @"car_full_model": @"我不清楚/其他", @"brand_name": _carBrand.brand_name, @"model_name": carModel.model_name};
+            NSDictionary *defaultCarData = @{@"car_id": @"",
+                                           @"model_id": carModel.model_id,
+                                     @"car_full_model": @"我不清楚/其他",
+                                         @"brand_name": _carBrand.brand_name,
+                                         @"model_name": carModel.model_name};
             SCCar *defaultCar = [[SCCar alloc] initWithDictionary:defaultCarData error:nil];
             [_cars addObject:defaultCar];
             
