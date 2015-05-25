@@ -10,6 +10,7 @@
 #import "SCCouponCell.h"
 #import "SCCouponDetailShowMoreMerchantsCell.h"
 #import "SCCouponDetailRuleCell.h"
+#import "SCCouponMerchantsViewController.h"
 
 typedef NS_ENUM(NSUInteger, SCCouponDetailRow) {
     SCCouponDetailRowCoupon,
@@ -114,10 +115,11 @@ static NSInteger rowNumber = 3;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     if (indexPath.row == SCCouponDetailRowShowMoreMerchants)
     {
-        
+        SCCouponMerchantsViewController *couponMerchantsViewController = [SCCouponMerchantsViewController instance];
+        couponMerchantsViewController.couponCode = _coupon.code;
+        [self.navigationController pushViewController:couponMerchantsViewController animated:YES];
     }
 }
 

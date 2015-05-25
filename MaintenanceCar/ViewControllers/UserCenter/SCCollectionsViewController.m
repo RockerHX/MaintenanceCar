@@ -104,14 +104,9 @@
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
         [weakSelf startMerchantCollectionListRequest:latitude longitude:longitude];
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
-        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"定位失败，采用当前城市中心坐标！" delay:0.5f];
+        [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"定位失败，采用当前城市中心坐标!"];
+        [weakSelf showAlertWithMessage:@"定位失败，请检查您的定位服务是否打开：设置->隐私->定位服务"];
         [weakSelf startMerchantCollectionListRequest:latitude longitude:longitude];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
-                                                            message:@"定位失败，请检查您的定位服务是否打开：设置->隐私->定位服务"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"确定"
-                                                  otherButtonTitles:nil, nil];
-        [alertView show];
     }];
 }
 
@@ -124,8 +119,8 @@
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                 @"limit"  : @(SearchLimit),
-                                 @"offset" : @(self.offset)};
+                                   @"limit": @(SearchLimit),
+                                  @"offset": @(self.offset)};
     [[SCAPIRequest manager] startCollectionsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf endRefresh];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
