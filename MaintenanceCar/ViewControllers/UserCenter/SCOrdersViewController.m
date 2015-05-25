@@ -113,7 +113,6 @@ typedef NS_ENUM(NSUInteger, SCOrderAlertType) {
     SCOrderDetailViewController *orderDetailViewController = USERCENTER_VIEW_CONTROLLER(@"SCOrderDetailViewController");
     orderDetailViewController.delegate  = self;
     orderDetailViewController.reserveID = ((SCOrder *)[self dataList][indexPath.row]).reserveID;
-    orderDetailViewController.canPay    = (_ordersRequest == SCOrdersReuqestProgress);
     [self.navigationController pushViewController:orderDetailViewController animated:YES];
 }
 

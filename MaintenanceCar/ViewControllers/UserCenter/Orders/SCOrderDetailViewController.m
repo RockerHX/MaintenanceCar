@@ -16,7 +16,7 @@
 
 typedef NS_ENUM(NSUInteger, SCOrderDetailAlertType) {
     SCOrderAlertDetailTypeCallMerchant,
-    SCOrderAlertDetailTypeCancelReserve
+    SCOrderAlertDetailTypeCancelOrder
 };
 
 typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
@@ -85,7 +85,7 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _detail ? (section ? _detail.processes.count + 1 : (_canPay ? 2 : 1)) : Zero;
+    return _detail ? (section ? _detail.processes.count + 1 : (_detail.canPay ? 2 : 1)) : Zero;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -226,16 +226,16 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
         switch (selectedIndex)
         {
             case SCOrderDetailMenuTypeCancelReservetion:
-                [weakSelf showAlertWithTitle:@"您确定要取消此订单吗？" message:nil delegate:self tag:SCOrderAlertDetailTypeCancelReserve cancelButtonTitle:@"否" otherButtonTitle:@"是"];
+                [weakSelf showAlertWithTitle:@"您确定要取消此订单吗？" message:nil delegate:self tag:SCOrderAlertDetailTypeCancelOrder cancelButtonTitle:@"否" otherButtonTitle:@"是"];
                 break;
         }
     }];
 }
 
 /**
- *  取消预约请求方法，必选参数：company_id，user_id，reserve_id，status
+ *  取消订单请求方法，必选参数：company_id，user_id，reserve_id，status
  */
-- (void)startCancelReservationRequest
+- (void)startCancelOrderRequest
 {
     [self showHUDOnViewController:self.navigationController];
     __weak typeof(self) weakSelf = self;
@@ -284,8 +284,8 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
             case SCOrderAlertDetailTypeCallMerchant:
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", alertView.message]]];
                 break;
-            case SCOrderAlertDetailTypeCancelReserve:
-                [self startCancelReservationRequest];
+            case SCOrderAlertDetailTypeCancelOrder:
+                [self startCancelOrderRequest];
                 break;
             case SCViewControllerAlertTypeNeedLogin:
                 [self checkShouldLogin];
