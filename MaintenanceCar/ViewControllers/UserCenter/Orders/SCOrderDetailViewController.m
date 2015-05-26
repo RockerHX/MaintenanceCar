@@ -115,7 +115,7 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = ZERO_POINT;
+    CGFloat height = 10.0f;
     if (_detail)
     {
         switch (indexPath.section)
@@ -124,13 +124,13 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
             {
                 if (!indexPath.row)
                 {
-                    return [tableView fd_heightForCellWithIdentifier:@"SCOrderDetailSummaryCell" cacheByIndexPath:indexPath configuration:^(SCOrderDetailSummaryCell *cell) {
+                    height += [tableView fd_heightForCellWithIdentifier:@"SCOrderDetailSummaryCell" cacheByIndexPath:indexPath configuration:^(SCOrderDetailSummaryCell *cell) {
                         [cell displayCellWithDetail:_detail];
                     }];
                 }
                 else
                 {
-                    return [tableView fd_heightForCellWithIdentifier:@"SCOrderDetailPayCell" cacheByIndexPath:indexPath configuration:^(SCOrderDetailPayCell *cell) {
+                    height += [tableView fd_heightForCellWithIdentifier:@"SCOrderDetailPayCell" cacheByIndexPath:indexPath configuration:^(SCOrderDetailPayCell *cell) {
                         [cell displayCellWithDetail:_detail];
                     }];
                 }
@@ -140,7 +140,7 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
             {
                 if (indexPath.row)
                 {
-                    return [tableView fd_heightForCellWithIdentifier:@"SCOrderDetailProgressCell" cacheByIndexPath:indexPath configuration:^(SCOrderDetailProgressCell *cell) {
+                    height += [tableView fd_heightForCellWithIdentifier:@"SCOrderDetailProgressCell" cacheByIndexPath:indexPath configuration:^(SCOrderDetailProgressCell *cell) {
                         [cell displayCellWithDetail:_detail index:(indexPath.row-1)];
                     }];
                 }

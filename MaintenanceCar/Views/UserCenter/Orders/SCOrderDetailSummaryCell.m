@@ -35,7 +35,7 @@
     self.carModelLabel.text     = detail.carModelName;
     self.serviceNameLabel.text  = detail.serviceName;
     self.merchantNameLabel.text = detail.merchantName;
-
+    
     _orderDateLabel.text        = detail.orderDate;
     _arriveDateLabel.text       = detail.arriveDate;
     _reserveUserLabel.text      = detail.reserveUser;
