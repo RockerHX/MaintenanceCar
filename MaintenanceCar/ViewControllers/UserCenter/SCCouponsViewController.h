@@ -20,4 +20,6 @@
 - (IBAction)ruleButtonPressed;
 - (IBAction)showInvalidCoupons;
 
++ (instancetype)instance;
+
 @end

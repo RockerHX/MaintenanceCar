@@ -9,6 +9,7 @@
 #import "SCUserViewController.h"
 #import "SCLoginViewController.h"
 #import "SCCollectionsViewController.h"
+#import "SCCouponsViewController.h"
 #import "SCUserInfoView.h"
 #import "SCChangeMaintenanceDataViewController.h"
 
@@ -93,7 +94,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
                 break;
                 
             case SCUserCenterRowCoupons:
-                [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCCouponsViewController")];
+                [self pushToSubViewControllerWithController:[SCCouponsViewController instance]];
                 break;
         }
     }

@@ -42,6 +42,12 @@
     [self startCouponsRequest];
 }
 
+#pragma mark - Init Methods
++ (instancetype)instance
+{
+    return USERCENTER_VIEW_CONTROLLER(@"SCCouponsViewController");
+}
+
 #pragma mark - Config Methods
 - (void)initConfig
 {

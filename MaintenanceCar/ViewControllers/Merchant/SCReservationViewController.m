@@ -265,18 +265,11 @@
             {
                 if ([SCUserInfo share].loginStatus)
                 {
-                    @try {
-                        UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
-                        SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
-                        addCarViewController.delegate = self;
-                        [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
-                    }
-                    @catch (NSException *exception) {
-                        NSLog(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
-                    }
-                    @finally {
-                        [pickerView hidde];
-                    }
+                    UINavigationController *addCarViewNavigationControler = USERCENTER_VIEW_CONTROLLER(@"SCAddCarViewNavigationController");
+                    SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
+                    addCarViewController.delegate = self;
+                    [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
+                    [pickerView hidde];
                 }
                 else
                     [self showShoulLoginAlert];
