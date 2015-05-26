@@ -19,11 +19,13 @@
 @interface SCPayOrderMerchandiseSummaryCell : SCOrderBaseCell <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet          id  <SCPayOrderMerchandiseSummaryCellDelegate>delegate;
+@property (weak, nonatomic) IBOutlet      UIView *paySuccessView;
+@property (weak, nonatomic) IBOutlet     UILabel *payPriceLabel;
 @property (weak, nonatomic) IBOutlet UITextField *inputTextField;
 @property (weak, nonatomic) IBOutlet    UIButton *enterButton;
 
 - (IBAction)enterButtonPressed;
 
-- (CGFloat)displayCellWithDetail:(SCOrderDetail *)detail;
+- (void)displayCellWithDetail:(SCOrderDetail *)detail;
 
 @end

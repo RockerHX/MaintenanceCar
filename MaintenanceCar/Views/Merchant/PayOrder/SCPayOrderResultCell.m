@@ -39,13 +39,11 @@
 }
 
 #pragma mark - Public Methods
-- (CGFloat)displayCellWithResult:(SCPayOrderResult *)result
+- (void)displayCellWithResult:(SCPayOrderResult *)result
 {
     _totalPriceLabel.text      = result.totalPrice;
     _deductiblePriceLabel.text = result.deductiblePrice;
     _payPriceLabel.text        = result.payPrice;
-    
-    return 154.0f;
 }
 
 @end

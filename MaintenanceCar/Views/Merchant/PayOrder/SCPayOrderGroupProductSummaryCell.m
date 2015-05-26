@@ -55,23 +55,18 @@
 #pragma mark - Private Methods
 - (double)getTotalPriceAndDisplayView
 {
-    double totalPrice = (_productCount * _productPrice);
     _countLabel.text = @(_productCount).stringValue;
-    _priceLabel.text = [NSString stringWithFormat:@"%.2f", totalPrice];
-    return totalPrice;
+    _priceLabel.text = [NSString stringWithFormat:@"%.2f", (_productCount * _productPrice)];
+    return _productPrice;
 }
 
 #pragma mark - Publi Methods
-- (CGFloat)displayCellWithProduct:(SCGroupProduct *)product
+- (void)displayCellWithProduct:(SCGroupProduct *)product
 {
     _productPrice               = [product.final_price doubleValue];
     self.serviceNameLabel.text  = product.title;
     self.merchantNameLabel.text = product.merchantName;
-    
-    if (_delegate && [_delegate respondsToSelector:@selector(didDisplayProductPrice:)])
-        [_delegate didDisplayProductPrice:[self getTotalPriceAndDisplayView]];
-    
-    return [self layoutSizeFittingSize];
+    [self getTotalPriceAndDisplayView];
 }
 
 @end

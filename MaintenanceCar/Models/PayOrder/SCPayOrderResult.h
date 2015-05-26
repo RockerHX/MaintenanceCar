@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class SCCoupon;
+
 typedef NS_ENUM(NSUInteger, SCPayOrderment) {
     SCPayOrdermentWeiXinPay,
     SCPayOrdermentAliPay
@@ -15,19 +17,18 @@ typedef NS_ENUM(NSUInteger, SCPayOrderment) {
 
 @interface SCPayOrderResult : NSObject
 {
-    double _resultTotalPrice;
+    double _resultProductPrice;
     double _resultDeductiblePrice;
-    double _resultPayPrice;
 }
 
-@property (nonatomic, copy)           NSString *purchaseCount;
-@property (nonatomic, copy)           NSString *couponCode;
+@property (nonatomic, weak)           SCCoupon *coupon;
+@property (nonatomic, assign)           double purchaseCount;
+@property (nonatomic, copy, readonly) NSString *couponCode;
 @property (nonatomic, copy, readonly) NSString *totalPrice;
 @property (nonatomic, copy, readonly) NSString *deductiblePrice;
 @property (nonatomic, copy, readonly) NSString *payPrice;
 @property (nonatomic, copy, readonly) NSString *useCoupon;
 
-- (void)setResultTotalPrice:(double)resultTotalPrice;
-- (void)setResultDeductiblePrice:(double)resultDeductiblePrice;
+- (void)setResultProductPrice:(double)productPrice;
 
 @end

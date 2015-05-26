@@ -30,6 +30,6 @@
 - (IBAction)weiXinPayBUttonPressed;
 - (IBAction)aliPayButtonPressed;
 
-- (CGFloat)displayCellWithResult:(SCPayOrderResult *)result;
+- (void)displayCellWithResult:(SCPayOrderResult *)result;
 
 @end

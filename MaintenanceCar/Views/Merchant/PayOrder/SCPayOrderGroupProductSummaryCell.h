@@ -12,7 +12,6 @@
 @protocol SCPayOrderGroupProductSummaryCellDelegate <NSObject>
 
 @required
-- (void)didDisplayProductPrice:(CGFloat)price;
 - (void)didConfirmProductPrice:(CGFloat)price purchaseCount:(NSInteger)purchaseCount;
 
 @end
@@ -29,6 +28,6 @@
 - (IBAction)cutButtonPressed;
 - (IBAction)addButtonPressed;
 
-- (CGFloat)displayCellWithProduct:(SCGroupProduct *)product;
+- (void)displayCellWithProduct:(SCGroupProduct *)product;
 
 @end

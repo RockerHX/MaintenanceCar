@@ -27,6 +27,7 @@
 @property (nonatomic, strong) NSString *reservePhone;      // 预约电话
 @property (nonatomic, strong) NSString *price;             // 预估价格
 @property (nonatomic, strong) NSString *remark;            // 备注
+@property (nonatomic, strong) NSString *payPrice;          // 支付价格
 @property (nonatomic, assign)     BOOL  canCancel;         // 是否取消
 @property (nonatomic, assign)     BOOL  canPay;            // 能否买单
 

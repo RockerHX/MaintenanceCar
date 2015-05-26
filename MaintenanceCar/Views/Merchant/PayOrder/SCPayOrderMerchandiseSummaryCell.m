@@ -22,27 +22,28 @@
     _enterButton.layer.shadowOpacity = 1.0f;
     _enterButton.layer.shadowRadius = 1.0f;
     
-    __weak typeof(self)weakSelf = self;
     self.merchantNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 43.0f;
-    [SCNumberKeyBoard showWithTextField:_inputTextField block:^(NSString *number) {
-        [weakSelf executeDelegateMethodWithNumber:number];
-    }];
+    [SCNumberKeyBoard showWithTextField:_inputTextField block:nil];
 }
 
 #pragma mark - Action Methods
 - (IBAction)enterButtonPressed
 {
+    _enterButton.enabled = NO;
+    _enterButton.backgroundColor = [UIColor grayColor];
+    _inputTextField.enabled = NO;
     [_inputTextField resignFirstResponder];
     [self executeDelegateMethodWithNumber:_inputTextField.text];
 }
 
 #pragma mark - Public Methods
-- (CGFloat)displayCellWithDetail:(SCOrderDetail *)detail
+- (void)displayCellWithDetail:(SCOrderDetail *)detail
 {
+    self.paySuccessView.hidden  = !detail.payPrice;
+    self.payPriceLabel.text     = detail.payPrice;
     self.carModelLabel.text     = detail.carModelName;
     self.serviceNameLabel.text  = detail.serviceName;
     self.merchantNameLabel.text = detail.merchantName;
-    return [self layoutSizeFittingSize];
 }
 
 #pragma mark - Private Methods

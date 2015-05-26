@@ -8,6 +8,18 @@
 
 #import "SCTableViewCell.h"
 
+@protocol SCPayOrderEnterCodeCellDelegate <NSObject>
+
+@optional
+- (void)shouldEnterCouponCode;
+
+@end
+
 @interface SCPayOrderEnterCodeCell : SCTableViewCell
+
+@property (weak, nonatomic) IBOutlet       id  <SCPayOrderEnterCodeCellDelegate>delegate;
+@property (weak, nonatomic) IBOutlet UIButton *enterCodeButton;
+
+- (IBAction)enterCodeButtonPressed;
 
 @end

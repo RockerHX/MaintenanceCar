@@ -7,6 +7,7 @@
 //
 
 #import "SCPayOrderResult.h"
+#import "SCCoupon.h"
 
 @implementation SCPayOrderResult
 
@@ -16,30 +17,37 @@
     self = [super init];
     if (self)
     {
-        _purchaseCount = @"1";
+        _purchaseCount = 1;
     }
     return self;
 }
 
 #pragma mark - Setter And Getter Methods
+- (void)setCoupon:(SCCoupon *)coupon
+{
+    _coupon = coupon;
+    _resultDeductiblePrice = coupon.amount.doubleValue;
+}
+
 - (NSString *)couponCode
 {
-    return _couponCode ? _couponCode : @"0";
+    return _coupon ? _coupon.code : @"0";
 }
 
 - (NSString *)totalPrice
 {
-    return [NSString stringWithFormat:@"%.2f", (_resultTotalPrice)];
+    return [NSString stringWithFormat:@"%.2f", (_resultProductPrice * _purchaseCount)];
 }
 
 - (NSString *)deductiblePrice
 {
-    return [NSString stringWithFormat:@"%.2f", (_resultDeductiblePrice)];
+    return [NSString stringWithFormat:@"%.2f", _resultDeductiblePrice];
 }
 
 - (NSString *)payPrice
 {
-    return [NSString stringWithFormat:@"%.2f", (_resultPayPrice)];
+    double totalPrice = (_resultProductPrice * _purchaseCount) - _resultDeductiblePrice;
+    return [NSString stringWithFormat:@"%.2f", (totalPrice > 0) ? totalPrice : 0];
 }
 
 - (NSString *)useCoupon
@@ -48,16 +56,9 @@
 }
 
 #pragma mark - Public Methods
-- (void)setResultTotalPrice:(double)resultTotalPrice
+- (void)setResultProductPrice:(double)productPrice
 {
-    _resultTotalPrice = resultTotalPrice;
-    _resultPayPrice = resultTotalPrice - _resultDeductiblePrice;
-}
-
-- (void)setResultDeductiblePrice:(double)resultDeductiblePrice
-{
-    _resultDeductiblePrice = resultDeductiblePrice;
-    _resultPayPrice = _resultTotalPrice - resultDeductiblePrice;
+    _resultProductPrice = productPrice;
 }
 
 @end

@@ -189,6 +189,8 @@
                     }];
                     
                     [weakSelf.tableView reloadData];
+                    if (_delegate && [_delegate respondsToSelector:@selector(userAddCouponSuccess)])
+                        [_delegate userAddCouponSuccess];
                 }
                     break;
             }

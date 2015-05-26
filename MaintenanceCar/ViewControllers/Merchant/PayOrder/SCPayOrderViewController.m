@@ -16,6 +16,7 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "SCWeiXinPayOrder.h"
 #import "SCAliPayOrder.h"
+#import "SCCouponsViewController.h"
 
 typedef NS_ENUM(NSInteger, SCAliPayCode) {
     SCAliPayCodePaySuccess    = 9000,
@@ -25,8 +26,10 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
     SCAliPayCodeNetworkError  = 6002
 };
 
-@interface SCPayOrderViewController () <SCPayOrderMerchandiseSummaryCellDelegate, SCPayOrderGroupProductSummaryCellDelegate, SCPayOrderResultCellDelegate>
+@interface SCPayOrderViewController () <SCPayOrderMerchandiseSummaryCellDelegate, SCPayOrderGroupProductSummaryCellDelegate, SCPayOrderEnterCodeCellDelegate, SCPayOrderCouponCellDelegate, SCPayOrderResultCellDelegate, SCCouponsViewControllerDelegate>
 {
+    BOOL              _canSelectedCoupon;
+    NSMutableArray   *_coupons;
     SCPayOrderResult *_payResult;
     
     SCPayOrderGroupProductSummaryCell *_groupProductSummaryCell;
@@ -58,6 +61,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
     [super viewDidLoad];
     
     [self initConfig];
+    [self startValidCouponsRequest];
 }
 
 - (void)dealloc
@@ -75,7 +79,10 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 #pragma mark - Config Methods
 - (void)initConfig
 {
+    _canSelectedCoupon = YES;
+    _coupons = @[].mutableCopy;
     _payResult = [[SCPayOrderResult alloc] init];
+    [_payResult setResultProductPrice:(_groupProduct ? _groupProduct.final_price.doubleValue : Zero)];
     
     [NOTIFICATION_CENTER addObserver:self selector:@selector(weiXinPaySuccess) name:kWeiXinPaySuccessNotification object:nil];
     [NOTIFICATION_CENTER addObserver:self selector:@selector(weiXinPayFailure) name:kWeiXinPayFailureNotification object:nil];
@@ -89,7 +96,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return ( _orderDetail || _groupProduct) ? ((section == 1) ? 2 : 1) : Zero;
+    return ( _orderDetail || _groupProduct) ? ((section == 1) ? (_coupons.count ? (_coupons.count + 1) : 2) : 1) : Zero;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -101,15 +108,15 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
         {
             case 0:
             {
-                if (_groupProduct)
-                {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderGroupProductSummaryCell" forIndexPath:indexPath];
-                    [(SCPayOrderGroupProductSummaryCell *)cell displayCellWithProduct:_groupProduct];
-                }
-                else if (_orderDetail)
+                if (_orderDetail)
                 {
                     cell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderMerchandiseSummaryCell" forIndexPath:indexPath];
                     [(SCPayOrderMerchandiseSummaryCell *)cell displayCellWithDetail:_orderDetail];
+                }
+                else if (_groupProduct)
+                {
+                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderGroupProductSummaryCell" forIndexPath:indexPath];
+                    [(SCPayOrderGroupProductSummaryCell *)cell displayCellWithProduct:_groupProduct];
                 }
             }
                 break;
@@ -117,8 +124,13 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
             {
                 if (indexPath.row)
                 {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderCouponCell" forIndexPath:indexPath];
-//                    [(SCPayOrderCouponCell *)cell displayCellWithDetail:_detail];
+                    if (_coupons.count)
+                    {
+                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderCouponCell" forIndexPath:indexPath];
+                        [(SCPayOrderCouponCell *)cell displayCellWithCoupons:_coupons index:indexPath.row - 1];
+                    }
+                    else
+                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCNoValidCouponCell" forIndexPath:indexPath];
                 }
                 else
                     cell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderEnterCodeCell" forIndexPath:indexPath];
@@ -138,53 +150,104 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = ZERO_POINT;
+    CGFloat height = 10.0f;
     if ( _orderDetail || _groupProduct)
     {
         switch (indexPath.section)
         {
             case 0:
             {
-                if (_groupProduct)
+                if (_orderDetail)
                 {
-                    if(!_groupProductSummaryCell)
-                        _groupProductSummaryCell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderGroupProductSummaryCell"];
-                    height = [_groupProductSummaryCell displayCellWithProduct:_groupProduct];
+                    height += [tableView fd_heightForCellWithIdentifier:@"SCPayOrderMerchandiseSummaryCell" cacheByIndexPath:indexPath configuration:^(SCPayOrderMerchandiseSummaryCell *cell) {
+                        [cell displayCellWithDetail:_orderDetail];
+                    }];
                 }
-                else if (_orderDetail)
+                else if (_groupProduct)
                 {
-                    if(!_merchandiseSummaryCell)
-                        _merchandiseSummaryCell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderMerchandiseSummaryCell"];
-                    height = [_merchandiseSummaryCell displayCellWithDetail:_orderDetail];
+                    height += [tableView fd_heightForCellWithIdentifier:@"SCPayOrderGroupProductSummaryCell" cacheByIndexPath:indexPath configuration:^(SCPayOrderGroupProductSummaryCell *cell) {
+                        [cell displayCellWithProduct:_groupProduct];
+                    }];
                 }
+            }
+                break;
+            case 1:
+            {
+                if (indexPath.row)
+                {
+                    if (_coupons.count)
+                    {
+                        height += [tableView fd_heightForCellWithIdentifier:@"SCPayOrderCouponCell" cacheByIndexPath:indexPath configuration:^(SCPayOrderCouponCell *cell) {
+                            [cell displayCellWithCoupons:_coupons index:indexPath.row - 1];
+                        }];
+                    }
+                    else
+                        height = 44.0f;
+                }
+                else
+                    height = 70.0f;
             }
                 break;
             case 2:
             {
-                if(!_payResultCell)
-                    _payResultCell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderResultCell"];
-                height = [_payResultCell displayCellWithResult:_payResult];
-            }
-                break;
-            default:
-            {
-                height = 44.0f;
+                height += [tableView fd_heightForCellWithIdentifier:@"SCPayOrderResultCell" cacheByIndexPath:indexPath configuration:^(SCPayOrderResultCell *cell) {
+                    [cell displayCellWithResult:_payResult];
+                }];
             }
                 break;
         }
     }
-    
     return height;
 }
 
 #pragma mark - Private Methods
+- (void)startValidCouponsRequest
+{
+    if (!_orderDetail.payPrice.doubleValue && _payResult.totalPrice.doubleValue)
+    {
+        [self showHUDOnViewController:self.navigationController];
+        __weak typeof(self) weakSelf = self;
+        // 配置请求参数
+        NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                                  @"company_id": _orderDetail ? _orderDetail.companyID : (_groupProduct ? _groupProduct.companyID : @""),
+                                       @"price": _payResult.totalPrice};
+        [[SCAPIRequest manager] startValidCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [weakSelf hideHUDOnViewController:weakSelf.navigationController];
+            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+            {
+                NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
+                NSString *statusMessage = responseObject[@"status_message"];
+                switch (statusCode)
+                {
+                    case SCAPIRequestErrorCodeNoError:
+                    {
+                        [_coupons removeAllObjects];
+                        [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                            SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];
+                            [_coupons addObject:coupon];
+                        }];
+                        
+                        [weakSelf.tableView reloadData];
+                    }
+                        break;
+                }
+                if (statusMessage.length)
+                    [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [weakSelf hanleFailureResponseWtihOperation:operation];
+            [weakSelf hideHUDOnViewController:weakSelf.navigationController];
+        }];
+    }
+}
+
 - (void)weiXinPayWithParameters:(NSDictionary *)parameters
 {
     if ([SCUserInfo share].loginStatus)
     {
         if ([WXApi isWXAppInstalled])
         {
-            [self showHUDOnViewController:self];
+            [self showHUDOnViewController:self.navigationController];
             __weak typeof(self)weakSelf = self;
             if (_orderDetail)
             {
@@ -214,7 +277,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 {
     if ([SCUserInfo share].loginStatus)
     {
-        [self showHUDOnViewController:self];
+        [self showHUDOnViewController:self.navigationController];
         __weak typeof(self)weakSelf = self;
         if (_orderDetail)
         {
@@ -303,7 +366,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 
 - (void)sendAliPay:(SCAliPayOrder *)order
 {
-    [self hideHUDOnViewController:self];
+    [self hideHUDOnViewController:self.navigationController];
     __weak typeof(self)weakSelf = self;
     [[AlipaySDK defaultService] payOrder:[order requestString] fromScheme:@"com.YJCL.XiuYang" callback:^(NSDictionary *resultDic) {
         [weakSelf alipayResult:resultDic];
@@ -312,9 +375,20 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 
 - (void)weiXinPaySuccess
 {
-    [self showHUDAlertToViewController:self.navigationController text:@"恭喜您团购成功！"];
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    [NOTIFICATION_CENTER postNotificationName:kGenerateTicketSuccessNotification object:nil];
+    if (_orderDetail)
+    {
+        [_coupons removeAllObjects];
+        _orderDetail.payPrice = _payResult.payPrice;
+        [self.tableView reloadData];
+        [self.tableView setContentOffset:CGPointMake(Zero, Zero)];
+        [self showPromptWithText:@"支付成功"];
+    }
+    else if (_groupProduct)
+    {
+        [self showHUDAlertToViewController:self.navigationController text:@"恭喜您团购成功！"];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [NOTIFICATION_CENTER postNotificationName:kGenerateTicketSuccessNotification object:nil];
+    }
 }
 
 - (void)weiXinPayFailure
@@ -328,9 +402,20 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
     {
         case SCAliPayCodePaySuccess:
         {
-            [self showPromptWithText:@"支付成功"];
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            [NOTIFICATION_CENTER postNotificationName:kGenerateTicketSuccessNotification object:nil];
+            if (_orderDetail)
+            {
+                [_coupons removeAllObjects];
+                _orderDetail.payPrice = _payResult.payPrice;
+                [self.tableView reloadData];
+                [self.tableView setContentOffset:CGPointMake(Zero, Zero)];
+                [self showPromptWithText:@"支付成功"];
+            }
+            else if (_groupProduct)
+            {
+                [self showPromptWithText:@"支付成功"];
+                [self.navigationController popToRootViewControllerAnimated:YES];
+                [NOTIFICATION_CENTER postNotificationName:kGenerateTicketSuccessNotification object:nil];
+            }
         }
             break;
         case SCAliPayCodePayProcessing:
@@ -355,28 +440,62 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 
 - (void)showPromptWithText:(NSString *)text
 {
-    [self hideHUDOnViewController:self];
-    [self showHUDAlertToViewController:self text:text delay:1.0f];
+    [self hideHUDOnViewController:self.navigationController];
+    [self showHUDAlertToViewController:self.navigationController text:text delay:1.0f];
 }
 
 #pragma mark - SCPayOrderGroupProductSummaryCellDelegate Methods
-- (void)didDisplayProductPrice:(CGFloat)price
-{
-    [_payResult setResultTotalPrice:price];
-}
-
 - (void)didConfirmProductPrice:(CGFloat)price purchaseCount:(NSInteger)purchaseCount
 {
-    [_payResult setPurchaseCount:@(purchaseCount).stringValue];
-    [_payResult setResultTotalPrice:price];
+    [_payResult setPurchaseCount:purchaseCount];
+    [_payResult setResultProductPrice:price];
     [self.tableView reloadData];
+    [self startValidCouponsRequest];
 }
 
 #pragma mark - SCPayOrderMerchandiseSummaryCellDelegate Methods
 - (void)didConfirmMerchantPrice:(CGFloat)price
 {
-    [_payResult setResultTotalPrice:price];
+    [_payResult setResultProductPrice:price];
     [self.tableView reloadData];
+    [self startValidCouponsRequest];
+}
+
+#pragma mark - SCPayOrderEnterCodeCellDelegate Methods
+- (void)shouldEnterCouponCode
+{
+    SCCouponsViewController *couponsViewController = [SCCouponsViewController instance];
+    couponsViewController.delegate = self;
+    [self.navigationController pushViewController:couponsViewController animated:YES];
+}
+
+#pragma mark - SCPayOrderCouponCellDelegate Methods
+- (void)payOrderCouponCell:(SCPayOrderCouponCell *)cell selectedCoupon:(SCCoupon *)coupon
+{
+    if (_payResult.totalPrice.doubleValue && _payResult.payPrice.doubleValue)
+    {
+        if (_canSelectedCoupon)
+        {
+            if (!cell.checkBoxButton.selected)
+            {
+                _canSelectedCoupon = cell.checkBoxButton.selected;
+                cell.checkBoxButton.selected = !_canSelectedCoupon;
+                _payResult.coupon = coupon;
+            }
+        }
+        else if (cell.checkBoxButton.selected)
+        {
+            _canSelectedCoupon = cell.checkBoxButton.selected;
+            cell.checkBoxButton.selected = !_canSelectedCoupon;
+            _payResult.coupon = nil;
+        }
+        [self.tableView reloadData];
+    }
+    else
+    {
+        cell.checkBoxButton.selected = NO;
+        [self showHUDAlertToViewController:self.navigationController text:@"请您先输入正确的价格才能选择优惠券噢！"];
+    }
 }
 
 #pragma mark - SCPayOrderResultCellDelegate Methods
@@ -401,7 +520,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                         @"mobile": userInfo.phoneNmber,
                     @"company_id": _groupProduct.companyID,
                     @"product_id": _groupProduct.product_id,
-                      @"how_many": _payResult.purchaseCount,
+                      @"how_many": @(_payResult.purchaseCount),
                    @"total_price": _payResult.payPrice,
                      @"old_price": _payResult.totalPrice,
                     @"use_coupon": _payResult.useCoupon,
@@ -417,6 +536,12 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
             [self aliPayWithParameters:parameters];
             break;
     }
+}
+
+#pragma mark - SCCouponsViewControllerDelegate Methods
+- (void)userAddCouponSuccess
+{
+    [self startValidCouponsRequest];
 }
 
 @end
