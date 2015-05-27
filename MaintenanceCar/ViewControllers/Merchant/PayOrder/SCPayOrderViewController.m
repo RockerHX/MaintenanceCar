@@ -177,7 +177,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                 {
                     if (_coupons.count)
                     {
-                        height += [tableView fd_heightForCellWithIdentifier:@"SCPayOrderCouponCell" cacheByIndexPath:indexPath configuration:^(SCPayOrderCouponCell *cell) {
+                        height = [tableView fd_heightForCellWithIdentifier:@"SCPayOrderCouponCell" cacheByIndexPath:indexPath configuration:^(SCPayOrderCouponCell *cell) {
                             [cell displayCellWithCoupons:_coupons index:indexPath.row - 1];
                         }];
                     }
