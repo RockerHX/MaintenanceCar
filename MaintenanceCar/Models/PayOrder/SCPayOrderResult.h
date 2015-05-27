@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, SCPayOrderment) {
 }
 
 @property (nonatomic, assign)             double  purchaseCount;
-@property (nonatomic, weak)             SCCoupon *coupon;
+@property (nonatomic, strong)           SCCoupon *coupon;
 @property (nonatomic, strong, readonly) NSString *couponCode;
 @property (nonatomic, strong, readonly) NSString *totalPrice;
 @property (nonatomic, strong, readonly) NSString *deductiblePrice;
@@ -30,5 +30,6 @@ typedef NS_ENUM(NSUInteger, SCPayOrderment) {
 @property (nonatomic, strong, readonly) NSString *useCoupon;
 
 - (void)setResultProductPrice:(double)productPrice;
+- (BOOL)checkCouponCanUse;
 
 @end

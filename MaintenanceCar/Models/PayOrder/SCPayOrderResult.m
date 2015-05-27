@@ -11,6 +11,9 @@
 
 @implementation SCPayOrderResult
 
+#define ZERO_PRICE              0
+#define UN_SELECTED_CODE        @"0"
+
 #pragma mark - Init Methods
 - (instancetype)init
 {
@@ -31,23 +34,23 @@
 
 - (NSString *)couponCode
 {
-    return _coupon ? _coupon.code : @"0";
+    return _coupon ? _coupon.code : UN_SELECTED_CODE;
 }
 
 - (NSString *)totalPrice
 {
-    return [NSString stringWithFormat:@"%.2f", (_resultProductPrice * _purchaseCount)];
+    return [NSString stringWithFormat:@"%.2f", [self resultTotalPrice]];
 }
 
 - (NSString *)deductiblePrice
 {
-    return [NSString stringWithFormat:@"%.2f", _resultDeductiblePrice];
+    return [NSString stringWithFormat:@"%.2f", ([self resultTotalPrice] > _resultDeductiblePrice) ? _resultDeductiblePrice : ZERO_PRICE];
 }
 
 - (NSString *)payPrice
 {
-    double totalPrice = (_resultProductPrice * _purchaseCount) - _resultDeductiblePrice;
-    return [NSString stringWithFormat:@"%.2f", (totalPrice > 0) ? totalPrice : 0];
+    double payPrice = [self resultTotalPrice] - _resultDeductiblePrice;
+    return [NSString stringWithFormat:@"%.2f", (payPrice > 0) ? payPrice : 0];
 }
 
 - (NSString *)useCoupon
@@ -59,6 +62,22 @@
 - (void)setResultProductPrice:(double)productPrice
 {
     _resultProductPrice = productPrice;
+}
+
+- (BOOL)checkCouponCanUse
+{
+    if (self.totalPrice.doubleValue <= _coupon.needMin.doubleValue)
+    {
+        self.coupon = nil;
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark - Private Methods
+- (double)resultTotalPrice
+{
+    return (_resultProductPrice * _purchaseCount);
 }
 
 @end

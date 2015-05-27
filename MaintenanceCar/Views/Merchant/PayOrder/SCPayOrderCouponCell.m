@@ -9,9 +9,6 @@
 #import "SCPayOrderCouponCell.h"
 
 @implementation SCPayOrderCouponCell
-{
-    SCCoupon *_coupon;
-}
 
 #pragma mark - Init Methods
 - (void)awakeFromNib
@@ -31,12 +28,12 @@
 #pragma mark - Action Methods
 - (IBAction)checkBoxButtonPressed:(UIButton *)sender
 {
-    if (_delegate && [_delegate respondsToSelector:@selector(payOrderCouponCell:selectedCoupon:)])
-        [_delegate payOrderCouponCell:self selectedCoupon:_coupon];
+    if (_delegate && [_delegate respondsToSelector:@selector(payOrderCouponCell:)])
+        [_delegate payOrderCouponCell:self];
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithCoupons:(NSArray *)coupons index:(NSInteger)index
+- (void)displayCellWithCoupons:(NSArray *)coupons index:(NSInteger)index couponCode:(NSString *)couponCode
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(ZERO_POINT, -SHADOW_OFFSET*4)];
@@ -53,11 +50,13 @@
     self.layer.shadowOpacity = 1.0f;
     self.layer.shadowRadius = 1.0f;
     
-    _coupon = coupons[index];
+    self.tag = index;
+    SCCoupon *coupon = coupons[index];
+    _checkBoxButton.selected = [coupon.code isEqualToString:couponCode];
     if (index == (coupons.count - 1))
         self.layer.shadowPath = nil;
     
-    _couponPromptLabel.text = _coupon.title;
+    _couponPromptLabel.text = coupon.title;
 }
 
 @end

@@ -19,13 +19,13 @@
 
 - (IBAction)checkBoxButtonPressed:(UIButton *)sender;
 
-- (void)displayCellWithCoupons:(NSArray *)coupons index:(NSInteger)index;
+- (void)displayCellWithCoupons:(NSArray *)coupons index:(NSInteger)index couponCode:(NSString *)couponCode;
 
 @end
 
 @protocol SCPayOrderCouponCellDelegate <NSObject>
 
 @required
-- (void)payOrderCouponCell:(SCPayOrderCouponCell *)cell selectedCoupon:(SCCoupon *)coupon;
+- (void)payOrderCouponCell:(SCPayOrderCouponCell *)cell;
 
 @end

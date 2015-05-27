@@ -28,7 +28,6 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 
 @interface SCPayOrderViewController () <SCPayOrderMerchandiseSummaryCellDelegate, SCPayOrderGroupProductSummaryCellDelegate, SCPayOrderEnterCodeCellDelegate, SCPayOrderCouponCellDelegate, SCPayOrderResultCellDelegate, SCCouponsViewControllerDelegate>
 {
-    BOOL              _canSelectedCoupon;
     NSMutableArray   *_coupons;
     SCPayOrderResult *_payResult;
     
@@ -79,7 +78,6 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 #pragma mark - Config Methods
 - (void)initConfig
 {
-    _canSelectedCoupon = YES;
     _coupons = @[].mutableCopy;
     _payResult = [[SCPayOrderResult alloc] init];
     [_payResult setResultProductPrice:(_groupProduct ? _groupProduct.final_price.doubleValue : Zero)];
@@ -127,7 +125,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                     if (_coupons.count)
                     {
                         cell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderCouponCell" forIndexPath:indexPath];
-                        [(SCPayOrderCouponCell *)cell displayCellWithCoupons:_coupons index:indexPath.row - 1];
+                        [(SCPayOrderCouponCell *)cell displayCellWithCoupons:_coupons index:(indexPath.row - 1) couponCode:_payResult.couponCode];
                     }
                     else
                         cell = [tableView dequeueReusableCellWithIdentifier:@"SCNoValidCouponCell" forIndexPath:indexPath];
@@ -178,7 +176,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                     if (_coupons.count)
                     {
                         height = [tableView fd_heightForCellWithIdentifier:@"SCPayOrderCouponCell" cacheByIndexPath:indexPath configuration:^(SCPayOrderCouponCell *cell) {
-                            [cell displayCellWithCoupons:_coupons index:indexPath.row - 1];
+                            [cell displayCellWithCoupons:_coupons index:(indexPath.row - 1) couponCode:_payResult.couponCode];
                         }];
                     }
                     else
@@ -221,6 +219,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                 {
                     case SCAPIRequestErrorCodeNoError:
                     {
+                        [_payResult checkCouponCanUse];
                         [_coupons removeAllObjects];
                         [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                             SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];
@@ -470,32 +469,28 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 }
 
 #pragma mark - SCPayOrderCouponCellDelegate Methods
-- (void)payOrderCouponCell:(SCPayOrderCouponCell *)cell selectedCoupon:(SCCoupon *)coupon
+- (void)payOrderCouponCell:(SCPayOrderCouponCell *)cell
 {
-    if (_payResult.totalPrice.doubleValue && _payResult.payPrice.doubleValue)
+    if (_payResult.coupon)
     {
-        if (_canSelectedCoupon)
+        SCCoupon *coupon = _coupons[cell.tag];
+        if ([coupon.code isEqualToString:_payResult.couponCode])
         {
-            if (!cell.checkBoxButton.selected)
-            {
-                _canSelectedCoupon = cell.checkBoxButton.selected;
-                cell.checkBoxButton.selected = !_canSelectedCoupon;
-                _payResult.coupon = coupon;
-            }
-        }
-        else if (cell.checkBoxButton.selected)
-        {
-            _canSelectedCoupon = cell.checkBoxButton.selected;
-            cell.checkBoxButton.selected = !_canSelectedCoupon;
+            cell.checkBoxButton.selected = !cell.checkBoxButton.selected;
             _payResult.coupon = nil;
         }
-        [self.tableView reloadData];
+        else
+        {
+            cell.checkBoxButton.selected = NO;
+            [self showHUDAlertToViewController:self.navigationController text:@"一个订单只能使用一张优惠券噢，亲！"];
+        }
     }
     else
     {
-        cell.checkBoxButton.selected = NO;
-        [self showHUDAlertToViewController:self.navigationController text:@"请您先输入正确的价格才能选择优惠券噢！"];
+        cell.checkBoxButton.selected = !cell.checkBoxButton.selected;
+        _payResult.coupon = _coupons[cell.tag];
     }
+    [self.tableView reloadData];
 }
 
 #pragma mark - SCPayOrderResultCellDelegate Methods
