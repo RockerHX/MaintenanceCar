@@ -17,6 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *tenThousandLabel;         // 万位栏
 @property (weak, nonatomic) IBOutlet UILabel *hundredThousandLabel;     // 十万位栏
 
-@property (nonatomic, copy) NSString *mileage;                          // 里程数据
+@property (nonatomic, strong) NSString *mileage;                          // 里程数据
 
 @end

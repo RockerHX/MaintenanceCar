@@ -14,7 +14,7 @@
     UIView      *_window;
 }
 
-@property (nonatomic, copy) UIColor *menuColor;         // 菜单颜色
+@property (nonatomic, strong) UIColor *menuColor;         // 菜单颜色
 
 /**
  *  Menu初始化方法

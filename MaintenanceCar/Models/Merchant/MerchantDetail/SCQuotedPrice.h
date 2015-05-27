@@ -13,16 +13,16 @@
 
 @interface SCQuotedPrice : JSONModel
 
-@property (nonatomic, copy) NSString <Optional>*product_id;
-@property (nonatomic, copy) NSString <Optional>*title;
-@property (nonatomic, copy) NSString <Optional>*content;
-@property (nonatomic, copy) NSString <Optional>*type;
-@property (nonatomic, copy) NSString <Optional>*final_price;
-@property (nonatomic, copy) NSString <Optional>*total_price;
-@property (nonatomic, copy) NSString <Optional>*price_begin;
-@property (nonatomic, copy) NSString <Optional>*price_end;
+@property (nonatomic, strong) NSString <Optional>*product_id;
+@property (nonatomic, strong) NSString <Optional>*title;
+@property (nonatomic, strong) NSString <Optional>*content;
+@property (nonatomic, strong) NSString <Optional>*type;
+@property (nonatomic, strong) NSString <Optional>*final_price;
+@property (nonatomic, strong) NSString <Optional>*total_price;
+@property (nonatomic, strong) NSString <Optional>*price_begin;
+@property (nonatomic, strong) NSString <Optional>*price_end;
 
-@property (nonatomic, copy) NSString <Ignore>*companyID;
-@property (nonatomic, copy) NSString <Ignore>*merchantName;
+@property (nonatomic, strong) NSString <Ignore>*companyID;
+@property (nonatomic, strong) NSString <Ignore>*merchantName;
 
 @end

@@ -12,12 +12,12 @@
 
 @interface SCMerchantFlag : NSObject
 
-@property (nonatomic, copy)           NSString *flag;
-@property (nonatomic, copy, readonly) NSString *title;
-@property (nonatomic, copy, readonly) NSString *prompt;
-@property (nonatomic, copy, readonly) NSString *content;
-@property (nonatomic, copy, readonly) NSString *imageName;
-@property (nonatomic, copy, readonly) NSString *colorHex;
+@property (nonatomic, strong)           NSString *flag;
+@property (nonatomic, strong, readonly) NSString *title;
+@property (nonatomic, strong, readonly) NSString *prompt;
+@property (nonatomic, strong, readonly) NSString *content;
+@property (nonatomic, strong, readonly) NSString *imageName;
+@property (nonatomic, strong, readonly) NSString *colorHex;
 
 - (instancetype)initWithMerchantDetail:(SCMerchantDetail *)detail flag:(NSString *)flag;
 
@@ -26,9 +26,9 @@
 
 @interface SCMerchantSummary : SCMerchantDetailBase
 
-@property (nonatomic, copy, readonly)  NSString *name;
-@property (nonatomic, copy, readonly)  NSString *distance;
-@property (nonatomic, copy, readonly)  NSString *star;
+@property (nonatomic, strong, readonly)  NSString *name;
+@property (nonatomic, strong, readonly)  NSString *distance;
+@property (nonatomic, strong, readonly)  NSString *star;
 
 @property (nonatomic, strong, readonly) NSArray *flags;
 @property (nonatomic, assign, readonly)     BOOL unReserve;

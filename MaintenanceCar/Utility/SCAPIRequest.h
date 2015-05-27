@@ -40,11 +40,11 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 
 @interface SCAPIRequest : AFHTTPRequestOperationManager
 
-@property (nonatomic, copy) NSString *doMain;       // URL域
-@property (nonatomic, copy) NSString *path;         // API路径
-@property (nonatomic, copy) NSString *api;          // 请求的API
+@property (nonatomic, strong) NSString *doMain;       // URL域
+@property (nonatomic, strong) NSString *path;         // API路径
+@property (nonatomic, strong) NSString *api;          // 请求的API
 
-@property (nonatomic, copy) NSString *url;          // 完整的API链接地址(不带参数)
+@property (nonatomic, strong) NSString *url;          // 完整的API链接地址(不带参数)
 
 /**
  *  初始化方法 - 通过url参数生成SCAPIRequest实例

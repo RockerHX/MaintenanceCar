@@ -12,8 +12,8 @@
 
 @interface SCMerchantDetailBase : NSObject
 
-@property (nonatomic, assign)        NSInteger  displayRow;
-@property (nonatomic, copy, readonly) NSString *headerTitle;
+@property (nonatomic, assign)          NSInteger  displayRow;
+@property (nonatomic, strong, readonly) NSString *headerTitle;
 
 - (instancetype)initWithMerchantDetail:(SCMerchantDetail *)detail;
 

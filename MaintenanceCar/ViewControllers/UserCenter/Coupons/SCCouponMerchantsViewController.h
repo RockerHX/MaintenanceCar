@@ -15,7 +15,7 @@
     NSMutableArray *_merchants;
 }
 
-@property (nonatomic, copy) NSString *couponCode;
+@property (nonatomic, strong) NSString *couponCode;
 
 + (instancetype)instance;
 

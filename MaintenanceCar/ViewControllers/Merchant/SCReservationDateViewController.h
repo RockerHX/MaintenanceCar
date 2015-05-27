@@ -25,7 +25,7 @@
 
 @property (nonatomic, weak)                        id <SCReservationDateViewControllerDelegate>delegate;
 
-@property (nonatomic, copy)                  NSString *companyID;
-@property (nonatomic, copy)                  NSString *type;
+@property (nonatomic, strong)                  NSString *companyID;
+@property (nonatomic, strong)                  NSString *type;
 
 @end

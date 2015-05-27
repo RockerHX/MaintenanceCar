@@ -11,9 +11,9 @@
 // 车辆品牌数据Model
 @interface SCCarBrand : JSONModel
 
-@property (nonatomic, copy) NSString <Optional>*brand_id;       // 车辆品牌ID
-@property (nonatomic, copy) NSString <Optional>*brand_init;     // 车辆品牌索引
-@property (nonatomic, copy) NSString <Optional>*brand_name;     // 车辆品牌名称
-@property (nonatomic, copy) NSString   <Ignore>*img_name;       // 车辆品牌logo
+@property (nonatomic, strong) NSString <Optional>*brand_id;       // 车辆品牌ID
+@property (nonatomic, strong) NSString <Optional>*brand_init;     // 车辆品牌索引
+@property (nonatomic, strong) NSString <Optional>*brand_name;     // 车辆品牌名称
+@property (nonatomic, strong) NSString   <Ignore>*img_name;       // 车辆品牌logo
 
 @end

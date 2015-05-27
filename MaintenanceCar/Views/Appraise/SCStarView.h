@@ -10,8 +10,8 @@
 
 @interface SCStarView : UIView
 
-@property (nonatomic, copy)           NSString *value;
-@property (nonatomic, copy, readonly) NSString *startValue;
+@property (nonatomic, strong)           NSString *value;
+@property (nonatomic, strong, readonly) NSString *startValue;
 
 @property (nonatomic, assign)             BOOL enabled;
 

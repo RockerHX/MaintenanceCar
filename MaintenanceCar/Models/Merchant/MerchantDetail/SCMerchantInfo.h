@@ -13,9 +13,9 @@
 
 @interface SCMerchantInfoItem : NSObject
 
-@property (nonatomic, copy)  NSString *imageName;
-@property (nonatomic, copy)  NSString *text;
-@property (nonatomic, strong) UIColor *textColor;
+@property (nonatomic, strong) NSString *imageName;
+@property (nonatomic, strong) NSString *text;
+@property (nonatomic, strong)  UIColor *textColor;
 
 @property (nonatomic, assign) CGFloat  fontSize;
 @property (nonatomic, assign)    BOOL  canSelected;

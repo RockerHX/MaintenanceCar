@@ -10,25 +10,25 @@
 
 @interface SCAliPayOrder : JSONModel
 
-@property(nonatomic, copy) NSString <Optional>*partner;
-@property(nonatomic, copy) NSString <Optional>*seller_id;
-@property(nonatomic, copy) NSString <Optional>*out_trade_no;
-@property(nonatomic, copy) NSString <Optional>*subject;
-@property(nonatomic, copy) NSString <Optional>*body;
-@property(nonatomic, copy) NSString <Optional>*total_fee;
-@property(nonatomic, copy) NSString <Optional>*notify_url;
+@property(nonatomic, strong) NSString <Optional>*partner;
+@property(nonatomic, strong) NSString <Optional>*seller_id;
+@property(nonatomic, strong) NSString <Optional>*out_trade_no;
+@property(nonatomic, strong) NSString <Optional>*subject;
+@property(nonatomic, strong) NSString <Optional>*body;
+@property(nonatomic, strong) NSString <Optional>*total_fee;
+@property(nonatomic, strong) NSString <Optional>*notify_url;
 
-@property(nonatomic, copy) NSString <Optional>*service;
-@property(nonatomic, copy) NSString <Optional>*payment_type;
-@property(nonatomic, copy) NSString <Optional>*input_charset;
-@property(nonatomic, copy) NSString <Optional>*it_b_pay;
-@property(nonatomic, copy) NSString <Optional>*show_url;
+@property(nonatomic, strong) NSString <Optional>*service;
+@property(nonatomic, strong) NSString <Optional>*payment_type;
+@property(nonatomic, strong) NSString <Optional>*input_charset;
+@property(nonatomic, strong) NSString <Optional>*it_b_pay;
+@property(nonatomic, strong) NSString <Optional>*show_url;
 
-@property(nonatomic, copy) NSString <Optional>*sign;
-@property(nonatomic, copy) NSString <Optional>*sign_type;
+@property(nonatomic, strong) NSString <Optional>*sign;
+@property(nonatomic, strong) NSString <Optional>*sign_type;
 
-@property(nonatomic, copy) NSString <Optional>*rsaDate;//可选
-@property(nonatomic, copy) NSString <Optional>*appID;//可选
+@property(nonatomic, strong) NSString <Optional>*rsaDate;//可选
+@property(nonatomic, strong) NSString <Optional>*appID;//可选
 
 - (NSString *)requestString;
 
