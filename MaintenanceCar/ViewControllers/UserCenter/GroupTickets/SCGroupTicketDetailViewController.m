@@ -63,12 +63,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - Config Methods
 - (void)initConfig
 {
-    self.tableView.tableFooterView.hidden = YES;
 }
 
 - (void)viewConfig
 {
-    self.tableView.tableFooterView = [_ticket expired] ? nil : _refundView;
+    BOOL hidden = ([_ticket expired] || (_ticket.state != SCGroupTicketStateUnUse));
+    self.tableView.tableFooterView = hidden ? nil : _refundView;
     [self.tableView reLayoutHeaderView];
     [self startTicketDetailRequest];
 }
@@ -359,7 +359,10 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             [[SCAPIRequest manager] startGroupTicketRefundAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 [weakSelf hideHUDOnViewController:weakSelf.navigationController];
                 if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+                {
+                    weakSelf.tableView.tableFooterView = nil;
                     [weakSelf showHUDAlertToViewController:weakSelf.navigationController delegate:weakSelf text:@"退款成功" delay:0.5f];
+                }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 [weakSelf hideHUDOnViewController:weakSelf.navigationController];
                 [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"退款失败，请重试或者联系客服..." delay:0.5f];
