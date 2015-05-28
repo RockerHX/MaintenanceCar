@@ -23,7 +23,7 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
     SCOrderDetailMenuTypeCancelReservetion
 };
 
-@interface SCOrderDetailViewController () <SCOrderDetailSummaryCellDelegate, SCOrderDetailPayCellDelegate>
+@interface SCOrderDetailViewController () <SCOrderDetailSummaryCellDelegate, SCOrderDetailPayCellDelegate, SCPayOrderViewControllerDelegate>
 @end
 
 @implementation SCOrderDetailViewController
@@ -289,6 +289,12 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
     SCPayOrderViewController *payOrderViewController = [SCPayOrderViewController instance];
     payOrderViewController.orderDetail  = _detail;
     [self.navigationController pushViewController:payOrderViewController animated:YES];
+}
+
+#pragma mark - SCPayOrderViewControllerDelegate Methods
+- (void)orderPaySucceed
+{
+    [self.tableView.header beginRefreshing];
 }
 
 @end

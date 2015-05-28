@@ -41,6 +41,8 @@
 #pragma mark - Public Methods
 - (void)displayCellWithResult:(SCPayOrderResult *)result
 {
+    _weiXinPayButton.enabled   = result.canPay;
+    _aliPayButton.enabled      = result.canPay;
     _totalPriceLabel.text      = result.totalPrice;
     _deductiblePriceLabel.text = result.deductiblePrice;
     _payPriceLabel.text        = result.payPrice;

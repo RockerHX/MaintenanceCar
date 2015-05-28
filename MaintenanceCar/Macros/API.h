@@ -79,6 +79,7 @@
 #define ProgressOrdersAPI           @"/Reservation/doing"                   // 我的进行中订单API
 #define FinishedOrdersAPI           @"/Reservation/done"                    // 我的已完成订单API
 #define OrderDetailAPI              @"/Reservation"                         // 订单详情API
+#define OrderTicketsAPI             @"/Group_ticket/order"               // 买单成功获取团购券API
 
 #define ValidCouponsAPI             @"/coupon/get_effective_coupon"         // 有效优惠券API
 #define InvalidCouponsAPI           @"/coupon/get_invalid_coupon"           // 无效优惠券API
@@ -141,6 +142,7 @@
 #define ProgressOrdersAPIURL            [V2APIURL stringByAppendingString:ProgressOrdersAPI]          // 进行中订单接口URL - 用于进行中订单数据获取
 #define FinishedOrdersAPIURL            [V2APIURL stringByAppendingString:FinishedOrdersAPI]          // 已完成订单接口URL - 用于已完成订单数据获取
 #define OrderDetailAPIURL               [V2APIURL stringByAppendingString:OrderDetailAPI]             // 订单详情接口URL - 用于订单详情数据获取
+#define OrderTicketsAPIURL              [V2APIURL stringByAppendingString:OrderTicketsAPI]            // 买单成功获取团购券接口URL - 用于团购券买单成功之后回去购买成功的优惠券
 
 #define ValidCouponsAPIURL              [V2APIURL stringByAppendingString:ValidCouponsAPI]            // 有效优惠券接口URL - 用于获取用户所有有效优惠券
 #define InvalidCouponsAPIURL            [V2APIURL stringByAppendingString:InvalidCouponsAPI]          // 无效优惠券接口URL - 用于获取用户所有无效优惠券

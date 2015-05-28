@@ -19,6 +19,8 @@
 @interface SCPayOrderGroupProductSummaryCell : SCOrderBaseCell
 
 @property (weak, nonatomic) IBOutlet       id  <SCPayOrderGroupProductSummaryCellDelegate>delegate;
+@property (weak, nonatomic) IBOutlet   UIView *paySuccessView;
+@property (weak, nonatomic) IBOutlet  UILabel *payCountLabel;
 @property (weak, nonatomic) IBOutlet  UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet  UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UIButton *cutButton;

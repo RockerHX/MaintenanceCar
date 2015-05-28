@@ -398,6 +398,13 @@
     [self requestGETMethodsWithAPI:OrderDetailAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startOrderTicketsAPIRequestWithParameters:(NSDictionary *)parameters
+                                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:OrderTicketsAPIURL parameters:parameters success:success failure:failure];
+}
+
 - (void)startValidCouponsAPIRequestWithParameters:(NSDictionary *)parameters
                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure

@@ -10,4 +10,9 @@
 
 @implementation SCWeiXinPayOrder
 
++ (JSONKeyMapper *)keyMapper
+{
+    return [[JSONKeyMapper alloc] initWithDictionary:@{@"out_trade_no": @"outTradeNo"}];
+}
+
 @end

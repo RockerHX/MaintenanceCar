@@ -63,9 +63,12 @@
 #pragma mark - Publi Methods
 - (void)displayCellWithProduct:(SCGroupProduct *)product
 {
-    _productPrice               = [product.final_price doubleValue];
     self.serviceNameLabel.text  = product.title;
     self.merchantNameLabel.text = product.merchantName;
+    
+    _productPrice          = [product.final_price doubleValue];
+    _paySuccessView.hidden = !product.tickets.count;
+    _payCountLabel.text    = @(product.tickets.count).stringValue;
     [self getTotalPriceAndDisplayView];
 }
 

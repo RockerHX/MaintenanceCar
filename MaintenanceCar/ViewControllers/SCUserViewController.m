@@ -60,7 +60,6 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 - (void)initConfig
 {
     [NOTIFICATION_CENTER addObserver:self selector:@selector(showMyOrderList) name:kShowTicketNotification object:nil];
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(pushToGroupTicketsViewController) name:kGenerateTicketSuccessNotification object:nil];
     [NOTIFICATION_CENTER addObserver:_userInfoView selector:@selector(refresh) name:kUserCarsDataNeedReloadSuccessNotification object:nil];
 }
 

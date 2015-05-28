@@ -24,5 +24,6 @@
 
 @property (nonatomic, strong) NSString <Ignore>*companyID;
 @property (nonatomic, strong) NSString <Ignore>*merchantName;
+@property (nonatomic, strong) NSArray  <Ignore>*tickets;
 
 @end

@@ -11,9 +11,17 @@
 @class SCOrderDetail;
 @class SCGroupProduct;
 
+@protocol SCPayOrderViewControllerDelegate <NSObject>
+
+@optional
+- (void)orderPaySucceed;
+
+@end
+
 @interface SCPayOrderViewController : UITableViewController
 
-@property (nonatomic, strong)   SCOrderDetail *orderDetail;
+@property (nonatomic, weak)               id  <SCPayOrderViewControllerDelegate>delegate;
+@property (nonatomic, strong)  SCOrderDetail *orderDetail;
 @property (nonatomic, strong) SCGroupProduct *groupProduct;
 
 + (instancetype)instance;

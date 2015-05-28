@@ -3498,6 +3498,50 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lfn-l8-3hc">
+                                            <rect key="frame" x="0.0" y="96" width="320" height="54"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="恭喜！您已成功购买" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DDI-e9-Z2w">
+                                                    <rect key="frame" x="39.5" y="16" width="153" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="团购券" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V1K-hH-F9L">
+                                                    <rect key="frame" x="230" y="16" width="51" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="张" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fCU-jw-2sc">
+                                                    <rect key="frame" x="206" y="12" width="24" height="29"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SnB-TB-VJS">
+                                                    <rect key="frame" x="192.5" y="12" width="13.5" height="29"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="SnB-TB-VJS" firstAttribute="centerY" secondItem="fCU-jw-2sc" secondAttribute="centerY" id="4OI-uY-nqt"/>
+                                                <constraint firstAttribute="centerX" secondItem="DDI-e9-Z2w" secondAttribute="centerX" constant="44" id="66Y-OW-F3z"/>
+                                                <constraint firstAttribute="centerY" secondItem="SnB-TB-VJS" secondAttribute="centerY" id="7j4-DZ-QBL"/>
+                                                <constraint firstItem="DDI-e9-Z2w" firstAttribute="centerY" secondItem="SnB-TB-VJS" secondAttribute="centerY" id="7rU-Xz-vjg"/>
+                                                <constraint firstAttribute="height" constant="54" id="894-42-gxZ"/>
+                                                <constraint firstItem="SnB-TB-VJS" firstAttribute="leading" secondItem="DDI-e9-Z2w" secondAttribute="trailing" id="KsG-Sh-ryZ"/>
+                                                <constraint firstItem="fCU-jw-2sc" firstAttribute="centerY" secondItem="V1K-hH-F9L" secondAttribute="centerY" id="LXe-Hz-rfz"/>
+                                                <constraint firstAttribute="centerY" secondItem="fCU-jw-2sc" secondAttribute="centerY" id="NhM-Ol-ycV"/>
+                                                <constraint firstItem="V1K-hH-F9L" firstAttribute="leading" secondItem="fCU-jw-2sc" secondAttribute="trailing" id="Q2n-MZ-ofK"/>
+                                                <constraint firstAttribute="centerY" secondItem="DDI-e9-Z2w" secondAttribute="centerY" id="YCr-Hc-tq2"/>
+                                                <constraint firstAttribute="centerY" secondItem="V1K-hH-F9L" secondAttribute="centerY" id="cDe-PT-5P4"/>
+                                                <constraint firstItem="fCU-jw-2sc" firstAttribute="leading" secondItem="SnB-TB-VJS" secondAttribute="trailing" id="e10-BA-dqS"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="aNX-1J-KDW" firstAttribute="top" secondItem="zsv-i5-yof" secondAttribute="bottom" constant="4" id="3GF-qy-hww"/>
@@ -3514,6 +3558,8 @@
                                         <constraint firstItem="9HD-c0-x7j" firstAttribute="leading" secondItem="J3m-Gu-xyW" secondAttribute="trailing" constant="10" id="THc-ym-dvb"/>
                                         <constraint firstItem="9HD-c0-x7j" firstAttribute="top" secondItem="1YY-Fx-ekM" secondAttribute="bottom" constant="26" id="Vdp-xy-ToG"/>
                                         <constraint firstItem="Y0z-yh-Pvz" firstAttribute="width" secondItem="XWi-62-m9U" secondAttribute="width" id="Zk9-yV-bhj"/>
+                                        <constraint firstItem="Lfn-l8-3hc" firstAttribute="top" secondItem="1YY-Fx-ekM" secondAttribute="bottom" constant="8" id="fCb-rL-oMq"/>
+                                        <constraint firstAttribute="trailing" secondItem="Lfn-l8-3hc" secondAttribute="trailing" id="faF-Ux-s0h"/>
                                         <constraint firstItem="KMD-U2-bho" firstAttribute="centerY" secondItem="J6P-ST-p9i" secondAttribute="centerY" constant="1" id="hdu-jM-y7L"/>
                                         <constraint firstItem="J6P-ST-p9i" firstAttribute="centerY" secondItem="J3m-Gu-xyW" secondAttribute="centerY" id="isY-Ed-uU4"/>
                                         <constraint firstItem="XWi-62-m9U" firstAttribute="leading" secondItem="RFw-zI-UGg" secondAttribute="trailing" constant="-1" id="mAJ-hy-kJg"/>
@@ -3525,6 +3571,7 @@
                                         <constraint firstItem="RFw-zI-UGg" firstAttribute="width" secondItem="XWi-62-m9U" secondAttribute="width" id="vkq-1K-IW0"/>
                                         <constraint firstAttribute="bottom" secondItem="9HD-c0-x7j" secondAttribute="bottom" constant="26" id="vrb-A5-fjQ"/>
                                         <constraint firstItem="Y0z-yh-Pvz" firstAttribute="height" secondItem="XWi-62-m9U" secondAttribute="height" id="wBx-Xo-KqE"/>
+                                        <constraint firstItem="Lfn-l8-3hc" firstAttribute="leading" secondItem="pjm-S1-dCk" secondAttribute="leading" id="wJn-eN-Mfb"/>
                                         <constraint firstAttribute="centerX" secondItem="9HD-c0-x7j" secondAttribute="centerX" constant="10" id="xzN-lC-uWH"/>
                                         <constraint firstItem="Y0z-yh-Pvz" firstAttribute="leading" secondItem="9HD-c0-x7j" secondAttribute="trailing" id="ymx-qa-JAo"/>
                                         <constraint firstItem="zsv-i5-yof" firstAttribute="top" secondItem="pjm-S1-dCk" secondAttribute="top" constant="15" id="zd4-a1-q83"/>
@@ -3537,8 +3584,40 @@
                                     <outlet property="dateLabel" destination="1YY-Fx-ekM" id="DGn-u3-VUb"/>
                                     <outlet property="delegate" destination="yZs-RG-kAK" id="Xh2-LA-SeM"/>
                                     <outlet property="merchantNameLabel" destination="aNX-1J-KDW" id="tIf-dP-t1V"/>
+                                    <outlet property="payCountLabel" destination="SnB-TB-VJS" id="6GM-fD-wks"/>
+                                    <outlet property="paySuccessView" destination="Lfn-l8-3hc" id="8Ke-TN-faW"/>
                                     <outlet property="priceLabel" destination="J6P-ST-p9i" id="C2n-YM-Zwe"/>
                                     <outlet property="serviceNameLabel" destination="zsv-i5-yof" id="8A7-G5-xly"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SCPayOderTicketCell" rowHeight="44" id="SoN-10-ta8" customClass="SCPayOderTicketCell">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SoN-10-ta8" id="ZVP-Jb-s8L">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="券号： " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uAr-MW-Qxr">
+                                            <rect key="frame" x="54" y="10" width="66" height="24"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1234123421342" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HJs-4I-Nu2">
+                                            <rect key="frame" x="120" y="10" width="144.5" height="24"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerX" secondItem="HJs-4I-Nu2" secondAttribute="centerX" constant="-33" id="DZG-hY-6er"/>
+                                        <constraint firstItem="HJs-4I-Nu2" firstAttribute="leading" secondItem="uAr-MW-Qxr" secondAttribute="trailing" id="Fmm-pm-egX"/>
+                                        <constraint firstAttribute="centerY" secondItem="HJs-4I-Nu2" secondAttribute="centerY" id="GY5-7Q-xLs"/>
+                                        <constraint firstItem="HJs-4I-Nu2" firstAttribute="centerY" secondItem="uAr-MW-Qxr" secondAttribute="centerY" id="Qex-a8-TOf"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="codeLabel" destination="HJs-4I-Nu2" id="ST4-W3-YwI"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCPayOrderMerchandiseSummaryCell" rowHeight="176" id="JhJ-T9-7ec" customClass="SCPayOrderMerchandiseSummaryCell">

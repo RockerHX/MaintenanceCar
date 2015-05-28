@@ -17,7 +17,7 @@
 @property (nonatomic, strong) NSString <Optional>*sign;
 @property (nonatomic, strong) NSString <Optional>*prepayid;
 @property (nonatomic, strong) NSString <Optional>*partnerid;
-@property (nonatomic, strong) NSString <Optional>*out_trade_no;
+@property (nonatomic, strong) NSString <Optional>*outTradeNo;
 @property (nonatomic, assign) NSInteger           timestamp;
 
 @end

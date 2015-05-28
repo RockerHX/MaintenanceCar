@@ -20,6 +20,7 @@
     self = [super init];
     if (self)
     {
+        _canPay = YES;
         _purchaseCount = 1;
     }
     return self;
