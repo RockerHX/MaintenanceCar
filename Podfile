@@ -16,7 +16,8 @@ pod 'UITableView+FDTemplateLayoutCell'
 # ********************** 第三方SDK **********************
 # 友盟SDK
 pod 'UMengMessage'
-pod 'UMengAnalytics'
+#pod 'UMengAnalytics'
+pod 'UMengAnalytics-NO-IDFA'
 # 百度地图SDK
 pod 'Baidu-Maps-iOS-SDK'
 # 微信SDK

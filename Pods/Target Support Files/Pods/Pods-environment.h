@@ -120,11 +120,11 @@
 #define COCOAPODS_VERSION_MINOR_UITableView_FDTemplateLayoutCell 2
 #define COCOAPODS_VERSION_PATCH_UITableView_FDTemplateLayoutCell 0
 
-// UMengAnalytics
-#define COCOAPODS_POD_AVAILABLE_UMengAnalytics
-#define COCOAPODS_VERSION_MAJOR_UMengAnalytics 3
-#define COCOAPODS_VERSION_MINOR_UMengAnalytics 5
-#define COCOAPODS_VERSION_PATCH_UMengAnalytics 8
+// UMengAnalytics-NO-IDFA
+#define COCOAPODS_POD_AVAILABLE_UMengAnalytics_NO_IDFA
+#define COCOAPODS_VERSION_MAJOR_UMengAnalytics_NO_IDFA 3
+#define COCOAPODS_VERSION_MINOR_UMengAnalytics_NO_IDFA 5
+#define COCOAPODS_VERSION_PATCH_UMengAnalytics_NO_IDFA 9
 
 // UMengMessage
 #define COCOAPODS_POD_AVAILABLE_UMengMessage

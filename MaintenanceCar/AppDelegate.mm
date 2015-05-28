@@ -10,7 +10,7 @@
 //#import <AFNetworking/UIKit+AFNetworking.h>
 //#import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 #import <Baidu-Maps-iOS-SDK/BMapKit.h>
-#import <UMengAnalytics/MobClick.h>
+#import <UMengAnalytics-NO-IDFA/MobClick.h>
 #import <UMengMessage/UMessage.h>
 #import <Weixin/WXApi.h>
 #import <AlipaySDK/AlipaySDK.h>
@@ -51,6 +51,7 @@
 //    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"AppStore:%@", APP_VERSION]];
 #warning @"发布时更改测试统计"
     [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"TestVersion:%@", APP_VERSION]];
+    [MobClick setEncryptEnabled:YES];       // 日志加密
     
     //set AppKey and AppSecret
     [UMessage startWithAppkey:UMengAPPKEY launchOptions:launchOptions];
