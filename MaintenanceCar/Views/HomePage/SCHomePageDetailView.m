@@ -15,7 +15,7 @@
 #import "SCAllDictionary.h"
 #import "SCSpecial.h"
 #import <SCLoopScrollView/SCLoopScrollView.h>
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation SCHomePageDetailView
 {

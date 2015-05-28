@@ -7,7 +7,7 @@
 //
 
 #import "SCMerchantDetailViewController.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 #import <SCLoopScrollView/SCLoopScrollView.h>
 #import "SCMerchantDetail.h"
 #import "SCComment.h"

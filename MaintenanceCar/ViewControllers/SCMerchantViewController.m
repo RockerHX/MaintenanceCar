@@ -95,8 +95,8 @@
     
     // 根据选中的商家，取到其商家ID，跳转到商家页面进行详情展示
     SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMerchantDetailViewController"];
-    merchantDetialViewControler.merchant                        = _merchantList[indexPath.row];
-    merchantDetialViewControler.canSelectedReserve              = YES;
+    merchantDetialViewControler.merchant           = _merchantList[indexPath.row];
+    merchantDetialViewControler.canSelectedReserve = YES;
     [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
 }
 
@@ -107,9 +107,9 @@
     {
         // 地图按钮被点击，跳转到地图页面
         UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
-        SCMapViewController *mapViewController          = (SCMapViewController *)mapNavigationController.topViewController;
-        mapViewController.merchants                     = _merchantList;
-        mapNavigationController.modalTransitionStyle    = UIModalTransitionStyleCrossDissolve;
+        SCMapViewController *mapViewController       = (SCMapViewController *)mapNavigationController.topViewController;
+        mapViewController.merchants                  = _merchantList;
+        mapNavigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         [self presentViewController:mapNavigationController animated:YES completion:nil];
     }
 }

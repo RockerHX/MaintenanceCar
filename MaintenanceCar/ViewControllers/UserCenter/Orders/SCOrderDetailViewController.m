@@ -287,7 +287,8 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
 - (void)userWantToPayForOrder
 {
     SCPayOrderViewController *payOrderViewController = [SCPayOrderViewController instance];
-    payOrderViewController.orderDetail  = _detail;
+    payOrderViewController.delegate    = self;
+    payOrderViewController.orderDetail = _detail;
     [self.navigationController pushViewController:payOrderViewController animated:YES];
 }
 

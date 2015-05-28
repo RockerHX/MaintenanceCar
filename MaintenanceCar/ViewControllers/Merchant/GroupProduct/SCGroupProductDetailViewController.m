@@ -8,7 +8,7 @@
 
 #import "SCGroupProductDetailViewController.h"
 #import <SCLoopScrollView/SCLoopScrollView.h>
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "SCBuyGroupProductCell.h"
 #import "SCGroupProductMerchantCell.h"
 #import "SCGroupProductDetailCell.h"

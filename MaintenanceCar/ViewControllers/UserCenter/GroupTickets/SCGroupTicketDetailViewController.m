@@ -18,7 +18,7 @@
 #import "SCCommentListViewController.h"
 #import "SCReservationViewController.h"
 #import <SCLoopScrollView/SCLoopScrollView.h>
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 typedef NS_ENUM(NSInteger, SCAlertType) {
     SCAlertTyperefund,

@@ -10,7 +10,7 @@
 #import "UIConstants.h"
 #import "MicroConstants.h"
 #import "AppDelegate.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation SCADView
 
@@ -21,7 +21,7 @@
     self.frame = APP_DELEGATE_INSTANCE.window.bounds;
     _delegate = delegate;
     
-    [_imageView setImageWithURL:[NSURL URLWithString:imageURL]];
+    [_imageView sd_setImageWithURL:[NSURL URLWithString:imageURL]];
     
     [self initConfig];
     [self viewConfig];
