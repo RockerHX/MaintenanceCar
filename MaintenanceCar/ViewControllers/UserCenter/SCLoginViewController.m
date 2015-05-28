@@ -251,4 +251,12 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     }
 }
 
+#pragma mark - UITextFieldDelegate Methods
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *regex = @"[0-9]";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [pred evaluateWithObject:string];
+}
+
 @end

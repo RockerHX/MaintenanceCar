@@ -10,7 +10,7 @@
 
 @class SCVerificationCodeView;
 
-@interface SCLoginViewController : UIViewController
+@interface SCLoginViewController : UIViewController <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField            *phoneNumberTextField;          // 手机号码输入框
 @property (weak, nonatomic) IBOutlet UITextField            *verificationCodeTextField;     // 验证码输入框
