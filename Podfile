@@ -2,16 +2,20 @@ platform :ios, '7.0'
 
 pod 'AFNetworking'
 pod 'AFNetworkActivityLogger'
+pod 'SDWebImage'
 pod 'JSONModel'
+
 pod 'MBProgressHUD'
 pod 'MJRefresh'
+pod 'UITableView+FDTemplateLayoutCell'
 pod 'CSStickyHeaderFlowLayout'
+
 pod 'HexColors'
 pod 'DateTools'
 pod 'IQKeyboardManager'
+
 pod 'SCLoopScrollView'
 pod 'SCNumberKeyBoard'
-pod 'UITableView+FDTemplateLayoutCell'
 
 # ********************** 第三方SDK **********************
 # 友盟SDK

@@ -114,10 +114,22 @@
 #define COCOAPODS_VERSION_MINOR_SCNumberKeyBoard 1
 #define COCOAPODS_VERSION_PATCH_SCNumberKeyBoard 3
 
+// SDWebImage
+#define COCOAPODS_POD_AVAILABLE_SDWebImage
+#define COCOAPODS_VERSION_MAJOR_SDWebImage 3
+#define COCOAPODS_VERSION_MINOR_SDWebImage 7
+#define COCOAPODS_VERSION_PATCH_SDWebImage 2
+
+// SDWebImage/Core
+#define COCOAPODS_POD_AVAILABLE_SDWebImage_Core
+#define COCOAPODS_VERSION_MAJOR_SDWebImage_Core 3
+#define COCOAPODS_VERSION_MINOR_SDWebImage_Core 7
+#define COCOAPODS_VERSION_PATCH_SDWebImage_Core 2
+
 // UITableView+FDTemplateLayoutCell
 #define COCOAPODS_POD_AVAILABLE_UITableView_FDTemplateLayoutCell
 #define COCOAPODS_VERSION_MAJOR_UITableView_FDTemplateLayoutCell 1
-#define COCOAPODS_VERSION_MINOR_UITableView_FDTemplateLayoutCell 2
+#define COCOAPODS_VERSION_MINOR_UITableView_FDTemplateLayoutCell 3
 #define COCOAPODS_VERSION_PATCH_UITableView_FDTemplateLayoutCell 0
 
 // UMengAnalytics-NO-IDFA
