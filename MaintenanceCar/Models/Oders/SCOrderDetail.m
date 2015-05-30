@@ -20,10 +20,7 @@
     self = [super initWithDictionary:dict error:err];
     if (self)
     {
-        if ([_price doubleValue])
-            _price = [_price stringByAppendingString:@"元"];
-        else
-            _price = @"待确定";
+        _price = ([_price doubleValue]) ? [_price stringByAppendingString:@"元"] : @"待确定";
     }
     return self;
 }
@@ -39,6 +36,7 @@
                                         @"content": @"remark",
                                      @"can_cancel": @"canCancel",
                                         @"can_pay": @"canPay",
+                                         @"is_pay": @"isPay",
                                         @"process": @"processes"}];
     return [[JSONKeyMapper alloc] initWithDictionary:dic];
 }

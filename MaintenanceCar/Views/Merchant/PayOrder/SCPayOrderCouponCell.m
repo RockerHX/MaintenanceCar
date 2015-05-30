@@ -56,7 +56,7 @@
     if (index == (coupons.count - 1))
         self.layer.shadowPath = nil;
     
-    _couponPromptLabel.text = coupon.title;
+    _couponPromptLabel.text = [NSString stringWithFormat:@"%@（%@）", coupon.title, coupon.prompt];
 }
 
 @end

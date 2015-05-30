@@ -140,7 +140,7 @@
             {
                 // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
                 [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj[@"fields"] error:nil];
+                    SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj error:nil];
                     [_merchants addObject:merchant];
                 }];
                 [weakSelf.tableView reloadData];    // 数据配置完成，刷新商家列表

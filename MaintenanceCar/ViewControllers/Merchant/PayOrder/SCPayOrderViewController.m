@@ -240,8 +240,11 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
         __weak typeof(self) weakSelf = self;
         // 配置请求参数
         NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                  @"company_id": _orderDetail ? _orderDetail.companyID : (_groupProduct ? _groupProduct.companyID : @""),
+                                  @"company_id": (_orderDetail ? _orderDetail.companyID : (_groupProduct ? _groupProduct.companyID : @"")),
+                                  @"reserve_id": (_orderDetail ? _orderDetail.reserveID : @""),
+                                  @"product_id": (_groupProduct ? _groupProduct.product_id : @""),
                                        @"price": _payResult.totalPrice,
+                              @"is_group_order": (_groupProduct ? @"Y" : @"N"),
                                  @"sort_method": @"amount"};
         [[SCAPIRequest manager] startValidCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [weakSelf hideHUDOnViewController:weakSelf.navigationController];

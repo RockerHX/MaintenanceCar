@@ -160,7 +160,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     // 限制用户输入长度，以免数据越界
-    NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    NSString *toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     
     if ((toBeString.length > kMaxLength) && (range.length != 1))
     {

@@ -134,7 +134,8 @@
     [self showHUDOnViewController:self];
     __weak typeof(self) weakSelf = self;
     // 配置请求参数
-    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID};
+    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                             @"sort_method": @"time"};
     [[SCAPIRequest manager] startValidCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)

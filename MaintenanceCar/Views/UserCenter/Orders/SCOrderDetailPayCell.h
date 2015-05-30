@@ -19,8 +19,11 @@
 
 @interface SCOrderDetailPayCell : SCTableViewCell
 
-@property (weak, nonatomic) IBOutlet      id  <SCOrderDetailPayCellDelegate>delegate;
-@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet       id  <SCOrderDetailPayCellDelegate>delegate;
+@property (weak, nonatomic) IBOutlet  UILabel *promptLabel;
+@property (weak, nonatomic) IBOutlet  UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet  UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UIButton *payOrderButton;
 
 - (IBAction)payOrderButtonPressed;
 
