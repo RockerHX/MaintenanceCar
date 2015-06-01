@@ -91,7 +91,7 @@
 #pragma mark - Private Methods
 - (void)startCommentListRequest
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     // 配置请求参数
     NSDictionary *parameters = @{@"company_id": _companyID,
                                       @"limit": @(SearchLimit),

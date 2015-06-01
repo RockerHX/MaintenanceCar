@@ -256,7 +256,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    __weak typeof(self)weakSelf = self;
+    WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"product_id": _ticket.product_id};
     [[SCAPIRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
@@ -352,8 +352,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     {
         if (buttonIndex == alertView.cancelButtonIndex)
         {
+            WEAK_SELF(weakSelf);
             [self showHUDOnViewController:self.navigationController];
-            __weak typeof(self)weakSelf = self;
             NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                  @"group_ticket_id": _ticket.group_ticket_id};
             [[SCAPIRequest manager] startGroupTicketRefundAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

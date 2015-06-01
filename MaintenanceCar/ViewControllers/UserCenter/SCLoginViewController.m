@@ -116,7 +116,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     _cancelButton.layer.cornerRadius = 5.0f;
     
     // self弱引用，防止block使用出现循环引用，造成内存泄露
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     // 获取验证码View被点击之后的回调，判断是否输入手机号进行返回和执行获取验证码请求
     [_verificationCodeView verificationCodeShouldSend:^BOOL{
         if ([weakSelf.phoneNumberTextField.text length] == 11)
@@ -137,7 +137,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
  */
 - (void)startGetVerificationCodeReuqestWithMode:(SCVerificationCodeMode)mode
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text,
                            @"time_expire": @(CodeExpire),
                                   @"mode": @(mode)};
@@ -175,7 +175,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
  */
 - (void)startLoginRequest
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text,
                                   @"code": _verificationCodeTextField.text};
     [[SCAPIRequest manager] startLoginAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

@@ -236,8 +236,8 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 {
     if (!_orderDetail.payPrice.doubleValue && _payResult.totalPrice.doubleValue)
     {
+        WEAK_SELF(weakSelf);
         [self showHUDOnViewController:self.navigationController];
-        __weak typeof(self) weakSelf = self;
         // 配置请求参数
         NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                   @"company_id": (_orderDetail ? _orderDetail.companyID : (_groupProduct ? _groupProduct.companyID : @"")),
@@ -283,8 +283,8 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
     {
         if ([WXApi isWXAppInstalled])
         {
+            WEAK_SELF(weakSelf);
             [self showHUDOnViewController:self.navigationController];
-            __weak typeof(self)weakSelf = self;
             if (_orderDetail)
             {
                 [[SCAPIRequest manager] startWeiXinPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -313,8 +313,8 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 {
     if ([SCUserInfo share].loginStatus)
     {
+        WEAK_SELF(weakSelf);
         [self showHUDOnViewController:self.navigationController];
-        __weak typeof(self)weakSelf = self;
         if (_orderDetail)
         {
             [[SCAPIRequest manager] startAliPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -403,9 +403,9 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 
 - (void)sendAliPay:(SCAliPayOrder *)order
 {
+    WEAK_SELF(weakSelf);
     _payResult.outTradeNo = order.outTradeNo;
     [self hideHUDOnViewController:self.navigationController];
-    __weak typeof(self)weakSelf = self;
     [[AlipaySDK defaultService] payOrder:[order requestString] fromScheme:@"com.YJCL.XiuYang" callback:^(NSDictionary *resultDic) {
         [weakSelf alipayResult:resultDic];
     }];
@@ -488,8 +488,8 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 
 - (void)startOrderTikcetsReuqest
 {
+    WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self.navigationController];
-    __weak typeof(self) weakSelf = self;
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                 @"order_id": _payResult.outTradeNo};

@@ -151,8 +151,8 @@
 
 - (void)startMerchantReservationRequest
 {
+    WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self];
-    __weak typeof(self)weakSelf = self;
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                               @"company_id": _merchant.company_id,
                                     @"type": _reservationType,

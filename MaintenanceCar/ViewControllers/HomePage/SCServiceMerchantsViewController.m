@@ -138,9 +138,8 @@
 #pragma mark - Private Methods
 - (void)refreshMerchantList
 {
+    WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self];
-    
-    __weak typeof(self) weakSelf = self;
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
         [weakSelf startMerchantsRequestWithLatitude:latitude longitude:longitude];
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
@@ -183,7 +182,7 @@
 
 - (void)startMerchantsRequestWithAPIURL:(NSString *)apiURL latitude:(NSString *)latitude longitude:(NSString *)longitude
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     // 配置请求参数
     NSDictionary *parameters = @{@"limit": @(SearchLimit),
                                 @"offset": @(_offset),

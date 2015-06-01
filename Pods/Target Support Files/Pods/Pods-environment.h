@@ -102,6 +102,12 @@
 #define COCOAPODS_VERSION_MINOR_MJRefresh 4
 #define COCOAPODS_VERSION_PATCH_MJRefresh 6
 
+// Masonry
+#define COCOAPODS_POD_AVAILABLE_Masonry
+#define COCOAPODS_VERSION_MAJOR_Masonry 0
+#define COCOAPODS_VERSION_MINOR_Masonry 6
+#define COCOAPODS_VERSION_PATCH_Masonry 1
+
 // SCLoopScrollView
 #define COCOAPODS_POD_AVAILABLE_SCLoopScrollView
 #define COCOAPODS_VERSION_MAJOR_SCLoopScrollView 0

@@ -103,9 +103,8 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
  */
 - (void)startUpdateUserCarRequest
 {
-    [self showHUDOnViewController:self];
-    
-    __weak typeof(self)weakSelf = self;
+    WEAK_SELF(weakSelf);
+    [self showHUDOnViewController:self.navigationController];
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                              @"user_car_id": _car.user_car_id,
                                 @"model_id": _car.model_id,
@@ -131,9 +130,8 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 
 - (void)startDeleteUserCarRequest
 {
+    WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self.navigationController];
-    
-    __weak typeof(self) weakSelf = self;
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                  @"user_car_id": _car.user_car_id};
     [[SCAPIRequest manager] startDeleteCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

@@ -108,8 +108,8 @@
 #pragma mark - Private Methods
 - (void)startInvalidCouponsRequest
 {
+    WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self];
-    __weak typeof(self) weakSelf = self;
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID};
     [[SCAPIRequest manager] startInvalidCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

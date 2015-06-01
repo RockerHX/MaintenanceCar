@@ -3079,6 +3079,131 @@
             </objects>
             <point key="canvasLocation" x="-1105" y="2175"/>
         </scene>
+        <!--发现-->
+        <scene sceneID="4w0-pQ-1B3">
+            <objects>
+                <viewController id="VbC-uB-0ow" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hRC-rK-e5n"/>
+                        <viewControllerLayoutGuide type="bottom" id="r0h-nD-diW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WQP-qz-MLO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lM5-9c-AJV">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BSH-z5-cbg">
+                                        <rect key="frame" x="0.0" y="0.0" width="106.5" height="50"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <state key="normal" title="按服务">
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected" title="按服务">
+                                            <color key="titleColor" red="0.19215686269999999" green="0.58823529409999997" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zkz-Xf-P0Y">
+                                        <rect key="frame" x="106" y="0.0" width="107" height="50"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <state key="normal" title="智能排序">
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected" title="智能排序">
+                                            <color key="titleColor" red="0.19215686269999999" green="0.58823529409999997" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m2A-ws-m8p">
+                                        <rect key="frame" x="213" y="0.0" width="106.5" height="50"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <state key="normal" title="按专修">
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected" title="按专修">
+                                            <color key="titleColor" red="0.19215686269999999" green="0.58823529409999997" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="BSH-z5-cbg" firstAttribute="top" secondItem="lM5-9c-AJV" secondAttribute="top" id="2lh-Mq-stW"/>
+                                    <constraint firstItem="m2A-ws-m8p" firstAttribute="top" secondItem="lM5-9c-AJV" secondAttribute="top" id="2oQ-QR-rFF"/>
+                                    <constraint firstItem="Zkz-Xf-P0Y" firstAttribute="top" secondItem="lM5-9c-AJV" secondAttribute="top" id="4Bg-mf-HY9"/>
+                                    <constraint firstAttribute="trailing" secondItem="m2A-ws-m8p" secondAttribute="trailing" id="Cuh-so-h9S"/>
+                                    <constraint firstItem="m2A-ws-m8p" firstAttribute="leading" secondItem="Zkz-Xf-P0Y" secondAttribute="trailing" id="Jm9-K7-YLV"/>
+                                    <constraint firstItem="BSH-z5-cbg" firstAttribute="leading" secondItem="lM5-9c-AJV" secondAttribute="leading" id="OlS-oh-I88"/>
+                                    <constraint firstItem="BSH-z5-cbg" firstAttribute="width" secondItem="m2A-ws-m8p" secondAttribute="width" id="PGU-vM-6ek"/>
+                                    <constraint firstAttribute="bottom" secondItem="BSH-z5-cbg" secondAttribute="bottom" id="QMt-22-pU3"/>
+                                    <constraint firstItem="BSH-z5-cbg" firstAttribute="width" secondItem="Zkz-Xf-P0Y" secondAttribute="width" id="YU6-fS-wpq"/>
+                                    <constraint firstItem="Zkz-Xf-P0Y" firstAttribute="leading" secondItem="BSH-z5-cbg" secondAttribute="trailing" id="hT4-gM-bRZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="Zkz-Xf-P0Y" secondAttribute="bottom" id="q1W-Fb-XR0"/>
+                                    <constraint firstAttribute="bottom" secondItem="m2A-ws-m8p" secondAttribute="bottom" id="sXw-qM-tJH"/>
+                                    <constraint firstAttribute="height" constant="50" id="z1N-bM-moe"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="AE4-v2-fKe">
+                                <rect key="frame" x="0.0" y="50" width="320" height="518"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="133" id="HVh-eC-jPl">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HVh-eC-jPl" id="B8A-WT-1Wo">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="uPS-Kh-DuJ">
+                                                    <rect key="frame" x="278" y="0.0" width="42" height="132.5"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="B8A-WT-1Wo" id="wmp-Mj-cej"/>
+                                                        <outlet property="delegate" destination="B8A-WT-1Wo" id="IqQ-VX-Pe8"/>
+                                                    </connections>
+                                                </tableView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="sLC-6F-rwe">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sLC-6F-rwe" id="sCi-mt-SLI">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="h4K-hT-J11">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h4K-hT-J11" id="BFY-p0-OLQ">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="VbC-uB-0ow" id="NaP-Xi-3Fm"/>
+                                    <outlet property="delegate" destination="VbC-uB-0ow" id="I8n-SZ-X5L"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="AE4-v2-fKe" firstAttribute="top" secondItem="lM5-9c-AJV" secondAttribute="bottom" id="5JB-RS-PCN"/>
+                            <constraint firstItem="r0h-nD-diW" firstAttribute="top" secondItem="AE4-v2-fKe" secondAttribute="bottom" id="BHD-kb-HAK"/>
+                            <constraint firstAttribute="trailing" secondItem="lM5-9c-AJV" secondAttribute="trailing" id="Oyv-SY-Tmk"/>
+                            <constraint firstItem="lM5-9c-AJV" firstAttribute="leading" secondItem="WQP-qz-MLO" secondAttribute="leading" id="hUf-Dk-ucs"/>
+                            <constraint firstItem="lM5-9c-AJV" firstAttribute="top" secondItem="WQP-qz-MLO" secondAttribute="top" id="kwH-Oq-94M"/>
+                            <constraint firstItem="AE4-v2-fKe" firstAttribute="leading" secondItem="WQP-qz-MLO" secondAttribute="leading" id="s0B-Oq-hbx"/>
+                            <constraint firstAttribute="trailing" secondItem="AE4-v2-fKe" secondAttribute="trailing" id="u12-wS-Fda"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="发现" id="odk-zZ-MoD"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="izp-Lo-bb3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1105" y="2829"/>
+        </scene>
         <!--添加车辆-->
         <scene sceneID="iA5-aR-3DD">
             <objects>
@@ -3917,19 +4042,11 @@
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
-                                            <connections>
-                                                <action selector="weiXinPayBUttonPressed" destination="SkZ-LQ-FhL" eventType="touchUpInside" id="Gh2-Q2-Mhj"/>
-                                            </connections>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2If-x7-42z">
-                                            <rect key="frame" x="180" y="102.5" width="125" height="34"/>
-                                            <color key="backgroundColor" red="0.17254901959999999" green="0.48627450979999998" blue="0.72549019609999998" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <state key="normal" title="支付宝支付">
-                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <state key="disabled" title="微信支付">
+                                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <action selector="aliPayButtonPressed" destination="SkZ-LQ-FhL" eventType="touchUpInside" id="LNt-bv-uxV"/>
+                                                <action selector="weiXinPayBUttonPressed" destination="SkZ-LQ-FhL" eventType="touchUpInside" id="Gh2-Q2-Mhj"/>
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="    " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8UR-Ub-Gfx">
@@ -3980,6 +4097,20 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2If-x7-42z">
+                                            <rect key="frame" x="180" y="103" width="125" height="34"/>
+                                            <color key="backgroundColor" red="0.17254901959999999" green="0.48627450979999998" blue="0.72549019609999998" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <state key="normal" title="支付宝支付">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <state key="disabled" title="支付宝支付">
+                                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="aliPayButtonPressed" destination="SkZ-LQ-FhL" eventType="touchUpInside" id="LNt-bv-uxV"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="2If-x7-42z" firstAttribute="leading" secondItem="vOZ-ZW-leD" secondAttribute="trailing" constant="40" id="08g-bi-B0i"/>

@@ -167,7 +167,7 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
  */
 - (void)startOrderDetailRequest
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                               @"reserve_id": _reserveID};
@@ -209,7 +209,7 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
 
 - (void)showCancelAlert
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK_SELF(weakSelf);
     SCMoreMenu *moreMenu = [[SCMoreMenu alloc] initWithTitles:@[@"取消订单"] images:nil];
     [moreMenu show:^(NSInteger selectedIndex) {
         switch (selectedIndex)
@@ -226,8 +226,8 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
  */
 - (void)startCancelOrderRequest
 {
+    WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self.navigationController];
-    __weak typeof(self) weakSelf = self;
     NSDictionary *paramters = @{@"user_id": [SCUserInfo share].userID,
                              @"company_id": _detail.companyID,
                              @"reserve_id": _detail.reserveID,

@@ -13,6 +13,7 @@ pod 'CSStickyHeaderFlowLayout'
 pod 'HexColors'
 pod 'DateTools'
 pod 'IQKeyboardManager'
+pod 'Masonry'
 
 pod 'SCLoopScrollView'
 pod 'SCNumberKeyBoard'

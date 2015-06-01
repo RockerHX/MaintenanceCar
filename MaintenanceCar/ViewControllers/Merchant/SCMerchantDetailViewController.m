@@ -429,8 +429,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
  */
 - (void)startMerchantDetailRequestWithParameters
 {
+    WEAK_SELF(weakSelf);
     [MBProgressHUD showHUDAddedTo:_blankView animated:YES];
-    __weak typeof(self) weakSelf = self;
     NSDictionary *paramters = @{@"id": _merchant.company_id,
                            @"user_id": [SCUserInfo share].userID};
     [[SCAPIRequest manager] startMerchantDetailAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -454,7 +454,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
  */
 - (void)startCollectionMerchantRequest
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     NSDictionary *paramters = @{@"company_id": _merchantDetail.company_id,
                                    @"user_id": [SCUserInfo share].userID,
                                    @"type_id": @"1"};
@@ -480,7 +480,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
  */
 - (void)startCancelCollectionMerchantRequest
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     NSDictionary *paramters = @{@"company_id": _merchantDetail.company_id,
                                    @"user_id": [SCUserInfo share].userID};
     [[SCAPIRequest manager] startCancelCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {

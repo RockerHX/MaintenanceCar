@@ -36,6 +36,8 @@
 
 #define LabelSystemFont(size)   [UIFont systemFontOfSize:size]
 
+#define WEAK_SELF(weakSelf)     __weak __typeof(&*self)weakSelf = self;
+
 
 // 通过十六进制的rgb值来返回一个UIColor实例
 #define UIColorFromRGB(rgbHexValue)     [UIColor colorWithRed:((float)((rgbHexValue & 0xFF0000) >> 16))/255.0f green:((float)((rgbHexValue & 0xFF00) >> 8))/255.0f blue:((float)(rgbHexValue & 0xFF))/255.0f alpha:1.0f]

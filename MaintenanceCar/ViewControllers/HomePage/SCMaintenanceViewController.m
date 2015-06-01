@@ -197,7 +197,7 @@
  */
 - (void)startMaintenanceDataRequest
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK_SELF(weakSelf);
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     NSDictionary *parameters = @{@"user_car_id": _currentCar.user_car_id};
     [[SCAPIRequest manager] startMaintenanceDataAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -238,7 +238,7 @@
  */
 - (void)startRecommendMerchantRequest
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     // 配置请求参数
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
         [weakSelf startRecommendMerchantListRequestWithLatitude:latitude longitude:longitude];
@@ -258,7 +258,7 @@
  */
 - (void)startRecommendMerchantListRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"query": [NSString stringWithFormat:@"default:'深圳' AND service:'养' AND majors:'%@'", _currentCar.brand_name],
                                  @"limit": @(3),
                                 @"offset": @(0),

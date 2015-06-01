@@ -94,7 +94,7 @@
 #pragma mark - Private Methods
 - (void)startGroupTicketsListRequest
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                    @"limit": @(SearchLimit),

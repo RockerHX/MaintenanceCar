@@ -152,7 +152,7 @@
 
 - (void)displayUserLocation
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK_SELF(weakSelf);
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
         [weakSelf.mapView updateLocationData:userLocation];     // 根据坐标在地图上显示位置
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {

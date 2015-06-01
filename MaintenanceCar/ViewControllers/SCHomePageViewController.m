@@ -115,7 +115,7 @@
 // 自定义数据请求方法(用于首页第四个按钮，预约以及筛选条件)，无参数
 - (void)startSpecialRequest
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK_SELF(weakSelf);
     [[SCAPIRequest manager] startHomePageSpecialAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {

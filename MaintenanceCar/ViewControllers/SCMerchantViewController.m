@@ -128,8 +128,8 @@
 
 - (void)refreshMerchantList
 {
+    WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self];
-    __weak typeof(self) weakSelf = self;
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
         [weakSelf startMerchantListRequestWithLatitude:latitude longitude:longitude];
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
@@ -150,7 +150,7 @@
  */
 - (void)startMerchantListRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     // 配置请求参数
     NSDictionary *parameters = @{@"query": _query,
                                  @"limit": @(SearchLimit),

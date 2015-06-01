@@ -94,8 +94,8 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 
 - (void)startReservationItemsRequest
 {
+    WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self];
-    __weak typeof(self)weakSelf = self;
     NSDictionary *parameters = @{@"company_id": _companyID,
                                        @"type": _type};
     [[SCAPIRequest manager] startGetReservationItemNumAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

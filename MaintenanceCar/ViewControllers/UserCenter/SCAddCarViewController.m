@@ -89,7 +89,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 
 - (void)viewConfig
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK_SELF(weakSelf);
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     [[SCCarBrandDisplayModel share] requestCarBrands:^(NSDictionary *displayData, NSArray *indexTitles, BOOL finish) {
         if (finish)
@@ -190,7 +190,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
  */
 - (void)startAddCarRequest
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                   @"car_id": _car.car_id,
                                 @"model_id": _car.model_id};

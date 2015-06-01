@@ -100,7 +100,7 @@
 
 - (void)refreshCollectionListMerchantList
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
         [weakSelf startMerchantCollectionListRequest:latitude longitude:longitude];
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
@@ -116,7 +116,7 @@
  */
 - (void)startMerchantCollectionListRequest:(NSString *)latitude longitude:(NSString *)longitude
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                    @"limit": @(SearchLimit),
@@ -167,7 +167,7 @@
  */
 - (void)startCancelCollectionMerchantRequestWithIndex:(NSInteger)index
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     NSDictionary *paramters = @{@"company_id": ((SCMerchant *)_deleteDataCache).company_id,
                                    @"user_id": [SCUserInfo share].userID};
     [[SCAPIRequest manager] startCancelCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {

@@ -76,8 +76,8 @@
 
 - (void)startCommentRequest
 {
+    WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self];
-    __weak typeof(self)weakSelf = self;
     NSDictionary *paramters = @{@"user_id": [SCUserInfo share].userID,
                              @"company_id": _order.companyID,
                              @"reserve_id": _order.reserveID,

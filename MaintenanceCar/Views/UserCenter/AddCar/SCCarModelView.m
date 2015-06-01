@@ -101,7 +101,7 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
 
 - (void)startCarModelReuqest:(SCCarBrand *)carBrand
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"brand_id": carBrand.brand_id,
                                 @"time_flag": @"0"};
     [[SCAPIRequest manager] startUpdateCarModelAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -126,7 +126,7 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
 
 - (void)startCarsRequest:(SCCarModel *)carModel
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"model_id": carModel.model_id,
                                  @"time_flag": @"0"};
     [[SCAPIRequest manager] startUpdateCarsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

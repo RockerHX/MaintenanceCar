@@ -102,8 +102,8 @@
 
 - (void)loadCouponMerchantsAndLocation
 {
+    WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self];
-    __weak typeof(self) weakSelf = self;
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
         [weakSelf startCouponMerchantsRequestWithLatitude:latitude longitude:longitude];
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
@@ -124,7 +124,7 @@
  */
 - (void)startCouponMerchantsRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"coupon_code": _couponCode,
                                        @"limit": @(SearchLimit),
                                       @"offset": @(_offset),

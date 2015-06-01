@@ -218,7 +218,7 @@ static SCCarBrandDisplayModel *displayModel = nil;
     [self clearData];
     _block = finfish;
     
-    __weak typeof(self)weakSelf = self;
+    WEAK_SELF(weakSelf);
     // 车辆品牌显示模型初始化完毕之后先加载本地数据，再进行服务器数据同步操作
     NSDictionary *localDate = [self readLocalDataWithFileName:fCarBrandsFileName];
     if (!localDate)
