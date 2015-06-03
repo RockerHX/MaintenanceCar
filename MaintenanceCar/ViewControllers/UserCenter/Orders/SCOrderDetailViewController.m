@@ -72,7 +72,7 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _detail ? (section ? _detail.processes.count + 1 : (_detail.canPay ? 2 : 1)) : Zero;
+    return _detail ? (section ? _detail.processes.count + 1 : ((_detail.canPay || _detail.isPay) ? 2 : 1)) : Zero;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

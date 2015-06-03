@@ -215,7 +215,7 @@ static SCAllDictionary *allDictionary = nil;
 
 - (NSString *)imageNameOfFlag:(NSString *)flag
 {
-    NSDictionary *data = [NSDictionary dictionaryWithContentsOfFile:[NSFileManager pathForResource:@"MerchantFlagIcon" ofType:@"plist"]];
+    NSDictionary *data = [NSDictionary dictionaryWithContentsOfFile:[NSFileManager pathForResource:@"FlagsKV" ofType:@"plist"]];
     return data[flag];
 }
 

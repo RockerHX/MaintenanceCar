@@ -21,5 +21,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *enterCodeButton;
 
 - (IBAction)enterCodeButtonPressed;
+- (void)displayCellWithPaySucceed:(BOOL)paySucceed;
 
 @end

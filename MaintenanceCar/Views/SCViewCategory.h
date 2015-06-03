@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Masonry/Masonry.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "UIConstants.h"
 

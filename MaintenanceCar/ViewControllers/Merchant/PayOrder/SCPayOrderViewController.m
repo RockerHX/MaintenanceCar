@@ -159,7 +159,10 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                         cell = [tableView dequeueReusableCellWithIdentifier:@"SCNoValidCouponCell" forIndexPath:indexPath];
                 }
                 else
+                {
                     cell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderEnterCodeCell" forIndexPath:indexPath];
+                    [(SCPayOrderEnterCodeCell *)cell displayCellWithPaySucceed:_payResult.canPay];
+                }
             }
                 break;
             case 2:
