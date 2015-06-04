@@ -1,1 +1,1 @@
-../../../SCLoopScrollView/Class/SCLoopScrollView.h
+../../../SCLoopScrollView/Classes/SCLoopScrollView.h

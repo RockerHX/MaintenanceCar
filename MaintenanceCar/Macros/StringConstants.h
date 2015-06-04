@@ -19,7 +19,6 @@ FOUNDATION_EXPORT NSString *const kUserNeedLoginNotification;                   
 FOUNDATION_EXPORT NSString *const kUserLoginSuccessNotification;                    // 用户登录成功的通知，用于登录成功之后通知对应页面刷新数据
 FOUNDATION_EXPORT NSString *const kWeiXinPaySuccessNotification;                    // 微信支付成功的通知
 FOUNDATION_EXPORT NSString *const kWeiXinPayFailureNotification;                    // 微信支付失败的通知
-FOUNDATION_EXPORT NSString *const kGenerateTicketSuccessNotification;               // 生成团购券成功的通知
 FOUNDATION_EXPORT NSString *const kShowTicketNotification;                          // 查看团购券的通知
 
 #pragma mark - App Custom Constant
@@ -29,4 +28,3 @@ FOUNDATION_EXPORT NSString *const DisplayNameKey;
 FOUNDATION_EXPORT NSString *const RequestValueKey;
 
 FOUNDATION_EXPORT NSString *const MerchantDetailViewControllerStoryBoardID;
-FOUNDATION_EXPORT NSString *const ReservationViewControllerStoryBoardID;

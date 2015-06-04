@@ -7,12 +7,11 @@
 //
 
 #import "SCMerchantCell.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 #import <HexColors/HexColor.h>
 #import "MicroConstants.h"
 #import "SCAPIRequest.h"
 #import "SCStarView.h"
-#import "SCMerchant.h"
 #import "SCMerchantFlagCell.h"
 #import "SCAllDictionary.h"
 #import "API.h"
@@ -52,8 +51,8 @@
 #pragma mark - Public Methods
 - (void)handelWithMerchant:(SCMerchant *)merchant
 {
-    [_merchantIcon setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@_s.jpg", MerchantImageDoMain, merchant.company_id]]
-                  placeholderImage:[UIImage imageNamed:@"MerchantIconDefault"]];
+    [_merchantIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@_s.jpg", MerchantImageDoMain, merchant.company_id]]
+                     placeholderImage:[UIImage imageNamed:@"MerchantIconDefault"]];
     _merchantNameLabel.text = merchant.name;
     _distanceLabel.text     = merchant.distance;
     _starView.value         = merchant.star;

@@ -12,44 +12,51 @@
 
 +(JSONKeyMapper*)keyMapper
 {
-    return [[JSONKeyMapper alloc] initWithDictionary:@{@"_input_charset": @"input_charset"}];
+    return [[JSONKeyMapper alloc] initWithDictionary:@{@"_input_charset": @"inputCharset",
+                                                            @"seller_id": @"sellerID",
+                                                         @"out_trade_no": @"outTradeNo",
+                                                            @"total_fee": @"totalFee",
+                                                           @"notify_url": @"notifyURL",
+                                                         @"payment_type": @"paymentType",
+                                                             @"it_b_pay": @"itBPay",
+                                                             @"show_url": @"showURL",
+                                                            @"sign_type": @"signType"}];
 }
 
 - (NSString *)requestString
 {
-	NSMutableString *oder = [NSMutableString string];
+	NSMutableString *order = [NSMutableString string];
     if (_partner)
-        [oder appendFormat:@"partner=\"%@\"", _partner];
-    if (_seller_id)
-        [oder appendFormat:@"&seller_id=\"%@\"", _seller_id];
-	if (_out_trade_no)
-        [oder appendFormat:@"&out_trade_no=\"%@\"", _out_trade_no];
+        [order appendFormat:@"partner=\"%@\"", _partner];
+    if (_sellerID)
+        [order appendFormat:@"&seller_id=\"%@\"", _sellerID];
+	if (_outTradeNo)
+        [order appendFormat:@"&out_trade_no=\"%@\"", _outTradeNo];
 	if (_subject)
-        [oder appendFormat:@"&subject=\"%@\"", _subject];
+        [order appendFormat:@"&subject=\"%@\"", _subject];
 	if (_body)
-        [oder appendFormat:@"&body=\"%@\"", _body];
-	if (_total_fee)
-        [oder appendFormat:@"&total_fee=\"%@\"", _total_fee];
-    if (_notify_url)
-        [oder appendFormat:@"&notify_url=\"%@\"", _notify_url];
+        [order appendFormat:@"&body=\"%@\"", _body];
+	if (_totalFee)
+        [order appendFormat:@"&total_fee=\"%@\"", _totalFee];
+    if (_notifyURL)
+        [order appendFormat:@"&notify_url=\"%@\"", _notifyURL];
     if (_service)
-        [oder appendFormat:@"&service=\"%@\"", _service];                   //mobile.securitypay.pay
-    if (_payment_type)
-        [oder appendFormat:@"&payment_type=\"%@\"", _payment_type];         //1
-    if (_input_charset)
-        [oder appendFormat:@"&_input_charset=\"%@\"", _input_charset];      //utf-8
-    if (_it_b_pay)
-        [oder appendFormat:@"&it_b_pay=\"%@\"", _it_b_pay];                 //30m
-    if (_show_url)
-        [oder appendFormat:@"&show_url=\"%@\"", _show_url];                 //m.alipay.com
+        [order appendFormat:@"&service=\"%@\"", _service];                   //mobile.securitypay.pay
+    if (_paymentType)
+        [order appendFormat:@"&payment_type=\"%@\"", _paymentType];         //1
+    if (_inputCharset)
+        [order appendFormat:@"&_input_charset=\"%@\"", _inputCharset];      //utf-8
+    if (_itBPay)
+        [order appendFormat:@"&it_b_pay=\"%@\"", _itBPay];                 //30m
+    if (_showURL)
+        [order appendFormat:@"&show_url=\"%@\"", _showURL];                 //m.alipay.com
     if (_rsaDate)
-        [oder appendFormat:@"&sign_date=\"%@\"", _rsaDate];
+        [order appendFormat:@"&sign_date=\"%@\"", _rsaDate];
     if (_appID)
-        [oder appendFormat:@"&app_id=\"%@\"", _appID];
+        [order appendFormat:@"&app_id=\"%@\"", _appID];
     
     return [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
-                   oder, _sign, _sign_type];;
+                   order, _sign, _signType];;
 }
-
 
 @end

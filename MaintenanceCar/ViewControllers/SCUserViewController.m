@@ -9,6 +9,7 @@
 #import "SCUserViewController.h"
 #import "SCLoginViewController.h"
 #import "SCCollectionsViewController.h"
+#import "SCCouponsViewController.h"
 #import "SCUserInfoView.h"
 #import "SCChangeMaintenanceDataViewController.h"
 
@@ -58,8 +59,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 #pragma mark - Private Methods
 - (void)initConfig
 {
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(showMyOderList) name:kShowTicketNotification object:nil];
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(pushToGroupTicketsViewController) name:kGenerateTicketSuccessNotification object:nil];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(showMyOrderList) name:kShowTicketNotification object:nil];
     [NOTIFICATION_CENTER addObserver:_userInfoView selector:@selector(refresh) name:kUserCarsDataNeedReloadSuccessNotification object:nil];
 }
 
@@ -79,7 +79,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
         switch (indexPath.row)
         {
             case SCUserCenterRowOrders:
-                [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCOdersViewController")];
+                [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCOrdersViewController")];
                 break;
             case SCUserCenterRowCollections:
             {
@@ -93,7 +93,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
                 break;
                 
             case SCUserCenterRowCoupons:
-                [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCCouponsViewController")];
+                [self pushToSubViewControllerWithController:[SCCouponsViewController instance]];
                 break;
         }
     }
@@ -117,7 +117,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     [self pushToSubViewControllerWithController:USERCENTER_VIEW_CONTROLLER(@"SCGroupTicketsViewController")];
 }
 
-- (void)showMyOderList
+- (void)showMyOrderList
 {
     [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:Zero inSection:Zero]];
 }

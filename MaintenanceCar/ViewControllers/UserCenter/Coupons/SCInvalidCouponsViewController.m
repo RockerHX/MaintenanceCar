@@ -8,6 +8,7 @@
 
 #import "SCInvalidCouponsViewController.h"
 #import "SCCouponCell.h"
+#import "SCCouponDetailViewController.h"
 #import "SCWebViewController.h"
 
 @implementation SCInvalidCouponsViewController
@@ -73,7 +74,10 @@
     SCCouponCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCell" forIndexPath:indexPath];
     
     if (_coupons.count)
+    {
+        cell.canNotUse = YES;
         [cell displayCellWithCoupon:_coupons[indexPath.row]];
+    }
     return cell;
 }
 
@@ -95,17 +99,17 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    //    SCMyOderDetailViewController *myOderDetailViewController = USERCENTER_VIEW_CONTROLLER(@"SCMyOderDetailViewController");
-    //    myOderDetailViewController.delegate  = self;
-    //    myOderDetailViewController.reserveID = ((SCMyOder *)[self dataList][indexPath.row]).reserveID;
-    //    [self.navigationController pushViewController:myOderDetailViewController animated:YES];
+    SCCouponDetailViewController *couponDetailViewController = USERCENTER_VIEW_CONTROLLER(@"SCCouponDetailViewController");
+    couponDetailViewController.couponCanNotUse = YES;
+    couponDetailViewController.coupon = _coupons[indexPath.row];
+    [self.navigationController pushViewController:couponDetailViewController animated:YES];
 }
 
 #pragma mark - Private Methods
 - (void)startInvalidCouponsRequest
 {
+    WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self];
-    __weak typeof(self) weakSelf = self;
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID};
     [[SCAPIRequest manager] startInvalidCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

@@ -14,11 +14,11 @@
 #import "SCGroupProductDetailCell.h"
 #import "SCShowMoreCell.h"
 #import "SCCommentCell.h"
-#import "SCOderPayViewController.h"
+#import "SCPayOrderViewController.h"
 #import "SCCommentListViewController.h"
 #import "SCReservationViewController.h"
 #import <SCLoopScrollView/SCLoopScrollView.h>
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 typedef NS_ENUM(NSInteger, SCAlertType) {
     SCAlertTyperefund,
@@ -63,12 +63,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - Config Methods
 - (void)initConfig
 {
-    self.tableView.tableFooterView.hidden = YES;
 }
 
 - (void)viewConfig
 {
-    self.tableView.tableFooterView = [_ticket expired] ? nil : _refundView;
+    BOOL hidden = ([_ticket expired] || (_ticket.state != SCGroupTicketStateUnUse));
+    self.tableView.tableFooterView = hidden ? nil : _refundView;
     [self.tableView reLayoutHeaderView];
     [self startTicketDetailRequest];
 }
@@ -256,7 +256,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    __weak typeof(self)weakSelf = self;
+    WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"product_id": _ticket.product_id};
     [[SCAPIRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
@@ -285,9 +285,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - SCGroupProductCellDelegate Methods
 - (void)shouldShowBuyProductView
 {
-    SCOderPayViewController *oderPayViewController = MAIN_VIEW_CONTROLLER(@"SCOderPayViewController");
-    oderPayViewController.groupProductDetail = _detail;
-    [self.navigationController pushViewController:oderPayViewController animated:YES];
+    SCPayOrderViewController *payOrderViewController = [SCPayOrderViewController instance];
+    payOrderViewController.groupProduct = _detail;
+    [self.navigationController pushViewController:payOrderViewController animated:YES];
 }
 
 #pragma mark - SCTicketCodeCellDelegate Methods
@@ -296,7 +296,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     // 跳转到预约页面
     @try {
         [[SCUserInfo share] removeItems];
-        SCReservationViewController *reservationViewController = MAIN_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
+        SCReservationViewController *reservationViewController = [SCReservationViewController instance];
         reservationViewController.delegate    = self;
         reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:_ticket.company_name
                                                                                companyID:_ticket.company_id];
@@ -352,14 +352,17 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     {
         if (buttonIndex == alertView.cancelButtonIndex)
         {
+            WEAK_SELF(weakSelf);
             [self showHUDOnViewController:self.navigationController];
-            __weak typeof(self)weakSelf = self;
             NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                  @"group_ticket_id": _ticket.group_ticket_id};
             [[SCAPIRequest manager] startGroupTicketRefundAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 [weakSelf hideHUDOnViewController:weakSelf.navigationController];
                 if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+                {
+                    weakSelf.tableView.tableFooterView = nil;
                     [weakSelf showHUDAlertToViewController:weakSelf.navigationController delegate:weakSelf text:@"退款成功" delay:0.5f];
+                }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 [weakSelf hideHUDOnViewController:weakSelf.navigationController];
                 [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"退款失败，请重试或者联系客服..." delay:0.5f];

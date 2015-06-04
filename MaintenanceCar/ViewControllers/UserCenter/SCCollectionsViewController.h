@@ -7,7 +7,8 @@
 //
 
 #import "SCTableViewController.h"
+#import "SCMerchantDetailViewController.h"
 
-@interface SCCollectionsViewController : SCTableViewController
+@interface SCCollectionsViewController : SCTableViewController <SCMerchantDetailViewControllerDelegate>
 
 @end

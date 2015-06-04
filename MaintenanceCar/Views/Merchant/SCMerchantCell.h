@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SCViewCategory.h"
+#import "SCMerchant.h"
 
 @class SCStarView;
-@class SCMerchant;
 
 @interface SCMerchantCell : UITableViewCell
 

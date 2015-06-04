@@ -8,13 +8,13 @@
 
 #import "SCGroupProductDetailViewController.h"
 #import <SCLoopScrollView/SCLoopScrollView.h>
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "SCBuyGroupProductCell.h"
 #import "SCGroupProductMerchantCell.h"
 #import "SCGroupProductDetailCell.h"
 #import "SCShowMoreCell.h"
 #import "SCCommentCell.h"
-#import "SCOderPayViewController.h"
+#import "SCPayOrderViewController.h"
 #import "SCCommentListViewController.h"
 #import "SCReservationViewController.h"
 
@@ -239,7 +239,7 @@
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    __weak typeof(self)weakSelf = self;
+    WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"product_id": _price ? _price.product_id : _product.product_id};
     [[SCAPIRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
@@ -270,16 +270,9 @@
 {
     if ([SCUserInfo share].loginStatus)
     {
-        @try {
-            SCOderPayViewController *viewController = MAIN_VIEW_CONTROLLER(@"SCOderPayViewController");
-            viewController.groupProductDetail = _detail;
-            [self.navigationController pushViewController:viewController animated:YES];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"SCGroupProductDetailViewController Go to the SCGroupProductViewController exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
+        SCPayOrderViewController *payOrderViewController = [SCPayOrderViewController instance];
+        payOrderViewController.groupProduct = _detail;
+        [self.navigationController pushViewController:payOrderViewController animated:YES];
     }
     else
         [self showShoulLoginAlert];
@@ -288,20 +281,13 @@
 - (void)shouldReserveProduct
 {
     // 跳转到预约页面
-    @try {
-        [[SCUserInfo share] removeItems];
-        SCReservationViewController *reservationViewController = MAIN_VIEW_CONTROLLER(ReservationViewControllerStoryBoardID);
-        reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName: _price.merchantName
-                                                                                                companyID: _price.companyID];
-        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:_price.type];
-        reservationViewController.quotedPrice = _price;
-        [self.navigationController pushViewController:reservationViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    [[SCUserInfo share] removeItems];
+    SCReservationViewController *reservationViewController = [SCReservationViewController instance];
+    reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName: _price.merchantName
+                                                                           companyID: _price.companyID];
+    reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:_price.type];
+    reservationViewController.quotedPrice = _price;
+    [self.navigationController pushViewController:reservationViewController animated:YES];
 }
 
 #pragma mark - SCGroupProductMerchantCell Delegate Methods

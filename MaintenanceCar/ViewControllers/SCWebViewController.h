@@ -12,6 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
-@property (nonatomic, copy) NSString *loadURL;
+@property (nonatomic, strong) NSString *loadURL;
 
 @end

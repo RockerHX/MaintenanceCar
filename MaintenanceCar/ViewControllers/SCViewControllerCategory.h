@@ -5,8 +5,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <UMengAnalytics/MobClick.h>
+#import <UMengAnalytics-NO-IDFA/MobClick.h>
 #import <MBProgressHUD/MBProgressHUD.h>
+#import <UITableView+FDTemplateLayoutCell/UITableView+FDTemplateLayoutCell.h>
 #import "AllMicroConstants.h"
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"

@@ -48,22 +48,6 @@
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/xiu-yang/id960929849?mt=8"]];
         }
             break;
-            
-        default:
-        {
-            NSString *url = [USER_DEFAULT objectForKey:kADURLKey];
-            if (!url || ![url length])
-                url = [MobClick getAdURL];
-            if ([url length])
-            {
-                SCWebViewController *webViewController = MAIN_VIEW_CONTROLLER(@"SCWebViewController");
-                webViewController.title = @"精彩推荐";
-                webViewController.loadURL = url;
-                [self.navigationController pushViewController:webViewController animated:YES];
-                [self performSelectorInBackground:@selector(getURL) withObject:nil];
-            }
-        }
-            break;
     }
 }
 
@@ -77,12 +61,6 @@
     _logoImageView.layer.borderWidth  = 1.0f;
     _logoImageView.layer.borderColor  = [UIColor lightGrayColor].CGColor;
     _versionLabel.text = [NSString stringWithFormat:@"当前版本号:%@(Build %@)", version, build];
-}
-
-- (void)getURL
-{
-    [USER_DEFAULT setObject:[MobClick getAdURL] forKey:kADURLKey];
-    [USER_DEFAULT synchronize];
 }
 
 @end

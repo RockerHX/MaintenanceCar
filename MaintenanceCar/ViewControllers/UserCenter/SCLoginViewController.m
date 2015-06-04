@@ -60,7 +60,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
 }
 
 #pragma mark - Button Action Methods
-- (IBAction)loginButtonPressed:(UIButton *)sender
+- (IBAction)loginButtonPressed
 {
     // 登录按钮点击之后分别经行是否输入手机号，是否输入验证码，验证码是否正确的判断操作，前面这些都正确以后才进行注册登录操作
     [self resignKeyBoard];
@@ -89,16 +89,16 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     }
 }
 
-- (IBAction)cancelButtonPressed:(UIButton *)sender
+- (IBAction)cancelButtonPressed
 {
     [self dismissController:SCDismissTypeCancel];
 }
 
-- (IBAction)weiboLoginButtonPressed:(UIButton *)sender
+- (IBAction)weiboLoginButtonPressed
 {
 }
 
-- (IBAction)weixinLoginButtonPressed:(UIButton *)sender
+- (IBAction)weixinLoginButtonPressed
 {
 }
 
@@ -116,7 +116,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     _cancelButton.layer.cornerRadius = 5.0f;
     
     // self弱引用，防止block使用出现循环引用，造成内存泄露
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     // 获取验证码View被点击之后的回调，判断是否输入手机号进行返回和执行获取验证码请求
     [_verificationCodeView verificationCodeShouldSend:^BOOL{
         if ([weakSelf.phoneNumberTextField.text length] == 11)
@@ -137,7 +137,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
  */
 - (void)startGetVerificationCodeReuqestWithMode:(SCVerificationCodeMode)mode
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text,
                            @"time_expire": @(CodeExpire),
                                   @"mode": @(mode)};
@@ -175,7 +175,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
  */
 - (void)startLoginRequest
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text,
                                   @"code": _verificationCodeTextField.text};
     [[SCAPIRequest manager] startLoginAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -249,6 +249,31 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
         }
             break;
     }
+}
+
+#pragma mark - Text Field Delegate Methods
+#define kMaxLength 4
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (string.length)
+    {
+        // 限制用户输入长度，以免数据越界
+        NSString *toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+
+        if ((toBeString.length >= kMaxLength) && (range.length != 1))
+        {
+            textField.text = [toBeString substringToIndex:kMaxLength];
+            [self loginButtonPressed];
+            return NO;
+        }
+        else
+        {
+            NSString *regex = @"[0-9]";
+            NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+            return [pred evaluateWithObject:string];
+        }
+    }
+    return YES;
 }
 
 @end

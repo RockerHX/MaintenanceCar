@@ -42,6 +42,12 @@
     [self viewConfig];
 }
 
+#pragma mark - Init Methods
++ (instancetype)instance
+{
+    return MAIN_VIEW_CONTROLLER(@"SCReservationViewController");
+}
+
 - (void)dealloc
 {
     [NOTIFICATION_CENTER removeObserver:self name:kUserCarsDataNeedReloadSuccessNotification object:nil];
@@ -145,8 +151,8 @@
 
 - (void)startMerchantReservationRequest
 {
+    WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self];
-    __weak typeof(self)weakSelf = self;
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                               @"company_id": _merchant.company_id,
                                     @"type": _reservationType,
@@ -259,18 +265,11 @@
             {
                 if ([SCUserInfo share].loginStatus)
                 {
-                    @try {
-                        UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
-                        SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
-                        addCarViewController.delegate = self;
-                        [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
-                    }
-                    @catch (NSException *exception) {
-                        NSLog(@"SCMyReservationTableViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
-                    }
-                    @finally {
-                        [pickerView hidde];
-                    }
+                    UINavigationController *addCarViewNavigationControler = USERCENTER_VIEW_CONTROLLER(@"SCAddCarViewNavigationController");
+                    SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
+                    addCarViewController.delegate = self;
+                    [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
+                    [pickerView hidde];
                 }
                 else
                     [self showShoulLoginAlert];

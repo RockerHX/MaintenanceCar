@@ -103,9 +103,8 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
  */
 - (void)startUpdateUserCarRequest
 {
-    [self showHUDOnViewController:self];
-    
-    __weak typeof(self)weakSelf = self;
+    WEAK_SELF(weakSelf);
+    [self showHUDOnViewController:self.navigationController];
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                              @"user_car_id": _car.user_car_id,
                                 @"model_id": _car.model_id,
@@ -131,9 +130,8 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 
 - (void)startDeleteUserCarRequest
 {
+    WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self.navigationController];
-    
-    __weak typeof(self) weakSelf = self;
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                  @"user_car_id": _car.user_car_id};
     [[SCAPIRequest manager] startDeleteCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -160,7 +158,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     // 限制用户输入长度，以免数据越界
-    NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    NSString *toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     
     if ((toBeString.length > kMaxLength) && (range.length != 1))
     {
@@ -248,18 +246,11 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     {
         if ([SCUserInfo share].loginStatus)
         {
-            @try {
-                UINavigationController *addCarViewNavigationControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCAddCarViewNavigationController"];
-                SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
-                addCarViewController.delegate = self;
-                [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
-            }
-            @catch (NSException *exception) {
-                NSLog(@"SCChangeMaintenanceDataViewController Go to the SCAddCarViewNavigationControler exception reasion:%@", exception.reason);
-            }
-            @finally {
-                [pickerView hidde];
-            }
+            UINavigationController *addCarViewNavigationControler = USERCENTER_VIEW_CONTROLLER(@"SCAddCarViewNavigationController");
+            SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
+            addCarViewController.delegate = self;
+            [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
+            [pickerView hidde];
         }
         else
             [self showShoulLoginAlert];

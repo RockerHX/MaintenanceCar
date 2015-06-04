@@ -10,7 +10,7 @@
 #import "UIConstants.h"
 #import "MicroConstants.h"
 #import "AppDelegate.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation SCADView
 
@@ -21,7 +21,7 @@
     self.frame = APP_DELEGATE_INSTANCE.window.bounds;
     _delegate = delegate;
     
-    [_imageView setImageWithURL:[NSURL URLWithString:imageURL]];
+    [_imageView sd_setImageWithURL:[NSURL URLWithString:imageURL]];
     
     [self initConfig];
     [self viewConfig];
@@ -58,7 +58,7 @@
 
 - (void)removeADView
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     [UIView animateWithDuration:0.2f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseInOut animations:^{
         weakSelf.imageView.transform    = CGAffineTransformMakeScale(0.85f, 0.85f);
         weakSelf.enterButton.transform  = CGAffineTransformMakeScale(0.85f, 0.85f);
@@ -74,7 +74,7 @@
 {
     [APP_DELEGATE_INSTANCE.window addSubview:self];
     
-    __weak typeof(self) weakSelf = self;
+    WEAK_SELF(weakSelf);
     [UIView animateWithDuration:0.3f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseInOut animations:^{
         weakSelf.alpha = 1.0f;
         weakSelf.imageView.transform = CGAffineTransformIdentity;

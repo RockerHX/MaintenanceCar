@@ -11,10 +11,10 @@
 // 字典项Model
 @interface SCDictionaryItem : JSONModel
 
-@property (nonatomic, copy) NSString <Optional>*dict_id;    // 字典ID
-@property (nonatomic, copy) NSString <Optional>*name;       // 字典名字
-@property (nonatomic, copy) NSString <Optional>*type;       // 字典类型
-@property (nonatomic, copy) NSString <Optional>*index;      // 字典索引
+@property (nonatomic, strong) NSString <Optional>*dict_id;    // 字典ID
+@property (nonatomic, strong) NSString <Optional>*name;       // 字典名字
+@property (nonatomic, strong) NSString <Optional>*type;       // 字典类型
+@property (nonatomic, strong) NSString <Optional>*index;      // 字典索引
 
 /**
  *  字典项Model初始化方法

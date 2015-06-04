@@ -15,7 +15,7 @@
 #import "SCAllDictionary.h"
 #import "SCSpecial.h"
 #import <SCLoopScrollView/SCLoopScrollView.h>
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation SCHomePageDetailView
 {
@@ -65,7 +65,7 @@
 #pragma mark - Private Methods
 - (void)startOperatADReuqet
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK_SELF(weakSelf);
     [[SCAPIRequest manager] startGetOperatADAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
@@ -204,7 +204,7 @@
 #pragma mark - Public Methods
 - (void)getUserCar
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK_SELF(weakSelf);
     [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
         if (finish)
             _currentCar = [userInfo.cars firstObject];
@@ -217,7 +217,7 @@
     [self showPrompt];
     if ([SCUserInfo share].loginStatus)
     {
-        __weak typeof(self)weakSelf = self;
+        WEAK_SELF(weakSelf);
         NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID};
         [[SCAPIRequest manager] startHomePageReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)

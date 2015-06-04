@@ -42,6 +42,12 @@
     [self startCouponsRequest];
 }
 
+#pragma mark - Init Methods
++ (instancetype)instance
+{
+    return USERCENTER_VIEW_CONTROLLER(@"SCCouponsViewController");
+}
+
 #pragma mark - Config Methods
 - (void)initConfig
 {
@@ -63,7 +69,10 @@
 - (IBAction)exchangeButtonPressed
 {
     if (_codeField.text.length > Zero)
+    {
+        [_codeField resignFirstResponder];
         [self startAddCouponRequest];
+    }
     else
         [self showHUDAlertToViewController:self text:@"请输入优惠券再兑换"];
 }
@@ -115,16 +124,18 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     SCCouponDetailViewController *couponDetailViewController = USERCENTER_VIEW_CONTROLLER(@"SCCouponDetailViewController");
+    couponDetailViewController.coupon = _coupons[indexPath.row];
     [self.navigationController pushViewController:couponDetailViewController animated:YES];
 }
 
 #pragma mark - Private Methods
 - (void)startCouponsRequest
 {
+    WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self];
-    __weak typeof(self) weakSelf = self;
     // 配置请求参数
-    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID};
+    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                             @"sort_method": @"time"};
     [[SCAPIRequest manager] startValidCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
@@ -156,10 +167,11 @@
 
 - (void)startAddCouponRequest
 {
+    WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self];
-    __weak typeof(self) weakSelf = self;
     // 配置请求参数
-    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID};
+    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
+                                    @"code": _codeField.text};
     [[SCAPIRequest manager] startAddCouponAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
@@ -170,6 +182,7 @@
             {
                 case SCAPIRequestErrorCodeNoError:
                 {
+                    _codeField.text = @"";
                     [_coupons removeAllObjects];
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                         SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];
@@ -177,11 +190,18 @@
                     }];
                     
                     [weakSelf.tableView reloadData];
+                    if (_delegate && [_delegate respondsToSelector:@selector(userAddCouponSuccess)])
+                        [_delegate userAddCouponSuccess];
                 }
                     break;
             }
             if (statusMessage.length)
                 [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
+            [_coupons enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                SCCoupon *coupon = obj;
+                if (coupon.current)
+                    [weakSelf showAlertWithTitle:@"兑换成功" message:[NSString stringWithFormat:@"%@（%@），有效期至%@。请按优惠券使用规则使用。", coupon.title, coupon.prompt, coupon.validDate]];
+            }];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf hanleFailureResponseWtihOperation:operation];

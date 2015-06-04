@@ -32,16 +32,19 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
     SCAPIRequestErrorCodeRefreshTokenError         = 4005,
     // Reservation
     SCAPIRequestErrorCodeReservationFailure        = 4006,
-    SCAPIRequestErrorCodeListNotFoundMore          = 4008
+    SCAPIRequestErrorCodeListNotFoundMore          = 4008,
+    // Collection
+    SCAPIRequestErrorCodeCancelCollectionFailure   = 4012,
+    SCAPIRequestErrorCodeCollectionFailure         = 4013
 };
 
 @interface SCAPIRequest : AFHTTPRequestOperationManager
 
-@property (nonatomic, copy) NSString *doMain;       // URL域
-@property (nonatomic, copy) NSString *path;         // API路径
-@property (nonatomic, copy) NSString *api;          // 请求的API
+@property (nonatomic, strong) NSString *doMain;       // URL域
+@property (nonatomic, strong) NSString *path;         // API路径
+@property (nonatomic, strong) NSString *api;          // 请求的API
 
-@property (nonatomic, copy) NSString *url;          // 完整的API链接地址(不带参数)
+@property (nonatomic, strong) NSString *url;          // 完整的API链接地址(不带参数)
 
 /**
  *  初始化方法 - 通过url参数生成SCAPIRequest实例
@@ -118,9 +121,9 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 /**
  *  获取收藏商家接口请求方法(API:/Collection - GET)
  */
-- (void)startGetCollectionMerchantAPIRequestWithParameters:(NSDictionary *)parameters
-                                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startCollectionsAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  取消收藏商家接口请求方法(API:/Collection/delete - GET)
@@ -129,13 +132,6 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
                                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
-/**
- *  检查商家是否收藏接口请求方法(API:/Collection/user - GET)
- */
-- (void)startCheckMerchantCollectionStutasAPIRequestWithParameters:(NSDictionary *)parameters
-                                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
 #pragma mark - Group Product API
 /**
  *  商家团购详情接口请求方法(API:/Group_product - GET)
@@ -143,20 +139,6 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 - (void)startMerchantGroupProductDetailAPIRequestWithParameters:(NSDictionary *)parameters
                                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
-/**
- *  获取微信支付订单信息接口请求方法(API:/wepay - POST)
- */
-- (void)startGetWeiXinPayOrderAPIRequestWithParameters:(NSDictionary *)parameters
-                                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
-/**
- *  获取支付宝钱包订单信息接口请求方法(API:/zhipay - POST)
- */
-- (void)startGetAliPayOrderAPIRequestWithParameters:(NSDictionary *)parameters
-                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  团购券列表接口请求方法(API:/Group_ticket/all - GET)
@@ -171,6 +153,35 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 - (void)startGroupTicketRefundAPIRequestWithParameters:(NSDictionary *)parameters
                                                success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+#pragma mark - Pay API
+/**
+ *  获取微信支付下单信息接口请求方法(API:/wepay - POST)
+ */
+- (void)startWeiXinOrderAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  获取微信支付买单信息接口请求方法(API:/wepay/custom - POST)
+ */
+- (void)startWeiXinPayOrderAPIRequestWithParameters:(NSDictionary *)parameters
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  获取支付宝下单信息接口请求方法(API:/zhipay - POST)
+ */
+- (void)startAliOrderAPIRequestWithParameters:(NSDictionary *)parameters
+                                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  获取支付宝买单信息接口请求方法(API:/zhipay/custom - POST)
+ */
+- (void)startAliPayOrderAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - Comment API
 /**
@@ -339,51 +350,65 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 /**
  *  进行中订单接口请求方法(API:/Reservation/doing - GET)
  */
-- (void)startProgressOdersAPIRequestWithParameters:(NSDictionary *)parameters
-                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startProgressOrdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  已完成订单接口请求方法(API:/Reservation/done - GET)
  */
-- (void)startFinishedOdersAPIRequestWithParameters:(NSDictionary *)parameters
-                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startFinishedOrdersAPIRequestWithParameters:(NSDictionary *)parameters
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  订单详情接口请求方法(API:/Reservation - GET)
  */
-- (void)startOderDetailAPIRequestWithParameters:(NSDictionary *)parameters
-                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)startOrderDetailAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  有效优惠券接口请求方法(API:/get_effective_coupon - GET)
+ *  订单详情接口请求方法(API:/Group_ticket/order - GET)
+ */
+- (void)startOrderTicketsAPIRequestWithParameters:(NSDictionary *)parameters
+                                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  有效优惠券接口请求方法(API:/coupon/get_effective_coupon - GET)
  */
 - (void)startValidCouponsAPIRequestWithParameters:(NSDictionary *)parameters
                                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  无效优惠券接口请求方法(API:/get_invalid_coupon - GET)
+ *  无效优惠券接口请求方法(API:/coupon/get_invalid_coupon - GET)
  */
 - (void)startInvalidCouponsAPIRequestWithParameters:(NSDictionary *)parameters
                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  添加优惠券接口请求方法(API:/add_coupon - POST)
+ *  添加优惠券接口请求方法(API:/coupon/add_coupon - POST)
  */
 - (void)startAddCouponAPIRequestWithParameters:(NSDictionary *)parameters
                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
- *  使用优惠券接口请求方法(API:/use_coupon - POST)
+ *  使用优惠券接口请求方法(API:/coupon/use_coupon - POST)
  */
 - (void)startUseCouponAPIRequestWithParameters:(NSDictionary *)parameters
                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  优惠券商家接口请求方法(API:/coupon/shop_list - POST)
+ */
+- (void)startCouponMerchantsAPIRequestWithParameters:(NSDictionary *)parameters
+                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 
 @end

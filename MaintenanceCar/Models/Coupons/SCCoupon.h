@@ -10,12 +10,14 @@
 
 @interface SCCoupon : JSONModel
 
-@property (nonatomic, copy) NSString *ID;
-@property (nonatomic, copy) NSString *code;
-@property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *prompt;
-@property (nonatomic, copy) NSString *amount;
-@property (nonatomic, copy) NSString *validDate;
-@property (nonatomic, copy) NSString *memo;
+@property (nonatomic, strong) NSString *ID;
+@property (nonatomic, strong) NSString *code;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *prompt;
+@property (nonatomic, strong) NSString *amount;
+@property (nonatomic, strong) NSString *needMin;
+@property (nonatomic, strong) NSString *validDate;
+@property (nonatomic, strong) NSString *memo;
+@property (nonatomic, assign)     BOOL  current;
 
 @end

@@ -12,22 +12,22 @@
 #import "SCSpecial.h"
 
 typedef NS_ENUM(NSInteger, SCDictionaryType) {
-    SCDictionaryTypeOderType,                           // 订单类型
+    SCDictionaryTypeOrderType,                          // 订单类型
     SCDictionaryTypeReservationType,                    // 预约类型
     SCDictionaryTypeQuestionType,                       // 问题类型
     SCDictionaryTypeReservationStatus,                  // 预约状态
-    SCDictionaryTypeOderStatus,                         // 订单状态
+    SCDictionaryTypeOrderStatus,                        // 订单状态
     SCDictionaryTypeDriveHabit,                         // 驾驶习惯
 };
 
 @interface SCAllDictionary : NSObject
 
-@property (nonatomic, strong, readonly) NSArray   *oderTypeItems;             // 订单类型字典
-@property (nonatomic, strong, readonly) NSArray   *reservationTypeItems;      // 预约类型字典
-@property (nonatomic, strong, readonly) NSArray   *questionTypeItems;         // 问题类型字典
-@property (nonatomic, strong, readonly) NSArray   *reservationStatusItems;    // 预约状态字典
-@property (nonatomic, strong, readonly) NSArray   *oderStatusItems;           // 订单状态字典
-@property (nonatomic, strong, readonly) NSArray   *driveHabitItems;           // 驾驶习惯字典
+@property (nonatomic, strong, readonly) NSArray *orderTypeItems;              // 订单类型字典
+@property (nonatomic, strong, readonly) NSArray *reservationTypeItems;        // 预约类型字典
+@property (nonatomic, strong, readonly) NSArray *questionTypeItems;           // 问题类型字典
+@property (nonatomic, strong, readonly) NSArray *reservationStatusItems;      // 预约状态字典
+@property (nonatomic, strong, readonly) NSArray *orderStatusItems;            // 订单状态字典
+@property (nonatomic, strong, readonly) NSArray *driveHabitItems;             // 驾驶习惯字典
 
 @property (nonatomic, strong, readonly) NSArray   *serviceItems;              // 服务项目
 

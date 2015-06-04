@@ -152,7 +152,7 @@
 
 - (void)displayUserLocation
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK_SELF(weakSelf);
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
         [weakSelf.mapView updateLocationData:userLocation];     // 根据坐标在地图上显示位置
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
@@ -164,8 +164,8 @@
 - (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
 {
     [mapView selectAnnotation:view.annotation animated:YES];
-    _preAnnotationView.image = [UIImage imageNamed:@"map-red"];
-    view.image = [UIImage imageNamed:@"map-blue"];
+    _preAnnotationView.image = [UIImage imageNamed:@"MapPinIcon-Red"];
+    view.image = [UIImage imageNamed:@"MapPinIcon-Blue"];
     // 刷新商家数据
     for (SCMerchant *merchant in _merchants)
     {

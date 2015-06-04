@@ -8,6 +8,13 @@
 
 #import "SCViewControllerCategory.h"
 
+@protocol SCCouponsViewControllerDelegate <NSObject>
+
+@optional
+- (void)userAddCouponSuccess;
+
+@end
+
 @interface SCCouponsViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet      UIView *headerView;
@@ -16,8 +23,12 @@
 @property (weak, nonatomic) IBOutlet    UIButton *exchangeButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (nonatomic, weak) id <SCCouponsViewControllerDelegate>delegate;
+
 - (IBAction)exchangeButtonPressed;
 - (IBAction)ruleButtonPressed;
 - (IBAction)showInvalidCoupons;
+
++ (instancetype)instance;
 
 @end

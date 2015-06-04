@@ -10,9 +10,9 @@
 
 @interface SCWeather : JSONModel
 
-@property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *zs;
-@property (nonatomic, copy) NSString *tipt;
-@property (nonatomic, copy) NSString *des;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *zs;
+@property (nonatomic, strong) NSString *tipt;
+@property (nonatomic, strong) NSString *des;
 
 @end

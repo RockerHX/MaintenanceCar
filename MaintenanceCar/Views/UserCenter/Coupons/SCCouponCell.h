@@ -11,10 +11,13 @@
 
 @interface SCCouponCell : SCTableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *amountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *promptLabel;
-@property (weak, nonatomic) IBOutlet UILabel *validDateLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *couponBgView;
+@property (weak, nonatomic) IBOutlet     UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet     UILabel *amountLabel;
+@property (weak, nonatomic) IBOutlet     UILabel *promptLabel;
+@property (weak, nonatomic) IBOutlet     UILabel *validDateLabel;
+
+@property (nonatomic, assign) BOOL canNotUse;
 
 - (CGFloat)displayCellWithCoupon:(SCCoupon *)coupon;
 

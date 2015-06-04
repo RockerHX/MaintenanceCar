@@ -215,7 +215,7 @@ static SCAllDictionary *allDictionary = nil;
 
 - (NSString *)imageNameOfFlag:(NSString *)flag
 {
-    NSDictionary *data = [NSDictionary dictionaryWithContentsOfFile:[NSFileManager pathForResource:@"MerchantFlagIcon" ofType:@"plist"]];
+    NSDictionary *data = [NSDictionary dictionaryWithContentsOfFile:[NSFileManager pathForResource:@"FlagsKV" ofType:@"plist"]];
     return data[flag];
 }
 
@@ -252,10 +252,10 @@ static SCAllDictionary *allDictionary = nil;
 {
     switch (_type)
     {
-        case SCDictionaryTypeOderType:
+        case SCDictionaryTypeOrderType:
         {
-            _oderTypeItems = [self getItemsWithData:data];
-            finfish(_oderTypeItems);
+            _orderTypeItems = [self getItemsWithData:data];
+            finfish(_orderTypeItems);
         }
             break;
         case SCDictionaryTypeReservationType:
@@ -276,10 +276,10 @@ static SCAllDictionary *allDictionary = nil;
             finfish(_reservationStatusItems);
         }
             break;
-        case SCDictionaryTypeOderStatus:
+        case SCDictionaryTypeOrderStatus:
         {
-            _oderStatusItems = [self getItemsWithData:data];
-            finfish(_oderStatusItems);
+            _orderStatusItems = [self getItemsWithData:data];
+            finfish(_orderStatusItems);
         }
             break;
             

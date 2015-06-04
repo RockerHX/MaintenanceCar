@@ -7,7 +7,6 @@
 //
 
 #import "SCCollectionIndexView.h"
-#import "UIConstants.h"
 
 #define LabelWidth      24.0f
 

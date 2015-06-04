@@ -11,9 +11,9 @@
 // 用户位置信息Model - 单例，全局使用
 @interface SCLocationManager : NSObject
 
-@property (nonatomic, copy, readonly)          NSString *city;         // 当前所在城市
-@property (nonatomic, copy, readonly)          NSString *latitude;     // 当前位置 - 纬度
-@property (nonatomic, copy, readonly)          NSString *longitude;    // 当前位置 - 经度
+@property (nonatomic, strong, readonly) NSString *city;         // 当前所在城市
+@property (nonatomic, strong, readonly) NSString *latitude;     // 当前位置 - 纬度
+@property (nonatomic, strong, readonly) NSString *longitude;    // 当前位置 - 经度
 
 @property (nonatomic, strong, readonly) BMKUserLocation *userLocation; // 当前地理位置信息(百度坐标)
 

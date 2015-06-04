@@ -19,6 +19,7 @@
 {
     return [[JSONKeyMapper alloc] initWithDictionary:@{@"coupon_id": @"ID",
                                                      @"description": @"prompt",
+                                                        @"need_min": @"needMin",
                                                       @"expiration": @"validDate"}];
 }
 

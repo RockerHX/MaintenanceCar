@@ -26,13 +26,13 @@
 #pragma mark - Public Methods
 - (void)selected
 {
-    _checkBox.image = [UIImage imageNamed:@"the-radio-pitch-on"];
+    _checkBox.image = [UIImage imageNamed:@"CycleIcon-Check"];
     _nameLabel.textColor = [UIColor blackColor];
 }
 
 - (void)unSelected
 {
-    _checkBox.image = [UIImage imageNamed:@"the-radio-uncheck"];
+    _checkBox.image = [UIImage imageNamed:@"CycleIcon-Uncheck"];
     _nameLabel.textColor = [UIColor lightGrayColor];
 }
 
