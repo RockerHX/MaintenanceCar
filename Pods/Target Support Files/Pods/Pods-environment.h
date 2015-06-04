@@ -64,7 +64,7 @@
 #define COCOAPODS_POD_AVAILABLE_CSStickyHeaderFlowLayout
 #define COCOAPODS_VERSION_MAJOR_CSStickyHeaderFlowLayout 0
 #define COCOAPODS_VERSION_MINOR_CSStickyHeaderFlowLayout 2
-#define COCOAPODS_VERSION_PATCH_CSStickyHeaderFlowLayout 5
+#define COCOAPODS_VERSION_PATCH_CSStickyHeaderFlowLayout 6
 
 // DateTools
 #define COCOAPODS_POD_AVAILABLE_DateTools
@@ -100,7 +100,7 @@
 #define COCOAPODS_POD_AVAILABLE_MJRefresh
 #define COCOAPODS_VERSION_MAJOR_MJRefresh 1
 #define COCOAPODS_VERSION_MINOR_MJRefresh 4
-#define COCOAPODS_VERSION_PATCH_MJRefresh 6
+#define COCOAPODS_VERSION_PATCH_MJRefresh 7
 
 // Masonry
 #define COCOAPODS_POD_AVAILABLE_Masonry
@@ -117,8 +117,8 @@
 // SCNumberKeyBoard
 #define COCOAPODS_POD_AVAILABLE_SCNumberKeyBoard
 #define COCOAPODS_VERSION_MAJOR_SCNumberKeyBoard 0
-#define COCOAPODS_VERSION_MINOR_SCNumberKeyBoard 1
-#define COCOAPODS_VERSION_PATCH_SCNumberKeyBoard 3
+#define COCOAPODS_VERSION_MINOR_SCNumberKeyBoard 2
+#define COCOAPODS_VERSION_PATCH_SCNumberKeyBoard 1
 
 // SDWebImage
 #define COCOAPODS_POD_AVAILABLE_SDWebImage
