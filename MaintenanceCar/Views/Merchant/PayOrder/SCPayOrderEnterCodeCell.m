@@ -46,7 +46,7 @@
 #pragma mark - Public Methods
 - (void)displayCellWithPaySucceed:(BOOL)paySucceed
 {
-    _enterCodeButton.enabled = !paySucceed;
+    _enterCodeButton.enabled = paySucceed;
 }
 
 @end
