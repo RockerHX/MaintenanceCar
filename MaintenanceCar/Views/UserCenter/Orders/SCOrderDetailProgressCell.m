@@ -73,31 +73,31 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailProgressState) {
 #pragma mark - Public Methods
 - (void)displayCellWithDetail:(SCOrderDetail *)detail index:(NSInteger)index
 {
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:CGPointMake(ZERO_POINT, -SHADOW_OFFSET*4)];
-    [path addLineToPoint:CGPointMake(ZERO_POINT, SELF_HEIGHT)];
-    [path addLineToPoint:CGPointMake(SHADOW_OFFSET*2, SELF_HEIGHT - SHADOW_OFFSET*6)];
-    [path addLineToPoint:CGPointMake(SELF_WIDTH - SHADOW_OFFSET*2, SELF_HEIGHT - SHADOW_OFFSET*6)];
-    [path addLineToPoint:CGPointMake(SELF_WIDTH, SELF_HEIGHT + SHADOW_OFFSET*4)];
-    [path addLineToPoint:CGPointMake(SELF_WIDTH, -SHADOW_OFFSET*4)];
-    [path addLineToPoint:CGPointMake(SELF_WIDTH - SHADOW_OFFSET*2, SHADOW_OFFSET*6)];
-    [path addLineToPoint:CGPointMake(SHADOW_OFFSET*2, SHADOW_OFFSET*6)];
+    CGFloat width = SELF_WIDTH;
+    CGFloat height = SELF_HEIGHT;
+    UIBezierPath *path = [self shadowPathWithPoints:@[@[@(ZERO_POINT), @(-SHADOW_OFFSET*4)],
+                                                      @[@(ZERO_POINT), @(height)],
+                                                      @[@(SHADOW_OFFSET*2), @(height - SHADOW_OFFSET*6)],
+                                                      @[@(width - SHADOW_OFFSET*2), @(height - SHADOW_OFFSET*6)],
+                                                      @[@(width), @(height + SHADOW_OFFSET*4)],
+                                                      @[@(width), @(-SHADOW_OFFSET*4)],
+                                                      @[@(width - SHADOW_OFFSET*2), @(SHADOW_OFFSET*6)],
+                                                      @[@(SHADOW_OFFSET*2), @(SHADOW_OFFSET*6)]]];
     self.layer.shadowPath = path.CGPath;
-    self.layer.shadowColor = [UIColor lightGrayColor].CGColor;
-    self.layer.shadowOffset = CGSizeMake(SHADOW_OFFSET, SHADOW_OFFSET);
-    self.layer.shadowOpacity = 1.0f;
-    self.layer.shadowRadius = 1.0f;
-    
     SCOrderDetailProgress *progress = detail.processes[index];
     [self restoreProgressState];
     [self displayProgressState:progress.flag];
-    if (!index)
-        _upLine.hidden = YES;
-    else if (index == (detail.processes.count-1))
+    if  (index == (detail.processes.count-1))
     {
         self.layer.shadowPath = nil;
         _downLine.hidden = YES;
     }
+    else if (!index)
+        _upLine.hidden = YES;
+    self.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+    self.layer.shadowOffset = CGSizeMake(SHADOW_OFFSET, SHADOW_OFFSET);
+    self.layer.shadowOpacity = 1.0f;
+    self.layer.shadowRadius = 1.0f;
     
     _dateLabel.text = progress.date;
     _nameLabel.text = progress.name;

@@ -11,11 +11,14 @@
 
 @implementation SCCouponDetailRuleCell
 
+#pragma mark - Init Methods
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     _ruleLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 20.0f;
 }
 
+#pragma mark - Public Methods
 - (CGFloat)displayCellWithCoupon:(SCCoupon *)coupon
 {
     _ruleLabel.text = coupon.memo;
