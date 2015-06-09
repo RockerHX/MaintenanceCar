@@ -47,7 +47,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 //    return _merchants.count;
-    return 3;
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -78,15 +78,6 @@
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    CGFloat height = Zero;
-//    if (_coupons.count)
-//    {
-//        if(!_couponCell)
-//            _couponCell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCell"];
-//        height = [_couponCell displayCellWithCoupon:_coupons[indexPath.row]];
-//    }
-//    
-    //    return height;
     if (!indexPath.row)
         return 120.0f;
     else if (indexPath.row == 4)
@@ -97,10 +88,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-//    SCCouponDetailViewController *couponDetailViewController = USERCENTER_VIEW_CONTROLLER(@"SCCouponDetailViewController");
-//    couponDetailViewController.coupon = _coupons[indexPath.row];
-//    [self.navigationController pushViewController:couponDetailViewController animated:YES];
 }
 
 @end

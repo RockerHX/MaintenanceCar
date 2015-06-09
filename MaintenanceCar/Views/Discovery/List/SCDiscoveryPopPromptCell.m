@@ -43,10 +43,20 @@
     self.layer.shadowOpacity = 0.5f;
     self.layer.shadowRadius = 1.0f;
     
-    _topShadowLine.layer.shadowColor = _topShadowLine.backgroundColor.CGColor;
-    _topShadowLine.layer.shadowOffset = CGSizeMake(ZERO_POINT, SHADOW_OFFSET);
-    _topShadowLine.layer.shadowOpacity = 1.0f;
-    _topShadowLine.layer.shadowRadius = 1.0f;
+    if (!_topLeftShadowLayer)
+    {
+        _topLeftShadowLayer = [CALayer layer];
+        _topLeftShadowLayer.frame = CGRectMake(-POP_CELL_OFFSET + 10.0f, ZERO_POINT, POP_CELL_OFFSET*0.75, SHADOW_OFFSET);
+        _topLeftShadowLayer.backgroundColor = [UIColor colorWithWhite:0.9f alpha:0.8f].CGColor;
+        [self.layer addSublayer:_topLeftShadowLayer];
+    }
+    if (!_topRightShadowLayer)
+    {
+        _topRightShadowLayer = [CALayer layer];
+        _topRightShadowLayer.frame = CGRectMake(SELF_WIDTH, ZERO_POINT, POP_CELL_OFFSET*0.75, SHADOW_OFFSET);
+        _topRightShadowLayer.backgroundColor = [UIColor colorWithWhite:0.9f alpha:0.8f].CGColor;
+        [self.layer addSublayer:_topRightShadowLayer];
+    }
 }
 
 @end

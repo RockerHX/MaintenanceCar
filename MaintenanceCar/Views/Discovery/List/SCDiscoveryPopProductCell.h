@@ -10,7 +10,7 @@
 
 @interface SCDiscoveryPopProductCell : SCTableViewCell
 {
-    CAGradientLayer *shadowLayer;
+    CAGradientLayer *_shadowLayer;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *hotIcon;

@@ -158,6 +158,7 @@
 		48C8B1D91A80CC1200E4114E /* SCObjectCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 48C8B1D81A80CC1200E4114E /* SCObjectCategory.m */; };
 		48DF20691ABB20C2009708F8 /* GPSTransform.c in Sources */ = {isa = PBXBuildFile; fileRef = 48DF20561ABB20C2009708F8 /* GPSTransform.c */; };
 		48E611221AE54C19000F65F0 /* SCNavigationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E611211AE54C19000F65F0 /* SCNavigationTableViewController.m */; };
+		48EA0AAE1B26E60B00575FA7 /* SCDiscoveryMerchantServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48EA0AAD1B26E60B00575FA7 /* SCDiscoveryMerchantServiceCell.m */; };
 		48EBF5BB1AC6AF8D00892099 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48EBF5BA1AC6AF8D00892099 /* AVFoundation.framework */; };
 		48EBF5BD1AC6AF9100892099 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 48EBF5BC1AC6AF9100892099 /* libsqlite3.dylib */; };
 		48EBF5D71AC6AFE600892099 /* UMFeedbackLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 48EBF5BF1AC6AFE600892099 /* UMFeedbackLocalizable.strings */; };
@@ -502,6 +503,8 @@
 		48DF20571ABB20C2009708F8 /* GPSTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSTransform.h; sourceTree = "<group>"; };
 		48E611201AE54C19000F65F0 /* SCNavigationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNavigationTableViewController.h; sourceTree = "<group>"; };
 		48E611211AE54C19000F65F0 /* SCNavigationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCNavigationTableViewController.m; sourceTree = "<group>"; };
+		48EA0AAC1B26E60B00575FA7 /* SCDiscoveryMerchantServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCDiscoveryMerchantServiceCell.h; sourceTree = "<group>"; };
+		48EA0AAD1B26E60B00575FA7 /* SCDiscoveryMerchantServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCDiscoveryMerchantServiceCell.m; sourceTree = "<group>"; };
 		48EBF5BA1AC6AF8D00892099 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		48EBF5BC1AC6AF9100892099 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		48EBF5C01AC6AFE600892099 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/UMFeedbackLocalizable.strings; sourceTree = "<group>"; };
@@ -683,6 +686,7 @@
 				482335321A4BA71300B60921 /* Utility */,
 				48F8055B1A4AC06700BD2379 /* Resource */,
 				48EC70501A442ACB003CE3FD /* Models */,
+				48EA0AA91B26D97D00575FA7 /* ViewModels */,
 				4866F92B1AACBD88008E195C /* Views */,
 				4866F8DB1AACBD2D008E195C /* ViewControllers */,
 				482B57DA1A43CB7700E47962 /* AppDelegate.h */,
@@ -1274,6 +1278,7 @@
 		48A7C02B1B1E10480080A014 /* List */ = {
 			isa = PBXGroup;
 			children = (
+				48EA0AAB1B26E57E00575FA7 /* SubViews */,
 				48A7C0381B214FA20080A014 /* SCDiscoveryCellConstants.h */,
 				48A7C02C1B1E10480080A014 /* SCDiscoveryMerchantCell.h */,
 				48A7C02D1B1E10480080A014 /* SCDiscoveryMerchantCell.m */,
@@ -1310,6 +1315,30 @@
 				48DF20571ABB20C2009708F8 /* GPSTransform.h */,
 			);
 			path = c;
+			sourceTree = "<group>";
+		};
+		48EA0AA91B26D97D00575FA7 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				48EA0AAA1B26D99800575FA7 /* Discovery */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		48EA0AAA1B26D99800575FA7 /* Discovery */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Discovery;
+			sourceTree = "<group>";
+		};
+		48EA0AAB1B26E57E00575FA7 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				48EA0AAC1B26E60B00575FA7 /* SCDiscoveryMerchantServiceCell.h */,
+				48EA0AAD1B26E60B00575FA7 /* SCDiscoveryMerchantServiceCell.m */,
+			);
+			path = SubViews;
 			sourceTree = "<group>";
 		};
 		48EBF5BE1AC6AFE600892099 /* UMengFeedback_SDK_2.1 */ = {
@@ -1768,6 +1797,7 @@
 				4896E3F21B10A85E00838EED /* SCOrderDetailProgressCell.m in Sources */,
 				4866F9281AACBD2D008E195C /* SCSettingViewController.m in Sources */,
 				4866F9B11AACBD89008E195C /* SCSearchFilterView.m in Sources */,
+				48EA0AAE1B26E60B00575FA7 /* SCDiscoveryMerchantServiceCell.m in Sources */,
 				4866F9201AACBD2D008E195C /* SCUserViewController.m in Sources */,
 				4896E3D31B109FA800838EED /* SCPayOrderResult.m in Sources */,
 				4896E3CF1B109F9400838EED /* SCPayOrderResultCell.m in Sources */,

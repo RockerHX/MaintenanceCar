@@ -22,13 +22,22 @@
     [super setFrame:frame];
 }
 
+#pragma mark - Draw Methods
+- (void)drawRect:(CGRect)rect
+{
+    self.layer.shadowColor   = [UIColor lightGrayColor].CGColor;
+    self.layer.shadowOffset  = CGSizeMake(ZERO_POINT, ZERO_POINT);
+    self.layer.shadowOpacity = 1.0f;
+    self.layer.shadowRadius  = 1.0f;
+}
+
 #pragma mark - Public Methods
 #define FirstProductRow     1
 - (void)displayCellWithProducts:(NSArray *)products index:(NSInteger)index
 {
     CGFloat  width                = SELF_WIDTH;
     CGFloat  height               = SELF_HEIGHT;
-    CGFloat  topShadowHeight      = SHADOW_OFFSET*4;
+    CGFloat  topShadowHeight      = ZERO_POINT;
     NSArray *cellShadowPathPoints = nil;
     if (index == FirstProductRow)
     {
@@ -40,20 +49,7 @@
                                  @[@(width), @(ZERO_POINT)],
                                  @[@(width - SHADOW_OFFSET*2), @(SHADOW_OFFSET*6)],
                                  @[@(SHADOW_OFFSET*2), @(SHADOW_OFFSET*6)]];
-        topShadowHeight = SHADOW_OFFSET*14;
-    }
-    else if (index == products.count)
-    {
-        cellShadowPathPoints = @[@[@(ZERO_POINT), @(ZERO_POINT)],
-                                 @[@(ZERO_POINT), @(height)],
-                                 @[@(POP_CELL_OFFSET - CELL_OFFSET), @(height)],
-                                 @[@(POP_CELL_OFFSET - CELL_OFFSET), @(height - SHADOW_OFFSET*6)],
-                                 @[@(width - (POP_CELL_OFFSET - CELL_OFFSET)), @(height - SHADOW_OFFSET*6)],
-                                 @[@(width - (POP_CELL_OFFSET - CELL_OFFSET)), @(height)],
-                                 @[@(width), @(height)],
-                                 @[@(width), @(ZERO_POINT)],
-                                 @[@(width - SHADOW_OFFSET*2), @(SHADOW_OFFSET*6)],
-                                 @[@(SHADOW_OFFSET*2), @(SHADOW_OFFSET*6)]];
+        topShadowHeight = SHADOW_OFFSET*10;
     }
     else
     {
@@ -66,23 +62,19 @@
                                  @[@(width - SHADOW_OFFSET*2), @(SHADOW_OFFSET*6)],
                                  @[@(SHADOW_OFFSET*2), @(SHADOW_OFFSET*6)]];
     }
-    self.layer.shadowPath    = [self shadowPathWithPoints:cellShadowPathPoints].CGPath;
-    self.layer.shadowColor   = [UIColor lightGrayColor].CGColor;
-    self.layer.shadowOffset  = CGSizeMake(SHADOW_OFFSET, SHADOW_OFFSET);
-    self.layer.shadowOpacity = 1.0f;
-    self.layer.shadowRadius  = 1.0f;
-
-    if (!shadowLayer)
+    self.layer.shadowPath = [self shadowPathWithPoints:cellShadowPathPoints].CGPath;
+    
+    if (!_shadowLayer)
     {
-        shadowLayer = [CAGradientLayer layer];
-        shadowLayer.startPoint = CGPointMake(SHADOW_OFFSET, ZERO_POINT);
-        shadowLayer.endPoint = CGPointMake(SHADOW_OFFSET, SHADOW_OFFSET*2);
-        shadowLayer.colors = @[(id)[UIColor colorWithWhite:0.85f alpha:0.9f].CGColor,
+        _shadowLayer = [CAGradientLayer layer];
+        _shadowLayer.startPoint = CGPointMake(SHADOW_OFFSET, ZERO_POINT);
+        _shadowLayer.endPoint = CGPointMake(SHADOW_OFFSET, SHADOW_OFFSET*2);
+        _shadowLayer.colors = @[(id)[UIColor colorWithWhite:0.8f alpha:0.95f].CGColor,
                                (id)self.backgroundColor.CGColor];
-        shadowLayer.locations = @[@(0.1f)];
-        [self.layer addSublayer:shadowLayer];
+        _shadowLayer.locations = @[@(0.1f)];
+        [self.layer addSublayer:_shadowLayer];
     }
-    shadowLayer.frame = CGRectMake(ZERO_POINT, ZERO_POINT, width, topShadowHeight);
+    _shadowLayer.frame = CGRectMake(ZERO_POINT, ZERO_POINT, width, topShadowHeight);
 }
 
 @end

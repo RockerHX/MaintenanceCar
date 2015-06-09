@@ -7,16 +7,65 @@
 //
 
 #import "SCDiscoveryMerchantCell.h"
+#import "VersionConstants.h"
+#import "SCStarView.h"
+#import "SCDiscoveryMerchantServiceCell.h"
+#import <Masonry/Masonry.h>
 
 @implementation SCDiscoveryMerchantCell
 
-#pragma mark - Draw Methods
-- (void)drawRect:(CGRect)rect
+#pragma mark - Init Methods
+- (void)awakeFromNib
 {
-    self.layer.shadowColor = [UIColor lightGrayColor].CGColor;
-    self.layer.shadowOffset = CGSizeMake(SHADOW_OFFSET, SHADOW_OFFSET*3);
-    self.layer.shadowOpacity = 1.0f;
-    self.layer.shadowRadius = 3.0f;
+    [super awakeFromNib];
+    
+    if (IS_IPHONE_5_PRIOR)
+    {
+        [self narrowLabel:_starValueLabel how:2.0f];
+        [self narrowLabel:_characteristicLabel how:1.0f];
+        [self narrowLabel:_distanceLabel how:2.0f];
+        [self narrowLabel:_repairPromptLabel how:1.0f];
+        
+        _starViewToStarValueLabelConstraint.constant = 2.0f;
+        _starValueLabelToCharacteristicLabelConstraint.constant = 2.0f;
+        _characteristicLabelToDistanceLabelConstraint.constant = 2.0f;
+    }
+}
+
+#pragma mark - Private Methods
+- (void)narrowLabel:(UILabel *)label how:(CGFloat)how
+{
+    label.font = [label.font fontWithSize:(label.font.pointSize - how)];
+}
+
+#pragma mark - Table View Data Source Methods
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 3;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SCDiscoveryMerchantServiceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCDiscoveryMerchantServiceCell" forIndexPath:indexPath];
+    return cell;
+}
+
+#pragma mark - Table View Delegate Methods
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 4.0f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 1.0f, 1.0f)];
+    view.backgroundColor = [UIColor clearColor];
+    return view;
 }
 
 @end

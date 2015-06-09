@@ -18,10 +18,11 @@
 #define IS_IOS7                         ((CURRENT_SYSTEM_VERSION >= 7.0f && CURRENT_SYSTEM_VERSION < 8.0f) ? YES : NO)
 #define IS_IOS8                         ((CURRENT_SYSTEM_VERSION >= 8.0f) ? YES : NO)
 
-#define IS_WIDESCREEN_4                 (fabs((double)[[UIScreen mainScreen] bounds].size.height - (double)480) < __DBL_EPSILON__)
-#define IS_WIDESCREEN_5                 (fabs((double)[[UIScreen mainScreen] bounds].size.height - (double)568) < __DBL_EPSILON__)
-#define IS_WIDESCREEN_6                 (fabs((double)[[UIScreen mainScreen] bounds].size.height - (double)667) < __DBL_EPSILON__)
-#define IS_WIDESCREEN_6Plus             (fabs((double)[[UIScreen mainScreen] bounds].size.height - (double)736) < __DBL_EPSILON__)
+#define MAIN_SCREEN_HEIGHT              [[UIScreen mainScreen] bounds].size.height
+#define IS_WIDESCREEN_4                 (fabs((double)MAIN_SCREEN_HEIGHT - 480.0f) < __DBL_EPSILON__)
+#define IS_WIDESCREEN_5                 (fabs((double)MAIN_SCREEN_HEIGHT - 568.0f) < __DBL_EPSILON__)
+#define IS_WIDESCREEN_6                 (fabs((double)MAIN_SCREEN_HEIGHT - 667.0f) < __DBL_EPSILON__)
+#define IS_WIDESCREEN_6Plus             (fabs((double)MAIN_SCREEN_HEIGHT - 736.0f) < __DBL_EPSILON__)
 
 #define IS_IPHONE                       ([[[UIDevice currentDevice] model] isEqualToString: @"iPhone"] || [[[UIDevice currentDevice] model] isEqualToString: @"iPhone Simulator"])
 #define IS_IPOD                         ([[[UIDevice currentDevice] model] isEqualToString: @"iPod touch"])
