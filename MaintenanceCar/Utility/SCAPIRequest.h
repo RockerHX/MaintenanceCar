@@ -346,6 +346,14 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 
 
 #pragma mark - V2 API
+#pragma mark - Discovery API
+/**
+ *  商家列表接口请求方法(API:/company_search/company_product - GET)
+ */
+- (void)startShopsAPIRequestWithParameters:(NSDictionary *)parameters
+                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 #pragma mark - User Center API
 /**
  *  进行中订单接口请求方法(API:/Reservation/doing - GET)

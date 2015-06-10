@@ -6,6 +6,7 @@ pod 'AFNetworking'
 pod 'AFNetworkActivityLogger'
 pod 'SDWebImage'
 pod 'JSONModel'
+pod 'MJExtension'
 
 pod 'MBProgressHUD'
 pod 'MJRefresh'

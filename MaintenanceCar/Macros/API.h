@@ -76,10 +76,12 @@
 
 
 #pragma mark - V2
+#define ShopsAPI                    @"/company_search/company_product"      // 商家列表的API
+
 #define ProgressOrdersAPI           @"/Reservation/doing"                   // 我的进行中订单API
 #define FinishedOrdersAPI           @"/Reservation/done"                    // 我的已完成订单API
 #define OrderDetailAPI              @"/Reservation"                         // 订单详情API
-#define OrderTicketsAPI             @"/Group_ticket/order"               // 买单成功获取团购券API
+#define OrderTicketsAPI             @"/Group_ticket/order"                  // 买单成功获取团购券API
 
 #define ValidCouponsAPI             @"/coupon/get_effective_coupon"         // 有效优惠券API
 #define InvalidCouponsAPI           @"/coupon/get_invalid_coupon"           // 无效优惠券API
@@ -139,6 +141,8 @@
 
 
 #pragma mark - V2
+#define ShopsAPIURL                     [V2APIURL stringByAppendingString:ShopsAPI]                   // 商家列表接口URL - 用于请求商家列表数据
+
 #define ProgressOrdersAPIURL            [V2APIURL stringByAppendingString:ProgressOrdersAPI]          // 进行中订单接口URL - 用于进行中订单数据获取
 #define FinishedOrdersAPIURL            [V2APIURL stringByAppendingString:FinishedOrdersAPI]          // 已完成订单接口URL - 用于已完成订单数据获取
 #define OrderDetailAPIURL               [V2APIURL stringByAppendingString:OrderDetailAPI]             // 订单详情接口URL - 用于订单详情数据获取

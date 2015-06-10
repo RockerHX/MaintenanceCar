@@ -10,6 +10,7 @@
 #import "SCDiscoveryMerchantCell.h"
 #import "SCDiscoveryPopProductCell.h"
 #import "SCDiscoveryPopPromptCell.h"
+#import "SCShopList.h"
 
 @interface SCDiscoveryViewController ()
 @end
@@ -34,7 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [[[SCShopList alloc] init] loadMoreShops];
 }
 
 #pragma mark - Init Methods
