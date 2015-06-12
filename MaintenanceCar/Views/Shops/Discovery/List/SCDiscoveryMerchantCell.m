@@ -6,11 +6,13 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
+#import <Masonry/Masonry.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "SCDiscoveryMerchantCell.h"
 #import "VersionConstants.h"
 #import "SCStarView.h"
 #import "SCDiscoveryMerchantServiceCell.h"
-#import <Masonry/Masonry.h>
+#import "SCShopViewModel.h"
 
 @implementation SCDiscoveryMerchantCell
 
@@ -36,7 +38,7 @@
 - (void)drawRect:(CGRect)rect
 {
     self.layer.shadowColor = [UIColor colorWithWhite:0.8f alpha:0.9f].CGColor;
-    self.layer.shadowOffset = CGSizeMake(0.5f, 0.5f);
+    self.layer.shadowOffset = CGSizeMake(SHADOW_OFFSET, SHADOW_OFFSET);
     self.layer.shadowOpacity = 1.0f;
     self.layer.shadowRadius = 1.0f;
 }
@@ -45,6 +47,20 @@
 - (void)narrowLabel:(UILabel *)label how:(CGFloat)how
 {
     label.font = [label.font fontWithSize:(label.font.pointSize - how)];
+}
+
+#pragma mark - Public Methods
+- (void)displayCellWithShopViewModel:(SCShopViewModel *)shopViewModel
+{
+    [_thumbnailIcon sd_setImageWithURL:[NSURL URLWithString:shopViewModel.shop.thumbnails] placeholderImage:[UIImage imageNamed:@"MerchantIconDefault"]];
+    _canPayIcon.hidden = !shopViewModel.shop.canPay;
+    _mechantNameLabel.text = shopViewModel.shop.name;
+    _starView.value = shopViewModel.shop.star;
+    _starValueLabel.text = shopViewModel.star;
+    _characteristicLabel.text = shopViewModel.shop.characteristic.title;
+    _distanceLabel.text = shopViewModel.distance;
+    _repairTypeIcon.image = [UIImage imageNamed:shopViewModel.repairTypeImageName];
+    _repairPromptLabel.text = shopViewModel.repairPrompt;
 }
 
 #pragma mark - Table View Data Source Methods

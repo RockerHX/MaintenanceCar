@@ -6,12 +6,13 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "SCShopViewModel.h"
 
 @interface SCShopList : NSObject
 
-@property (nonatomic, assign, readonly)    BOOL  shopsLoaded;
-@property (nonatomic, strong, readonly) NSArray *shops;
+@property (nonatomic, assign)              BOOL  shopsLoaded;
+@property (nonatomic, strong, readonly) NSString *serverPrompt;
+@property (nonatomic, strong, readonly)  NSArray *shops;
 
 - (void)loadMoreShops;
 

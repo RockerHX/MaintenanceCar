@@ -8,16 +8,20 @@
 
 #import "SCTableViewCell.h"
 
+@class SCShopProduct;
+
 @interface SCDiscoveryPopProductCell : SCTableViewCell
 {
+    NSArray *_firstCellShadowPathPoints;
+    NSArray *_otherCellShadowPathPoints;
+    
     CAGradientLayer *_shadowLayer;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *hotIcon;
 @property (weak, nonatomic) IBOutlet     UILabel *productNameLabel;
-@property (weak, nonatomic) IBOutlet     UILabel *originalPriceLabel;
 @property (weak, nonatomic) IBOutlet     UILabel *discountPriceLabel;
 
-- (void)displayCellWithProducts:(NSArray *)products index:(NSInteger)index;
+- (void)displayCellWithProduct:(SCShopProduct *)product index:(NSInteger)index;
 
 @end

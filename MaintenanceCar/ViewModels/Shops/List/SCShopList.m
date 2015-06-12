@@ -6,11 +6,10 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
+#import <MJExtension/MJExtension.h>
 #import "SCShopList.h"
 #import "MicroConstants.h"
 #import "SCAPIRequest.h"
-#import "SCShopViewModel.h"
 
 @implementation SCShopList
 {
@@ -38,8 +37,9 @@
 - (void)loadMoreShops
 {
 //    WEAK_SELF(weakSelf);
-    NSDictionary *parameters = @{@"limit": @"3",
+    NSDictionary *parameters = @{@"limit": @"10",
                                 @"offset": @"0"};
+    __weak typeof(self)weakSelf = self;
     [[SCAPIRequest manager] startShopsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
@@ -51,9 +51,10 @@
                 {
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                         SCShop *shop = [SCShop objectWithKeyValues:obj];
-                        SCShopViewModel *shopViewModel = [SCShopViewModel initWithShop:shop];
+                        SCShopViewModel *shopViewModel = [[SCShopViewModel alloc] initWithShop:shop];
                         [_shops addObject:shopViewModel];
                     }];
+                    weakSelf.shopsLoaded = YES;
                 }
                     break;
                     
@@ -63,7 +64,7 @@
                     break;
             }
             if (statusMessage.length)
-                NSLog(@"%@", statusMessage);
+                _serverPrompt = statusMessage;
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];

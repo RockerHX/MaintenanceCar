@@ -11,6 +11,7 @@
 #import "SCDiscoveryPopProductCell.h"
 #import "SCDiscoveryPopPromptCell.h"
 #import "SCShopList.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface SCDiscoveryViewController ()
 @end
@@ -35,7 +36,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[[SCShopList alloc] init] loadMoreShops];
+    _shopList = [[SCShopList alloc] init];
+    @weakify(self)
+    [RACObserve(_shopList, shopsLoaded) subscribeNext:^(id x) {
+        @strongify(self)
+        NSNumber *shopsLoaded = x;
+        if (shopsLoaded.boolValue)
+        {
+            NSLog(@"serverPrompt:%@", _shopList.serverPrompt);
+            [self.tableView reloadData];
+        }
+    }];
+    [_shopList loadMoreShops];
 }
 
 #pragma mark - Init Methods
@@ -47,43 +59,46 @@
 #pragma mark - Table View Data Source Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//    return _merchants.count;
-    return 5;
+    return _shopList.shops.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    SCMerchant *merchant = _merchants[section];
-//    return merchant.products.count;
-    return 5;
+    SCShopViewModel *shopViewModel = _shopList.shops[section];
+    return shopViewModel.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    SCMerchant *merchant = _merchants[indexPath.section];
-    if (!indexPath.row)
+    SCShopViewModel *shopViewModel = _shopList.shops[indexPath.section];
+    id data = shopViewModel.dataSource[indexPath.row];
+    if ([data isKindOfClass:[SCShopViewModel class]])
     {
         SCDiscoveryMerchantCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCDiscoveryMerchantCell" forIndexPath:indexPath];
+        [cell displayCellWithShopViewModel:data];
         return cell;
     }
-    else if (indexPath.row == 4)
+    else if ([data isKindOfClass:[NSString class]])
     {
         SCDiscoveryPopPromptCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCDiscoveryPopPromptCell" forIndexPath:indexPath];
+        [cell displayCellWithPrompt:data pop:shopViewModel.isProductsPop];
         return cell;
     }
     SCDiscoveryPopProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCDiscoveryPopProductCell" forIndexPath:indexPath];
-    [cell displayCellWithProducts:@[@"1",@"2",@"3"] index:indexPath.row];
+    [cell displayCellWithProduct:data index:indexPath.row];
     return cell;
 }
 
 #pragma mark - Table View Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (!indexPath.row)
+    SCShopViewModel *shopViewModel = _shopList.shops[indexPath.section];
+    id data = shopViewModel.dataSource[indexPath.row];
+    if ([data isKindOfClass:[SCShopViewModel class]])
         return 120.0f;
-    else if (indexPath.row == 4)
+    else if ([data isKindOfClass:[NSString class]])
         return 32.0f;
-    return 52.0f;
+    return 44.0f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

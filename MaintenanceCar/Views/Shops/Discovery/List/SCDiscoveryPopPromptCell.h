@@ -9,12 +9,10 @@
 #import "SCTableViewCell.h"
 
 @interface SCDiscoveryPopPromptCell : SCTableViewCell
-{
-    CALayer *_topLeftShadowLayer;
-    CALayer *_topRightShadowLayer;
-}
 
 @property (weak, nonatomic) IBOutlet     UILabel *promptLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *arrowIcon;
+
+- (void)displayCellWithPrompt:(NSString *)prompt pop:(BOOL)pop;
 
 @end

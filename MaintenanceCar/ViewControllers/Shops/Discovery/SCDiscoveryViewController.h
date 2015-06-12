@@ -8,10 +8,14 @@
 
 #import "SCViewControllerCategory.h"
 
-@interface SCDiscoveryViewController : UIViewController <UITableViewDataSource, UITabBarDelegate>
+@class SCShopList;
+
+@interface SCDiscoveryViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 {
-    NSMutableArray *_merchants;
+    SCShopList *_shopList;
 }
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 + (instancetype)instance;
 

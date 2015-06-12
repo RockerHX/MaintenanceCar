@@ -38,25 +38,16 @@
     [path fill];
     [path stroke];
     
-    self.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+    self.layer.shadowColor = [UIColor colorWithWhite:0.8f alpha:0.9f].CGColor;
     self.layer.shadowOffset = CGSizeMake(ZERO_POINT, SHADOW_OFFSET);
-    self.layer.shadowOpacity = 0.5f;
+    self.layer.shadowOpacity = 1.0f;
     self.layer.shadowRadius = 1.0f;
-    
-    if (!_topLeftShadowLayer)
-    {
-        _topLeftShadowLayer = [CALayer layer];
-        _topLeftShadowLayer.frame = CGRectMake(-POP_CELL_OFFSET + 10.0f, ZERO_POINT, POP_CELL_OFFSET*0.75, SHADOW_OFFSET);
-        _topLeftShadowLayer.backgroundColor = [UIColor colorWithWhite:0.9f alpha:0.8f].CGColor;
-        [self.layer addSublayer:_topLeftShadowLayer];
-    }
-    if (!_topRightShadowLayer)
-    {
-        _topRightShadowLayer = [CALayer layer];
-        _topRightShadowLayer.frame = CGRectMake(SELF_WIDTH, ZERO_POINT, POP_CELL_OFFSET*0.75, SHADOW_OFFSET);
-        _topRightShadowLayer.backgroundColor = [UIColor colorWithWhite:0.9f alpha:0.8f].CGColor;
-        [self.layer addSublayer:_topRightShadowLayer];
-    }
+}
+
+#pragma mark - Public Methods
+- (void)displayCellWithPrompt:(NSString *)prompt pop:(BOOL)pop
+{
+    _promptLabel.text = prompt;
 }
 
 @end

@@ -10,10 +10,11 @@
 #import "SCMerchant.h"
 
 @class SCStarView;
+@class SCShopViewModel;
 
 @interface SCDiscoveryMerchantCell : SCTableViewCell <UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImageView *hotIcon;
+@property (weak, nonatomic) IBOutlet UIImageView *canPayIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailIcon;
 @property (weak, nonatomic) IBOutlet     UILabel *mechantNameLabel;
 @property (weak, nonatomic) IBOutlet  SCStarView *starView;
@@ -27,5 +28,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *starViewToStarValueLabelConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *starValueLabelToCharacteristicLabelConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *characteristicLabelToDistanceLabelConstraint;
+
+- (void)displayCellWithShopViewModel:(SCShopViewModel *)shopViewModel;
 
 @end

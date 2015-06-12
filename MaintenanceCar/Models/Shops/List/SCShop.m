@@ -7,6 +7,7 @@
 //
 
 #import "SCShop.h"
+#import <MJExtension/MJExtension.h>
 
 @implementation SCShopCharacteristic
 
@@ -26,7 +27,7 @@
 + (NSDictionary *)replacedKeyFromPropertyName
 {
     return @{@"ID": @"product_id",
-     @"finalPrice": @"final_price"};
+  @"discountPrice": @"final_price"};
 }
 
 @end
