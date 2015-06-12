@@ -32,6 +32,15 @@
     }
 }
 
+#pragma mark - Draw Methods
+- (void)drawRect:(CGRect)rect
+{
+    self.layer.shadowColor = [UIColor colorWithWhite:0.8f alpha:0.9f].CGColor;
+    self.layer.shadowOffset = CGSizeMake(0.5f, 0.5f);
+    self.layer.shadowOpacity = 1.0f;
+    self.layer.shadowRadius = 1.0f;
+}
+
 #pragma mark - Private Methods
 - (void)narrowLabel:(UILabel *)label how:(CGFloat)how
 {

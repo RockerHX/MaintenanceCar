@@ -69,7 +69,7 @@
         _shadowLayer = [CAGradientLayer layer];
         _shadowLayer.startPoint = CGPointMake(SHADOW_OFFSET, ZERO_POINT);
         _shadowLayer.endPoint = CGPointMake(SHADOW_OFFSET, SHADOW_OFFSET*2);
-        _shadowLayer.colors = @[(id)[UIColor colorWithWhite:0.65f alpha:1.0f].CGColor,
+        _shadowLayer.colors = @[(id)[UIColor colorWithWhite:0.8f alpha:0.9f].CGColor,
                                (id)self.backgroundColor.CGColor];
         _shadowLayer.locations = @[@(0.1f)];
         [self.layer addSublayer:_shadowLayer];
