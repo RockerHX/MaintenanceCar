@@ -23,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet     UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *repairTypeIcon;
 @property (weak, nonatomic) IBOutlet     UILabel *repairPromptLabel;
-@property (weak, nonatomic) IBOutlet UITableView *servicesView;
+@property (weak, nonatomic) IBOutlet UITableView *flagsView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *starViewToStarValueLabelConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *starValueLabelToCharacteristicLabelConstraint;

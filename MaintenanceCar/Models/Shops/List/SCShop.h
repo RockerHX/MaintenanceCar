@@ -29,6 +29,7 @@
 @interface SCShopProduct : NSObject
 
 @property (nonatomic, assign)     BOOL  hot;            // 是否热卖
+@property (nonatomic, assign)     BOOL  isGroup;        // 是否热卖
 @property (nonatomic, copy)   NSString *ID;             // 产品ID
 @property (nonatomic, copy)   NSString *title;          // 产品名称
 @property (nonatomic, copy)   NSString *discountPrice;  // 产品价格

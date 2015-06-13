@@ -27,6 +27,7 @@
 + (NSDictionary *)replacedKeyFromPropertyName
 {
     return @{@"ID": @"product_id",
+        @"isGroup": @"is_group",
   @"discountPrice": @"final_price"};
 }
 

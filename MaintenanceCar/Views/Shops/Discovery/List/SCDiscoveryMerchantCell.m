@@ -15,6 +15,9 @@
 #import "SCShopViewModel.h"
 
 @implementation SCDiscoveryMerchantCell
+{
+    NSArray *_flags;
+}
 
 #pragma mark - Init Methods
 - (void)awakeFromNib
@@ -61,12 +64,15 @@
     _distanceLabel.text = shopViewModel.distance;
     _repairTypeIcon.image = [UIImage imageNamed:shopViewModel.repairTypeImageName];
     _repairPromptLabel.text = shopViewModel.repairPrompt;
+    
+    _flags = shopViewModel.flags;
+    [self.flagsView reloadData];
 }
 
 #pragma mark - Table View Data Source Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return _flags.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -77,6 +83,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SCDiscoveryMerchantServiceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCDiscoveryMerchantServiceCell" forIndexPath:indexPath];
+    cell.icon.image = [UIImage imageNamed:_flags[indexPath.section]];
     return cell;
 }
 

@@ -36,6 +36,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self initConfig];
+}
+
+#pragma mark - Init Methods
++ (instancetype)instance
+{
+    return DISCOVERY_VIEW_CONTROLLER(@"SCDiscoveryViewController");
+}
+
+#pragma mark - Config Methods
+- (void)initConfig
+{
     _shopList = [[SCShopList alloc] init];
     @weakify(self)
     [RACObserve(_shopList, shopsLoaded) subscribeNext:^(id x) {
@@ -45,15 +58,10 @@
         {
             NSLog(@"serverPrompt:%@", _shopList.serverPrompt);
             [self.tableView reloadData];
+            [self hanleErrorWithServerStatusCode:_shopList.statusCode];
         }
     }];
     [_shopList loadMoreShops];
-}
-
-#pragma mark - Init Methods
-+ (instancetype)instance
-{
-    return DISCOVERY_VIEW_CONTROLLER(@"SCDiscoveryViewController");
 }
 
 #pragma mark - Table View Data Source Methods
@@ -81,7 +89,7 @@
     else if ([data isKindOfClass:[NSString class]])
     {
         SCDiscoveryPopPromptCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCDiscoveryPopPromptCell" forIndexPath:indexPath];
-        [cell displayCellWithPrompt:data pop:shopViewModel.isProductsPop];
+        [cell displayCellWithPrompt:data openUp:shopViewModel.isProductsOpen];
         return cell;
     }
     SCDiscoveryPopProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCDiscoveryPopProductCell" forIndexPath:indexPath];
@@ -104,6 +112,43 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    SCShopViewModel *shopViewModel = _shopList.shops[indexPath.section];
+    if ([cell isKindOfClass:[SCDiscoveryMerchantCell class]])
+    {
+        
+    }
+    else if ([cell isKindOfClass:[SCDiscoveryPopPromptCell class]])
+    {
+        WEAK_SELF(weakSelf);
+        [shopViewModel operateProductsMenu:^(BOOL shouldReload) {
+            if (shouldReload)
+                [weakSelf.tableView reloadData];
+        }];
+    }
+    else if ([cell isKindOfClass:[SCDiscoveryPopProductCell class]])
+    {
+        
+    }
+}
+
+#pragma mark - Private Methods
+- (void)hanleErrorWithServerStatusCode:(NSInteger)code
+{
+    switch (code)
+    {
+        case SCAPIRequestStatusCodeTokenError:
+            [self showShoulReLoginAlert];
+            break;
+            
+        default:
+        {
+            if (_shopList.serverPrompt.length)
+                [self showHUDAlertToViewController:self text:_shopList.serverPrompt];
+        }
+            break;
+    }
 }
 
 @end

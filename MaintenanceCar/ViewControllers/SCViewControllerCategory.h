@@ -46,6 +46,11 @@ typedef NS_ENUM(NSUInteger, SCViewControllerAlertType) {
 - (void)showShoulLoginAlert;
 
 /**
+ *  提示用户需要重新登录
+ */
+- (void)showShoulReLoginAlert;
+
+/**
  *  检查用户是否需要登录，需要则跳转到登录页面
  */
 - (void)checkShouldLogin;

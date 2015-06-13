@@ -104,7 +104,7 @@ static SCLocationManager *locationManager = nil;
     return displayDistance;
 }
 
-#pragma mark - Getter Methods
+#pragma mark - Setter And Getter Methods
 // 重构经纬度getter方法，处理经纬度数据
 - (NSString *)latitude
 {

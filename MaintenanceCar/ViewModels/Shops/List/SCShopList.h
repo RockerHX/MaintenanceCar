@@ -10,9 +10,10 @@
 
 @interface SCShopList : NSObject
 
-@property (nonatomic, assign)              BOOL  shopsLoaded;
-@property (nonatomic, strong, readonly) NSString *serverPrompt;
-@property (nonatomic, strong, readonly)  NSArray *shops;
+@property (nonatomic, assign)                BOOL  shopsLoaded;
+@property (nonatomic, assign, readonly) NSInteger  statusCode;
+@property (nonatomic, strong, readonly)  NSString *serverPrompt;
+@property (nonatomic, strong, readonly)   NSArray *shops;
 
 - (void)loadMoreShops;
 

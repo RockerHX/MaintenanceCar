@@ -23,55 +23,109 @@ static int popMax = 2;
     if (self)
     {
         _shop = shop;
+        [self initConfig];
         [self propertyConfig];
         [self hanleProducts];
     }
     return self;
 }
 
-#pragma mark - Private Methods
+#pragma mark - Config Methods
+- (void)initConfig
+{
+}
+
 - (void)propertyConfig
 {
     _star = [_shop.star stringByAppendingString:@"分"];
     _distance = [[SCLocationManager share] distanceWithLatitude:_shop.latitude longitude:_shop.longtitude];
     _repairTypeImageName = _shop.repair.type ? @"MerchantZhuanTagIcon" : @"MerchantZongTagIcon";
-    [_shop.repair.haveNot enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        _repairPrompt = [_repairPrompt stringByAppendingString:stop ? [NSString stringWithFormat:@"%@、", obj] : obj];
-    }];
+    [self handleRepairPrompt];
+    [self hanldeFlags];
+}
+
+#pragma mark - Private Methods
+- (void)handleRepairPrompt
+{
+    _repairPrompt = @"";
+    NSArray *brands = _shop.repair.haveNot;
+    NSInteger count = brands.count;
+    for (NSUInteger index = 0; index < count; index++)
+        _repairPrompt = [_repairPrompt stringByAppendingString:((index == (count - 1)) ? brands[index] : [NSString stringWithFormat:@"%@、", brands[index]])];
+}
+
+- (void)hanldeFlags
+{
+    NSMutableArray *flags = @[].mutableCopy;
+    @try {
+        [_shop.flags enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            if ([obj isEqualToString:@"洗"])
+                [flags addObject:@"MerchantTagWashIcon"];
+            else if ([obj isEqualToString:@"养"])
+                [flags addObject:@"MerchantTagMaintenanceIcon"];
+            else if ([obj isEqualToString:@"修"])
+                [flags addObject:@"MerchantTagRepairIcon"];
+        }];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"SCShopViewModel Hanlde Flags Error:%@", exception.reason);
+    }
+    @finally {
+        _flags = [NSArray arrayWithArray:flags];
+    }
 }
 
 - (void)hanleProducts
 {
     __weak typeof(self)weakSelf = self;
-    NSInteger productCount = _shop.products.count;
+    NSInteger productCount     = _shop.products.count;
+    NSArray *products          = _shop.products;
     NSMutableArray *dataSource = @[].mutableCopy;
     [dataSource addObject:weakSelf];
     if (productCount > popMax)
     {
-        _canPop = YES;
-        [dataSource addObject:_shop.products[0]];
-        [dataSource addObject:_shop.products[1]];
+        _canOpen = YES;
+        [dataSource addObject:products[0]];
+        [dataSource addObject:products[1]];
         [dataSource addObject:[NSString stringWithFormat:@"查看全部%zd款", productCount]];
     }
     else
     {
-        [_shop.products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [dataSource addObject:_shop.products[idx]];
+        [products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [dataSource addObject:products[idx]];
         }];
     }
     _dataSource = [NSArray arrayWithArray:dataSource];
 }
 
-#pragma mark - Setter And Getter Methods
-- (NSArray *)cellDisplayData
+#pragma mark - Public Methods
+- (void)operateProductsMenu:(void(^)(BOOL shouldReload))block
 {
-    if (_productsPop)
+    if (_canOpen)
     {
-        // TODO
-        return nil;
+        NSInteger productCount     = _shop.products.count;
+        NSArray *products          = _shop.products;
+        NSMutableArray *dataSource = [NSMutableArray arrayWithArray:_dataSource];
+        [dataSource removeLastObject];
+        if (_productsOpen)
+        {
+            for (NSInteger index = productCount; index > popMax; --index)
+                [dataSource removeObjectAtIndex:index];
+            [dataSource addObject:[NSString stringWithFormat:@"查看全部%zd款", productCount]];
+        }
+        else
+        {
+            for (NSInteger index = popMax; index < productCount; index++)
+                [dataSource addObject:products[index]];
+            [dataSource addObject:@"收起"];
+        }
+        _productsOpen = !_productsOpen;
+        _dataSource = [NSArray arrayWithArray:dataSource];
+        
+        block(YES);
     }
     else
-        return _dataSource;
+        block(NO);
 }
 
 @end

@@ -13,6 +13,6 @@
 @property (weak, nonatomic) IBOutlet     UILabel *promptLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *arrowIcon;
 
-- (void)displayCellWithPrompt:(NSString *)prompt pop:(BOOL)pop;
+- (void)displayCellWithPrompt:(NSString *)prompt openUp:(BOOL)openUp;
 
 @end

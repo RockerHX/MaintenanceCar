@@ -221,7 +221,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="宝马、奔驰、保时捷" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a8J-7B-nSO">
-                                                    <rect key="frame" x="121" y="78" width="169" height="17"/>
+                                                    <rect key="frame" x="121" y="79" width="169" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -271,7 +271,6 @@
                                                 <constraint firstAttribute="centerY" secondItem="6S9-q6-cry" secondAttribute="centerY" id="BEC-d8-pq0"/>
                                                 <constraint firstItem="gWs-VT-w3V" firstAttribute="leading" secondItem="rE8-Yp-ge5" secondAttribute="leading" id="BsS-B1-7PJ"/>
                                                 <constraint firstAttribute="centerY" secondItem="klA-8y-iav" secondAttribute="centerY" id="JMH-PH-bmX"/>
-                                                <constraint firstItem="a8J-7B-nSO" firstAttribute="bottom" secondItem="QrW-gq-0aa" secondAttribute="bottom" id="Lho-Np-S5t"/>
                                                 <constraint firstItem="gWs-VT-w3V" firstAttribute="top" secondItem="rE8-Yp-ge5" secondAttribute="top" id="Lp8-2r-noc"/>
                                                 <constraint firstItem="a8J-7B-nSO" firstAttribute="leading" secondItem="QrW-gq-0aa" secondAttribute="trailing" constant="8" id="M8z-gM-xaO"/>
                                                 <constraint firstItem="0Ok-HI-fCN" firstAttribute="leading" secondItem="QrW-gq-0aa" secondAttribute="leading" id="NGC-rY-OjD"/>
@@ -287,6 +286,7 @@
                                                 <constraint firstAttribute="centerY" secondItem="eLJ-eV-0yv" secondAttribute="centerY" id="lSY-I3-tgH"/>
                                                 <constraint firstItem="e2C-Rn-xII" firstAttribute="leading" secondItem="rE8-Yp-ge5" secondAttribute="leading" constant="20" id="o1d-N0-zab"/>
                                                 <constraint firstItem="0Ok-HI-fCN" firstAttribute="top" secondItem="e2C-Rn-xII" secondAttribute="top" id="sBo-CB-O9Y"/>
+                                                <constraint firstItem="QrW-gq-0aa" firstAttribute="centerY" secondItem="a8J-7B-nSO" secondAttribute="centerY" id="uw0-RL-NC2"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -294,10 +294,10 @@
                                             <outlet property="characteristicLabel" destination="klA-8y-iav" id="LRf-7E-vLy"/>
                                             <outlet property="characteristicLabelToDistanceLabelConstraint" destination="1Je-Bs-Vou" id="7cQ-s2-gxP"/>
                                             <outlet property="distanceLabel" destination="eLJ-eV-0yv" id="Vsj-oc-JPH"/>
+                                            <outlet property="flagsView" destination="fxM-gX-ZuZ" id="GiG-yw-gxO"/>
                                             <outlet property="mechantNameLabel" destination="0Ok-HI-fCN" id="6Xq-hg-BfF"/>
                                             <outlet property="repairPromptLabel" destination="a8J-7B-nSO" id="NDw-kk-EaQ"/>
                                             <outlet property="repairTypeIcon" destination="QrW-gq-0aa" id="csi-IB-0eU"/>
-                                            <outlet property="servicesView" destination="fxM-gX-ZuZ" id="agx-s7-4xv"/>
                                             <outlet property="starValueLabel" destination="z8B-kW-Teg" id="qAz-29-3GW"/>
                                             <outlet property="starValueLabelToCharacteristicLabelConstraint" destination="XOp-gN-c2M" id="k6E-pL-gek"/>
                                             <outlet property="starView" destination="6S9-q6-cry" id="ajH-At-j37"/>
@@ -319,13 +319,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rg2-Tk-W4g">
-                                                    <rect key="frame" x="252.5" y="13" width="16" height="19.5"/>
+                                                    <rect key="frame" x="252" y="13" width="16" height="19.5"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                     <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTu-8R-3CN">
-                                                    <rect key="frame" x="268.5" y="12" width="28.5" height="20.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="100" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTu-8R-3CN">
+                                                    <rect key="frame" x="268" y="12" width="28.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -338,7 +338,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="特别保养套餐" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="137" translatesAutoresizingMaskIntoConstraints="NO" id="9Df-FJ-co0">
-                                                    <rect key="frame" x="31" y="13.5" width="213.5" height="17"/>
+                                                    <rect key="frame" x="31" y="13" width="213.5" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>

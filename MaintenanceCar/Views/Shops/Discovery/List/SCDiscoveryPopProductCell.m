@@ -43,7 +43,7 @@ static int firstRow = 1;
 {
     CGFloat  width                = SELF_WIDTH;
     CGFloat  height               = SELF_HEIGHT;
-    CGFloat  topShadowHeight      = ZERO_POINT;
+    
     NSArray *cellShadowPathPoints = @[@[@(ZERO_POINT), @(ZERO_POINT)],
                                       @[@(ZERO_POINT), @(height)],
                                       @[@(SHADOW_OFFSET*2), @(height - SHADOW_OFFSET*6)],
@@ -52,23 +52,24 @@ static int firstRow = 1;
                                       @[@(width), @(ZERO_POINT)],
                                       @[@(width - SHADOW_OFFSET*2), @(SHADOW_OFFSET*6)],
                                       @[@(SHADOW_OFFSET*2), @(SHADOW_OFFSET*6)]];;
-    
-    if (index == firstRow)
-        topShadowHeight = SHADOW_OFFSET*10;
-    
     self.layer.shadowPath = [self shadowPathWithPoints:cellShadowPathPoints].CGPath;
     
     if (!_shadowLayer)
     {
         _shadowLayer = [CAGradientLayer layer];
+        _shadowLayer.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SELF_WIDTH, SHADOW_OFFSET*10);
         _shadowLayer.startPoint = CGPointMake(SHADOW_OFFSET, ZERO_POINT);
         _shadowLayer.endPoint = CGPointMake(SHADOW_OFFSET, SHADOW_OFFSET*2);
         _shadowLayer.colors = @[(id)[UIColor colorWithWhite:0.8f alpha:0.9f].CGColor,
                                 (id)self.backgroundColor.CGColor];
         _shadowLayer.locations = @[@(0.1f)];
+    }
+    if (index == firstRow)
+    {
         [self.layer addSublayer:_shadowLayer];
     }
-    _shadowLayer.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SELF_WIDTH, topShadowHeight);
+    else
+        [_shadowLayer removeFromSuperlayer];
     
     _hotIcon.hidden = !product.hot;
     _productNameLabel.text = product.title;

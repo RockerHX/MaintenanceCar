@@ -38,6 +38,12 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
     SCAPIRequestErrorCodeCollectionFailure         = 4013
 };
 
+typedef NS_ENUM(NSInteger, CocoaErrorCode) {
+    CocoaErrorCodeJsonParseError = 3840
+};
+
+FOUNDATION_EXPORT NSString *const CocoaErrorJsonParseError;
+
 @interface SCAPIRequest : AFHTTPRequestOperationManager
 
 @property (nonatomic, strong) NSString *doMain;       // URL域

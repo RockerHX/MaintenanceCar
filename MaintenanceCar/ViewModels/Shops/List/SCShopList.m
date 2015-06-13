@@ -8,7 +8,6 @@
 
 #import <MJExtension/MJExtension.h>
 #import "SCShopList.h"
-#import "MicroConstants.h"
 #import "SCAPIRequest.h"
 
 @implementation SCShopList
@@ -36,37 +35,39 @@
 #pragma mark - Public Methods
 - (void)loadMoreShops
 {
-//    WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"limit": @"10",
-                                @"offset": @"0"};
+                                @"offset": @"0",
+                              @"latitude": @"22.5207972824928",
+                            @"longtitude": @"113.9498737813554",
+                                @"radius": @"50000"};
     __weak typeof(self)weakSelf = self;
     [[SCAPIRequest manager] startShopsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
-            NSString *statusMessage = responseObject[@"status_message"];
-            switch (statusCode)
+            _statusCode = [responseObject[@"status_code"] integerValue];
+            _serverPrompt = responseObject[@"status_message"];
+            if (_statusCode == SCAPIRequestErrorCodeNoError)
             {
-                case SCAPIRequestErrorCodeNoError:
-                {
-                    [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                        SCShop *shop = [SCShop objectWithKeyValues:obj];
-                        SCShopViewModel *shopViewModel = [[SCShopViewModel alloc] initWithShop:shop];
-                        [_shops addObject:shopViewModel];
-                    }];
-                    weakSelf.shopsLoaded = YES;
-                }
-                    break;
-                    
-                case SCAPIRequestErrorCodeListNotFoundMore:
-                {
-                }
-                    break;
+                [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    SCShop *shop = [SCShop objectWithKeyValues:obj];
+                    SCShopViewModel *shopViewModel = [[SCShopViewModel alloc] initWithShop:shop];
+                    [_shops addObject:shopViewModel];
+                }];
             }
-            if (statusMessage.length)
-                _serverPrompt = statusMessage;
+            weakSelf.shopsLoaded = YES;
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (error.code == CocoaErrorCodeJsonParseError)
+        {
+            _statusCode = error.code;
+            _serverPrompt = CocoaErrorJsonParseError;
+        }
+        else
+        {
+            _statusCode = [operation.responseObject[@"status_code"] integerValue];
+            _serverPrompt = operation.responseObject[@"status_message"];
+        }
+        weakSelf.shopsLoaded = YES;
     }];
 }
 

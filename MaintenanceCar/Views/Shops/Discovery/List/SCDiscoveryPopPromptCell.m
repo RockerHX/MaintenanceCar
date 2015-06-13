@@ -45,9 +45,10 @@
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithPrompt:(NSString *)prompt pop:(BOOL)pop
+- (void)displayCellWithPrompt:(NSString *)prompt openUp:(BOOL)openUp
 {
     _promptLabel.text = prompt;
+    _arrowIcon.transform = openUp ? CGAffineTransformMakeRotation(M_PI) : CGAffineTransformIdentity;
 }
 
 @end

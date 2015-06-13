@@ -9,6 +9,8 @@
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
 
+NSString *const CocoaErrorJsonParseError    = @"数据出错，请联系元景科技！";
+
 #define CustomRequestHeaderKey          @"X-API-KEY"                // 请求头加密Key
 #define CustomRequestHeaderValue        @"SlwX20U65YMTuNRDe3fZ"     // 请求头加密Value
 
