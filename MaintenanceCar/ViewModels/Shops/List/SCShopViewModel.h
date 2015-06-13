@@ -37,6 +37,6 @@
  *
  *  @param block 列表刷新的判断回调
  */
-- (void)operateProductsMenu:(void(^)(BOOL shouldReload))block;
+- (void)operateProductsMenu:(void(^)(BOOL shouldReload, BOOL close))block;
 
 @end

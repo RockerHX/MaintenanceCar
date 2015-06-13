@@ -122,9 +122,13 @@
     else if ([cell isKindOfClass:[SCDiscoveryPopPromptCell class]])
     {
         WEAK_SELF(weakSelf);
-        [shopViewModel operateProductsMenu:^(BOOL shouldReload) {
+        [shopViewModel operateProductsMenu:^(BOOL shouldReload, BOOL close) {
             if (shouldReload)
+            {
                 [weakSelf.tableView reloadData];
+                if (close)
+                    [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.section] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+            }
         }];
     }
     else if ([cell isKindOfClass:[SCDiscoveryPopProductCell class]])

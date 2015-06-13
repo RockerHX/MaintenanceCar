@@ -87,7 +87,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fuk-E7-eNy" id="rE8-Yp-ge5">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MerchangPayTagIcon" translatesAutoresizingMaskIntoConstraints="NO" id="gWs-VT-w3V">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ShopCanPayTagIcon" translatesAutoresizingMaskIntoConstraints="NO" id="gWs-VT-w3V">
                                                     <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="3Me-li-4Fk"/>
@@ -213,7 +213,7 @@
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MerchantZhuanTagIcon" translatesAutoresizingMaskIntoConstraints="NO" id="QrW-gq-0aa">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ShopZhuanTagIcon" translatesAutoresizingMaskIntoConstraints="NO" id="QrW-gq-0aa">
                                                     <rect key="frame" x="98" y="80" width="15" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="7Mc-Tr-gph"/>
@@ -239,7 +239,7 @@
                                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eAW-hb-SvA" id="cKp-CS-mA4">
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MerchantTagWashIcon" translatesAutoresizingMaskIntoConstraints="NO" id="K6k-jG-sQ5">
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ShopTagWashIcon" translatesAutoresizingMaskIntoConstraints="NO" id="K6k-jG-sQ5">
                                                                         <rect key="frame" x="0.0" y="0.0" width="25" height="17"/>
                                                                     </imageView>
                                                                 </subviews>
@@ -311,7 +311,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ggi-6y-m8n" id="glN-Cp-VHp">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MerchantHotTagIcon" translatesAutoresizingMaskIntoConstraints="NO" id="bRx-4i-jAY">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ShopTuanTagIcon" translatesAutoresizingMaskIntoConstraints="NO" id="bRx-4i-jAY">
                                                     <rect key="frame" x="0.0" y="14" width="23" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="7RP-Pp-feM"/>
@@ -330,7 +330,7 @@
                                                     <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MerchantProductArrowIcon-Left" translatesAutoresizingMaskIntoConstraints="NO" id="Py3-ln-mvJ">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ShopProductArrowIcon-Left" translatesAutoresizingMaskIntoConstraints="NO" id="Py3-ln-mvJ">
                                                     <rect key="frame" x="305" y="16" width="7" height="12"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="7" id="9gM-Jf-0aB"/>
@@ -370,7 +370,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="discountPriceLabel" destination="XTu-8R-3CN" id="UcX-lG-pOU"/>
-                                            <outlet property="hotIcon" destination="bRx-4i-jAY" id="gs8-hr-bOp"/>
+                                            <outlet property="icon" destination="bRx-4i-jAY" id="qMO-0U-VTX"/>
                                             <outlet property="productNameLabel" destination="9Df-FJ-co0" id="Di6-6m-Y0f"/>
                                         </connections>
                                     </tableViewCell>
@@ -386,7 +386,7 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MerchantProductArrowIcon-Down" translatesAutoresizingMaskIntoConstraints="NO" id="HQC-cD-2Aw">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ShopProductArrowIcon-Down" translatesAutoresizingMaskIntoConstraints="NO" id="HQC-cD-2Aw">
                                                     <rect key="frame" x="202" y="13.5" width="11" height="6"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="6" id="kuL-M8-VUd"/>
@@ -436,13 +436,13 @@
         </scene>
     </scenes>
     <resources>
-        <image name="MerchangPayTagIcon" width="25" height="25"/>
-        <image name="MerchantHotTagIcon" width="23" height="16"/>
         <image name="MerchantIconDefault" width="80" height="80"/>
-        <image name="MerchantProductArrowIcon-Down" width="11" height="6"/>
-        <image name="MerchantProductArrowIcon-Left" width="7" height="12"/>
-        <image name="MerchantTagWashIcon" width="24" height="17"/>
-        <image name="MerchantZhuanTagIcon" width="15" height="15"/>
+        <image name="ShopCanPayTagIcon" width="25" height="25"/>
+        <image name="ShopProductArrowIcon-Down" width="11" height="6"/>
+        <image name="ShopProductArrowIcon-Left" width="7" height="12"/>
+        <image name="ShopTagWashIcon" width="24" height="17"/>
+        <image name="ShopTuanTagIcon" width="23" height="16"/>
+        <image name="ShopZhuanTagIcon" width="15" height="15"/>
         <image name="Star-Unlight" width="24" height="28"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

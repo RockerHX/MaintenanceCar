@@ -39,7 +39,7 @@ static int popMax = 2;
 {
     _star = [_shop.star stringByAppendingString:@"分"];
     _distance = [[SCLocationManager share] distanceWithLatitude:_shop.latitude longitude:_shop.longtitude];
-    _repairTypeImageName = _shop.repair.type ? @"MerchantZhuanTagIcon" : @"MerchantZongTagIcon";
+    _repairTypeImageName = _shop.repair.type ? @"ShopZhuanTagIcon" : @"ShopZongTagIcon";
     [self handleRepairPrompt];
     [self hanldeFlags];
 }
@@ -60,11 +60,11 @@ static int popMax = 2;
     @try {
         [_shop.flags enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             if ([obj isEqualToString:@"洗"])
-                [flags addObject:@"MerchantTagWashIcon"];
+                [flags addObject:@"ShopTagWashIcon"];
             else if ([obj isEqualToString:@"养"])
-                [flags addObject:@"MerchantTagMaintenanceIcon"];
+                [flags addObject:@"ShopTagMaintenanceIcon"];
             else if ([obj isEqualToString:@"修"])
-                [flags addObject:@"MerchantTagRepairIcon"];
+                [flags addObject:@"ShopTagRepairIcon"];
         }];
     }
     @catch (NSException *exception) {
@@ -99,10 +99,11 @@ static int popMax = 2;
 }
 
 #pragma mark - Public Methods
-- (void)operateProductsMenu:(void(^)(BOOL shouldReload))block
+- (void)operateProductsMenu:(void(^)(BOOL shouldReload, BOOL close))block
 {
     if (_canOpen)
     {
+        BOOL close                 = NO;
         NSInteger productCount     = _shop.products.count;
         NSArray *products          = _shop.products;
         NSMutableArray *dataSource = [NSMutableArray arrayWithArray:_dataSource];
@@ -112,6 +113,7 @@ static int popMax = 2;
             for (NSInteger index = productCount; index > popMax; --index)
                 [dataSource removeObjectAtIndex:index];
             [dataSource addObject:[NSString stringWithFormat:@"查看全部%zd款", productCount]];
+            close = YES;
         }
         else
         {
@@ -121,11 +123,10 @@ static int popMax = 2;
         }
         _productsOpen = !_productsOpen;
         _dataSource = [NSArray arrayWithArray:dataSource];
-        
-        block(YES);
+        block(YES, close);
     }
     else
-        block(NO);
+        block(NO, NO);
 }
 
 @end

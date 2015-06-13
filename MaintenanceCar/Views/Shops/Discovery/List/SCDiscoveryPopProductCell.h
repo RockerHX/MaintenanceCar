@@ -18,7 +18,7 @@
     CAGradientLayer *_shadowLayer;
 }
 
-@property (weak, nonatomic) IBOutlet UIImageView *hotIcon;
+@property (weak, nonatomic) IBOutlet UIImageView *icon;
 @property (weak, nonatomic) IBOutlet     UILabel *productNameLabel;
 @property (weak, nonatomic) IBOutlet     UILabel *discountPriceLabel;
 

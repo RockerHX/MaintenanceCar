@@ -71,7 +71,7 @@ static int firstRow = 1;
     else
         [_shadowLayer removeFromSuperlayer];
     
-    _hotIcon.hidden = !product.hot;
+    _icon.hidden = !product.isGroup;
     _productNameLabel.text = product.title;
     _discountPriceLabel.text = product.discountPrice;
 }
