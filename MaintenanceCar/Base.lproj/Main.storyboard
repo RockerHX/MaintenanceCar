@@ -4169,7 +4169,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="rri-An-luB">
-                            <rect key="frame" x="0.0" y="420" width="320" height="60"/>
+                            <rect key="frame" x="0.0" y="533" width="320" height="80"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kpC-Rd-kor">
@@ -4177,6 +4177,7 @@
                                     <color key="backgroundColor" red="0.17254901959999999" green="0.48627450979999998" blue="0.72549019609999998" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="FcJ-iP-ejo"/>
+                                        <constraint firstAttribute="width" constant="220" id="nIP-Id-T2w"/>
                                     </constraints>
                                     <state key="normal" title="预约">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4188,10 +4189,8 @@
                                 </button>
                             </subviews>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="kpC-Rd-kor" secondAttribute="trailing" constant="50" id="Akg-Le-IDY"/>
                                 <constraint firstAttribute="centerX" secondItem="kpC-Rd-kor" secondAttribute="centerX" id="edm-ZS-BZD"/>
-                                <constraint firstAttribute="bottom" secondItem="kpC-Rd-kor" secondAttribute="bottom" id="qQF-SY-OEy"/>
-                                <constraint firstItem="kpC-Rd-kor" firstAttribute="leading" secondItem="rri-An-luB" secondAttribute="leading" constant="50" id="xQd-Ox-8gJ"/>
+                                <constraint firstAttribute="centerY" secondItem="kpC-Rd-kor" secondAttribute="centerY" id="i2p-e6-h8Y"/>
                             </constraints>
                         </view>
                         <sections>

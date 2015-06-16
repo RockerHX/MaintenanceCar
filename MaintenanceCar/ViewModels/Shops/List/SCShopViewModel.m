@@ -12,9 +12,6 @@
 static int popMax = 2;
 
 @implementation SCShopViewModel
-{
-    NSArray *_dataSource;
-}
 
 #pragma mark - Init Methods
 - (instancetype)initWithShop:(SCShop *)shop
@@ -25,7 +22,7 @@ static int popMax = 2;
         _shop = shop;
         [self initConfig];
         [self propertyConfig];
-        [self hanleProducts];
+        [self hanleDataSource];
     }
     return self;
 }
@@ -75,12 +72,13 @@ static int popMax = 2;
     }
 }
 
-- (void)hanleProducts
+- (void)hanleDataSource
 {
+    NSInteger productCount      = _shop.products.count;
+    NSArray *products           = _shop.products;
+    NSMutableArray *dataSource  = @[].mutableCopy;
+    
     __weak typeof(self)weakSelf = self;
-    NSInteger productCount     = _shop.products.count;
-    NSArray *products          = _shop.products;
-    NSMutableArray *dataSource = @[].mutableCopy;
     [dataSource addObject:weakSelf];
     if (productCount > popMax)
     {

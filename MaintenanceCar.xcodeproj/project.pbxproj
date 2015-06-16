@@ -12,6 +12,10 @@
 		480445B61AC5616B004C20B9 /* SCAliPayOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 480445B51AC5616B004C20B9 /* SCAliPayOrder.m */; };
 		480754181B09CC8F00DB2433 /* SCCouponDetailShowMoreMerchantsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 480754171B09CC8F00DB2433 /* SCCouponDetailShowMoreMerchantsCell.m */; };
 		4807541B1B09CCCB00DB2433 /* SCCouponDetailRuleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4807541A1B09CCCB00DB2433 /* SCCouponDetailRuleCell.m */; };
+		481B9B2D1B2FBF28003B2D4B /* UIButton+SCIBnspectable.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B9B281B2FBF28003B2D4B /* UIButton+SCIBnspectable.m */; };
+		481B9B2E1B2FBF28003B2D4B /* UILabel+SCIBnsepectable.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B9B2A1B2FBF28003B2D4B /* UILabel+SCIBnsepectable.m */; };
+		481B9B2F1B2FBF28003B2D4B /* UIView+SCIBnspectable.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B9B2C1B2FBF28003B2D4B /* UIView+SCIBnspectable.m */; };
+		481B9B381B2FC568003B2D4B /* SCIBnsepectableManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 481B9B371B2FC568003B2D4B /* SCIBnsepectableManager.m */; };
 		481D94C41AC6B330005F3DD7 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 481D94621AC6B330005F3DD7 /* AlipaySDK.bundle */; };
 		481D94C51AC6B330005F3DD7 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 481D94631AC6B330005F3DD7 /* AlipaySDK.framework */; };
 		4820DA3E1A63FE5000129D39 /* SCCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4820DA3D1A63FE5000129D39 /* SCCoreDataManager.m */; };
@@ -220,6 +224,14 @@
 		480754171B09CC8F00DB2433 /* SCCouponDetailShowMoreMerchantsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCouponDetailShowMoreMerchantsCell.m; sourceTree = "<group>"; };
 		480754191B09CCCB00DB2433 /* SCCouponDetailRuleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCouponDetailRuleCell.h; sourceTree = "<group>"; };
 		4807541A1B09CCCB00DB2433 /* SCCouponDetailRuleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCouponDetailRuleCell.m; sourceTree = "<group>"; };
+		481B9B271B2FBF28003B2D4B /* UIButton+SCIBnspectable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+SCIBnspectable.h"; sourceTree = "<group>"; };
+		481B9B281B2FBF28003B2D4B /* UIButton+SCIBnspectable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+SCIBnspectable.m"; sourceTree = "<group>"; };
+		481B9B291B2FBF28003B2D4B /* UILabel+SCIBnsepectable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+SCIBnsepectable.h"; sourceTree = "<group>"; };
+		481B9B2A1B2FBF28003B2D4B /* UILabel+SCIBnsepectable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+SCIBnsepectable.m"; sourceTree = "<group>"; };
+		481B9B2B1B2FBF28003B2D4B /* UIView+SCIBnspectable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SCIBnspectable.h"; sourceTree = "<group>"; };
+		481B9B2C1B2FBF28003B2D4B /* UIView+SCIBnspectable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SCIBnspectable.m"; sourceTree = "<group>"; };
+		481B9B361B2FC568003B2D4B /* SCIBnsepectableManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCIBnsepectableManager.h; sourceTree = "<group>"; };
+		481B9B371B2FC568003B2D4B /* SCIBnsepectableManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCIBnsepectableManager.m; sourceTree = "<group>"; };
 		481D94621AC6B330005F3DD7 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		481D94631AC6B330005F3DD7 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		4820DA3C1A63FE5000129D39 /* SCCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCoreDataManager.h; sourceTree = "<group>"; };
@@ -613,6 +625,21 @@
 			path = CouponDetail;
 			sourceTree = "<group>";
 		};
+		481B9B261B2FBF28003B2D4B /* MBIBnspectable */ = {
+			isa = PBXGroup;
+			children = (
+				481B9B361B2FC568003B2D4B /* SCIBnsepectableManager.h */,
+				481B9B371B2FC568003B2D4B /* SCIBnsepectableManager.m */,
+				481B9B271B2FBF28003B2D4B /* UIButton+SCIBnspectable.h */,
+				481B9B281B2FBF28003B2D4B /* UIButton+SCIBnspectable.m */,
+				481B9B291B2FBF28003B2D4B /* UILabel+SCIBnsepectable.h */,
+				481B9B2A1B2FBF28003B2D4B /* UILabel+SCIBnsepectable.m */,
+				481B9B2B1B2FBF28003B2D4B /* UIView+SCIBnspectable.h */,
+				481B9B2C1B2FBF28003B2D4B /* UIView+SCIBnspectable.m */,
+			);
+			path = MBIBnspectable;
+			sourceTree = "<group>";
+		};
 		481D94611AC6B330005F3DD7 /* AliPay2.2.1 */ = {
 			isa = PBXGroup;
 			children = (
@@ -954,6 +981,7 @@
 		4866F92B1AACBD88008E195C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				481B9B261B2FBF28003B2D4B /* MBIBnspectable */,
 				48249D211B2883FA00B67676 /* Shops */,
 				482AC9781AB43B81001574EF /* Appraise */,
 				4866F92C1AACBD88008E195C /* Common */,
@@ -1766,12 +1794,14 @@
 				4896E3F11B10A85E00838EED /* SCOrderDetailPayCell.m in Sources */,
 				4896E3BF1B109F7F00838EED /* SCPayOrderViewController.m in Sources */,
 				4866F9B01AACBD89008E195C /* SCMerchantCell.m in Sources */,
+				481B9B2D1B2FBF28003B2D4B /* UIButton+SCIBnspectable.m in Sources */,
 				48FB70C81AA5A58300AF4AD9 /* SCAllDictionary.m in Sources */,
 				48FB70C41AA5A58300AF4AD9 /* SCCar.m in Sources */,
 				482AC9821AB48EE9001574EF /* SCTextView.m in Sources */,
 				4866F9EF1AAD9068008E195C /* SCGroupTicketCell.m in Sources */,
 				48A349071B0B385B0068F8E2 /* SCReservationItemCell.m in Sources */,
 				48FB70CD1AA5A58300AF4AD9 /* SCMerchant.m in Sources */,
+				481B9B2F1B2FBF28003B2D4B /* UIView+SCIBnspectable.m in Sources */,
 				482AC99D1AB6CA87001574EF /* SCCommentListViewController.m in Sources */,
 				4869679C1AD6A63900C3F7A6 /* SCMerchantSummary.m in Sources */,
 				4866F99A1AACBD89008E195C /* SCADView.m in Sources */,
@@ -1839,6 +1869,7 @@
 				48AB35DC1A517CAB00BFBC77 /* SCUserInfo.m in Sources */,
 				489AA1DE1B0356C700EDB86C /* SCWebViewController.m in Sources */,
 				480445B61AC5616B004C20B9 /* SCAliPayOrder.m in Sources */,
+				481B9B2E1B2FBF28003B2D4B /* UILabel+SCIBnsepectable.m in Sources */,
 				48A349021B0B385B0068F8E2 /* SCMoreMenu.m in Sources */,
 				4866F99D1AACBD89008E195C /* SCDriveHabitsItem.m in Sources */,
 				48249D321B2883FA00B67676 /* SCDiscoveryMerchantServiceCell.m in Sources */,
@@ -1892,6 +1923,7 @@
 				4896E3E11B10A5EA00838EED /* SCOrderDetailViewController.m in Sources */,
 				4866F9AC1AACBD89008E195C /* SCDateCell.m in Sources */,
 				4866F8B71AAB32ED008E195C /* SCGroupProductDetail.m in Sources */,
+				481B9B381B2FC568003B2D4B /* SCIBnsepectableManager.m in Sources */,
 				4866F91F1AACBD2D008E195C /* SCQAViewController.m in Sources */,
 				486967B41AD80DF800C3F7A6 /* SCQuotedPrice.m in Sources */,
 				486967B11AD803EB00C3F7A6 /* SCQuotedPriceGroup.m in Sources */,
