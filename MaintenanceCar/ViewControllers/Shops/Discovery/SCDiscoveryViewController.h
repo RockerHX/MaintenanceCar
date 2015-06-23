@@ -6,11 +6,11 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCViewControllerCategory.h"
+#import "SCViewController.h"
 
 @class SCShopList;
 
-@interface SCDiscoveryViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface SCDiscoveryViewController : SCViewController <UITableViewDataSource, UITableViewDelegate>
 {
     SCShopList *_shopList;
 }

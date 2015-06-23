@@ -40,7 +40,7 @@
 		482B57E71A43CB7700E47962 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 482B57E61A43CB7700E47962 /* Images.xcassets */; };
 		482B57EA1A43CB7700E47962 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 482B57E81A43CB7700E47962 /* LaunchScreen.xib */; };
 		482B57F61A43CB7700E47962 /* MaintenanceCarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 482B57F51A43CB7700E47962 /* MaintenanceCarTests.m */; };
-		483BA63B1B31565A00B24C5F /* SCNetworkLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 483BA63A1B31565A00B24C5F /* SCNetworkLoadingViewController.m */; };
+		483BA63B1B31565A00B24C5F /* SCLoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 483BA63A1B31565A00B24C5F /* SCLoadingViewController.m */; };
 		483BA63F1B31566400B24C5F /* SCActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 483BA63E1B31566400B24C5F /* SCActivityIndicator.m */; };
 		4841CECD1A6BE5C300DA36FC /* SCUserCar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CECC1A6BE5C300DA36FC /* SCUserCar.m */; };
 		48534A631AE8A7F5000665A4 /* SCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48534A621AE8A7F5000665A4 /* SCTableViewCell.m */; };
@@ -197,6 +197,7 @@
 		48FB70CD1AA5A58300AF4AD9 /* SCMerchant.m in Sources */ = {isa = PBXBuildFile; fileRef = 48FB70BE1AA5A58300AF4AD9 /* SCMerchant.m */; };
 		48FB70CE1AA5A58300AF4AD9 /* SCMerchantDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 48FB70C01AA5A58300AF4AD9 /* SCMerchantDetail.m */; };
 		48FB70CF1AA5A58300AF4AD9 /* SCReservation.m in Sources */ = {isa = PBXBuildFile; fileRef = 48FB70C31AA5A58300AF4AD9 /* SCReservation.m */; };
+		48FCC5F31B31690F00AEB874 /* SCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48FCC5F21B31690F00AEB874 /* SCViewController.m */; };
 		9E0A36B3F4162AAD50219CE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0D4E7F3EE1B590B1DC7DC0 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -275,8 +276,8 @@
 		482B57EF1A43CB7700E47962 /* MaintenanceCarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaintenanceCarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		482B57F41A43CB7700E47962 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		482B57F51A43CB7700E47962 /* MaintenanceCarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaintenanceCarTests.m; sourceTree = "<group>"; };
-		483BA6391B31565A00B24C5F /* SCNetworkLoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNetworkLoadingViewController.h; sourceTree = "<group>"; };
-		483BA63A1B31565A00B24C5F /* SCNetworkLoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCNetworkLoadingViewController.m; sourceTree = "<group>"; };
+		483BA6391B31565A00B24C5F /* SCLoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLoadingViewController.h; sourceTree = "<group>"; };
+		483BA63A1B31565A00B24C5F /* SCLoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLoadingViewController.m; sourceTree = "<group>"; };
 		483BA63D1B31566400B24C5F /* SCActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCActivityIndicator.h; sourceTree = "<group>"; };
 		483BA63E1B31566400B24C5F /* SCActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCActivityIndicator.m; sourceTree = "<group>"; };
 		4841CECB1A6BE5C300DA36FC /* SCUserCar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCUserCar.h; sourceTree = "<group>"; };
@@ -571,6 +572,8 @@
 		48FB70C01AA5A58300AF4AD9 /* SCMerchantDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMerchantDetail.m; sourceTree = "<group>"; };
 		48FB70C21AA5A58300AF4AD9 /* SCReservation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCReservation.h; sourceTree = "<group>"; };
 		48FB70C31AA5A58300AF4AD9 /* SCReservation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCReservation.m; sourceTree = "<group>"; };
+		48FCC5F11B31690F00AEB874 /* SCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCViewController.h; sourceTree = "<group>"; };
+		48FCC5F21B31690F00AEB874 /* SCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCViewController.m; sourceTree = "<group>"; };
 		6BF7DC11E8E03D2E33EF3C43 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E2AD02DF3987D2F961F0ADFB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -849,8 +852,8 @@
 		483BA6381B31565A00B24C5F /* Loading */ = {
 			isa = PBXGroup;
 			children = (
-				483BA6391B31565A00B24C5F /* SCNetworkLoadingViewController.h */,
-				483BA63A1B31565A00B24C5F /* SCNetworkLoadingViewController.m */,
+				483BA6391B31565A00B24C5F /* SCLoadingViewController.h */,
+				483BA63A1B31565A00B24C5F /* SCLoadingViewController.m */,
 			);
 			path = Loading;
 			sourceTree = "<group>";
@@ -891,6 +894,8 @@
 				4866F8FF1AACBD2D008E195C /* UserCenter */,
 				4866F8FD1AACBD2D008E195C /* SCViewControllerCategory.h */,
 				4866F8FE1AACBD2D008E195C /* SCViewControllerCategory.m */,
+				48FCC5F11B31690F00AEB874 /* SCViewController.h */,
+				48FCC5F21B31690F00AEB874 /* SCViewController.m */,
 				4866F8F51AACBD2D008E195C /* SCMainViewController.h */,
 				4866F8F61AACBD2D008E195C /* SCMainViewController.m */,
 				4866F8F31AACBD2D008E195C /* SCHomePageViewController.h */,
@@ -1806,7 +1811,7 @@
 				48720E0B1AE4F9CD002D435F /* SCNavigationTab.m in Sources */,
 				4869679F1AD6BBB800C3F7A6 /* SCMerchantGroup.m in Sources */,
 				4896E3E01B10A5EA00838EED /* SCAppraiseViewController.m in Sources */,
-				483BA63B1B31565A00B24C5F /* SCNetworkLoadingViewController.m in Sources */,
+				483BA63B1B31565A00B24C5F /* SCLoadingViewController.m in Sources */,
 				4866FA1E1AAED9B2008E195C /* SCGroupTicketCodeCell.m in Sources */,
 				48C8B1D91A80CC1200E4114E /* SCObjectCategory.m in Sources */,
 				4866F9A21AACBD89008E195C /* SCMaintenanceTypeView.m in Sources */,
@@ -1864,6 +1869,7 @@
 				4866F9211AACBD2D008E195C /* SCViewControllerCategory.m in Sources */,
 				4866F91D1AACBD2D008E195C /* SCMainViewController.m in Sources */,
 				4866F9C01AACBD89008E195C /* SCUserInfoView.m in Sources */,
+				48FCC5F31B31690F00AEB874 /* SCViewController.m in Sources */,
 				48AB35DC1A517CAB00BFBC77 /* SCUserInfo.m in Sources */,
 				489AA1DE1B0356C700EDB86C /* SCWebViewController.m in Sources */,
 				480445B61AC5616B004C20B9 /* SCAliPayOrder.m in Sources */,

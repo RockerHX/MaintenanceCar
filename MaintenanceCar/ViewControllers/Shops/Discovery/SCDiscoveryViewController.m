@@ -6,12 +6,12 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "SCDiscoveryViewController.h"
 #import "SCDiscoveryMerchantCell.h"
 #import "SCDiscoveryPopProductCell.h"
 #import "SCDiscoveryPopPromptCell.h"
 #import "SCShopList.h"
-#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface SCDiscoveryViewController ()
 @end
@@ -57,7 +57,6 @@
         if (shopsLoaded.boolValue)
         {
             NSLog(@"serverPrompt:%@", _shopList.serverPrompt);
-            [self.tableView reloadData];
             [self hanleErrorWithServerStatusCode:_shopList.statusCode];
         }
     }];
@@ -146,13 +145,15 @@
             [self showShoulReLoginAlert];
             break;
             
-        default:
+        case SCAPIRequestErrorCodeNoError:
         {
-            if (_shopList.serverPrompt.length)
-                [self showHUDAlertToViewController:self text:_shopList.serverPrompt];
+            [self.tableView reloadData];
+            [self loadFinished];
         }
             break;
     }
+    if (_shopList.serverPrompt.length)
+        [self showHUDAlertToViewController:self text:_shopList.serverPrompt];
 }
 
 @end
