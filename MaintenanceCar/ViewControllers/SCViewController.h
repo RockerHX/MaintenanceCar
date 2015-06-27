@@ -8,15 +8,18 @@
 
 #import "SCViewControllerCategory.h"
 #import "SCLoadingViewController.h"
+#import "SCServerResponse.h"
 
 @interface SCViewController : UIViewController <SCLoadingViewControllerDelegate>
 {
-    UIView *_loadingContainerView;
     SCLoadingViewController *_loadingViewController;
 }
 
+@property (weak, nonatomic) IBOutlet UIView *loadingContainerView;
+
 - (void)loadFinished;
 - (void)loadError;
+- (void)hanleServerResponse:(SCServerResponse *)response;
 - (void)retryRequest;
 
 @end

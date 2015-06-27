@@ -1,20 +1,21 @@
 //
-//  SCShopList.h
+//  SCFilterViewModel.h
 //  MaintenanceCar
 //
-//  Created by ShiCang on 15/6/9.
+//  Created by ShiCang on 15/6/26.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCShopViewModel.h"
+#import "SCFilter.h"
 
 @class SCServerResponse;
-@interface SCShopList : NSObject
+@interface SCFilterViewModel : NSObject
 
 @property (nonatomic, assign)                        BOOL  loaded;
 @property (nonatomic, strong, readonly)  SCServerResponse *serverResponse;
-@property (nonatomic, strong, readonly)           NSArray *shops;
 
-- (void)loadMoreShops;
+@property (nonatomic, strong, readonly) SCFilter *filter;
+
+- (void)load;
 
 @end

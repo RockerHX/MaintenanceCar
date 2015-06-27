@@ -77,6 +77,7 @@
 
 #pragma mark - V2
 #define ShopsAPI                    @"/company_search/company_product"      // 商家列表的API
+#define FilterCategoryAPI           @"/company_search/category"             // 筛选分类API
 
 #define ProgressOrdersAPI           @"/Reservation/doing"                   // 我的进行中订单API
 #define FinishedOrdersAPI           @"/Reservation/done"                    // 我的已完成订单API
@@ -142,6 +143,7 @@
 
 #pragma mark - V2
 #define ShopsAPIURL                     [V2APIURL stringByAppendingString:ShopsAPI]                   // 商家列表接口URL - 用于请求商家列表数据
+#define FilterCategoryAPIURL            [V2APIURL stringByAppendingString:FilterCategoryAPI]          // 筛选分类接口URL - 用于请求筛选的分类数据
 
 #define ProgressOrdersAPIURL            [V2APIURL stringByAppendingString:ProgressOrdersAPI]          // 进行中订单接口URL - 用于进行中订单数据获取
 #define FinishedOrdersAPIURL            [V2APIURL stringByAppendingString:FinishedOrdersAPI]          // 已完成订单接口URL - 用于已完成订单数据获取

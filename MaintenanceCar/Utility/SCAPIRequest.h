@@ -352,13 +352,20 @@ FOUNDATION_EXPORT NSString *const CocoaErrorJsonParseError;
 
 
 #pragma mark - V2 API
-#pragma mark - Discovery API
+#pragma mark - Shops API
 /**
  *  商家列表接口请求方法(API:/company_search/company_product - GET)
  */
 - (void)startShopsAPIRequestWithParameters:(NSDictionary *)parameters
                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  筛选分类数据接口请求方法(API:/company_search/category - GET)
+ */
+- (void)startFilterCategoryAPIRequestWithParameters:(NSDictionary *)parameters
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - User Center API
 /**

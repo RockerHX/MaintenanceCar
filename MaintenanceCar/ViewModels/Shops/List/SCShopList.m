@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <MJExtension/MJExtension.h>
 #import "SCShopList.h"
 #import "SCAPIRequest.h"
+#import "SCServerResponse.h"
 
 @implementation SCShopList
 {
@@ -44,9 +44,8 @@
     [[SCAPIRequest manager] startShopsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            _statusCode = [responseObject[@"status_code"] integerValue];
-            _serverPrompt = responseObject[@"status_message"];
-            if (_statusCode == SCAPIRequestErrorCodeNoError)
+            _serverResponse = [[SCServerResponse alloc] initWithResponseObject:responseObject];
+            if (_serverResponse.statusCode == SCAPIRequestErrorCodeNoError)
             {
                 [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                     SCShop *shop = [SCShop objectWithKeyValues:obj];
@@ -54,20 +53,18 @@
                     [_shops addObject:shopViewModel];
                 }];
             }
-            weakSelf.shopsLoaded = YES;
+            weakSelf.loaded = YES;
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (error.code == CocoaErrorCodeJsonParseError)
         {
-            _statusCode = error.code;
-            _serverPrompt = CocoaErrorJsonParseError;
+            _serverResponse = [[SCServerResponse alloc] init];
+            _serverResponse.statusCode = error.code;
+            _serverResponse.prompt = CocoaErrorJsonParseError;
         }
         else
-        {
-            _statusCode = [operation.responseObject[@"status_code"] integerValue];
-            _serverPrompt = operation.responseObject[@"status_message"];
-        }
-        weakSelf.shopsLoaded = YES;
+            _serverResponse = [[SCServerResponse alloc] initWithResponseObject:operation.responseObject];
+        weakSelf.loaded = YES;
     }];
 }
 

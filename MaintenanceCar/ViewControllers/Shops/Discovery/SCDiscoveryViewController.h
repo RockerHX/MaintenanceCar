@@ -9,12 +9,16 @@
 #import "SCViewController.h"
 
 @class SCShopList;
+@class SCFilterViewModel;
+@class SCFilterView;
 
 @interface SCDiscoveryViewController : SCViewController <UITableViewDataSource, UITableViewDelegate>
 {
-    SCShopList *_shopList;
+    SCShopList        *_shopList;
+    SCFilterViewModel *_filterViewModel;
 }
 
+@property (weak, nonatomic) IBOutlet SCFilterView *filterView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 + (instancetype)instance;

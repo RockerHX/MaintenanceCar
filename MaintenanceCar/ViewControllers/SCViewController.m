@@ -41,7 +41,27 @@
 
 - (void)loadError
 {
-    
+    [self performSelector:@selector(hideLoadingView) withObject:nil afterDelay:0.5f];
+}
+
+- (void)hanleServerResponse:(SCServerResponse *)response
+{
+    switch (response.statusCode)
+    {
+        case SCAPIRequestErrorCodeNoError:
+        {
+            [self loadFinished];
+        }
+            break;
+        case SCAPIRequestStatusCodeTokenError:
+            [self showShoulReLoginAlert];
+            break;
+        case SCAPIRequestErrorCodeListNotFoundMore:
+            [self loadFinished];
+            break;
+    }
+    if (response.prompt.length)
+        [self showHUDAlertToViewController:self text:response.prompt];
 }
 
 #pragma mark - KMNetworkLoadingViewDelegate

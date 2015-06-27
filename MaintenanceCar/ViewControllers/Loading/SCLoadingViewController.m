@@ -10,9 +10,7 @@
 
 @implementation SCLoadingViewController
 
-#pragma mark -
-#pragma mark View LifeCycle
-
+#pragma mark - View LifeCycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];

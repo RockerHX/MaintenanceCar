@@ -378,15 +378,19 @@ NSString *const CocoaErrorJsonParseError    = @"数据出错，请联系元景�
 
 
 #pragma mark - V2 API
-#pragma mark - Discovery API
-/**
- *  商家列表接口请求方法(API:/company_search/company_product - GET)
- */
+#pragma mark - Shops API
 - (void)startShopsAPIRequestWithParameters:(NSDictionary *)parameters
                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     [self requestGETMethodsWithAPI:ShopsAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startFilterCategoryAPIRequestWithParameters:(NSDictionary *)parameters
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:FilterCategoryAPIURL parameters:parameters success:success failure:failure];
 }
 
 #pragma mark - User Center API

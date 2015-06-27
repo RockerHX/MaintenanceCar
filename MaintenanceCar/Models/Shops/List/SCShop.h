@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <MJExtension/MJExtension.h>
 
 // 商家特色数据模型
 @interface SCShopCharacteristic : NSObject

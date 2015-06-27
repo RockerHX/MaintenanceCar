@@ -12,6 +12,8 @@
 #import "SCDiscoveryPopProductCell.h"
 #import "SCDiscoveryPopPromptCell.h"
 #import "SCShopList.h"
+#import "SCFilterViewModel.h"
+#import "SCFilterView.h"
 
 @interface SCDiscoveryViewController ()
 @end
@@ -38,6 +40,7 @@
     [super viewDidLoad];
     
     [self initConfig];
+    [self viewConfig];
 }
 
 #pragma mark - Init Methods
@@ -51,16 +54,23 @@
 {
     _shopList = [[SCShopList alloc] init];
     @weakify(self)
-    [RACObserve(_shopList, shopsLoaded) subscribeNext:^(id x) {
+    [RACObserve(_shopList, loaded) subscribeNext:^(NSNumber *loaded) {
         @strongify(self)
-        NSNumber *shopsLoaded = x;
-        if (shopsLoaded.boolValue)
-        {
-            NSLog(@"serverPrompt:%@", _shopList.serverPrompt);
-            [self hanleErrorWithServerStatusCode:_shopList.statusCode];
-        }
+        if (loaded.boolValue)
+            [self hanleServerResponse:_shopList.serverResponse];
     }];
+    _filterViewModel = [[SCFilterViewModel alloc] init];
+    [RACObserve(_filterViewModel, loaded) subscribeNext:^(NSNumber *loaded) {
+        if (loaded.boolValue)
+            _filterView.filterViewModel = _filterViewModel;
+    }];
+    [_filterViewModel load];
     [_shopList loadMoreShops];
+}
+
+- (void)viewConfig
+{
+    _tableView.scrollsToTop = YES;
 }
 
 #pragma mark - Table View Data Source Methods
@@ -136,24 +146,12 @@
     }
 }
 
-#pragma mark - Private Methods
-- (void)hanleErrorWithServerStatusCode:(NSInteger)code
+#pragma mark - Public Methods
+- (void)hanleServerResponse:(SCServerResponse *)response
 {
-    switch (code)
-    {
-        case SCAPIRequestStatusCodeTokenError:
-            [self showShoulReLoginAlert];
-            break;
-            
-        case SCAPIRequestErrorCodeNoError:
-        {
-            [self.tableView reloadData];
-            [self loadFinished];
-        }
-            break;
-    }
-    if (_shopList.serverPrompt.length)
-        [self showHUDAlertToViewController:self text:_shopList.serverPrompt];
+    if (response.statusCode == SCAPIRequestErrorCodeNoError)
+        [self.tableView reloadData];
+    [super hanleServerResponse:response];
 }
 
 @end

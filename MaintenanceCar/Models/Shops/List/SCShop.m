@@ -7,7 +7,6 @@
 //
 
 #import "SCShop.h"
-#import <MJExtension/MJExtension.h>
 
 @implementation SCShopCharacteristic
 
