@@ -11,8 +11,8 @@
 typedef NS_ENUM(NSUInteger, SCFilterType) {
     SCFilterTypeService,
     SCFilterTypeRegion,
-    SCFilterTypeModel,
-    SCFilterTypeSort
+    SCFilterTypeSort,
+    SCFilterTypeCarModel,
 };
 
 @class SCFilterCategory;
@@ -31,8 +31,8 @@ typedef NS_ENUM(NSUInteger, SCFilterType) {
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *heightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *buttonHeightConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentWidthConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentHeightConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *mainFilterViewWidthConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *bottomBarHeightConstraint;
 
 @property (nonatomic, weak) IBOutlet      UIView *containerView;

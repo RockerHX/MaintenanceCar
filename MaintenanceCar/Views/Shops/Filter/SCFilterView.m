@@ -120,18 +120,18 @@ typedef void(^BLOCK)(NSUInteger index);
                 _filterCategory = _filterViewModel.filter.regionCategory;
             }
                 break;
-            case SCFilterTypeModel:
-            {
-                _filterCategory = _filterViewModel.filter.carModelCategory;
-            }
-                break;
             case SCFilterTypeSort:
             {
                 _filterCategory = _filterViewModel.filter.sortCategory;
             }
                 break;
+            case SCFilterTypeCarModel:
+            {
+                _filterCategory = _filterViewModel.filter.carModelCategory;
+            }
+                break;
         }
-        _contentWidthConstraint.constant = _filterCategory.hasSubItems ? contentWidth : Zero;
+        _mainFilterViewWidthConstraint.constant = _filterCategory.hasSubItems ? contentWidth : Zero;
         if (_filterCategory.hasSubItems)
         {
             [self.mainFilterView reloadData];
