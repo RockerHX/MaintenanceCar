@@ -24,16 +24,29 @@
 #pragma mark - Private Methods
 - (void)hideLoadingView
 {
-    [UIView transitionWithView:self.view duration:0.3f options:UIViewAnimationOptionTransitionCrossDissolve animations:^(void)
-     {
-         [_loadingContainerView removeFromSuperview];
-     } completion:^(BOOL finished) {
-         [_loadingViewController removeFromParentViewController];
-         _loadingContainerView = nil;
-     }];
+    [UIView transitionWithView:self.view duration:0.3f options:UIViewAnimationOptionTransitionCrossDissolve animations:^(void){
+        _loadingContainerView.hidden = YES;
+    } completion:^(BOOL finished) {
+        [_loadingViewController hiddenLoadingView];
+    }];
+}
+
+- (void)showErrorView
+{
+    [self hideLoadingView];
+    [_loadingViewController showErrorView];
 }
 
 #pragma mark - Public Methods
+- (void)showLoadingView
+{
+    [UIView transitionWithView:self.view duration:0.2f options:UIViewAnimationOptionTransitionCrossDissolve animations:^(void){
+        _loadingContainerView.hidden = NO;
+    } completion:^(BOOL finished) {
+        [_loadingViewController showLoadingView];
+    }];
+}
+
 - (void)loadFinished
 {
     [self performSelector:@selector(hideLoadingView) withObject:nil afterDelay:0.5f];
@@ -41,7 +54,7 @@
 
 - (void)loadError
 {
-    [self performSelector:@selector(hideLoadingView) withObject:nil afterDelay:0.5f];
+    [self performSelector:@selector(showErrorView) withObject:nil afterDelay:0.5f];
 }
 
 - (void)hanleServerResponse:(SCServerResponse *)response
@@ -59,9 +72,14 @@
         case SCAPIRequestErrorCodeListNotFoundMore:
             [self loadFinished];
             break;
+        default:
+            [self loadError];
+            break;
     }
     if (response.prompt.length)
         [self showHUDAlertToViewController:self text:response.prompt];
+    if (response.locationPrompt.length)
+        [self showHUDAlertToViewController:self text:response.locationPrompt];
 }
 
 #pragma mark - KMNetworkLoadingViewDelegate

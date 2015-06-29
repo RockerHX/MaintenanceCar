@@ -9,9 +9,11 @@
 #import "SCShopList.h"
 #import "SCAPIRequest.h"
 #import "SCServerResponse.h"
+#import "SCLocationManager.h"
 
 @implementation SCShopList
 {
+    NSInteger       _offset;
     NSMutableArray *_shops;
 }
 
@@ -21,9 +23,19 @@
     self = [super init];
     if (self)
     {
-        _shops = @[].mutableCopy;
+        [self initConfig];
     }
     return self;
+}
+
+#pragma mark - Config Methods
+- (void)initConfig
+{
+    _shops = @[].mutableCopy;
+    _parameters = @{@"limit": @(SearchLimit),
+                   @"offset": @(_offset),
+                   @"radius": @(SearchRadius)}.mutableCopy;
+    _serverResponse = [[SCServerResponse alloc] init];
 }
 
 #pragma mark - Setter And Getter Methods
@@ -32,19 +44,29 @@
     return [NSArray arrayWithArray:_shops];
 }
 
-#pragma mark - Public Methods
-- (void)loadMoreShops
+#pragma mark - Private Methods
+- (void)clearShops
 {
-    NSDictionary *parameters = @{@"limit": @"10",
-                                @"offset": @"0",
-                              @"latitude": @"22.5207972824928",
-                            @"longtitude": @"113.9498737813554",
-                                @"radius": @"50000"};
+    _offset = 0;
+    [_shops removeAllObjects];
+    [_parameters setValue:@(_offset) forKey:@"offset"];
+}
+
+- (void)addParametersWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
+{
+    [_parameters setValue:latitude forKey:@"latitude"];
+    [_parameters setValue:longitude forKey:@"longtitude"];
+}
+
+- (void)requestShops
+{
     __weak typeof(self)weakSelf = self;
-    [[SCAPIRequest manager] startShopsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAPIRequest manager] startShopsAPIRequestWithParameters:_parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            _serverResponse = [[SCServerResponse alloc] initWithResponseObject:responseObject];
+            [_serverResponse parseResponseObject:responseObject];
+            if (_serverResponse.firstLoad)
+                [self clearShops];
             if (_serverResponse.statusCode == SCAPIRequestErrorCodeNoError)
             {
                 [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -63,9 +85,31 @@
             _serverResponse.prompt = CocoaErrorJsonParseError;
         }
         else
-            _serverResponse = [[SCServerResponse alloc] initWithResponseObject:operation.responseObject];
+            [_serverResponse parseResponseObject:operation.responseObject];
         weakSelf.loaded = YES;
     }];
+}
+
+#pragma mark - Public Methods
+- (void)reloadShops
+{
+    _serverResponse.firstLoad = YES;
+    __weak typeof(self)weakSelf = self;
+    [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
+        [self addParametersWithLatitude:latitude longitude:longitude];
+        [weakSelf requestShops];
+    } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
+        [self addParametersWithLatitude:latitude longitude:longitude];
+        [weakSelf requestShops];
+        _serverResponse.locationPrompt = @"定位失败，采用当前城市中心坐标!";
+    }];
+}
+
+- (void)loadMoreShops
+{
+    _serverResponse.firstLoad = NO;
+    [_parameters setValue:@(++_offset) forKey:@"offset"];
+    [self requestShops];
 }
 
 @end

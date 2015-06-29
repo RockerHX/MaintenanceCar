@@ -12,10 +12,10 @@
 #import "SCFilterCell.h"
 
 static CGFloat contentWidth = 140.0f;
-static CGFloat contentHeight = 200.0f;
+static CGFloat contentHeight = 195.0f;
 static CGFloat bottomBarHeight = 20.0f;
 
-typedef void(^BLOCK)(NSUInteger index);
+typedef void(^BLOCK)(NSString *param, NSString *value);
 
 @implementation SCFilterView
 {
@@ -52,16 +52,15 @@ typedef void(^BLOCK)(NSUInteger index);
 - (IBAction)filterButtonPressed:(UIButton *)button
 {
     _filterType = button.tag;
-    if (!_popUp)
-        [self popUp];
+    _mainFilterIndex = Zero;
     [self reload];
+    [self popUp];
 }
 
 #pragma mark - Touch Event Methods
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (_popUp)
-        [self packUp];
+    [self packUp];
 }
 
 #pragma mark - Private Methods
@@ -71,16 +70,15 @@ typedef void(^BLOCK)(NSUInteger index);
     _bottomBarHeightConstraint.constant = Zero;
     _contentHeightConstraint.constant = Zero;
     [self needsUpdateConstraints];
-    [UIView animateWithDuration:(_filterViewModel ? 0.3f : 0.2f) delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
         [_popUpView layoutIfNeeded];
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.2f animations:^{
+        [UIView animateWithDuration:0.2f delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
             _containerView.alpha = Zero;
         } completion:^(BOOL finished) {
             _containerView.alpha = 1.0f;
             _heightConstraint.constant = _buttonHeightConstraint.constant;
             _canSelected = YES;
-            _popUp = NO;
         }];
     }];
 }
@@ -91,16 +89,14 @@ typedef void(^BLOCK)(NSUInteger index);
     {
         _canSelected = NO;
         _heightConstraint.constant = SCREEN_HEIGHT;
-        _contentHeightConstraint.constant = _filterViewModel ? contentHeight : bottomBarHeight;
+        _contentHeightConstraint.constant = (_filterCategory.maxCount > 4) ? contentHeight : (_filterCategory.maxCount*44.0f + bottomBarHeight);
         _bottomBarHeightConstraint.constant = bottomBarHeight;
         [self needsUpdateConstraints];
     }
-    [UIView animateWithDuration:(_filterViewModel ? 0.3f : 0.2f) delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
         [_popUpView layoutIfNeeded];
     } completion:^(BOOL finished) {
-//        [weakSelf.contentView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
         _canSelected = YES;
-        _popUp = YES;
     }];
 }
 
@@ -132,18 +128,19 @@ typedef void(^BLOCK)(NSUInteger index);
                 break;
         }
         _mainFilterViewWidthConstraint.constant = _filterCategory.hasSubItems ? contentWidth : Zero;
+        [_popUpView layoutIfNeeded];
         if (_filterCategory.hasSubItems)
         {
-            [self.mainFilterView reloadData];
-            [self.subFilterView reloadData];
+            [_mainFilterView reloadData];
+            [_subFilterView reloadData];
         }
         else
-            [self.subFilterView reloadData];
+            [_subFilterView reloadData];
     }
 }
 
 #pragma mark - Public Methods
-- (void)selectedAtIndex:(void(^)(NSUInteger index))block
+- (void)fiflterCompleted:(void(^)(NSString *param, NSString *value))block
 {
     _block = block;
 }
@@ -151,34 +148,51 @@ typedef void(^BLOCK)(NSUInteger index);
 #pragma mark - Table View Data Source Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([tableView isEqual:_subFilterView])
+    if ([tableView isEqual:_subFilterView] && _filterCategory.hasSubItems)
     {
         SCFilterCategoryItem *item = _filterCategory.items[_mainFilterIndex];
         return item.subItems.count;
     }
-    else if ([tableView isEqual:_mainFilterView])
-        return _filterCategory.items.count;
-    else
-        return 0;
+    return _filterCategory.items.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCFilterCategoryItem *item = nil;
-    if ([tableView isEqual:_subFilterView])
-        item = ((SCFilterCategoryItem *)_filterCategory.items[_mainFilterIndex]).subItems[indexPath.row];
-    else if ([tableView isEqual:_mainFilterView])
-        item = _filterCategory.items[indexPath.row];
+    NSArray *items = nil;
+    if ([tableView isEqual:_subFilterView] && _filterCategory.hasSubItems)
+        items = ((SCFilterCategoryItem *)_filterCategory.items[_mainFilterIndex]).subItems;
+    else
+        items = _filterCategory.items;
     SCFilterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCFilterCell" forIndexPath:indexPath];
-    cell.titleLabel.text = item.title;
+    [cell displayWithItems:items atIndex:indexPath.row];
     return cell;
 }
 
 #pragma mark - Table View Delegate Methods
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([tableView isEqual:_mainFilterView])
+    {
         _mainFilterIndex = indexPath.row;
+        [_subFilterView reloadData];
+        [_subFilterView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Zero inSection:Zero] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
+    else if ([tableView isEqual:_subFilterView])
+    {
+        SCFilterCategoryItem *item = nil;
+        if (_filterCategory.hasSubItems)
+            item = ((SCFilterCategoryItem *)_filterCategory.items[_mainFilterIndex]).subItems[indexPath.row];
+        else
+            item = _filterCategory.items[indexPath.row];
+        if (_block)
+        {
+            if (_filterCategory.program)
+                _block(_filterCategory.program, item.value);
+            else if (item.program)
+                _block(item.program, item.value);
+        }
+        [self packUp];
+    }
 }
 
 @end

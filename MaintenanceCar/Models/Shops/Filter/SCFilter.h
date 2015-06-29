@@ -11,6 +11,7 @@
 @interface SCFilterCategoryItem : NSObject
 
 @property (nonatomic, copy)  NSString *title;
+@property (nonatomic, copy)  NSString *program;
 @property (nonatomic, copy)  NSString *value;
 @property (nonatomic, strong) NSArray *subItems;
 
@@ -18,10 +19,11 @@
 
 @interface SCFilterCategory : NSObject
 
-@property (nonatomic, assign)    BOOL  hasSubItems;
-@property (nonatomic, copy)  NSString *program;
-@property (nonatomic, copy)  NSString *value;
-@property (nonatomic, strong) NSArray *items;
+@property (nonatomic, assign)      BOOL  hasSubItems;
+@property (nonatomic, assign) NSInteger  maxCount;
+@property (nonatomic, copy)   NSString *program;
+@property (nonatomic, copy)   NSString *value;
+@property (nonatomic, strong)  NSArray *items;
 
 @end
 

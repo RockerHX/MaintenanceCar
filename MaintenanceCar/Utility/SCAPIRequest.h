@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFNetworking.h>
 #import "API.h"
+#import "AppMicroConstants.h"
 
 typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
     SCAPIRequestStatusCodeGETSuccess     = 200,

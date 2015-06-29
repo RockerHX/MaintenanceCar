@@ -10,15 +10,10 @@
 
 @implementation SCServerResponse
 
-- (instancetype)initWithResponseObject:(id)responseObject
+- (void)parseResponseObject:(id)responseObject
 {
-    self = [super init];
-    if (self)
-    {
-        _statusCode = [responseObject[@"status_code"] integerValue];
-        _prompt = responseObject[@"status_message"];
-    }
-    return self;
+    _statusCode = [responseObject[@"status_code"] integerValue];
+    _prompt = responseObject[@"status_message"];
 }
 
 @end

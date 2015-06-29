@@ -10,9 +10,11 @@
 
 @interface SCServerResponse : NSObject
 
+@property (nonatomic, assign)      BOOL  firstLoad;
 @property (nonatomic, assign) NSInteger  statusCode;
 @property (nonatomic, strong)  NSString *prompt;
+@property (nonatomic, strong)  NSString *locationPrompt;
 
-- (instancetype)initWithResponseObject:(id)responseObject;
+- (void)parseResponseObject:(id)responseObject;
 
 @end

@@ -59,18 +59,23 @@
         if (loaded.boolValue)
             [self hanleServerResponse:_shopList.serverResponse];
     }];
+    [_shopList reloadShops];
     _filterViewModel = [[SCFilterViewModel alloc] init];
-    [RACObserve(_filterViewModel, loaded) subscribeNext:^(NSNumber *loaded) {
-        if (loaded.boolValue)
-            _filterView.filterViewModel = _filterViewModel;
+    [_filterViewModel loadCompleted:^(SCFilterViewModel *viewModel, BOOL success) {
+        if (success)
+            _filterView.filterViewModel = viewModel;
     }];
-    [_filterViewModel load];
-    [_shopList loadMoreShops];
 }
 
 - (void)viewConfig
 {
-    _tableView.scrollsToTop = YES;
+    self.tableView.scrollsToTop = YES;
+    WEAK_SELF(weakSelf);
+    [_filterView fiflterCompleted:^(NSString *param, NSString *value) {
+        [weakSelf showLoadingView];
+        [_shopList.parameters setValue:value forKey:param];
+        [_shopList reloadShops];
+    }];
 }
 
 #pragma mark - Table View Data Source Methods
@@ -150,7 +155,11 @@
 - (void)hanleServerResponse:(SCServerResponse *)response
 {
     if (response.statusCode == SCAPIRequestErrorCodeNoError)
+    {
         [self.tableView reloadData];
+        if (response.firstLoad)
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+    }
     [super hanleServerResponse:response];
 }
 

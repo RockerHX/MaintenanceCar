@@ -20,7 +20,6 @@ typedef NS_ENUM(NSUInteger, SCFilterType) {
 @interface SCFilterView : UIView <UITableViewDataSource, UITableViewDelegate>
 {
     BOOL _canSelected;
-    BOOL _popUp;
     
     NSInteger _mainFilterIndex;
     NSInteger _subFilterIndex;
@@ -52,6 +51,6 @@ typedef NS_ENUM(NSUInteger, SCFilterType) {
 
 - (IBAction)filterButtonPressed:(UIButton *)button;
 
-- (void)selectedAtIndex:(void(^)(NSUInteger index))block;
+- (void)fiflterCompleted:(void(^)(NSString *param, NSString *value))block;
 
 @end

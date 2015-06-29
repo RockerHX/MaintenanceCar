@@ -17,6 +17,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *loadingContainerView;
 
+- (void)showLoadingView;
 - (void)loadFinished;
 - (void)loadError;
 - (void)hanleServerResponse:(SCServerResponse *)response;

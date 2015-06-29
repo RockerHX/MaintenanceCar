@@ -29,6 +29,7 @@
 - (IBAction)retryButtonPressed;
 
 - (void)showLoadingView;
+- (void)hiddenLoadingView;
 - (void)showNoContentView;
 - (void)showErrorView;
 

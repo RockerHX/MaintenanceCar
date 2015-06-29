@@ -11,5 +11,8 @@
 @interface SCFilterCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
+@property (nonatomic, weak) IBOutlet  UIView *bottomLine;
+
+- (void)displayWithItems:(NSArray *)items atIndex:(NSInteger)index;
 
 @end

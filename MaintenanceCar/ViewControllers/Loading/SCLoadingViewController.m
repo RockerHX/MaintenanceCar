@@ -17,16 +17,16 @@
     [self showLoadingView];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [_activityIndicatorView startAnimating];
-}
-
 - (void)showLoadingView
 {
     _errorView.hidden = YES;
     _activityIndicatorView.color = [UIColor colorWithRed:232.0f/255.0f green:35.0f/255.0f blue:111.0f/255.0f alpha:1.0f];
+    [_activityIndicatorView startAnimating];
+}
+
+- (void)hiddenLoadingView
+{
+    [_activityIndicatorView stopAnimating];
 }
 
 - (void)showErrorView

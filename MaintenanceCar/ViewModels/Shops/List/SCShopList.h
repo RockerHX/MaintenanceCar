@@ -12,9 +12,11 @@
 @interface SCShopList : NSObject
 
 @property (nonatomic, assign)                        BOOL  loaded;
+@property (nonatomic, strong)         NSMutableDictionary *parameters;
 @property (nonatomic, strong, readonly)  SCServerResponse *serverResponse;
 @property (nonatomic, strong, readonly)           NSArray *shops;
 
+- (void)reloadShops;
 - (void)loadMoreShops;
 
 @end
