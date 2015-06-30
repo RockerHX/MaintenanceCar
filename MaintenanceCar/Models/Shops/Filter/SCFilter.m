@@ -42,7 +42,10 @@
     for (SCFilterCategoryItem *item in _items)
     {
         if (item.subItems.count)
+        {
             has = YES;
+            break;
+        }
     }
     _hasSubItems = has;
     NSInteger max = 0;
@@ -63,6 +66,36 @@
 {
     return @{@"myCars": @"my_cars",
           @"otherCars": @"other_cars"};
+}
+
++ (NSDictionary *)objectClassInArray
+{
+    return @{@"myCars": @"SCFilterCategoryItem",
+          @"otherCars": @"SCFilterCategoryItem"};
+}
+
+- (instancetype)setKeyValues:(id)keyValues context:(NSManagedObjectContext *)context error:(NSError *__autoreleasing *)error
+{
+    [super setKeyValues:keyValues context:context error:error];
+    [self config];
+    return self;
+}
+
+- (void)config
+{
+    double height = 30.0f;
+    NSInteger count = _myCars.count;
+    NSInteger section = count / 3;
+    section = (count % 3) ? (section + 1) : section;
+    _myCarsViewHeight = (section > 1) ? (((section - 1) * 40.0f) + height) : height;
+    
+    count = _otherCars.count;
+    section = count / 3;
+    section = (count % 3) ? (section + 1) : section;
+    _otherCarsViewHeight = (section > 1) ? (((section - 1) * 40.0f) + height) : height;
+    
+    _myCarsViewHeight = (_myCarsViewHeight > 70.0f) ? 70.0f : _myCarsViewHeight;
+    _otherCarsViewHeight = (_otherCarsViewHeight > 70.0f) ? 70.0f : _otherCarsViewHeight;
 }
 
 @end

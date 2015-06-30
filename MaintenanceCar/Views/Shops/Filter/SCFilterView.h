@@ -8,41 +8,34 @@
 
 #import "SCViewCategory.h"
 
-typedef NS_ENUM(NSUInteger, SCFilterType) {
-    SCFilterTypeService,
-    SCFilterTypeRegion,
-    SCFilterTypeSort,
-    SCFilterTypeCarModel,
-};
-
 @class SCFilterCategory;
 @class SCFilterViewModel;
+@class SCCarModelFilterView;
 @interface SCFilterView : UIView <UITableViewDataSource, UITableViewDelegate>
 {
     BOOL _canSelected;
     
     NSInteger _mainFilterIndex;
     NSInteger _subFilterIndex;
-    
-    SCFilterType      _filterType;
-    SCFilterCategory *_filterCategory;
 }
 
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *heightConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *buttonHeightConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentHeightConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *mainFilterViewWidthConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *bottomBarHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *mainFilterViewWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomBarHeightConstraint;
 
-@property (nonatomic, weak) IBOutlet      UIView *containerView;
-@property (nonatomic, weak) IBOutlet      UIView *popUpView;
-@property (nonatomic, weak) IBOutlet UITableView *mainFilterView;
-@property (nonatomic, weak) IBOutlet UITableView *subFilterView;
+@property (weak, nonatomic) IBOutlet               UIView *containerView;
+@property (weak, nonatomic) IBOutlet               UIView *popUpView;
+@property (weak, nonatomic) IBOutlet               UIView *listFilterView;
+@property (weak, nonatomic) IBOutlet          UITableView *mainFilterView;
+@property (weak, nonatomic) IBOutlet          UITableView *subFilterView;
+@property (weak, nonatomic) IBOutlet SCCarModelFilterView *carModelView;
 
-@property (nonatomic, weak) IBOutlet UIButton *seviceFilterButton;
-@property (nonatomic, weak) IBOutlet UIButton *regionFilterButton;
-@property (nonatomic, weak) IBOutlet UIButton *modelFilterButton;
-@property (nonatomic, weak) IBOutlet UIButton *sortFilterButton;
+@property (weak, nonatomic) IBOutlet UIButton *seviceFilterButton;
+@property (weak, nonatomic) IBOutlet UIButton *regionFilterButton;
+@property (weak, nonatomic) IBOutlet UIButton *modelFilterButton;
+@property (weak, nonatomic) IBOutlet UIButton *sortFilterButton;
 
 @property (nonatomic, assign, readonly) NSInteger  selectedIndex;
 @property (nonatomic, strong)             NSArray *mainFilters;

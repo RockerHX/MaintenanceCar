@@ -29,6 +29,8 @@
 
 @interface SCCarModelFilterCategory : SCFilterCategory
 
+@property (nonatomic, assign)  double  myCarsViewHeight;
+@property (nonatomic, assign)  double  otherCarsViewHeight;
 @property (nonatomic, strong) NSArray *myCars;
 @property (nonatomic, strong) NSArray *otherCars;
 

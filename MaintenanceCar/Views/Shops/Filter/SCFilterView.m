@@ -10,6 +10,7 @@
 #import "MicroConstants.h"
 #import "SCFilterViewModel.h"
 #import "SCFilterCell.h"
+#import "SCCarModelFilterView.h"
 
 static CGFloat contentWidth = 140.0f;
 static CGFloat contentHeight = 195.0f;
@@ -51,9 +52,8 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
 #pragma mark - Action Methods
 - (IBAction)filterButtonPressed:(UIButton *)button
 {
-    _filterType = button.tag;
+    [_filterViewModel changeCategory:button.tag];
     _mainFilterIndex = Zero;
-    [self reload];
     [self popUp];
 }
 
@@ -69,6 +69,7 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
     _canSelected = NO;
     _bottomBarHeightConstraint.constant = Zero;
     _contentHeightConstraint.constant = Zero;
+    [_carModelView hidden];
     [self needsUpdateConstraints];
     [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
         [_popUpView layoutIfNeeded];
@@ -85,11 +86,15 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
 
 - (void)popUp
 {
+    [self reload];
     if (_canSelected)
     {
         _canSelected = NO;
         _heightConstraint.constant = SCREEN_HEIGHT;
-        _contentHeightConstraint.constant = (_filterCategory.maxCount > 4) ? contentHeight : (_filterCategory.maxCount*44.0f + bottomBarHeight);
+        if (_filterViewModel.type == SCFilterTypeCarModel)
+            _contentHeightConstraint.constant = _filterViewModel.carModelViewHeight;
+        else
+            _contentHeightConstraint.constant = (_filterViewModel.category.maxCount > 4) ? contentHeight : (_filterViewModel.category.maxCount*44.0f + bottomBarHeight);
         _bottomBarHeightConstraint.constant = bottomBarHeight;
         [self needsUpdateConstraints];
     }
@@ -104,38 +109,26 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
 {
     if (_filterViewModel)
     {
-        switch (_filterType)
+        if ([_filterViewModel.category isKindOfClass:[SCCarModelFilterCategory class]])
         {
-            case SCFilterTypeService:
-            {
-                _filterCategory = _filterViewModel.filter.serviceCategory;
-            }
-                break;
-            case SCFilterTypeRegion:
-            {
-                _filterCategory = _filterViewModel.filter.regionCategory;
-            }
-                break;
-            case SCFilterTypeSort:
-            {
-                _filterCategory = _filterViewModel.filter.sortCategory;
-            }
-                break;
-            case SCFilterTypeCarModel:
-            {
-                _filterCategory = _filterViewModel.filter.carModelCategory;
-            }
-                break;
-        }
-        _mainFilterViewWidthConstraint.constant = _filterCategory.hasSubItems ? contentWidth : Zero;
-        [_popUpView layoutIfNeeded];
-        if (_filterCategory.hasSubItems)
-        {
-            [_mainFilterView reloadData];
-            [_subFilterView reloadData];
+            _carModelView.category = _filterViewModel.filter.carModelCategory;
+            [_carModelView show];
+            _listFilterView.hidden = YES;
         }
         else
-            [_subFilterView reloadData];
+        {
+            [_carModelView hidden];
+            _listFilterView.hidden = NO;
+            _mainFilterViewWidthConstraint.constant = _filterViewModel.category.hasSubItems ? contentWidth : Zero;
+            [_popUpView layoutIfNeeded];
+            if (_filterViewModel.category.hasSubItems)
+            {
+                [_mainFilterView reloadData];
+                [_subFilterView reloadData];
+            }
+            else
+                [_subFilterView reloadData];
+        }
     }
 }
 
@@ -148,21 +141,21 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
 #pragma mark - Table View Data Source Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([tableView isEqual:_subFilterView] && _filterCategory.hasSubItems)
+    if ([tableView isEqual:_subFilterView] && _filterViewModel.category.hasSubItems)
     {
-        SCFilterCategoryItem *item = _filterCategory.items[_mainFilterIndex];
+        SCFilterCategoryItem *item = _filterViewModel.category.items[_mainFilterIndex];
         return item.subItems.count;
     }
-    return _filterCategory.items.count;
+    return _filterViewModel.category.items.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *items = nil;
-    if ([tableView isEqual:_subFilterView] && _filterCategory.hasSubItems)
-        items = ((SCFilterCategoryItem *)_filterCategory.items[_mainFilterIndex]).subItems;
+    if ([tableView isEqual:_subFilterView] && _filterViewModel.category.hasSubItems)
+        items = ((SCFilterCategoryItem *)_filterViewModel.category.items[_mainFilterIndex]).subItems;
     else
-        items = _filterCategory.items;
+        items = _filterViewModel.category.items;
     SCFilterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCFilterCell" forIndexPath:indexPath];
     [cell displayWithItems:items atIndex:indexPath.row];
     return cell;
@@ -180,14 +173,14 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
     else if ([tableView isEqual:_subFilterView])
     {
         SCFilterCategoryItem *item = nil;
-        if (_filterCategory.hasSubItems)
-            item = ((SCFilterCategoryItem *)_filterCategory.items[_mainFilterIndex]).subItems[indexPath.row];
+        if (_filterViewModel.category.hasSubItems)
+            item = ((SCFilterCategoryItem *)_filterViewModel.category.items[_mainFilterIndex]).subItems[indexPath.row];
         else
-            item = _filterCategory.items[indexPath.row];
+            item = _filterViewModel.category.items[indexPath.row];
         if (_block)
         {
-            if (_filterCategory.program)
-                _block(_filterCategory.program, item.value);
+            if (_filterViewModel.category.program)
+                _block(_filterViewModel.category.program, item.value);
             else if (item.program)
                 _block(item.program, item.value);
         }
