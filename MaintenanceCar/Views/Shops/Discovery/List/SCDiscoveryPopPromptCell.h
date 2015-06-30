@@ -10,9 +10,10 @@
 
 @interface SCDiscoveryPopPromptCell : SCTableViewCell
 
-@property (weak, nonatomic) IBOutlet     UILabel *promptLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *arrowIcon;
+@property (weak, nonatomic) IBOutlet            UILabel *promptLabel;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *centerXConstraint;
+@property (weak, nonatomic) IBOutlet        UIImageView *arrowIcon;
 
-- (void)displayCellWithPrompt:(NSString *)prompt openUp:(BOOL)openUp;
+- (void)displayCellWithPrompt:(NSString *)prompt openUp:(BOOL)openUp canPop:(BOOL)canPop;
 
 @end

@@ -10,4 +10,6 @@
 
 @interface SCFilterViewController : SCViewController
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 @end

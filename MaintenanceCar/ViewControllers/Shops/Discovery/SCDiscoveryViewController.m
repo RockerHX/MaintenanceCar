@@ -103,7 +103,7 @@
     else if ([data isKindOfClass:[NSString class]])
     {
         SCDiscoveryPopPromptCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCDiscoveryPopPromptCell" forIndexPath:indexPath];
-        [cell displayCellWithPrompt:data openUp:shopViewModel.isProductsOpen];
+        [cell displayCellWithPrompt:data openUp:shopViewModel.isProductsOpen canPop:shopViewModel.canOpen];
         return cell;
     }
     SCDiscoveryPopProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCDiscoveryPopProductCell" forIndexPath:indexPath];
@@ -133,6 +133,10 @@
     {
         
     }
+    else if ([cell isKindOfClass:[SCDiscoveryPopProductCell class]])
+    {
+        
+    }
     else if ([cell isKindOfClass:[SCDiscoveryPopPromptCell class]])
     {
         WEAK_SELF(weakSelf);
@@ -144,10 +148,6 @@
                     [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.section] atScrollPosition:UITableViewScrollPositionNone animated:YES];
             }
         }];
-    }
-    else if ([cell isKindOfClass:[SCDiscoveryPopProductCell class]])
-    {
-        
     }
 }
 

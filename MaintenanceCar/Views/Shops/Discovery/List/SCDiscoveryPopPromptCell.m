@@ -45,9 +45,20 @@
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithPrompt:(NSString *)prompt openUp:(BOOL)openUp
+- (void)displayCellWithPrompt:(NSString *)prompt openUp:(BOOL)openUp canPop:(BOOL)canPop
 {
     _promptLabel.text = prompt;
+    if (!canPop)
+    {
+        _arrowIcon.hidden = YES;
+        _centerXConstraint.constant = Zero;
+        return;
+    }
+    else
+    {
+        _centerXConstraint.constant = 5.0f;
+        _arrowIcon.hidden = NO;
+    }
     _arrowIcon.transform = openUp ? CGAffineTransformMakeRotation(M_PI) : CGAffineTransformIdentity;
 }
 

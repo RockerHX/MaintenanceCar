@@ -44,8 +44,13 @@ static int popMax = 2;
 #pragma mark - Private Methods
 - (void)handleRepairPrompt
 {
-    _repairPrompt = @"";
+    _repairPrompt = _shop.repair.type ? @"" : @"主修：";
     NSArray *brands = _shop.repair.haveNot;
+    if (!brands.count)
+    {
+        _repairPrompt = _shop.repair.type ? @"专修" : @"综合维修";
+        return;
+    }
     NSInteger count = brands.count;
     for (NSUInteger index = 0; index < count; index++)
         _repairPrompt = [_repairPrompt stringByAppendingString:((index == (count - 1)) ? brands[index] : [NSString stringWithFormat:@"%@、", brands[index]])];
@@ -92,6 +97,8 @@ static int popMax = 2;
         [products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [dataSource addObject:products[idx]];
         }];
+        if (products.count)
+            [dataSource addObject:@"暂无更多"];
     }
     _dataSource = [NSArray arrayWithArray:dataSource];
 }
