@@ -44,13 +44,13 @@
 		483BA63F1B31566400B24C5F /* SCActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 483BA63E1B31566400B24C5F /* SCActivityIndicator.m */; };
 		4841CECD1A6BE5C300DA36FC /* SCUserCar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4841CECC1A6BE5C300DA36FC /* SCUserCar.m */; };
 		485332651B416C9900782121 /* SCFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 485332641B416C9900782121 /* SCFilterViewController.m */; };
-		485332681B424A3400782121 /* SCCarModelFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 485332671B424A3400782121 /* SCCarModelFilterView.m */; };
-		4853326B1B42901000782121 /* SCCarModelFilterViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4853326A1B42901000782121 /* SCCarModelFilterViewCell.m */; };
+		485332761B42C4D400782121 /* SCCarModelFilterReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 485332711B42C4D400782121 /* SCCarModelFilterReusableView.m */; };
+		485332771B42C4D400782121 /* SCCarModelFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 485332731B42C4D400782121 /* SCCarModelFilterView.m */; };
+		485332781B42C4D400782121 /* SCCarModelFilterViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 485332751B42C4D400782121 /* SCCarModelFilterViewCell.m */; };
 		48534A631AE8A7F5000665A4 /* SCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48534A621AE8A7F5000665A4 /* SCTableViewCell.m */; };
 		486093901B3E85B8006D8E90 /* SCFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4860938F1B3E85B8006D8E90 /* SCFilterView.m */; };
 		486093941B3E85D6006D8E90 /* SCFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 486093931B3E85D6006D8E90 /* SCFilter.m */; };
 		486093981B3E85E9006D8E90 /* SCFilterViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 486093971B3E85E9006D8E90 /* SCFilterViewModel.m */; };
-		4860939B1B3E8635006D8E90 /* SCFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4860939A1B3E8635006D8E90 /* SCFilterCell.m */; };
 		48647C671AB1369E00810974 /* SCUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 48647C661AB1369E00810974 /* SCUtility.m */; };
 		48661B761A5E6627007F92A7 /* FilterConditions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 48661B751A5E6627007F92A7 /* FilterConditions.plist */; };
 		4866F8B61AAB32ED008E195C /* SCGroupProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 4866F8B11AAB32ED008E195C /* SCGroupProduct.m */; };
@@ -170,6 +170,9 @@
 		48AB35DC1A517CAB00BFBC77 /* SCUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 48AB35DB1A517CAB00BFBC77 /* SCUserInfo.m */; };
 		48BF33821B3E8F950052233B /* SCServerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 48BF33811B3E8F950052233B /* SCServerResponse.m */; };
 		48C8B1D91A80CC1200E4114E /* SCObjectCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 48C8B1D81A80CC1200E4114E /* SCObjectCategory.m */; };
+		48DABD071B42DCBA00E3CB67 /* SCListFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DABD061B42DCBA00E3CB67 /* SCListFilterView.m */; };
+		48DABD0A1B42DCD900E3CB67 /* SCSubListFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DABD091B42DCD900E3CB67 /* SCSubListFilterView.m */; };
+		48DABD0D1B42E54700E3CB67 /* SCFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DABD0C1B42E54700E3CB67 /* SCFilterCell.m */; };
 		48DF20691ABB20C2009708F8 /* GPSTransform.c in Sources */ = {isa = PBXBuildFile; fileRef = 48DF20561ABB20C2009708F8 /* GPSTransform.c */; };
 		48E611221AE54C19000F65F0 /* SCNavigationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E611211AE54C19000F65F0 /* SCNavigationTableViewController.m */; };
 		48EBF5BB1AC6AF8D00892099 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48EBF5BA1AC6AF8D00892099 /* AVFoundation.framework */; };
@@ -292,10 +295,12 @@
 		4841CECC1A6BE5C300DA36FC /* SCUserCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCUserCar.m; sourceTree = "<group>"; };
 		485332631B416C9900782121 /* SCFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFilterViewController.h; sourceTree = "<group>"; };
 		485332641B416C9900782121 /* SCFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCFilterViewController.m; sourceTree = "<group>"; };
-		485332661B424A3400782121 /* SCCarModelFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCarModelFilterView.h; sourceTree = "<group>"; };
-		485332671B424A3400782121 /* SCCarModelFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCarModelFilterView.m; sourceTree = "<group>"; };
-		485332691B42901000782121 /* SCCarModelFilterViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCarModelFilterViewCell.h; sourceTree = "<group>"; };
-		4853326A1B42901000782121 /* SCCarModelFilterViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCarModelFilterViewCell.m; sourceTree = "<group>"; };
+		485332701B42C4D400782121 /* SCCarModelFilterReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCarModelFilterReusableView.h; sourceTree = "<group>"; };
+		485332711B42C4D400782121 /* SCCarModelFilterReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCarModelFilterReusableView.m; sourceTree = "<group>"; };
+		485332721B42C4D400782121 /* SCCarModelFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCarModelFilterView.h; sourceTree = "<group>"; };
+		485332731B42C4D400782121 /* SCCarModelFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCarModelFilterView.m; sourceTree = "<group>"; };
+		485332741B42C4D400782121 /* SCCarModelFilterViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCarModelFilterViewCell.h; sourceTree = "<group>"; };
+		485332751B42C4D400782121 /* SCCarModelFilterViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCarModelFilterViewCell.m; sourceTree = "<group>"; };
 		48534A611AE8A7F5000665A4 /* SCTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCTableViewCell.h; sourceTree = "<group>"; };
 		48534A621AE8A7F5000665A4 /* SCTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCTableViewCell.m; sourceTree = "<group>"; };
 		4860938E1B3E85B8006D8E90 /* SCFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFilterView.h; sourceTree = "<group>"; };
@@ -304,8 +309,6 @@
 		486093931B3E85D6006D8E90 /* SCFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCFilter.m; sourceTree = "<group>"; };
 		486093961B3E85E9006D8E90 /* SCFilterViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFilterViewModel.h; sourceTree = "<group>"; };
 		486093971B3E85E9006D8E90 /* SCFilterViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCFilterViewModel.m; sourceTree = "<group>"; };
-		486093991B3E8635006D8E90 /* SCFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCFilterCell.h; sourceTree = "<group>"; };
-		4860939A1B3E8635006D8E90 /* SCFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCFilterCell.m; sourceTree = "<group>"; };
 		48647C651AB1369E00810974 /* SCUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCUtility.h; sourceTree = "<group>"; };
 		48647C661AB1369E00810974 /* SCUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCUtility.m; sourceTree = "<group>"; };
 		48661B751A5E6627007F92A7 /* FilterConditions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FilterConditions.plist; sourceTree = "<group>"; };
@@ -541,6 +544,12 @@
 		48BF33811B3E8F950052233B /* SCServerResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCServerResponse.m; sourceTree = "<group>"; };
 		48C8B1D71A80CC1200E4114E /* SCObjectCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCObjectCategory.h; sourceTree = "<group>"; };
 		48C8B1D81A80CC1200E4114E /* SCObjectCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCObjectCategory.m; sourceTree = "<group>"; };
+		48DABD051B42DCBA00E3CB67 /* SCListFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCListFilterView.h; sourceTree = "<group>"; };
+		48DABD061B42DCBA00E3CB67 /* SCListFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCListFilterView.m; sourceTree = "<group>"; };
+		48DABD081B42DCD900E3CB67 /* SCSubListFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSubListFilterView.h; sourceTree = "<group>"; };
+		48DABD091B42DCD900E3CB67 /* SCSubListFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSubListFilterView.m; sourceTree = "<group>"; };
+		48DABD0B1B42E54700E3CB67 /* SCFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCFilterCell.h; path = MaintenanceCar/Views/Shops/Filter/CarModelFilter/SCFilterCell.h; sourceTree = SOURCE_ROOT; };
+		48DABD0C1B42E54700E3CB67 /* SCFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCFilterCell.m; path = MaintenanceCar/Views/Shops/Filter/CarModelFilter/SCFilterCell.m; sourceTree = SOURCE_ROOT; };
 		48DF20561ABB20C2009708F8 /* GPSTransform.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GPSTransform.c; sourceTree = "<group>"; };
 		48DF20571ABB20C2009708F8 /* GPSTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSTransform.h; sourceTree = "<group>"; };
 		48E611201AE54C19000F65F0 /* SCNavigationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNavigationTableViewController.h; sourceTree = "<group>"; };
@@ -896,17 +905,26 @@
 			path = Loading;
 			sourceTree = "<group>";
 		};
+		4853326F1B42C4D400782121 /* CarModelFilter */ = {
+			isa = PBXGroup;
+			children = (
+				485332721B42C4D400782121 /* SCCarModelFilterView.h */,
+				485332731B42C4D400782121 /* SCCarModelFilterView.m */,
+				485332701B42C4D400782121 /* SCCarModelFilterReusableView.h */,
+				485332711B42C4D400782121 /* SCCarModelFilterReusableView.m */,
+				485332741B42C4D400782121 /* SCCarModelFilterViewCell.h */,
+				485332751B42C4D400782121 /* SCCarModelFilterViewCell.m */,
+			);
+			path = CarModelFilter;
+			sourceTree = "<group>";
+		};
 		4860938D1B3E85B8006D8E90 /* Filter */ = {
 			isa = PBXGroup;
 			children = (
+				48DABD041B42DCA400E3CB67 /* ListFilter */,
+				4853326F1B42C4D400782121 /* CarModelFilter */,
 				4860938E1B3E85B8006D8E90 /* SCFilterView.h */,
 				4860938F1B3E85B8006D8E90 /* SCFilterView.m */,
-				486093991B3E8635006D8E90 /* SCFilterCell.h */,
-				4860939A1B3E8635006D8E90 /* SCFilterCell.m */,
-				485332661B424A3400782121 /* SCCarModelFilterView.h */,
-				485332671B424A3400782121 /* SCCarModelFilterView.m */,
-				485332691B42901000782121 /* SCCarModelFilterViewCell.h */,
-				4853326A1B42901000782121 /* SCCarModelFilterViewCell.m */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -1471,6 +1489,19 @@
 			path = ThirdLibrary;
 			sourceTree = "<group>";
 		};
+		48DABD041B42DCA400E3CB67 /* ListFilter */ = {
+			isa = PBXGroup;
+			children = (
+				48DABD051B42DCBA00E3CB67 /* SCListFilterView.h */,
+				48DABD061B42DCBA00E3CB67 /* SCListFilterView.m */,
+				48DABD081B42DCD900E3CB67 /* SCSubListFilterView.h */,
+				48DABD091B42DCD900E3CB67 /* SCSubListFilterView.m */,
+				48DABD0B1B42E54700E3CB67 /* SCFilterCell.h */,
+				48DABD0C1B42E54700E3CB67 /* SCFilterCell.m */,
+			);
+			path = ListFilter;
+			sourceTree = "<group>";
+		};
 		48DF20531ABB20C2009708F8 /* EvilTransform */ = {
 			isa = PBXGroup;
 			children = (
@@ -1864,7 +1895,7 @@
 				4866F9B01AACBD89008E195C /* SCMerchantCell.m in Sources */,
 				48FB70C81AA5A58300AF4AD9 /* SCAllDictionary.m in Sources */,
 				48FB70C41AA5A58300AF4AD9 /* SCCar.m in Sources */,
-				485332681B424A3400782121 /* SCCarModelFilterView.m in Sources */,
+				485332761B42C4D400782121 /* SCCarModelFilterReusableView.m in Sources */,
 				482AC9821AB48EE9001574EF /* SCTextView.m in Sources */,
 				4866F9EF1AAD9068008E195C /* SCGroupTicketCell.m in Sources */,
 				48A349071B0B385B0068F8E2 /* SCReservationItemCell.m in Sources */,
@@ -1876,6 +1907,7 @@
 				4866F9B21AACBD89008E195C /* SCMerchantFlagCell.m in Sources */,
 				48720E0B1AE4F9CD002D435F /* SCNavigationTab.m in Sources */,
 				4869679F1AD6BBB800C3F7A6 /* SCMerchantGroup.m in Sources */,
+				48DABD0D1B42E54700E3CB67 /* SCFilterCell.m in Sources */,
 				4896E3E01B10A5EA00838EED /* SCAppraiseViewController.m in Sources */,
 				483BA63B1B31565A00B24C5F /* SCLoadingViewController.m in Sources */,
 				4866FA1E1AAED9B2008E195C /* SCGroupTicketCodeCell.m in Sources */,
@@ -1897,6 +1929,7 @@
 				489AA2381B05DA1E00EDB86C /* SCInvalidCouponsViewController.m in Sources */,
 				4866F9A11AACBD89008E195C /* SCMaintenanceTypeItem.m in Sources */,
 				485332651B416C9900782121 /* SCFilterViewController.m in Sources */,
+				485332781B42C4D400782121 /* SCCarModelFilterViewCell.m in Sources */,
 				48FB70C71AA5A58300AF4AD9 /* SCCarModel.m in Sources */,
 				4866F9181AACBD2D008E195C /* SCMapViewController.m in Sources */,
 				4899EDCB1ADD54470044373E /* SCMerchantDetailFlagCell.m in Sources */,
@@ -1920,6 +1953,7 @@
 				48249D301B2883FA00B67676 /* SCDiscoveryPopProductCell.m in Sources */,
 				48A349001B0B385B0068F8E2 /* SCDatePickerView.m in Sources */,
 				48FB70C51AA5A58300AF4AD9 /* SCCarBrand.m in Sources */,
+				485332771B42C4D400782121 /* SCCarModelFilterView.m in Sources */,
 				4866F91C1AACBD2D008E195C /* SCHomePageViewController.m in Sources */,
 				4866F9AE1AACBD89008E195C /* SCCollectionItem.m in Sources */,
 				4866F9F21AAD96F7008E195C /* SCGroupTicket.m in Sources */,
@@ -1943,7 +1977,6 @@
 				489AA1DE1B0356C700EDB86C /* SCWebViewController.m in Sources */,
 				480445B61AC5616B004C20B9 /* SCAliPayOrder.m in Sources */,
 				48A349021B0B385B0068F8E2 /* SCMoreMenu.m in Sources */,
-				4860939B1B3E8635006D8E90 /* SCFilterCell.m in Sources */,
 				4866F99D1AACBD89008E195C /* SCDriveHabitsItem.m in Sources */,
 				48249D321B2883FA00B67676 /* SCDiscoveryMerchantServiceCell.m in Sources */,
 				482335351A4BA78700B60921 /* SCAPIRequest.m in Sources */,
@@ -1970,8 +2003,9 @@
 				4866F9201AACBD2D008E195C /* SCUserViewController.m in Sources */,
 				4896E3D31B109FA800838EED /* SCPayOrderResult.m in Sources */,
 				4896E3CF1B109F9400838EED /* SCPayOrderResultCell.m in Sources */,
-				4853326B1B42901000782121 /* SCCarModelFilterViewCell.m in Sources */,
 				482AC9931AB5C7E8001574EF /* SCCommentCell.m in Sources */,
+				48DABD071B42DCBA00E3CB67 /* SCListFilterView.m in Sources */,
+				48DABD0A1B42DCD900E3CB67 /* SCSubListFilterView.m in Sources */,
 				486967AB1AD77CE500C3F7A6 /* SCCommentGroup.m in Sources */,
 				4866F9BF1AACBD89008E195C /* SCSelectedView.m in Sources */,
 				4896E3CB1B109F9400838EED /* SCPayOrderCouponCell.m in Sources */,

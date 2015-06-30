@@ -38,16 +38,16 @@
 
 - (void)config
 {
-    BOOL has = NO;
+    BOOL have = NO;
     for (SCFilterCategoryItem *item in _items)
     {
         if (item.subItems.count)
         {
-            has = YES;
+            have = YES;
             break;
         }
     }
-    _hasSubItems = has;
+    _haveSubItems = have;
     NSInteger max = 0;
     for (SCFilterCategoryItem *item in _items)
     {
@@ -81,9 +81,10 @@
     return self;
 }
 
+static double maxHeight = 85.0f;
 - (void)config
 {
-    double height = 30.0f;
+    double height = 45.0f;
     NSInteger count = _myCars.count;
     NSInteger section = count / 3;
     section = (count % 3) ? (section + 1) : section;
@@ -94,8 +95,8 @@
     section = (count % 3) ? (section + 1) : section;
     _otherCarsViewHeight = (section > 1) ? (((section - 1) * 40.0f) + height) : height;
     
-    _myCarsViewHeight = (_myCarsViewHeight > 70.0f) ? 70.0f : _myCarsViewHeight;
-    _otherCarsViewHeight = (_otherCarsViewHeight > 70.0f) ? 70.0f : _otherCarsViewHeight;
+    _myCarsViewHeight = (_myCarsViewHeight > maxHeight) ? maxHeight : _myCarsViewHeight;
+    _otherCarsViewHeight = (_otherCarsViewHeight > maxHeight) ? maxHeight : _otherCarsViewHeight;
 }
 
 @end

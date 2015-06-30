@@ -10,8 +10,8 @@
 
 @interface SCFilterCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet  UIView *bottomLine;
+@property (weak, nonatomic) IBOutlet            UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet             UIView *bottomLine;
 
 - (void)displayWithItems:(NSArray *)items atIndex:(NSInteger)index;
 

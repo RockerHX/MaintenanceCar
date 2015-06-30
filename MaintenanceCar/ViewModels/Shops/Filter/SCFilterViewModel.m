@@ -19,6 +19,15 @@ typedef void(^BLOCK)(SCFilterViewModel *viewModel, BOOL success);
     BLOCK _block;
 }
 
+#pragma mark - Setter And Getter Methods
+- (CGFloat)contentHeight
+{
+    if (_type == SCFilterTypeCarModel)
+        return (120.0f + _filter.carModelCategory.myCarsViewHeight + _filter.carModelCategory.otherCarsViewHeight);
+    else
+        return ((_category.maxCount > 4) ? contentHeight : (_category.maxCount*44.0f + bottomBarHeight));
+}
+
 #pragma mark - Public Methods
 - (void)changeCategory:(SCFilterType)type
 {
@@ -50,10 +59,8 @@ typedef void(^BLOCK)(SCFilterViewModel *viewModel, BOOL success);
         {
             NSInteger statusCode = [responseObject[@"status_code"] integerValue];
             if (statusCode == SCAPIRequestErrorCodeNoError)
-            {
                 _filter = [SCFilter objectWithKeyValues:responseObject[@"data"]];
-                [self handleCarModelViewHeight];
-            }
+            
             if (_block)
                 _block(weakSelf, YES);
         }
@@ -61,12 +68,6 @@ typedef void(^BLOCK)(SCFilterViewModel *viewModel, BOOL success);
         if (_block)
             _block(nil, NO);
     }];
-}
-
-#pragma mark - Private Methods
-- (void)handleCarModelViewHeight
-{
-    _carModelViewHeight = 110.0f + _filter.carModelCategory.myCarsViewHeight + _filter.carModelCategory.otherCarsViewHeight;
 }
 
 @end

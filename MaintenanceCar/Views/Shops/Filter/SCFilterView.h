@@ -10,13 +10,13 @@
 
 @class SCFilterCategory;
 @class SCFilterViewModel;
+@class SCListFilterView;
+@class SCSubListFilterView;
 @class SCCarModelFilterView;
-@interface SCFilterView : UIView <UITableViewDataSource, UITableViewDelegate>
+
+@interface SCFilterView : UIView
 {
     BOOL _canSelected;
-    
-    NSInteger _mainFilterIndex;
-    NSInteger _subFilterIndex;
 }
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
@@ -27,9 +27,8 @@
 
 @property (weak, nonatomic) IBOutlet               UIView *containerView;
 @property (weak, nonatomic) IBOutlet               UIView *popUpView;
-@property (weak, nonatomic) IBOutlet               UIView *listFilterView;
-@property (weak, nonatomic) IBOutlet          UITableView *mainFilterView;
-@property (weak, nonatomic) IBOutlet          UITableView *subFilterView;
+@property (weak, nonatomic) IBOutlet     SCListFilterView *listFilterView;
+@property (weak, nonatomic) IBOutlet  SCSubListFilterView *subListFilterView;
 @property (weak, nonatomic) IBOutlet SCCarModelFilterView *carModelView;
 
 @property (weak, nonatomic) IBOutlet UIButton *seviceFilterButton;
@@ -44,6 +43,6 @@
 
 - (IBAction)filterButtonPressed:(UIButton *)button;
 
-- (void)fiflterCompleted:(void(^)(NSString *param, NSString *value))block;
+- (void)filterCompleted:(void(^)(NSString *param, NSString *value))block;
 
 @end

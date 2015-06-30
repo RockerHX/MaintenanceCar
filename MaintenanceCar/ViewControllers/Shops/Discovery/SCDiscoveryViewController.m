@@ -71,7 +71,7 @@
 {
     self.tableView.scrollsToTop = YES;
     WEAK_SELF(weakSelf);
-    [_filterView fiflterCompleted:^(NSString *param, NSString *value) {
+    [_filterView filterCompleted:^(NSString *param, NSString *value) {
         [weakSelf showLoadingView];
         [_shopList.parameters setValue:value forKey:param];
         [_shopList reloadShops];
@@ -154,9 +154,9 @@
 #pragma mark - Public Methods
 - (void)hanleServerResponse:(SCServerResponse *)response
 {
+    [self.tableView reloadData];
     if (response.statusCode == SCAPIRequestErrorCodeNoError)
     {
-        [self.tableView reloadData];
         if (response.firstLoad)
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
     }

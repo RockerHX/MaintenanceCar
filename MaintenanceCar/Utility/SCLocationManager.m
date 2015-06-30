@@ -15,9 +15,9 @@ static SCLocationManager *locationManager = nil;
 {
     SuccessBlock _successBlock;
     FailureBlock _failureBlock;
-    
-    BMKLocationService *_locationService;
 }
+
+@property (nonatomic, strong) BMKLocationService *locationService;
 
 @end
 

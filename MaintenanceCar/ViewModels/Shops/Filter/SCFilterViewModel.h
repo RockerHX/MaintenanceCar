@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SCFilter.h"
 
+static CGFloat contentHeight = 195.0f;
+static CGFloat bottomBarHeight = 20.0f;
+
 typedef NS_ENUM(NSUInteger, SCFilterType) {
     SCFilterTypeService,
     SCFilterTypeRegion,
@@ -18,8 +21,8 @@ typedef NS_ENUM(NSUInteger, SCFilterType) {
 
 @interface SCFilterViewModel : NSObject
 
+@property (nonatomic, assign, readonly)          CGFloat  contentHeight;
 @property (nonatomic, assign, readonly)     SCFilterType  type;
-@property (nonatomic, assign, readonly)          CGFloat  carModelViewHeight;
 @property (nonatomic, strong, readonly)         SCFilter *filter;
 @property (nonatomic, strong, readonly) SCFilterCategory *category;
 

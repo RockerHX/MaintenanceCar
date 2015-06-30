@@ -10,21 +10,20 @@
 #import "MicroConstants.h"
 #import "SCFilterViewModel.h"
 #import "SCFilterCell.h"
+#import "SCListFilterView.h"
+#import "SCSubListFilterView.h"
 #import "SCCarModelFilterView.h"
-
-static CGFloat contentWidth = 140.0f;
-static CGFloat contentHeight = 195.0f;
-static CGFloat bottomBarHeight = 20.0f;
 
 typedef void(^BLOCK)(NSString *param, NSString *value);
 
-@implementation SCFilterView
+@interface SCFilterView () <SCListFilterViewDelegate, SCSubListFilterViewDelegate, SCCarModelFilterViewDelegate>
 {
     BLOCK _block;
-    
-    UIButton *_previousSelectedButton;
-    UIButton *_currentSelectedButton;
 }
+
+@end
+
+@implementation SCFilterView
 
 #pragma mark - Init Methods
 - (void)awakeFromNib
@@ -32,7 +31,6 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
     [super awakeFromNib];
     
     [self initConfig];
-    [self viewConfig];
 }
 
 #pragma mark - Config Methods
@@ -41,20 +39,12 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
     _canSelected = YES;
 }
 
-- (void)viewConfig
-{
-    _mainFilterView.scrollsToTop = NO;
-    _subFilterView.scrollsToTop = NO;
-    _mainFilterView.tableFooterView = [[UIView alloc] init];
-    _subFilterView.tableFooterView = [[UIView alloc] init];
-}
-
 #pragma mark - Action Methods
 - (IBAction)filterButtonPressed:(UIButton *)button
 {
     [_filterViewModel changeCategory:button.tag];
-    _mainFilterIndex = Zero;
     [self popUp];
+    [self reload];
 }
 
 #pragma mark - Touch Event Methods
@@ -69,7 +59,6 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
     _canSelected = NO;
     _bottomBarHeightConstraint.constant = Zero;
     _contentHeightConstraint.constant = Zero;
-    [_carModelView hidden];
     [self needsUpdateConstraints];
     [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
         [_popUpView layoutIfNeeded];
@@ -86,23 +75,19 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
 
 - (void)popUp
 {
-    [self reload];
     if (_canSelected)
     {
         _canSelected = NO;
         _heightConstraint.constant = SCREEN_HEIGHT;
-        if (_filterViewModel.type == SCFilterTypeCarModel)
-            _contentHeightConstraint.constant = _filterViewModel.carModelViewHeight;
-        else
-            _contentHeightConstraint.constant = (_filterViewModel.category.maxCount > 4) ? contentHeight : (_filterViewModel.category.maxCount*44.0f + bottomBarHeight);
+        _contentHeightConstraint.constant = _filterViewModel.contentHeight;
         _bottomBarHeightConstraint.constant = bottomBarHeight;
         [self needsUpdateConstraints];
+        [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
+            [_popUpView layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            _canSelected = YES;
+        }];
     }
-    [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
-        [_popUpView layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        _canSelected = YES;
-    }];
 }
 
 - (void)reload
@@ -114,78 +99,37 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
             _carModelView.category = _filterViewModel.filter.carModelCategory;
             [_carModelView show];
             _listFilterView.hidden = YES;
+            _subListFilterView.hidden = YES;
         }
         else
         {
+            SCFilterCategory *category = _filterViewModel.category;
+            BOOL haveSubItems = category.haveSubItems;
+            
             [_carModelView hidden];
-            _listFilterView.hidden = NO;
-            _mainFilterViewWidthConstraint.constant = _filterViewModel.category.hasSubItems ? contentWidth : Zero;
-            [_popUpView layoutIfNeeded];
-            if (_filterViewModel.category.hasSubItems)
-            {
-                [_mainFilterView reloadData];
-                [_subFilterView reloadData];
-            }
+            _listFilterView.hidden = haveSubItems;
+            _subListFilterView.hidden = !haveSubItems;
+            
+            if (haveSubItems)
+                _subListFilterView.category = category;
             else
-                [_subFilterView reloadData];
+                _listFilterView.category = category;
         }
     }
 }
 
 #pragma mark - Public Methods
-- (void)fiflterCompleted:(void(^)(NSString *param, NSString *value))block
+- (void)filterCompleted:(void(^)(NSString *param, NSString *value))block
 {
     _block = block;
 }
 
-#pragma mark - Table View Data Source Methods
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+#pragma mark - SCCarModelFilterViewDelegate Methods
+- (void)selectedCompletedWithParameter:(NSString *)parameter value:(NSString *)value
 {
-    if ([tableView isEqual:_subFilterView] && _filterViewModel.category.hasSubItems)
-    {
-        SCFilterCategoryItem *item = _filterViewModel.category.items[_mainFilterIndex];
-        return item.subItems.count;
-    }
-    return _filterViewModel.category.items.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSArray *items = nil;
-    if ([tableView isEqual:_subFilterView] && _filterViewModel.category.hasSubItems)
-        items = ((SCFilterCategoryItem *)_filterViewModel.category.items[_mainFilterIndex]).subItems;
-    else
-        items = _filterViewModel.category.items;
-    SCFilterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCFilterCell" forIndexPath:indexPath];
-    [cell displayWithItems:items atIndex:indexPath.row];
-    return cell;
-}
-
-#pragma mark - Table View Delegate Methods
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([tableView isEqual:_mainFilterView])
-    {
-        _mainFilterIndex = indexPath.row;
-        [_subFilterView reloadData];
-        [_subFilterView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:Zero inSection:Zero] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-    }
-    else if ([tableView isEqual:_subFilterView])
-    {
-        SCFilterCategoryItem *item = nil;
-        if (_filterViewModel.category.hasSubItems)
-            item = ((SCFilterCategoryItem *)_filterViewModel.category.items[_mainFilterIndex]).subItems[indexPath.row];
-        else
-            item = _filterViewModel.category.items[indexPath.row];
-        if (_block)
-        {
-            if (_filterViewModel.category.program)
-                _block(_filterViewModel.category.program, item.value);
-            else if (item.program)
-                _block(item.program, item.value);
-        }
-        [self packUp];
-    }
+    if (_block)
+        _block(parameter, value);
+    [self packUp];
 }
 
 @end
