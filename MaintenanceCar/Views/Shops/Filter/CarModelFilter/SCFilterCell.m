@@ -13,7 +13,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    _titleLabel.font = selected ? [UIFont boldSystemFontOfSize:22.0f] : [UIFont systemFontOfSize:17.0f];
+    _titleLabel.font = selected ? [UIFont boldSystemFontOfSize:20.0f] : [UIFont systemFontOfSize:17.0f];
 }
 
 - (void)displayWithItems:(NSArray *)items atIndex:(NSInteger)index
