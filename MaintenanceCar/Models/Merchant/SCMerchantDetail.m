@@ -153,9 +153,9 @@
 {
     [products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         SCGroupProduct *product = obj;
-        product.companyID       = _company_id;
-        product.merchantName    = _name;
-        product.now             = _now;
+        product.company_id = _company_id;
+        product.name       = _name;
+        product.now        = _now;
     }];
 }
 

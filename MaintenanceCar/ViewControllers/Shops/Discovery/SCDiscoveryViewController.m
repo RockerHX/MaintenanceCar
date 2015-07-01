@@ -15,6 +15,10 @@
 #import "SCFilterViewModel.h"
 #import "SCFilterView.h"
 #import "SCMerchantDetailViewController.h"
+#import "SCGroupProductDetailViewController.h"
+// TODO
+#import "SCGroupProduct.h"
+#import "SCQuotedPrice.h"
 
 @interface SCDiscoveryViewController ()
 @end
@@ -132,15 +136,34 @@
     SCShopViewModel *shopViewModel = _shopList.shops[indexPath.section];
     if ([cell isKindOfClass:[SCDiscoveryMerchantCell class]])
     {
-        // 根据选中的商家，取到其商家ID，跳转到商家页面进行详情展示
-        SCMerchantDetailViewController *merchantDetialViewControler = [SCMerchantDetailViewController instance];
-        merchantDetialViewControler.merchant = [[SCMerchant alloc] initWithMerchantName:shopViewModel.shop.name companyID:shopViewModel.shop.ID];
-        merchantDetialViewControler.canSelectedReserve = YES;
-        [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
+        // TODO
+        SCMerchantDetailViewController *viewControler = [SCMerchantDetailViewController instance];
+        viewControler.merchant = [[SCMerchant alloc] initWithMerchantName:shopViewModel.shop.name companyID:shopViewModel.shop.ID];
+        viewControler.canSelectedReserve = YES;
+        [self.navigationController pushViewController:viewControler animated:YES];
     }
     else if ([cell isKindOfClass:[SCDiscoveryPopProductCell class]])
     {
+        SCShopProduct *product = shopViewModel.shop.products[indexPath.row - 1];
+        SCGroupProductDetailViewController *viewController = [SCGroupProductDetailViewController instance];
         
+        if (product.isGroup)
+        {
+            SCGroupProduct *groupProduct = [[SCGroupProduct alloc] init];
+            groupProduct.product_id = product.ID;
+            viewController.product = groupProduct;
+        }
+        else
+        {
+            SCQuotedPrice *price = [[SCQuotedPrice alloc] init];
+            price.product_id   = product.ID;
+            price.merchantName = shopViewModel.shop.name;
+            price.companyID    = shopViewModel.shop.ID;
+            viewController.title = @"商品详情";
+            viewController.price = price;
+        }
+        
+        [self.navigationController pushViewController:viewController animated:YES];
     }
     else if ([cell isKindOfClass:[SCDiscoveryPopPromptCell class]])
     {

@@ -243,7 +243,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
         [self showHUDOnViewController:self.navigationController];
         // 配置请求参数
         NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                  @"company_id": (_orderDetail ? _orderDetail.companyID : (_groupProduct ? _groupProduct.companyID : @"")),
+                                  @"company_id": (_orderDetail ? _orderDetail.companyID : (_groupProduct ? _groupProduct.company_id : @"")),
                                   @"reserve_id": (_orderDetail ? _orderDetail.reserveID : @""),
                                   @"product_id": (_groupProduct ? _groupProduct.product_id : @""),
                                        @"price": _payResult.totalPrice,
@@ -601,7 +601,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
     {
         parameters = @{@"user_id": userInfo.userID,
                         @"mobile": userInfo.phoneNmber,
-                    @"company_id": _groupProduct.companyID,
+                    @"company_id": _groupProduct.company_id,
                     @"product_id": _groupProduct.product_id,
                       @"how_many": @(_payResult.purchaseCount),
                    @"total_price": _payResult.payPrice,

@@ -31,7 +31,7 @@
 #pragma mark - Public Methods
 - (void)displayCellWithDetial:(SCGroupProductDetail *)detail
 {
-    _nameLabel.text = detail.merchantName;
+    _nameLabel.text = detail.name;
     _starView.value = detail.star;
     _distanceLabel.text = detail.distance;
     _addressLabel.text = detail.address;

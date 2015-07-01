@@ -65,6 +65,12 @@
     [self startGroupProductDetailRequest];
 }
 
+#pragma mark - Init Methods
++ (instancetype)instance
+{
+    return MAIN_VIEW_CONTROLLER(NSStringFromClass([self class]));
+}
+
 #pragma mark - Table View Data Source Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -223,7 +229,7 @@
     {
         @try {
             SCCommentListViewController *commentListViewController = MAIN_VIEW_CONTROLLER(@"SCCommentListViewController");
-            commentListViewController.companyID = _detail.companyID;
+            commentListViewController.companyID = _detail.company_id;
             [self.navigationController pushViewController:commentListViewController animated:YES];
         }
         @catch (NSException *exception) {
@@ -244,10 +250,8 @@
     [[SCAPIRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            _detail              = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
-            _detail.companyID    = _product.companyID;
-            _detail.merchantName = _product.merchantName;
-            _detail.serviceDate  = _product.now;
+            _detail = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
+            _detail.serviceDate = _product.now;
             
             [weakSelf dispalyDetialView];
             [weakSelf.tableView reloadData];
@@ -261,7 +265,7 @@
 - (void)dispalyDetialView
 {
     _merchanImagesView.defaultImage = [UIImage imageNamed:@"MerchantImageDefault"];
-    _merchanImagesView.images = @[[NSString stringWithFormat:@"%@%@", MerchantImageDoMain, _detail.img1 ? _detail.img1 : [NSString stringWithFormat:@"%@_1.jpg", _detail.companyID]]];
+    _merchanImagesView.images = @[[NSString stringWithFormat:@"%@%@", MerchantImageDoMain, _detail.img1 ? _detail.img1 : [NSString stringWithFormat:@"%@_1.jpg", _detail.company_id]]];
     [_merchanImagesView show:nil finished:nil];
 }
 

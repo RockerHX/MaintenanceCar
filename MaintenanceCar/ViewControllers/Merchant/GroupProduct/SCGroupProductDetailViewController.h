@@ -19,4 +19,6 @@
 @property (nonatomic, strong) SCGroupProduct *product;
 @property (nonatomic, strong)  SCQuotedPrice *price;
 
++ (instancetype)instance;
+
 @end

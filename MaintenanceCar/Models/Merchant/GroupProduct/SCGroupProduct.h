@@ -13,6 +13,8 @@
 
 @interface SCGroupProduct : JSONModel
 
+@property (nonatomic, strong) NSString <Optional>*company_id;
+@property (nonatomic, strong) NSString <Optional>*name;
 @property (nonatomic, strong) NSString <Optional>*product_id;
 @property (nonatomic, strong) NSString <Optional>*title;
 @property (nonatomic, strong) NSString <Optional>*content;
@@ -22,8 +24,6 @@
 @property (nonatomic, strong) NSString <Optional>*sell_count;
 @property (nonatomic, strong) NSString <Optional>*now;
 
-@property (nonatomic, strong) NSString <Ignore>*companyID;
-@property (nonatomic, strong) NSString <Ignore>*merchantName;
 @property (nonatomic, strong) NSArray  <Ignore>*tickets;
 
 @end
