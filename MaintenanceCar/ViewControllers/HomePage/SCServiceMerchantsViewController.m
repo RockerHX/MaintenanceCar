@@ -67,7 +67,7 @@
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return MAIN_VIEW_CONTROLLER(@"SCServiceMerchantsViewController");
+    return MAIN_VIEW_CONTROLLER(NSStringFromClass([self class]));
 }
 
 #pragma mark - Config Methods

@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return USERCENTER_VIEW_CONTROLLER(@"SCPayOrderViewController");
+    return USERCENTER_VIEW_CONTROLLER(NSStringFromClass([self class]));
 }
 
 #pragma mark - Config Methods

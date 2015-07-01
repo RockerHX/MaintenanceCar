@@ -14,6 +14,7 @@
 #import "SCShopList.h"
 #import "SCFilterViewModel.h"
 #import "SCFilterView.h"
+#import "SCMerchantDetailViewController.h"
 
 @interface SCDiscoveryViewController ()
 @end
@@ -46,7 +47,7 @@
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return DISCOVERY_VIEW_CONTROLLER(@"SCDiscoveryViewController");
+    return DISCOVERY_VIEW_CONTROLLER(NSStringFromClass([self class]));
 }
 
 #pragma mark - Config Methods
@@ -131,7 +132,11 @@
     SCShopViewModel *shopViewModel = _shopList.shops[indexPath.section];
     if ([cell isKindOfClass:[SCDiscoveryMerchantCell class]])
     {
-        
+        // 根据选中的商家，取到其商家ID，跳转到商家页面进行详情展示
+        SCMerchantDetailViewController *merchantDetialViewControler = [SCMerchantDetailViewController instance];
+        merchantDetialViewControler.merchant = [[SCMerchant alloc] initWithMerchantName:shopViewModel.shop.name companyID:shopViewModel.shop.ID];
+        merchantDetialViewControler.canSelectedReserve = YES;
+        [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
     }
     else if ([cell isKindOfClass:[SCDiscoveryPopProductCell class]])
     {

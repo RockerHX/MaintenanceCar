@@ -31,6 +31,9 @@
 @property (nonatomic, strong)         NSString *type;
 @property (nonatomic, assign)             BOOL  canSelectedReserve;
 
+
++ (instancetype)instance;
+
 /**
  *  [收藏]按钮触发事件
  */

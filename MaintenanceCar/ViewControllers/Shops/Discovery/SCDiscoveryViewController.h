@@ -6,19 +6,21 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCFilterViewController.h"
+
+#import "SCViewController.h"
 
 @class SCShopList;
 @class SCFilterViewModel;
 @class SCFilterView;
 
-@interface SCDiscoveryViewController : SCFilterViewController <UITableViewDataSource, UITableViewDelegate>
+@interface SCDiscoveryViewController : SCViewController <UITableViewDataSource, UITableViewDelegate>
 {
     SCShopList        *_shopList;
     SCFilterViewModel *_filterViewModel;
 }
 
 @property (weak, nonatomic) IBOutlet SCFilterView *filterView;
+@property (weak, nonatomic) IBOutlet  UITableView *tableView;
 
 + (instancetype)instance;
 
