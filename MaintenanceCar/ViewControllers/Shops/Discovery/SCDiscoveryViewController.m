@@ -156,9 +156,12 @@
         else
         {
             SCQuotedPrice *price = [[SCQuotedPrice alloc] init];
-            price.product_id   = product.ID;
-            price.merchantName = shopViewModel.shop.name;
-            price.companyID    = shopViewModel.shop.ID;
+            price.product_id     = product.ID;
+            price.merchantName   = shopViewModel.shop.name;
+            price.companyID      = shopViewModel.shop.ID;
+            price.title          = product.title;
+            price.final_price    = product.discountPrice;
+            price.total_price    = product.discountPrice;
             viewController.title = @"商品详情";
             viewController.price = price;
         }
