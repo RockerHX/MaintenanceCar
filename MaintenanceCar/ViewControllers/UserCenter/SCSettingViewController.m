@@ -80,7 +80,7 @@
     if (!userInfo.loginStatus)
     {
         _appMessageSwitch.on = NO;
-        [self showHUDAlertToViewController:self text:@"您还未登录，无法接受维修消息" delay:0.5f];
+        [self showHUDAlertToViewController:self text:@"您还未登录，无法接受推送消息" delay:0.5f];
     }
     userInfo.receiveMessage = sender.on;
 }
