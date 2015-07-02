@@ -8,7 +8,6 @@
 
 #import "SCAboutViewController.h"
 #import "SCWebViewController.h"
-#import "SCDiscoveryViewController.h"
 
 #define kADURLKey       @"kADURLKey"
 
@@ -47,11 +46,6 @@
         case 0:
         {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/xiu-yang/id960929849?mt=8"]];
-        }
-            break;
-        case 1:
-        {
-            [self.navigationController pushViewController:[SCDiscoveryViewController instance] animated:YES];
         }
             break;
     }
