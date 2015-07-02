@@ -69,8 +69,8 @@
 - (void)displayView
 {
     SCUserInfo *userInfo = [SCUserInfo share];
-    _appMessageSwitch.on             = userInfo.receiveMessage;
-    _logoutView.hidden               = !userInfo.loginStatus;
+    _appMessageSwitch.on = userInfo.receiveMessage;
+    _logoutView.hidden   = !userInfo.loginStatus;
     _logoutButton.layer.cornerRadius = 5.0f;
 }
 

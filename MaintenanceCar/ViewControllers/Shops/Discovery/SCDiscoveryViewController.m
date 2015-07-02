@@ -20,9 +20,6 @@
 #import "SCGroupProduct.h"
 #import "SCQuotedPrice.h"
 
-@interface SCDiscoveryViewController ()
-@end
-
 @implementation SCDiscoveryViewController
 
 #pragma mark - View Controller Life Cycle
@@ -40,14 +37,6 @@
     [MobClick endLogPageView:@"[发现]"];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    [self initConfig];
-    [self viewConfig];
-}
-
 #pragma mark - Init Methods
 + (instancetype)instance
 {
@@ -57,6 +46,8 @@
 #pragma mark - Config Methods
 - (void)initConfig
 {
+    [super initConfig];
+    
     _shopList = [[SCShopList alloc] init];
     @weakify(self)
     [RACObserve(_shopList, loaded) subscribeNext:^(NSNumber *loaded) {
@@ -74,13 +65,53 @@
 
 - (void)viewConfig
 {
+    [super viewConfig];
+    
     self.tableView.scrollsToTop = YES;
     WEAK_SELF(weakSelf);
     [_filterView filterCompleted:^(NSString *param, NSString *value) {
+        [weakSelf resetRequestState];
         [weakSelf showLoadingView];
         [_shopList.parameters setValue:value forKey:param];
         [_shopList reloadShops];
     }];
+}
+
+#pragma mark - Private Methods
+- (void)startDropDownRefreshReuqest
+{
+    [super startDropDownRefreshReuqest];
+    
+    [_shopList reloadShops];
+}
+
+- (void)startPullUpRefreshRequest
+{
+    [super startPullUpRefreshRequest];
+    
+    [_shopList loadMoreShops];
+}
+
+- (void)hanleServerResponse:(SCServerResponse *)response
+{
+    [self endRefresh];
+    [self.tableView reloadData];
+    
+    switch (response.statusCode)
+    {
+        case SCAPIRequestErrorCodeNoError:
+        {
+            if (_shopList.shops.count < SearchLimit)
+                [self removeRefreshFooter];
+            if (response.firstLoad)
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+        }
+            break;
+        case SCAPIRequestErrorCodeListNotFoundMore:
+            [self removeRefreshFooter];
+            break;
+    }
+    [super hanleServerResponse:response];
 }
 
 #pragma mark - Table View Data Source Methods
@@ -180,18 +211,6 @@
             }
         }];
     }
-}
-
-#pragma mark - Public Methods
-- (void)hanleServerResponse:(SCServerResponse *)response
-{
-    [self.tableView reloadData];
-    if (response.statusCode == SCAPIRequestErrorCodeNoError)
-    {
-        if (response.firstLoad)
-            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
-    }
-    [super hanleServerResponse:response];
 }
 
 @end

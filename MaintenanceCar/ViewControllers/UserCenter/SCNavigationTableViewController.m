@@ -103,8 +103,8 @@
 {
     if (!self.tableView.tableFooterView)
     {
-        UIView *footer                 = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 10.0f)];
-        footer.backgroundColor         = [UIColor clearColor];
+        UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 10.0f)];
+        footer.backgroundColor = [UIColor clearColor];
         self.tableView.tableFooterView = footer;
     }
 }

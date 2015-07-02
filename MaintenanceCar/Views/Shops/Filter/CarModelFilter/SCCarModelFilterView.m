@@ -20,13 +20,14 @@
 {
     [super awakeFromNib];
     
-    [self initConfig];
+    [self viewConfig];
 }
 
 #pragma mark - Config Methods
-- (void)initConfig
+
+- (void)viewConfig
 {
-    _indexPath = [NSIndexPath indexPathForRow:-1 inSection:-1];
+    _collectionView.scrollsToTop = NO;
 }
 
 #pragma mark - Public Methods
@@ -93,7 +94,7 @@
 #pragma mark - Collection View Delegate Methods
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake((SCREEN_WIDTH - 60.0f) / 3, 30.0f);
+    return CGSizeMake(((SCREEN_WIDTH - 60.0f) / 3), 30.0f);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section

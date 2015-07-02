@@ -7,20 +7,19 @@
 //
 
 
-#import "SCViewController.h"
+#import "SCTopBarTableViewController.h"
 
 @class SCShopList;
 @class SCFilterViewModel;
 @class SCFilterView;
 
-@interface SCDiscoveryViewController : SCViewController <UITableViewDataSource, UITableViewDelegate>
+@interface SCDiscoveryViewController : SCTopBarTableViewController <UITableViewDataSource, UITableViewDelegate>
 {
     SCShopList        *_shopList;
     SCFilterViewModel *_filterViewModel;
 }
 
 @property (weak, nonatomic) IBOutlet SCFilterView *filterView;
-@property (weak, nonatomic) IBOutlet  UITableView *tableView;
 
 + (instancetype)instance;
 

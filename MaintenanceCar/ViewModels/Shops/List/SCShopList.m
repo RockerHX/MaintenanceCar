@@ -10,10 +10,11 @@
 #import "SCAPIRequest.h"
 #import "SCServerResponse.h"
 #import "SCLocationManager.h"
+#import "SCUserInfo.h"
 
 @implementation SCShopList
 {
-    NSInteger       _offset;
+    NSInteger _page;
     NSMutableArray *_shops;
 }
 
@@ -33,8 +34,10 @@
 {
     _shops = @[].mutableCopy;
     _parameters = @{@"limit": @(SearchLimit),
-                   @"offset": @(_offset),
-                   @"radius": @(SearchRadius)}.mutableCopy;
+                   @"offset": @(_page * SearchLimit),
+                   @"radius": @(SearchRadius),
+             @"auto_get_car": @(YES),
+                      @"uid": [SCUserInfo share].userID}.mutableCopy;
     _serverResponse = [[SCServerResponse alloc] init];
 }
 
@@ -47,9 +50,19 @@
 #pragma mark - Private Methods
 - (void)clearShops
 {
-    _offset = 0;
     [_shops removeAllObjects];
-    [_parameters setValue:@(_offset) forKey:@"offset"];
+}
+
+- (void)updateOffsetParameterWithPage:(NSInteger)page
+{
+    _page = page;
+    [_parameters setValue:@(page * SearchLimit) forKey:@"offset"];
+}
+
+- (void)locationCompletedWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
+{
+    [self addParametersWithLatitude:latitude longitude:longitude];
+    [self requestShops];
 }
 
 - (void)addParametersWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
@@ -74,6 +87,7 @@
                     SCShopViewModel *shopViewModel = [[SCShopViewModel alloc] initWithShop:shop];
                     [_shops addObject:shopViewModel];
                 }];
+                _page ++;
             }
             weakSelf.loaded = YES;
         }
@@ -94,13 +108,13 @@
 - (void)reloadShops
 {
     _serverResponse.firstLoad = YES;
+    [self updateOffsetParameterWithPage:0];
+    
     __weak typeof(self)weakSelf = self;
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
-        [self addParametersWithLatitude:latitude longitude:longitude];
-        [weakSelf requestShops];
+        [weakSelf locationCompletedWithLatitude:latitude longitude:longitude];
     } failure:^(NSString *latitude, NSString *longitude, NSError *error) {
-        [self addParametersWithLatitude:latitude longitude:longitude];
-        [weakSelf requestShops];
+        [weakSelf locationCompletedWithLatitude:latitude longitude:longitude];
         _serverResponse.locationPrompt = @"定位失败，采用当前城市中心坐标!";
     }];
 }
@@ -108,7 +122,7 @@
 - (void)loadMoreShops
 {
     _serverResponse.firstLoad = NO;
-    [_parameters setValue:@(++_offset) forKey:@"offset"];
+    [self updateOffsetParameterWithPage:_page];
     [self requestShops];
 }
 

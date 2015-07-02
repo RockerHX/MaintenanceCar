@@ -81,22 +81,24 @@
     return self;
 }
 
-static double maxHeight = 85.0f;
+static double LastRowHeight = 45.0f;
+static double RowHeight = 40.0f;
+static double MaxHeight = 85.0f;
 - (void)config
 {
-    double height = 45.0f;
+    double height = 20.0f;
     NSInteger count = _myCars.count;
     NSInteger section = count / 3;
     section = (count % 3) ? (section + 1) : section;
-    _myCarsViewHeight = (section > 1) ? (((section - 1) * 40.0f) + height) : height;
+    _myCarsViewHeight = (section >= 1) ? (((section - 1) * RowHeight) + LastRowHeight) : height;
     
     count = _otherCars.count;
     section = count / 3;
     section = (count % 3) ? (section + 1) : section;
-    _otherCarsViewHeight = (section > 1) ? (((section - 1) * 40.0f) + height) : height;
+    _otherCarsViewHeight = (section >= 1) ? (((section - 1) * RowHeight) + LastRowHeight) : height;
     
-    _myCarsViewHeight = (_myCarsViewHeight > maxHeight) ? maxHeight : _myCarsViewHeight;
-    _otherCarsViewHeight = (_otherCarsViewHeight > maxHeight) ? maxHeight : _otherCarsViewHeight;
+    _myCarsViewHeight = (_myCarsViewHeight > MaxHeight) ? MaxHeight : _myCarsViewHeight;
+    _otherCarsViewHeight = (_otherCarsViewHeight > MaxHeight) ? MaxHeight : _otherCarsViewHeight;
 }
 
 @end
