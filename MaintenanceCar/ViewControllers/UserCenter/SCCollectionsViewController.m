@@ -131,9 +131,10 @@
             {
                 case SCAPIRequestErrorCodeNoError:
                 {
+                    NSArray *merchants = responseObject[@"data"];
                     if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
                         [weakSelf clearListData];
-                    [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    [merchants enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                         SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj error:nil];
                         [_dataList addObject:merchant];
                     }];
@@ -142,6 +143,8 @@
                     [weakSelf.tableView reloadData];                // 数据配置完成，刷新商家列表
                     [weakSelf addRefreshHeader];
                     [weakSelf addRefreshFooter];
+                    if (merchants.count < SearchLimit)
+                        [weakSelf removeRefreshFooter];
                 }
                     break;
                     
