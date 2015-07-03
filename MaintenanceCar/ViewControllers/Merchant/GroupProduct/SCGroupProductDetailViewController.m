@@ -251,7 +251,6 @@
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             _detail = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
-            _detail.serviceDate = _product.now;
             
             [weakSelf dispalyDetialView];
             [weakSelf.tableView reloadData];

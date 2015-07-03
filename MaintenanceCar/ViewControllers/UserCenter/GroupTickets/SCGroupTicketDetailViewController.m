@@ -264,7 +264,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             _detail             = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
             _detail.company_id  = _ticket.company_id;
             _detail.name        = _ticket.company_name;
-            _detail.serviceDate = _ticket.now;
             
             [weakSelf dispalyDetialView];
             [weakSelf.tableView reloadData];

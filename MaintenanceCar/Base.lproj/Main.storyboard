@@ -440,7 +440,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wqE-zc-pH0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1075" y="1543"/>
+            <point key="canvasLocation" x="1084" y="1543"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6o6-fa-AZn">
@@ -2958,6 +2958,7 @@
                             <outlet property="delegate" destination="hpj-tS-aRE" id="3Qb-lN-kkP"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="商家详情" id="gC1-qD-md3">
                         <barButtonItem key="rightBarButtonItem" id="g5S-1w-iCj">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="kKB-po-FQB" customClass="SCCollectionItem">
@@ -3263,7 +3264,7 @@
         <!--团购详情-->
         <scene sceneID="azR-Hp-85n">
             <objects>
-                <tableViewController storyboardIdentifier="SCGroupProductDetailViewController" id="40x-Eh-XNq" customClass="SCGroupProductDetailViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SCGroupProductDetailViewController" hidesBottomBarWhenPushed="YES" id="40x-Eh-XNq" customClass="SCGroupProductDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="b7a-oS-ikK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3792,6 +3793,7 @@
                             <outlet property="delegate" destination="40x-Eh-XNq" id="7Yk-1B-ZMF"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="团购详情" id="Ujw-TV-Dqg"/>
                     <connections>
                         <outlet property="merchanImagesView" destination="eKH-qn-479" id="ENW-rF-0jz"/>
