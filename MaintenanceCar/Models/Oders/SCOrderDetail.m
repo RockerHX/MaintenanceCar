@@ -20,7 +20,7 @@
     self = [super initWithDictionary:dict error:err];
     if (self)
     {
-        _price = ([_price doubleValue]) ? [_price stringByAppendingString:@"元"] : @"待确定";
+        _pricePrompt = [_price doubleValue] ? [_price stringByAppendingString:@"元"] : @"待确定";
     }
     return self;
 }

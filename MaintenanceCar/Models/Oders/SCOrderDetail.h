@@ -28,12 +28,13 @@
 @property (nonatomic, strong) NSString *reserveUser;       // 预约名称
 @property (nonatomic, strong) NSString *reservePhone;      // 预约电话
 @property (nonatomic, strong) NSString *price;             // 预估价格
+@property (nonatomic, strong) NSString *pricePrompt;       // 估价提示
 @property (nonatomic, strong) SCCoupon *coupon;            // 团购券
 @property (nonatomic, strong) NSString *remark;            // 备注
 @property (nonatomic, strong) NSString *payPrice;          // 支付价格
 @property (nonatomic, assign)     BOOL  canCancel;         // 是否取消
 @property (nonatomic, assign)     BOOL  canPay;            // 能否买单
-@property (nonatomic, assign)     BOOL  isPay;             // 能否买单
+@property (nonatomic, assign)     BOOL  isPay;             // 是否支付
 
 @property (nonatomic, strong) NSArray <SCOrderDetailProgress>*processes;
 

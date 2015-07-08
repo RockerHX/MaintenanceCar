@@ -538,9 +538,14 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 #pragma mark - SCPayOrderMerchandiseSummaryCellDelegate Methods
 - (void)didConfirmMerchantPrice:(CGFloat)price
 {
-    [_payResult setResultProductPrice:price];
-    [self.tableView reloadData];
-    [self startValidCouponsRequest];
+    if (price)
+    {
+        [_payResult setResultProductPrice:price];
+        [self.tableView reloadData];
+        [self startValidCouponsRequest];
+    }
+    else
+        [self showAlertWithMessage:@"请您输入正确价格！"];
 }
 
 #pragma mark - SCPayOrderEnterCodeCellDelegate Methods
@@ -556,19 +561,11 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 {
     if (_payResult.canPay)
     {
-        if (_payResult.coupon)
+        SCCoupon *coupon = _coupons[cell.tag];
+        if (_payResult.coupon && [coupon.code isEqualToString:_payResult.couponCode])
         {
-            SCCoupon *coupon = _coupons[cell.tag];
-            if ([coupon.code isEqualToString:_payResult.couponCode])
-            {
-                cell.checkBoxButton.selected = !cell.checkBoxButton.selected;
-                _payResult.coupon = nil;
-            }
-            else
-            {
-                cell.checkBoxButton.selected = NO;
-                [self showHUDAlertToViewController:self.navigationController text:@"一个订单只能使用一张优惠券噢，亲！"];
-            }
+            cell.checkBoxButton.selected = !cell.checkBoxButton.selected;
+            _payResult.coupon = nil;
         }
         else
         {
@@ -584,41 +581,39 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 #pragma mark - SCPayOrderResultCellDelegate Methods
 - (void)shouldPayForOrderWithPayment:(SCPayOrderment)payment
 {
-    NSDictionary *parameters = nil;
-    SCUserInfo *userInfo = [SCUserInfo share];
-    if (_orderDetail)
+    if (_payResult.canPay && [_payResult.totalPrice doubleValue])
     {
-        parameters = @{@"user_id": userInfo.userID,
-                        @"mobile": userInfo.phoneNmber,
-                    @"company_id": _orderDetail.companyID,
-                    @"reserve_id": _orderDetail.reserveID,
-                   @"total_price": _payResult.payPrice,
-                     @"old_price": _payResult.totalPrice,
-                    @"use_coupon": _payResult.useCoupon,
-                   @"coupon_code": _payResult.couponCode};
+        SCUserInfo *userInfo = [SCUserInfo share];
+        NSMutableDictionary *parameters = @{@"user_id": userInfo.userID,
+                                             @"mobile": userInfo.phoneNmber,
+                                        @"total_price": _payResult.payPrice,
+                                          @"old_price": _payResult.totalPrice,
+                                         @"use_coupon": _payResult.useCoupon,
+                                        @"coupon_code": _payResult.couponCode}.mutableCopy;
+        if (_orderDetail)
+        {
+            [parameters setValue:_orderDetail.companyID forKey:@"company_id"];
+            [parameters setValue:_orderDetail.reserveID forKey:@"reserve_id"];
+        }
+        else if (_groupProduct)
+        {
+            [parameters setValue:_groupProduct.company_id forKey:@"company_id"];
+            [parameters setValue:_groupProduct.product_id forKey:@"product_id"];
+            [parameters setValue:@(_payResult.purchaseCount) forKey:@"how_many"];
+        }
+        
+        switch (payment)
+        {
+            case SCPayOrdermentWeiXinPay:
+                [self weiXinPayWithParameters:parameters];
+                break;
+            case SCPayOrdermentAliPay:
+                [self aliPayWithParameters:parameters];
+                break;
+        }
     }
-    else if (_groupProduct)
-    {
-        parameters = @{@"user_id": userInfo.userID,
-                        @"mobile": userInfo.phoneNmber,
-                    @"company_id": _groupProduct.company_id,
-                    @"product_id": _groupProduct.product_id,
-                      @"how_many": @(_payResult.purchaseCount),
-                   @"total_price": _payResult.payPrice,
-                     @"old_price": _payResult.totalPrice,
-                    @"use_coupon": _payResult.useCoupon,
-                   @"coupon_code": _payResult.couponCode};
-    }
-    
-    switch (payment)
-    {
-        case SCPayOrdermentWeiXinPay:
-            [self weiXinPayWithParameters:parameters];
-            break;
-        case SCPayOrdermentAliPay:
-            [self aliPayWithParameters:parameters];
-            break;
-    }
+    else
+        [self showAlertWithMessage:@"请先确认您的购买总价是否正确！"];
 }
 
 #pragma mark - SCCouponsViewControllerDelegate Methods

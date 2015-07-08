@@ -29,16 +29,20 @@
 #pragma mark - Action Methods
 - (IBAction)enterButtonPressed
 {
-    _enterButton.enabled = NO;
-    _enterButton.backgroundColor = [UIColor grayColor];
-    _inputTextField.enabled = NO;
-    [_inputTextField resignFirstResponder];
+    if ([_inputTextField.text doubleValue])
+    {
+        _enterButton.enabled = NO;
+        _enterButton.backgroundColor = [UIColor grayColor];
+        _inputTextField.enabled = NO;
+        [_inputTextField resignFirstResponder];
+    }
     [self executeDelegateMethodWithNumber:_inputTextField.text];
 }
 
 #pragma mark - Public Methods
 - (void)displayCellWithDetail:(SCOrderDetail *)detail
 {
+    _inputTextField.text        = [_inputTextField.text doubleValue] ? _inputTextField.text : detail.price;
     self.paySuccessView.hidden  = !detail.payPrice;
     self.payPriceLabel.text     = detail.payPrice;
     self.carModelLabel.text     = detail.carModelName;

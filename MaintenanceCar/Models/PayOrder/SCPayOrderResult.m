@@ -45,13 +45,13 @@
 
 - (NSString *)deductiblePrice
 {
-    return [NSString stringWithFormat:@"%.2f", ([self resultTotalPrice] > _resultDeductiblePrice) ? _resultDeductiblePrice : ZERO_PRICE];
+    return [NSString stringWithFormat:@"%.2f", _resultDeductiblePrice];
 }
 
 - (NSString *)payPrice
 {
     double payPrice = [self resultTotalPrice] - _resultDeductiblePrice;
-    return [NSString stringWithFormat:@"%.2f", (payPrice > 0) ? payPrice : 0];
+    return [NSString stringWithFormat:@"%.2f", payPrice ? payPrice : 0];
 }
 
 - (NSString *)useCoupon
