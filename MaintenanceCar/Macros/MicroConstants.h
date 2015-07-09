@@ -12,12 +12,15 @@
 #pragma mark - System Framework Singleton Define
 #define APP_DELEGATE_INSTANCE               ((AppDelegate*)([UIApplication sharedApplication].delegate))
 #define USER_DEFAULT                        [NSUserDefaults standardUserDefaults]
+#define NOTIFICATION_CENTER                 [NSNotificationCenter defaultCenter]
+
 #define STORY_BOARD(Name)                   [UIStoryboard storyboardWithName:Name bundle:nil]
 #define MAIN_VIEW_CONTROLLER(Name)          [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:Name]
 #define USERCENTER_VIEW_CONTROLLER(Name)    [STORY_BOARD(@"UserCenter") instantiateViewControllerWithIdentifier:Name]
 #define DISCOVERY_VIEW_CONTROLLER(Name)     [STORY_BOARD(@"Discovery") instantiateViewControllerWithIdentifier:Name]
-#define NOTIFICATION_CENTER                 [NSNotificationCenter defaultCenter]
+#define SEARCH_VIEW_CONTROLLER(Name)        [STORY_BOARD(@"Discovery") instantiateViewControllerWithIdentifier:Name]
 
+#define CLASS_NAME(Class)                   NSStringFromClass([Class class])
 
 #ifdef DEBUG
 #define debugLog(...) NSLog(__VA_ARGS__)

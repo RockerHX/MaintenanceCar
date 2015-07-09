@@ -11,6 +11,7 @@
 #import "SCPayOderTicketCell.h"
 #import "SCPayOrderGroupProductSummaryCell.h"
 #import "SCPayOrderEnterCodeCell.h"
+#import "SCNoValidCouponCell.h"
 #import "SCPayOrderCouponCell.h"
 #import "SCPayOrderResultCell.h"
 #import <Weixin/WXApi.h>
@@ -76,7 +77,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return USERCENTER_VIEW_CONTROLLER(NSStringFromClass([self class]));
+    return USERCENTER_VIEW_CONTROLLER(CLASS_NAME(self));
 }
 
 #pragma mark - Config Methods
@@ -128,19 +129,19 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
             {
                 if (_orderDetail)
                 {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderMerchandiseSummaryCell" forIndexPath:indexPath];
+                    cell = [tableView dequeueReusableCellWithIdentifier:CLASS_NAME(SCPayOrderMerchandiseSummaryCell) forIndexPath:indexPath];
                     [(SCPayOrderMerchandiseSummaryCell *)cell displayCellWithDetail:_orderDetail];
                 }
                 else if (_groupProduct)
                 {
                     if (!indexPath.row)
                     {
-                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderGroupProductSummaryCell" forIndexPath:indexPath];
+                        cell = [tableView dequeueReusableCellWithIdentifier:CLASS_NAME(SCPayOrderGroupProductSummaryCell) forIndexPath:indexPath];
                         [(SCPayOrderGroupProductSummaryCell *)cell displayCellWithProduct:_groupProduct];
                     }
                     else
                     {
-                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOderTicketCell" forIndexPath:indexPath];
+                        cell = [tableView dequeueReusableCellWithIdentifier:CLASS_NAME(SCPayOderTicketCell) forIndexPath:indexPath];
                         [(SCPayOderTicketCell *)cell displayCellWithTickets:_tickets index:(indexPath.row - 1)];
                     }
                 }
@@ -152,22 +153,25 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                 {
                     if (_coupons.count)
                     {
-                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderCouponCell" forIndexPath:indexPath];
+                        cell = [tableView dequeueReusableCellWithIdentifier:CLASS_NAME(SCPayOrderCouponCell) forIndexPath:indexPath];
                         [(SCPayOrderCouponCell *)cell displayCellWithCoupons:_coupons index:(indexPath.row - 1) couponCode:_payResult.couponCode];
                     }
                     else
-                        cell = [tableView dequeueReusableCellWithIdentifier:@"SCNoValidCouponCell" forIndexPath:indexPath];
+                    {
+                        cell = [tableView dequeueReusableCellWithIdentifier:CLASS_NAME(SCNoValidCouponCell) forIndexPath:indexPath];
+                        [(SCNoValidCouponCell *)cell displayWithPriceConfirm:_payResult.priceConfirm];
+                    }
                 }
                 else
                 {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderEnterCodeCell" forIndexPath:indexPath];
+                    cell = [tableView dequeueReusableCellWithIdentifier:CLASS_NAME(SCPayOrderEnterCodeCell) forIndexPath:indexPath];
                     [(SCPayOrderEnterCodeCell *)cell displayCellWithPaySucceed:_payResult.canPay];
                 }
             }
                 break;
             case 2:
             {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"SCPayOrderResultCell" forIndexPath:indexPath];
+                cell = [tableView dequeueReusableCellWithIdentifier:CLASS_NAME(SCPayOrderResultCell) forIndexPath:indexPath];
                 [(SCPayOrderResultCell *)cell displayCellWithResult:_payResult];
             }
                 break;
@@ -188,7 +192,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
             {
                 if (_orderDetail)
                 {
-                    height += [tableView fd_heightForCellWithIdentifier:@"SCPayOrderMerchandiseSummaryCell" cacheByIndexPath:indexPath configuration:^(SCPayOrderMerchandiseSummaryCell *cell) {
+                    height += [tableView fd_heightForCellWithIdentifier:CLASS_NAME(SCPayOrderMerchandiseSummaryCell) cacheByIndexPath:indexPath configuration:^(SCPayOrderMerchandiseSummaryCell *cell) {
                         [cell displayCellWithDetail:_orderDetail];
                     }];
                 }
@@ -196,7 +200,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                 {
                     if (!indexPath.row)
                     {
-                        height += [tableView fd_heightForCellWithIdentifier:@"SCPayOrderGroupProductSummaryCell" cacheByIndexPath:indexPath configuration:^(SCPayOrderGroupProductSummaryCell *cell) {
+                        height += [tableView fd_heightForCellWithIdentifier:CLASS_NAME(SCPayOrderGroupProductSummaryCell) cacheByIndexPath:indexPath configuration:^(SCPayOrderGroupProductSummaryCell *cell) {
                             [cell displayCellWithProduct:_groupProduct];
                         }];
                     }
@@ -211,7 +215,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                 {
                     if (_coupons.count)
                     {
-                        height = [tableView fd_heightForCellWithIdentifier:@"SCPayOrderCouponCell" cacheByIndexPath:indexPath configuration:^(SCPayOrderCouponCell *cell) {
+                        height = [tableView fd_heightForCellWithIdentifier:CLASS_NAME(SCPayOrderCouponCell) cacheByIndexPath:indexPath configuration:^(SCPayOrderCouponCell *cell) {
                             [cell displayCellWithCoupons:_coupons index:(indexPath.row - 1) couponCode:_payResult.couponCode];
                         }];
                     }
@@ -224,7 +228,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                 break;
             case 2:
             {
-                height += [tableView fd_heightForCellWithIdentifier:@"SCPayOrderResultCell" cacheByIndexPath:indexPath configuration:^(SCPayOrderResultCell *cell) {
+                height += [tableView fd_heightForCellWithIdentifier:CLASS_NAME(SCPayOrderResultCell) cacheByIndexPath:indexPath configuration:^(SCPayOrderResultCell *cell) {
                     [cell displayCellWithResult:_payResult];
                 }];
             }
@@ -350,8 +354,15 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
         {
             case SCAPIRequestErrorCodeNoError:
             {
-                SCWeiXinPayOrder *weiXinPayOrder = [[SCWeiXinPayOrder alloc] initWithDictionary:responseObject[@"data"] error:nil];
-                [self sendWeiXinPay:weiXinPayOrder];
+                NSDictionary *data = responseObject[@"data"];
+                BOOL zeroPay = data[@"zero_pay"];
+                if (zeroPay)
+                {
+                    _payResult.outTradeNo = data[@"order_id"];
+                    [self weiXinPaySuccess];
+                }
+                else
+                    [self sendWeiXinPay:[[SCWeiXinPayOrder alloc] initWithDictionary:data error:nil]];
             }
                 break;
         }
@@ -371,8 +382,15 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
         {
             case SCAPIRequestErrorCodeNoError:
             {
-                SCAliPayOrder *aliPayOrder = [[SCAliPayOrder alloc] initWithDictionary:responseObject[@"data"] error:nil];
-                [self sendAliPay:aliPayOrder];
+                NSDictionary *data = responseObject[@"data"];
+                BOOL zeroPay = data[@"zero_pay"];
+                if (zeroPay)
+                {
+                    _payResult.outTradeNo = data[@"order_id"];
+                    [self alipayResult:@{@"resultStatus": @(9000)}];
+                }
+                else
+                    [self sendAliPay:[[SCAliPayOrder alloc] initWithDictionary:data error:nil]];
             }
                 break;
         }

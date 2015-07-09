@@ -27,6 +27,11 @@
 }
 
 #pragma mark - Setter And Getter Methods
+- (BOOL)priceConfirm
+{
+    return _resultProductPrice ? YES : NO;
+}
+
 - (void)setCoupon:(SCCoupon *)coupon
 {
     _coupon = coupon;

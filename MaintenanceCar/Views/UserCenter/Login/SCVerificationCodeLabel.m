@@ -1,31 +1,25 @@
 //
-//  SCVerificationCodeView.m
+//  SCVerificationCodeLabel.m
 //  MaintenanceCar
 //
 //  Created by ShiCang on 14/12/31.
 //  Copyright (c) 2014年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCVerificationCodeView.h"
+#import "SCVerificationCodeLabel.h"
 #import "AppMicroConstants.h"
 
 typedef BOOL(^BLOCK)(void);
 
 #define TIME_OUT_FLAG               1                                       // 倒计时结束时间
 #define TIME_INTERVAL               1.0f                                    // 倒计时时间间隔
-#define COUNT_DOWN_TIME_DURATION    CodeExpire * 60 + 30    // 倒计时结束时间
-#define TEXT_PROMPT                 @"获取验证码"                             // SCVerificationCodeView提示
+#define COUNT_DOWN_TIME_DURATION    CodeExpire * 60 + 30                    // 倒计时结束时间
+#define TEXT_PROMPT                 @"获取语音验证码"                         // SCVerificationCodeView提示
 
-@interface SCVerificationCodeView ()
+@implementation SCVerificationCodeLabel
 {
-    NSUInteger _timeout;                // 倒计时结束时间
-    NSTimer    *_countDownTimer;        // 倒计时计时器
     BLOCK      _block;                  // 点击事件回调函数
 }
-
-@end
-
-@implementation SCVerificationCodeView
 
 #pragma mark - Init Methods
 - (void)awakeFromNib
@@ -49,7 +43,7 @@ typedef BOOL(^BLOCK)(void);
 /**
  *  倒计时刷新方法
  */
--(void)timeFireMethod
+- (void)timeFireMethod
 {
     _timeout--;
     self.text = [NSString stringWithFormat:@"%@s", @(_timeout)];
@@ -61,7 +55,7 @@ typedef BOOL(^BLOCK)(void);
 }
 
 #pragma mark - Public Methods
-- (void)verificationCodeShouldSend:(BOOL(^)())block
+- (void)codeShouldSend:(BOOL(^)())block
 {
     _block = block;
 }

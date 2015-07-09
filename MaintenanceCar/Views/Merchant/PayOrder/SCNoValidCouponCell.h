@@ -10,4 +10,8 @@
 
 @interface SCNoValidCouponCell : SCTableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *promptLabel;
+
+-  (void)displayWithPriceConfirm:(BOOL)confirm;
+
 @end

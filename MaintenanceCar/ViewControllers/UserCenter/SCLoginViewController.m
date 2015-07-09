@@ -8,7 +8,7 @@
 
 #import "SCLoginViewController.h"
 #import <UMengMessage/UMessage.h>
-#import "SCVerificationCodeView.h"
+#import "SCVerificationCodeLabel.h"
 
 // 登录验证模式
 typedef NS_ENUM(NSInteger, SCVerificationCodeMode) {
@@ -118,7 +118,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     // self弱引用，防止block使用出现循环引用，造成内存泄露
     WEAK_SELF(weakSelf);
     // 获取验证码View被点击之后的回调，判断是否输入手机号进行返回和执行获取验证码请求
-    [_verificationCodeView verificationCodeShouldSend:^BOOL{
+    [_verificationCodeLabel codeShouldSend:^BOOL{
         if ([weakSelf.phoneNumberTextField.text length] == 11)
         {
             [weakSelf startGetVerificationCodeReuqestWithMode:SCVerificationCodeModeMessage];
@@ -166,7 +166,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
             [weakSelf showHUDAlertToViewController:weakSelf text:message];
         else
             [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
-        [_verificationCodeView stop];
+        [_verificationCodeLabel stop];
     }];
 }
 
@@ -225,7 +225,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
 {
     if (type == SCDismissTypeLoginSuccess)
         [NOTIFICATION_CENTER postNotificationName:kUserLoginSuccessNotification object:nil];
-    [_verificationCodeView stop];           // 退出之前要记得关掉验证码倒计时，防止内存释放引起crash
+    [_verificationCodeLabel stop];           // 退出之前要记得关掉验证码倒计时，防止内存释放引起crash
     [self resignKeyBoard];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }

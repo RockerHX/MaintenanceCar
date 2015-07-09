@@ -18,4 +18,10 @@
     [super setFrame:frame];
 }
 
+#pragma mark - Public Methods
+-  (void)displayWithPriceConfirm:(BOOL)confirm
+{
+    _promptLabel.text = confirm ? @"暂无可用的优惠券" : @"请您先确认买单金额";
+}
+
 @end

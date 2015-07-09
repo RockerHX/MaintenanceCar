@@ -302,7 +302,7 @@
                                     <constraint firstAttribute="width" constant="100" id="5A3-BO-Xo4"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="获取验证码" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pgg-xl-3UU" customClass="SCVerificationCodeView">
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="获取验证码" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pgg-xl-3UU" customClass="SCVerificationCodeLabel">
                                 <rect key="frame" x="200" y="79" width="100" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -434,8 +434,8 @@
                         <outlet property="cancelButton" destination="Sm7-vK-RVj" id="9up-m8-Nvb"/>
                         <outlet property="loginButton" destination="Rwm-D7-PzH" id="ifU-2r-s3Z"/>
                         <outlet property="phoneNumberTextField" destination="bl5-mD-hdI" id="dx2-4r-e52"/>
+                        <outlet property="verificationCodeLabel" destination="Pgg-xl-3UU" id="9dK-yW-zpo"/>
                         <outlet property="verificationCodeTextField" destination="rTx-28-xOW" id="JA7-QJ-yaP"/>
-                        <outlet property="verificationCodeView" destination="Pgg-xl-3UU" id="jLB-9Y-P08"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wqE-zc-pH0" userLabel="First Responder" sceneMemberID="firstResponder"/>
