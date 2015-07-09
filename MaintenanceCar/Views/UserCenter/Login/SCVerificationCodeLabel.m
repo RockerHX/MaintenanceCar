@@ -9,7 +9,7 @@
 #import "SCVerificationCodeLabel.h"
 #import "AppMicroConstants.h"
 
-typedef BOOL(^BLOCK)(void);
+typedef BOOL(^BLOCK)(SCVerificationType type);
 
 #define TIME_OUT_FLAG               1                                       // 倒计时结束时间
 #define TIME_INTERVAL               1.0f                                    // 倒计时时间间隔
@@ -18,12 +18,22 @@ typedef BOOL(^BLOCK)(void);
 
 @implementation SCVerificationCodeLabel
 {
-    BLOCK      _block;                  // 点击事件回调函数
+    BLOCK _block;                  // 点击事件回调函数
+    SCVerificationType _type;
 }
 
 #pragma mark - Init Methods
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+    
+    [self initConfig];
+}
+
+#pragma mark - Config Methods
+- (void)initConfig
+{
+    _type = SCVerificationTypeMessage;
     // 加入一个单击手势，事件触发关联到startCountDown方法
     [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startCountDown)]];
 }
@@ -32,7 +42,7 @@ typedef BOOL(^BLOCK)(void);
 - (void)startCountDown
 {
     // 如果回调获得的返回值为YES，执行倒计时
-    if(_block())
+    if(_block && _block(_type))
     {
         self.userInteractionEnabled = NO;
         _timeout = COUNT_DOWN_TIME_DURATION;
@@ -51,11 +61,12 @@ typedef BOOL(^BLOCK)(void);
     if(_timeout < TIME_OUT_FLAG)
     {
         [self stop];
+        _type = SCVerificationTypeCall;
     }
 }
 
 #pragma mark - Public Methods
-- (void)codeShouldSend:(BOOL(^)())block
+- (void)codeShouldSend:(BOOL(^)(SCVerificationType type))block
 {
     _block = block;
 }

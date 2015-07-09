@@ -118,10 +118,18 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     // self弱引用，防止block使用出现循环引用，造成内存泄露
     WEAK_SELF(weakSelf);
     // 获取验证码View被点击之后的回调，判断是否输入手机号进行返回和执行获取验证码请求
-    [_verificationCodeLabel codeShouldSend:^BOOL{
+    [_verificationCodeLabel codeShouldSend:^BOOL(SCVerificationType type) {
         if ([weakSelf.phoneNumberTextField.text length] == 11)
         {
-            [weakSelf startGetVerificationCodeReuqestWithMode:SCVerificationCodeModeMessage];
+            switch (type)
+            {
+                case SCVerificationTypeMessage:
+                    [weakSelf startGetVerificationCodeReuqestWithMode:SCVerificationCodeModeMessage];
+                    break;
+                case SCVerificationTypeCall:
+                    [weakSelf startGetVerificationCodeReuqestWithMode:SCVerificationCodeModeCall];
+                    break;
+            }
             return YES;
         }
         else
