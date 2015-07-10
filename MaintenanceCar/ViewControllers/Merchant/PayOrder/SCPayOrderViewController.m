@@ -355,7 +355,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
             case SCAPIRequestErrorCodeNoError:
             {
                 NSDictionary *data = responseObject[@"data"];
-                BOOL zeroPay = data[@"zero_pay"];
+                BOOL zeroPay = [data[@"zero_pay"] boolValue];
                 if (zeroPay)
                 {
                     _payResult.outTradeNo = data[@"order_id"];
@@ -383,7 +383,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
             case SCAPIRequestErrorCodeNoError:
             {
                 NSDictionary *data = responseObject[@"data"];
-                BOOL zeroPay = data[@"zero_pay"];
+                BOOL zeroPay = [data[@"zero_pay"] boolValue];
                 if (zeroPay)
                 {
                     _payResult.outTradeNo = data[@"order_id"];

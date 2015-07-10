@@ -175,6 +175,10 @@
 		48DDB94C1B4B840300CFD394 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48DDB94A1B4B840300CFD394 /* Search.storyboard */; };
 		48DDB9501B4CD1CC00CFD394 /* SCSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DDB94F1B4CD1CC00CFD394 /* SCSearchViewController.m */; };
 		48DDB9541B4E695D00CFD394 /* SCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DDB9531B4E695D00CFD394 /* SCLoginViewController.m */; };
+		48DDB95B1B4E815600CFD394 /* SCSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DDB95A1B4E815600CFD394 /* SCSearchBar.m */; };
+		48DDB95E1B4E88C900CFD394 /* SCSearchHistoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DDB95D1B4E88C900CFD394 /* SCSearchHistoryView.m */; };
+		48DDB9661B4F7A7100CFD394 /* SCSearchHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DDB9651B4F7A7100CFD394 /* SCSearchHistory.m */; };
+		48DDB9691B4FBB1B00CFD394 /* SCSearchHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DDB9681B4FBB1B00CFD394 /* SCSearchHistoryCell.m */; };
 		48DF20691ABB20C2009708F8 /* GPSTransform.c in Sources */ = {isa = PBXBuildFile; fileRef = 48DF20561ABB20C2009708F8 /* GPSTransform.c */; };
 		48E611221AE54C19000F65F0 /* SCNavigationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E611211AE54C19000F65F0 /* SCNavigationTableViewController.m */; };
 		48EBF5BB1AC6AF8D00892099 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48EBF5BA1AC6AF8D00892099 /* AVFoundation.framework */; };
@@ -555,6 +559,14 @@
 		48DDB94F1B4CD1CC00CFD394 /* SCSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSearchViewController.m; sourceTree = "<group>"; };
 		48DDB9521B4E695D00CFD394 /* SCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLoginViewController.h; sourceTree = "<group>"; };
 		48DDB9531B4E695D00CFD394 /* SCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLoginViewController.m; sourceTree = "<group>"; };
+		48DDB9591B4E815600CFD394 /* SCSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSearchBar.h; sourceTree = "<group>"; };
+		48DDB95A1B4E815600CFD394 /* SCSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSearchBar.m; sourceTree = "<group>"; };
+		48DDB95C1B4E88C900CFD394 /* SCSearchHistoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSearchHistoryView.h; sourceTree = "<group>"; };
+		48DDB95D1B4E88C900CFD394 /* SCSearchHistoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSearchHistoryView.m; sourceTree = "<group>"; };
+		48DDB9641B4F7A7100CFD394 /* SCSearchHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSearchHistory.h; sourceTree = "<group>"; };
+		48DDB9651B4F7A7100CFD394 /* SCSearchHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSearchHistory.m; sourceTree = "<group>"; };
+		48DDB9671B4FBB1B00CFD394 /* SCSearchHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSearchHistoryCell.h; sourceTree = "<group>"; };
+		48DDB9681B4FBB1B00CFD394 /* SCSearchHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSearchHistoryCell.m; sourceTree = "<group>"; };
 		48DF20561ABB20C2009708F8 /* GPSTransform.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GPSTransform.c; sourceTree = "<group>"; };
 		48DF20571ABB20C2009708F8 /* GPSTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSTransform.h; sourceTree = "<group>"; };
 		48E611201AE54C19000F65F0 /* SCNavigationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNavigationTableViewController.h; sourceTree = "<group>"; };
@@ -1069,6 +1081,7 @@
 		4866F92B1AACBD88008E195C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				48DDB9551B4E80BA00CFD394 /* Search */,
 				483BA63C1B31566400B24C5F /* Loading */,
 				48249D211B2883FA00B67676 /* Shops */,
 				482AC9781AB43B81001574EF /* Appraise */,
@@ -1526,6 +1539,28 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		48DDB9551B4E80BA00CFD394 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				48DDB9591B4E815600CFD394 /* SCSearchBar.h */,
+				48DDB95A1B4E815600CFD394 /* SCSearchBar.m */,
+				48DDB95C1B4E88C900CFD394 /* SCSearchHistoryView.h */,
+				48DDB95D1B4E88C900CFD394 /* SCSearchHistoryView.m */,
+				48DDB9671B4FBB1B00CFD394 /* SCSearchHistoryCell.h */,
+				48DDB9681B4FBB1B00CFD394 /* SCSearchHistoryCell.m */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		48DDB9631B4F7A7100CFD394 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				48DDB9641B4F7A7100CFD394 /* SCSearchHistory.h */,
+				48DDB9651B4F7A7100CFD394 /* SCSearchHistory.m */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		48DF20531ABB20C2009708F8 /* EvilTransform */ = {
 			isa = PBXGroup;
 			children = (
@@ -1546,6 +1581,7 @@
 		48EA0AA91B26D97D00575FA7 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				48DDB9631B4F7A7100CFD394 /* Search */,
 				48249D0E1B286E1600B67676 /* Shops */,
 				48BF33801B3E8F950052233B /* SCServerResponse.h */,
 				48BF33811B3E8F950052233B /* SCServerResponse.m */,
@@ -1904,6 +1940,7 @@
 				480754181B09CC8F00DB2433 /* SCCouponDetailShowMoreMerchantsCell.m in Sources */,
 				48FB70C61AA5A58300AF4AD9 /* SCCarBrandDisplayModel.m in Sources */,
 				482B57DC1A43CB7700E47962 /* AppDelegate.mm in Sources */,
+				48DDB95B1B4E815600CFD394 /* SCSearchBar.m in Sources */,
 				4803EB091ABCB688001AD4F9 /* SCServiceItemCell.m in Sources */,
 				4866F9B31AACBD89008E195C /* SCMerchantListCell.m in Sources */,
 				4866F9121AACBD2D008E195C /* SCChangeMaintenanceDataViewController.m in Sources */,
@@ -1924,6 +1961,7 @@
 				485332761B42C4D400782121 /* SCCarModelFilterReusableView.m in Sources */,
 				482AC9821AB48EE9001574EF /* SCTextView.m in Sources */,
 				4866F9EF1AAD9068008E195C /* SCGroupTicketCell.m in Sources */,
+				48DDB9691B4FBB1B00CFD394 /* SCSearchHistoryCell.m in Sources */,
 				48A349071B0B385B0068F8E2 /* SCReservationItemCell.m in Sources */,
 				48FB70CD1AA5A58300AF4AD9 /* SCMerchant.m in Sources */,
 				482AC99D1AB6CA87001574EF /* SCCommentListViewController.m in Sources */,
@@ -1937,6 +1975,7 @@
 				4896E3E01B10A5EA00838EED /* SCAppraiseViewController.m in Sources */,
 				484C0AA01B44EEC300294747 /* SCTopBarTableViewController.m in Sources */,
 				483BA63B1B31565A00B24C5F /* SCLoadingViewController.m in Sources */,
+				48DDB95E1B4E88C900CFD394 /* SCSearchHistoryView.m in Sources */,
 				4866FA1E1AAED9B2008E195C /* SCGroupTicketCodeCell.m in Sources */,
 				48C8B1D91A80CC1200E4114E /* SCObjectCategory.m in Sources */,
 				4866F9A21AACBD89008E195C /* SCMaintenanceTypeView.m in Sources */,
@@ -2042,6 +2081,7 @@
 				48249D201B286E7700B67676 /* SCShop.m in Sources */,
 				4866F9231AACBD2D008E195C /* SCAddCarViewController.m in Sources */,
 				4866F9AB1AACBD89008E195C /* SCMerchantDetailItemCell.m in Sources */,
+				48DDB9661B4F7A7100CFD394 /* SCSearchHistory.m in Sources */,
 				4866F9AF1AACBD89008E195C /* SCFilterPopView.m in Sources */,
 				489AA2351B05943900EDB86C /* SCCouponDetailViewController.m in Sources */,
 				48720E0E1AE5060B002D435F /* SCOrdersViewController.m in Sources */,

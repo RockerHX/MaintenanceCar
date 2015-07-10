@@ -23,4 +23,6 @@
 
 + (instancetype)instance;
 
+- (IBAction)searchButtonItemPressed;
+
 @end

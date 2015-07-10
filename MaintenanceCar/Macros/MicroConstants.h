@@ -18,7 +18,7 @@
 #define MAIN_VIEW_CONTROLLER(Name)          [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:Name]
 #define USERCENTER_VIEW_CONTROLLER(Name)    [STORY_BOARD(@"UserCenter") instantiateViewControllerWithIdentifier:Name]
 #define DISCOVERY_VIEW_CONTROLLER(Name)     [STORY_BOARD(@"Discovery") instantiateViewControllerWithIdentifier:Name]
-#define SEARCH_VIEW_CONTROLLER(Name)        [STORY_BOARD(@"Discovery") instantiateViewControllerWithIdentifier:Name]
+#define SEARCH_VIEW_CONTROLLER(Name)        [STORY_BOARD(@"Search") instantiateViewControllerWithIdentifier:Name]
 
 #define CLASS_NAME(Class)                   NSStringFromClass([Class class])
 

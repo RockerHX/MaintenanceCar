@@ -62,9 +62,7 @@
     switch (response.statusCode)
     {
         case SCAPIRequestErrorCodeNoError:
-        {
             [self loadFinished];
-        }
             break;
         case SCAPIRequestStatusCodeTokenError:
             [self showShoulReLoginAlert];

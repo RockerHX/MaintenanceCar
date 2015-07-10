@@ -16,6 +16,7 @@
 #import "SCFilterView.h"
 #import "SCMerchantDetailViewController.h"
 #import "SCGroupProductDetailViewController.h"
+#import "SCSearchViewController.h"
 // TODO
 #import "SCGroupProduct.h"
 #import "SCQuotedPrice.h"
@@ -77,6 +78,13 @@
     }];
 }
 
+#pragma mark - Action Methods
+- (IBAction)searchButtonItemPressed
+{
+    SCSearchViewController *searchViewController = [SCSearchViewController instance];
+    [self presentViewController:searchViewController animated:YES completion:nil];
+}
+
 #pragma mark - Private Methods
 - (void)startDropDownRefreshReuqest
 {
@@ -132,17 +140,17 @@
     id data = shopViewModel.dataSource[indexPath.row];
     if ([data isKindOfClass:[SCShopViewModel class]])
     {
-        SCDiscoveryMerchantCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCDiscoveryMerchantCell" forIndexPath:indexPath];
+        SCDiscoveryMerchantCell *cell = [tableView dequeueReusableCellWithIdentifier:CLASS_NAME(SCDiscoveryMerchantCell) forIndexPath:indexPath];
         [cell displayCellWithShopViewModel:data];
         return cell;
     }
     else if ([data isKindOfClass:[NSString class]])
     {
-        SCDiscoveryPopPromptCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCDiscoveryPopPromptCell" forIndexPath:indexPath];
+        SCDiscoveryPopPromptCell *cell = [tableView dequeueReusableCellWithIdentifier:CLASS_NAME(SCDiscoveryPopPromptCell) forIndexPath:indexPath];
         [cell displayCellWithPrompt:data openUp:shopViewModel.isProductsOpen canPop:shopViewModel.canOpen];
         return cell;
     }
-    SCDiscoveryPopProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCDiscoveryPopProductCell" forIndexPath:indexPath];
+    SCDiscoveryPopProductCell *cell = [tableView dequeueReusableCellWithIdentifier:CLASS_NAME(SCDiscoveryPopProductCell) forIndexPath:indexPath];
     [cell displayCellWithProduct:data index:indexPath.row];
     return cell;
 }

@@ -845,7 +845,13 @@
                             <constraint firstItem="bs9-hn-Uwh" firstAttribute="leading" secondItem="coc-OZ-B6K" secondAttribute="leading" id="xk8-cR-YC1"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="发现" id="QXe-vG-hj0"/>
+                    <navigationItem key="navigationItem" title="发现" id="QXe-vG-hj0">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="ufU-XP-3RR">
+                            <connections>
+                                <action selector="searchButtonItemPressed" destination="J5i-E0-Avb" id="AtB-A6-dfb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="filterView" destination="Emi-AO-0J2" id="ocr-YX-ph0"/>
                         <outlet property="loadingContainerView" destination="bs9-hn-Uwh" id="B1u-vM-igH"/>
