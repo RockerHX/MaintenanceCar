@@ -35,10 +35,6 @@
 
 #pragma mark - API
 #define SearchAPI                   @"/company_search"                      // 商家搜索API
-#define SearchWashAPI               @"/company_search/wash"                 // 洗车美容商户搜索API
-#define SearchMaintanceAPI          @"/company_search/maintance"            // 保养商户搜索API
-#define SearchRepairAPI             @"/company_search/repair"               // 维修商户搜索API
-#define SearchOperateAPI            @"/company_search/operate"              // 运营位商家搜索API
 #define MerchantDetailAPI           @"/Carshop"                             // 商家详情API
 
 #define MerchantGroupProductAPI     @"/Group_product"                       // 商家团购详情API
@@ -101,10 +97,6 @@
 
 #pragma mark - API URL
 #define SearchAPIURL                    [V1APIURL stringByAppendingString:SearchAPI]                  // 商家搜索接口URL - 用于商家搜索和筛选
-#define SearchWashAPIURL                [V1APIURL stringByAppendingString:SearchWashAPI]              // 洗车美容商户搜索接口URL - 用于搜索洗车美容商户
-#define SearchMaintanceAPIURL           [V1APIURL stringByAppendingString:SearchMaintanceAPI]         // 保养商户搜索接口URL - 用于搜索保养商户
-#define SearchRepairAPIURL              [V1APIURL stringByAppendingString:SearchRepairAPI]            // 维修商户搜索接口URL - 用于搜索维修商户
-#define SearchOperateAPIURL             [V1APIURL stringByAppendingString:SearchOperateAPI]           // 运营位商家搜索接口URL - 用于运营位商家搜索和筛选
 #define MerchantDetailAPIURL            [V1APIURL stringByAppendingString:MerchantDetailAPI]          // 商家详情接口URL - 用于获取短信或者语音验证码
 
 #define MerchantGroupProductAPIURL      [V1APIURL stringByAppendingString:MerchantGroupProductAPI]    // 商家团购详情接口URL - 用于商家团购项目

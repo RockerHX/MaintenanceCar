@@ -18,5 +18,6 @@
 
 - (void)reloadShops;
 - (void)loadMoreShops;
+- (void)setParameter:(NSString *)parameter value:(NSString *)value;
 
 @end

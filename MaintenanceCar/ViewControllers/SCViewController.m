@@ -11,7 +11,7 @@
 @implementation SCViewController
 
 #pragma mark - Container Segue Methods
-- (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:NSStringFromClass([SCLoadingViewController class])])
     {

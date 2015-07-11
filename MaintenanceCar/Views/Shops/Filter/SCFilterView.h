@@ -15,9 +15,6 @@
 @class SCCarModelFilterView;
 
 @interface SCFilterView : UIView
-{
-    BOOL _canSelected;
-}
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonHeightConstraint;

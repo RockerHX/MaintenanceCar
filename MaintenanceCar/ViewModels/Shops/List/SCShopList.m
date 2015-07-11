@@ -47,6 +47,12 @@
     return [NSArray arrayWithArray:_shops];
 }
 
+#pragma mark - Public Methods
+- (void)setParameter:(NSString *)parameter value:(NSString *)value
+{
+    [_parameters setValue:value forKey:parameter];
+}
+
 #pragma mark - Private Methods
 - (void)clearShops
 {

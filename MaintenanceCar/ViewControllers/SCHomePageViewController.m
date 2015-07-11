@@ -10,14 +10,13 @@
 #import <AFNetworking/UIButton+AFNetworking.h>
 #import "SCHomePageDetailView.h"
 #import "SCAllDictionary.h"
-#import "SCWebViewController.h"
-#import "SCServiceMerchantsViewController.h"
+#import "SCOperationViewController.h"
+#import "SCMaintenanceViewController.h"
 #import "SCADView.h"
+#import "SCWebViewController.h"
 #import "SCChangeMaintenanceDataViewController.h"
-#import "SCReservationViewController.h"
 
-@interface SCHomePageViewController () <SCADViewDelegate, SCHomePageDetailViewDelegate, SCChangeMaintenanceDataViewControllerDelegate>
-
+@interface SCHomePageViewController () <SCADViewDelegate, SCHomePageDetailViewDelegate>
 @end
 
 @implementation SCHomePageViewController
@@ -47,51 +46,7 @@
     [self viewConfig];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"Wash"])
-    {
-        SCServiceMerchantsViewController *washViewController = segue.destinationViewController;
-        washViewController.title      = @"洗车美容";
-        washViewController.type       = @"1";
-        washViewController.noBrand    = YES;
-        washViewController.searchType = SCSearchTypeWash;
-    }
-    else if ([segue.identifier isEqualToString:@"Repair"])
-    {
-        SCServiceMerchantsViewController *repairViewController = segue.destinationViewController;
-        repairViewController.title      = @"维修";
-        repairViewController.type       = @"3";
-        repairViewController.searchType = SCSearchTypeRepair;
-    }
-}
-
-#pragma mark - Action Methods
-- (IBAction)locationItemPressed:(UIBarButtonItem *)sender
-{
-    [self showAlertWithTitle:@"温馨提示" message:@"您好，修养目前只开通了深圳城市试运营，其他城市暂时还没有开通，感谢您对修养的关注。"];
-}
-
-- (IBAction)maintenanceButtonPressed:(UIButton *)sender
-{
-    SCUserInfo *userInfo = [SCUserInfo share];
-    if (userInfo.loginStatus)
-    {
-        UIViewController *viewController = MAIN_VIEW_CONTROLLER(@"MaintenanceViewController");
-        [self.navigationController pushViewController:viewController animated:YES];
-    }
-    else
-        [self showShoulLoginAlert];
-}
-
-- (IBAction)SpecialButtonPressed:(UIButton *)sender
-{
-    SCSpecial *special = [SCAllDictionary share].special;
-    SCADView *adView = [[SCADView alloc] initWithDelegate:self imageURL:special.post_pic];
-    [adView show];
-}
-
-#pragma mark - Private Methods
+#pragma mark - Config Methods
 - (void)initConfig
 {
     [self startSpecialRequest];
@@ -112,6 +67,56 @@
     [self.view layoutIfNeeded];
 }
 
+#pragma mark - Action Methods
+- (IBAction)locationItemPressed
+{
+    [self showAlertWithTitle:@"温馨提示" message:@"您好，修养目前只开通了深圳城市试运营，其他城市暂时还没有开通，感谢您对修养的关注。"];
+}
+
+- (void)maintenanceButtonPressed
+{
+}
+
+- (IBAction)serviceButtonPressed:(UIButton *)button
+{
+    switch (button.tag)
+    {
+        case SCHomePageServiceButtonTypeRepair:
+        {
+            SCOperationViewController *repairViewController = [SCOperationViewController instance];
+            repairViewController.title = @"维修";
+            [repairViewController setServiceParameter:@"product_tag" value:@"维修"];
+            [self.navigationController pushViewController:repairViewController animated:YES];
+        }
+            break;
+        case SCHomePageServiceButtonTypeMaintance:
+        {
+            SCUserInfo *userInfo = [SCUserInfo share];
+            if (userInfo.loginStatus)
+                [self.navigationController pushViewController:[SCMaintenanceViewController instance] animated:YES];
+            else
+                [self showShoulLoginAlert];
+        }
+            break;
+        case SCHomePageServiceButtonTypeWash:
+        {
+            SCOperationViewController *washViewController = [SCOperationViewController instance];
+            washViewController.title = @"洗车美容";
+            [washViewController setServiceParameter:@"product_tag" value:@"洗车,美容"];
+            [self.navigationController pushViewController:washViewController animated:YES];
+        }
+            break;
+        case SCHomePageServiceButtonTypeOperation:
+        {
+            SCSpecial *special = [SCAllDictionary share].special;
+            SCADView *adView = [[SCADView alloc] initWithDelegate:self imageURL:special.post_pic];
+            [adView show];
+        }
+            break;
+    }
+}
+
+#pragma mark - Private Methods
 // 自定义数据请求方法(用于首页第四个按钮，预约以及筛选条件)，无参数
 - (void)startSpecialRequest
 {
@@ -140,18 +145,17 @@
 {
     if (special.html)
     {
-        SCWebViewController *webViewController = MAIN_VIEW_CONTROLLER(@"SCWebViewController");
+        SCWebViewController *webViewController = [SCWebViewController instance];
         webViewController.title   = special.text;
         webViewController.loadURL = special.url;
         [self.navigationController pushViewController:webViewController animated:YES];
     }
     else
     {
-        SCServiceMerchantsViewController *specialViewController = [SCServiceMerchantsViewController instance];
-        specialViewController.title      = special.text;
-        specialViewController.type       = special.type;
-        specialViewController.searchType = SCSearchTypeOperate;
-        [self.navigationController pushViewController:specialViewController animated:YES];
+        SCOperationViewController *operationViewController = [SCOperationViewController instance];
+        operationViewController.title = special.text;
+        [operationViewController setServiceParameter:special.parameter value:special.value];
+        [self.navigationController pushViewController:operationViewController animated:YES];
     }
 }
 

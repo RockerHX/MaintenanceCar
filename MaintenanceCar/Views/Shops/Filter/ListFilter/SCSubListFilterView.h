@@ -11,7 +11,7 @@
 @protocol SCSubListFilterViewDelegate <NSObject>
 
 @required
-- (void)selectedCompletedWithParameter:(NSString *)parameter value:(NSString *)value;
+- (void)selectedCompletedWithTitle:(NSString *)title parameter:(NSString *)parameter value:(NSString *)value;
 
 @end
 

@@ -36,6 +36,12 @@
     [self loadWebView];
 }
 
+#pragma mark - Init Methods
++ (instancetype)instance
+{
+    return MAIN_VIEW_CONTROLLER(NSStringFromClass([self class]));
+}
+
 #pragma mark - Private Methods
 - (void)initConfig
 {

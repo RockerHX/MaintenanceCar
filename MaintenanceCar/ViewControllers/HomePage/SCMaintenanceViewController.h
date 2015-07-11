@@ -28,9 +28,11 @@
 @property (weak, nonatomic) IBOutlet                UIView *headerView;
 @property (weak, nonatomic) IBOutlet                UIView *footerView;
 
++ (instancetype)instance;
+
 - (IBAction)preCarButtonPressed:(UIButton *)sender;
 - (IBAction)nextButtonPressed:(UIButton *)sender;
-
-- (IBAction)infoViewPressed:(id)sender;
+- (IBAction)infoViewPressed;
+- (IBAction)showMoreButtonPressed;
 
 @end

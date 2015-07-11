@@ -19,6 +19,9 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
 @interface SCFilterView () <SCListFilterViewDelegate, SCSubListFilterViewDelegate, SCCarModelFilterViewDelegate>
 {
     BLOCK _block;
+    BOOL  _canSelected;
+    
+    UIButton *_selectedButton;
 }
 
 @end
@@ -42,6 +45,7 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
 #pragma mark - Action Methods
 - (IBAction)filterButtonPressed:(UIButton *)button
 {
+    _selectedButton = button;
     [_filterViewModel changeCategory:button.tag];
     [self popUp];
     [self reload];
@@ -125,10 +129,13 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
 }
 
 #pragma mark - SCCarModelFilterViewDelegate Methods
-- (void)selectedCompletedWithParameter:(NSString *)parameter value:(NSString *)value
+- (void)selectedCompletedWithTitle:(NSString *)title parameter:(NSString *)parameter value:(NSString *)value
 {
     if (_block)
+    {
+        [_selectedButton setTitle:title forState:UIControlStateNormal];
         _block(parameter, value);
+    }
     [self packUp];
 }
 

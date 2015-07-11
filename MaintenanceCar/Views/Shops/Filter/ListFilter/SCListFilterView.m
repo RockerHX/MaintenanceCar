@@ -51,12 +51,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SCFilterCategoryItem *item = _items[indexPath.row];
-    if (_delegate && [_delegate respondsToSelector:@selector(selectedCompletedWithParameter:value:)])
+    if (_delegate && [_delegate respondsToSelector:@selector(selectedCompletedWithTitle:parameter:value:)])
     {
         if (_category.program)
-            [_delegate selectedCompletedWithParameter:_category.program value:item.value];
+            [_delegate selectedCompletedWithTitle:item.title parameter:_category.program value:item.value];
         else if (item.program)
-            [_delegate selectedCompletedWithParameter:item.program value:item.value];
+            [_delegate selectedCompletedWithTitle:item.title parameter:item.program value:item.value];
     }
 }
 

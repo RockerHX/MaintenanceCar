@@ -117,12 +117,12 @@
             item = _category.otherCars[indexPath.row];
             break;
     }
-    if (_delegate && [_delegate respondsToSelector:@selector(selectedCompletedWithParameter:value:)])
+    if (_delegate && [_delegate respondsToSelector:@selector(selectedCompletedWithTitle:parameter:value:)])
     {
         if (_category.program)
-            [_delegate selectedCompletedWithParameter:_category.program value:item.value];
+            [_delegate selectedCompletedWithTitle:@"车型" parameter:_category.program value:item.value];
         else if (item.program)
-            [_delegate selectedCompletedWithParameter:item.program value:item.value];
+            [_delegate selectedCompletedWithTitle:@"车型" parameter:item.program value:item.value];
     }
 }
 

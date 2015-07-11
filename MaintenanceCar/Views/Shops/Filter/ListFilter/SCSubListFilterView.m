@@ -67,7 +67,8 @@
     if ([tableView isEqual:_mainFilterView])
     {
         _mainFilterIndex = indexPath.row;
-        _subItems = ((SCFilterCategoryItem *)_category.items[_mainFilterIndex]).subItems;
+        SCFilterCategoryItem *item = _category.items[_mainFilterIndex];
+        _subItems = item.subItems;
         if (_subItems.count)
         {
             [_subFilterView reloadData];
@@ -76,18 +77,18 @@
         else
         {
             if (_category.program)
-                [_delegate selectedCompletedWithParameter:_category.program value:_category.value];
+                [_delegate selectedCompletedWithTitle:item.title parameter:_category.program value:_category.value];
         }
     }
     else if ([tableView isEqual:_subFilterView])
     {
         SCFilterCategoryItem *item = _subItems[indexPath.row];
-        if (_delegate && [_delegate respondsToSelector:@selector(selectedCompletedWithParameter:value:)])
+        if (_delegate && [_delegate respondsToSelector:@selector(selectedCompletedWithTitle:parameter:value:)])
         {
             if (_category.program)
-                [_delegate selectedCompletedWithParameter:_category.program value:item.value];
+                [_delegate selectedCompletedWithTitle:item.title parameter:_category.program value:item.value];
             else if (item.program)
-                [_delegate selectedCompletedWithParameter:item.program value:item.value];
+                [_delegate selectedCompletedWithTitle:item.title parameter:item.program value:item.value];
         }
     }
 }

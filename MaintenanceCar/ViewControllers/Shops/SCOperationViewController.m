@@ -1,13 +1,13 @@
 //
-//  SCDiscoveryViewController.m
+//  SCOperationViewController.m
 //  MaintenanceCar
 //
-//  Created by ShiCang on 15/6/3.
+//  Created by ShiCang on 15/7/10.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
-#import "SCDiscoveryViewController.h"
+#import "SCOperationViewController.h"
 #import "SCDiscoveryMerchantCell.h"
 #import "SCDiscoveryPopProductCell.h"
 #import "SCDiscoveryPopPromptCell.h"
@@ -21,27 +21,31 @@
 #import "SCGroupProduct.h"
 #import "SCQuotedPrice.h"
 
-@implementation SCDiscoveryViewController
+@implementation SCOperationViewController
+{
+    NSString *_serviceParameter;
+    NSString *_serviceValue;
+}
 
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated
 {
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"[发现]"];
+    [MobClick beginLogPageView:self.title];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"[发现]"];
+    [MobClick endLogPageView:self.title];
 }
 
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return DISCOVERY_VIEW_CONTROLLER(NSStringFromClass([self class]));
+    return SHOPS_VIEW_CONTROLLER(NSStringFromClass([self class]));
 }
 
 #pragma mark - Config Methods
@@ -50,6 +54,9 @@
     [super initConfig];
     
     _shopList = [[SCShopList alloc] init];
+    if (_serviceParameter && _serviceValue)
+        [_shopList setParameter:_serviceParameter value:_serviceValue];
+    
     @weakify(self)
     [RACObserve(_shopList, loaded) subscribeNext:^(NSNumber *loaded) {
         @strongify(self)
@@ -73,7 +80,7 @@
     [_filterView filterCompleted:^(NSString *param, NSString *value) {
         [weakSelf resetRequestState];
         [weakSelf showLoadingView];
-        [_shopList.parameters setValue:value forKey:param];
+        [_shopList setParameter:param value:value];
         [_shopList reloadShops];
     }];
 }
@@ -83,6 +90,13 @@
 {
     SCSearchViewController *searchViewController = [SCSearchViewController instance];
     [self presentViewController:searchViewController animated:YES completion:nil];
+}
+
+#pragma mark - Public Methods
+- (void)setServiceParameter:(NSString *)parameter value:(NSString *)value
+{
+    _serviceParameter = parameter;
+    _serviceValue = value;
 }
 
 #pragma mark - Private Methods
