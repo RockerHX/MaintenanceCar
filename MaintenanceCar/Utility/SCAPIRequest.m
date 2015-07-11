@@ -393,6 +393,13 @@ NSString *const CocoaErrorJsonParseError    = @"数据出错，请联系元景�
     [self requestGETMethodsWithAPI:FilterCategoryAPIURL parameters:parameters success:success failure:failure];
 }
 
+- (void)startSearchShopsAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:SearchShopsAPI parameters:parameters success:success failure:failure];
+}
+
 #pragma mark - User Center API
 - (void)startProgressOrdersAPIRequestWithParameters:(NSDictionary *)parameters
                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success

@@ -368,6 +368,13 @@ FOUNDATION_EXPORT NSString *const CocoaErrorJsonParseError;
                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+/**
+ *  搜索商家接口请求方法(API:/company_search/input_result - GET)
+ */
+- (void)startSearchShopsAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 #pragma mark - User Center API
 /**
  *  进行中订单接口请求方法(API:/Reservation/doing - GET)
