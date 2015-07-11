@@ -28,7 +28,7 @@
     WEAK_SELF(weakSelf);
     [_filterView filterCompleted:^(NSString *param, NSString *value) {
         [weakSelf resetRequestState];
-        [weakSelf showLoadingView];
+        [weakSelf showLoading];
         [weakSelf.shopList.parameters setValue:value forKey:param];
         [weakSelf.shopList reloadShops];
     }];

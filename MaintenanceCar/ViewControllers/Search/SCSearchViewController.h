@@ -8,13 +8,6 @@
 
 #import "SCShopsViewController.h"
 
-@protocol SCSearchViewControllerDelegate <NSObject>
-
-@optional
-- (void)searchViewControllerReturnBack;
-
-@end
-
 @class SCSearchBar;
 @class SCSearchHistoryView;
 
@@ -23,7 +16,5 @@
 @property (weak, nonatomic) IBOutlet         SCSearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet              UIView *searchSubView;
 @property (weak, nonatomic) IBOutlet SCSearchHistoryView *searchHistoryView;
-
-@property (nonatomic, weak) id  <SCSearchViewControllerDelegate>delegate;
 
 @end

@@ -10,16 +10,6 @@
 #import "SCSearchViewController.h"
 #import "SCSearchBar.h"
 #import "SCSearchHistoryView.h"
-#import "SCShopList.h"
-#import "SCDiscoveryMerchantCell.h"
-#import "SCDiscoveryPopProductCell.h"
-#import "SCDiscoveryPopPromptCell.h"
-#import "SCMerchantDetailViewController.h"
-#import "SCGroupProductDetailViewController.h"
-#import "SCSearchViewController.h"
-// TODO
-#import "SCGroupProduct.h"
-#import "SCQuotedPrice.h"
 
 @interface SCSearchViewController () <SCSearchBarDelegate, SCSearchHistoryViewDelegate>
 {
@@ -31,20 +21,18 @@
 @implementation SCSearchViewController
 
 #pragma mark - View Controller Life Cycle
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
     
-//    self.navigationController.navigationBarHidden = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     
-//    self.navigationController.navigationBarHidden = NO;
-//    if (_delegate && [_delegate respondsToSelector:@selector(searchViewControllerReturnBack)])
-//        [_delegate searchViewControllerReturnBack];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewDidLoad
@@ -63,7 +51,7 @@
 
 + (instancetype)instance
 {
-    return SEARCH_VIEW_CONTROLLER(CLASS_NAME(self));
+    return SEARCH_VIEW_CONTROLLER(@"SCSearchNavgationViewController");
 }
 
 #pragma mark - Config Methods
@@ -87,25 +75,35 @@
     _searchHistoryView.searchHistory = _searchHistory;
 }
 
-#pragma mark - Public Methods
-- (void)showLoadingView
-{
-    [super showLoadingView];
-    _searchSubView.hidden = YES;
-}
-
 #pragma mark - Private Methods
 - (void)startSearch:(NSString *)search
 {
     [_searchBar.textField resignFirstResponder];
-    [self showLoadingView];
+    [self showLoading];
     [self.shopList reloadShopsWithSearch:search];
+}
+
+#pragma mark - Public Methods
+- (void)showLoading
+{
+    [super showLoading];
+    _searchSubView.hidden = YES;
 }
 
 #pragma mark - SCSearchBarDelegate Methods
 - (void)shouldBackReturn
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    CATransition *transition = [CATransition animation];
+    transition.type = kCATransitionFade;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.duration = 0.2f;
+    [self.view.window.layer addAnimation:transition forKey:nil];
+    [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+}
+
+- (void)shouldResearch
+{
+    _searchSubView.hidden = NO;
 }
 
 - (void)shouldSearchWithContent:(NSString *)content

@@ -59,11 +59,12 @@
     [self endRefresh];
     [self.tableView reloadData];
     
+    NSInteger shopsCount = self.shopList.shops.count;
     switch (response.statusCode)
     {
         case SCAPIRequestErrorCodeNoError:
         {
-            if (self.shopList.shops.count < SearchLimit)
+            if (shopsCount < SearchLimit)
                 [self removeRefreshFooter];
             if (response.firstLoad)
                 [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
@@ -130,10 +131,10 @@
     if ([cell isKindOfClass:[SCDiscoveryMerchantCell class]])
     {
         // TODO
-        SCMerchantDetailViewController *viewControler = [SCMerchantDetailViewController instance];
-        viewControler.merchant = [[SCMerchant alloc] initWithMerchantName:shopViewModel.shop.name companyID:shopViewModel.shop.ID];
-        viewControler.canSelectedReserve = YES;
-        [self.navigationController pushViewController:viewControler animated:YES];
+        SCMerchantDetailViewController *viewController = [SCMerchantDetailViewController instance];
+        viewController.merchant = [[SCMerchant alloc] initWithMerchantName:shopViewModel.shop.name companyID:shopViewModel.shop.ID];
+        viewController.canSelectedReserve = YES;
+        [self.navigationController pushViewController:viewController animated:YES];
     }
     else if ([cell isKindOfClass:[SCDiscoveryPopProductCell class]])
     {

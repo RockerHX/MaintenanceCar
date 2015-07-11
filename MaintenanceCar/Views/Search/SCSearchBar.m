@@ -44,4 +44,10 @@
     return YES;
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldResearch)])
+        [_delegate shouldResearch];
+}
+
 @end

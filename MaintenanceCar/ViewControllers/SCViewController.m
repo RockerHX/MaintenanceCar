@@ -44,7 +44,7 @@
 }
 
 #pragma mark - Public Methods
-- (void)showLoadingView
+- (void)showLoading
 {
     [UIView transitionWithView:self.view duration:0.2f options:UIViewAnimationOptionTransitionCrossDissolve animations:^(void){
         _loadingContainerView.hidden = NO;
@@ -56,6 +56,15 @@
 - (void)loadFinished
 {
     [self performSelector:@selector(hideLoadingView) withObject:nil afterDelay:0.5f];
+}
+
+- (void)showNoContent
+{
+    [UIView transitionWithView:self.view duration:0.2f options:UIViewAnimationOptionTransitionCrossDissolve animations:^(void){
+        _loadingContainerView.hidden = NO;
+    } completion:^(BOOL finished) {
+        [_loadingViewController showNoContentView];
+    }];
 }
 
 - (void)loadError

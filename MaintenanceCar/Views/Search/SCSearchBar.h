@@ -12,6 +12,7 @@
 
 @optional
 - (void)shouldBackReturn;
+- (void)shouldResearch;
 - (void)shouldSearchWithContent:(NSString *)content;
 
 @end

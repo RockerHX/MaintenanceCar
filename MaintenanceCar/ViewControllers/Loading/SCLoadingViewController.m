@@ -17,6 +17,7 @@
     [self showLoadingView];
 }
 
+#pragma mark - Public Methods
 - (void)showLoadingView
 {
     _errorView.hidden = YES;
@@ -29,20 +30,19 @@
     [_activityIndicatorView stopAnimating];
 }
 
-- (void)showErrorView
-{
-    _noContentView.hidden = YES;
-    _errorView.hidden = NO;
-}
-
 - (void)showNoContentView;
 {
     _noContentView.hidden = NO;
     _errorView.hidden = YES;
 }
 
-#pragma mark -
-#pragma mark Action Methods
+- (void)showErrorView
+{
+    _noContentView.hidden = YES;
+    _errorView.hidden = NO;
+}
+
+#pragma mark - Action Methods
 - (IBAction)retryButtonPressed
 {
     [self showLoadingView];

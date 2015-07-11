@@ -19,10 +19,12 @@
 
 + (instancetype)instance;
 
-- (void)showLoadingView;
+- (void)showLoading;
 - (void)loadFinished;
+- (void)showNoContent;
 - (void)loadError;
-- (void)hanleServerResponse:(SCServerResponse *)response;
+
 - (void)retryRequest;
+- (void)hanleServerResponse:(SCServerResponse *)response;
 
 @end
