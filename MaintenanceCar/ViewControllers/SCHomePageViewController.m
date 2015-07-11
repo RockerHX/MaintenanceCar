@@ -85,7 +85,7 @@
         {
             SCOperationViewController *repairViewController = [SCOperationViewController instance];
             repairViewController.title = @"维修";
-            [repairViewController setServiceParameter:@"product_tag" value:@"维修"];
+            [repairViewController setRequestParameter:@"product_tag" value:@"维修"];
             [self.navigationController pushViewController:repairViewController animated:YES];
         }
             break;
@@ -102,7 +102,7 @@
         {
             SCOperationViewController *washViewController = [SCOperationViewController instance];
             washViewController.title = @"洗车美容";
-            [washViewController setServiceParameter:@"product_tag" value:@"洗车,美容"];
+            [washViewController setRequestParameter:@"product_tag" value:@"洗车,美容"];
             [self.navigationController pushViewController:washViewController animated:YES];
         }
             break;
@@ -154,7 +154,7 @@
     {
         SCOperationViewController *operationViewController = [SCOperationViewController instance];
         operationViewController.title = special.text;
-        [operationViewController setServiceParameter:special.parameter value:special.value];
+        [operationViewController setRequestParameter:special.parameter value:special.value];
         [self.navigationController pushViewController:operationViewController animated:YES];
     }
 }

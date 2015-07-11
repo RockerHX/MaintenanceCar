@@ -25,6 +25,7 @@
 #pragma mark - Config Methods
 - (void)viewConfig
 {
+    _tableView.scrollsToTop = NO;
     _tableView.tableFooterView = [[UIView alloc] init];
 }
 

@@ -1,16 +1,19 @@
 //
-//  SCTopBarTableViewController.m
+//  SCTableViewController.m
 //  MaintenanceCar
 //
-//  Created by ShiCang on 15/7/2.
+//  Created by ShiCang on 15/7/11.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCTopBarTableViewController.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
+#import "SCTableViewController.h"
 
-@implementation SCTopBarTableViewController
-
-#pragma mark - Init Methods
+@implementation SCTableViewController
+{
+    NSString *_requestParameter;
+    NSString *_requestValue;
+}
 
 #pragma mark - View Controller Life Cycle
 - (void)viewDidLoad
@@ -25,11 +28,25 @@
 #pragma mark - Private Methods
 
 #pragma mark - Public Methods
-- (void)initConfig{}
+- (void)initConfig
+{
+    _shopList = [[SCShopList alloc] init];
+    if (_requestParameter && _requestValue)
+        [_shopList setParameter:_requestParameter value:_requestValue];
+    
+    @weakify(self)
+    [RACObserve(_shopList, loaded) subscribeNext:^(NSNumber *loaded) {
+        @strongify(self)
+        if (loaded.boolValue)
+            [self hanleServerResponse:_shopList.serverResponse];
+    }];
+    [_shopList reloadShops];
+}
 
 - (void)viewConfig
 {
-    self.tableView.tableFooterView = [[UIView alloc] init];         // 为tableview添加空白尾部，以免没有数据显示时有很多条纹
+    _tableView.scrollsToTop = YES;
+    _tableView.tableFooterView = [[UIView alloc] init];         // 为tableview添加空白尾部，以免没有数据显示时有很多条纹
     
     // 为tableview添加下拉响应式控件和触发方法
     [self addRefreshHeader];
@@ -38,24 +55,24 @@
 
 - (void)resetRequestState
 {
-    _requestType = SCRequestRefreshTypeDropDown;
+    _refreshType = SCTableViewRefreshTypeDropDown;
 }
 
 - (void)startDropDownRefreshReuqest
 {
-    _requestType = SCRequestRefreshTypeDropDown;
+    _refreshType = SCTableViewRefreshTypeDropDown;
     [self removeRefreshFooter];
 }
 
 - (void)startPullUpRefreshRequest
 {
-    _requestType = SCRequestRefreshTypePullUp;
+    _refreshType = SCTableViewRefreshTypePullUp;
     [self removeRefreshHeader];
 }
 
 - (void)endRefresh
 {
-    if (_requestType == SCRequestRefreshTypeDropDown)
+    if (_refreshType == SCTableViewRefreshTypeDropDown)
     {
         [self.tableView.header endRefreshing];
         [self addRefreshFooter];
@@ -99,6 +116,12 @@
 - (void)removeFooter
 {
     self.tableView.tableFooterView = nil;
+}
+
+- (void)setRequestParameter:(NSString *)parameter value:(NSString *)value
+{
+    _requestParameter = parameter;
+    _requestValue = value;
 }
 
 @end

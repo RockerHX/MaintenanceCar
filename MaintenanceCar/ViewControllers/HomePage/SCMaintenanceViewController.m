@@ -154,7 +154,7 @@
 {
     SCOperationViewController *maintenanceViewController = [SCOperationViewController instance];
     maintenanceViewController.title = @"保养";
-    [maintenanceViewController setServiceParameter:@"product_tag" value:@"保养"];
+    [maintenanceViewController setRequestParameter:@"product_tag" value:@"保养"];
     [self.navigationController pushViewController:maintenanceViewController animated:YES];
 }
 

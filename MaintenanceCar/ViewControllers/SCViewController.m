@@ -10,6 +10,12 @@
 
 @implementation SCViewController
 
+#pragma mark - Init Methods
++ (instancetype)instance
+{
+    return nil;
+}
+
 #pragma mark - Container Segue Methods
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

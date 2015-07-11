@@ -41,7 +41,12 @@ static NSString *SearchHistoryFileName = @"SearchHistory";
 {
     if ([newSearch isKindOfClass:[NSString class]])
     {
-        [_histories addObject:newSearch];
+        [_histories enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSString *history = obj;
+            if ([history isEqualToString:newSearch])
+                [_histories removeObject:history];
+        }];
+        [_histories insertObject:newSearch atIndex:0];
         [self save];
     }
 }

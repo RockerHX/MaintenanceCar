@@ -17,6 +17,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *loadingContainerView;
 
++ (instancetype)instance;
+
 - (void)showLoadingView;
 - (void)loadFinished;
 - (void)loadError;

@@ -35,9 +35,7 @@
     _shops = @[].mutableCopy;
     _parameters = @{@"limit": @(SearchLimit),
                    @"offset": @(_page * SearchLimit),
-                   @"radius": @(SearchRadius),
-             @"auto_get_car": @(YES),
-                      @"uid": [SCUserInfo share].userID}.mutableCopy;
+                   @"radius": @(SearchRadius)}.mutableCopy;
     _serverResponse = [[SCServerResponse alloc] init];
 }
 
@@ -48,7 +46,7 @@
 }
 
 #pragma mark - Public Methods
-- (void)setParameter:(NSString *)parameter value:(NSString *)value
+- (void)setParameter:(id)parameter value:(id)value
 {
     [_parameters setValue:value forKey:parameter];
 }
@@ -77,41 +75,7 @@
     [_parameters setValue:longitude forKey:@"longtitude"];
 }
 
-- (void)requestShops
-{
-    __weak typeof(self)weakSelf = self;
-    [[SCAPIRequest manager] startShopsAPIRequestWithParameters:_parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
-        {
-            [_serverResponse parseResponseObject:responseObject];
-            if (_serverResponse.firstLoad)
-                [self clearShops];
-            if (_serverResponse.statusCode == SCAPIRequestErrorCodeNoError)
-            {
-                [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    SCShop *shop = [SCShop objectWithKeyValues:obj];
-                    SCShopViewModel *shopViewModel = [[SCShopViewModel alloc] initWithShop:shop];
-                    [_shops addObject:shopViewModel];
-                }];
-                _page ++;
-            }
-            weakSelf.loaded = YES;
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if (error.code == CocoaErrorCodeJsonParseError)
-        {
-            _serverResponse = [[SCServerResponse alloc] init];
-            _serverResponse.statusCode = error.code;
-            _serverResponse.prompt = CocoaErrorJsonParseError;
-        }
-        else
-            [_serverResponse parseResponseObject:operation.responseObject];
-        weakSelf.loaded = YES;
-    }];
-}
-
-#pragma mark - Public Methods
-- (void)reloadShops
+- (void)loadNewShops
 {
     _serverResponse.firstLoad = YES;
     [self updateOffsetParameterWithPage:0];
@@ -123,6 +87,77 @@
         [weakSelf locationCompletedWithLatitude:latitude longitude:longitude];
         _serverResponse.locationPrompt = @"定位失败，采用当前城市中心坐标!";
     }];
+}
+
+- (void)requestShops
+{
+    __weak typeof(self)weakSelf = self;
+    if (_type == SCShopListTypeSearch)
+    {
+        [[SCAPIRequest manager] startSearchShopsAPIRequestWithParameters:_parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [weakSelf reuqeustSuccessWithOperation:operation];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [weakSelf reuqeustFailureWithOperation:operation error:error];
+        }];
+    }
+    else
+    {
+        [[SCAPIRequest manager] startShopsAPIRequestWithParameters:_parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [weakSelf reuqeustSuccessWithOperation:operation];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [weakSelf reuqeustFailureWithOperation:operation error:error];
+        }];
+    }
+}
+
+- (void)reuqeustSuccessWithOperation:(AFHTTPRequestOperation *)operation
+{
+    id responseObject = operation.responseObject;
+    if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+    {
+        [_serverResponse parseResponseObject:responseObject];
+        if (_serverResponse.firstLoad)
+            [self clearShops];
+        if (_serverResponse.statusCode == SCAPIRequestErrorCodeNoError)
+        {
+            [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                SCShop *shop = [SCShop objectWithKeyValues:obj];
+                SCShopViewModel *shopViewModel = [[SCShopViewModel alloc] initWithShop:shop];
+                [_shops addObject:shopViewModel];
+            }];
+            _page ++;
+        }
+        self.loaded = YES;
+    }
+}
+
+- (void)reuqeustFailureWithOperation:(AFHTTPRequestOperation *)operation error:(NSError *)error
+{
+    if (error.code == CocoaErrorCodeJsonParseError)
+    {
+        _serverResponse = [[SCServerResponse alloc] init];
+        _serverResponse.statusCode = error.code;
+        _serverResponse.prompt = CocoaErrorJsonParseError;
+    }
+    else
+        [_serverResponse parseResponseObject:operation.responseObject];
+    self.loaded = YES;
+}
+
+#pragma mark - Public Methods
+- (void)reloadShops
+{
+    _type = SCShopListTypeNormal;
+    [self setParameter:@"auto_get_car" value:@(YES)];
+    [self setParameter:@"uid" value:[SCUserInfo share].userID];
+    [self loadNewShops];
+}
+
+- (void)reloadShopsWithSearch:(NSString *)search
+{
+    _type = SCShopListTypeSearch;
+    [self setParameter:@"field" value:search];
+    [self loadNewShops];
 }
 
 - (void)loadMoreShops

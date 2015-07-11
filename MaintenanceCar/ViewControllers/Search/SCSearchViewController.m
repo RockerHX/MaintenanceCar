@@ -6,11 +6,22 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "SCSearchViewController.h"
 #import "SCSearchBar.h"
 #import "SCSearchHistoryView.h"
+#import "SCShopList.h"
+#import "SCDiscoveryMerchantCell.h"
+#import "SCDiscoveryPopProductCell.h"
+#import "SCDiscoveryPopPromptCell.h"
+#import "SCMerchantDetailViewController.h"
+#import "SCGroupProductDetailViewController.h"
+#import "SCSearchViewController.h"
+// TODO
+#import "SCGroupProduct.h"
+#import "SCQuotedPrice.h"
 
-@interface SCSearchViewController () <SCSearchBarDelegate>
+@interface SCSearchViewController () <SCSearchBarDelegate, SCSearchHistoryViewDelegate>
 {
     SCSearchHistory *_searchHistory;
 }
@@ -20,18 +31,20 @@
 @implementation SCSearchViewController
 
 #pragma mark - View Controller Life Cycle
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    // 用户行为统计，页面停留时间
-    [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"[搜索]"];
+    [super viewDidAppear:animated];
+    
+//    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"[搜索]"];
+    
+//    self.navigationController.navigationBarHidden = NO;
+//    if (_delegate && [_delegate respondsToSelector:@selector(searchViewControllerReturnBack)])
+//        [_delegate searchViewControllerReturnBack];
 }
 
 - (void)viewDidLoad
@@ -42,33 +55,70 @@
     [self viewConfig];
 }
 
-#pragma mark - Config Methods
-- (void)initConfig
-{
-    _searchHistory = [[SCSearchHistory alloc] init];
-}
-
-- (void)viewConfig
-{
-    _searchHistoryView.searchHistory = _searchHistory;
-}
-
 #pragma mark - Init Methods
+- (void)awakeFromNib
+{
+    self.title = @"搜索";
+}
+
 + (instancetype)instance
 {
     return SEARCH_VIEW_CONTROLLER(CLASS_NAME(self));
 }
 
-#pragma mark - Search Bar Delegate Methods
+#pragma mark - Config Methods
+- (void)initConfig
+{
+    _searchHistory = [[SCSearchHistory alloc] init];
+    
+    self.shopList = [[SCShopList alloc] init];
+    @weakify(self)
+    [RACObserve(self.shopList, loaded) subscribeNext:^(NSNumber *loaded) {
+        @strongify(self)
+        if (loaded.boolValue)
+            [self hanleServerResponse:self.shopList.serverResponse];
+    }];
+}
+
+- (void)viewConfig
+{
+    [super viewConfig];
+    
+    _searchHistoryView.searchHistory = _searchHistory;
+}
+
+#pragma mark - Public Methods
+- (void)showLoadingView
+{
+    [super showLoadingView];
+    _searchSubView.hidden = YES;
+}
+
+#pragma mark - Private Methods
+- (void)startSearch:(NSString *)search
+{
+    [_searchBar.textField resignFirstResponder];
+    [self showLoadingView];
+    [self.shopList reloadShopsWithSearch:search];
+}
+
+#pragma mark - SCSearchBarDelegate Methods
 - (void)shouldBackReturn
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)shouldSearchWithContent:(NSString *)content
 {
     [_searchHistory addNewSearchHistory:content];
     [_searchHistoryView refresh];
+    [self startSearch:content];
+}
+
+#pragma mark - SCSearchHistoryViewDelegate Methods
+- (void)shouldSearchWithHistory:(NSString *)history
+{
+    [self startSearch:history];
 }
 
 @end

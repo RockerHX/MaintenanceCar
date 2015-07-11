@@ -1,5 +1,5 @@
 //
-//  SCTableViewController.h
+//  SCListViewController.h
 //  MaintenanceCar
 //
 //  Created by ShiCang on 15/1/10.
@@ -9,7 +9,7 @@
 #import "SCViewControllerCategory.h"
 #import <MJRefresh/MJRefresh.h>
 
-@interface SCTableViewController : UITableViewController
+@interface SCListViewController : UITableViewController
 {
     id              _deleteDataCache;    // 删除数据的缓存
     NSMutableArray *_dataList;           // 列表数据缓存

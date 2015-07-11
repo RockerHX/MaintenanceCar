@@ -6,24 +6,24 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCViewController.h"
-#import <MJRefresh/MJRefresh.h>
+#import "SCShopsViewController.h"
 
-@class SCShopList;
-@class SCFilterViewModel;
+@protocol SCSearchViewControllerDelegate <NSObject>
+
+@optional
+- (void)searchViewControllerReturnBack;
+
+@end
+
 @class SCSearchBar;
 @class SCSearchHistoryView;
 
-@interface SCSearchViewController : SCViewController <UITableViewDataSource, UITableViewDelegate>
-{
-    SCShopList        *_shopList;
-    SCFilterViewModel *_filterViewModel;
-}
+@interface SCSearchViewController : SCShopsViewController
 
-@property (weak, nonatomic) IBOutlet         UITableView *tableView;
 @property (weak, nonatomic) IBOutlet         SCSearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet              UIView *searchSubView;
 @property (weak, nonatomic) IBOutlet SCSearchHistoryView *searchHistoryView;
 
-+ (instancetype)instance;
+@property (nonatomic, weak) id  <SCSearchViewControllerDelegate>delegate;
 
 @end

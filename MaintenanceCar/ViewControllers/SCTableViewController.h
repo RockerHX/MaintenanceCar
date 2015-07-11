@@ -1,17 +1,24 @@
 //
-//  SCTopBarTableViewController.h
+//  SCTableViewController.h
 //  MaintenanceCar
 //
-//  Created by ShiCang on 15/7/2.
+//  Created by ShiCang on 15/7/11.
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCViewController.h"
 #import <MJRefresh/MJRefresh.h>
+#import "SCViewController.h"
+#import "SCShopList.h"
 
-@interface SCTopBarTableViewController : SCViewController
+typedef NS_ENUM(NSUInteger, SCTableViewRefreshType) {
+    SCTableViewRefreshTypeDropDown,
+    SCTableViewRefreshTypePullUp
+};
 
-@property (nonatomic, assign) SCRequestRefreshType requestType;    // 请求类型，是上拉刷新还是下拉刷新
+@interface SCTableViewController : SCViewController
+
+@property (nonatomic, assign) SCTableViewRefreshType  refreshType;  // 刷新类型，是上拉刷新还是下拉刷新
+@property (nonatomic, strong)             SCShopList *shopList;
 
 @property (weak, nonatomic) IBOutlet  UITableView *tableView;
 
@@ -33,5 +40,7 @@
 - (void)removeRefreshFooter;
 - (void)addFooter;
 - (void)removeFooter;
+
+- (void)setRequestParameter:(NSString *)parameter value:(NSString *)value;
 
 @end
