@@ -37,6 +37,7 @@
                 _prompt = [NSString stringWithFormat:@"该厂擅长维修%@", detail.majors];
                 _content = [_content stringByAppendingFormat:@"（%@）", _prompt];
             }
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"MerchantFlagsHandleCompleted" object:nil];
         }];
     }
     return self;

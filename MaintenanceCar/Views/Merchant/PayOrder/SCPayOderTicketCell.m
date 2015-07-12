@@ -21,21 +21,21 @@
 #pragma mark - Public Methods
 - (void)displayCellWithTickets:(NSArray *)tickets index:(NSInteger)index
 {
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:CGPointMake(ZERO_POINT, -SHADOW_OFFSET*4)];
-    [path addLineToPoint:CGPointMake(ZERO_POINT, SELF_HEIGHT)];
-    [path addLineToPoint:CGPointMake(SHADOW_OFFSET*2, SELF_HEIGHT - SHADOW_OFFSET*6)];
-    [path addLineToPoint:CGPointMake(SELF_WIDTH - SHADOW_OFFSET*2, SELF_HEIGHT - SHADOW_OFFSET*6)];
-    [path addLineToPoint:CGPointMake(SELF_WIDTH, SELF_HEIGHT + SHADOW_OFFSET*4)];
-    [path addLineToPoint:CGPointMake(SELF_WIDTH, -SHADOW_OFFSET*4)];
-    [path addLineToPoint:CGPointMake(SELF_WIDTH - SHADOW_OFFSET*2, SHADOW_OFFSET*6)];
-    [path addLineToPoint:CGPointMake(SHADOW_OFFSET*2, SHADOW_OFFSET*6)];
+    CGFloat width = SELF_WIDTH;
+    CGFloat height = SELF_HEIGHT;
+    UIBezierPath *path = [self shadowPathWithPoints:@[@[@(ZERO_POINT), @(-SHADOW_OFFSET*4)],
+                                                      @[@(ZERO_POINT), @(height)],
+                                                      @[@(SHADOW_OFFSET*2), @(height - SHADOW_OFFSET*6)],
+                                                      @[@(width - SHADOW_OFFSET*2), @(height - SHADOW_OFFSET*6)],
+                                                      @[@(width), @(height + SHADOW_OFFSET*4)],
+                                                      @[@(width), @(-SHADOW_OFFSET*4)],
+                                                      @[@(width - SHADOW_OFFSET*2), @(SHADOW_OFFSET*6)],
+                                                      @[@(SHADOW_OFFSET*2), @(SHADOW_OFFSET*6)]]];
     self.layer.shadowPath = path.CGPath;
     self.layer.shadowColor = [UIColor lightGrayColor].CGColor;
     self.layer.shadowOffset = CGSizeMake(SHADOW_OFFSET, SHADOW_OFFSET);
     self.layer.shadowOpacity = 1.0f;
     self.layer.shadowRadius = 1.0f;
-    
     SCGroupTicket *ticket = tickets[index];
     if (index == (tickets.count - 1))
         self.layer.shadowPath = nil;

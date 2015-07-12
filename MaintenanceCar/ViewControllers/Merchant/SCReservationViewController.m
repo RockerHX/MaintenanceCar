@@ -45,7 +45,7 @@
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return MAIN_VIEW_CONTROLLER(@"SCReservationViewController");
+    return MAIN_VIEW_CONTROLLER(NSStringFromClass([self class]));
 }
 
 - (void)dealloc

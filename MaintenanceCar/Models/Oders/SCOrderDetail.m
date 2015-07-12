@@ -20,7 +20,8 @@
     self = [super initWithDictionary:dict error:err];
     if (self)
     {
-        _price = ([_price doubleValue]) ? [_price stringByAppendingString:@"元"] : @"待确定";
+        NSString *pricePrompt = [_price stringByAppendingString:@"元"];
+        _pricePrompt = _isPay ? pricePrompt : ([_price doubleValue] ? pricePrompt : @"待确定");
     }
     return self;
 }

@@ -31,14 +31,14 @@
         
         [self handleProducts:_products];
         
-        _summary       = [[SCMerchantSummary alloc] initWithMerchantDetail:self];
+        _summary = [[SCMerchantSummary alloc] initWithMerchantDetail:self];
         if (_products.count)
-            _productGroup     = [[SCMerchantProductGroup alloc] initWithMerchantDetail:self];
+            _productGroup = [[SCMerchantProductGroup alloc] initWithMerchantDetail:self];
         if (_normal_products.count)
             _quotedPriceGroup = [[SCQuotedPriceGroup alloc] initWithMerchantDetail:self];
-        _info          = [[SCMerchantInfo alloc] initWithMerchantDetail:self];
+        _info = [[SCMerchantInfo alloc] initWithMerchantDetail:self];
         _commentMore = [[SCCommentMore alloc] initWithMerchantDetail:self];
-        _commentGroup  = [[SCCommentGroup alloc] initWithMerchantDetail:self];
+        _commentGroup = [[SCCommentGroup alloc] initWithMerchantDetail:self];
     }
     return self;
 }
@@ -153,9 +153,9 @@
 {
     [products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         SCGroupProduct *product = obj;
-        product.companyID       = _company_id;
-        product.merchantName    = _name;
-        product.now             = _now;
+        product.company_id = _company_id;
+        product.name       = _name;
+        product.now        = _now;
     }];
 }
 

@@ -38,7 +38,7 @@
             make.right.equalTo(_payOrderButton.mas_left).with.offset(-8);
     }];
     _promptLabel.text = detail.isPay ? @"已支付" : @"预估价格";
-    _priceLabel.text = detail.price;
+    _priceLabel.text = detail.pricePrompt;
     _descriptionLabel.text = detail.coupon ? [NSString stringWithFormat:@"已使用优惠券：%@（%@）", detail.coupon.title, detail.coupon.prompt] : @"本价格仅供参考，等待商家给出最终价格";
     _payOrderButton.hidden = detail.isPay;
 }

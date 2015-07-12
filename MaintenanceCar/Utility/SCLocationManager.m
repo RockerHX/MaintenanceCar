@@ -15,9 +15,9 @@ static SCLocationManager *locationManager = nil;
 {
     SuccessBlock _successBlock;
     FailureBlock _failureBlock;
-    
     BMKLocationService *_locationService;
 }
+
 
 @end
 
@@ -28,9 +28,7 @@ static SCLocationManager *locationManager = nil;
 {
     self = [super init];
     if (self) {
-        _city = @"深圳";          // 第一版针对深圳市场，默认为深圳
-        
-        [self startLocation];
+        _city = @"深圳"; // 第一版针对深圳市场，默认为深圳
     }
     return self;
 }
@@ -58,7 +56,7 @@ static SCLocationManager *locationManager = nil;
         [BMKLocationService setLocationDistanceFilter:10.0f];
         
         //初始化BMKLocationService
-        _locationService = [[BMKLocationService alloc]init];
+        _locationService = [[BMKLocationService alloc] init];
         _locationService.delegate = self;
     }
     //启动LocationService
@@ -104,7 +102,7 @@ static SCLocationManager *locationManager = nil;
     return displayDistance;
 }
 
-#pragma mark - Getter Methods
+#pragma mark - Setter And Getter Methods
 // 重构经纬度getter方法，处理经纬度数据
 - (NSString *)latitude
 {
@@ -140,7 +138,7 @@ static SCLocationManager *locationManager = nil;
 {
     _successBlock = success;
     _failureBlock = failure;
-    [_locationService startUserLocationService];
+    [self startLocation];
 }
 
 #pragma mark - BMKLocationService Delegate Methods

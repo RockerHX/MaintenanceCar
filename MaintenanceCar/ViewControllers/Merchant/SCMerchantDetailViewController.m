@@ -74,6 +74,13 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - Config Methods
 - (void)initConfig
 {
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(merchantFlagsHandleCompleted) name:@"MerchantFlagsHandleCompleted" object:nil];
+}
+
+// TODO
+- (void)merchantFlagsHandleCompleted
+{
+    [self.tableView reloadData];
 }
 
 - (void)viewConfig
@@ -83,6 +90,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [self.tableView reLayoutFooterView];
     // 开始数据请求
     [self startMerchantDetailRequestWithParameters];
+}
+
+#pragma mark - Public Methods
++ (instancetype)instance
+{
+    return MAIN_VIEW_CONTROLLER(NSStringFromClass([self class]));
 }
 
 #pragma mark - Table View Data Source Methods

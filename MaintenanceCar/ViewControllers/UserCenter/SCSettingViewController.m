@@ -69,8 +69,8 @@
 - (void)displayView
 {
     SCUserInfo *userInfo = [SCUserInfo share];
-    _appMessageSwitch.on             = userInfo.receiveMessage;
-    _logoutView.hidden               = !userInfo.loginStatus;
+    _appMessageSwitch.on = userInfo.receiveMessage;
+    _logoutView.hidden   = !userInfo.loginStatus;
     _logoutButton.layer.cornerRadius = 5.0f;
 }
 
@@ -80,7 +80,7 @@
     if (!userInfo.loginStatus)
     {
         _appMessageSwitch.on = NO;
-        [self showHUDAlertToViewController:self text:@"您还未登录，无法接受维修消息" delay:0.5f];
+        [self showHUDAlertToViewController:self text:@"您还未登录，无法接受推送消息" delay:0.5f];
     }
     userInfo.receiveMessage = sender.on;
 }

@@ -64,7 +64,7 @@
 #define COCOAPODS_POD_AVAILABLE_CSStickyHeaderFlowLayout
 #define COCOAPODS_VERSION_MAJOR_CSStickyHeaderFlowLayout 0
 #define COCOAPODS_VERSION_MINOR_CSStickyHeaderFlowLayout 2
-#define COCOAPODS_VERSION_PATCH_CSStickyHeaderFlowLayout 5
+#define COCOAPODS_VERSION_PATCH_CSStickyHeaderFlowLayout 7
 
 // DateTools
 #define COCOAPODS_POD_AVAILABLE_DateTools
@@ -82,7 +82,7 @@
 #define COCOAPODS_POD_AVAILABLE_IQKeyboardManager
 #define COCOAPODS_VERSION_MAJOR_IQKeyboardManager 3
 #define COCOAPODS_VERSION_MINOR_IQKeyboardManager 2
-#define COCOAPODS_VERSION_PATCH_IQKeyboardManager 3
+#define COCOAPODS_VERSION_PATCH_IQKeyboardManager 4
 
 // JSONModel
 #define COCOAPODS_POD_AVAILABLE_JSONModel
@@ -96,17 +96,47 @@
 #define COCOAPODS_VERSION_MINOR_MBProgressHUD 9
 #define COCOAPODS_VERSION_PATCH_MBProgressHUD 1
 
+// MJExtension
+#define COCOAPODS_POD_AVAILABLE_MJExtension
+#define COCOAPODS_VERSION_MAJOR_MJExtension 2
+#define COCOAPODS_VERSION_MINOR_MJExtension 3
+#define COCOAPODS_VERSION_PATCH_MJExtension 2
+
 // MJRefresh
 #define COCOAPODS_POD_AVAILABLE_MJRefresh
 #define COCOAPODS_VERSION_MAJOR_MJRefresh 1
 #define COCOAPODS_VERSION_MINOR_MJRefresh 4
-#define COCOAPODS_VERSION_PATCH_MJRefresh 6
+#define COCOAPODS_VERSION_PATCH_MJRefresh 7
 
 // Masonry
 #define COCOAPODS_POD_AVAILABLE_Masonry
 #define COCOAPODS_VERSION_MAJOR_Masonry 0
 #define COCOAPODS_VERSION_MINOR_Masonry 6
 #define COCOAPODS_VERSION_PATCH_Masonry 1
+
+// ReactiveCocoa
+#define COCOAPODS_POD_AVAILABLE_ReactiveCocoa
+#define COCOAPODS_VERSION_MAJOR_ReactiveCocoa 2
+#define COCOAPODS_VERSION_MINOR_ReactiveCocoa 5
+#define COCOAPODS_VERSION_PATCH_ReactiveCocoa 0
+
+// ReactiveCocoa/Core
+#define COCOAPODS_POD_AVAILABLE_ReactiveCocoa_Core
+#define COCOAPODS_VERSION_MAJOR_ReactiveCocoa_Core 2
+#define COCOAPODS_VERSION_MINOR_ReactiveCocoa_Core 5
+#define COCOAPODS_VERSION_PATCH_ReactiveCocoa_Core 0
+
+// ReactiveCocoa/UI
+#define COCOAPODS_POD_AVAILABLE_ReactiveCocoa_UI
+#define COCOAPODS_VERSION_MAJOR_ReactiveCocoa_UI 2
+#define COCOAPODS_VERSION_MINOR_ReactiveCocoa_UI 5
+#define COCOAPODS_VERSION_PATCH_ReactiveCocoa_UI 0
+
+// ReactiveCocoa/no-arc
+#define COCOAPODS_POD_AVAILABLE_ReactiveCocoa_no_arc
+#define COCOAPODS_VERSION_MAJOR_ReactiveCocoa_no_arc 2
+#define COCOAPODS_VERSION_MINOR_ReactiveCocoa_no_arc 5
+#define COCOAPODS_VERSION_PATCH_ReactiveCocoa_no_arc 0
 
 // SCLoopScrollView
 #define COCOAPODS_POD_AVAILABLE_SCLoopScrollView
@@ -117,8 +147,8 @@
 // SCNumberKeyBoard
 #define COCOAPODS_POD_AVAILABLE_SCNumberKeyBoard
 #define COCOAPODS_VERSION_MAJOR_SCNumberKeyBoard 0
-#define COCOAPODS_VERSION_MINOR_SCNumberKeyBoard 1
-#define COCOAPODS_VERSION_PATCH_SCNumberKeyBoard 3
+#define COCOAPODS_VERSION_MINOR_SCNumberKeyBoard 2
+#define COCOAPODS_VERSION_PATCH_SCNumberKeyBoard 1
 
 // SDWebImage
 #define COCOAPODS_POD_AVAILABLE_SDWebImage

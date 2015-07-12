@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -3788,7 +3788,7 @@
                                                 <constraint firstAttribute="width" constant="120" id="elR-XZ-9A2"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                            <state key="normal" title="输入优惠码">
+                                            <state key="normal" title="兑换优惠券">
                                                 <color key="titleColor" red="0.19215686269999999" green="0.58823529409999997" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -3827,6 +3827,9 @@
                                         <constraint firstAttribute="centerX" secondItem="JWp-Fx-WMo" secondAttribute="centerX" id="pw0-gj-0cM"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="promptLabel" destination="JWp-Fx-WMo" id="tDP-fc-6n9"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SCPayOrderCouponCell" rowHeight="44" id="r0Z-WH-XKr" customClass="SCPayOrderCouponCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

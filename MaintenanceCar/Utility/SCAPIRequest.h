@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFNetworking.h>
 #import "API.h"
+#import "AppMicroConstants.h"
 
 typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
     SCAPIRequestStatusCodeGETSuccess     = 200,
@@ -37,6 +38,12 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
     SCAPIRequestErrorCodeCancelCollectionFailure   = 4012,
     SCAPIRequestErrorCodeCollectionFailure         = 4013
 };
+
+typedef NS_ENUM(NSInteger, CocoaErrorCode) {
+    CocoaErrorCodeJsonParseError = 3840
+};
+
+FOUNDATION_EXPORT NSString *const CocoaErrorJsonParseError;
 
 @interface SCAPIRequest : AFHTTPRequestOperationManager
 
@@ -346,6 +353,28 @@ typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
 
 
 #pragma mark - V2 API
+#pragma mark - Shops API
+/**
+ *  商家列表接口请求方法(API:/company_search/company_product - GET)
+ */
+- (void)startShopsAPIRequestWithParameters:(NSDictionary *)parameters
+                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  筛选分类数据接口请求方法(API:/company_search/category - GET)
+ */
+- (void)startFilterCategoryAPIRequestWithParameters:(NSDictionary *)parameters
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ *  搜索商家接口请求方法(API:/company_search/input_result - GET)
+ */
+- (void)startSearchShopsAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 #pragma mark - User Center API
 /**
  *  进行中订单接口请求方法(API:/Reservation/doing - GET)

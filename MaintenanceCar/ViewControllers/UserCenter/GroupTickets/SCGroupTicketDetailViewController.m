@@ -246,7 +246,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     if ([cell isKindOfClass:[SCShowMoreCell class]])
     {
         SCCommentListViewController *commentListViewController = MAIN_VIEW_CONTROLLER(@"SCCommentListViewController");
-        commentListViewController.companyID = _detail.companyID;
+        commentListViewController.companyID = _detail.company_id;
         [self.navigationController pushViewController:commentListViewController animated:YES];
     }
 }
@@ -261,10 +261,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [[SCAPIRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
-            _detail              = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
-            _detail.companyID    = _ticket.company_id;
-            _detail.merchantName = _ticket.company_name;
-            _detail.serviceDate  = _ticket.now;
+            _detail             = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
+            _detail.company_id  = _ticket.company_id;
+            _detail.name        = _ticket.company_name;
             
             [weakSelf dispalyDetialView];
             [weakSelf.tableView reloadData];

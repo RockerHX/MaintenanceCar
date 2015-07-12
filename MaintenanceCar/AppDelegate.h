@@ -16,4 +16,3 @@
 @property (strong, nonatomic) BMKMapManager *mapManager;
 
 @end
-

@@ -41,7 +41,7 @@
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return USERCENTER_VIEW_CONTROLLER(@"SCCouponMerchantsViewController");
+    return USERCENTER_VIEW_CONTROLLER(NSStringFromClass([self class]));
 }
 
 #pragma mark - Config Methods

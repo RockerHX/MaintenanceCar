@@ -17,9 +17,9 @@
 
 
 #pragma mark - API Domain
-#define DoMain              @"https://api.yjclw.com"                        // 接口域名
+//#define DoMain              @"https://api.yjclw.com"                        // 接口域名
 #warning @"发布时更改测试环境"
-//#define DoMain              @"http://testing.yjclw.com"                     // 接口域名
+#define DoMain              @"http://testing.yjclw.com"                     // 接口域名
 #define ImageDoMain         @"http://static.yjclw.com"                      // 图片资源域名
 #define InspectionURL       @"http://mobile.yjclw.com/Inspection"           // 检测进度
 #define MerchantImageDoMain @"http://cdn1.yjclw.com/"                       // 商家图片资源域名
@@ -35,10 +35,6 @@
 
 #pragma mark - API
 #define SearchAPI                   @"/company_search"                      // 商家搜索API
-#define SearchWashAPI               @"/company_search/wash"                 // 洗车美容商户搜索API
-#define SearchMaintanceAPI          @"/company_search/maintance"            // 保养商户搜索API
-#define SearchRepairAPI             @"/company_search/repair"               // 维修商户搜索API
-#define SearchOperateAPI            @"/company_search/operate"              // 运营位商家搜索API
 #define MerchantDetailAPI           @"/Carshop"                             // 商家详情API
 
 #define MerchantGroupProductAPI     @"/Group_product"                       // 商家团购详情API
@@ -76,10 +72,14 @@
 
 
 #pragma mark - V2
+#define ShopsAPI                    @"/company_search/company_product"      // 商家列表的API
+#define FilterCategoryAPI           @"/company_search/category"             // 筛选分类API
+#define SearchShopsAPI              @"/company_search/input_result"         // 搜索商家API
+
 #define ProgressOrdersAPI           @"/Reservation/doing"                   // 我的进行中订单API
 #define FinishedOrdersAPI           @"/Reservation/done"                    // 我的已完成订单API
 #define OrderDetailAPI              @"/Reservation"                         // 订单详情API
-#define OrderTicketsAPI             @"/Group_ticket/order"               // 买单成功获取团购券API
+#define OrderTicketsAPI             @"/Group_ticket/order"                  // 买单成功获取团购券API
 
 #define ValidCouponsAPI             @"/coupon/get_effective_coupon"         // 有效优惠券API
 #define InvalidCouponsAPI           @"/coupon/get_invalid_coupon"           // 无效优惠券API
@@ -98,10 +98,6 @@
 
 #pragma mark - API URL
 #define SearchAPIURL                    [V1APIURL stringByAppendingString:SearchAPI]                  // 商家搜索接口URL - 用于商家搜索和筛选
-#define SearchWashAPIURL                [V1APIURL stringByAppendingString:SearchWashAPI]              // 洗车美容商户搜索接口URL - 用于搜索洗车美容商户
-#define SearchMaintanceAPIURL           [V1APIURL stringByAppendingString:SearchMaintanceAPI]         // 保养商户搜索接口URL - 用于搜索保养商户
-#define SearchRepairAPIURL              [V1APIURL stringByAppendingString:SearchRepairAPI]            // 维修商户搜索接口URL - 用于搜索维修商户
-#define SearchOperateAPIURL             [V1APIURL stringByAppendingString:SearchOperateAPI]           // 运营位商家搜索接口URL - 用于运营位商家搜索和筛选
 #define MerchantDetailAPIURL            [V1APIURL stringByAppendingString:MerchantDetailAPI]          // 商家详情接口URL - 用于获取短信或者语音验证码
 
 #define MerchantGroupProductAPIURL      [V1APIURL stringByAppendingString:MerchantGroupProductAPI]    // 商家团购详情接口URL - 用于商家团购项目
@@ -139,6 +135,10 @@
 
 
 #pragma mark - V2
+#define ShopsAPIURL                     [V2APIURL stringByAppendingString:ShopsAPI]                   // 商家列表接口URL - 用于请求商家列表数据
+#define FilterCategoryAPIURL            [V2APIURL stringByAppendingString:FilterCategoryAPI]          // 筛选分类接口URL - 用于请求筛选的分类数据
+#define SearchShopsAPIURL               [V2APIURL stringByAppendingString:SearchShopsAPI]             // 搜索商家接口URL - 用于商家搜索请求
+
 #define ProgressOrdersAPIURL            [V2APIURL stringByAppendingString:ProgressOrdersAPI]          // 进行中订单接口URL - 用于进行中订单数据获取
 #define FinishedOrdersAPIURL            [V2APIURL stringByAppendingString:FinishedOrdersAPI]          // 已完成订单接口URL - 用于已完成订单数据获取
 #define OrderDetailAPIURL               [V2APIURL stringByAppendingString:OrderDetailAPI]             // 订单详情接口URL - 用于订单详情数据获取

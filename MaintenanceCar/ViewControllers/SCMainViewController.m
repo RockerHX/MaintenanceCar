@@ -7,10 +7,7 @@
 //
 
 #import "SCMainViewController.h"
-
-@interface SCMainViewController ()
-
-@end
+#import "SCDiscoveryViewController.h"
 
 @implementation SCMainViewController
 
@@ -20,15 +17,28 @@
     [super viewDidLoad];
     
     [self initConfig];
+    [self linkSubViewControllers];
 }
 
-#pragma mark - Private Methods
+#pragma mark - Config Methods
 - (void)initConfig
 {
     [self userLog];                             // 开启用户日志
     
     // 监听登录通知，收到通知会触发页面跳转方法
     [NOTIFICATION_CENTER addObserver:self selector:@selector(shouldLogin) name:kUserNeedLoginNotification object:nil];
+}
+
+#pragma mark - Private Methods
+- (void)linkSubViewControllers
+{
+    for (UINavigationController *navigationController in self.viewControllers)
+    {
+        if ([navigationController.restorationIdentifier isEqualToString:@"DiscoveryNavigationController"])
+        {
+            [navigationController setViewControllers:@[[SCDiscoveryViewController instance]]];
+        }
+    }
 }
 
 /**

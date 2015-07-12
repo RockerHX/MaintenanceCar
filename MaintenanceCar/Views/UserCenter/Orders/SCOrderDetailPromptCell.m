@@ -15,15 +15,19 @@
 {
     frame.size.height = frame.size.height + 10.0f;
     [super setFrame:frame];
-    
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:CGPointMake(ZERO_POINT, ZERO_POINT)];
-    [path addLineToPoint:CGPointMake(ZERO_POINT, SELF_HEIGHT)];
-    [path addLineToPoint:CGPointMake(SHADOW_OFFSET*2, SELF_HEIGHT - SHADOW_OFFSET*6)];
-    [path addLineToPoint:CGPointMake(SELF_WIDTH - SHADOW_OFFSET*2, SELF_HEIGHT - SHADOW_OFFSET*6)];
-    [path addLineToPoint:CGPointMake(SELF_WIDTH, SELF_HEIGHT + SHADOW_OFFSET*4)];
-    [path addLineToPoint:CGPointMake(SELF_WIDTH, ZERO_POINT)];
-    
+}
+
+#pragma mark - Draw Methods
+- (void)drawRect:(CGRect)rect
+{
+    CGFloat width = SELF_WIDTH;
+    CGFloat height = SELF_HEIGHT;
+    UIBezierPath *path = [self shadowPathWithPoints:@[@[@(ZERO_POINT), @(ZERO_POINT)],
+                                                      @[@(ZERO_POINT), @(height)],
+                                                      @[@(SHADOW_OFFSET*2), @(height - SHADOW_OFFSET*6)],
+                                                      @[@(width - SHADOW_OFFSET*2), @(height - SHADOW_OFFSET*6)],
+                                                      @[@(width), @(height + SHADOW_OFFSET*4)],
+                                                      @[@(width), @(ZERO_POINT)]]];
     self.layer.shadowPath = path.CGPath;
     self.layer.shadowColor = [UIColor lightGrayColor].CGColor;
     self.layer.shadowOffset = CGSizeMake(SHADOW_OFFSET, SHADOW_OFFSET);

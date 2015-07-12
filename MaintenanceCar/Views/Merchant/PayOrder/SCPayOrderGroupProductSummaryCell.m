@@ -64,7 +64,7 @@
 - (void)displayCellWithProduct:(SCGroupProduct *)product
 {
     self.serviceNameLabel.text  = product.title;
-    self.merchantNameLabel.text = product.merchantName;
+    self.merchantNameLabel.text = product.name;
     
     _productPrice          = [product.final_price doubleValue];
     _paySuccessView.hidden = !product.tickets.count;

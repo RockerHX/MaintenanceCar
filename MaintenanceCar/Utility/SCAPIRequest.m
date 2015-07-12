@@ -9,6 +9,8 @@
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
 
+NSString *const CocoaErrorJsonParseError    = @"数据出错，请联系元景科技！";
+
 #define CustomRequestHeaderKey          @"X-API-KEY"                // 请求头加密Key
 #define CustomRequestHeaderValue        @"SlwX20U65YMTuNRDe3fZ"     // 请求头加密Value
 
@@ -376,6 +378,28 @@
 
 
 #pragma mark - V2 API
+#pragma mark - Shops API
+- (void)startShopsAPIRequestWithParameters:(NSDictionary *)parameters
+                                   success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:ShopsAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startFilterCategoryAPIRequestWithParameters:(NSDictionary *)parameters
+                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:FilterCategoryAPIURL parameters:parameters success:success failure:failure];
+}
+
+- (void)startSearchShopsAPIRequestWithParameters:(NSDictionary *)parameters
+                                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self requestGETMethodsWithAPI:SearchShopsAPIURL parameters:parameters success:success failure:failure];
+}
+
 #pragma mark - User Center API
 - (void)startProgressOrdersAPIRequestWithParameters:(NSDictionary *)parameters
                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success

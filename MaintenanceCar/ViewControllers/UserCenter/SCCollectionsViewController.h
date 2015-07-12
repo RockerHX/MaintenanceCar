@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCTableViewController.h"
+#import "SCListViewController.h"
 #import "SCMerchantDetailViewController.h"
 
-@interface SCCollectionsViewController : SCTableViewController <SCMerchantDetailViewControllerDelegate>
+@interface SCCollectionsViewController : SCListViewController <SCMerchantDetailViewControllerDelegate>
 
 @end

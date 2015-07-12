@@ -22,6 +22,7 @@ typedef NS_ENUM(NSUInteger, SCPayOrderment) {
 }
 
 @property (nonatomic, assign)               BOOL  canPay;
+@property (nonatomic, assign, readonly)     BOOL  priceConfirm;
 @property (nonatomic, assign)             double  purchaseCount;
 @property (nonatomic, strong)           SCCoupon *coupon;
 @property (nonatomic, strong)           NSString *outTradeNo;

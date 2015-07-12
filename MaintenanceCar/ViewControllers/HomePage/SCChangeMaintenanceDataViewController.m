@@ -121,9 +121,9 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
             }];
         }
         else
-            [weakSelf hideHUDOnViewController:weakSelf];
+            [weakSelf hideHUDOnViewController:weakSelf.navigationController];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [weakSelf hideHUDOnViewController:weakSelf];
+        [weakSelf hideHUDOnViewController:weakSelf.navigationController];
         [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"数据保存失败，请重试！" delay:0.5f];
     }];
 }
@@ -219,7 +219,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
             if (_delegate && [_delegate respondsToSelector:@selector(dataSaveSuccess)])
                 [_delegate dataSaveSuccess];
             // 保存成功，返回上一页
-            [self hideHUDOnViewController:self];
+            [self hideHUDOnViewController:self.navigationController];
             [self.navigationController popViewControllerAnimated:YES];
         }
             break;

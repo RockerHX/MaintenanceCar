@@ -18,18 +18,17 @@
     _enterCodeButton.layer.borderWidth  = 0.5f;
 }
 
-#pragma mark - Setter And Getter Methods
-- (void)setFrame:(CGRect)frame
+#pragma mark - Draw Methods
+- (void)drawRect:(CGRect)rect
 {
-    [super setFrame:frame];
-    
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:CGPointMake(ZERO_POINT, ZERO_POINT)];
-    [path addLineToPoint:CGPointMake(ZERO_POINT, SELF_HEIGHT)];
-    [path addLineToPoint:CGPointMake(SHADOW_OFFSET*2, SELF_HEIGHT - SHADOW_OFFSET*6)];
-    [path addLineToPoint:CGPointMake(SELF_WIDTH - SHADOW_OFFSET*2, SELF_HEIGHT - SHADOW_OFFSET*6)];
-    [path addLineToPoint:CGPointMake(SELF_WIDTH, SELF_HEIGHT + SHADOW_OFFSET*4)];
-    [path addLineToPoint:CGPointMake(SELF_WIDTH, ZERO_POINT)];
+    CGFloat width = SELF_WIDTH;
+    CGFloat height = SELF_HEIGHT;
+    UIBezierPath *path = [self shadowPathWithPoints:@[@[@(ZERO_POINT), @(ZERO_POINT)],
+                                                      @[@(ZERO_POINT), @(height)],
+                                                      @[@(SHADOW_OFFSET*2), @(height - SHADOW_OFFSET*6)],
+                                                      @[@(width - SHADOW_OFFSET*2), @(height - SHADOW_OFFSET*6)],
+                                                      @[@(width), @(height + SHADOW_OFFSET*4)],
+                                                      @[@(width), @(ZERO_POINT)]]];
     self.layer.shadowPath = path.CGPath;
     self.layer.shadowColor = [UIColor lightGrayColor].CGColor;
     self.layer.shadowOffset = CGSizeMake(SHADOW_OFFSET, SHADOW_OFFSET);
@@ -47,7 +46,7 @@
 #pragma mark - Public Methods
 - (void)displayCellWithPaySucceed:(BOOL)paySucceed
 {
-    _enterCodeButton.enabled = !paySucceed;
+    _enterCodeButton.enabled = paySucceed;
 }
 
 @end

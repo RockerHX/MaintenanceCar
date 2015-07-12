@@ -18,4 +18,13 @@
  */
 - (CGFloat)layoutSizeFittingSize;
 
+/**
+ *  通过点集合创建多边形
+ *
+ *  @param points 点集合
+ *
+ *  @return 图形路径
+ */
+- (UIBezierPath *)shadowPathWithPoints:(NSArray *)points;
+
 @end

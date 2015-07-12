@@ -12,11 +12,15 @@
 #pragma mark - System Framework Singleton Define
 #define APP_DELEGATE_INSTANCE               ((AppDelegate*)([UIApplication sharedApplication].delegate))
 #define USER_DEFAULT                        [NSUserDefaults standardUserDefaults]
+#define NOTIFICATION_CENTER                 [NSNotificationCenter defaultCenter]
+
 #define STORY_BOARD(Name)                   [UIStoryboard storyboardWithName:Name bundle:nil]
 #define MAIN_VIEW_CONTROLLER(Name)          [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:Name]
 #define USERCENTER_VIEW_CONTROLLER(Name)    [STORY_BOARD(@"UserCenter") instantiateViewControllerWithIdentifier:Name]
-#define NOTIFICATION_CENTER                 [NSNotificationCenter defaultCenter]
+#define SHOPS_VIEW_CONTROLLER(Name)         [STORY_BOARD(@"Shops") instantiateViewControllerWithIdentifier:Name]
+#define SEARCH_VIEW_CONTROLLER(Name)        [STORY_BOARD(@"Search") instantiateViewControllerWithIdentifier:Name]
 
+#define CLASS_NAME(Class)                   NSStringFromClass([Class class])
 
 #ifdef DEBUG
 #define debugLog(...) NSLog(__VA_ARGS__)
@@ -32,11 +36,11 @@
 
 #define PATH_OF_APP_HOME        NSHomeDirectory()
 #define PATH_OF_TEMP            NSTemporaryDirectory()
-#define PATH_OF_DOCUMENT        [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+#define PATH_OF_DOCUMENT        [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
 
 #define LabelSystemFont(size)   [UIFont systemFontOfSize:size]
 
-#define WEAK_SELF(weakSelf)     __weak __typeof(&*self)weakSelf = self;
+#define WEAK_SELF(weakSelf)     __weak __typeof(&*self)weakSelf = self
 
 
 // 通过十六进制的rgb值来返回一个UIColor实例

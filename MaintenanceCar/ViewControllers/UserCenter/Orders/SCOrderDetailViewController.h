@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCTableViewController.h"
+#import "SCListViewController.h"
 
 @protocol SCOrderDetailViewControllerDelegate <NSObject>
 
@@ -17,7 +17,7 @@
 
 @class SCOrderDetail;
 
-@interface SCOrderDetailViewController : SCTableViewController
+@interface SCOrderDetailViewController : SCListViewController
 {
     BOOL          _needRefresh;
     SCOrderDetail *_detail;

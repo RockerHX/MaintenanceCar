@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCTableViewController.h"
+#import "SCListViewController.h"
 
-@interface SCCommentListViewController : SCTableViewController
+@interface SCCommentListViewController : SCListViewController
 
 @property (nonatomic, strong) NSString *companyID;
 

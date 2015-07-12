@@ -17,7 +17,7 @@
 #import "SCMileageView.h"
 #import "SCAllDictionary.h"
 #import "SCChangeMaintenanceDataViewController.h"
-#import "SCServiceMerchantsViewController.h"
+#import "SCOperationViewController.h"
 
 @interface SCMaintenanceViewController () <SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate, SCMerchantTableViewCellDelegate>
 {
@@ -58,6 +58,12 @@
     
     [self initConfig];
     [self performSelector:@selector(viewConfig) withObject:nil afterDelay:0.1f];
+}
+
+#pragma mark - Init Methods
++ (instancetype)instance
+{
+    return MAIN_VIEW_CONTROLLER(NSStringFromClass([self class]));
 }
 
 #pragma mark - Config Methods
@@ -102,19 +108,6 @@
         [self showHUDAlertToViewController:self tag:Zero text:@"暂无车辆，请您添加" delay:0.5f];
 }
 
-#pragma mark - Navigation
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"Maintenance"])
-    {
-        SCServiceMerchantsViewController *maintenanceViewController = segue.destinationViewController;
-        maintenanceViewController.title      = @"保养";
-        maintenanceViewController.type       = @"2";
-        maintenanceViewController.searchType = SCSearchTypeMaintenance;
-    }
-}
-
 #pragma mark - Action Methods
 - (IBAction)preCarButtonPressed:(UIButton *)sender
 {
@@ -149,19 +142,20 @@
     }
 }
 
-- (IBAction)infoViewPressed:(id)sender
+- (IBAction)infoViewPressed
 {
-    @try {
-        SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCChangeMaintenanceDataViewController"];
-        changeMaintenanceDataViewController.delegate = self;
-        changeMaintenanceDataViewController.car = _currentCar;
-        [self.navigationController pushViewController:changeMaintenanceDataViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCHomePageViewController Go to the SCChangeMaintenanceDataViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCChangeMaintenanceDataViewController"];
+    changeMaintenanceDataViewController.delegate = self;
+    changeMaintenanceDataViewController.car = _currentCar;
+    [self.navigationController pushViewController:changeMaintenanceDataViewController animated:YES];
+}
+
+- (IBAction)showMoreButtonPressed
+{
+    SCOperationViewController *maintenanceViewController = [SCOperationViewController instance];
+    maintenanceViewController.title = @"保养";
+    [maintenanceViewController setRequestParameter:@"product_tag" value:@"保养"];
+    [self.navigationController pushViewController:maintenanceViewController animated:YES];
 }
 
 #pragma mark - Private Methods
