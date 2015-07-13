@@ -62,7 +62,7 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 #pragma mark - Init Methods
 + (UINavigationController *)navigationInstance
 {
-    return CAR_VIEW_CONTROLLER(@"SCAddCarViewNavigationController");
+    return [SCStoryBoardManager navigaitonControllerWithIdentifier:@"SCAddCarViewNavigationController" storyBoardName:SCStoryBoardNameCar];
 }
 
 #pragma mark - Config Methods

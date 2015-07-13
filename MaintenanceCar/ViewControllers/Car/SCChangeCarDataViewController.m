@@ -38,7 +38,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return CAR_VIEW_CONTROLLER(CLASS_NAME(self));
+    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameCar];
 }
 
 #pragma mark - Config Methods

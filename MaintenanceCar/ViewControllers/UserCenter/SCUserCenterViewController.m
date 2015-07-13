@@ -61,7 +61,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return USERCENTER_VIEW_CONTROLLER(CLASS_NAME(self));
+    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameUserCenter];
 }
 
 #pragma mark - Class Methods

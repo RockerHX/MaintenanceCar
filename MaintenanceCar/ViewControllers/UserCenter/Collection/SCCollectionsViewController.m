@@ -36,7 +36,7 @@
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return COLLECTION_VIEW_CONTROLLER(CLASS_NAME(self));
+    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameCollection];
 }
 
 #pragma mark - Table View Data Source Methods

@@ -39,7 +39,7 @@
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return COMMENT_VIEW_CONTROLLER(CLASS_NAME(self));
+    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameComment];
 }
 
 #pragma mark - Config Methods

@@ -67,7 +67,7 @@
 #pragma mark - Init Methods
 + (UINavigationController *)navigationInstance
 {
-    return MAP_VIEW_CONTROLLER(@"SCMapViewNavigationController");
+    return [SCStoryBoardManager navigaitonControllerWithIdentifier:@"SCMapViewNavigationController" storyBoardName:SCStoryBoardNameMap];
 }
 
 #pragma mark - Config Methods

@@ -47,7 +47,7 @@ typedef NS_ENUM(NSUInteger, SCCouponDetailRow) {
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return COUPON_VIEW_CONTROLLER(CLASS_NAME(self));
+    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameCoupon];
 }
 
 #pragma mark - Table View Data Source Methods

@@ -14,24 +14,6 @@
 #define USER_DEFAULT                        [NSUserDefaults standardUserDefaults]
 #define NOTIFICATION_CENTER                 [NSNotificationCenter defaultCenter]
 
-#define STORY_BOARD(Name)                   [UIStoryboard storyboardWithName:Name bundle:nil]
-#define MAIN_VIEW_CONTROLLER(Name)          [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:Name]
-#define USERCENTER_VIEW_CONTROLLER(Name)    [STORY_BOARD(@"UserCenter") instantiateViewControllerWithIdentifier:Name]
-#define SHOPS_VIEW_CONTROLLER(Name)         [STORY_BOARD(@"Shops") instantiateViewControllerWithIdentifier:Name]
-#define SEARCH_VIEW_CONTROLLER(Name)        [STORY_BOARD(@"Search") instantiateViewControllerWithIdentifier:Name]
-#define ORDER_VIEW_CONTROLLER(Name)         [STORY_BOARD(@"Order") instantiateViewControllerWithIdentifier:Name]
-#define ORDER_PAY_VIEW_CONTROLLER(Name)     [STORY_BOARD(@"OrderPay") instantiateViewControllerWithIdentifier:Name]
-#define COUPON_VIEW_CONTROLLER(Name)        [STORY_BOARD(@"Coupon") instantiateViewControllerWithIdentifier:Name]
-#define GROUP_TICKET_VIEW_CONTROLLER(Name)  [STORY_BOARD(@"GroupTicket") instantiateViewControllerWithIdentifier:Name]
-#define COLLECTION_VIEW_CONTROLLER(Name)    [STORY_BOARD(@"Collection") instantiateViewControllerWithIdentifier:Name]
-#define LOGIN_VIEW_CONTROLLER(Name)         [STORY_BOARD(@"Login") instantiateViewControllerWithIdentifier:Name]
-#define MAP_VIEW_CONTROLLER(Name)           [STORY_BOARD(@"Map") instantiateViewControllerWithIdentifier:Name]
-#define RESERVATION_VIEW_CONTROLLER(Name)   [STORY_BOARD(@"Reservation") instantiateViewControllerWithIdentifier:Name]
-#define COMMENT_VIEW_CONTROLLER(Name)       [STORY_BOARD(@"Comment") instantiateViewControllerWithIdentifier:Name]
-#define CAR_VIEW_CONTROLLER(Name)           [STORY_BOARD(@"Car") instantiateViewControllerWithIdentifier:Name]
-#define HOMEPAGE_VIEW_CONTROLLER(Name)      [STORY_BOARD(@"HomePage") instantiateViewControllerWithIdentifier:Name]
-#define DETAIL_VIEW_CONTROLLER(Name)        [STORY_BOARD(@"Detail") instantiateViewControllerWithIdentifier:Name]
-
 #define CLASS_NAME(Class)                   NSStringFromClass([Class class])
 
 #ifdef DEBUG

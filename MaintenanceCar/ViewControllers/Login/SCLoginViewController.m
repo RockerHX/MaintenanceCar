@@ -55,7 +55,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
 #pragma mark - Init Methods
 + (UINavigationController *)navigationInstance
 {
-    return LOGIN_VIEW_CONTROLLER(@"SCLoginViewNavigationController");
+    return [SCStoryBoardManager navigaitonControllerWithIdentifier:@"SCLoginViewNavigationController" storyBoardName:SCStoryBoardNameLogin];
 }
 
 #pragma mark - Touch Event Methods

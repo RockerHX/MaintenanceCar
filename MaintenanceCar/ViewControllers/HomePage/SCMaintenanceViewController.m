@@ -63,7 +63,7 @@
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return HOMEPAGE_VIEW_CONTROLLER(CLASS_NAME(self));
+    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameHomePage];
 }
 
 #pragma mark - Config Methods

@@ -51,7 +51,7 @@
 
 + (UINavigationController *)navigationInstance
 {
-    return SEARCH_VIEW_CONTROLLER(@"SCSearchNavgationViewController");
+    return [SCStoryBoardManager navigaitonControllerWithIdentifier:@"SCSearchNavgationViewController" storyBoardName:SCStoryBoardNameSearch];
 }
 
 #pragma mark - Config Methods

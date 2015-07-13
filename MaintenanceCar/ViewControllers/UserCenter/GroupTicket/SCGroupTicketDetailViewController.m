@@ -63,7 +63,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return GROUP_TICKET_VIEW_CONTROLLER(CLASS_NAME(self));
+    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameGroupTicket];
 }
 
 #pragma mark - Config Methods

@@ -57,7 +57,7 @@
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return DETAIL_VIEW_CONTROLLER(CLASS_NAME(self));
+    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameDetail];
 }
 
 #pragma mark - Config Methods

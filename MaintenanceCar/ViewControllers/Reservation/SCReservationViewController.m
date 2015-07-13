@@ -45,7 +45,7 @@
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return RESERVATION_VIEW_CONTROLLER(CLASS_NAME(self));
+    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameReservation];
 }
 
 - (void)dealloc

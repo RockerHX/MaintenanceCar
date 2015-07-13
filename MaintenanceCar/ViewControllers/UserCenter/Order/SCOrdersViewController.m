@@ -44,7 +44,7 @@ typedef NS_ENUM(NSUInteger, SCOrderAlertType) {
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return ORDER_VIEW_CONTROLLER(CLASS_NAME(self));
+    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameOrder];
 }
 
 #pragma mark - Config Methods
