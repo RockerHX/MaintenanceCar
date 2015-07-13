@@ -65,11 +65,6 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
     return CAR_VIEW_CONTROLLER(@"SCAddCarViewNavigationController");
 }
 
-+ (instancetype)instance
-{
-    return CAR_VIEW_CONTROLLER(CLASS_NAME(self));
-}
-
 #pragma mark - Config Methods
 - (void)initConfig
 {

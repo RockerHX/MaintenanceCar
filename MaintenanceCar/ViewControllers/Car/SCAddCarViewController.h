@@ -37,6 +37,5 @@
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender;
 
 + (UINavigationController *)navigationInstance;
-+ (instancetype)instance;
 
 @end

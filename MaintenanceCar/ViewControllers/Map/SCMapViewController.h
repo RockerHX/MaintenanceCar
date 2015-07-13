@@ -30,6 +30,5 @@
 - (IBAction)listItemPressed:(UIBarButtonItem *)sender;
 
 + (UINavigationController *)navigationInstance;
-+ (instancetype)instance;
 
 @end

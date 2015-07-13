@@ -58,11 +58,6 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     return LOGIN_VIEW_CONTROLLER(@"SCLoginViewNavigationController");
 }
 
-+ (instancetype)instance
-{
-    return LOGIN_VIEW_CONTROLLER(CLASS_NAME(self));
-}
-
 #pragma mark - Touch Event Methods
 // 点击页面上不能相应事件的位置，收起键盘
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

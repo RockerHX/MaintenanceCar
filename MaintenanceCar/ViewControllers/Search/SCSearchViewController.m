@@ -54,11 +54,6 @@
     return SEARCH_VIEW_CONTROLLER(@"SCSearchNavgationViewController");
 }
 
-+ (instancetype)instance
-{
-    return SEARCH_VIEW_CONTROLLER(CLASS_NAME(self));
-}
-
 #pragma mark - Config Methods
 - (void)initConfig
 {

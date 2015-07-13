@@ -33,6 +33,5 @@
 - (IBAction)weixinLoginButtonPressed;
 
 + (UINavigationController *)navigationInstance;
-+ (instancetype)instance;
 
 @end

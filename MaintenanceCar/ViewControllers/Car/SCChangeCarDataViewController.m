@@ -253,7 +253,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
         if ([SCUserInfo share].loginStatus)
         {
             UINavigationController *addCarViewNavigationControler = [SCAddCarViewController navigationInstance];
-            SCAddCarViewController *addCarViewController = [SCAddCarViewController instance];
+            SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;
             addCarViewController.delegate = self;
             [self presentViewController:addCarViewNavigationControler animated:YES completion:nil];
             [pickerView hidde];

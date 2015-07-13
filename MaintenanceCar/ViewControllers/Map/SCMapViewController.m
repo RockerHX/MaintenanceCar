@@ -21,8 +21,8 @@
     SCMerchant        *_merchant;               // 当前点击商家的数据缓存
     BMKAnnotationView *_preAnnotationView;      // 地图图钉缓存
     
-    NSTimer           *_timer;
-    CGFloat           _zoomLevel;
+    CGFloat  _zoomLevel;
+    NSTimer *_timer;
     BMKCoordinateRegion _coordinateRegion;
 }
 
@@ -70,11 +70,6 @@
     return MAP_VIEW_CONTROLLER(@"SCMapViewNavigationController");
 }
 
-+ (instancetype)instance
-{
-    return MAP_VIEW_CONTROLLER(CLASS_NAME(self));
-}
-
 #pragma mark - Config Methods
 - (void)initConfig
 {
@@ -87,15 +82,13 @@
     
     if (_isMerchantMap)
     {
-        _mapMerchantInfoView.hidden   = YES;
+        _mapMerchantInfoView.hidden = YES;
         UIBarButtonItem *item = self.navigationItem.leftBarButtonItem;
         self.navigationItem.leftBarButtonItem = self.navigationItem.rightBarButtonItem;
         self.navigationItem.rightBarButtonItem = item;
     }
     else
-    {
         _mapMerchantInfoView.delegate = self;
-    }
     _timer = [NSTimer scheduledTimerWithTimeInterval:MAP_REFRESH_TIME_INTERVAL target:self selector:@selector(displayUserLocation) userInfo:nil repeats:YES];
 }
 
@@ -131,7 +124,7 @@
     _merchants = merchants;
     _merchant  = [merchants firstObject];
     if (!_annotations)
-        _annotations = [@[] mutableCopy];
+        _annotations = @[].mutableCopy;
     
     // 根据传入的商家数据，生成商家图钉需要的数据并添加到商家图钉集合(_annotations)
     [merchants enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {

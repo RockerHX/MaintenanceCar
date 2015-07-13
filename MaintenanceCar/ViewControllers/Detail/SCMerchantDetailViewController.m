@@ -29,7 +29,7 @@
 #import "SCCommentsViewController.h"
 
 typedef NS_ENUM(NSInteger, SCAlertType) {
-    SCAlertTypeNeedLogin    = 100,
+    SCAlertTypeNeedLogin = 100,
     SCAlertTypeReuqestError,
     SCAlertTypeReuqestCall
 };
@@ -319,7 +319,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         _merchant.longtitude = _merchantDetail.longtitude;
         // 地图按钮被点击，跳转到地图页面
         UINavigationController *mapNavigationController = [SCMapViewController navigationInstance];
-        SCMapViewController *mapViewController = [SCMapViewController instance];
+        SCMapViewController *mapViewController = (SCMapViewController *)mapNavigationController.topViewController;
         mapViewController.merchants     = @[_merchant];
         mapViewController.isMerchantMap = YES;
         mapNavigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
