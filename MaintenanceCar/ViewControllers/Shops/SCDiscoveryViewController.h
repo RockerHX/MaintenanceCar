@@ -12,4 +12,6 @@
 
 - (IBAction)searchButtonItemPressed;
 
++ (NSString *)navgationRestorationIdentifier;
+
 @end

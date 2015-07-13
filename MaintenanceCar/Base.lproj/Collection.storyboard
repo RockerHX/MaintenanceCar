@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--收藏-->
+        <scene sceneID="Dcj-BE-Rja">
+            <objects>
+                <tableViewController storyboardIdentifier="SCCollectionsViewController" hidesBottomBarWhenPushed="YES" id="BcV-5m-PeZ" customClass="SCCollectionsViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" id="eSg-q1-FQ8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="separatorInset" minX="95" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SCMerchantTableViewCell" rowHeight="100" id="7JG-bX-hdc" customClass="SCMerchantTableViewCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7JG-bX-hdc" id="DVV-2Y-H49">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MerchantIconDefault" translatesAutoresizingMaskIntoConstraints="NO" id="Exp-PS-5tj">
+                                            <rect key="frame" x="8" y="10" width="80" height="80"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="80" id="KQv-Df-lVd"/>
+                                                <constraint firstAttribute="width" constant="80" id="eus-nJ-EQH"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="元景专修" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlw-it-VQc">
+                                            <rect key="frame" x="96" y="10" width="216" height="36"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="36" id="dCo-k5-Gow"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DistanceIcon" translatesAutoresizingMaskIntoConstraints="NO" id="JcZ-Hg-KNy">
+                                            <rect key="frame" x="96" y="50" width="15" height="15"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="15" id="u7D-ay-HRM"/>
+                                                <constraint firstAttribute="height" constant="15" id="vsC-Cb-xgU"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="500m" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7XK-xQ-Sbz">
+                                            <rect key="frame" x="113" y="50" width="37" height="15"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4wP-uM-Ml1" customClass="SCStarView">
+                                            <rect key="frame" x="96" y="71" width="64" height="14"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t9d-Za-9GK">
+                                                    <rect key="frame" x="0.0" y="0.0" width="12" height="14"/>
+                                                    <state key="normal" image="Star-Unlight">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted" image="Star-Unlight"/>
+                                                    <connections>
+                                                        <action selector="starFirstButton:" destination="4wP-uM-Ml1" eventType="touchUpInside" id="sSB-Jt-S5R"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jbL-Ct-4K0">
+                                                    <rect key="frame" x="13" y="0.0" width="12" height="14"/>
+                                                    <state key="normal" image="Star-Unlight">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted" image="Star-Unlight"/>
+                                                    <connections>
+                                                        <action selector="starSecondButton:" destination="4wP-uM-Ml1" eventType="touchUpInside" id="eDD-du-90W"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QaY-ZP-NZK">
+                                                    <rect key="frame" x="26" y="0.0" width="12" height="14"/>
+                                                    <state key="normal" image="Star-Unlight">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted" image="Star-Unlight"/>
+                                                    <connections>
+                                                        <action selector="starThirdButton:" destination="4wP-uM-Ml1" eventType="touchUpInside" id="nkc-U1-YTw"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tpR-GA-uHY">
+                                                    <rect key="frame" x="39" y="0.0" width="12" height="14"/>
+                                                    <state key="normal" image="Star-Unlight">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted" image="Star-Unlight"/>
+                                                    <connections>
+                                                        <action selector="starFourthButton:" destination="4wP-uM-Ml1" eventType="touchUpInside" id="Z3O-aZ-eAX"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8n1-ih-fyL">
+                                                    <rect key="frame" x="52" y="0.0" width="12" height="14"/>
+                                                    <state key="normal" image="Star-Unlight">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted" image="Star-Unlight"/>
+                                                    <connections>
+                                                        <action selector="starFifthButton:" destination="4wP-uM-Ml1" eventType="touchUpInside" id="27I-r3-BgF"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="QaY-ZP-NZK" firstAttribute="width" secondItem="jbL-Ct-4K0" secondAttribute="width" id="056-5W-n9v"/>
+                                                <constraint firstItem="jbL-Ct-4K0" firstAttribute="leading" secondItem="t9d-Za-9GK" secondAttribute="trailing" constant="1" id="BUR-BZ-xac"/>
+                                                <constraint firstAttribute="bottom" secondItem="QaY-ZP-NZK" secondAttribute="bottom" id="CTa-03-NBc"/>
+                                                <constraint firstItem="QaY-ZP-NZK" firstAttribute="top" secondItem="4wP-uM-Ml1" secondAttribute="top" id="ETh-LR-E2k"/>
+                                                <constraint firstItem="QaY-ZP-NZK" firstAttribute="width" secondItem="tpR-GA-uHY" secondAttribute="width" id="Fsj-eM-OI0"/>
+                                                <constraint firstAttribute="bottom" secondItem="t9d-Za-9GK" secondAttribute="bottom" id="I70-mF-TJF"/>
+                                                <constraint firstItem="8n1-ih-fyL" firstAttribute="top" secondItem="4wP-uM-Ml1" secondAttribute="top" id="MvA-hI-yX1"/>
+                                                <constraint firstAttribute="height" constant="14" id="QZO-RU-9sA"/>
+                                                <constraint firstItem="QaY-ZP-NZK" firstAttribute="width" secondItem="t9d-Za-9GK" secondAttribute="width" id="S6M-es-pmN"/>
+                                                <constraint firstAttribute="bottom" secondItem="jbL-Ct-4K0" secondAttribute="bottom" id="SFD-mH-47f"/>
+                                                <constraint firstAttribute="width" constant="64" id="Sku-5o-K6G"/>
+                                                <constraint firstItem="jbL-Ct-4K0" firstAttribute="top" secondItem="4wP-uM-Ml1" secondAttribute="top" id="Tix-eU-awU"/>
+                                                <constraint firstItem="tpR-GA-uHY" firstAttribute="top" secondItem="4wP-uM-Ml1" secondAttribute="top" id="ZOx-KD-xsQ"/>
+                                                <constraint firstItem="t9d-Za-9GK" firstAttribute="leading" secondItem="4wP-uM-Ml1" secondAttribute="leading" id="Zwf-o2-NAF"/>
+                                                <constraint firstItem="t9d-Za-9GK" firstAttribute="top" secondItem="4wP-uM-Ml1" secondAttribute="top" id="f4g-US-77Z"/>
+                                                <constraint firstItem="QaY-ZP-NZK" firstAttribute="leading" secondItem="jbL-Ct-4K0" secondAttribute="trailing" constant="1" id="fd4-cq-Heo"/>
+                                                <constraint firstItem="QaY-ZP-NZK" firstAttribute="width" secondItem="8n1-ih-fyL" secondAttribute="width" id="nso-F7-ztH"/>
+                                                <constraint firstAttribute="bottom" secondItem="tpR-GA-uHY" secondAttribute="bottom" id="qgR-kd-q0r"/>
+                                                <constraint firstItem="tpR-GA-uHY" firstAttribute="leading" secondItem="QaY-ZP-NZK" secondAttribute="trailing" constant="1" id="vJF-JD-EN3"/>
+                                                <constraint firstAttribute="trailing" secondItem="8n1-ih-fyL" secondAttribute="trailing" id="wMv-7T-P0D"/>
+                                                <constraint firstAttribute="bottom" secondItem="8n1-ih-fyL" secondAttribute="bottom" id="xaA-v6-KNb"/>
+                                                <constraint firstItem="8n1-ih-fyL" firstAttribute="leading" secondItem="tpR-GA-uHY" secondAttribute="trailing" constant="1" id="yf7-Qe-bZE"/>
+                                            </constraints>
+                                            <connections>
+                                                <outlet property="starFifth" destination="8n1-ih-fyL" id="KKO-vk-33O"/>
+                                                <outlet property="starFirst" destination="t9d-Za-9GK" id="6qE-YW-mLJ"/>
+                                                <outlet property="starFourth" destination="tpR-GA-uHY" id="VNA-Qj-XTe"/>
+                                                <outlet property="starSecond" destination="jbL-Ct-4K0" id="aX4-ES-DTU"/>
+                                                <outlet property="starThird" destination="QaY-ZP-NZK" id="Zfe-od-yRW"/>
+                                            </connections>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="JcZ-Hg-KNy" firstAttribute="leading" secondItem="Exp-PS-5tj" secondAttribute="trailing" constant="8" id="0aT-IB-Fmy"/>
+                                        <constraint firstItem="Xlw-it-VQc" firstAttribute="leading" secondItem="4wP-uM-Ml1" secondAttribute="leading" id="0tK-VM-Njj"/>
+                                        <constraint firstItem="Exp-PS-5tj" firstAttribute="top" secondItem="Xlw-it-VQc" secondAttribute="top" id="FKy-E7-eFZ"/>
+                                        <constraint firstItem="Xlw-it-VQc" firstAttribute="leading" secondItem="Exp-PS-5tj" secondAttribute="trailing" constant="8" id="O5x-1d-SSo"/>
+                                        <constraint firstItem="JcZ-Hg-KNy" firstAttribute="top" secondItem="7XK-xQ-Sbz" secondAttribute="top" id="Sjv-Rl-FqY"/>
+                                        <constraint firstItem="7XK-xQ-Sbz" firstAttribute="height" secondItem="JcZ-Hg-KNy" secondAttribute="height" id="VXm-fE-cde"/>
+                                        <constraint firstItem="4wP-uM-Ml1" firstAttribute="top" secondItem="JcZ-Hg-KNy" secondAttribute="bottom" constant="6" id="XZB-d5-CfO"/>
+                                        <constraint firstItem="Exp-PS-5tj" firstAttribute="leading" secondItem="DVV-2Y-H49" secondAttribute="leadingMargin" id="Zn1-Gi-f5c"/>
+                                        <constraint firstItem="7XK-xQ-Sbz" firstAttribute="leading" secondItem="JcZ-Hg-KNy" secondAttribute="trailing" constant="2" id="diS-bk-aFi"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Xlw-it-VQc" secondAttribute="trailing" id="qlP-Ed-4Sg"/>
+                                        <constraint firstItem="JcZ-Hg-KNy" firstAttribute="top" secondItem="Xlw-it-VQc" secondAttribute="bottom" constant="4" id="vIT-QT-WSm"/>
+                                        <constraint firstAttribute="centerY" secondItem="Exp-PS-5tj" secondAttribute="centerY" id="vQc-NF-0dJ"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="distanceLabel" destination="7XK-xQ-Sbz" id="f5b-gr-gsV"/>
+                                    <outlet property="merchantIcon" destination="Exp-PS-5tj" id="aeb-Ix-4XX"/>
+                                    <outlet property="merchantNameLabel" destination="Xlw-it-VQc" id="vCs-Kf-0Pr"/>
+                                    <outlet property="starView" destination="4wP-uM-Ml1" id="wFU-Qw-as6"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="BcV-5m-PeZ" id="4OH-XO-433"/>
+                            <outlet property="delegate" destination="BcV-5m-PeZ" id="hW5-IF-BJF"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="收藏" id="p3X-pN-zvr">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="PSU-63-4l2"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="azA-4w-v0Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="233" y="-221"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="DistanceIcon" width="15" height="15"/>
+        <image name="MerchantIconDefault" width="80" height="80"/>
+        <image name="Star-Unlight" width="24" height="28"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

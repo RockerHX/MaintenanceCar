@@ -11,12 +11,18 @@
 
 @implementation SCDiscoveryViewController
 
+#pragma mark - Class Methods
++ (NSString *)navgationRestorationIdentifier
+{
+    return @"DiscoveryNavigationController";
+}
+
 #pragma mark - Action Methods
 - (IBAction)searchButtonItemPressed
 {
-    SCSearchViewController *searchViewController = [SCSearchViewController instance];
-    searchViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self presentViewController:searchViewController animated:YES completion:nil];
+    UINavigationController *searchNavigationViewController = [SCSearchViewController navigationInstance];
+    searchNavigationViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:searchNavigationViewController animated:YES completion:nil];
 }
 
 @end

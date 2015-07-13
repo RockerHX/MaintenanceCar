@@ -8,10 +8,6 @@
 
 #import "SCWebViewController.h"
 
-@interface SCWebViewController () <UIWebViewDelegate, UIAlertViewDelegate>
-
-@end
-
 @implementation SCWebViewController
 
 #pragma mark - View Controller Life Cycle
@@ -39,7 +35,7 @@
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return MAIN_VIEW_CONTROLLER(NSStringFromClass([self class]));
+    return MAIN_VIEW_CONTROLLER(CLASS_NAME(self));
 }
 
 #pragma mark - Private Methods

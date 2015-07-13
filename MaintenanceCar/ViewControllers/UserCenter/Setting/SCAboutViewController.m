@@ -37,6 +37,18 @@
     [self viewConfig];
 }
 
+#pragma mark - Config Methods
+- (void)viewConfig
+{
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSString *build = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    
+    _logoImageView.layer.cornerRadius = 30.0f;
+    _logoImageView.layer.borderWidth  = 1.0f;
+    _logoImageView.layer.borderColor  = [UIColor lightGrayColor].CGColor;
+    _versionLabel.text = [NSString stringWithFormat:@"当前版本号:%@(Build %@)", version, build];
+}
+
 #pragma mark - Table View Delegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -52,15 +64,5 @@
 }
 
 #pragma mark - Private Methods
-- (void)viewConfig
-{
-    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    NSString *build = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-    
-    _logoImageView.layer.cornerRadius = 30.0f;
-    _logoImageView.layer.borderWidth  = 1.0f;
-    _logoImageView.layer.borderColor  = [UIColor lightGrayColor].CGColor;
-    _versionLabel.text = [NSString stringWithFormat:@"当前版本号:%@(Build %@)", version, build];
-}
 
 @end

@@ -14,8 +14,8 @@
 #import "SCGroupProductDetailCell.h"
 #import "SCShowMoreCell.h"
 #import "SCCommentCell.h"
-#import "SCPayOrderViewController.h"
-#import "SCCommentListViewController.h"
+#import "SCOrderPayViewController.h"
+#import "SCCommentsViewController.h"
 #import "SCReservationViewController.h"
 
 @interface SCGroupProductDetailViewController () <SCBuyGroupProductCellDelegate, SCGroupProductMerchantCellDelegate>
@@ -54,6 +54,12 @@
     [self viewConfig];
 }
 
+#pragma mark - Init Methods
++ (instancetype)instance
+{
+    return DETAIL_VIEW_CONTROLLER(CLASS_NAME(self));
+}
+
 #pragma mark - Config Methods
 - (void)initConfig
 {
@@ -63,12 +69,6 @@
 {
     [self.tableView reLayoutHeaderView];
     [self startGroupProductDetailRequest];
-}
-
-#pragma mark - Init Methods
-+ (instancetype)instance
-{
-    return MAIN_VIEW_CONTROLLER(NSStringFromClass([self class]));
 }
 
 #pragma mark - Table View Data Source Methods
@@ -227,16 +227,9 @@
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell isKindOfClass:[SCShowMoreCell class]])
     {
-        @try {
-            SCCommentListViewController *commentListViewController = MAIN_VIEW_CONTROLLER(@"SCCommentListViewController");
-            commentListViewController.companyID = _detail.company_id;
-            [self.navigationController pushViewController:commentListViewController animated:YES];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"SCGroupProductDetailViewController Go to the SCCommentListViewController exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
+        SCCommentsViewController *commentListViewController = [SCCommentsViewController instance];
+        commentListViewController.companyID = _detail.company_id;
+        [self.navigationController pushViewController:commentListViewController animated:YES];
     }
 }
 
@@ -273,7 +266,7 @@
 {
     if ([SCUserInfo share].loginStatus)
     {
-        SCPayOrderViewController *payOrderViewController = [SCPayOrderViewController instance];
+        SCOrderPayViewController *payOrderViewController = [SCOrderPayViewController instance];
         payOrderViewController.groupProduct = _detail;
         [self.navigationController pushViewController:payOrderViewController animated:YES];
     }

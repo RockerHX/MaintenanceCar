@@ -26,7 +26,7 @@
 #import "SCAllDictionary.h"
 #import "SCGroupProductDetailViewController.h"
 #import "SCViewCategory.h"
-#import "SCCommentListViewController.h"
+#import "SCCommentsViewController.h"
 
 typedef NS_ENUM(NSInteger, SCAlertType) {
     SCAlertTypeNeedLogin    = 100,
@@ -71,6 +71,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [self viewConfig];
 }
 
+#pragma mark - Init Methods
++ (instancetype)instance
+{
+    return DETAIL_VIEW_CONTROLLER(CLASS_NAME(self));
+}
+
 #pragma mark - Config Methods
 - (void)initConfig
 {
@@ -90,12 +96,6 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [self.tableView reLayoutFooterView];
     // 开始数据请求
     [self startMerchantDetailRequestWithParameters];
-}
-
-#pragma mark - Public Methods
-+ (instancetype)instance
-{
-    return MAIN_VIEW_CONTROLLER(NSStringFromClass([self class]));
 }
 
 #pragma mark - Table View Data Source Methods
@@ -271,19 +271,19 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if ([cell isKindOfClass:[SCGroupProductCell class]])
         {
-            SCGroupProductDetailViewController *groupProductDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
-            groupProductDetailViewController.product = [cell isKindOfClass:[SCGroupProductCell class]] ? _merchantDetail.products[indexPath.row] : nil;
-            [self.navigationController pushViewController:groupProductDetailViewController animated:YES];
+            SCGroupProductDetailViewController *viewController = [SCGroupProductDetailViewController instance];
+            viewController.product = [cell isKindOfClass:[SCGroupProductCell class]] ? _merchantDetail.products[indexPath.row] : nil;
+            [self.navigationController pushViewController:viewController animated:YES];
         }
         if ([cell isKindOfClass:[SCQuotedPriceCell class]])
         {
             SCQuotedPrice *price = _merchantDetail.quotedPriceGroup.products[indexPath.row];
             price.merchantName   = _merchantDetail.name;
             price.companyID      = _merchantDetail.company_id;
-            SCGroupProductDetailViewController *priceDetailViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCGroupProductDetailViewController"];
-            priceDetailViewController.title = @"商品详情";
-            priceDetailViewController.price = price;
-            [self.navigationController pushViewController:priceDetailViewController animated:YES];
+            SCGroupProductDetailViewController *viewController = [SCGroupProductDetailViewController instance];
+            viewController.title = @"商品详情";
+            viewController.price = price;
+            [self.navigationController pushViewController:viewController animated:YES];
         }
         else if ([cell isKindOfClass:[SCShowMoreProductCell class]])
         {
@@ -299,7 +299,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         }
         else if ([cell isKindOfClass:[SCShowMoreCell class]])
         {
-            SCCommentListViewController *commentListViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCCommentListViewController"];
+            SCCommentsViewController *commentListViewController = [SCCommentsViewController instance];
             commentListViewController.companyID = _merchantDetail.company_id;
             [self.navigationController pushViewController:commentListViewController animated:YES];
         }
@@ -318,11 +318,11 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         _merchant.latitude   = _merchantDetail.latitude;
         _merchant.longtitude = _merchantDetail.longtitude;
         // 地图按钮被点击，跳转到地图页面
-        UINavigationController *mapNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCMapViewNavigationController"];
-        SCMapViewController *mapViewController          = (SCMapViewController *)mapNavigationController.topViewController;
-        mapViewController.merchants                     = @[_merchant];
-        mapViewController.isMerchantMap                 = YES;
-        mapNavigationController.modalTransitionStyle    = UIModalTransitionStyleCrossDissolve;
+        UINavigationController *mapNavigationController = [SCMapViewController navigationInstance];
+        SCMapViewController *mapViewController = [SCMapViewController instance];
+        mapViewController.merchants     = @[_merchant];
+        mapViewController.isMerchantMap = YES;
+        mapNavigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         [self presentViewController:mapNavigationController animated:YES completion:nil];
     }
     else if (indexPath.row == 1)

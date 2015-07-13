@@ -26,5 +26,3 @@ FOUNDATION_EXPORT NSString *const MerchantCellReuseIdentifier;
 
 FOUNDATION_EXPORT NSString *const DisplayNameKey;
 FOUNDATION_EXPORT NSString *const RequestValueKey;
-
-FOUNDATION_EXPORT NSString *const MerchantDetailViewControllerStoryBoardID;

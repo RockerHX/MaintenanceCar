@@ -26,5 +26,3 @@ NSString *const DisplayNameKey                             = @"DisplayName";
 NSString *const RequestValueKey                            = @"RequestValue";
 
 NSString *const MerchantCellReuseIdentifier                = @"SCMerchantTableViewCell";
-
-NSString *const MerchantDetailViewControllerStoryBoardID   = @"SCMerchantDetailViewController";
