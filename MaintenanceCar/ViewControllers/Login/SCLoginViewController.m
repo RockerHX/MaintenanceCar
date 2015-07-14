@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCLoginViewController.h"
 #import <UMengMessage/UMessage.h>
+#import "SCLoginViewController.h"
 #import "SCVerificationCodeLabel.h"
 
 // 登录验证模式

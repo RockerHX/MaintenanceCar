@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "SCFilterViewController.h"
 
 @implementation SCFilterViewController
@@ -15,9 +16,11 @@
 {
     [super initConfig];
     _filterViewModel = [[SCFilterViewModel alloc] init];
-    [_filterViewModel loadCompleted:^(SCFilterViewModel *viewModel, BOOL success) {
-        if (success)
-            _filterView.filterViewModel = viewModel;
+    
+    @weakify(self)
+    [RACObserve([SCUserInfo share], loginStatus) subscribeNext:^(NSNumber *loginStatus) {
+        @strongify(self)
+        [self loadFilterData];
     }];
 }
 
@@ -32,6 +35,18 @@
         [weakSelf.shopList.parameters setValue:value forKey:param];
         [weakSelf.shopList reloadShops];
     }];
+}
+
+#pragma mark - Private Methods
+- (void)loadFilterData
+{
+    if (_filterViewModel)
+    {
+        [_filterViewModel loadCompleted:^(SCFilterViewModel *viewModel, BOOL success) {
+            if (success)
+                _filterView.filterViewModel = viewModel;
+        }];
+    }
 }
 
 @end

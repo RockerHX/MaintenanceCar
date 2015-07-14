@@ -149,6 +149,7 @@ static SCUserInfo *userInfo = nil;
     [USER_DEFAULT synchronize];
     
     self.receiveMessage = YES;
+    self.loginStatus = SCLoginStatusLogin;
 }
 
 - (void)saveOwnerName:(NSString *)name
@@ -161,13 +162,15 @@ static SCUserInfo *userInfo = nil;
 {
     [_userCars removeAllObjects];
     
-    self.receiveMessage = NO;
     [USER_DEFAULT setObject:@(NO) forKey:kLoginKey];
     [USER_DEFAULT removeObjectForKey:kUserIDKey];
     [USER_DEFAULT removeObjectForKey:kPhoneNumberKey];
     [USER_DEFAULT removeObjectForKey:kUserTokenKey];
     [USER_DEFAULT removeObjectForKey:kUserCarsKey];
     [USER_DEFAULT synchronize];
+    
+    self.receiveMessage = NO;
+    self.loginStatus = SCLoginStatusLogout;
 }
 
 - (BOOL)needRefreshToken

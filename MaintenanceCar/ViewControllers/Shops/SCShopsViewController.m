@@ -138,6 +138,7 @@
     }
     else if ([cell isKindOfClass:[SCDiscoveryPopProductCell class]])
     {
+        // TODO
         SCShopProduct *product = shopViewModel.shop.products[indexPath.row - 1];
         SCGroupProductDetailViewController *viewController = [SCGroupProductDetailViewController instance];
         
@@ -159,7 +160,6 @@
             viewController.title = @"商品详情";
             viewController.price = price;
         }
-        
         [self.navigationController pushViewController:viewController animated:YES];
     }
     else if ([cell isKindOfClass:[SCDiscoveryPopPromptCell class]])
