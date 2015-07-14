@@ -45,10 +45,30 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
 #pragma mark - Action Methods
 - (IBAction)filterButtonPressed:(UIButton *)button
 {
-    _selectedButton = button;
-    [_filterViewModel changeCategory:button.tag];
-    [self popUp];
-    [self reload];
+    if (!((_state == SCFilterViewStateOpen) && (_selectedButton.tag == button.tag)))
+    {
+        _selectedButton = button;
+        [_filterViewModel changeCategory:button.tag];
+        [self popUp];
+        [self reload];
+    }
+    else
+        [self packUp];
+}
+
+#pragma mark - Setter And Getter Methods
+- (void)setState:(SCFilterViewState)state
+{
+    _state = state;
+    switch (state)
+    {
+        case SCFilterViewStateOpen:
+            [self popUp];
+            break;
+        case SCFilterViewStateClose:
+            [self packUp];
+            break;
+    }
 }
 
 #pragma mark - Touch Event Methods
@@ -58,6 +78,44 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
 }
 
 #pragma mark - Private Methods
+- (void)packUp
+{
+    _canSelected = NO;
+    _bottomBarHeightConstraint.constant = Zero;
+    _contentHeightConstraint.constant = Zero;
+    [self needsUpdateConstraints];
+    [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [_popUpView layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.2f delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
+            _containerView.alpha = Zero;
+        } completion:^(BOOL finished) {
+            _containerView.alpha = 1.0f;
+            _heightConstraint.constant = _buttonHeightConstraint.constant;
+            _canSelected = YES;
+            _state = SCFilterViewStateClose;
+        }];
+    }];
+}
+
+- (void)popUp
+{
+    if (_canSelected)
+    {
+        _canSelected = NO;
+        _heightConstraint.constant = SCREEN_HEIGHT;
+        _contentHeightConstraint.constant = _filterViewModel.contentHeight;
+        _bottomBarHeightConstraint.constant = bottomBarHeight;
+        [self needsUpdateConstraints];
+        [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
+            [_popUpView layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            _canSelected = YES;
+            _state = SCFilterViewStateOpen;
+        }];
+    }
+}
+
 - (void)reload
 {
     if (_filterViewModel)
@@ -87,42 +145,6 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
 }
 
 #pragma mark - Public Methods
-- (void)packUp
-{
-    _canSelected = NO;
-    _bottomBarHeightConstraint.constant = Zero;
-    _contentHeightConstraint.constant = Zero;
-    [self needsUpdateConstraints];
-    [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
-        [_popUpView layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.2f delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
-            _containerView.alpha = Zero;
-        } completion:^(BOOL finished) {
-            _containerView.alpha = 1.0f;
-            _heightConstraint.constant = _buttonHeightConstraint.constant;
-            _canSelected = YES;
-        }];
-    }];
-}
-
-- (void)popUp
-{
-    if (_canSelected)
-    {
-        _canSelected = NO;
-        _heightConstraint.constant = SCREEN_HEIGHT;
-        _contentHeightConstraint.constant = _filterViewModel.contentHeight;
-        _bottomBarHeightConstraint.constant = bottomBarHeight;
-        [self needsUpdateConstraints];
-        [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
-            [_popUpView layoutIfNeeded];
-        } completion:^(BOOL finished) {
-            _canSelected = YES;
-        }];
-    }
-}
-
 - (void)filterCompleted:(void(^)(NSString *param, NSString *value))block
 {
     _block = block;

@@ -16,7 +16,7 @@
 {
     [super viewWillDisappear:animated];
     
-    [self.filterView packUp];
+    self.filterView.state = SCFilterViewStateClose;
 }
 
 #pragma mark - Class Methods
