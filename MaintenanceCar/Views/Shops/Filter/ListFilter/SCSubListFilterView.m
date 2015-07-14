@@ -57,7 +57,7 @@
     else if ([tableView isEqual:_subFilterView])
         items = _subItems;
     SCFilterCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCFilterCell class]) forIndexPath:indexPath];
-    [cell displayWithItems:items atIndex:indexPath.row];
+    [cell displayWithCategory:_category atIndex:indexPath.row];
     return cell;
 }
 
@@ -86,9 +86,9 @@
         if (_delegate && [_delegate respondsToSelector:@selector(selectedCompletedWithTitle:parameter:value:)])
         {
             if (_category.program)
-                [_delegate selectedCompletedWithTitle:item.title parameter:_category.program value:item.value];
+                [_delegate selectedCompletedWithTitle:item.filterTitle parameter:_category.program value:item.value];
             else if (item.program)
-                [_delegate selectedCompletedWithTitle:item.title parameter:item.program value:item.value];
+                [_delegate selectedCompletedWithTitle:item.filterTitle parameter:item.program value:item.value];
         }
     }
 }

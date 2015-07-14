@@ -11,6 +11,7 @@
 @interface SCFilterCategoryItem : NSObject
 
 @property (nonatomic, copy)  NSString *title;
+@property (nonatomic, copy)  NSString *filterTitle;
 @property (nonatomic, copy)  NSString *program;
 @property (nonatomic, copy)  NSString *value;
 @property (nonatomic, strong) NSArray *subItems;
@@ -20,6 +21,7 @@
 @interface SCFilterCategory : NSObject
 
 @property (nonatomic, assign)      BOOL  haveSubItems;
+@property (nonatomic, assign) NSInteger  selectedIndex;
 @property (nonatomic, assign) NSInteger  maxCount;
 @property (nonatomic, copy)   NSString *program;
 @property (nonatomic, copy)   NSString *value;
@@ -40,7 +42,7 @@
 
 @property (nonatomic, strong) SCFilterCategory         *serviceCategory;
 @property (nonatomic, strong) SCFilterCategory         *regionCategory;
-@property (nonatomic, strong) SCCarModelFilterCategory *carModelCategory;
 @property (nonatomic, strong) SCFilterCategory         *sortCategory;
+@property (nonatomic, strong) SCCarModelFilterCategory *carModelCategory;
 
 @end

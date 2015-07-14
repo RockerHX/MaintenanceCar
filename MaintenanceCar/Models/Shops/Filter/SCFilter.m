@@ -12,7 +12,8 @@
 
 + (NSDictionary *)replacedKeyFromPropertyName
 {
-    return @{@"subItems": @"sub_items"};
+    return @{@"filterTitle": @"filter_title",
+                @"subItems": @"sub_items"};
 }
 
 + (NSDictionary *)objectClassInArray

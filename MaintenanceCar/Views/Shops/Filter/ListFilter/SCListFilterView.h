@@ -18,9 +18,6 @@
 @class SCFilterCategory;
 
 @interface SCListFilterView : UIView <UITableViewDataSource, UITableViewDelegate>
-{
-    NSArray *_items;
-}
 
 @property (weak, nonatomic) SCFilterCategory *category;
 

@@ -36,7 +36,7 @@
             storyBoardName = @"HomePage";
             break;
         case SCStoryBoardNameShops:
-            storyBoardName = @"Shops";
+            storyBoardName = @"Shop";
             break;
         case SCStoryBoardNameUserCenter:
             storyBoardName = @"UserCenter";
