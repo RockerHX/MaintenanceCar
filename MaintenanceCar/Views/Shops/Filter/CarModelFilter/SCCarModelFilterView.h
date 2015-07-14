@@ -12,16 +12,16 @@
 
 @required
 - (void)selectedCompletedWithTitle:(NSString *)title parameter:(NSString *)parameter value:(NSString *)value;
-
 @end
 
 @class SCCarModelFilterCategory;
+
 @interface SCCarModelFilterView : UIView <UICollectionViewDataSource, UICollectionViewDelegate>
 {
     NSIndexPath *_indexPath;
 }
 
-@property (weak, nonatomic) SCCarModelFilterCategory *category;
+@property (nonatomic, strong) SCCarModelFilterCategory *category;
 
 @property (weak, nonatomic) IBOutlet                 id  <SCCarModelFilterViewDelegate>delegate;
 @property (weak, nonatomic) IBOutlet   UICollectionView *collectionView;

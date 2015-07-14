@@ -24,10 +24,19 @@
 }
 
 #pragma mark - Config Methods
-
 - (void)viewConfig
 {
     _collectionView.scrollsToTop = NO;
+}
+
+#pragma mark - Public Methods
+- (void)setCategory:(SCCarModelFilterCategory *)category
+{
+    _category = category;
+    if (category.myCars.count)
+        _indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    else
+        _indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
 }
 
 #pragma mark - Public Methods
