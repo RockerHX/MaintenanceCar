@@ -30,6 +30,7 @@
 #pragma mark - Public Methods
 - (void)initConfig
 {
+    _hasRreshHeader = YES;
     _shopList = [[SCShopList alloc] init];
     if (_requestParameter && _requestValue)
         [_shopList setParameter:_requestParameter value:_requestValue];
@@ -49,7 +50,8 @@
     _tableView.tableFooterView = [[UIView alloc] init];         // 为tableview添加空白尾部，以免没有数据显示时有很多条纹
     
     // 为tableview添加下拉响应式控件和触发方法
-    [self addRefreshHeader];
+    if (_hasRreshHeader)
+        [self addRefreshHeader];
     [self addFooter];
 }
 

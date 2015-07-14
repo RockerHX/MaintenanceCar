@@ -17,6 +17,7 @@ typedef NS_ENUM(NSUInteger, SCTableViewRefreshType) {
 
 @interface SCTableViewController : SCViewController
 
+@property (nonatomic, assign)                   BOOL  hasRreshHeader;
 @property (nonatomic, assign) SCTableViewRefreshType  refreshType;  // 刷新类型，是上拉刷新还是下拉刷新
 @property (nonatomic, strong)             SCShopList *shopList;
 
