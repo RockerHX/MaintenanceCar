@@ -11,6 +11,14 @@
 
 @implementation SCDiscoveryViewController
 
+#pragma mark - View Controller Life Cycle
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.filterView packUp];
+}
+
 #pragma mark - Class Methods
 + (NSString *)navgationRestorationIdentifier
 {

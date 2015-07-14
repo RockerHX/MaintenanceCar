@@ -58,6 +58,35 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
 }
 
 #pragma mark - Private Methods
+- (void)reload
+{
+    if (_filterViewModel)
+    {
+        if ([_filterViewModel.category isKindOfClass:[SCCarModelFilterCategory class]])
+        {
+            _carModelView.category = _filterViewModel.filter.carModelCategory;
+            [_carModelView show];
+            _listFilterView.hidden = YES;
+            _subListFilterView.hidden = YES;
+        }
+        else
+        {
+            SCFilterCategory *category = _filterViewModel.category;
+            BOOL haveSubItems = category.haveSubItems;
+            
+            [_carModelView hidden];
+            _listFilterView.hidden = haveSubItems;
+            _subListFilterView.hidden = !haveSubItems;
+            
+            if (haveSubItems)
+                _subListFilterView.category = category;
+            else
+                _listFilterView.category = category;
+        }
+    }
+}
+
+#pragma mark - Public Methods
 - (void)packUp
 {
     _canSelected = NO;
@@ -94,35 +123,6 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
     }
 }
 
-- (void)reload
-{
-    if (_filterViewModel)
-    {
-        if ([_filterViewModel.category isKindOfClass:[SCCarModelFilterCategory class]])
-        {
-            _carModelView.category = _filterViewModel.filter.carModelCategory;
-            [_carModelView show];
-            _listFilterView.hidden = YES;
-            _subListFilterView.hidden = YES;
-        }
-        else
-        {
-            SCFilterCategory *category = _filterViewModel.category;
-            BOOL haveSubItems = category.haveSubItems;
-            
-            [_carModelView hidden];
-            _listFilterView.hidden = haveSubItems;
-            _subListFilterView.hidden = !haveSubItems;
-            
-            if (haveSubItems)
-                _subListFilterView.category = category;
-            else
-                _listFilterView.category = category;
-        }
-    }
-}
-
-#pragma mark - Public Methods
 - (void)filterCompleted:(void(^)(NSString *param, NSString *value))block
 {
     _block = block;

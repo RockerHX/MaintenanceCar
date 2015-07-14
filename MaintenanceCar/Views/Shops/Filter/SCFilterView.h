@@ -40,6 +40,8 @@
 
 - (IBAction)filterButtonPressed:(UIButton *)button;
 
+- (void)packUp;
+- (void)popUp;
 - (void)filterCompleted:(void(^)(NSString *param, NSString *value))block;
 
 @end
