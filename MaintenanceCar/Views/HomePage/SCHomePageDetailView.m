@@ -41,7 +41,7 @@
 {
     if (_canTap)
     {
-        if ([SCUserInfo share].loginStatus)
+        if ([SCUserInfo share].loginState)
         {
             if (!_reservation)
             {
@@ -168,7 +168,7 @@
 
 - (void)showPrompt
 {
-    if ([SCUserInfo share].loginStatus)
+    if ([SCUserInfo share].loginState)
     {
         _canTap = NO;
         _promptLabel.text = @"数据获取中...";
@@ -215,7 +215,7 @@
 - (void)refresh
 {
     [self showPrompt];
-    if ([SCUserInfo share].loginStatus)
+    if ([SCUserInfo share].loginState)
     {
         WEAK_SELF(weakSelf);
         NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID};

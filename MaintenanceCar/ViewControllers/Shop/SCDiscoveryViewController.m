@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "SCDiscoveryViewController.h"
 #import "SCSearchViewController.h"
 
@@ -23,6 +24,18 @@
 + (NSString *)navgationRestorationIdentifier
 {
     return @"DiscoveryNavigationController";
+}
+
+#pragma mark - Config Methods
+- (void)initConfig
+{
+    [super initConfig];
+    
+    @weakify(self)
+    [RACObserve([SCUserInfo share], loginState) subscribeNext:^(NSNumber *loginState) {
+        @strongify(self)
+        [self.shopList reloadShops];
+    }];
 }
 
 #pragma mark - Action Methods

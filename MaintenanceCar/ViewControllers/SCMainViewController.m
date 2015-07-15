@@ -58,7 +58,7 @@
 - (void)userLog
 {
     SCUserInfo *userInfo = [SCUserInfo share];
-    if (userInfo.loginStatus)
+    if (userInfo.loginState)
     {
         // 获取用户设备数据，进行远程日志记录
         NSString *os = [UIDevice currentDevice].systemName;

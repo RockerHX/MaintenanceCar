@@ -145,6 +145,13 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
 }
 
 #pragma mark - Public Methods
+- (void)restore
+{
+    [_seviceFilterButton setTitle:@"服务" forState:UIControlStateNormal];
+    [_regionFilterButton setTitle:@"区域" forState:UIControlStateNormal];
+    [_modelFilterButton setTitle:@"排序" forState:UIControlStateNormal];
+}
+
 - (void)filterCompleted:(void(^)(NSString *param, NSString *value))block
 {
     _block = block;

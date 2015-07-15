@@ -23,20 +23,16 @@
 #define kReceiveMessageKey      @"kReceiveMessageKey"
 
 typedef void(^BLOCK)(SCUserInfo *userInfo, BOOL finish);
-
-static SCUserInfo *userInfo = nil;
-
-@interface SCUserInfo ()
-{
-    NSMutableArray *_userCars;
-    NSMutableArray *_selectedItems;
-    
-    BLOCK          _block;
-}
-
-@end
+typedef void(^STATE_BLOCK)(SCLoginState state);
 
 @implementation SCUserInfo
+{
+    BLOCK       _block;
+    STATE_BLOCK _stateBlock;
+    
+    NSMutableArray *_userCars;
+    NSMutableArray *_selectedItems;
+}
 
 #pragma mark - Init Methods
 - (id)init
@@ -51,6 +47,7 @@ static SCUserInfo *userInfo = nil;
 
 + (instancetype)share
 {
+    static SCUserInfo *userInfo = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         userInfo = [[SCUserInfo alloc] init];
@@ -62,27 +59,27 @@ static SCUserInfo *userInfo = nil;
 #pragma mark - Getter Methods
 - (NSString *)userID
 {
-    return self.loginStatus ? [USER_DEFAULT objectForKey:kUserIDKey] : @"";
+    return self.loginState ? [USER_DEFAULT objectForKey:kUserIDKey] : @"";
 }
 
 - (NSString *)phoneNmber
 {
-    return self.loginStatus ? [USER_DEFAULT objectForKey:kPhoneNumberKey] : @"";
+    return self.loginState ? [USER_DEFAULT objectForKey:kPhoneNumberKey] : @"";
 }
 
 - (NSString *)token
 {
-    return self.loginStatus ? [USER_DEFAULT objectForKey:kUserTokenKey] : @"";
+    return self.loginState ? [USER_DEFAULT objectForKey:kUserTokenKey] : @"";
 }
 
 - (NSString *)ownerName
 {
-    return self.loginStatus ? [USER_DEFAULT objectForKey:kOwnerNameKey] : @"";
+    return self.loginState ? [USER_DEFAULT objectForKey:kOwnerNameKey] : @"";
 }
 
-- (SCLoginStatus)loginStatus
+- (SCLoginState)loginState
 {
-    return ([[USER_DEFAULT objectForKey:kLoginKey] boolValue] && [USER_DEFAULT objectForKey:kUserIDKey] && [USER_DEFAULT objectForKey:kUserTokenKey]) ? SCLoginStatusLogin : SCLoginStatusLogout;
+    return ([[USER_DEFAULT objectForKey:kLoginKey] boolValue] && [USER_DEFAULT objectForKey:kUserIDKey] && [USER_DEFAULT objectForKey:kUserTokenKey]) ? SCLoginStateLogin : SCLoginStateLogout;
 }
 
 - (BOOL)addAliasSuccess
@@ -117,7 +114,7 @@ static SCUserInfo *userInfo = nil;
 
 - (NSArray *)cars
 {
-    return self.loginStatus ? _userCars : nil;
+    return self.loginState ? _userCars : nil;
 }
 
 - (void)canReceiveMessage:(BOOL)can
@@ -148,8 +145,7 @@ static SCUserInfo *userInfo = nil;
     [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"now"]] forKey:kTokenRefreshDateKey];
     [USER_DEFAULT synchronize];
     
-    self.receiveMessage = YES;
-    self.loginStatus = SCLoginStatusLogin;
+    [self loginStateChange:SCLoginStateLogin];
 }
 
 - (void)saveOwnerName:(NSString *)name
@@ -169,8 +165,7 @@ static SCUserInfo *userInfo = nil;
     [USER_DEFAULT removeObjectForKey:kUserCarsKey];
     [USER_DEFAULT synchronize];
     
-    self.receiveMessage = NO;
-    self.loginStatus = SCLoginStatusLogout;
+    [self loginStateChange:SCLoginStateLogout];
 }
 
 - (BOOL)needRefreshToken
@@ -208,10 +203,15 @@ static SCUserInfo *userInfo = nil;
     }
 }
 
+- (void)stateChange:(void(^)(SCLoginState state))block
+{
+    _stateBlock = block;
+}
+
 - (void)userCarsReuqest:(void (^)(SCUserInfo *, BOOL))block
 {
     _block = block;
-    if (self.loginStatus)
+    if (self.loginState)
     {
         __weak typeof(self)weakSelf = self;
         NSDictionary *parameters = @{@"user_id": self.userID};
@@ -243,7 +243,7 @@ static SCUserInfo *userInfo = nil;
 - (void)load
 {
     NSArray *userCars = [USER_DEFAULT objectForKey:kUserCarsKey];
-    if (self.loginStatus)
+    if (self.loginState)
     {
         [_userCars removeAllObjects];
         for (NSDictionary *carData in userCars)
@@ -274,6 +274,15 @@ static SCUserInfo *userInfo = nil;
 - (void)removeItems
 {
     [_selectedItems removeAllObjects];
+}
+
+#pragma mark - Private Methods
+- (void)loginStateChange:(SCLoginState)state
+{
+    self.receiveMessage = state;
+    self.loginState = state;
+    if (_stateBlock)
+        _stateBlock(state);
 }
 
 @end

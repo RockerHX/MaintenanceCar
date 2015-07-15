@@ -80,7 +80,7 @@
 {
     [_searchBar.textField resignFirstResponder];
     [self showLoading];
-    [self.shopList reloadShopsWithSearch:search];
+    [self.shopList loadShopsWithSearch:search];
 }
 
 #pragma mark - Public Methods

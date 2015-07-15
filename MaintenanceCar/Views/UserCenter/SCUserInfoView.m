@@ -52,11 +52,11 @@
 - (void)refresh
 {
     SCUserInfo *userInfo = [SCUserInfo share];
-    _loginButton.hidden  = userInfo.loginStatus;
+    _loginButton.hidden  = userInfo.loginState;
     _carInfoView.hidden  = !_loginButton.hidden;
     _userCarsView.hidden = _carInfoView.hidden;
     
-    if (userInfo.loginStatus)
+    if (userInfo.loginState)
     {
         if (!userInfo.cars.count)
         {

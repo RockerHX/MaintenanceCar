@@ -25,8 +25,6 @@
     [self viewConfig];
 }
 
-#pragma mark - Private Methods
-
 #pragma mark - Public Methods
 - (void)initConfig
 {
@@ -41,7 +39,7 @@
         if (loaded.boolValue)
             [self hanleServerResponse:_shopList.serverResponse];
     }];
-    [_shopList reloadShops];
+    [_shopList loadShops];
 }
 
 - (void)viewConfig

@@ -286,7 +286,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 
 - (void)weiXinPayWithParameters:(NSDictionary *)parameters
 {
-    if ([SCUserInfo share].loginStatus)
+    if ([SCUserInfo share].loginState)
     {
         if ([WXApi isWXAppInstalled])
         {
@@ -318,7 +318,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 
 - (void)aliPayWithParameters:(NSDictionary *)parameters
 {
-    if ([SCUserInfo share].loginStatus)
+    if ([SCUserInfo share].loginState)
     {
         WEAK_SELF(weakSelf);
         [self showHUDOnViewController:self.navigationController];

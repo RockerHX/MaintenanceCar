@@ -86,7 +86,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
 // [添加车辆]按钮被点击，跳转到添加车辆页面
 - (IBAction)addCarItemPressed:(UIBarButtonItem *)sender
 {
-    if ([SCUserInfo share].loginStatus)
+    if ([SCUserInfo share].loginState)
     {
         UINavigationController *navigationControler = [SCAddCarViewController navigationInstance];
         [self presentViewController:navigationControler animated:YES completion:nil];
@@ -101,7 +101,7 @@ typedef NS_ENUM(NSInteger, SCUserCenterRow) {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     // 检查用户是否登录，在进行相应页面跳转
-    if ([SCUserInfo share].loginStatus)
+    if ([SCUserInfo share].loginState)
     {
         switch (indexPath.row)
         {

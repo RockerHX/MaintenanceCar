@@ -147,13 +147,19 @@
 #pragma mark - Public Methods
 - (void)reloadShops
 {
+    [self initConfig];
+    [self loadShops];
+}
+
+- (void)loadShops
+{
     _type = SCShopListTypeNormal;
-    [self setParameter:@"auto_get_car" value:@(YES)];
+    [self setParameter:@"auto_get_car" value:@([SCUserInfo share].loginState)];
     [self setParameter:@"uid" value:[SCUserInfo share].userID];
     [self loadNewShops];
 }
 
-- (void)reloadShopsWithSearch:(NSString *)search
+- (void)loadShopsWithSearch:(NSString *)search
 {
     _type = SCShopListTypeSearch;
     [self setParameter:@"field" value:search];

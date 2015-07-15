@@ -24,7 +24,8 @@ typedef NS_ENUM(NSUInteger, SCShopListType) {
 @property (nonatomic, strong, readonly)           NSArray *shops;
 
 - (void)reloadShops;
-- (void)reloadShopsWithSearch:(NSString *)search;
+- (void)loadShops;
+- (void)loadShopsWithSearch:(NSString *)search;
 - (void)loadMoreShops;
 
 - (void)setParameter:(id)parameter value:(id)value;

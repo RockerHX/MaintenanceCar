@@ -92,7 +92,7 @@
     [UMessage setLogEnabled:YES];
     
     SCUserInfo *userInfo = [SCUserInfo share];
-    if (!userInfo.addAliasSuccess && userInfo.loginStatus)
+    if (!userInfo.addAliasSuccess && userInfo.loginState)
     {
         [UMessage addAlias:userInfo.phoneNmber type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
             if ([responseObject[@"success"] isEqualToString:@"ok"])

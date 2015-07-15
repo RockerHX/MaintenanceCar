@@ -264,7 +264,7 @@
 #pragma mark - SCGroupProductCellDelegate Methods
 - (void)shouldShowBuyProductView
 {
-    if ([SCUserInfo share].loginStatus)
+    if ([SCUserInfo share].loginState)
     {
         SCOrderPayViewController *payOrderViewController = [SCOrderPayViewController instance];
         payOrderViewController.groupProduct = _detail;

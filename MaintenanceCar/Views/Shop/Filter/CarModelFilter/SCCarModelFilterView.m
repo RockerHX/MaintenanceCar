@@ -12,6 +12,7 @@
 #import "SCFilter.h"
 #import "SCCarModelFilterReusableView.h"
 #import "SCCarModelFilterViewCell.h"
+#import "SCUserInfo.h"
 
 @implementation SCCarModelFilterView
 
@@ -20,23 +21,23 @@
 {
     [super awakeFromNib];
     
+    [self initConfig];
     [self viewConfig];
 }
 
 #pragma mark - Config Methods
+- (void)initConfig
+{
+    [self changeSelectedIndexWithLoginState:[SCUserInfo share].loginState];
+    __weak typeof(self)weakSelf = self;
+    [[SCUserInfo share] stateChange:^(SCLoginState state) {
+        [weakSelf changeSelectedIndexWithLoginState:state];
+    }];
+}
+
 - (void)viewConfig
 {
     _collectionView.scrollsToTop = NO;
-}
-
-#pragma mark - Public Methods
-- (void)setCategory:(SCCarModelFilterCategory *)category
-{
-    _category = category;
-    if (category.myCars.count)
-        _indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    else
-        _indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
 }
 
 #pragma mark - Public Methods
@@ -49,6 +50,15 @@
 - (void)hidden
 {
     self.hidden = YES;
+}
+
+#pragma mark - Private Methods
+- (void)changeSelectedIndexWithLoginState:(SCLoginState)state
+{
+    if (state)
+        _indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    else
+        _indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
 }
 
 #pragma mark - Collection View Data Source Methods

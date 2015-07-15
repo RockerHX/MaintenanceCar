@@ -105,7 +105,7 @@
         case SCHomePageServiceButtonTypeMaintance:
         {
             SCUserInfo *userInfo = [SCUserInfo share];
-            if (userInfo.loginStatus)
+            if (userInfo.loginState)
                 [self.navigationController pushViewController:[SCMaintenanceViewController instance] animated:YES];
             else
                 [self showShoulLoginAlert];

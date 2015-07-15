@@ -118,7 +118,7 @@
 {
     [self closeAllKeyboard];
     // 检查是否登录，已登录进行预约请求，反之则弹出登录提示框跳转到登录页面
-    if (![SCUserInfo share].loginStatus)
+    if (![SCUserInfo share].loginState)
         [self showShoulLoginAlert];
     else if ([self checkeParamterIntegrity])
         [self startMerchantReservationRequest];
@@ -263,7 +263,7 @@
         {
             if ([pickerView lastItem:item])
             {
-                if ([SCUserInfo share].loginStatus)
+                if ([SCUserInfo share].loginState)
                 {
                     UINavigationController *addCarViewNavigationControler = [SCAddCarViewController navigationInstance];
                     SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;

@@ -44,7 +44,7 @@
 {
     [super startDropDownRefreshReuqest];
     
-    [self.shopList reloadShops];
+    [self.shopList loadShops];
 }
 
 - (void)startPullUpRefreshRequest

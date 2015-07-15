@@ -383,7 +383,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (IBAction)collectionItemPressed:(SCCollectionItem *)sender
 {
     // 是否需要用户登录，已登录经行收藏请求或者取消收藏请求，否则弹出警告提示框
-    if ([SCUserInfo share].loginStatus)
+    if ([SCUserInfo share].loginState)
     {
         if (sender.favorited)
             [self startCancelCollectionMerchantRequest];

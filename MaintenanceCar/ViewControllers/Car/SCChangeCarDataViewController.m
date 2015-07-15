@@ -250,7 +250,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 {
     if ([pickerView lastItem:item])
     {
-        if ([SCUserInfo share].loginStatus)
+        if ([SCUserInfo share].loginState)
         {
             UINavigationController *addCarViewNavigationControler = [SCAddCarViewController navigationInstance];
             SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarViewNavigationControler.topViewController;

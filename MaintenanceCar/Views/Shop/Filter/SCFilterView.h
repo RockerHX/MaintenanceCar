@@ -46,6 +46,7 @@ typedef NS_ENUM(NSUInteger, SCFilterViewState) {
 
 - (IBAction)filterButtonPressed:(UIButton *)button;
 
+- (void)restore;
 - (void)filterCompleted:(void(^)(NSString *param, NSString *value))block;
 
 @end

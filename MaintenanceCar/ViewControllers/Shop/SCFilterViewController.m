@@ -18,7 +18,7 @@
     _filterViewModel = [[SCFilterViewModel alloc] init];
     
     @weakify(self)
-    [RACObserve([SCUserInfo share], loginStatus) subscribeNext:^(NSNumber *loginStatus) {
+    [RACObserve([SCUserInfo share], loginState) subscribeNext:^(NSNumber *loginState) {
         @strongify(self)
         [self loadFilterData];
     }];
@@ -33,13 +33,14 @@
         [weakSelf resetRequestState];
         [weakSelf showLoading];
         [weakSelf.shopList.parameters setValue:value forKey:param];
-        [weakSelf.shopList reloadShops];
+        [weakSelf.shopList loadShops];
     }];
 }
 
 #pragma mark - Private Methods
 - (void)loadFilterData
 {
+    [_filterView restore];
     if (_filterViewModel)
     {
         [_filterViewModel loadCompleted:^(SCFilterViewModel *viewModel, BOOL success) {

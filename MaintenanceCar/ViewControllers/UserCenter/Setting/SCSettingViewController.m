@@ -71,14 +71,14 @@
 {
     SCUserInfo *userInfo = [SCUserInfo share];
     _appMessageSwitch.on = userInfo.receiveMessage;
-    _logoutView.hidden   = !userInfo.loginStatus;
+    _logoutView.hidden   = !userInfo.loginState;
     _logoutButton.layer.cornerRadius = 5.0f;
 }
 
 - (void)appMessageAction:(UISwitch *)sender
 {
     SCUserInfo *userInfo = [SCUserInfo share];
-    if (!userInfo.loginStatus)
+    if (!userInfo.loginState)
     {
         _appMessageSwitch.on = NO;
         [self showHUDAlertToViewController:self text:@"您还未登录，无法接受推送消息" delay:0.5f];
