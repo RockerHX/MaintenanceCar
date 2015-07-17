@@ -1,6 +1,6 @@
 platform :ios, '7.0'
 
-pod 'ReactiveCocoa',                    '~> 2.5'
+pod 'ReactiveCocoa'
 
 pod 'AFNetworking'
 pod 'AFNetworkActivityLogger'
@@ -9,7 +9,7 @@ pod 'JSONModel'
 pod 'MJExtension'
 
 pod 'MBProgressHUD'
-pod 'MJRefresh'
+pod 'MJRefresh', '~> 1.4.7'
 pod 'UITableView+FDTemplateLayoutCell'
 pod 'CSStickyHeaderFlowLayout'
 

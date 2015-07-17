@@ -8,7 +8,7 @@
 
 #import "SCMerchantCell.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-#import <HexColors/HexColor.h>
+#import <HexColors/HexColors.h>
 #import "MicroConstants.h"
 #import "SCAPIRequest.h"
 #import "SCStarView.h"

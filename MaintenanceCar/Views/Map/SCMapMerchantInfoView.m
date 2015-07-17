@@ -8,7 +8,7 @@
 
 #import "SCMapMerchantInfoView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-#import <HexColors/HexColor.h>
+#import <HexColors/HexColors.h>
 #import "SCAPIRequest.h"
 #import "SCStarView.h"
 #import "SCMerchant.h"

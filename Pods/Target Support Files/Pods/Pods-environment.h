@@ -69,14 +69,14 @@
 // DateTools
 #define COCOAPODS_POD_AVAILABLE_DateTools
 #define COCOAPODS_VERSION_MAJOR_DateTools 1
-#define COCOAPODS_VERSION_MINOR_DateTools 5
-#define COCOAPODS_VERSION_PATCH_DateTools 0
+#define COCOAPODS_VERSION_MINOR_DateTools 6
+#define COCOAPODS_VERSION_PATCH_DateTools 1
 
 // HexColors
 #define COCOAPODS_POD_AVAILABLE_HexColors
 #define COCOAPODS_VERSION_MAJOR_HexColors 2
-#define COCOAPODS_VERSION_MINOR_HexColors 2
-#define COCOAPODS_VERSION_PATCH_HexColors 1
+#define COCOAPODS_VERSION_MINOR_HexColors 3
+#define COCOAPODS_VERSION_PATCH_HexColors 0
 
 // IQKeyboardManager
 #define COCOAPODS_POD_AVAILABLE_IQKeyboardManager
@@ -99,7 +99,7 @@
 // MJExtension
 #define COCOAPODS_POD_AVAILABLE_MJExtension
 #define COCOAPODS_VERSION_MAJOR_MJExtension 2
-#define COCOAPODS_VERSION_MINOR_MJExtension 3
+#define COCOAPODS_VERSION_MINOR_MJExtension 5
 #define COCOAPODS_VERSION_PATCH_MJExtension 2
 
 // MJRefresh
@@ -112,7 +112,7 @@
 #define COCOAPODS_POD_AVAILABLE_Masonry
 #define COCOAPODS_VERSION_MAJOR_Masonry 0
 #define COCOAPODS_VERSION_MINOR_Masonry 6
-#define COCOAPODS_VERSION_PATCH_Masonry 1
+#define COCOAPODS_VERSION_PATCH_Masonry 2
 
 // ReactiveCocoa
 #define COCOAPODS_POD_AVAILABLE_ReactiveCocoa
@@ -147,20 +147,20 @@
 // SCNumberKeyBoard
 #define COCOAPODS_POD_AVAILABLE_SCNumberKeyBoard
 #define COCOAPODS_VERSION_MAJOR_SCNumberKeyBoard 0
-#define COCOAPODS_VERSION_MINOR_SCNumberKeyBoard 2
-#define COCOAPODS_VERSION_PATCH_SCNumberKeyBoard 1
+#define COCOAPODS_VERSION_MINOR_SCNumberKeyBoard 3
+#define COCOAPODS_VERSION_PATCH_SCNumberKeyBoard 0
 
 // SDWebImage
 #define COCOAPODS_POD_AVAILABLE_SDWebImage
 #define COCOAPODS_VERSION_MAJOR_SDWebImage 3
 #define COCOAPODS_VERSION_MINOR_SDWebImage 7
-#define COCOAPODS_VERSION_PATCH_SDWebImage 2
+#define COCOAPODS_VERSION_PATCH_SDWebImage 3
 
 // SDWebImage/Core
 #define COCOAPODS_POD_AVAILABLE_SDWebImage_Core
 #define COCOAPODS_VERSION_MAJOR_SDWebImage_Core 3
 #define COCOAPODS_VERSION_MINOR_SDWebImage_Core 7
-#define COCOAPODS_VERSION_PATCH_SDWebImage_Core 2
+#define COCOAPODS_VERSION_PATCH_SDWebImage_Core 3
 
 // UITableView+FDTemplateLayoutCell
 #define COCOAPODS_POD_AVAILABLE_UITableView_FDTemplateLayoutCell

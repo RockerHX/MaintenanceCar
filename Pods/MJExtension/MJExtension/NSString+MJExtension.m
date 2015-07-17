@@ -1,14 +1,14 @@
 //
-//  NSString+Extension.m
+//  NSString+MJExtension.m
 //  MJExtensionExample
 //
 //  Created by MJ Lee on 15/6/7.
 //  Copyright (c) 2015年 小码哥. All rights reserved.
 //
 
-#import "NSString+Extension.h"
+#import "NSString+MJExtension.h"
 
-@implementation NSString (Extension)
+@implementation NSString (MJExtension)
 - (NSString *)underlineFromCamel
 {
     if (self.length == 0) return self;
@@ -60,5 +60,12 @@
     [string appendString:[NSString stringWithFormat:@"%c", [self characterAtIndex:0]].uppercaseString];
     if (self.length >= 2) [string appendString:[self substringFromIndex:1]];
     return string;
+}
+
+- (BOOL)isPureInt
+{
+    NSScanner *scan = [NSScanner scannerWithString:self];
+    int val;
+    return [scan scanInt:&val] && [scan isAtEnd];
 }
 @end
