@@ -51,6 +51,14 @@
     [_parameters setValue:value forKey:parameter];
 }
 
+- (void)addParameters:(NSDictionary *)parameters
+{
+    NSArray *keys = [parameters allKeys];
+    [keys enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [_parameters setValue:parameters[@"obj"] forKey:obj];
+    }];
+}
+
 #pragma mark - Private Methods
 - (void)clearShops
 {

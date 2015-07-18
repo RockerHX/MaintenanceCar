@@ -35,8 +35,8 @@ typedef NS_ENUM(NSUInteger, SCFilterViewState) {
 
 @property (weak, nonatomic) IBOutlet UIButton *seviceFilterButton;
 @property (weak, nonatomic) IBOutlet UIButton *regionFilterButton;
-@property (weak, nonatomic) IBOutlet UIButton *modelFilterButton;
 @property (weak, nonatomic) IBOutlet UIButton *sortFilterButton;
+@property (weak, nonatomic) IBOutlet UIButton *modelFilterButton;
 
 @property (nonatomic, assign, readonly) NSInteger  selectedIndex;
 @property (nonatomic, assign)   SCFilterViewState  state;

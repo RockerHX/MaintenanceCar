@@ -11,8 +11,7 @@
 
 @implementation SCTableViewController
 {
-    NSString *_requestParameter;
-    NSString *_requestValue;
+    NSMutableDictionary *_requestParameters;
 }
 
 #pragma mark - View Controller Life Cycle
@@ -30,8 +29,8 @@
 {
     _hasRreshHeader = YES;
     _shopList = [[SCShopList alloc] init];
-    if (_requestParameter && _requestValue)
-        [_shopList setParameter:_requestParameter value:_requestValue];
+    if (_requestParameters)
+        [_shopList addParameters:_requestParameters];
     
     @weakify(self)
     [RACObserve(_shopList, loaded) subscribeNext:^(NSNumber *loaded) {
@@ -84,44 +83,37 @@
     }
 }
 
-- (void)addRefreshHeader
-{
+- (void)addRefreshHeader {
     if (!self.tableView.header)
         [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(startDropDownRefreshReuqest)];
 }
 
-- (void)removeRefreshHeader
-{
+- (void)removeRefreshHeader {
     [self.tableView removeHeader];
 }
 
-- (void)addRefreshFooter
-{
+- (void)addRefreshFooter {
     if (!self.tableView.footer)
         [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(startPullUpRefreshRequest)];
 }
 
-- (void)removeRefreshFooter
-{
+- (void)removeRefreshFooter {
     [self.tableView removeFooter];
 }
 
-- (void)addFooter
-{
+- (void)addFooter {
     UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 10.0f)];
     footer.backgroundColor = [UIColor clearColor];
     self.tableView.tableFooterView = footer;
 }
 
-- (void)removeFooter
-{
+- (void)removeFooter {
     self.tableView.tableFooterView = nil;
 }
 
-- (void)setRequestParameter:(NSString *)parameter value:(NSString *)value
-{
-    _requestParameter = parameter;
-    _requestValue = value;
+- (void)setRequestParameter:(NSString *)parameter value:(NSString *)value {
+    if (!_requestParameters) _requestParameters = @{}.mutableCopy;
+    [_requestParameters setValue:value forKey:parameter];
 }
 
 @end

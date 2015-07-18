@@ -149,7 +149,7 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
 {
     [_seviceFilterButton setTitle:@"服务" forState:UIControlStateNormal];
     [_regionFilterButton setTitle:@"区域" forState:UIControlStateNormal];
-    [_modelFilterButton setTitle:@"排序" forState:UIControlStateNormal];
+    [_sortFilterButton setTitle:@"排序" forState:UIControlStateNormal];
 }
 
 - (void)filterCompleted:(void(^)(NSString *param, NSString *value))block

@@ -29,5 +29,6 @@ typedef NS_ENUM(NSUInteger, SCShopListType) {
 - (void)loadMoreShops;
 
 - (void)setParameter:(id)parameter value:(id)value;
+- (void)addParameters:(NSDictionary *)parameters;
 
 @end
