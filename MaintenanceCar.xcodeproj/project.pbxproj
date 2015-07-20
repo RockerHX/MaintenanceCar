@@ -228,6 +228,10 @@
 		48FB70CF1AA5A58300AF4AD9 /* SCReservation.m in Sources */ = {isa = PBXBuildFile; fileRef = 48FB70C31AA5A58300AF4AD9 /* SCReservation.m */; };
 		48FCC5F31B31690F00AEB874 /* SCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48FCC5F21B31690F00AEB874 /* SCViewController.m */; };
 		9E0A36B3F4162AAD50219CE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0D4E7F3EE1B590B1DC7DC0 /* libPods.a */; };
+		A1960D3C1B5CA53200939A7D /* V2MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1960D3B1B5CA53200939A7D /* V2MainViewController.m */; };
+		A1960D401B5CDD5F00939A7D /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1960D3F1B5CDD5F00939A7D /* Reveal.framework */; };
+		A1960D431B5CDFF000939A7D /* SCMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1960D421B5CDFF000939A7D /* SCMenuViewController.m */; };
+		A1960D471B5CFA2A00939A7D /* SCSlideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = A1960D461B5CFA2A00939A7D /* SCSlideMenu.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -649,6 +653,13 @@
 		48FCC5F11B31690F00AEB874 /* SCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCViewController.h; sourceTree = "<group>"; };
 		48FCC5F21B31690F00AEB874 /* SCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCViewController.m; sourceTree = "<group>"; };
 		6BF7DC11E8E03D2E33EF3C43 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		A1960D3A1B5CA53200939A7D /* V2MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = V2MainViewController.h; sourceTree = "<group>"; };
+		A1960D3B1B5CA53200939A7D /* V2MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = V2MainViewController.m; sourceTree = "<group>"; };
+		A1960D3F1B5CDD5F00939A7D /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = MaintenanceCar/Reveal.framework; sourceTree = "<group>"; };
+		A1960D411B5CDFF000939A7D /* SCMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMenuViewController.h; sourceTree = "<group>"; };
+		A1960D421B5CDFF000939A7D /* SCMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMenuViewController.m; sourceTree = "<group>"; };
+		A1960D451B5CFA2A00939A7D /* SCSlideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSlideMenu.h; sourceTree = "<group>"; };
+		A1960D461B5CFA2A00939A7D /* SCSlideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSlideMenu.m; sourceTree = "<group>"; };
 		E2AD02DF3987D2F961F0ADFB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -657,6 +668,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1960D401B5CDD5F00939A7D /* Reveal.framework in Frameworks */,
 				48EBF5D81AC6AFE600892099 /* libUMFeedback.a in Frameworks */,
 				48EBF5BD1AC6AF9100892099 /* libsqlite3.dylib in Frameworks */,
 				48EBF5E71AC6AFE600892099 /* libUMOpus.a in Frameworks */,
@@ -1250,6 +1262,10 @@
 				4866F8F61AACBD2D008E195C /* SCMainViewController.m */,
 				489AA1DC1B0356C700EDB86C /* SCWebViewController.h */,
 				489AA1DD1B0356C700EDB86C /* SCWebViewController.m */,
+				A1960D3A1B5CA53200939A7D /* V2MainViewController.h */,
+				A1960D3B1B5CA53200939A7D /* V2MainViewController.m */,
+				A1960D411B5CDFF000939A7D /* SCMenuViewController.h */,
+				A1960D421B5CDFF000939A7D /* SCMenuViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1286,6 +1302,7 @@
 		4866F92B1AACBD88008E195C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A1960D441B5CFA0F00939A7D /* Menu */,
 				4863546F1B5658E800DE43B2 /* Shop */,
 				483BA63C1B31566400B24C5F /* Loading */,
 				48DDB9551B4E80BA00CFD394 /* Search */,
@@ -1883,11 +1900,21 @@
 		4A941BDF60920671B449F360 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A1960D3F1B5CDD5F00939A7D /* Reveal.framework */,
 				48EBF5BC1AC6AF9100892099 /* libsqlite3.dylib */,
 				48EBF5BA1AC6AF8D00892099 /* AVFoundation.framework */,
 				1C0D4E7F3EE1B590B1DC7DC0 /* libPods.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A1960D441B5CFA0F00939A7D /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				A1960D451B5CFA2A00939A7D /* SCSlideMenu.h */,
+				A1960D461B5CFA2A00939A7D /* SCSlideMenu.m */,
+			);
+			path = Menu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2145,6 +2172,7 @@
 				482AC9991AB5FD24001574EF /* SCShowMoreProductCell.m in Sources */,
 				486354911B5658E800DE43B2 /* SCDiscoveryMerchantServiceCell.m in Sources */,
 				4866F9BB1AACBD89008E195C /* SCCollectionReusableView.m in Sources */,
+				A1960D471B5CFA2A00939A7D /* SCSlideMenu.m in Sources */,
 				4807541B1B09CCCB00DB2433 /* SCCouponDetailRuleCell.m in Sources */,
 				48A349031B0B385B0068F8E2 /* SCPickerView.m in Sources */,
 				48738A641ACE42400028FC13 /* StringConstants.m in Sources */,
@@ -2157,6 +2185,7 @@
 				48DF20691ABB20C2009708F8 /* GPSTransform.c in Sources */,
 				4896E3CC1B109F9400838EED /* SCPayOrderEnterCodeCell.m in Sources */,
 				4866F8B61AAB32ED008E195C /* SCGroupProduct.m in Sources */,
+				A1960D3C1B5CA53200939A7D /* V2MainViewController.m in Sources */,
 				4866F9291AACBD2D008E195C /* SCListViewController.m in Sources */,
 				486967A51AD6D65100C3F7A6 /* SCMerchantInfo.m in Sources */,
 				489AA2281B04F35E00EDB86C /* SCOrderDetail.m in Sources */,
@@ -2213,6 +2242,7 @@
 				4866F9A51AACBD89008E195C /* SCBuyGroupProductCell.m in Sources */,
 				48EEE0E51A4AD163005C735D /* SCWeather.m in Sources */,
 				488885931B141C690075DFDE /* SCNoValidCouponCell.m in Sources */,
+				A1960D431B5CDFF000939A7D /* SCMenuViewController.m in Sources */,
 				48FB70C91AA5A58300AF4AD9 /* SCDictionaryItem.m in Sources */,
 				4896E3CD1B109F9400838EED /* SCPayOrderGroupProductSummaryCell.m in Sources */,
 				4866F9A61AACBD89008E195C /* SCGroupProductCell.m in Sources */,
@@ -2508,11 +2538,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = AppLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: xiao hua (58FGBM23AF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xiao hua (58FGBM23AF)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/AliPay2.2.1",
+					/Users/andy/Desktop,
+					"$(PROJECT_DIR)/MaintenanceCar",
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = MaintenanceCar/Info.plist;
@@ -2523,6 +2555,55 @@
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMengFeedback_SDK_2.1",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMengFeedback_SDK_2.1/UMOpus",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/AliPay2.2.1",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"BaiduMapApi\"",
+					"-l\"MobClickLibrary\"",
+					"-l\"Pods-AFNetworkActivityLogger\"",
+					"-l\"Pods-AFNetworking\"",
+					"-l\"Pods-CSStickyHeaderFlowLayout\"",
+					"-l\"Pods-DateTools\"",
+					"-l\"Pods-HexColors\"",
+					"-l\"Pods-IQKeyboardManager\"",
+					"-l\"Pods-JSONModel\"",
+					"-l\"Pods-MBProgressHUD\"",
+					"-l\"Pods-MJExtension\"",
+					"-l\"Pods-MJRefresh\"",
+					"-l\"Pods-Masonry\"",
+					"-l\"Pods-ReactiveCocoa\"",
+					"-l\"Pods-SCLoopScrollView\"",
+					"-l\"Pods-SCNumberKeyBoard\"",
+					"-l\"Pods-SDWebImage\"",
+					"-l\"Pods-UITableView+FDTemplateLayoutCell\"",
+					"-l\"UMessage_Sdk_1.1.0\"",
+					"-l\"WeChatSDK\"",
+					"-l\"stdc++\"",
+					"-l\"z\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"OpenGLES\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-ObjC",
+					"-framework",
+					Reveal,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "a7ebf63d-83ac-402e-b1cb-a451b6b35066";
@@ -2539,11 +2620,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = AppLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shenzhen Yuanjing Telematics Tech Co., Ltd. (539L59J6H5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shenzhen Yuanjing Telematics Tech Co., Ltd. (539L59J6H5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/AliPay2.2.1",
+					/Users/andy/Desktop,
+					"$(PROJECT_DIR)/MaintenanceCar",
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = MaintenanceCar/Info.plist;
@@ -2555,8 +2638,57 @@
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/UMengFeedback_SDK_2.1/UMOpus",
 					"$(PROJECT_DIR)/MaintenanceCar/Utility/ThirdLibrary/AliPay2.2.1",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"BaiduMapApi\"",
+					"-l\"MobClickLibrary\"",
+					"-l\"Pods-AFNetworkActivityLogger\"",
+					"-l\"Pods-AFNetworking\"",
+					"-l\"Pods-CSStickyHeaderFlowLayout\"",
+					"-l\"Pods-DateTools\"",
+					"-l\"Pods-HexColors\"",
+					"-l\"Pods-IQKeyboardManager\"",
+					"-l\"Pods-JSONModel\"",
+					"-l\"Pods-MBProgressHUD\"",
+					"-l\"Pods-MJExtension\"",
+					"-l\"Pods-MJRefresh\"",
+					"-l\"Pods-Masonry\"",
+					"-l\"Pods-ReactiveCocoa\"",
+					"-l\"Pods-SCLoopScrollView\"",
+					"-l\"Pods-SCNumberKeyBoard\"",
+					"-l\"Pods-SDWebImage\"",
+					"-l\"Pods-UITableView+FDTemplateLayoutCell\"",
+					"-l\"UMessage_Sdk_1.1.0\"",
+					"-l\"WeChatSDK\"",
+					"-l\"stdc++\"",
+					"-l\"z\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"OpenGLES\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-ObjC",
+					"-framework",
+					Reveal,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7d0f62e5-e132-480c-bb73-ef5bc3964160";
+				PROVISIONING_PROFILE = "7d27efdd-39d9-4e66-813e-5cdae396ed32";
 				SWIFT_OBJC_BRIDGING_HEADER = "MaintenanceCar/ViewControllers/Merchant/GroupProduct/MaintenanceCar-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
