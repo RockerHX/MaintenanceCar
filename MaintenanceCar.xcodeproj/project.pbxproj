@@ -228,7 +228,6 @@
 		48FB70CF1AA5A58300AF4AD9 /* SCReservation.m in Sources */ = {isa = PBXBuildFile; fileRef = 48FB70C31AA5A58300AF4AD9 /* SCReservation.m */; };
 		48FCC5F31B31690F00AEB874 /* SCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48FCC5F21B31690F00AEB874 /* SCViewController.m */; };
 		9E0A36B3F4162AAD50219CE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0D4E7F3EE1B590B1DC7DC0 /* libPods.a */; };
-		A1960D401B5CDD5F00939A7D /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1960D3F1B5CDD5F00939A7D /* Reveal.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -650,7 +649,6 @@
 		48FCC5F11B31690F00AEB874 /* SCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCViewController.h; sourceTree = "<group>"; };
 		48FCC5F21B31690F00AEB874 /* SCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCViewController.m; sourceTree = "<group>"; };
 		6BF7DC11E8E03D2E33EF3C43 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		A1960D3F1B5CDD5F00939A7D /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = MaintenanceCar/Reveal.framework; sourceTree = "<group>"; };
 		E2AD02DF3987D2F961F0ADFB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -659,7 +657,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1960D401B5CDD5F00939A7D /* Reveal.framework in Frameworks */,
 				48EBF5D81AC6AFE600892099 /* libUMFeedback.a in Frameworks */,
 				48EBF5BD1AC6AF9100892099 /* libsqlite3.dylib in Frameworks */,
 				48EBF5E71AC6AFE600892099 /* libUMOpus.a in Frameworks */,
@@ -1886,7 +1883,6 @@
 		4A941BDF60920671B449F360 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A1960D3F1B5CDD5F00939A7D /* Reveal.framework */,
 				48EBF5BC1AC6AF9100892099 /* libsqlite3.dylib */,
 				48EBF5BA1AC6AF8D00892099 /* AVFoundation.framework */,
 				1C0D4E7F3EE1B590B1DC7DC0 /* libPods.a */,
@@ -2575,9 +2571,6 @@
 					"\"SystemConfiguration\"",
 					"-framework",
 					"\"UIKit\"",
-					"-ObjC",
-					"-framework",
-					Reveal,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "a7ebf63d-83ac-402e-b1cb-a451b6b35066";
@@ -2657,9 +2650,6 @@
 					"\"SystemConfiguration\"",
 					"-framework",
 					"\"UIKit\"",
-					"-ObjC",
-					"-framework",
-					Reveal,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7d27efdd-39d9-4e66-813e-5cdae396ed32";
