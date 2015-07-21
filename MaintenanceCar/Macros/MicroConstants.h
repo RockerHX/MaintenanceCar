@@ -14,12 +14,6 @@
 #define USER_DEFAULT                        [NSUserDefaults standardUserDefaults]
 #define NOTIFICATION_CENTER                 [NSNotificationCenter defaultCenter]
 
-#define STORY_BOARD(Name)                   [UIStoryboard storyboardWithName:Name bundle:nil]
-#define MAIN_VIEW_CONTROLLER(Name)          [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:Name]
-#define USERCENTER_VIEW_CONTROLLER(Name)    [STORY_BOARD(@"UserCenter") instantiateViewControllerWithIdentifier:Name]
-#define SHOPS_VIEW_CONTROLLER(Name)         [STORY_BOARD(@"Shops") instantiateViewControllerWithIdentifier:Name]
-#define SEARCH_VIEW_CONTROLLER(Name)        [STORY_BOARD(@"Search") instantiateViewControllerWithIdentifier:Name]
-
 #define CLASS_NAME(Class)                   NSStringFromClass([Class class])
 
 #ifdef DEBUG

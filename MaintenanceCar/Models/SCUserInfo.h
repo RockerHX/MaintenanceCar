@@ -9,26 +9,25 @@
 #import <Foundation/Foundation.h>
 #import "SCUserCar.h"
 
-typedef NS_ENUM(BOOL, SCLoginStatus) {
-    SCLoginStatusLogin  = YES,
-    SCLoginStatusLogout = NO
+typedef NS_ENUM(BOOL, SCLoginState) {
+    SCLoginStateLogin  = YES,
+    SCLoginStateLogout = NO
 };
 
 // 用户数据Model
 @interface SCUserInfo : NSObject
 
-@property (nonatomic, strong, readonly)      NSString *userID;           // 用户ID
-@property (nonatomic, strong, readonly)      NSString *phoneNmber;       // 用户手机号
-@property (nonatomic, strong, readonly)      NSString *token;            // 用户令牌
-@property (nonatomic, strong, readonly)      NSString *serverDate;       // 服务器时间
-@property (nonatomic, strong, readonly)      NSString *ownerName;        // 车主名字
-@property (nonatomic, strong, readonly)       NSArray *cars;             // 用户私家车集合
-@property (nonatomic, assign, readonly) SCLoginStatus  loginStatus;      // 登录状态
+@property (nonatomic, assign) SCLoginState  loginState;       // 登录状态
+@property (nonatomic, assign)         BOOL  addAliasSuccess;  // 推送Alias添加成功
+@property (nonatomic, assign)         BOOL  receiveMessage;   // 接受消息
 
-@property (nonatomic, assign)                    BOOL  addAliasSuccess;  // 推送Alias添加成功
-@property (nonatomic, assign)                    BOOL  receiveMessage;   // 接受消息
-
-@property (nonatomic, strong, readonly)       NSArray *selectedItems;   // 已选保养项目
+@property (nonatomic, copy, readonly)  NSString *userID;           // 用户ID
+@property (nonatomic, copy, readonly)  NSString *phoneNmber;       // 用户手机号
+@property (nonatomic, copy, readonly)  NSString *token;            // 用户令牌
+@property (nonatomic, copy, readonly)  NSString *serverDate;       // 服务器时间
+@property (nonatomic, copy, readonly)  NSString *ownerName;        // 车主名字
+@property (nonatomic, strong, readonly) NSArray *cars;             // 用户私家车集合
+@property (nonatomic, strong, readonly) NSArray *selectedItems;    // 已选保养项目
 
 /**
  *  单例方法
@@ -58,6 +57,7 @@ typedef NS_ENUM(BOOL, SCLoginStatus) {
 - (BOOL)needRefreshToken;
 - (void)refreshTokenDate;
 
+- (void)stateChange:(void(^)(SCLoginState state))block;
 - (void)userCarsReuqest:(void(^)(SCUserInfo *userInfo, BOOL finish))block;
 
 - (void)addMaintenanceItem:(NSString *)item;

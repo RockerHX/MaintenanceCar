@@ -16,10 +16,10 @@
 #import "SCUserCar.h"
 #import "SCMileageView.h"
 #import "SCAllDictionary.h"
-#import "SCChangeMaintenanceDataViewController.h"
+#import "SCChangeCarDataViewController.h"
 #import "SCOperationViewController.h"
 
-@interface SCMaintenanceViewController () <SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeMaintenanceDataViewControllerDelegate, SCMerchantTableViewCellDelegate>
+@interface SCMaintenanceViewController () <SCMaintenanceTypeViewDelegate, UIAlertViewDelegate, SCChangeCarDataViewControllerDelegate, SCMerchantTableViewCellDelegate>
 {
     NSInteger           _reservationButtonIndex;
     NSArray             *_serviceItems;
@@ -63,7 +63,7 @@
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return MAIN_VIEW_CONTROLLER(NSStringFromClass([self class]));
+    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameHomePage];
 }
 
 #pragma mark - Config Methods
@@ -144,10 +144,10 @@
 
 - (IBAction)infoViewPressed
 {
-    SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCChangeMaintenanceDataViewController"];
-    changeMaintenanceDataViewController.delegate = self;
-    changeMaintenanceDataViewController.car = _currentCar;
-    [self.navigationController pushViewController:changeMaintenanceDataViewController animated:YES];
+    SCChangeCarDataViewController *viewController = [SCChangeCarDataViewController instance];
+    viewController.delegate = self;
+    viewController.car = _currentCar;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (IBAction)showMoreButtonPressed
@@ -396,9 +396,9 @@
     else if (indexPath.section == 1)
     {
         // 根据选中的商家，取到其商家ID，跳转到商家页面进行详情展示
-        SCMerchantDetailViewController *merchantDetialViewControler = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:MerchantDetailViewControllerStoryBoardID];
-        merchantDetialViewControler.merchant                        = (SCMerchant *)_recommendMerchants[indexPath.row];
-        merchantDetialViewControler.type                            = @"2";
+        SCMerchantDetailViewController *merchantDetialViewControler = [SCMerchantDetailViewController instance];
+        merchantDetialViewControler.merchant = (SCMerchant *)_recommendMerchants[indexPath.row];
+        merchantDetialViewControler.type     = @"2";
         [self.navigationController pushViewController:merchantDetialViewControler animated:YES];
     }
 }
@@ -473,20 +473,13 @@
 {
     if (buttonIndex == alertView.cancelButtonIndex)
     {
-        @try {
-            SCChangeMaintenanceDataViewController *changeMaintenanceDataViewController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCChangeMaintenanceDataViewController"];
-            changeMaintenanceDataViewController.delegate = self;
-            [self.navigationController pushViewController:changeMaintenanceDataViewController animated:YES];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"SCMaintenanceViewController Go to the SCChangeMaintenanceDataViewController exception reasion:%@", exception.reason);
-        }
-        @finally {
-        }
+        SCChangeCarDataViewController *viewController = [SCChangeCarDataViewController instance];
+        viewController.delegate = self;
+        [self.navigationController pushViewController:viewController animated:YES];
     }
 }
 
-#pragma mark - SCChangeMaintenanceDataViewController Delegate Methods
+#pragma mark - SCChangeCarDataViewController Delegate Methods
 - (void)dataSaveSuccess
 {
     [self startMaintenanceDataRequest];
@@ -496,17 +489,10 @@
 - (void)shouldReservationWithIndex:(NSInteger)index
 {
     // 跳转到预约页面
-    @try {
-        SCReservationViewController *reservationViewController = [SCReservationViewController instance];
-        reservationViewController.merchant    = _recommendMerchants[index];
-        reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:@"2"];
-        [self.navigationController pushViewController:reservationViewController animated:YES];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"SCMerchantViewController Go to the SCReservationViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    SCReservationViewController *reservationViewController = [SCReservationViewController instance];
+    reservationViewController.merchant    = _recommendMerchants[index];
+    reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:@"2"];
+    [self.navigationController pushViewController:reservationViewController animated:YES];
 }
 
 @end

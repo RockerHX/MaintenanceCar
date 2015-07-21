@@ -96,7 +96,7 @@ NSString *const CocoaErrorJsonParseError    = @"数据出错，请联系元景�
 - (void)addHeader
 {
     SCUserInfo *userInfo = [SCUserInfo share];
-    if (userInfo.loginStatus)
+    if (userInfo.loginState)
     {
         [self.requestSerializer setValue:userInfo.token forHTTPHeaderField:TokenRequestHeaderKey];
         [self.requestSerializer setValue:userInfo.userID forHTTPHeaderField:UIDRequestHeaderKey];

@@ -11,6 +11,7 @@
 #import "AllMicroConstants.h"
 #import "SCAPIRequest.h"
 #import "SCUserInfo.h"
+#import "SCStoryBoardManager.h"
 
 typedef NS_ENUM(NSInteger, SCRequestRefreshType) {
     SCRequestRefreshTypeDropDown,

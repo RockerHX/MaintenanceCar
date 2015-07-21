@@ -7,7 +7,10 @@
 //
 
 #import "SCMainViewController.h"
+#import "SCHomePageViewController.h"
 #import "SCDiscoveryViewController.h"
+#import "SCUserCenterViewController.h"
+#import "SCLoginViewController.h"
 
 @implementation SCMainViewController
 
@@ -34,9 +37,17 @@
 {
     for (UINavigationController *navigationController in self.viewControllers)
     {
-        if ([navigationController.restorationIdentifier isEqualToString:@"DiscoveryNavigationController"])
+        if ([navigationController.restorationIdentifier isEqualToString:[SCHomePageViewController navgationRestorationIdentifier]])
+        {
+            [navigationController setViewControllers:@[[SCHomePageViewController instance]]];
+        }
+        else if ([navigationController.restorationIdentifier isEqualToString:[SCDiscoveryViewController navgationRestorationIdentifier]])
         {
             [navigationController setViewControllers:@[[SCDiscoveryViewController instance]]];
+        }
+        else if ([navigationController.restorationIdentifier isEqualToString:[SCUserCenterViewController navgationRestorationIdentifier]])
+        {
+            [navigationController setViewControllers:@[[SCUserCenterViewController instance]]];
         }
     }
 }
@@ -47,7 +58,7 @@
 - (void)userLog
 {
     SCUserInfo *userInfo = [SCUserInfo share];
-    if (userInfo.loginStatus)
+    if (userInfo.loginState)
     {
         // 获取用户设备数据，进行远程日志记录
         NSString *os = [UIDevice currentDevice].systemName;
@@ -85,16 +96,9 @@
  */
 - (void)shouldLogin
 {
-    @try {
-        UINavigationController *loginViewNavigationController = [STORY_BOARD(@"Main") instantiateViewControllerWithIdentifier:@"SCLoginViewNavigationController"];
-        loginViewNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        [self presentViewController:loginViewNavigationController animated:YES completion:nil];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"Go to the SCLoginViewController exception reasion:%@", exception.reason);
-    }
-    @finally {
-    }
+    UINavigationController *loginViewNavigationController = [SCLoginViewController navigationInstance];
+    loginViewNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentViewController:loginViewNavigationController animated:YES completion:nil];
 }
 
 @end

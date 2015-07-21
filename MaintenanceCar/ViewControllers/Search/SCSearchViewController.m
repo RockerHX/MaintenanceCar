@@ -49,9 +49,9 @@
     self.title = @"搜索";
 }
 
-+ (instancetype)instance
++ (UINavigationController *)navigationInstance
 {
-    return SEARCH_VIEW_CONTROLLER(@"SCSearchNavgationViewController");
+    return [SCStoryBoardManager navigaitonControllerWithIdentifier:@"SCSearchNavgationViewController" storyBoardName:SCStoryBoardNameSearch];
 }
 
 #pragma mark - Config Methods
@@ -80,7 +80,7 @@
 {
     [_searchBar.textField resignFirstResponder];
     [self showLoading];
-    [self.shopList reloadShopsWithSearch:search];
+    [self.shopList loadShopsWithSearch:search];
 }
 
 #pragma mark - Public Methods

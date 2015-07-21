@@ -41,7 +41,7 @@
 
 - (void)checkShouldLogin
 {
-    if (![SCUserInfo share].loginStatus)
+    if (![SCUserInfo share].loginState)
         [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
 }
 

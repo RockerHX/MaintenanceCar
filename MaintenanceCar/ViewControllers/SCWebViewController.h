@@ -8,7 +8,7 @@
 
 #import "SCViewControllerCategory.h"
 
-@interface SCWebViewController : UIViewController
+@interface SCWebViewController : UIViewController <UIWebViewDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 

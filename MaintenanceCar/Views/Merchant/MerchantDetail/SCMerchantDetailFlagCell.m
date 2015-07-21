@@ -7,7 +7,7 @@
 //
 
 #import "SCMerchantDetailFlagCell.h"
-#import <HexColors/HexColor.h>
+#import <HexColors/HexColors.h>
 #import "UIConstants.h"
 #import "SCMerchantSummary.h"
 
