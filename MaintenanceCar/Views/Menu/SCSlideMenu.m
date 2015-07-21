@@ -49,12 +49,18 @@ static CGFloat AnimationDelay = 0.0f;
     _leftConstraint.constant = _menuCloseConstant;
     _widthConstraint.constant = _menuWidth;
     [self updateConstraints];
+    
+    [self addGestureRecognizer:[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecongnizer:)]];
 }
 
 #pragma mark - Setter And Getter Methods
 - (void)setState:(SCMenuState)state {
-    _state = state;
     [self operateState:state];
+}
+
+#pragma mark - Gesture Recognizer
+- (void)swipeGestureRecongnizer:(UISwipeGestureRecognizer *)swipe {
+    
 }
 
 #pragma mark - Private Methods
@@ -62,21 +68,38 @@ static CGFloat AnimationDelay = 0.0f;
     switch (state) {
         case SCMenuStateClose: {
             _operateState = SCMenuOperateStateWillClose;
+            if (_delegate && [_delegate respondsToSelector:@selector(menuWillClose:)]) {
+                [_delegate menuWillClose:self];
+            }
             [self close];
             break;
         }
         case SCMenuStateOpen: {
             _operateState = SCMenuOperateStateWillOpen;
+            if (_delegate && [_delegate respondsToSelector:@selector(menuWillOpen:)]) {
+                [_delegate menuWillOpen:self];
+            }
             [self open];
             break;
         }
     }
-    [self setNeedsUpdateConstraints];
     
+    __weak __typeof(self)weakSelf = self;
+    [self setNeedsUpdateConstraints];
     [UIView animateWithDuration:AnimationDuration delay:AnimationDelay options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [self layoutIfNeeded];
     } completion:^(BOOL finished) {
         _operateState = (_operateState == SCMenuOperateStateClosing) ? SCMenuOperateStateDidClose : SCMenuOperateStateDidOpen;
+        if (_operateState == SCMenuOperateStateDidClose) {
+            if (_delegate && [_delegate respondsToSelector:@selector(menuDidClose:)]) {
+                [_delegate menuDidClose:weakSelf];
+            }
+        } else if (_operateState == SCMenuOperateStateDidOpen) {
+            if (_delegate && [_delegate respondsToSelector:@selector(menuDidOpen:)]) {
+                [_delegate menuDidOpen:weakSelf];
+            }
+        }
+        _state = state;
     }];
 }
 

@@ -13,7 +13,28 @@ typedef NS_ENUM(NSUInteger, SCMenuState) {
     SCMenuStateOpen
 };
 
+@class SCSlideMenu;
+@protocol SCSlideMenuDelegate <NSObject>
+
+@optional
+- (void)menuWillClose:(SCSlideMenu *)menu;
+- (void)menuDidClose:(SCSlideMenu *)menu;
+- (void)menuWillOpen:(SCSlideMenu *)menu;
+- (void)menuDidOpen:(SCSlideMenu *)menu;
+
+/**
+ *  菜单状态进度
+ *
+ *  @param menu     menu实例
+ *  @param progress 状态进度(0.0 ~ 1.0)，默认0.0
+ */
+- (void)menu:(SCSlideMenu *)menu stateProgress:(CGFloat)progress;
+
+@end
+
 @interface SCSlideMenu : UIView
+
+@property (weak, nonatomic) IBOutlet id <SCSlideMenuDelegate>delegate;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthConstraint;

@@ -8,12 +8,13 @@
 
 #import "SCSlideMenu.h"
 
-@interface SCMenuViewController : UIViewController
+@interface SCMenuViewController : UIViewController <SCSlideMenuDelegate>
 
+@property (weak, nonatomic) IBOutlet      UIView *transparentView;
 @property (weak, nonatomic) IBOutlet SCSlideMenu *menu;
 
 - (SCMenuState)menuState;
-- (void)setMenuState:(SCMenuState)state completion:(void(^)(void))completion;
+- (void)openMenuWhenClosed:(void(^)(void))closed;
 
 - (void)operateMenu;
 

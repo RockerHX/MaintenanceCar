@@ -34,26 +34,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
 }
 
 #pragma mark - Action
 - (IBAction)menuButtonPressed {
-    WEAK_SELF(weakSelf);
-    switch (_menuViewController.menuState) {
-        case SCMenuStateClose: {
-            _containerView.hidden = NO;
-            [_menuViewController setMenuState:SCMenuStateOpen completion:^{
-                
-            }];
-            break;
-        }
-        case SCMenuStateOpen: {
-            [_menuViewController setMenuState:SCMenuStateClose completion:^{
-                weakSelf.containerView.hidden = YES;
-            }];
-            break;
-        }
-    }
+    _containerView.hidden = NO;
+    [_menuViewController openMenuWhenClosed:^{
+        _containerView.hidden = YES;
+    }];
 }
 
 - (IBAction)searchButtonPressed {

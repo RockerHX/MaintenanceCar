@@ -207,6 +207,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZWV-XH-UuD">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k1k-qW-r0L" customClass="SCSlideMenu">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <color key="backgroundColor" red="0.17254901960784313" green="0.48627450980392156" blue="0.72549019607843135" alpha="1" colorSpace="calibratedRGB"/>
@@ -214,6 +218,7 @@
                                     <constraint firstAttribute="width" constant="320" id="xo0-xw-Czo"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="delegate" destination="7Z3-Bt-Awd" id="O36-i1-MuT"/>
                                     <outlet property="leftConstraint" destination="Isn-Ah-QCL" id="4Da-Vz-yS0"/>
                                     <outlet property="widthConstraint" destination="xo0-xw-Czo" id="75c-wq-nu7"/>
                                 </connections>
@@ -222,13 +227,18 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="k1k-qW-r0L" firstAttribute="top" secondItem="zUQ-Vv-Yyk" secondAttribute="top" id="0cT-tF-zdz"/>
+                            <constraint firstAttribute="bottom" secondItem="ZWV-XH-UuD" secondAttribute="bottom" id="30b-BX-qtf"/>
+                            <constraint firstAttribute="trailing" secondItem="ZWV-XH-UuD" secondAttribute="trailing" id="8vv-eP-QpO"/>
                             <constraint firstItem="k1k-qW-r0L" firstAttribute="leading" secondItem="zUQ-Vv-Yyk" secondAttribute="leading" id="Isn-Ah-QCL"/>
+                            <constraint firstItem="ZWV-XH-UuD" firstAttribute="leading" secondItem="zUQ-Vv-Yyk" secondAttribute="leading" id="iAO-w7-iAS"/>
+                            <constraint firstItem="ZWV-XH-UuD" firstAttribute="top" secondItem="zUQ-Vv-Yyk" secondAttribute="top" id="lS9-RF-Ot0"/>
                             <constraint firstAttribute="bottom" secondItem="k1k-qW-r0L" secondAttribute="bottom" id="sNo-ZS-KGB"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <connections>
                         <outlet property="menu" destination="k1k-qW-r0L" id="KcM-vF-8mh"/>
+                        <outlet property="transparentView" destination="ZWV-XH-UuD" id="zjJ-UM-Ppt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Er5-YQ-PQd" userLabel="First Responder" sceneMemberID="firstResponder"/>
