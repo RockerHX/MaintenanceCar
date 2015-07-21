@@ -1,94 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vOk-Qh-fLc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="RPR-Ec-YZ2">
     <dependencies>
         <deployment version="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
-        <scene sceneID="EyY-w7-Mod">
-            <objects>
-                <navigationController id="vOk-Qh-fLc" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" translucent="NO" id="cvm-lK-JoY">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Cxm-GZ-ocU" kind="relationship" relationship="rootViewController" id="rVG-SG-p0A"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wE7-Bj-btB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-254" y="454"/>
-        </scene>
-        <!--Main View Controller-->
-        <scene sceneID="kWM-sw-lDS">
-            <objects>
-                <viewController storyboardIdentifier="V2MainViewController" id="Cxm-GZ-ocU" customClass="V2MainViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="zXq-TH-weZ"/>
-                        <viewControllerLayoutGuide type="bottom" id="GkM-cC-hjx"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="5Fl-6b-4Hk">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Utq-Mk-gNq">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="euD-Fs-yZ3"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEg-2u-rvI">
-                                <rect key="frame" x="16" y="8" width="30" height="30"/>
-                                <state key="normal" title="菜单">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="menuButtonPressed" destination="Cxm-GZ-ocU" eventType="touchUpInside" id="TJb-1c-5zz"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4UW-RN-Mmz">
-                                <rect key="frame" x="274" y="8" width="30" height="30"/>
-                                <state key="normal" title="搜索">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="searchButtonPressed" destination="Cxm-GZ-ocU" eventType="touchUpInside" id="HML-xs-4G3"/>
-                                </connections>
-                            </button>
-                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a9e-TQ-9yQ">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                                <connections>
-                                    <segue destination="7Z3-Bt-Awd" kind="embed" identifier="SCMenuViewController" id="QHy-he-xcJ"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="sEg-2u-rvI" firstAttribute="leading" secondItem="5Fl-6b-4Hk" secondAttribute="leading" constant="16" id="2tZ-kf-jXk"/>
-                            <constraint firstItem="a9e-TQ-9yQ" firstAttribute="top" secondItem="5Fl-6b-4Hk" secondAttribute="top" id="3VT-pr-ieo"/>
-                            <constraint firstItem="Utq-Mk-gNq" firstAttribute="top" secondItem="5Fl-6b-4Hk" secondAttribute="top" id="LhV-cO-U5v"/>
-                            <constraint firstItem="a9e-TQ-9yQ" firstAttribute="leading" secondItem="5Fl-6b-4Hk" secondAttribute="leading" id="NTs-lD-e7K"/>
-                            <constraint firstAttribute="trailing" secondItem="a9e-TQ-9yQ" secondAttribute="trailing" id="OnI-Xi-AY1"/>
-                            <constraint firstAttribute="trailing" secondItem="Utq-Mk-gNq" secondAttribute="trailing" id="Z01-Du-4x1"/>
-                            <constraint firstItem="sEg-2u-rvI" firstAttribute="top" secondItem="zXq-TH-weZ" secondAttribute="bottom" constant="8" id="ZUx-zq-PEn"/>
-                            <constraint firstAttribute="bottom" secondItem="a9e-TQ-9yQ" secondAttribute="bottom" id="b6c-nr-ImB"/>
-                            <constraint firstItem="Utq-Mk-gNq" firstAttribute="leading" secondItem="5Fl-6b-4Hk" secondAttribute="leading" id="pE1-YB-7wJ"/>
-                            <constraint firstItem="4UW-RN-Mmz" firstAttribute="centerY" secondItem="sEg-2u-rvI" secondAttribute="centerY" id="rOJ-3w-M7Q"/>
-                            <constraint firstAttribute="trailing" secondItem="4UW-RN-Mmz" secondAttribute="trailing" constant="16" id="tAe-hZ-J3W"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="3k1-As-4Cm"/>
-                    <connections>
-                        <outlet property="containerView" destination="a9e-TQ-9yQ" id="dLP-PZ-bWK"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="awM-Jj-6QR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="193" y="454"/>
-        </scene>
         <!--Main View Controller-->
         <scene sceneID="hTJ-tz-x9a">
             <objects>
@@ -194,56 +110,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uvG-Ps-IFl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1566" y="328"/>
-        </scene>
-        <!--Menu View Controller-->
-        <scene sceneID="AmD-tn-bMZ">
-            <objects>
-                <viewController storyboardIdentifier="SCMenuViewController" automaticallyAdjustsScrollViewInsets="NO" id="7Z3-Bt-Awd" customClass="SCMenuViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="0tm-Cb-Az3"/>
-                        <viewControllerLayoutGuide type="bottom" id="lwd-rH-MzP"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="zUQ-Vv-Yyk">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZWV-XH-UuD">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k1k-qW-r0L" customClass="SCSlideMenu">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                                <color key="backgroundColor" red="0.17254901960784313" green="0.48627450980392156" blue="0.72549019607843135" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="320" id="xo0-xw-Czo"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="delegate" destination="7Z3-Bt-Awd" id="O36-i1-MuT"/>
-                                    <outlet property="leftConstraint" destination="Isn-Ah-QCL" id="4Da-Vz-yS0"/>
-                                    <outlet property="widthConstraint" destination="xo0-xw-Czo" id="75c-wq-nu7"/>
-                                </connections>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="k1k-qW-r0L" firstAttribute="top" secondItem="zUQ-Vv-Yyk" secondAttribute="top" id="0cT-tF-zdz"/>
-                            <constraint firstAttribute="bottom" secondItem="ZWV-XH-UuD" secondAttribute="bottom" id="30b-BX-qtf"/>
-                            <constraint firstAttribute="trailing" secondItem="ZWV-XH-UuD" secondAttribute="trailing" id="8vv-eP-QpO"/>
-                            <constraint firstItem="k1k-qW-r0L" firstAttribute="leading" secondItem="zUQ-Vv-Yyk" secondAttribute="leading" id="Isn-Ah-QCL"/>
-                            <constraint firstItem="ZWV-XH-UuD" firstAttribute="leading" secondItem="zUQ-Vv-Yyk" secondAttribute="leading" id="iAO-w7-iAS"/>
-                            <constraint firstItem="ZWV-XH-UuD" firstAttribute="top" secondItem="zUQ-Vv-Yyk" secondAttribute="top" id="lS9-RF-Ot0"/>
-                            <constraint firstAttribute="bottom" secondItem="k1k-qW-r0L" secondAttribute="bottom" id="sNo-ZS-KGB"/>
-                        </constraints>
-                    </view>
-                    <toolbarItems/>
-                    <connections>
-                        <outlet property="menu" destination="k1k-qW-r0L" id="KcM-vF-8mh"/>
-                        <outlet property="transparentView" destination="ZWV-XH-UuD" id="zjJ-UM-Ppt"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Er5-YQ-PQd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="630" y="454"/>
         </scene>
     </scenes>
     <resources>

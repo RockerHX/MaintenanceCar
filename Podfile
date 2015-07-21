@@ -18,6 +18,8 @@ pod 'DateTools'
 pod 'IQKeyboardManager'
 pod 'Masonry'
 
+pod 'REFrostedViewController'
+
 pod 'SCLoopScrollView'
 pod 'SCNumberKeyBoard'
 
