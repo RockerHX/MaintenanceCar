@@ -7,15 +7,16 @@
 //
 
 #import "SCRootViewController.h"
-#import "SCHomePageViewController.h"
+#import "SCMainViewController.h"
+#import "SCUserCenterMenuViewController.h"
 
 @implementation SCRootViewController
 
 #pragma mark - Init
 - (void)awakeFromNib
 {
-    self.contentViewController = [SCHomePageViewController instance];
-//    self.menuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"menuController"];
+    self.contentViewController = [SCMainViewController instance];
+    self.menuViewController = [SCUserCenterMenuViewController instance];
 }
 
 @end

@@ -8,6 +8,8 @@
 
 #import "SCViewControllerCategory.h"
 
-@interface SCMainViewController : UITabBarController
+@interface SCMainViewController : UIViewController
+
++ (instancetype)instance;
 
 @end
