@@ -279,8 +279,8 @@
     // 跳转到预约页面
     [[SCUserInfo share] removeItems];
     SCReservationViewController *reservationViewController = [SCReservationViewController instance];
-    reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName: _price.merchantName
-                                                                           companyID: _price.companyID];
+    reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:_price.merchantName
+                                                                           companyID:_price.companyID];
     reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:_price.type];
     reservationViewController.quotedPrice = _price;
     [self.navigationController pushViewController:reservationViewController animated:YES];
