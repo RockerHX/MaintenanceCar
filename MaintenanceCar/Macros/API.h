@@ -129,7 +129,7 @@
 #define FlagsColorExplainAPIURL         [V1APIURL stringByAppendingString:FlagsColorExplainAPI]       // 获取商家对应Flag颜色值接口URL
 #define MerchantTagsAPIURL              [V1APIURL stringByAppendingString:MerchantTagsAPI]            // 获取商家对应Tag标签接口URL
 
-#define OperatADAPIURL                  [V2APIURL stringByAppendingString:OperatADAPI]                // 首页运营位接口URL - 用于首页运营位数据
+#define OperatADAPIURL                  [V1APIURL stringByAppendingString:OperatADAPI]                // 首页运营位接口URL - 用于首页运营位数据
 #define HomePageReservationAPIURL       [V2APIURL stringByAppendingString:HomePageReservationAPI]     // 最新预约信息接口URL - 用于首页获取
 #define HomePageSpecialAPIURL           [V1APIURL stringByAppendingString:HomePageSpecialAPI]         // 首页第四个按钮数据接口URL
 

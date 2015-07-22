@@ -16,7 +16,6 @@
 #import "SCWebViewController.h"
 #import "SCChangeCarDataViewController.h"
 #import "SCAddCarViewController.h"
-#import "REFrostedViewController.h"
 
 @interface SCHomePageViewController () <SCADViewDelegate, SCHomePageDetailViewDelegate>
 @end
@@ -51,7 +50,7 @@
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return [SCStoryBoardManager navigaitonControllerWithIdentifier:[self navgationRestorationIdentifier] storyBoardName:SCStoryBoardNameHomePage];
+    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameHomePage];
 }
 
 #pragma mark - Class Methods
@@ -128,14 +127,6 @@
         }
             break;
     }
-}
-
-- (IBAction)showMenu
-{
-    [self.view endEditing:YES];
-    [self.frostedViewController.view endEditing:YES];
-    
-    [self.frostedViewController presentMenuViewController];
 }
 
 #pragma mark - Private Methods

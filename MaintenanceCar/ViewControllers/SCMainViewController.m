@@ -7,18 +7,12 @@
 //
 
 #import "SCMainViewController.h"
+#import "SCHomePageViewController.h"
+#import "SCDiscoveryViewController.h"
+#import "SCUserCenterViewController.h"
 #import "SCLoginViewController.h"
 
-static NSString *MainNavigationControllerStoryboardID = @"MainNavigationController";
-
 @implementation SCMainViewController
-
-#pragma mark - Init Methods
-+ (instancetype)instance
-{
-    return [SCStoryBoardManager navigaitonControllerWithIdentifier:MainNavigationControllerStoryboardID
-                                                    storyBoardName:SCStoryBoardNameMain];
-}
 
 #pragma mark - View Controller Life Cycle
 - (void)viewDidLoad
@@ -26,18 +20,38 @@ static NSString *MainNavigationControllerStoryboardID = @"MainNavigationControll
     [super viewDidLoad];
     
     [self initConfig];
+    [self linkSubViewControllers];
 }
 
 #pragma mark - Config Methods
 - (void)initConfig
 {
-    [self userLog];     // 开启用户日志
+    [self userLog];                             // 开启用户日志
     
     // 监听登录通知，收到通知会触发页面跳转方法
     [NOTIFICATION_CENTER addObserver:self selector:@selector(shouldLogin) name:kUserNeedLoginNotification object:nil];
 }
 
 #pragma mark - Private Methods
+- (void)linkSubViewControllers
+{
+    for (UINavigationController *navigationController in self.viewControllers)
+    {
+        if ([navigationController.restorationIdentifier isEqualToString:[SCHomePageViewController navgationRestorationIdentifier]])
+        {
+            [navigationController setViewControllers:@[[SCHomePageViewController instance]]];
+        }
+        else if ([navigationController.restorationIdentifier isEqualToString:[SCDiscoveryViewController navgationRestorationIdentifier]])
+        {
+            [navigationController setViewControllers:@[[SCDiscoveryViewController instance]]];
+        }
+        else if ([navigationController.restorationIdentifier isEqualToString:[SCUserCenterViewController navgationRestorationIdentifier]])
+        {
+            [navigationController setViewControllers:@[[SCUserCenterViewController instance]]];
+        }
+    }
+}
+
 /**
  *  记录用户数据 - 如果有用户登录，获取数据返回给服务器，没有用户登录则不管
  */

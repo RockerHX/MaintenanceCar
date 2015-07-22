@@ -113,7 +113,7 @@
 
 - (void)setRequestParameter:(NSString *)parameter value:(NSString *)value {
     if (!_requestParameters) _requestParameters = @{}.mutableCopy;
-    if (parameter && value) [_requestParameters setValue:value forKey:parameter];
+    [_requestParameters setValue:value forKey:parameter];
 }
 
 @end

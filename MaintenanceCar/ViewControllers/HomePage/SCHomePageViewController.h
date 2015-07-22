@@ -26,7 +26,6 @@ typedef NS_ENUM(NSUInteger, SCHomePageServiceButtonType) {
 
 - (IBAction)locationItemPressed;
 - (IBAction)serviceButtonPressed:(UIButton *)button;
-- (IBAction)showMenu;
 
 + (instancetype)instance;
 + (NSString *)navgationRestorationIdentifier;
