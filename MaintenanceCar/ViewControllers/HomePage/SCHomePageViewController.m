@@ -16,12 +16,18 @@
 #import "SCWebViewController.h"
 #import "SCChangeCarDataViewController.h"
 #import "SCAddCarViewController.h"
-#import "REFrostedViewController.h"
 
 @interface SCHomePageViewController () <SCADViewDelegate, SCHomePageDetailViewDelegate>
 @end
 
 @implementation SCHomePageViewController
+
+#pragma mark - Init Methods
++ (instancetype)instance
+{
+    return [SCStoryBoardManager viewControllerWithClass:self
+                                         storyBoardName:SCStoryBoardNameHomePage];
+}
 
 #pragma mark - View Controller Life Cycle
 - (void)viewWillAppear:(BOOL)animated
@@ -48,18 +54,6 @@
     [self viewConfig];
 }
 
-#pragma mark - Init Methods
-+ (instancetype)instance
-{
-    return [SCStoryBoardManager navigaitonControllerWithIdentifier:[self navgationRestorationIdentifier] storyBoardName:SCStoryBoardNameHomePage];
-}
-
-#pragma mark - Class Methods
-+ (NSString *)navgationRestorationIdentifier
-{
-    return @"HomePageNavigationController";
-}
-
 #pragma mark - Config Methods
 - (void)initConfig
 {
@@ -68,29 +62,12 @@
 
 - (void)viewConfig
 {
-    if (IS_IPHONE_6Plus)
-        _buttonWidthConstraint.constant = 110.0f;
-    else if (IS_IPHONE_6)
-        _buttonWidthConstraint.constant = 90.0f;
-    else if (IS_IPHONE_5)
-        _buttonWidthConstraint.constant = 75.0f;
-    else
-        _buttonWidthConstraint.constant = 55.0f;
-    
-    [self.view needsUpdateConstraints];
-    [self.view layoutIfNeeded];
+    _widthConstraint.constant = SCREEN_WIDTH;
+    _heightConstraint.constant = SCREEN_HEIGHT;
+    [self updateViewConstraints];
 }
 
-#pragma mark - Action Methods
-- (IBAction)locationItemPressed
-{
-    [self showAlertWithTitle:@"温馨提示" message:@"您好，修养目前只开通了深圳城市试运营，其他城市暂时还没有开通，感谢您对修养的关注。"];
-}
-
-- (void)maintenanceButtonPressed
-{
-}
-
+#pragma mark - Action
 - (IBAction)serviceButtonPressed:(UIButton *)button
 {
     switch (button.tag)
@@ -130,37 +107,17 @@
     }
 }
 
-- (IBAction)showMenu
-{
-    [self.view endEditing:YES];
-    [self.frostedViewController.view endEditing:YES];
-    
-    [self.frostedViewController presentMenuViewController];
-}
-
 #pragma mark - Private Methods
 // 自定义数据请求方法(用于首页第四个按钮，预约以及筛选条件)，无参数
 - (void)startSpecialRequest
 {
-    WEAK_SELF(weakSelf);
     [[SCAPIRequest manager] startHomePageSpecialAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             SCSpecial *special = [[SCSpecial alloc] initWithDictionary:responseObject error:nil];
             [[SCAllDictionary share] replaceSpecialDataWith:special];
-            [weakSelf displaySpecialButtonWithData:special];
         }
     } failure:nil];
-}
-
-- (void)displaySpecialButtonWithData:(SCSpecial *)special
-{
-    _specialLabel.textColor = [UIColor blackColor];
-    _specialLabel.text      = special.text;
-    _specialButton.enabled  = YES;
-    [_specialButton setBackgroundImageForState:UIControlStateNormal
-                                       withURL:[NSURL URLWithString:special.pic_url]
-                              placeholderImage:[_specialButton backgroundImageForState:UIControlStateNormal]];
 }
 
 - (void)jumpToSpecialViewControllerWith:(SCSpecial *)special isOperate:(BOOL)isOperate

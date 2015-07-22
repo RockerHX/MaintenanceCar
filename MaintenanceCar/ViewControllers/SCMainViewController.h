@@ -10,6 +10,10 @@
 
 @interface SCMainViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIButton *menuButton;
+
+- (IBAction)showMenu;
+
 + (instancetype)instance;
 
 @end
