@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 //#import <AFNetworking/UIKit+AFNetworking.h>
 //#import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
-#import <Baidu-Maps-iOS-SDK/BMapKit.h>
+#import <BaiduMapAPI/BMapKit.h>
 #import <UMengAnalytics-NO-IDFA/MobClick.h>
 #import <UMengMessage/UMessage.h>
 #import <Weixin/WXApi.h>

@@ -54,11 +54,12 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 5
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 4
 
-// Baidu-Maps-iOS-SDK
-#define COCOAPODS_POD_AVAILABLE_Baidu_Maps_iOS_SDK
-#define COCOAPODS_VERSION_MAJOR_Baidu_Maps_iOS_SDK 2
-#define COCOAPODS_VERSION_MINOR_Baidu_Maps_iOS_SDK 6
-#define COCOAPODS_VERSION_PATCH_Baidu_Maps_iOS_SDK 0
+// BaiduMap-iOS-SDK
+#define COCOAPODS_POD_AVAILABLE_BaiduMap_iOS_SDK
+// This library does not follow semantic-versioning,
+// so we were not able to define version macros.
+// Please contact the author.
+// Version: 2.8.1.1.
 
 // CSStickyHeaderFlowLayout
 #define COCOAPODS_POD_AVAILABLE_CSStickyHeaderFlowLayout
@@ -178,7 +179,7 @@
 #define COCOAPODS_POD_AVAILABLE_UMengAnalytics_NO_IDFA
 #define COCOAPODS_VERSION_MAJOR_UMengAnalytics_NO_IDFA 3
 #define COCOAPODS_VERSION_MINOR_UMengAnalytics_NO_IDFA 5
-#define COCOAPODS_VERSION_PATCH_UMengAnalytics_NO_IDFA 9
+#define COCOAPODS_VERSION_PATCH_UMengAnalytics_NO_IDFA 11
 
 // UMengMessage
 #define COCOAPODS_POD_AVAILABLE_UMengMessage
