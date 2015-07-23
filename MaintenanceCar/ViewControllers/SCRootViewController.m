@@ -9,6 +9,7 @@
 #import "SCRootViewController.h"
 #import "SCMainViewController.h"
 #import "SCUserCenterMenuViewController.h"
+#import "UIConstants.h"
 
 @implementation SCRootViewController
 
@@ -17,6 +18,7 @@
 {
     self.contentViewController = [SCMainViewController instance];
     self.menuViewController = [SCUserCenterMenuViewController instance];
+    self.menuViewSize = CGSizeMake(SCREEN_WIDTH*0.75f, self.menuViewSize.height);
 }
 
 @end

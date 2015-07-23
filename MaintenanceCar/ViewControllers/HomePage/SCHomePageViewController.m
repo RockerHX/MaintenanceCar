@@ -115,7 +115,6 @@
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
             SCSpecial *special = [[SCSpecial alloc] initWithDictionary:responseObject error:nil];
-            [[SCAllDictionary share] replaceSpecialDataWith:special];
         }
     } failure:nil];
 }

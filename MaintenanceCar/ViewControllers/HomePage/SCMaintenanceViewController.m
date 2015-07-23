@@ -15,7 +15,6 @@
 #import "SCReservationViewController.h"
 #import "SCUserCar.h"
 #import "SCMileageView.h"
-#import "SCAllDictionary.h"
 #import "SCChangeCarDataViewController.h"
 #import "SCOperationViewController.h"
 
