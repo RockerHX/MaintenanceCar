@@ -10,8 +10,12 @@
 
 @interface SCUserCenterMenuItem : NSObject
 
-@property (nonatomic, assign)   BOOL  last;
-@property (nonatomic, copy) NSString *icon;
-@property (nonatomic, copy) NSString *title;
+@property (nonatomic, assign)             BOOL  last;
+@property (nonatomic, assign, readonly)   BOOL  localData;
+@property (nonatomic, assign, readonly)  Class  viewController;
+@property (nonatomic, copy, readonly) NSString *icon;
+@property (nonatomic, copy, readonly) NSString *title;
+
+- (instancetype)initWithDictionary:(NSDictionary *)dic localData:(BOOL)local;
 
 @end

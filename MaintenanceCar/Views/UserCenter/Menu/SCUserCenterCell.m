@@ -7,17 +7,22 @@
 //
 
 #import "SCUserCenterCell.h"
+#import "SCUserCenterMenuItem.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation SCUserCenterCell
 
 - (void)awakeFromNib {
-    // Initialization code
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+#pragma mark - Public Methods
+- (void)diplayCellWithItem:(SCUserCenterMenuItem *)item {
+    if (item.localData) {
+        [_icon setImage:[UIImage imageNamed:item.icon]];
+    } else {
+        [_icon sd_setImageWithURL:[NSURL URLWithString:item.icon]];
+    }
+    _titleLabel.text = item.title;
 }
 
 @end

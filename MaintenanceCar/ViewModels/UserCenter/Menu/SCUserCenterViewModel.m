@@ -7,6 +7,7 @@
 //
 
 #import "SCUserCenterViewModel.h"
+#import "SCFileManager.h"
 
 @implementation SCUserCenterViewModel
 
@@ -24,10 +25,20 @@
     return self;
 }
 
-#pragma mark - Private Methods
+#pragma mark - Config Methods
 - (void)initConfig {
-    
     NSMutableArray *items = @[].mutableCopy;
+    NSArray *userCenterItems = [self loadUserCenterItems];
+    for (NSDictionary *dic in userCenterItems) {
+        SCUserCenterMenuItem *item = [[SCUserCenterMenuItem alloc] initWithDictionary:dic localData:YES];
+        [items addObject:item];
+    }
+    _userCenterItems = [NSArray arrayWithArray:items];
+}
+
+#pragma mark - Private Methods
+- (NSArray *)loadUserCenterItems {
+    return [NSArray arrayWithContentsOfFile:[NSFileManager pathForResource:@"UserCenterData" ofType:@"plist"]];
 }
 
 @end

@@ -10,4 +10,16 @@
 
 @implementation SCUserCenterMenuItem
 
+#pragma mark - Init Methods
+- (instancetype)initWithDictionary:(NSDictionary *)dic localData:(BOOL)local {
+    self = [super init];
+    if (self) {
+        _localData = local;
+        _viewController = NSClassFromString(dic[@"ViewController"]);
+        _icon = dic[@"Icon"];
+        _title = dic[@"Title"];
+    }
+    return self;
+}
+
 @end

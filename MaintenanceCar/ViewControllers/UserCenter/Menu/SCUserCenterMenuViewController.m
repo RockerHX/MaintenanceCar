@@ -38,31 +38,42 @@ static CGFloat CellHeight = 44.0f;
 }
 
 - (void)viewConfig {
-    _userCarHeightConstraint.constant = 3 * CellHeight;
+    _userCarHeightConstraint.constant = _viewModel.userCars.count * CellHeight;
     [self updateViewConstraints];
 }
 
 #pragma mark - Table View Data Source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    if ([tableView isEqual:_userView]) return _viewModel.userCars.count;
+    else if ([tableView isEqual:_userCenterView]) return _viewModel.userCenterItems.count;
+    else return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = nil;
+    SCUserCenterCell *cell = nil;
+    SCUserCenterMenuItem *item = nil;
     if ([tableView isEqual:_userCarView]) {
-        
-        if (indexPath.row != 3) {
-            cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterUserCarCell class])
+        item = _viewModel.userCars[indexPath.row];
+        if (item.last) {
+            cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterAddCarCell class])
                                                    forIndexPath:indexPath];
         } else {
-            cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterAddCarCell class])
+            cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterUserCarCell class])
                                                    forIndexPath:indexPath];
         }
     } else {
+        item = _viewModel.userCenterItems[indexPath.row];
         cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterCell class])
                                                forIndexPath:indexPath];
+        
     }
+    [cell diplayCellWithItem:item];
     return cell;
+}
+
+#pragma mark - Table View Delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

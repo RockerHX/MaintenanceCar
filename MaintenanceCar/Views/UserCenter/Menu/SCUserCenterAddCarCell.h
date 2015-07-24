@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SCUserCenterCell.h"
 
-@interface SCUserCenterAddCarCell : UITableViewCell
+@interface SCUserCenterAddCarCell : SCUserCenterCell
 
 @end

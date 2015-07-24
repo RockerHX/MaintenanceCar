@@ -316,17 +316,31 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VbG-Mn-wVH" id="Noe-sh-8uC">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="21k-zU-vvh">
-                                                    <rect key="frame" x="29" y="0.0" width="45" height="44"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="21k-zU-vvh">
+                                                    <rect key="frame" x="15" y="0.0" width="44" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="21k-zU-vvh" secondAttribute="height" multiplier="1:1" id="pIc-YM-xp8"/>
+                                                    </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWU-xC-q1b">
-                                                    <rect key="frame" x="101" y="11" width="42" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="首页" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWU-xC-q1b">
+                                                    <rect key="frame" x="79" y="11" width="34" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="YWU-xC-q1b" firstAttribute="leading" secondItem="21k-zU-vvh" secondAttribute="trailing" constant="20" id="KM0-wM-HVq"/>
+                                                <constraint firstItem="21k-zU-vvh" firstAttribute="leading" secondItem="Noe-sh-8uC" secondAttribute="leading" constant="15" id="Sce-Mk-7aW"/>
+                                                <constraint firstAttribute="bottom" secondItem="21k-zU-vvh" secondAttribute="bottom" id="alw-rp-gV2"/>
+                                                <constraint firstItem="21k-zU-vvh" firstAttribute="centerY" secondItem="YWU-xC-q1b" secondAttribute="centerY" id="nxS-xR-0j0"/>
+                                                <constraint firstItem="21k-zU-vvh" firstAttribute="top" secondItem="Noe-sh-8uC" secondAttribute="top" id="p8A-Oc-lpB"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="icon" destination="21k-zU-vvh" id="mWU-uf-5ph"/>
+                                            <outlet property="titleLabel" destination="YWU-xC-q1b" id="xV8-Pz-Qtj"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

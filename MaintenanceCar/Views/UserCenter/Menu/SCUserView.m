@@ -7,6 +7,7 @@
 //
 
 #import "SCUserView.h"
+#import "SCUserInfo.h"
 
 @implementation SCUserView
 
@@ -18,8 +19,23 @@
 }
 
 #pragma mark - Config Methods
+- (void)initConfig {
+    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap)]];
+}
+
 - (void)viewConfig {
     _header.layer.cornerRadius = _header.frame.size.width/2;
+}
+
+#pragma mark - Private Methods
+- (void)tap {
+    if ([SCUserInfo share].loginState) {
+        
+    } else {
+        if (_delegate && [_delegate respondsToSelector:@selector(shouldLogin)]) {
+            [_delegate shouldLogin];
+        }
+    }
 }
 
 @end
