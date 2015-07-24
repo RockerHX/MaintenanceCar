@@ -11,8 +11,8 @@
 typedef NS_ENUM(NSUInteger, SCUserCenterMenuRow) {
     SCUserCenterMenuRowHomePage,
     SCUserCenterMenuRowOrder,
-    SCUserCenterMenuRowGroupBuy,
     SCUserCenterMenuRowCollection,
+    SCUserCenterMenuRowGroupTicket,
     SCUserCenterMenuRowCoupon,
     SCUserCenterMenuRowSetting
 };

@@ -129,11 +129,11 @@ static NSString *MainNavigationControllerStoryboardID = @"MainNavigationControll
                 viewController = [SCOrdersViewController navigationInstance];
                 break;
             }
-            case SCUserCenterMenuRowGroupBuy: {
+            case SCUserCenterMenuRowCollection: {
                 
                 break;
             }
-            case SCUserCenterMenuRowCollection: {
+            case SCUserCenterMenuRowGroupTicket: {
                 
                 break;
             }
