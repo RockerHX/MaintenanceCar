@@ -58,23 +58,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="00f-Z2-XkK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1996" y="328"/>
-        </scene>
-        <!--Main Navigaiton Controller-->
-        <scene sceneID="fXj-M4-3xs">
-            <objects>
-                <navigationController storyboardIdentifier="MainNavigationController" id="Wpd-NN-mbM" customClass="SCMainNavigaitonController" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" translucent="NO" id="fi0-om-0zI">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="N9G-tN-Ssb" kind="relationship" relationship="rootViewController" id="VRr-01-7m6"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="exC-h2-m89" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1035" y="328"/>
+            <point key="canvasLocation" x="1486" y="328"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="951-QT-GKb">
@@ -85,38 +69,16 @@
                         <viewControllerLayoutGuide type="bottom" id="El6-S2-MP2"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="reo-92-1hp">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FQj-5e-59O">
-                                <rect key="frame" x="8" y="8" width="30" height="30"/>
-                                <state key="normal" image="MenuIcon">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="showMenu" destination="N9G-tN-Ssb" eventType="touchUpInside" id="TNn-82-W9v"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="FQj-5e-59O" firstAttribute="top" secondItem="1ja-55-xrT" secondAttribute="bottom" constant="8" id="L6q-Op-GRT"/>
-                            <constraint firstItem="FQj-5e-59O" firstAttribute="leading" secondItem="reo-92-1hp" secondAttribute="leading" constant="8" id="xqG-B7-bDe"/>
-                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="odh-Ar-hBI"/>
-                    <connections>
-                        <outlet property="menuButton" destination="FQj-5e-59O" id="icp-lg-yB6"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ynf-2H-mjL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1473" y="328"/>
+            <point key="canvasLocation" x="1030" y="328"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="MenuIcon" width="30" height="30"/>
-    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -24,11 +24,10 @@
 }
 
 - (void)viewConfig {
-    UINavigationController *mainNavigationController = [SCMainViewController navigationInstance];
-    SCMainViewController *mainViewController = (SCMainViewController *)mainNavigationController.topViewController;
+    SCMainViewController *mainViewController = [SCMainViewController instance];
     SCUserCenterMenuViewController *menuViewController = [SCUserCenterMenuViewController instance];
     menuViewController.delegate = mainViewController;
-    self.contentViewController = mainNavigationController;
+    self.contentViewController = mainViewController;
     self.menuViewController = menuViewController;
     self.menuViewSize = CGSizeMake(SCREEN_WIDTH*0.75f, self.menuViewSize.height);
 }

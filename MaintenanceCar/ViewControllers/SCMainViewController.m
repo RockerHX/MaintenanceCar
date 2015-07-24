@@ -44,11 +44,22 @@ static NSString *MainNavigationControllerStoryboardID = @"MainNavigationControll
                             selector:@selector(shouldLogin)
                                 name:kUserNeedLoginNotification
                               object:nil];
+    [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)]];
 }
 
 - (void)viewConfig {
     // 添加首页视图
     [self shouldShowViewControllerOnRow:SCUserCenterMenuRowHomePage];
+}
+
+#pragma mark - Gesture Recognizer
+- (void)panGestureRecognized:(UIPanGestureRecognizer *)sender {
+    // Dismiss keyboard (optional)
+    [self.view endEditing:YES];
+    [self.frostedViewController.view endEditing:YES];
+    
+    // Present the view controller
+    [self.frostedViewController panGestureRecognized:sender];
 }
 
 #pragma mark - Action
@@ -109,9 +120,6 @@ static NSString *MainNavigationControllerStoryboardID = @"MainNavigationControll
     // 添加子视图
     [self addChildViewController:viewController];
     [self.view addSubview:viewController.view];
-    
-    //把menu按钮放到最顶层
-    [self.view insertSubview:_menuButton atIndex:self.view.subviews.count];
 }
 
 #pragma mark - SCUserCenterMenuViewController Delegate
