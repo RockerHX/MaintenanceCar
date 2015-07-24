@@ -29,6 +29,7 @@
 - (IBAction)ruleButtonPressed;
 - (IBAction)showInvalidCoupons;
 
++ (UINavigationController *)navigationInstance;
 + (instancetype)instance;
 
 @end

@@ -11,6 +11,9 @@
 #import "REFrostedViewController.h"
 #import "SCHomePageViewController.h"
 #import "SCOrdersViewController.h"
+#import "SCCollectionsViewController.h"
+#import "SCGroupTicketsViewController.h"
+#import "SCCouponsViewController.h"
 
 static NSString *MainNavigationControllerStoryboardID = @"MainNavigationController";
 
@@ -117,16 +120,22 @@ static NSString *MainNavigationControllerStoryboardID = @"MainNavigationControll
 }
 
 - (void)showViewController:(UIViewController *)viewController {
-    // 添加子视图
-    [self addChildViewController:viewController];
-    [self.view addSubview:viewController.view];
+    @try {
+        // 添加子视图
+        [self addChildViewController:viewController];
+        [self.view addSubview:viewController.view];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Main View Controller Add Sub View Controller Error:%@", exception.reason);
+    }
+    @finally {
+    }
 }
 
 #pragma mark - SCUserCenterMenuViewController Delegate
 - (void)shouldShowViewControllerOnRow:(SCUserCenterMenuRow)row {
     // 检查用户是否登录，在进行相应页面跳转
-    if ([SCUserInfo share].loginState)
-    {
+    if ([SCUserInfo share].loginState) {
         UIViewController *viewController = nil;
         switch (row) {
             case SCUserCenterMenuRowHomePage: {
@@ -138,15 +147,15 @@ static NSString *MainNavigationControllerStoryboardID = @"MainNavigationControll
                 break;
             }
             case SCUserCenterMenuRowCollection: {
-                
+                viewController = [SCCollectionsViewController navigationInstance];
                 break;
             }
             case SCUserCenterMenuRowGroupTicket: {
-                
+                viewController = [SCGroupTicketsViewController navigationInstance];
                 break;
             }
             case SCUserCenterMenuRowCoupon: {
-                
+                viewController = [SCCouponsViewController navigationInstance];
                 break;
             }
             case SCUserCenterMenuRowSetting: {

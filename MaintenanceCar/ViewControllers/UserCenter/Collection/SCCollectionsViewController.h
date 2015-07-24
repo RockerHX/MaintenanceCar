@@ -11,6 +11,7 @@
 
 @interface SCCollectionsViewController : SCListViewController <SCMerchantDetailViewControllerDelegate>
 
++ (UINavigationController *)navigationInstance;
 + (instancetype)instance;
 
 @end

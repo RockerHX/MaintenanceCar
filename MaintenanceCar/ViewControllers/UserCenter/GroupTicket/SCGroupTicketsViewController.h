@@ -10,6 +10,7 @@
 
 @interface SCGroupTicketsViewController : SCListViewController
 
++ (UINavigationController *)navigationInstance;
 + (instancetype)instance;
 
 @end

@@ -11,7 +11,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="SCCollectionsViewController" hidesBottomBarWhenPushed="YES" id="BcV-5m-PeZ" customClass="SCCollectionsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" id="eSg-q1-FQ8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="95" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -173,6 +173,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="azA-4w-v0Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="233" y="-221"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fCB-4G-OqZ">
+            <objects>
+                <navigationController storyboardIdentifier="CollectionsNavigationController" id="Vda-AB-7f6" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="74X-25-gqF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BcV-5m-PeZ" kind="relationship" relationship="rootViewController" id="C8H-4Z-jbd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k8I-Gf-n56" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-208" y="-221"/>
         </scene>
     </scenes>
     <resources>
