@@ -14,6 +14,7 @@
 #import "SCCollectionsViewController.h"
 #import "SCGroupTicketsViewController.h"
 #import "SCCouponsViewController.h"
+#import "SCSettingViewController.h"
 
 static NSString *MainNavigationControllerStoryboardID = @"MainNavigationController";
 
@@ -158,15 +159,16 @@ static NSString *MainNavigationControllerStoryboardID = @"MainNavigationControll
                 viewController = [SCCouponsViewController navigationInstance];
                 break;
             }
-            case SCUserCenterMenuRowSetting: {
-                
+            default:
                 break;
-            }
         }
         [self showViewController:viewController];
         [self.frostedViewController hideMenuViewController];
     } else {
         [self showShoulLoginAlert];
+    }
+    if (row == SCUserCenterMenuRowSetting) {
+        [self showViewController:[SCSettingViewController navigationInstance]];
     }
 }
 

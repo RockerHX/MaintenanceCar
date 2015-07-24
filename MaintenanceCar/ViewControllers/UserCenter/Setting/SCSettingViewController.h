@@ -17,4 +17,6 @@
 
 - (IBAction)logoutButtonPressed:(UIButton *)sender;
 
++ (UINavigationController *)navigationInstance;
+
 @end
