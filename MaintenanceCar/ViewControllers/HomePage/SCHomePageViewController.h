@@ -19,8 +19,6 @@ typedef NS_ENUM(NSUInteger, SCHomePageServiceButtonType) {
 
 @interface SCHomePageViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet   NSLayoutConstraint *widthConstraint;     // 宽度约束
-@property (weak, nonatomic) IBOutlet   NSLayoutConstraint *heightConstraint;    // 高度约束
 @property (weak, nonatomic) IBOutlet SCHomePageDetailView *detailView;          // 首页详情View
 
 + (instancetype)instance;

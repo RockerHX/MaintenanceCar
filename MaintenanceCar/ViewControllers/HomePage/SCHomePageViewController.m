@@ -62,9 +62,6 @@
 
 - (void)viewConfig
 {
-    _widthConstraint.constant = SCREEN_WIDTH;
-    _heightConstraint.constant = SCREEN_HEIGHT;
-    [self updateViewConstraints];
 }
 
 #pragma mark - Action
