@@ -233,6 +233,7 @@
 		A117A7341B60FE9900073D2D /* MaintenanceCar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A117A7301B60FE9900073D2D /* MaintenanceCar.xcdatamodeld */; };
 		A117A7361B61D9BB00073D2D /* UserCenterData.plist in Resources */ = {isa = PBXBuildFile; fileRef = A117A7351B61D9BB00073D2D /* UserCenterData.plist */; };
 		A15284961B5F8389005936DF /* SCRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A15284951B5F8389005936DF /* SCRootViewController.m */; };
+		A1708B271B621F9A001F1B1B /* SCMainNavigaitonController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1708B261B621F9A001F1B1B /* SCMainNavigaitonController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -664,6 +665,8 @@
 		A117A7351B61D9BB00073D2D /* UserCenterData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserCenterData.plist; sourceTree = "<group>"; };
 		A15284941B5F8389005936DF /* SCRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCRootViewController.h; sourceTree = "<group>"; };
 		A15284951B5F8389005936DF /* SCRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCRootViewController.m; sourceTree = "<group>"; };
+		A1708B251B621F9A001F1B1B /* SCMainNavigaitonController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCMainNavigaitonController.h; sourceTree = "<group>"; };
+		A1708B261B621F9A001F1B1B /* SCMainNavigaitonController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCMainNavigaitonController.m; sourceTree = "<group>"; };
 		E2AD02DF3987D2F961F0ADFB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1243,6 +1246,7 @@
 		4866F8DB1AACBD2D008E195C /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				A1708B241B621F6B001F1B1B /* Main */,
 				4863544F1B53E26100DE43B2 /* Detail */,
 				483BA6381B31565A00B24C5F /* Loading */,
 				48DDB94D1B4CD18900CFD394 /* Search */,
@@ -1966,6 +1970,15 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
+		A1708B241B621F6B001F1B1B /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				A1708B251B621F9A001F1B1B /* SCMainNavigaitonController.h */,
+				A1708B261B621F9A001F1B1B /* SCMainNavigaitonController.m */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2285,6 +2298,7 @@
 				48FB70CE1AA5A58300AF4AD9 /* SCMerchantDetail.m in Sources */,
 				4866F9131AACBD2D008E195C /* SCMaintenanceViewController.m in Sources */,
 				482B57D91A43CB7700E47962 /* main.m in Sources */,
+				A1708B271B621F9A001F1B1B /* SCMainNavigaitonController.m in Sources */,
 				4866F9B91AACBD89008E195C /* SCCarModelView.m in Sources */,
 				4866F99E1AACBD89008E195C /* SCHomePageDetailView.m in Sources */,
 				4866F9A71AACBD89008E195C /* SCGroupProductDetailCell.m in Sources */,

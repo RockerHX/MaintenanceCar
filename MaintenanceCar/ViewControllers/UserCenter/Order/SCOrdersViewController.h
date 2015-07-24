@@ -31,6 +31,7 @@ typedef NS_ENUM(NSInteger, SCOrdersReuqest) {
 @property (weak, nonatomic) IBOutlet  UIView *promptView;
 @property (weak, nonatomic) IBOutlet UILabel *promptLabel;
 
++ (UINavigationController *)navigationInstance;
 + (instancetype)instance;
 
 @end

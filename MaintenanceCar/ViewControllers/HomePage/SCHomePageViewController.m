@@ -25,8 +25,13 @@
 #pragma mark - Init Methods
 + (instancetype)instance
 {
-    return [SCStoryBoardManager viewControllerWithClass:self
-                                         storyBoardName:SCStoryBoardNameHomePage];
+    static SCHomePageViewController *viewController = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        viewController = [SCStoryBoardManager viewControllerWithClass:self
+                                                       storyBoardName:SCStoryBoardNameHomePage];
+    });
+    return viewController;
 }
 
 #pragma mark - View Controller Life Cycle

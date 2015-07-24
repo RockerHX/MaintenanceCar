@@ -8,12 +8,16 @@
 
 #import "SCUserCenterMenuViewController.h"
 #import "SCStoryBoardManager.h"
+#import "SCUserView.h"
 #import "SCUserCenterUserCarCell.h"
 #import "SCUserCenterAddCarCell.h"
 #import "SCUserCenterCell.h"
 #import "SCUserCenterViewModel.h"
 
 static CGFloat CellHeight = 44.0f;
+
+@interface SCUserCenterMenuViewController () <SCUserViewDelegate>
+@end
 
 @implementation SCUserCenterMenuViewController {
     SCUserCenterViewModel *_viewModel;
@@ -72,8 +76,24 @@ static CGFloat CellHeight = 44.0f;
 }
 
 #pragma mark - Table View Delegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return CellHeight;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if ([tableView isEqual:_userCarView]) {
+        
+    } else {
+        if (_delegate && [_delegate respondsToSelector:@selector(shouldShowViewControllerOnRow:)]) {
+            [_delegate shouldShowViewControllerOnRow:indexPath.row];
+        }
+    }
+}
+
+#pragma mark - SCUserView Delegate
+- (void)shouldLogin {
+    
 }
 
 @end

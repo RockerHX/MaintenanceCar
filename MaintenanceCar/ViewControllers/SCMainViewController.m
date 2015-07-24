@@ -10,15 +10,20 @@
 #import "SCLoginViewController.h"
 #import "REFrostedViewController.h"
 #import "SCHomePageViewController.h"
+#import "SCOrdersViewController.h"
 
 static NSString *MainNavigationControllerStoryboardID = @"MainNavigationController";
 
 @implementation SCMainViewController
 
 #pragma mark - Init Methods
-+ (instancetype)instance {
++ (UINavigationController *)navigationInstance {
     return [SCStoryBoardManager navigaitonControllerWithIdentifier:MainNavigationControllerStoryboardID
                                                     storyBoardName:SCStoryBoardNameMain];
+}
+
++ (instancetype)instance {
+    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameMain];
 }
 
 #pragma mark - View Controller Life Cycle
@@ -43,12 +48,7 @@ static NSString *MainNavigationControllerStoryboardID = @"MainNavigationControll
 
 - (void)viewConfig {
     // 添加首页视图
-    SCHomePageViewController *viewController = [SCHomePageViewController instance];
-    [self addChildViewController:viewController];
-    [self.view addSubview:viewController.view];
-    
-    //把menu按钮放到最顶层
-    [self.view insertSubview:_menuButton atIndex:self.view.subviews.count];
+    [self shouldShowViewControllerOnRow:SCUserCenterMenuRowHomePage];
 }
 
 #pragma mark - Action
@@ -103,6 +103,54 @@ static NSString *MainNavigationControllerStoryboardID = @"MainNavigationControll
     UINavigationController *loginViewNavigationController = [SCLoginViewController navigationInstance];
     loginViewNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:loginViewNavigationController animated:YES completion:nil];
+}
+
+- (void)showViewController:(UIViewController *)viewController {
+    // 添加子视图
+    [self addChildViewController:viewController];
+    [self.view addSubview:viewController.view];
+    
+    //把menu按钮放到最顶层
+    [self.view insertSubview:_menuButton atIndex:self.view.subviews.count];
+}
+
+#pragma mark - SCUserCenterMenuViewController Delegate
+- (void)shouldShowViewControllerOnRow:(SCUserCenterMenuRow)row {
+    // 检查用户是否登录，在进行相应页面跳转
+    if ([SCUserInfo share].loginState)
+    {
+        UIViewController *viewController = nil;
+        switch (row) {
+            case SCUserCenterMenuRowHomePage: {
+                viewController = [SCHomePageViewController instance];
+                break;
+            }
+            case SCUserCenterMenuRowOrder: {
+                viewController = [SCOrdersViewController navigationInstance];
+                break;
+            }
+            case SCUserCenterMenuRowGroupBuy: {
+                
+                break;
+            }
+            case SCUserCenterMenuRowCollection: {
+                
+                break;
+            }
+            case SCUserCenterMenuRowCoupon: {
+                
+                break;
+            }
+            case SCUserCenterMenuRowSetting: {
+                
+                break;
+            }
+        }
+        [self showViewController:viewController];
+        [self.frostedViewController hideMenuViewController];
+    } else {
+        [self showShoulLoginAlert];
+    }
 }
 
 @end

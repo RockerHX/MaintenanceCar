@@ -7,13 +7,15 @@
 //
 
 #import "SCViewControllerCategory.h"
+#import "SCUserCenterMenuViewController.h"
 
-@interface SCMainViewController : UIViewController
+@interface SCMainViewController : UIViewController <SCUserCenterMenuViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *menuButton;
 
 - (IBAction)showMenu;
 
 + (instancetype)instance;
++ (UINavigationController *)navigationInstance;
 
 @end
