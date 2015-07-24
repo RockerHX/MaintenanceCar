@@ -31,7 +31,7 @@
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
-                                        <action selector="logoutButtonPressed:" destination="wy3-MM-fy9" eventType="touchUpInside" id="6Ad-EH-kvg"/>
+                                        <action selector="logoutButtonPressed" destination="wy3-MM-fy9" eventType="touchUpInside" id="57q-9e-PNu"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -140,7 +140,20 @@
                             <outlet property="delegate" destination="wy3-MM-fy9" id="6O1-1e-rj3"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="设置" id="pyC-oU-IQN"/>
+                    <navigationItem key="navigationItem" title="设置" id="pyC-oU-IQN">
+                        <barButtonItem key="leftBarButtonItem" id="iJM-Le-W92">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="iGK-yu-nw0">
+                                <rect key="frame" x="16" y="7" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="MenuIcon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="menuButtonPressed" destination="wy3-MM-fy9" eventType="touchUpInside" id="pcp-Bg-H9l"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="appMessageSwitch" destination="j7V-nV-5Mj" id="uya-M5-YDk"/>
                         <outlet property="logoutButton" destination="YgL-Uo-yst" id="lcg-dS-mHU"/>
@@ -325,7 +338,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="首页" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWU-xC-q1b">
                                                     <rect key="frame" x="79" y="11" width="34" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -393,6 +406,7 @@
     </scenes>
     <resources>
         <image name="LogoIcon" width="160" height="160"/>
+        <image name="MenuIcon" width="25" height="25"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

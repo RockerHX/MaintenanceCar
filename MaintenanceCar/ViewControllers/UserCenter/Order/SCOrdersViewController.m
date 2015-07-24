@@ -16,6 +16,8 @@ typedef NS_ENUM(NSUInteger, SCOrderAlertType) {
     SCOrderAlertTypeAppraiseAlert
 };
 
+static NSString *OderNavControllerID = @"OrdersNavigationController";
+
 @interface SCOrdersViewController () <SCOrderCellDelegate, SCAppraiseViewControllerDelegate, SCOrderDetailViewControllerDelegate>
 @end
 
@@ -26,7 +28,7 @@ typedef NS_ENUM(NSUInteger, SCOrderAlertType) {
     static UINavigationController *navigationController = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        navigationController = [SCStoryBoardManager navigaitonControllerWithIdentifier:@"OrdersNavigationController"
+        navigationController = [SCStoryBoardManager navigaitonControllerWithIdentifier:OderNavControllerID
                                                                         storyBoardName:SCStoryBoardNameOrder];
     });
     return navigationController;
@@ -79,6 +81,13 @@ typedef NS_ENUM(NSUInteger, SCOrderAlertType) {
         case SCOrdersReuqestFinished:
             return _finishedOffset;
             break;
+    }
+}
+
+#pragma mark - Action
+- (IBAction)menuButtonPressed {
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldShowMenu)]) {
+        [_delegate shouldShowMenu];
     }
 }
 

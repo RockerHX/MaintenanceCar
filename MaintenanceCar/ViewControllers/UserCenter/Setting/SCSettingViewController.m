@@ -51,6 +51,19 @@
     [self displayView];
 }
 
+#pragma mark - Action
+- (IBAction)menuButtonPressed {
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldShowMenu)]) {
+        [_delegate shouldShowMenu];
+    }
+}
+
+- (IBAction)logoutButtonPressed {
+    _appMessageSwitch.on = NO;
+    [[SCUserInfo share] logout];
+    [self showHUDPromptToViewController:self tag:Zero text:@"正在注销" delay:0.5f];
+}
+
 #pragma mark - Table View Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -83,12 +96,6 @@
         [self showHUDAlertToViewController:self text:@"您还未登录，无法接受推送消息" delay:0.5f];
     }
     userInfo.receiveMessage = sender.on;
-}
-
-- (IBAction)logoutButtonPressed:(UIButton *)sender {
-    _appMessageSwitch.on = NO;
-    [[SCUserInfo share] logout];
-    [self showHUDPromptToViewController:self tag:Zero text:@"正在注销" delay:0.5f];
 }
 
 #pragma mark - MBProgressHUD Delegate

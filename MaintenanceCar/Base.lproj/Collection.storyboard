@@ -167,6 +167,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="收藏" id="p3X-pN-zvr">
+                        <barButtonItem key="leftBarButtonItem" id="f7n-bm-5wB">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Jeq-dc-07J">
+                                <rect key="frame" x="16" y="7" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="MenuIcon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="menuButtonPressed" destination="BcV-5m-PeZ" eventType="touchUpInside" id="JNa-T0-wbi"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="PSU-63-4l2"/>
                     </navigationItem>
                 </tableViewController>
@@ -193,6 +205,7 @@
     </scenes>
     <resources>
         <image name="DistanceIcon" width="15" height="15"/>
+        <image name="MenuIcon" width="25" height="25"/>
         <image name="MerchantIconDefault" width="80" height="80"/>
         <image name="Star-Unlight" width="24" height="28"/>
     </resources>

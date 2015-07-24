@@ -16,13 +16,16 @@
 #import "SCCouponsViewController.h"
 #import "SCSettingViewController.h"
 
-static NSString *MainNavigationControllerStoryboardID = @"MainNavigationController";
+static NSString *MainNavControllerID = @"MainNavigationController";
+
+@interface SCMainViewController () <SCHomePageViewControllerDelegate, SCOrdersViewControllerDelegate, SCCollectionsViewControllerDelegate, SCGroupTicketsViewControllerDelegate, SCCouponsViewControllerDelegate, SCSettingViewControllerDelegate>
+@end
 
 @implementation SCMainViewController
 
 #pragma mark - Init Methods
 + (UINavigationController *)navigationInstance {
-    return [SCStoryBoardManager navigaitonControllerWithIdentifier:MainNavigationControllerStoryboardID
+    return [SCStoryBoardManager navigaitonControllerWithIdentifier:MainNavControllerID
                                                     storyBoardName:SCStoryBoardNameMain];
 }
 
@@ -64,16 +67,6 @@ static NSString *MainNavigationControllerStoryboardID = @"MainNavigationControll
     
     // Present the view controller
     [self.frostedViewController panGestureRecognized:sender];
-}
-
-#pragma mark - Action
-- (IBAction)showMenu {
-    // Dismiss keyboard (optional)
-    [self.view endEditing:YES];
-    [self.frostedViewController.view endEditing:YES];
-    
-    // Present the view controller
-    [self.frostedViewController presentMenuViewController];
 }
 
 #pragma mark - Private Methods
@@ -137,39 +130,62 @@ static NSString *MainNavigationControllerStoryboardID = @"MainNavigationControll
 - (void)shouldShowViewControllerOnRow:(SCUserCenterMenuRow)row {
     // 检查用户是否登录，在进行相应页面跳转
     if ([SCUserInfo share].loginState) {
-        UIViewController *viewController = nil;
+        UIViewController *navController = nil;
         switch (row) {
             case SCUserCenterMenuRowHomePage: {
-                viewController = [SCHomePageViewController instance];
+                navController = [SCHomePageViewController instance];
+                SCHomePageViewController *viewController = (SCHomePageViewController *)navController;
+                viewController.delegate = self;
                 break;
             }
             case SCUserCenterMenuRowOrder: {
-                viewController = [SCOrdersViewController navigationInstance];
+                navController = [SCOrdersViewController navigationInstance];
+                SCOrdersViewController *viewController = (SCOrdersViewController *)((UINavigationController *)navController).topViewController;
+                viewController.delegate = self;
                 break;
             }
             case SCUserCenterMenuRowCollection: {
-                viewController = [SCCollectionsViewController navigationInstance];
+                navController = [SCCollectionsViewController navigationInstance];
+                SCCollectionsViewController *viewController = (SCCollectionsViewController *)((UINavigationController *)navController).topViewController;
+                viewController.delegate = self;
                 break;
             }
             case SCUserCenterMenuRowGroupTicket: {
-                viewController = [SCGroupTicketsViewController navigationInstance];
+                navController = [SCGroupTicketsViewController navigationInstance];
+                SCGroupTicketsViewController *viewController = (SCGroupTicketsViewController *)((UINavigationController *)navController).topViewController;
+                viewController.delegate = self;
                 break;
             }
             case SCUserCenterMenuRowCoupon: {
-                viewController = [SCCouponsViewController navigationInstance];
+                navController = [SCCouponsViewController navigationInstance];
+                SCCouponsViewController *viewController = (SCCouponsViewController *)((UINavigationController *)navController).topViewController;
+                viewController.delegate = self;
                 break;
             }
             default:
                 break;
         }
-        [self showViewController:viewController];
+        [self showViewController:navController];
         [self.frostedViewController hideMenuViewController];
     } else {
         [self showShoulLoginAlert];
     }
     if (row == SCUserCenterMenuRowSetting) {
+        UINavigationController *navController = [SCSettingViewController navigationInstance];
+        SCSettingViewController *viewController = (SCSettingViewController *)navController.topViewController;
+        viewController.delegate = self;
         [self showViewController:[SCSettingViewController navigationInstance]];
     }
+}
+
+#pragma mark - Delegate
+- (void)shouldShowMenu {
+    // Dismiss keyboard (optional)
+    [self.view endEditing:YES];
+    [self.frostedViewController.view endEditing:YES];
+    
+    // Present the view controller
+    [self.frostedViewController presentMenuViewController];
 }
 
 @end

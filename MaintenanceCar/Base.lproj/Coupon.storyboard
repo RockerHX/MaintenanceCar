@@ -210,7 +210,20 @@
                             <constraint firstItem="TeD-MN-wgP" firstAttribute="top" secondItem="RUp-tM-86n" secondAttribute="bottom" id="yRj-hX-WXh"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="优惠券" id="Swi-Ld-W8A"/>
+                    <navigationItem key="navigationItem" title="优惠券" id="Swi-Ld-W8A">
+                        <barButtonItem key="leftBarButtonItem" id="Cfj-Z0-Ssl">
+                            <button key="customView" opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="cHS-2p-cgk">
+                                <rect key="frame" x="16" y="7" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="MenuIcon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="menuButtonPressed" destination="9pE-rk-7gG" eventType="touchUpInside" id="kdD-Cb-A1k"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="codeField" destination="Ff3-Af-lRq" id="R0m-ca-uE2"/>
                         <outlet property="enterCodeBGView" destination="upD-RT-7ap" id="H6r-Lo-QNF"/>
@@ -548,6 +561,7 @@
     </scenes>
     <resources>
         <image name="CouponBG" width="32" height="67"/>
+        <image name="MenuIcon" width="25" height="25"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

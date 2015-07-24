@@ -11,6 +11,8 @@
 #import "SCGroupTicketDetailViewController.h"
 #import "SCReservationViewController.h"
 
+static NSString *GroupTicketNavControllerID = @"GroupTicketsNavigationController";
+
 @interface SCGroupTicketsViewController () <SCGroupTicketCodeCellDelegate, SCReservationViewControllerDelegate>
 @end
 
@@ -21,7 +23,7 @@
     static UINavigationController *navigationController = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        navigationController = [SCStoryBoardManager navigaitonControllerWithIdentifier:@"GroupTicketsNavigationController"
+        navigationController = [SCStoryBoardManager navigaitonControllerWithIdentifier:GroupTicketNavControllerID
                                                                         storyBoardName:SCStoryBoardNameGroupTicket];
     });
     return navigationController;
@@ -46,6 +48,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+#pragma mark - Action
+- (IBAction)menuButtonPressed {
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldShowMenu)]) {
+        [_delegate shouldShowMenu];
+    }
 }
 
 #pragma mark - Table View Data Source Methods

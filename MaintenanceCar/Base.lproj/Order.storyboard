@@ -889,7 +889,20 @@
                             <constraint firstAttribute="trailing" secondItem="fud-w2-hws" secondAttribute="trailing" id="sfw-7q-N3Z"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="订单" id="aUo-ex-R9t"/>
+                    <navigationItem key="navigationItem" title="订单" id="aUo-ex-R9t">
+                        <barButtonItem key="leftBarButtonItem" id="3gs-WB-6J6">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="jKB-m7-VPb">
+                                <rect key="frame" x="16" y="7" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="MenuIcon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="menuButtonPressed" destination="XnD-1b-cSg" eventType="touchUpInside" id="HIT-1a-vCb"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="navigationTab" destination="fud-w2-hws" id="rPN-Ql-2em"/>
                         <outlet property="promptLabel" destination="6Jw-Vk-RD8" id="INe-zV-3NJ"/>
@@ -911,6 +924,7 @@
         <image name="Line-Dashed-V" width="2" height="6"/>
         <image name="Line-Solid-H" width="113" height="2"/>
         <image name="Line-Solid-V" width="2" height="4"/>
+        <image name="MenuIcon" width="25" height="25"/>
         <image name="OrderIcon-ZuiXin" width="52" height="52"/>
         <image name="Star-Unlight" width="24" height="28"/>
     </resources>

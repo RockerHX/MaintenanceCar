@@ -11,6 +11,8 @@
 #import "SCReservationViewController.h"
 #import "SCLocationManager.h"
 
+static NSString *CollectionNavControllerID = @"CollectionsNavigationController";
+
 @implementation SCCollectionsViewController
 
 #pragma mark - Init Methods
@@ -18,7 +20,7 @@
     static UINavigationController *navigationController = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        navigationController = [SCStoryBoardManager navigaitonControllerWithIdentifier:@"CollectionsNavigationController"
+        navigationController = [SCStoryBoardManager navigaitonControllerWithIdentifier:CollectionNavControllerID
                                                                         storyBoardName:SCStoryBoardNameCollection];
     });
     return navigationController;
@@ -43,6 +45,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+#pragma mark - Action
+- (IBAction)menuButtonPressed {
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldShowMenu)]) {
+        [_delegate shouldShowMenu];
+    }
 }
 
 #pragma mark - Table View Data Source Methods

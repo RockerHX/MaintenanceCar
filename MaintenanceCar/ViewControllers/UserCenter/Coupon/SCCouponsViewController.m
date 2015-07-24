@@ -12,6 +12,8 @@
 #import "SCCouponDetailViewController.h"
 #import "SCWebViewController.h"
 
+static NSString *CouponNavControllerID = @"CouponsNavigationController";
+
 @implementation SCCouponsViewController
 {
     NSMutableArray *_coupons;
@@ -23,7 +25,7 @@
     static UINavigationController *navigationController = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        navigationController = [SCStoryBoardManager navigaitonControllerWithIdentifier:@"CouponsNavigationController"
+        navigationController = [SCStoryBoardManager navigaitonControllerWithIdentifier:CouponNavControllerID
                                                                         storyBoardName:SCStoryBoardNameCoupon];
     });
     return navigationController;
@@ -69,7 +71,13 @@
     _enterCodeBGView.layer.shadowRadius = 1.0f;
 }
 
-#pragma mark - Action Methods
+#pragma mark - Action
+- (IBAction)menuButtonPressed {
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldShowMenu)]) {
+        [_delegate shouldShowMenu];
+    }
+}
+
 - (IBAction)exchangeButtonPressed {
     if (_codeField.text.length > Zero) {
         [_codeField resignFirstResponder];

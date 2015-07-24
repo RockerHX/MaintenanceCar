@@ -13,6 +13,13 @@ typedef NS_ENUM(NSInteger, SCOrdersReuqest) {
     SCOrdersReuqestFinished
 };
 
+@protocol SCOrdersViewControllerDelegate <NSObject>
+
+@optional
+- (void)shouldShowMenu;
+
+@end
+
 @class SCOrder;
 @class SCOrderCell;
 
@@ -30,6 +37,10 @@ typedef NS_ENUM(NSInteger, SCOrdersReuqest) {
 
 @property (weak, nonatomic) IBOutlet  UIView *promptView;
 @property (weak, nonatomic) IBOutlet UILabel *promptLabel;
+
+@property (nonatomic, weak) id  <SCOrdersViewControllerDelegate>delegate;
+
+- (IBAction)menuButtonPressed;
 
 + (UINavigationController *)navigationInstance;
 + (instancetype)instance;

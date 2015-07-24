@@ -163,7 +163,20 @@
                             <outlet property="delegate" destination="Sln-eW-sF3" id="Cqq-zF-qBv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="团购券" id="GsV-Bm-9Yr"/>
+                    <navigationItem key="navigationItem" title="团购券" id="GsV-Bm-9Yr">
+                        <barButtonItem key="leftBarButtonItem" id="MRs-f4-EyK">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="oOn-1z-NaP">
+                                <rect key="frame" x="16" y="7" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="MenuIcon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="menuButtonPressed" destination="Sln-eW-sF3" eventType="touchUpInside" id="6vb-XI-U4P"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q9V-4P-z5P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -789,6 +802,7 @@
         <image name="ArrowIcon-Yellow" width="9" height="16"/>
         <image name="CallButton" width="30" height="30"/>
         <image name="DistanceIcon" width="15" height="15"/>
+        <image name="MenuIcon" width="25" height="25"/>
         <image name="Star-Unlight" width="24" height="28"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
