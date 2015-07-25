@@ -29,6 +29,7 @@
     menuViewController.delegate = mainViewController;
     self.contentViewController = mainViewController;
     self.menuViewController = menuViewController;
+    self.delegate = menuViewController;
     self.menuViewSize = CGSizeMake(SCREEN_WIDTH*0.75f, self.menuViewSize.height);
 }
 

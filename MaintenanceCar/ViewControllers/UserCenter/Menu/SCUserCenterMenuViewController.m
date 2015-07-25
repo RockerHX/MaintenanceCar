@@ -7,17 +7,14 @@
 //
 
 #import "SCUserCenterMenuViewController.h"
+#import <SDWebImage/UIButton+WebCache.h>
 #import "SCStoryBoardManager.h"
-#import "SCUserView.h"
 #import "SCUserCenterUserCarCell.h"
 #import "SCUserCenterAddCarCell.h"
 #import "SCUserCenterCell.h"
 #import "SCUserCenterViewModel.h"
 
 static CGFloat CellHeight = 44.0f;
-
-@interface SCUserCenterMenuViewController () <SCUserViewDelegate>
-@end
 
 @implementation SCUserCenterMenuViewController {
     SCUserCenterViewModel *_viewModel;
@@ -42,13 +39,20 @@ static CGFloat CellHeight = 44.0f;
 }
 
 - (void)viewConfig {
-    _userCarHeightConstraint.constant = _viewModel.userCars.count * CellHeight;
+    _userCarHeightConstraint.constant = _viewModel.userCarItems.count * CellHeight;
     [self updateViewConstraints];
+}
+
+#pragma mark - Private Methods
+- (void)reloadData {
+    [_userView.header sd_setImageWithURL:_viewModel.headerURL forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:_viewModel.placeHolderHeader]];
+    [_userView.loginPromptLabel setText:_viewModel.prompt];
+    [_userCarView reloadData];
 }
 
 #pragma mark - Table View Data Source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([tableView isEqual:_userView]) return _viewModel.userCars.count;
+    if ([tableView isEqual:_userCarView]) return _viewModel.userCarItems.count;
     else if ([tableView isEqual:_userCenterView]) return _viewModel.userCenterItems.count;
     else return 0;
 }
@@ -57,7 +61,7 @@ static CGFloat CellHeight = 44.0f;
     SCUserCenterCell *cell = nil;
     SCUserCenterMenuItem *item = nil;
     if ([tableView isEqual:_userCarView]) {
-        item = _viewModel.userCars[indexPath.row];
+        item = _viewModel.userCarItems[indexPath.row];
         if (item.last) {
             cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterAddCarCell class])
                                                    forIndexPath:indexPath];
@@ -91,9 +95,15 @@ static CGFloat CellHeight = 44.0f;
     }
 }
 
+#pragma mark - REFrostedViewController Delegate
+- (void)frostedViewController:(REFrostedViewController *)frostedViewController willShowMenuViewController:(UIViewController *)menuViewController {
+    [self reloadData];
+}
+
 #pragma mark - SCUserView Delegate
 - (void)shouldLogin {
-    
+    [self.frostedViewController hideMenuViewController];
+    [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
 }
 
 @end

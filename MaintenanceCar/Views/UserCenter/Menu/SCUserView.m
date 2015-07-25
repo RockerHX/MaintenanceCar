@@ -30,7 +30,9 @@
 #pragma mark - Private Methods
 - (void)tap {
     if ([SCUserInfo share].loginState) {
-        
+        if (_delegate && [_delegate respondsToSelector:@selector(shouldEditUserInfo)]) {
+            [_delegate shouldEditUserInfo];
+        }
     } else {
         if (_delegate && [_delegate respondsToSelector:@selector(shouldLogin)]) {
             [_delegate shouldLogin];

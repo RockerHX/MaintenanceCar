@@ -8,14 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@class SCUserCar;
 @interface SCUserCenterMenuItem : NSObject
 
 @property (nonatomic, assign)             BOOL  last;
+@property (nonatomic, assign)             BOOL  selected;
 @property (nonatomic, assign, readonly)   BOOL  localData;
-@property (nonatomic, assign, readonly)  Class  viewController;
 @property (nonatomic, copy, readonly) NSString *icon;
 @property (nonatomic, copy, readonly) NSString *title;
 
+- (instancetype)initWithCar:(SCUserCar *)car;
 - (instancetype)initWithDictionary:(NSDictionary *)dic localData:(BOOL)local;
 
 @end

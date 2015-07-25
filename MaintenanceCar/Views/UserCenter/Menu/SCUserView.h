@@ -12,6 +12,7 @@
 
 @optional
 - (void)shouldLogin;
+- (void)shouldEditUserInfo;
 
 @end
 
@@ -19,8 +20,8 @@
 
 @property (weak, nonatomic) IBOutlet       id  <SCUserViewDelegate>delegate;
 @property (weak, nonatomic) IBOutlet UIButton *header;
-@property (weak, nonatomic) IBOutlet   UIView *loginPromptLabel;
-@property (weak, nonatomic) IBOutlet   UIView *userNameLabel;
-@property (weak, nonatomic) IBOutlet   UIView *infoLabel;
+@property (weak, nonatomic) IBOutlet  UILabel *loginPromptLabel;
+@property (weak, nonatomic) IBOutlet  UILabel *userNameLabel;
+@property (weak, nonatomic) IBOutlet  UILabel *infoLabel;
 
 @end

@@ -6,7 +6,9 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SCViewControllerCategory.h"
+#import <REFrostedViewController/REFrostedViewController.h>
+#import "SCUserView.h"
 
 typedef NS_ENUM(NSUInteger, SCUserCenterMenuRow) {
     SCUserCenterMenuRowHomePage,
@@ -25,7 +27,7 @@ typedef NS_ENUM(NSUInteger, SCUserCenterMenuRow) {
 @end
 
 @class SCUserView;
-@interface SCUserCenterMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface SCUserCenterMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, REFrostedViewControllerDelegate, SCUserViewDelegate>
 
 @property (weak, nonatomic) IBOutlet          id  <SCUserCenterMenuViewControllerDelegate>delegate;
 @property (weak, nonatomic) IBOutlet  SCUserView *userView;

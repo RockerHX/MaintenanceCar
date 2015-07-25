@@ -8,7 +8,7 @@
 
 #import "SCMainViewController.h"
 #import "SCLoginViewController.h"
-#import "REFrostedViewController.h"
+#import <REFrostedViewController/REFrostedViewController.h>
 #import "SCHomePageViewController.h"
 #import "SCOrdersViewController.h"
 #import "SCCollectionsViewController.h"
@@ -128,54 +128,54 @@ static NSString *MainNavControllerID = @"MainNavigationController";
 
 #pragma mark - SCUserCenterMenuViewController Delegate
 - (void)shouldShowViewControllerOnRow:(SCUserCenterMenuRow)row {
-    // 检查用户是否登录，在进行相应页面跳转
-    if ([SCUserInfo share].loginState) {
-        UIViewController *navController = nil;
-        switch (row) {
-            case SCUserCenterMenuRowHomePage: {
-                navController = [SCHomePageViewController instance];
-                SCHomePageViewController *viewController = (SCHomePageViewController *)navController;
-                viewController.delegate = self;
-                break;
-            }
-            case SCUserCenterMenuRowOrder: {
-                navController = [SCOrdersViewController navigationInstance];
-                SCOrdersViewController *viewController = (SCOrdersViewController *)((UINavigationController *)navController).topViewController;
-                viewController.delegate = self;
-                break;
-            }
-            case SCUserCenterMenuRowCollection: {
-                navController = [SCCollectionsViewController navigationInstance];
-                SCCollectionsViewController *viewController = (SCCollectionsViewController *)((UINavigationController *)navController).topViewController;
-                viewController.delegate = self;
-                break;
-            }
-            case SCUserCenterMenuRowGroupTicket: {
-                navController = [SCGroupTicketsViewController navigationInstance];
-                SCGroupTicketsViewController *viewController = (SCGroupTicketsViewController *)((UINavigationController *)navController).topViewController;
-                viewController.delegate = self;
-                break;
-            }
-            case SCUserCenterMenuRowCoupon: {
-                navController = [SCCouponsViewController navigationInstance];
-                SCCouponsViewController *viewController = (SCCouponsViewController *)((UINavigationController *)navController).topViewController;
-                viewController.delegate = self;
-                break;
-            }
-            default:
-                break;
-        }
-        [self showViewController:navController];
-        [self.frostedViewController hideMenuViewController];
-    } else {
-        [self showShoulLoginAlert];
-    }
+    UIViewController *navController = nil;
     if (row == SCUserCenterMenuRowSetting) {
-        UINavigationController *navController = [SCSettingViewController navigationInstance];
-        SCSettingViewController *viewController = (SCSettingViewController *)navController.topViewController;
+        navController = [SCSettingViewController navigationInstance];
+        SCSettingViewController *viewController = (SCSettingViewController *)((UINavigationController *)navController).topViewController;
         viewController.delegate = self;
-        [self showViewController:[SCSettingViewController navigationInstance]];
+    } else {
+        // 检查用户是否登录，在进行相应页面跳转
+        if ([SCUserInfo share].loginState) {
+            switch (row) {
+                case SCUserCenterMenuRowHomePage: {
+                    navController = [SCHomePageViewController instance];
+                    SCHomePageViewController *viewController = (SCHomePageViewController *)navController;
+                    viewController.delegate = self;
+                    break;
+                }
+                case SCUserCenterMenuRowOrder: {
+                    navController = [SCOrdersViewController navigationInstance];
+                    SCOrdersViewController *viewController = (SCOrdersViewController *)((UINavigationController *)navController).topViewController;
+                    viewController.delegate = self;
+                    break;
+                }
+                case SCUserCenterMenuRowCollection: {
+                    navController = [SCCollectionsViewController navigationInstance];
+                    SCCollectionsViewController *viewController = (SCCollectionsViewController *)((UINavigationController *)navController).topViewController;
+                    viewController.delegate = self;
+                    break;
+                }
+                case SCUserCenterMenuRowGroupTicket: {
+                    navController = [SCGroupTicketsViewController navigationInstance];
+                    SCGroupTicketsViewController *viewController = (SCGroupTicketsViewController *)((UINavigationController *)navController).topViewController;
+                    viewController.delegate = self;
+                    break;
+                }
+                case SCUserCenterMenuRowCoupon: {
+                    navController = [SCCouponsViewController navigationInstance];
+                    SCCouponsViewController *viewController = (SCCouponsViewController *)((UINavigationController *)navController).topViewController;
+                    viewController.delegate = self;
+                    break;
+                }
+                default:
+                    break;
+            }
+        } else {
+            [self showShoulLoginAlert];
+        }
     }
+    [self showViewController:navController];
+    [self.frostedViewController hideMenuViewController];
 }
 
 #pragma mark - Delegate

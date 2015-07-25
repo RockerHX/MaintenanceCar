@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "REFrostedViewController.h"
+#import <REFrostedViewController/REFrostedViewController.h>
 
 @interface SCRootViewController : REFrostedViewController
 

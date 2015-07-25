@@ -7,15 +7,21 @@
 //
 
 #import "SCUserCenterMenuItem.h"
+#import "SCUserCar.h"
 
 @implementation SCUserCenterMenuItem
 
 #pragma mark - Init Methods
+- (instancetype)initWithCar:(SCUserCar *)car {
+    NSDictionary *dic = @{@"Icon": @"",
+                         @"Title": car.model_name};
+    return [self initWithDictionary:dic localData:NO];
+}
+
 - (instancetype)initWithDictionary:(NSDictionary *)dic localData:(BOOL)local {
     self = [super init];
     if (self) {
         _localData = local;
-        _viewController = NSClassFromString(dic[@"ViewController"]);
         _icon = dic[@"Icon"];
         _title = dic[@"Title"];
     }

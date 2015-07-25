@@ -12,7 +12,11 @@
 
 + (instancetype)instance;
 
-@property (nonatomic, strong) NSArray *userCars;
-@property (nonatomic, strong) NSArray *userCenterItems;
+@property (nonatomic, assign)              BOOL  needRefresh;
+@property (nonatomic, strong, readonly)   NSURL *headerURL;
+@property (nonatomic, copy, readonly)  NSString *placeHolderHeader;
+@property (nonatomic, copy, readonly)  NSString *prompt;
+@property (nonatomic, strong, readonly) NSArray *userCarItems;
+@property (nonatomic, strong, readonly) NSArray *userCenterItems;
 
 @end
