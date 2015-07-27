@@ -20,6 +20,8 @@ pod 'Masonry'
 
 pod 'REFrostedViewController'
 
+pod 'JZNavigationExtension'
+
 pod 'SCLoopScrollView'
 pod 'SCNumberKeyBoard'
 

@@ -128,42 +128,42 @@ static NSString *MainNavControllerID = @"MainNavigationController";
 
 #pragma mark - SCUserCenterMenuViewController Delegate
 - (void)shouldShowViewControllerOnRow:(SCUserCenterMenuRow)row {
-    UIViewController *navController = nil;
+    UINavigationController *navController = nil;
     if (row == SCUserCenterMenuRowSetting) {
         navController = [SCSettingViewController navigationInstance];
-        SCSettingViewController *viewController = (SCSettingViewController *)((UINavigationController *)navController).topViewController;
+        SCSettingViewController *viewController = (SCSettingViewController *)navController.topViewController;
         viewController.delegate = self;
     } else {
         // 检查用户是否登录，在进行相应页面跳转
         if ([SCUserInfo share].loginState) {
             switch (row) {
                 case SCUserCenterMenuRowHomePage: {
-                    navController = [SCHomePageViewController instance];
-                    SCHomePageViewController *viewController = (SCHomePageViewController *)navController;
+                    navController = [SCHomePageViewController navigationInstance];
+                    SCHomePageViewController *viewController = (SCHomePageViewController *)navController.topViewController;
                     viewController.delegate = self;
                     break;
                 }
                 case SCUserCenterMenuRowOrder: {
                     navController = [SCOrdersViewController navigationInstance];
-                    SCOrdersViewController *viewController = (SCOrdersViewController *)((UINavigationController *)navController).topViewController;
+                    SCOrdersViewController *viewController = (SCOrdersViewController *)navController.topViewController;
                     viewController.delegate = self;
                     break;
                 }
                 case SCUserCenterMenuRowCollection: {
                     navController = [SCCollectionsViewController navigationInstance];
-                    SCCollectionsViewController *viewController = (SCCollectionsViewController *)((UINavigationController *)navController).topViewController;
+                    SCCollectionsViewController *viewController = (SCCollectionsViewController *)navController.topViewController;
                     viewController.delegate = self;
                     break;
                 }
                 case SCUserCenterMenuRowGroupTicket: {
                     navController = [SCGroupTicketsViewController navigationInstance];
-                    SCGroupTicketsViewController *viewController = (SCGroupTicketsViewController *)((UINavigationController *)navController).topViewController;
+                    SCGroupTicketsViewController *viewController = (SCGroupTicketsViewController *)navController.topViewController;
                     viewController.delegate = self;
                     break;
                 }
                 case SCUserCenterMenuRowCoupon: {
                     navController = [SCCouponsViewController navigationInstance];
-                    SCCouponsViewController *viewController = (SCCouponsViewController *)((UINavigationController *)navController).topViewController;
+                    SCCouponsViewController *viewController = (SCCouponsViewController *)navController.topViewController;
                     viewController.delegate = self;
                     break;
                 }

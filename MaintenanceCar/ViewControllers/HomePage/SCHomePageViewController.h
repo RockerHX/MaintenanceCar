@@ -31,6 +31,8 @@ typedef NS_ENUM(NSUInteger, SCHomePageServiceButtonType) {
 
 - (IBAction)menuButtonPressed;
 
+
++ (UINavigationController *)navigationInstance;
 + (instancetype)instance;
 
 @end

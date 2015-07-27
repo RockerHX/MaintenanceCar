@@ -17,7 +17,7 @@
 #import "SCChangeCarDataViewController.h"
 #import "SCAddCarViewController.h"
 
-static NSString *HomePageNavControllerID = @"";
+static NSString *HomePageNavControllerID = @"HomePageNavigationController";
 
 @interface SCHomePageViewController () <SCADViewDelegate, SCHomePageDetailViewDelegate>
 @end
@@ -25,14 +25,18 @@ static NSString *HomePageNavControllerID = @"";
 @implementation SCHomePageViewController
 
 #pragma mark - Init Methods
-+ (instancetype)instance {
-    static SCHomePageViewController *viewController = nil;
++ (UINavigationController *)navigationInstance {
+    static UINavigationController *navigationController = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        viewController = [SCStoryBoardManager viewControllerWithClass:self
-                                                       storyBoardName:SCStoryBoardNameHomePage];
+        navigationController = [SCStoryBoardManager navigaitonControllerWithIdentifier:HomePageNavControllerID
+                                                                        storyBoardName:SCStoryBoardNameHomePage];
     });
-    return viewController;
+    return navigationController;
+}
+
++ (instancetype)instance {
+    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameHomePage];;
 }
 
 #pragma mark - View Controller Life Cycle
