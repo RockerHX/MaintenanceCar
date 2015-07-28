@@ -26,7 +26,7 @@
         <!--Home Page View Controller-->
         <scene sceneID="n5x-zd-Tob">
             <objects>
-                <viewController storyboardIdentifier="SCHomePageViewController" id="5s2-Co-MNm" customClass="SCHomePageViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SCHomePageViewController" automaticallyAdjustsScrollViewInsets="NO" id="5s2-Co-MNm" customClass="SCHomePageViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bAM-3c-QUP"/>
                         <viewControllerLayoutGuide type="bottom" id="zE7-bY-Eel"/>
@@ -39,7 +39,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Van-Gj-OJE">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="600"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="awd-ct-zv1" customClass="SCLoopScrollView">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
@@ -61,7 +61,7 @@
                                             <constraint firstItem="Jf3-P1-UTM" firstAttribute="top" secondItem="awd-ct-zv1" secondAttribute="bottom" id="7cW-RB-lRO"/>
                                             <constraint firstItem="Jf3-P1-UTM" firstAttribute="trailing" secondItem="awd-ct-zv1" secondAttribute="trailing" id="UdH-gm-D68"/>
                                             <constraint firstItem="awd-ct-zv1" firstAttribute="leading" secondItem="Van-Gj-OJE" secondAttribute="leading" id="Zsb-DD-cGX"/>
-                                            <constraint firstAttribute="bottom" secondItem="Jf3-P1-UTM" secondAttribute="bottom" constant="-32" id="aWk-1M-KoX"/>
+                                            <constraint firstAttribute="bottom" secondItem="Jf3-P1-UTM" secondAttribute="bottom" id="aWk-1M-KoX"/>
                                             <constraint firstItem="awd-ct-zv1" firstAttribute="top" secondItem="Van-Gj-OJE" secondAttribute="top" id="adF-q2-uCF"/>
                                             <constraint firstItem="Jf3-P1-UTM" firstAttribute="leading" secondItem="awd-ct-zv1" secondAttribute="leading" id="chD-kw-tp4"/>
                                             <constraint firstAttribute="trailing" secondItem="awd-ct-zv1" secondAttribute="trailing" id="qDS-WN-aQK"/>

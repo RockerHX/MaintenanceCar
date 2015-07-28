@@ -45,13 +45,15 @@ static NSString *HomePageNavControllerID = @"HomePageNavigationController";
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[首页]"];
     
-    [_detailView refresh];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[首页]"];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewDidLoad {

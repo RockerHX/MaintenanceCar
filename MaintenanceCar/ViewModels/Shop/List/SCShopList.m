@@ -163,7 +163,7 @@
 {
     _type = SCShopListTypeNormal;
     [self setParameter:@"auto_get_car" value:@([SCUserInfo share].loginState)];
-    [self setParameter:@"uid" value:[SCUserInfo share].userID];
+    [self setParameter:@"user_id" value:[SCUserInfo share].userID];
     [self loadNewShops];
 }
 
