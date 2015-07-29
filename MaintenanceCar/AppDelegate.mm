@@ -15,7 +15,8 @@
 #import <Weixin/WXApi.h>
 #import <AlipaySDK/AlipaySDK.h>
 #import "AllMicroConstants.h"
-#import "UMFeedback.h"
+#import <UMengFeedback/UMFeedback.h>
+#import <UMengFeedback/UMOpus.h>
 #import "SCUserInfo.h"
 
 @interface AppDelegate () <WXApiDelegate>
@@ -43,6 +44,7 @@
 #pragma mark UMeng Analytics SDK
     // 启用[友盟反馈]
     [UMFeedback setAppkey:UMengAPPKEY];
+    [UMOpus setAudioEnable:YES];
     // 设置版本号
     [MobClick setAppVersion:APP_VERSION];
     [MobClick checkUpdate];                 // 集成友盟更新
