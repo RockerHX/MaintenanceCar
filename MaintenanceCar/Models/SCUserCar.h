@@ -10,19 +10,18 @@
 
 @interface SCUserCar : SCCar
 
-@property (nonatomic, strong) NSString <Optional>*plate;                  // 牌照
-@property (nonatomic, strong) NSString <Optional>*buy_car_year;           // 购买年份
-@property (nonatomic, strong) NSString <Optional>*buy_car_month;          // 购买月份
-@property (nonatomic, strong) NSString <Optional>*run_distance;           // 里程数
-@property (nonatomic, strong) NSString <Optional>*run_distance_stamp;     // 里程时间
-@property (nonatomic, strong) NSString <Optional>*habit;                  // 驾驶习惯
-@property (nonatomic, strong) NSString <Optional>*memo;                   // 备注
+@property (nonatomic, copy) NSString *plate;                  // 牌照
+@property (nonatomic, copy) NSString *buyCarYear;           // 购买年份
+@property (nonatomic, copy) NSString *buyCarMonth;          // 购买月份
+@property (nonatomic, copy) NSString *runDistance;           // 里程数
+@property (nonatomic, copy) NSString *runDistanceStamp;     // 里程时间
+@property (nonatomic, copy) NSString *habit;                  // 驾驶习惯
+@property (nonatomic, copy) NSString *memo;                   // 备注
 
-@property (nonatomic, strong) NSArray <Ignore>*normalItems;             // 保养数据 - 普保
-@property (nonatomic, strong) NSArray <Ignore>*carefulItems;            // 保养数据 - 精保
-@property (nonatomic, strong) NSArray <Ignore>*allItems;                // 保养数据 - 自选
+@property (nonatomic, strong) NSArray *normalItems;           // 保养数据 - 普保
+@property (nonatomic, strong) NSArray *carefulItems;          // 保养数据 - 精保
+@property (nonatomic, strong) NSArray *allItems;              // 保养数据 - 自选
 
-
-- (id)initWithCar:(SCCar *)car;
+- (instancetype)initWithCar:(SCCar *)car;
 
 @end

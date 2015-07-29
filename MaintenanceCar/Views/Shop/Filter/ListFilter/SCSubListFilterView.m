@@ -81,19 +81,24 @@
         }
         else
         {
-            if (_category.program)
-                [_delegate selectedCompletedWithTitle:item.title parameter:_category.program value:_category.value];
+            if (item.program)
+                [_delegate selectedCompletedWithTitle:item.filterTitle parameter:item.program value:item.value];
+            else if (_category.program)
+                [_delegate selectedCompletedWithTitle:item.filterTitle parameter:_category.program value:item.value];
         }
     }
     else if ([tableView isEqual:_subFilterView])
     {
-        SCFilterCategoryItem *item = _subItems[indexPath.row];
+        SCFilterCategoryItem *item = _category.items[_mainFilterIndex];
+        SCFilterCategoryItem *subItem = _subItems[indexPath.row];
         if (_delegate && [_delegate respondsToSelector:@selector(selectedCompletedWithTitle:parameter:value:)])
         {
-            if (_category.program)
-                [_delegate selectedCompletedWithTitle:item.filterTitle parameter:_category.program value:item.value];
+            if (subItem.program)
+                [_delegate selectedCompletedWithTitle:subItem.filterTitle parameter:subItem.program value:subItem.value];
             else if (item.program)
-                [_delegate selectedCompletedWithTitle:item.filterTitle parameter:item.program value:item.value];
+                [_delegate selectedCompletedWithTitle:subItem.filterTitle parameter:item.program value:subItem.value];
+            else if (_category.program)
+                [_delegate selectedCompletedWithTitle:subItem.filterTitle parameter:_category.program value:subItem.value];
         }
     }
 }

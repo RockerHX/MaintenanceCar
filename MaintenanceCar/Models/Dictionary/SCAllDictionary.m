@@ -11,50 +11,17 @@
 #import "SCAPIRequest.h"
 #import "SCUserCar.h"
 
-
-#define FilterConditionsResourceName    @"FilterConditions"
-#define FilterConditionsResourceType    @"plist"
-
-#define DistanceConditionKey            @"DistanceCondition"
-#define RepairConditionKey              @"RepairCondition"
-#define OtherConditionKey               @"OtherCondition"
-
 #define fColorExplainFileName           @"ColorExplain.dat"
 #define fAllDictionaryFileName          @"AllDictionary.dat"
 
 static SCAllDictionary *allDictionary = nil;
 
-@interface SCAllDictionary ()
+@implementation SCAllDictionary
 {
     SCDictionaryType _type;
-    
-    NSDictionary *_filterConditions;
 }
-
-@end
-
-@implementation SCAllDictionary
 
 #pragma mark - Init Methods
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        
-        // 初始化筛选数据
-        NSDictionary *localData = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:FilterConditionsResourceName ofType:FilterConditionsResourceType]];
-        
-        NSMutableDictionary *filterConditions = [localData mutableCopy];
-        NSMutableArray *repairConditions = [NSMutableArray arrayWithArray:localData[RepairConditionKey]];
-        NSMutableArray *otherConditions = [NSMutableArray arrayWithArray:localData[OtherConditionKey]];
-        
-        [filterConditions setObject:repairConditions forKey:RepairConditionKey];
-        [filterConditions setObject:otherConditions forKey:OtherConditionKey];
-        _filterConditions = filterConditions;
-    }
-    return self;
-}
-
 + (instancetype)share
 {
     static dispatch_once_t onceToken;
@@ -62,22 +29,6 @@ static SCAllDictionary *allDictionary = nil;
         allDictionary = [[SCAllDictionary alloc] init];
     });
     return allDictionary;
-}
-
-#pragma mark - Setter And Getter
-- (NSArray *)distanceConditions
-{
-    return _filterConditions[DistanceConditionKey];
-}
-
-- (NSArray *)repairConditions
-{
-    return _filterConditions[RepairConditionKey];
-}
-
-- (NSArray *)otherConditions
-{
-    return _filterConditions[OtherConditionKey];
 }
 
 #pragma mark - Public Methods
@@ -151,26 +102,6 @@ static SCAllDictionary *allDictionary = nil;
     }
 }
 
-- (void)replaceSpecialDataWith:(SCSpecial *)special
-{
-    _special = special;
-    NSMutableArray *otherConditions = _filterConditions[OtherConditionKey];
-    @try {
-        if (otherConditions.count >= 5)
-            [otherConditions removeObjectAtIndex:4];
-        [otherConditions insertObject:@{@"DisplayName": special.text, @"RequestValue": @"检"} atIndex:4];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"OtherConditions Add Condition Error:%@", exception.reason);
-    }
-    @finally {
-        [[SCAPIRequest manager] startMerchantTagsAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            for (NSDictionary *data in responseObject)
-                [otherConditions addObject:@{@"DisplayName": data[@"tag_name"], @"RequestValue": @"tag"}];
-        } failure:nil];
-    }
-}
-
 - (void)generateServiceItemsWtihMerchantImtes:(NSDictionary *)merchantItems inspectFree:(BOOL)free;
 {
     // 先分别取出服务项目
@@ -191,26 +122,6 @@ static SCAllDictionary *allDictionary = nil;
     if (_special && free)
         [items addObject:[[SCServiceItem alloc] initWithServiceID:@"5"]];
     _serviceItems = items;
-}
-
-- (void)hanleRepairConditions:(NSArray *)userCars
-{
-    // 先获取专修筛选数据
-    NSMutableArray *repairConditions = _filterConditions[RepairConditionKey];
-    // 获取专修筛选的第一个数据之后把数组清空，再添第一个预约项
-    id defaultCondition = [repairConditions firstObject];
-    [repairConditions removeAllObjects];
-    if (defaultCondition)
-        [repairConditions addObject:defaultCondition];
-    // 根据用户汽车品牌动态添加专修筛选数据
-    NSMutableSet *carSets = [NSMutableSet set];
-    for (SCUserCar *userCar in userCars)
-        [carSets addObject:userCar.brand_name];
-    for (NSString *brandName in carSets)
-    {
-        NSString *displayName = [@"专修" stringByAppendingString:brandName];
-        [repairConditions addObject:@{@"DisplayName": displayName, @"RequestValue": brandName}];
-    }
 }
 
 - (NSString *)imageNameOfFlag:(NSString *)flag

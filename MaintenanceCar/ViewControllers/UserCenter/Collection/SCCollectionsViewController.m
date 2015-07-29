@@ -11,42 +11,55 @@
 #import "SCReservationViewController.h"
 #import "SCLocationManager.h"
 
+static NSString *CollectionNavControllerID = @"CollectionsNavigationController";
+
 @implementation SCCollectionsViewController
 
+#pragma mark - Init Methods
++ (UINavigationController *)navigationInstance {
+    static UINavigationController *navigationController = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        navigationController = [SCStoryBoardManager navigaitonControllerWithIdentifier:CollectionNavControllerID
+                                                                        storyBoardName:SCStoryBoardNameCollection];
+    });
+    return navigationController;
+}
+
++ (instancetype)instance {
+    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameCollection];
+}
+
 #pragma mark - View Controller Life Cycle
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[个人中心] - 收藏"];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[个人中心] - 收藏"];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 }
 
-#pragma mark - Init Methods
-+ (instancetype)instance
-{
-    return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameCollection];
+#pragma mark - Action
+- (IBAction)menuButtonPressed {
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldShowMenu)]) {
+        [_delegate shouldShowMenu];
+    }
 }
 
 #pragma mark - Table View Data Source Methods
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _dataList.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SCMerchant *merchant = _dataList[indexPath.row];
     SCMerchantTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MerchantCellReuseIdentifier forIndexPath:indexPath];
     cell.reservationButton.tag    = indexPath.row;
@@ -58,16 +71,13 @@
     return cell;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;     // 允许列表编辑
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     // 如果用户经行删除或者滑动删除操作，设置数据缓存，并进行相关删除操作请求，同步服务器数据
-    if (editingStyle == UITableViewCellEditingStyleDelete)
-    {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
         _deleteDataCache = _dataList[indexPath.row];        // 设置数据缓存
         [_dataList removeObjectAtIndex:indexPath.row];      // 清楚数据
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];   // 列表中删除相关数据行
@@ -76,13 +86,11 @@
 }
 
 #pragma mark - Table View Delegate Methods
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     return @"取消收藏";
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SCMerchantDetailViewController *merchantDetialViewControler = [SCMerchantDetailViewController instance];
     merchantDetialViewControler.delegate           = self;
@@ -92,20 +100,17 @@
 }
 
 #pragma mark - Public Methods
-- (void)startDropDownRefreshReuqest
-{
+- (void)startDropDownRefreshReuqest {
     [super startDropDownRefreshReuqest];
     [self refreshCollectionListMerchantList];
 }
 
-- (void)startPullUpRefreshRequest
-{
+- (void)startPullUpRefreshRequest {
     [super startPullUpRefreshRequest];
     [self refreshCollectionListMerchantList];
 }
 
-- (void)refreshCollectionListMerchantList
-{
+- (void)refreshCollectionListMerchantList {
     WEAK_SELF(weakSelf);
     [[SCLocationManager share] getLocationSuccess:^(BMKUserLocation *userLocation, NSString *latitude, NSString *longitude) {
         [weakSelf startMerchantCollectionListRequest:latitude longitude:longitude];
@@ -120,8 +125,7 @@
 /**
  *  收藏列表数据请求方法，必选参数：user_id，limit，offset
  */
-- (void)startMerchantCollectionListRequest:(NSString *)latitude longitude:(NSString *)longitude
-{
+- (void)startMerchantCollectionListRequest:(NSString *)latitude longitude:(NSString *)longitude {
     WEAK_SELF(weakSelf);
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
@@ -129,17 +133,15 @@
                                   @"offset": @(self.offset)};
     [[SCAPIRequest manager] startCollectionsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf endRefresh];
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
-        {
+        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess) {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
-            switch (statusCode)
-            {
-                case SCAPIRequestErrorCodeNoError:
-                {
+            switch (statusCode) {
+                case SCAPIRequestErrorCodeNoError: {
                     NSArray *merchants = responseObject[@"data"];
-                    if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
+                    if (weakSelf.requestType == SCRequestRefreshTypeDropDown) {
                         [weakSelf clearListData];
+                    }
                     [merchants enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                         SCMerchant *merchant = [[SCMerchant alloc] initWithDictionary:obj error:nil];
                         [_dataList addObject:merchant];
@@ -149,21 +151,22 @@
                     [weakSelf.tableView reloadData];                // 数据配置完成，刷新商家列表
                     [weakSelf addRefreshHeader];
                     [weakSelf addRefreshFooter];
-                    if (merchants.count < SearchLimit)
+                    if (merchants.count < SearchLimit) {
                         [weakSelf removeRefreshFooter];
-                }
+                    }
                     break;
+                }
                     
-                case SCAPIRequestErrorCodeListNotFoundMore:
-                {
+                case SCAPIRequestErrorCodeListNotFoundMore: {
                     [weakSelf.tableView reloadData];
                     [weakSelf addRefreshHeader];
                     [weakSelf removeRefreshFooter];
-                }
                     break;
+                }
             }
-            if (statusMessage.length)
+            if (statusMessage.length) {
                 [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
+            }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf hanleFailureResponseWtihOperation:operation];
@@ -174,19 +177,15 @@
 /**
  *  取消收藏商家请求方法，必选参数：company_id，user_id
  */
-- (void)startCancelCollectionMerchantRequestWithIndex:(NSInteger)index
-{
+- (void)startCancelCollectionMerchantRequestWithIndex:(NSInteger)index {
     WEAK_SELF(weakSelf);
     NSDictionary *paramters = @{@"company_id": ((SCMerchant *)_deleteDataCache).company_id,
                                    @"user_id": [SCUserInfo share].userID};
     [[SCAPIRequest manager] startCancelCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // 根据返回结果进行相应提示
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
-        {
+        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess) {
             [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"删除成功" delay:0.5f];
-        }
-        else
-        {
+        } else {
             [weakSelf deleteFailureAtIndex:index];
             [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"删除失败，请重试！" delay:0.5f];
         }
@@ -197,8 +196,7 @@
 }
 
 #pragma mark - SCMerchantDetailViewControllerDelegate Methods
-- (void)cancelCollectionSuccess
-{
+- (void)cancelCollectionSuccess {
     [self.tableView.header beginRefreshing];
 }
 

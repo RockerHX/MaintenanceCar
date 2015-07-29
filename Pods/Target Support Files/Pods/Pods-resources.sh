@@ -58,7 +58,7 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "Baidu-Maps-iOS-SDK/mapapi.bundle"
+  install_resource "BaiduMap-iOS-SDK/BaiduMapAPI.framework/Resources/mapapi.bundle"
   install_resource "DateTools/DateTools/DateTools.bundle"
   install_resource "IQKeyboardManager/IQKeyBoardManager/Resources/IQKeyboardManager.bundle"
   install_resource "MJRefresh/MJRefreshExample/MJRefreshExample/MJRefresh/MJRefresh.bundle"
@@ -81,7 +81,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "UMengFeedback/UMFeedback_iOS_2.3.3/UMengFeedback_SDK/Resources/umeng_fb_audio_play_default@2x.png"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "Baidu-Maps-iOS-SDK/mapapi.bundle"
+  install_resource "BaiduMap-iOS-SDK/BaiduMapAPI.framework/Resources/mapapi.bundle"
   install_resource "DateTools/DateTools/DateTools.bundle"
   install_resource "IQKeyboardManager/IQKeyBoardManager/Resources/IQKeyboardManager.bundle"
   install_resource "MJRefresh/MJRefreshExample/MJRefreshExample/MJRefresh/MJRefresh.bundle"
