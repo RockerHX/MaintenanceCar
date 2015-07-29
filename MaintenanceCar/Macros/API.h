@@ -119,7 +119,7 @@
 #define CarBrandAPIURL                  [V1APIURL stringByAppendingString:CarBrandAPI]                // 汽车品牌接口URL - 用于更新汽车品牌
 #define CarModelAPIURL                  [V1APIURL stringByAppendingString:CarModelAPI]                // 汽车型号接口URL - 用于更新汽车型号
 #define CarsAPIURL                      [V1APIURL stringByAppendingString:CarsAPI]                    // 汽车款式接口URL - 用于更新汽车款式
-#define AddCarAPIURL                    [V2APIURL stringByAppendingString:AddCarAPI]                  // 添加车辆接口URL - 用于用户添加车辆
+#define AddCarAPIURL                    [V1APIURL stringByAppendingString:AddCarAPI]                  // 添加车辆接口URL - 用于用户添加车辆
 #define DeleteCarAPIURL                 [V1APIURL stringByAppendingString:DeleteCarAPI]               // 删除车辆接口URL - 用于用户删除车辆
 
 #define MaintenanceAPIURL               [V1APIURL stringByAppendingString:MaintenanceAPI]             // 保养数据接口URL - 用于获取用户车辆保养数据

@@ -15,6 +15,7 @@
 #import "SCReservationViewController.h"
 #import "SCUserCar.h"
 #import "SCMileageView.h"
+#import "SCAllDictionary.h"
 #import "SCChangeCarDataViewController.h"
 #import "SCOperationViewController.h"
 
@@ -161,10 +162,10 @@
 - (void)displayMaintenanceView
 {
     SCUserCar *userCar                   = _currentCar;
-    _carNameLabel.text                   = [userCar.brandName stringByAppendingString:userCar.modelName];
-    _carFullNameLabel.text               = userCar.carFullModel;
-    _buyCarTimeLabel.text                = ([userCar.buyCarYear integerValue] && [userCar.buyCarMonth integerValue]) ? [NSString stringWithFormat:@"%@年%@月", userCar.buyCarYear, userCar.buyCarMonth] : @"";
-    _labelView.mileage                   = userCar.runDistance;
+    _carNameLabel.text                   = [userCar.brand_name stringByAppendingString:userCar.model_name];
+    _carFullNameLabel.text               = userCar.car_full_model;
+    _buyCarTimeLabel.text                = ([userCar.buy_car_year integerValue] && [userCar.buy_car_month integerValue]) ? [NSString stringWithFormat:@"%@年%@月", userCar.buy_car_year, userCar.buy_car_month] : @"";
+    _labelView.mileage                   = userCar.run_distance;
     _driveHabitLabel.text                = [self handleHabitString:userCar.habit];
     _maintenanceTypeView.maintenanceType = _maintenanceType;
 }
@@ -192,7 +193,7 @@
 {
     WEAK_SELF(weakSelf);
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    NSDictionary *parameters = @{@"user_car_id": _currentCar.userCarID};
+    NSDictionary *parameters = @{@"user_car_id": _currentCar.user_car_id};
     [[SCAPIRequest manager] startMaintenanceDataAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
         {
@@ -252,7 +253,7 @@
 - (void)startRecommendMerchantListRequestWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
 {
     WEAK_SELF(weakSelf);
-    NSDictionary *parameters = @{@"query": [NSString stringWithFormat:@"default:'深圳' AND service:'养' AND majors:'%@'", _currentCar.brandName],
+    NSDictionary *parameters = @{@"query": [NSString stringWithFormat:@"default:'深圳' AND service:'养' AND majors:'%@'", _currentCar.brand_name],
                                  @"limit": @(3),
                                 @"offset": @(0),
                                 @"radius": @(SearchRadius).stringValue,

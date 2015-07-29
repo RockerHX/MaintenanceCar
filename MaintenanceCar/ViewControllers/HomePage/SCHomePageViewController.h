@@ -15,24 +15,19 @@ typedef NS_ENUM(NSUInteger, SCHomePageServiceButtonType) {
     SCHomePageServiceButtonTypeOperation
 };
 
-@protocol SCHomePageViewControllerDelegate <NSObject>
-
-@optional
-- (void)shouldShowMenu;
-
-@end
-
 @class SCHomePageDetailView;
+
 @interface SCHomePageViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet SCHomePageDetailView *detailView;          // 首页详情View
+@property (weak, nonatomic) IBOutlet   NSLayoutConstraint *buttonWidthConstraint;   // 按钮宽约束
+@property (weak, nonatomic) IBOutlet SCHomePageDetailView *detailView;              // 首页详情View
+@property (weak, nonatomic) IBOutlet             UIButton *specialButton;           // 首页第四个按钮
+@property (weak, nonatomic) IBOutlet              UILabel *specialLabel;            // 首页第四个文字栏
 
-@property (nonatomic, weak) id  <SCHomePageViewControllerDelegate>delegate;
+- (IBAction)locationItemPressed;
+- (IBAction)serviceButtonPressed:(UIButton *)button;
 
-- (IBAction)menuButtonPressed;
-
-
-+ (UINavigationController *)navigationInstance;
 + (instancetype)instance;
++ (NSString *)navgationRestorationIdentifier;
 
 @end

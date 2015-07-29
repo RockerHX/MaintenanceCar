@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="azL-7q-Cb5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="RPR-Ec-YZ2">
     <dependencies>
         <deployment version="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
-        <scene sceneID="QDc-hc-7nw">
+        <!--Main View Controller-->
+        <scene sceneID="hTJ-tz-x9a">
             <objects>
-                <viewController storyboardIdentifier="SCRootViewController" id="azL-7q-Cb5" customClass="SCRootViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="GnX-i2-Uey"/>
-                        <viewControllerLayoutGuide type="bottom" id="U3Z-gj-Zfa"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="PIn-Th-KFY">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ujd-FI-jJr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tabBarController id="RPR-Ec-YZ2" customClass="SCMainViewController" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="DF5-cW-7zW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="eRZ-xA-4ot" kind="relationship" relationship="viewControllers" id="PSI-7b-nZ1"/>
+                        <segue destination="yyw-cV-1ce" kind="relationship" relationship="viewControllers" id="J1X-bf-zVJ"/>
+                        <segue destination="4em-1g-qKQ" kind="relationship" relationship="viewControllers" id="5ce-Sc-5Bu"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ULj-WM-QwK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="586" y="328"/>
+            <point key="canvasLocation" x="1085" y="328"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="QLz-kJ-VW7">
@@ -58,27 +60,63 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="00f-Z2-XkK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1486" y="328"/>
+            <point key="canvasLocation" x="2042" y="328"/>
         </scene>
-        <!--Main View Controller-->
-        <scene sceneID="951-QT-GKb">
+        <!--我-->
+        <scene sceneID="sA9-3G-hGq">
             <objects>
-                <viewController storyboardIdentifier="SCMainViewController" id="N9G-tN-Ssb" customClass="SCMainViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="1ja-55-xrT"/>
-                        <viewControllerLayoutGuide type="bottom" id="El6-S2-MP2"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="reo-92-1hp">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ynf-2H-mjL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController restorationIdentifier="UserCenterNavigationController" id="4em-1g-qKQ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="我" image="UserIcon-Unselected" id="A4l-9c-4hF">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-2"/>
+                    </tabBarItem>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="J44-69-gTX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yYx-En-Owg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1030" y="328"/>
+            <point key="canvasLocation" x="1566" y="999"/>
+        </scene>
+        <!--首页-->
+        <scene sceneID="Hm6-9R-WxA">
+            <objects>
+                <navigationController restorationIdentifier="HomePageNavigationController" id="eRZ-xA-4ot" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="首页" image="HomePageIcon-Unselected" id="iZB-5n-y5Q">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-2"/>
+                    </tabBarItem>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="9Jp-hs-YlA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="roY-Cd-4NA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1566" y="-342"/>
+        </scene>
+        <!--发现-->
+        <scene sceneID="ndG-Ia-hcR">
+            <objects>
+                <navigationController restorationIdentifier="DiscoveryNavigationController" id="yyw-cV-1ce" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
+                    <tabBarItem key="tabBarItem" title="发现" image="FoundIcon-Unselected" id="930-t8-W6i">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-2"/>
+                    </tabBarItem>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UUP-xF-IyO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uvG-Ps-IFl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1566" y="328"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="FoundIcon-Unselected" width="24" height="24"/>
+        <image name="HomePageIcon-Unselected" width="24" height="24"/>
+        <image name="UserIcon-Unselected" width="24" height="24"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

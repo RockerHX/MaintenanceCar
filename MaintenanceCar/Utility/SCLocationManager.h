@@ -6,7 +6,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import <BaiduMapAPI/BMapKit.h>
+#import <Baidu-Maps-iOS-SDK/BMapKit.h>
 
 // 用户位置信息Model - 单例，全局使用
 @interface SCLocationManager : NSObject

@@ -9,6 +9,7 @@
 #import "SCFilterView.h"
 #import "MicroConstants.h"
 #import "SCFilterViewModel.h"
+#import "SCFilterCell.h"
 #import "SCListFilterView.h"
 #import "SCSubListFilterView.h"
 #import "SCCarModelFilterView.h"

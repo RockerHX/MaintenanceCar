@@ -8,20 +8,8 @@
 
 #import "SCListViewController.h"
 
-@protocol SCGroupTicketsViewControllerDelegate <NSObject>
-
-@optional
-- (void)shouldShowMenu;
-
-@end
-
 @interface SCGroupTicketsViewController : SCListViewController
 
-@property (nonatomic, weak) id  <SCGroupTicketsViewControllerDelegate>delegate;
-
-- (IBAction)menuButtonPressed;
-
-+ (UINavigationController *)navigationInstance;
 + (instancetype)instance;
 
 @end

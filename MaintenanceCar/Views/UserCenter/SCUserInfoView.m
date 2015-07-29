@@ -38,8 +38,8 @@
 - (void)displayLabelWithCar:(SCUserCar *)car
 {
     _currentCar = car;
-    _carNameLabel.text = [NSString stringWithFormat:@"%@%@", _currentCar.brandName, _currentCar.modelName];
-    _carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", _currentCar.runDistance.length ? _currentCar.runDistance : @"0"];
+    _carNameLabel.text = [NSString stringWithFormat:@"%@%@", _currentCar.brand_name, _currentCar.model_name];
+    _carDataLabel.text = [NSString stringWithFormat:@"已行驶%@公里", _currentCar.run_distance.length ? _currentCar.run_distance : @"0"];
 }
 
 - (void)changeCarData

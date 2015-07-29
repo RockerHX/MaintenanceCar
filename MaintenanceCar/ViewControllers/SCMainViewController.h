@@ -7,10 +7,7 @@
 //
 
 #import "SCViewControllerCategory.h"
-#import "SCUserCenterMenuViewController.h"
 
-@interface SCMainViewController : UIViewController <SCUserCenterMenuViewControllerDelegate>
-
-+ (instancetype)instance;
+@interface SCMainViewController : UITabBarController
 
 @end

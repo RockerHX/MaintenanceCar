@@ -179,10 +179,10 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 - (void)showAlert:(SCCar *)car
 {
     NSString *title;
-    if (car.carID.length)
-        title = [NSString stringWithFormat:@"您选择的是%@ %@", car.carFullModel, (car.upTime ? car.upTime : @"")];
+    if (car.car_id.length)
+        title = [NSString stringWithFormat:@"您选择的是%@ %@", car.car_full_model, (car.up_time ? car.up_time : @"")];
     else
-        title = [NSString stringWithFormat:@"您选择的是%@ %@", car.brandName, car.modelName];
+        title = [NSString stringWithFormat:@"您选择的是%@ %@", car.brand_name, car.model_name];
     [self showAlertWithTitle:title message:@"您确认添加吗？" delegate:self tag:Zero cancelButtonTitle:@"取消" otherButtonTitle:@"添加"];
 }
 
@@ -193,12 +193,12 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
 {
     WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                  @"car_id": _car.carID,
-                                @"model_id": _car.modelID};
+                                  @"car_id": _car.car_id,
+                                @"model_id": _car.model_id};
     [[SCAPIRequest manager] startAddCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
-            _car.userCarID = responseObject[@"user_car_id"];
+            _car.user_car_id = responseObject[@"user_car_id"];
             [NOTIFICATION_CENTER postNotificationName:kUserCarsDataNeedReloadSuccessNotification object:nil];
             if ([_delegate respondsToSelector:@selector(addCarSuccess:)])
                 [_delegate addCarSuccess:_car];

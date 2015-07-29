@@ -9,20 +9,8 @@
 #import "SCListViewController.h"
 #import "SCMerchantDetailViewController.h"
 
-@protocol SCCollectionsViewControllerDelegate <NSObject>
-
-@optional
-- (void)shouldShowMenu;
-
-@end
-
 @interface SCCollectionsViewController : SCListViewController <SCMerchantDetailViewControllerDelegate>
 
-@property (nonatomic, weak) id  <SCCollectionsViewControllerDelegate>delegate;
-
-- (IBAction)menuButtonPressed;
-
-+ (UINavigationController *)navigationInstance;
 + (instancetype)instance;
 
 @end

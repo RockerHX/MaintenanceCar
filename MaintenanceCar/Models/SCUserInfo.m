@@ -12,20 +12,21 @@
 #import "MicroConstants.h"
 #import "SCAPIRequest.h"
 
-static NSString *kLoginKey = @"kLoginKey";
-static NSString *kUserIDKey = @"kUserIDKey";
-static NSString *kPhoneNumberKey = @"kPhoneNumberKey";
-static NSString *kUserTokenKey = @"kUserTokenKey";
-static NSString *kTokenRefreshDateKey = @"kTokenRefreshDateKey";
-static NSString *kOwnerNameKey = @"kOwnerNameKey";
-static NSString *kUserCarsKey = @"kUserCarsKey";
-static NSString *kAddAliasKey = @"kAddAliasKey";
-static NSString *kReceiveMessageKey = @"kReceiveMessageKey";
+#define kLoginKey               @"kLoginKey"
+#define kUserIDKey              @"kUserIDKey"
+#define kPhoneNumberKey         @"kPhoneNumberKey"
+#define kUserTokenKey           @"kUserTokenKey"
+#define kTokenRefreshDateKey    @"kTokenRefreshDateKey"
+#define kOwnerNameKey           @"kOwnerNameKey"
+#define kUserCarsKey            @"kUserCarsKey"
+#define kAddAliasKey            @"kAddAliasKey"
+#define kReceiveMessageKey      @"kReceiveMessageKey"
 
 typedef void(^BLOCK)(SCUserInfo *userInfo, BOOL finish);
 typedef void(^STATE_BLOCK)(SCLoginState state);
 
-@implementation SCUserInfo {
+@implementation SCUserInfo
+{
     BLOCK       _block;
     STATE_BLOCK _stateBlock;
     
@@ -34,7 +35,8 @@ typedef void(^STATE_BLOCK)(SCLoginState state);
 }
 
 #pragma mark - Init Methods
-- (id)init {
+- (id)init
+{
     self = [super init];
     if (self) {
         _userCars      = [@[] mutableCopy];
@@ -43,7 +45,8 @@ typedef void(^STATE_BLOCK)(SCLoginState state);
     return self;
 }
 
-+ (instancetype)share {
++ (instancetype)share
+{
     static SCUserInfo *userInfo = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -54,73 +57,87 @@ typedef void(^STATE_BLOCK)(SCLoginState state);
 }
 
 #pragma mark - Getter Methods
-- (NSString *)userID {
+- (NSString *)userID
+{
     return self.loginState ? [USER_DEFAULT objectForKey:kUserIDKey] : @"";
 }
 
-- (NSString *)phoneNmber {
+- (NSString *)phoneNmber
+{
     return self.loginState ? [USER_DEFAULT objectForKey:kPhoneNumberKey] : @"";
 }
 
-- (NSString *)token {
+- (NSString *)token
+{
     return self.loginState ? [USER_DEFAULT objectForKey:kUserTokenKey] : @"";
 }
 
-- (NSString *)ownerName {
+- (NSString *)ownerName
+{
     return self.loginState ? [USER_DEFAULT objectForKey:kOwnerNameKey] : @"";
 }
 
-- (SCLoginState)loginState {
+- (SCLoginState)loginState
+{
     return ([[USER_DEFAULT objectForKey:kLoginKey] boolValue] && [USER_DEFAULT objectForKey:kUserIDKey] && [USER_DEFAULT objectForKey:kUserTokenKey]) ? SCLoginStateLogin : SCLoginStateLogout;
 }
 
-- (BOOL)addAliasSuccess {
+- (BOOL)addAliasSuccess
+{
     BOOL success = [[USER_DEFAULT objectForKey:kAddAliasKey] boolValue];
     return success;
 }
 
-- (void)setAddAliasSuccess:(BOOL)addAliasSuccess {
+- (void)setAddAliasSuccess:(BOOL)addAliasSuccess
+{
     [USER_DEFAULT setObject:@(addAliasSuccess) forKey:kAddAliasKey];
     [USER_DEFAULT synchronize];
 }
 
-- (BOOL)receiveMessage {
+- (BOOL)receiveMessage
+{
     BOOL receive = [[USER_DEFAULT objectForKey:kReceiveMessageKey] boolValue];
     return receive;
 }
 
-- (void)setReceiveMessage:(BOOL)receiveMessage {
+- (void)setReceiveMessage:(BOOL)receiveMessage
+{
     [self canReceiveMessage:receiveMessage];
     [USER_DEFAULT setObject:@(receiveMessage) forKey:kReceiveMessageKey];
     [USER_DEFAULT synchronize];
 }
 
-- (NSArray *)selectedItems {
+- (NSArray *)selectedItems
+{
     return _selectedItems;
 }
 
-- (NSArray *)cars {
+- (NSArray *)cars
+{
     return self.loginState ? _userCars : nil;
 }
 
-- (void)canReceiveMessage:(BOOL)can {
-    if (can) {
+- (void)canReceiveMessage:(BOOL)can
+{
+    if (can)
+    {
         [UMessage addAlias:[USER_DEFAULT objectForKey:kPhoneNumberKey] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
-            if ([responseObject[@"success"] isEqualToString:@"ok"]) {
+            if ([responseObject[@"success"] isEqualToString:@"ok"])
                 self.addAliasSuccess = YES;
-            }
         }];
-    } else {
+    }
+    else
+    {
         [UMessage removeAlias:[USER_DEFAULT objectForKey:kPhoneNumberKey] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
-            if ([responseObject[@"success"] isEqualToString:@"ok"]) {
+            if ([responseObject[@"success"] isEqualToString:@"ok"])
                 self.addAliasSuccess = NO;
-            }
         }];
     }
 }
 
 #pragma mark - Public Methods
-- (void)loginSuccessWithUserData:(NSDictionary *)userData {
+- (void)loginSuccessWithUserData:(NSDictionary *)userData
+{
     [USER_DEFAULT setObject:@(YES) forKey:kLoginKey];
     [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"user_id"]] forKey:kUserIDKey];
     [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"phone"]] forKey:kPhoneNumberKey];
@@ -131,12 +148,14 @@ typedef void(^STATE_BLOCK)(SCLoginState state);
     [self loginStateChange:SCLoginStateLogin];
 }
 
-- (void)saveOwnerName:(NSString *)name {
+- (void)saveOwnerName:(NSString *)name
+{
     [USER_DEFAULT setObject:name forKey:kOwnerNameKey];
     [USER_DEFAULT synchronize];
 }
 
-- (void)logout {
+- (void)logout
+{
     [_userCars removeAllObjects];
     
     [USER_DEFAULT setObject:@(NO) forKey:kLoginKey];
@@ -149,7 +168,8 @@ typedef void(^STATE_BLOCK)(SCLoginState state);
     [self loginStateChange:SCLoginStateLogout];
 }
 
-- (BOOL)needRefreshToken {
+- (BOOL)needRefreshToken
+{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:8]];
@@ -160,12 +180,14 @@ typedef void(^STATE_BLOCK)(SCLoginState state);
     return (hour > 24);
 }
 
-- (void)refreshTokenDate {
+- (void)refreshTokenDate
+{
     [USER_DEFAULT setObject:[[NSDate date] formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"] forKey:kTokenRefreshDateKey];
     [USER_DEFAULT synchronize];
 }
 
-- (void)saveUserCarsWithData:(NSArray *)userCars {
+- (void)saveUserCarsWithData:(NSArray *)userCars
+{
     @try {
         [USER_DEFAULT setObject:userCars forKey:kUserCarsKey];
         [USER_DEFAULT synchronize];
@@ -175,71 +197,88 @@ typedef void(^STATE_BLOCK)(SCLoginState state);
     }
     @finally {
         [self load];
-        if (_block) _block(self, YES);
+        
+        if (_block)
+            _block(self, YES);
     }
 }
 
-- (void)stateChange:(void(^)(SCLoginState state))block {
+- (void)stateChange:(void(^)(SCLoginState state))block
+{
     _stateBlock = block;
 }
 
-- (void)userCarsReuqest:(void (^)(SCUserInfo *, BOOL))block {
+- (void)userCarsReuqest:(void (^)(SCUserInfo *, BOOL))block
+{
     _block = block;
-    if (self.loginState) {
+    if (self.loginState)
+    {
         __weak typeof(self)weakSelf = self;
         NSDictionary *parameters = @{@"user_id": self.userID};
         [[SCAPIRequest manager] startGetUserCarsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess) {
-                NSInteger statusCode = [responseObject[@"status_code"] integerValue];
-                if (statusCode == SCAPIRequestErrorCodeNoError) {
-                    [weakSelf saveUserCarsWithData:responseObject[@"data"]];
-                } else {
-                    if (_block) _block(weakSelf, NO);
-                }
-            }
+            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+                [weakSelf saveUserCarsWithData:responseObject];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            if (_block) _block(weakSelf, NO);
+            if (_block)
+                _block(weakSelf, NO);
         }];
-        if (_userCars.count) {
-            if (_block) _block(self, YES);
-        } else {
-            if (_block) _block(self, NO);
+        if (_userCars.count)
+        {
+            if (_block)
+                _block(self, YES);
         }
-    } else {
-        if (_block) _block(self, NO);
+        else
+        {
+            if (_block)
+                _block(self, NO);
+        }
+    }
+    else
+    {
+        if (_block)
+            _block(self, NO);
     }
 }
 
-- (void)load {
+- (void)load
+{
     NSArray *userCars = [USER_DEFAULT objectForKey:kUserCarsKey];
-    if (self.loginState) {
+    if (self.loginState)
+    {
         [_userCars removeAllObjects];
-        for (NSDictionary *carData in userCars) {
-            SCUserCar *userCar = [SCUserCar objectWithKeyValues:carData];
+        for (NSDictionary *carData in userCars)
+        {
+            SCUserCar *userCar = [[SCUserCar alloc] initWithDictionary:carData error:nil];
             [_userCars addObject:userCar];
         }
     }
 }
 
-- (void)addMaintenanceItem:(NSString *)item {
+- (void)addMaintenanceItem:(NSString *)item
+{
     [_selectedItems addObject:item];
 }
 
-- (void)removeItem:(NSString *)item {
-    for (NSString *name in _selectedItems) {
-        if ([name isEqualToString:item]) {
+- (void)removeItem:(NSString *)item
+{
+    for (NSString *name in _selectedItems)
+    {
+        if ([name isEqualToString:item])
+        {
             [_selectedItems removeObject:name];
             break;
         }
     }
 }
 
-- (void)removeItems {
+- (void)removeItems
+{
     [_selectedItems removeAllObjects];
 }
 
 #pragma mark - Private Methods
-- (void)loginStateChange:(SCLoginState)state {
+- (void)loginStateChange:(SCLoginState)state
+{
     self.receiveMessage = state;
     self.loginState = state;
     if (_stateBlock)

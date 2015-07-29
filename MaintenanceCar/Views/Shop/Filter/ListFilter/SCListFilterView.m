@@ -57,10 +57,10 @@
     SCFilterCategoryItem *item = _category.items[indexPath.row];
     if (_delegate && [_delegate respondsToSelector:@selector(selectedCompletedWithTitle:parameter:value:)])
     {
-        if (item.program)
-            [_delegate selectedCompletedWithTitle:item.filterTitle parameter:item.program value:item.value];
-        else if (_category.program)
+        if (_category.program)
             [_delegate selectedCompletedWithTitle:item.filterTitle parameter:_category.program value:item.value];
+        else if (item.program)
+            [_delegate selectedCompletedWithTitle:item.filterTitle parameter:item.program value:item.value];
     }
 }
 
