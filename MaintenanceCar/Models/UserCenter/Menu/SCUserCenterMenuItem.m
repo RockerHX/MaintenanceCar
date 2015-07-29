@@ -13,8 +13,8 @@
 
 #pragma mark - Init Methods
 - (instancetype)initWithCar:(SCUserCar *)car {
-    NSDictionary *dic = @{@"Icon": @"",
-                         @"Title": car.model_name};
+    NSDictionary *dic = @{@"Icon": car.iconURL,
+                         @"Title": car.modelName};
     return [self initWithDictionary:dic localData:NO];
 }
 

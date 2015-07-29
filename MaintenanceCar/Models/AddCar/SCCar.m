@@ -7,7 +7,25 @@
 //
 
 #import "SCCar.h"
+#import "API.h"
 
 @implementation SCCar
+
++ (instancetype)objectWithKeyValues:(id)keyValues {
+    SCCar *car = [super objectWithKeyValues:keyValues];
+    car.iconURL = [ImageURL stringByAppendingString:[NSString stringWithFormat:@"%@.png", car.brandID]];
+    return car;
+}
+
++ (NSDictionary *)replacedKeyFromPropertyName {
+    return @{@"carID": @"car_id",
+         @"userCarID": @"user_car_id",
+           @"modelID": @"model_id",
+           @"brandID": @"brand_id",
+      @"carFullModel": @"car_full_model",
+            @"upTime": @"up_time",
+         @"brandName": @"brand_name",
+         @"modelName": @"model_name"};
+}
 
 @end
