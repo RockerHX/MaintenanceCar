@@ -12,6 +12,7 @@
 #import <BaiduMapAPI/BMapKit.h>
 #import <UMengMessage/UMessage.h>
 #import <UMengFeedback/UMFeedback.h>
+#import <UMengFeedback/UMOpus.h>
 #import <UMengAnalytics-NO-IDFA/MobClick.h>
 #import <Weixin/WXApi.h>
 #import <AlipaySDK/AlipaySDK.h>
@@ -43,6 +44,7 @@
 #pragma mark UMeng Analytics SDK
     // 启用[友盟反馈]
     [UMFeedback setAppkey:UMengAPPKEY];
+    [UMOpus setAudioEnable:YES];
     // 设置版本号
     [MobClick setAppVersion:APP_VERSION];
     [MobClick checkUpdate];                 // 集成友盟更新

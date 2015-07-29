@@ -138,10 +138,12 @@ static NSString *MainNavControllerID = @"MainNavigationController";
     UINavigationController *navController = nil;
     if (row == SCUserCenterMenuRowHomePage) {
         navController = [self configHomePage];
+        [self showViewController:navController];
     } else if (row == SCUserCenterMenuRowSetting) {
         navController = [SCSettingViewController navigationInstance];
         SCSettingViewController *viewController = (SCSettingViewController *)navController.topViewController;
         viewController.delegate = self;
+        [self showViewController:navController];
     } else {
         // 检查用户是否登录，在进行相应页面跳转
         if ([SCUserInfo share].loginState) {
@@ -173,11 +175,11 @@ static NSString *MainNavControllerID = @"MainNavigationController";
                 default:
                     break;
             }
+            [self showViewController:navController];
         } else {
             [self showShoulLoginAlert];
         }
     }
-    [self showViewController:navController];
     [self.frostedViewController hideMenuViewController];
 }
 
