@@ -7,7 +7,7 @@
 //
 
 #import "SCSettingViewController.h"
-#import "UMFeedback.h"
+#import <UMengFeedback/UMFeedback.h>
 
 @implementation SCSettingViewController
 

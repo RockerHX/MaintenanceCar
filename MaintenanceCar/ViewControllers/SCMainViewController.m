@@ -56,7 +56,7 @@ static NSString *MainNavControllerID = @"MainNavigationController";
 
 - (void)viewConfig {
     // 添加首页视图
-    [self shouldShowViewControllerOnRow:SCUserCenterMenuRowHomePage];
+    [self showViewController:[self configHomePage]];
 }
 
 #pragma mark - Gesture Recognizer
@@ -126,10 +126,19 @@ static NSString *MainNavControllerID = @"MainNavigationController";
     }
 }
 
+- (UINavigationController *)configHomePage {
+    UINavigationController *navController = [SCHomePageViewController navigationInstance];
+    SCHomePageViewController *viewController = (SCHomePageViewController *)navController.topViewController;
+    viewController.delegate = self;
+    return navController;
+}
+
 #pragma mark - SCUserCenterMenuViewController Delegate
 - (void)shouldShowViewControllerOnRow:(SCUserCenterMenuRow)row {
     UINavigationController *navController = nil;
-    if (row == SCUserCenterMenuRowSetting) {
+    if (row == SCUserCenterMenuRowHomePage) {
+        navController = [self configHomePage];
+    } else if (row == SCUserCenterMenuRowSetting) {
         navController = [SCSettingViewController navigationInstance];
         SCSettingViewController *viewController = (SCSettingViewController *)navController.topViewController;
         viewController.delegate = self;
@@ -137,12 +146,6 @@ static NSString *MainNavControllerID = @"MainNavigationController";
         // 检查用户是否登录，在进行相应页面跳转
         if ([SCUserInfo share].loginState) {
             switch (row) {
-                case SCUserCenterMenuRowHomePage: {
-                    navController = [SCHomePageViewController navigationInstance];
-                    SCHomePageViewController *viewController = (SCHomePageViewController *)navController.topViewController;
-                    viewController.delegate = self;
-                    break;
-                }
                 case SCUserCenterMenuRowOrder: {
                     navController = [SCOrdersViewController navigationInstance];
                     SCOrdersViewController *viewController = (SCOrdersViewController *)navController.topViewController;

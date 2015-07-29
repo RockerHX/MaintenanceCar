@@ -10,12 +10,12 @@
 //#import <AFNetworking/UIKit+AFNetworking.h>
 //#import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 #import <BaiduMapAPI/BMapKit.h>
-#import <UMengAnalytics-NO-IDFA/MobClick.h>
 #import <UMengMessage/UMessage.h>
+#import <UMengFeedback/UMFeedback.h>
+#import <UMengAnalytics-NO-IDFA/MobClick.h>
 #import <Weixin/WXApi.h>
 #import <AlipaySDK/AlipaySDK.h>
 #import "AllMicroConstants.h"
-#import "UMFeedback.h"
 #import "SCUserInfo.h"
 
 @interface AppDelegate () <WXApiDelegate>

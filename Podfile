@@ -28,6 +28,7 @@ pod 'SCNumberKeyBoard'
 # ********************** 第三方SDK **********************
 # 友盟SDK
 pod 'UMengMessage'
+pod 'UMengFeedback'
 #pod 'UMengAnalytics'
 pod 'UMengAnalytics-NO-IDFA'
 # 百度地图SDK
