@@ -189,13 +189,13 @@
 {
     _canTap                    = YES;
     _promptLabel.hidden        = NO;
-    if (_currentCar.brandName && _currentCar.modelName)
+    if (_currentCar.brand_name && _currentCar.model_name)
     {
         _merchantNameLabel.hidden  = YES;
         _serviceNameLabel.hidden   = YES;
         _servicePromptLabel.hidden = YES;
         _serviceDaysLabel.hidden   = YES;
-        _promptLabel.text = [NSString stringWithFormat:@"%@ %@ %@", _currentCar.brandName, _currentCar.modelName, _currentCar.carFullModel];
+        _promptLabel.text          = [NSString stringWithFormat:@"%@ %@ %@", _currentCar.brand_name, _currentCar.model_name, _currentCar.car_full_model];
     }
     else
         _promptLabel.text = @"点击加车";

@@ -278,8 +278,8 @@
             else
             {
                 SCUserCar *car = item;
-                _selectedCarID = car.userCarID;
-                _carLabel.text = [car.brandName stringByAppendingString:car.modelName];
+                _selectedCarID = car.user_car_id;
+                _carLabel.text = [car.brand_name stringByAppendingString:car.model_name];
             }
         }
             break;
@@ -306,8 +306,8 @@
 #pragma mark - SCAddCarViewController Delegate Methods
 - (void)addCarSuccess:(SCCar *)car
 {
-    _selectedCarID = car.userCarID;
-    _carLabel.text = [car.brandName stringByAppendingString:car.modelName];
+    _selectedCarID = car.user_car_id;
+    _carLabel.text = [car.brand_name stringByAppendingString:car.model_name];
 }
 
 @end

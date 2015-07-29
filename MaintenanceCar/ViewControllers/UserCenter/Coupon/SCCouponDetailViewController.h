@@ -9,6 +9,7 @@
 #import "SCViewControllerCategory.h"
 
 @class SCCoupon;
+
 @interface SCCouponDetailViewController : UITableViewController
 
 @property (nonatomic, assign)     BOOL  couponCanNotUse;

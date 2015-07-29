@@ -39,10 +39,10 @@
     {
         case SCPickerTypeCar:
         {
-            SCUserCar *car = [[SCUserCar alloc] init];
-            car.brandName  = @"添加车辆";
-            car.modelName  = @"";
-            car.userCarID  = @"";
+            SCUserCar *car       = [[SCUserCar alloc] init];
+            car.brand_name       = @"添加车辆";
+            car.model_name       = @"";
+            car.user_car_id      = @"";
             NSMutableArray *cars = [NSMutableArray arrayWithArray:[SCUserInfo share].cars];
             [cars addObject:car];
             _pickerItmes = cars;
@@ -83,7 +83,7 @@
             case SCPickerTypeCar:
             {
                 SCUserCar *car = _pickerItmes[row];
-                return [car.brandName stringByAppendingString:car.modelName];
+                return [car.brand_name stringByAppendingString:car.model_name];
             }
                 break;
             case SCPickerTypeService:

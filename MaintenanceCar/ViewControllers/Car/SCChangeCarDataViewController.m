@@ -96,9 +96,9 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 - (void)viewDisplay
 {
     // 刷新页面数据
-    _userCarLabel.text             = [_car.brandName stringByAppendingString:_car.modelName];
-    _mileageTextField.text         = _car.runDistance;
-    _buyCarDateLabel.text          = ([_car.buyCarYear integerValue] && [_car.buyCarMonth integerValue]) ? [NSString stringWithFormat:@"%@年%@月", _car.buyCarYear, _car.buyCarMonth] : @"";
+    _userCarLabel.text             = [_car.brand_name stringByAppendingString:_car.model_name];
+    _mileageTextField.text         = _car.run_distance;
+    _buyCarDateLabel.text          = ([_car.buy_car_year integerValue] && [_car.buy_car_month integerValue]) ? [NSString stringWithFormat:@"%@年%@月", _car.buy_car_year, _car.buy_car_month] : @"";
 
     _carDriveHabitsView.delegate   = self;
     _carDriveHabitsView.habitsType = (SCHabitsType)[_car.habit integerValue];
@@ -112,11 +112,11 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self.navigationController];
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                             @"user_car_id": _car.userCarID,
-                                @"model_id": _car.modelID,
-                            @"buy_car_year": _car.buyCarYear,
-                           @"buy_car_month": _car.buyCarMonth,
-                            @"run_distance": _car.runDistance,
+                             @"user_car_id": _car.user_car_id,
+                                @"model_id": _car.model_id,
+                            @"buy_car_year": _car.buy_car_year,
+                           @"buy_car_month": _car.buy_car_month,
+                            @"run_distance": _car.run_distance,
                                    @"habit": _car.habit};
     [[SCAPIRequest manager] startUpdateUserCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
@@ -139,7 +139,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self.navigationController];
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                 @"user_car_id": _car.userCarID};
+                                 @"user_car_id": _car.user_car_id};
     [[SCAPIRequest manager] startDeleteCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
         {
@@ -177,7 +177,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     // 输入结束，更新模型数据
-    _car.runDistance = textField.text;
+    _car.run_distance = textField.text;
 }
 
 #pragma mark - SCDatePickerView Delegate Methods
@@ -190,9 +190,9 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     _buyCarDateLabel.text = dateString;
     
     [formatter setDateFormat:@"yyyy"];
-    _car.buyCarYear = [formatter stringFromDate:date];
+    _car.buy_car_year = [formatter stringFromDate:date];
     [formatter setDateFormat:@"MM"];
-    _car.buyCarMonth = [NSString stringWithFormat:@"%@", @([[formatter stringFromDate:date] integerValue])];
+    _car.buy_car_month = [NSString stringWithFormat:@"%@", @([[formatter stringFromDate:date] integerValue])];
 }
 
 #pragma mark - SCCarDriveHabitsView Delegate Methods

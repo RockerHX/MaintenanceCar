@@ -18,94 +18,111 @@ typedef NS_ENUM(NSUInteger, SCCouponDetailRow) {
     SCCouponDetailRowRule,
 };
 
-@implementation SCCouponDetailViewController {
+@implementation SCCouponDetailViewController
+{
     SCCouponCell           *_couponCell;
     SCCouponDetailRuleCell *_ruleCell;
 }
 
 #pragma mark - View Controller Life Cycle
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[优惠券] - 详情"];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated
+{
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[优惠券] - 详情"];
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
 }
 
 #pragma mark - Init Methods
-+ (instancetype)instance {
++ (instancetype)instance
+{
     return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameCoupon];
 }
 
 #pragma mark - Table View Data Source Methods
 static NSInteger rowNumber = 3;
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return _coupon ? rowNumber : Zero;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     UITableViewCell *cell = nil;
-    if (_coupon) {
-        switch (indexPath.row) {
-            case SCCouponDetailRowCoupon: {
+    if (_coupon)
+    {
+        switch (indexPath.row)
+        {
+            case SCCouponDetailRowCoupon:
+            {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCell" forIndexPath:indexPath];
                 ((SCCouponCell *)cell).canNotUse = _couponCanNotUse;
                 [(SCCouponCell *)cell displayCellWithCoupon:_coupon];
-                break;
             }
-            case SCCouponDetailRowRule: {
+                break;
+            case SCCouponDetailRowRule:
+            {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponDetailRuleCell" forIndexPath:indexPath];
                 [(SCCouponCell *)cell displayCellWithCoupon:_coupon];
-                break;
             }
+                break;
                 
-            default: {
+            default:
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponDetailShowMoreMerchantsCell" forIndexPath:indexPath];
                 break;
-            }
         }
     }
     return cell;
 }
 
 #pragma mark - Table View Delegate Methods
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     CGFloat height = Zero;
-    if (_coupon) {
-        switch (indexPath.row) {
-            case SCCouponDetailRowCoupon: {
+    if (_coupon)
+    {
+        switch (indexPath.row)
+        {
+            case SCCouponDetailRowCoupon:
+            {
                 if(!_couponCell)
                     _couponCell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCell"];
                 height = [_couponCell displayCellWithCoupon:_coupon];
-                break;
             }
-            case SCCouponDetailRowRule: {
+                break;
+            case SCCouponDetailRowRule:
+            {
                 if(!_ruleCell)
                     _ruleCell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponDetailRuleCell"];
                 height = [_ruleCell displayCellWithCoupon:_coupon];
-                break;
             }
-            default: {
+                break;
+                
+            default:
                 height = 60.0f;
                 break;
-            }
         }
     }
+    
     return height;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    if (indexPath.row == SCCouponDetailRowShowMoreMerchants) {
+    if (indexPath.row == SCCouponDetailRowShowMoreMerchants)
+    {
         SCOperationViewController *viewController = [SCOperationViewController instance];
         viewController.title = @"优惠券商家";
         [viewController setRequestParameter:@"service" value:@"coupon"];
