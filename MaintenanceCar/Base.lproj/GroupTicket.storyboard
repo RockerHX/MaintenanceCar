@@ -11,7 +11,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="SCGroupTicketsViewController" hidesBottomBarWhenPushed="YES" id="Sln-eW-sF3" customClass="SCGroupTicketsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="96" sectionHeaderHeight="22" sectionFooterHeight="22" id="xyR-7e-mt7">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -163,7 +163,20 @@
                             <outlet property="delegate" destination="Sln-eW-sF3" id="Cqq-zF-qBv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="团购券" id="GsV-Bm-9Yr"/>
+                    <navigationItem key="navigationItem" title="团购券" id="GsV-Bm-9Yr">
+                        <barButtonItem key="leftBarButtonItem" id="MRs-f4-EyK">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="oOn-1z-NaP">
+                                <rect key="frame" x="16" y="7" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="MenuIcon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="menuButtonPressed" destination="Sln-eW-sF3" eventType="touchUpInside" id="6vb-XI-U4P"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q9V-4P-z5P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -768,11 +781,28 @@
             </objects>
             <point key="canvasLocation" x="4" y="-647"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wJo-CY-V4z">
+            <objects>
+                <navigationController storyboardIdentifier="GroupTicketsNavigationController" id="tIp-Cu-8O2" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="ihH-7S-5fe">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Sln-eW-sF3" kind="relationship" relationship="rootViewController" id="YDb-CI-uWx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8X9-9l-ggQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-857" y="-647"/>
+        </scene>
     </scenes>
     <resources>
         <image name="ArrowIcon-Yellow" width="9" height="16"/>
         <image name="CallButton" width="30" height="30"/>
         <image name="DistanceIcon" width="15" height="15"/>
+        <image name="MenuIcon" width="25" height="25"/>
         <image name="Star-Unlight" width="24" height="28"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

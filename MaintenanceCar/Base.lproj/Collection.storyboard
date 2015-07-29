@@ -11,7 +11,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="SCCollectionsViewController" hidesBottomBarWhenPushed="YES" id="BcV-5m-PeZ" customClass="SCCollectionsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" id="eSg-q1-FQ8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="95" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -167,6 +167,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="收藏" id="p3X-pN-zvr">
+                        <barButtonItem key="leftBarButtonItem" id="f7n-bm-5wB">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Jeq-dc-07J">
+                                <rect key="frame" x="16" y="7" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="MenuIcon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="menuButtonPressed" destination="BcV-5m-PeZ" eventType="touchUpInside" id="JNa-T0-wbi"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="PSU-63-4l2"/>
                     </navigationItem>
                 </tableViewController>
@@ -174,9 +186,26 @@
             </objects>
             <point key="canvasLocation" x="233" y="-221"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fCB-4G-OqZ">
+            <objects>
+                <navigationController storyboardIdentifier="CollectionsNavigationController" id="Vda-AB-7f6" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="74X-25-gqF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BcV-5m-PeZ" kind="relationship" relationship="rootViewController" id="C8H-4Z-jbd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k8I-Gf-n56" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-208" y="-221"/>
+        </scene>
     </scenes>
     <resources>
         <image name="DistanceIcon" width="15" height="15"/>
+        <image name="MenuIcon" width="25" height="25"/>
         <image name="MerchantIconDefault" width="80" height="80"/>
         <image name="Star-Unlight" width="24" height="28"/>
     </resources>

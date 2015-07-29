@@ -9,14 +9,13 @@
 #import "AppDelegate.h"
 //#import <AFNetworking/UIKit+AFNetworking.h>
 //#import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
-#import <Baidu-Maps-iOS-SDK/BMapKit.h>
-#import <UMengAnalytics-NO-IDFA/MobClick.h>
+#import <BaiduMapAPI/BMapKit.h>
 #import <UMengMessage/UMessage.h>
+#import <UMengFeedback/UMFeedback.h>
+#import <UMengAnalytics-NO-IDFA/MobClick.h>
 #import <Weixin/WXApi.h>
 #import <AlipaySDK/AlipaySDK.h>
 #import "AllMicroConstants.h"
-#import <UMengFeedback/UMFeedback.h>
-#import <UMengFeedback/UMOpus.h>
 #import "SCUserInfo.h"
 
 @interface AppDelegate () <WXApiDelegate>
@@ -44,15 +43,14 @@
 #pragma mark UMeng Analytics SDK
     // 启用[友盟反馈]
     [UMFeedback setAppkey:UMengAPPKEY];
-    [UMOpus setAudioEnable:YES];
     // 设置版本号
     [MobClick setAppVersion:APP_VERSION];
     [MobClick checkUpdate];                 // 集成友盟更新
     
     // 启动[友盟统计]，采用启动发送的方式 - BATCH
-    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"AppStore:%@", APP_VERSION]];
+//    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"AppStore:%@", APP_VERSION]];
 #warning @"发布时更改测试统计"
-//    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"TestVersion:%@", APP_VERSION]];
+    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"TestVersion:%@", APP_VERSION]];
     [MobClick setEncryptEnabled:YES];       // 日志加密
     
     //set AppKey and AppSecret

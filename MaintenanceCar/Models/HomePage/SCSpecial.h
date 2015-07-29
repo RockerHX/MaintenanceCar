@@ -10,12 +10,12 @@
 
 @interface SCSpecial : JSONModel
 
-@property (nonatomic, strong) NSString <Optional>*pic_url;            // 按钮图片地址连接
-@property (nonatomic, strong) NSString <Optional>*text;               // 显示名称
-@property (nonatomic, strong) NSString <Optional>*url;                // 网页地址
-@property (nonatomic, strong) NSString <Optional>*post_pic;           // 展示图片地址
-@property (nonatomic, strong) NSString <Optional>*parameter;
-@property (nonatomic, strong) NSString <Optional>*value;
-@property (nonatomic, assign) BOOL                html;               // 是否是网页
+@property (nonatomic, copy) NSString <Optional>*pic_url;            // 按钮图片地址连接
+@property (nonatomic, copy) NSString <Optional>*text;               // 显示名称
+@property (nonatomic, copy) NSString <Optional>*url;                // 网页地址
+@property (nonatomic, copy) NSString <Optional>*post_pic;           // 展示图片地址
+@property (nonatomic, copy) NSString <Optional>*parameter;
+@property (nonatomic, copy) NSString <Optional>*value;
+@property (nonatomic, assign) BOOL              html;               // 是否是网页
 
 @end

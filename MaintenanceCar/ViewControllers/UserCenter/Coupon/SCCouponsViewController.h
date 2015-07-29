@@ -11,6 +11,7 @@
 @protocol SCCouponsViewControllerDelegate <NSObject>
 
 @optional
+- (void)shouldShowMenu;
 - (void)userAddCouponSuccess;
 
 @end
@@ -23,12 +24,14 @@
 @property (weak, nonatomic) IBOutlet    UIButton *exchangeButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (nonatomic, weak) id <SCCouponsViewControllerDelegate>delegate;
+@property (nonatomic, weak) id  <SCCouponsViewControllerDelegate>delegate;
 
+- (IBAction)menuButtonPressed;
 - (IBAction)exchangeButtonPressed;
 - (IBAction)ruleButtonPressed;
 - (IBAction)showInvalidCoupons;
 
++ (UINavigationController *)navigationInstance;
 + (instancetype)instance;
 
 @end
