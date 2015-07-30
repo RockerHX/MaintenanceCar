@@ -19,6 +19,12 @@
 
 static NSString *HomePageNavControllerID = @"HomePageNavigationController";
 
+static CGFloat OperationBarHeightOn4S    = 250.0f;
+static CGFloat OperationBarHeightOn6     = 340.0f;
+static CGFloat OperationBarHeightOn6Plus = 374.0f;
+static CGFloat ShowShopsBarHeightOn6     = 70.0f;
+static CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
+
 @interface SCHomePageViewController () <SCADViewDelegate, SCHomePageDetailViewDelegate>
 @end
 
@@ -69,6 +75,16 @@ static NSString *HomePageNavControllerID = @"HomePageNavigationController";
 }
 
 - (void)viewConfig {
+    if (IS_IPHONE_6Plus) {
+        _operationBarHeight.constant = OperationBarHeightOn6Plus;
+        _showShopsBarHeight.constant = ShowShopsBarHeightOn6Plus;
+    } else if (IS_IPHONE_6) {
+        _operationBarHeight.constant = OperationBarHeightOn6;
+        _showShopsBarHeight.constant = ShowShopsBarHeightOn6;
+    } else if (IS_IPHONE_4) {
+        _operationBarHeight.constant = OperationBarHeightOn4S;
+    }
+    [self updateViewConstraints];
 }
 
 #pragma mark - Action
