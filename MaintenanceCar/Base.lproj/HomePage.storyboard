@@ -16,14 +16,14 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="5s2-Co-MNm" kind="relationship" relationship="rootViewController" id="VLe-Kx-GoY"/>
+                        <segue destination="5s2-Co-MNm" kind="relationship" relationship="rootViewController" id="Vjg-et-UG3"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GvN-gw-XPw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-745" y="-424"/>
         </scene>
-        <!--Home Page View Controller-->
+        <!--首页-->
         <scene sceneID="n5x-zd-Tob">
             <objects>
                 <viewController storyboardIdentifier="SCHomePageViewController" automaticallyAdjustsScrollViewInsets="NO" id="5s2-Co-MNm" customClass="SCHomePageViewController" sceneMemberID="viewController">
@@ -66,31 +66,108 @@
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ouI-ZS-xV7">
                                         <rect key="frame" x="0.0" y="134" width="320" height="60"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HP-LocationIcon" translatesAutoresizingMaskIntoConstraints="NO" id="KVT-jz-o0O">
+                                                <rect key="frame" x="51" y="18" width="30" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="KVT-jz-o0O" secondAttribute="height" multiplier="48:41" id="9uw-ND-HPs"/>
+                                                    <constraint firstAttribute="width" constant="30" id="TEX-6f-Fac"/>
+                                                </constraints>
+                                            </imageView>
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17y-9d-zRj">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                                                <state key="normal">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="serviceButtonPressed:" destination="5s2-Co-MNm" eventType="touchUpInside" id="lcP-Qf-dEQ"/>
+                                                </connections>
+                                            </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="irP-Ue-zIR">
+                                                <rect key="frame" x="89" y="21" width="190.5" height="18"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您身边有" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWa-NN-Wvo">
+                                                        <rect key="frame" x="0.0" y="0.0" width="60" height="18"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="多家优质服务商" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tzy-B8-9uW">
+                                                        <rect key="frame" x="85" y="0.0" width="105" height="18"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="120" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tTK-lo-zGv">
+                                                        <rect key="frame" x="60" y="0.0" width="25.5" height="18"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="iWa-NN-Wvo" secondAttribute="bottom" id="0ig-fl-HBt"/>
+                                                    <constraint firstItem="iWa-NN-Wvo" firstAttribute="leading" secondItem="irP-Ue-zIR" secondAttribute="leading" id="0sG-hE-EGE"/>
+                                                    <constraint firstItem="tzy-B8-9uW" firstAttribute="top" secondItem="irP-Ue-zIR" secondAttribute="top" id="3ij-Y0-oxw"/>
+                                                    <constraint firstItem="tTK-lo-zGv" firstAttribute="leading" secondItem="iWa-NN-Wvo" secondAttribute="trailing" id="76O-xd-u0z"/>
+                                                    <constraint firstItem="tzy-B8-9uW" firstAttribute="leading" secondItem="tTK-lo-zGv" secondAttribute="trailing" id="GvY-io-Nkd"/>
+                                                    <constraint firstAttribute="trailing" secondItem="tzy-B8-9uW" secondAttribute="trailing" id="Ig4-HC-WzB"/>
+                                                    <constraint firstItem="tTK-lo-zGv" firstAttribute="top" secondItem="irP-Ue-zIR" secondAttribute="top" id="Jt1-5G-opF"/>
+                                                    <constraint firstAttribute="bottom" secondItem="tTK-lo-zGv" secondAttribute="bottom" id="NLj-Fr-0dN"/>
+                                                    <constraint firstItem="iWa-NN-Wvo" firstAttribute="top" secondItem="irP-Ue-zIR" secondAttribute="top" id="SXy-QP-8xp"/>
+                                                    <constraint firstAttribute="bottom" secondItem="tzy-B8-9uW" secondAttribute="bottom" id="orb-JB-o6c"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
                                         <color key="backgroundColor" red="0.24313725490196078" green="0.60392156862745094" blue="0.79607843137254897" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
+                                            <constraint firstItem="KVT-jz-o0O" firstAttribute="centerY" secondItem="irP-Ue-zIR" secondAttribute="centerY" id="9h8-ev-VBX"/>
+                                            <constraint firstAttribute="centerY" secondItem="irP-Ue-zIR" secondAttribute="centerY" id="EMT-dg-FJ9"/>
                                             <constraint firstAttribute="height" constant="60" id="TfX-je-uUn"/>
+                                            <constraint firstAttribute="centerX" secondItem="irP-Ue-zIR" secondAttribute="centerX" constant="-24" id="WXo-Vh-LSa"/>
+                                            <constraint firstAttribute="bottom" secondItem="17y-9d-zRj" secondAttribute="bottom" id="XoX-GW-n7o"/>
+                                            <constraint firstItem="17y-9d-zRj" firstAttribute="top" secondItem="ouI-ZS-xV7" secondAttribute="top" id="iQv-nu-ker"/>
+                                            <constraint firstItem="irP-Ue-zIR" firstAttribute="leading" secondItem="KVT-jz-o0O" secondAttribute="trailing" constant="8" id="k8q-G6-DfT"/>
+                                            <constraint firstItem="17y-9d-zRj" firstAttribute="leading" secondItem="ouI-ZS-xV7" secondAttribute="leading" id="nRl-fg-qvV"/>
+                                            <constraint firstAttribute="trailing" secondItem="17y-9d-zRj" secondAttribute="trailing" id="xZm-qH-Buz"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p0i-fy-eB0">
-                                        <rect key="frame" x="0.0" y="15" width="100" height="104"/>
+                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p0i-fy-eB0">
+                                        <rect key="frame" x="0.0" y="10" width="100" height="114"/>
                                         <color key="backgroundColor" red="0.45098039215686275" green="0.792156862745098" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal">
+                                        <inset key="titleEdgeInsets" minX="-70" minY="0.0" maxX="0.0" maxY="-100"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="-34" maxY="0.0"/>
+                                        <state key="normal" title="保养" image="HP-MaintanceIcon">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="serviceButtonPressed:" destination="5s2-Co-MNm" eventType="touchUpInside" id="mVO-is-22V"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fxv-Qa-X9l">
-                                        <rect key="frame" x="110" y="15" width="100" height="104"/>
+                                    <button opaque="NO" tag="1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fxv-Qa-X9l">
+                                        <rect key="frame" x="110" y="10" width="100" height="114"/>
                                         <color key="backgroundColor" red="0.0" green="0.60392156862745094" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal">
+                                        <inset key="titleEdgeInsets" minX="-70" minY="0.0" maxX="0.0" maxY="-100"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="-34" maxY="0.0"/>
+                                        <state key="normal" title="洗车" image="HP-WashIcon">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="serviceButtonPressed:" destination="5s2-Co-MNm" eventType="touchUpInside" id="Iby-0z-nHI"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uEz-VX-QcC">
-                                        <rect key="frame" x="220" y="15" width="100" height="104"/>
+                                    <button opaque="NO" tag="2" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uEz-VX-QcC">
+                                        <rect key="frame" x="220" y="10" width="100" height="114"/>
                                         <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal">
+                                        <inset key="titleEdgeInsets" minX="-70" minY="0.0" maxX="0.0" maxY="-100"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="24" maxX="-34" maxY="0.0"/>
+                                        <state key="normal" title="维修" image="HP-RepairIcon">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="serviceButtonPressed:" destination="5s2-Co-MNm" eventType="touchUpInside" id="wpK-FG-aHf"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -98,8 +175,8 @@
                                     <constraint firstItem="Fxv-Qa-X9l" firstAttribute="height" secondItem="p0i-fy-eB0" secondAttribute="height" id="3AK-yr-YEI"/>
                                     <constraint firstItem="Fxv-Qa-X9l" firstAttribute="centerY" secondItem="p0i-fy-eB0" secondAttribute="centerY" id="5Zb-hM-1EV"/>
                                     <constraint firstAttribute="bottom" secondItem="iOQ-ad-llF" secondAttribute="bottom" id="6og-NY-HFy"/>
-                                    <constraint firstItem="Fxv-Qa-X9l" firstAttribute="top" secondItem="Jf3-P1-UTM" secondAttribute="top" constant="15" id="BjR-v7-voa"/>
-                                    <constraint firstItem="ouI-ZS-xV7" firstAttribute="top" secondItem="Fxv-Qa-X9l" secondAttribute="bottom" constant="15" id="Bzx-YS-S9U"/>
+                                    <constraint firstItem="Fxv-Qa-X9l" firstAttribute="top" secondItem="Jf3-P1-UTM" secondAttribute="top" constant="10" id="BjR-v7-voa"/>
+                                    <constraint firstItem="ouI-ZS-xV7" firstAttribute="top" secondItem="Fxv-Qa-X9l" secondAttribute="bottom" constant="10" id="Bzx-YS-S9U"/>
                                     <constraint firstItem="Fxv-Qa-X9l" firstAttribute="leading" secondItem="p0i-fy-eB0" secondAttribute="trailing" constant="10" id="Dp6-JW-Jdf"/>
                                     <constraint firstItem="p0i-fy-eB0" firstAttribute="leading" secondItem="Jf3-P1-UTM" secondAttribute="leading" id="Izz-3K-iNC"/>
                                     <constraint firstAttribute="trailing" secondItem="uEz-VX-QcC" secondAttribute="trailing" id="NhA-ZS-suP"/>
@@ -142,7 +219,7 @@
                             <constraint firstAttribute="trailing" secondItem="Jf3-P1-UTM" secondAttribute="trailing" id="qHj-VB-BRt"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="HrA-zo-v13"/>
+                    <navigationItem key="navigationItem" title="首页" id="HrA-zo-v13"/>
                     <connections>
                         <outlet property="operationBarHeight" destination="QAx-VD-Xq7" id="l7V-VA-WkP"/>
                         <outlet property="showShopsBarHeight" destination="TfX-je-uUn" id="GUn-Ch-G1Z"/>
@@ -893,6 +970,10 @@
         <image name="CycleIcon-Check" width="24" height="24"/>
         <image name="CycleIcon-Uncheck" width="24" height="24"/>
         <image name="DistanceIcon" width="15" height="15"/>
+        <image name="HP-LocationIcon" width="25" height="25"/>
+        <image name="HP-MaintanceIcon" width="70" height="70"/>
+        <image name="HP-RepairIcon" width="70" height="70"/>
+        <image name="HP-WashIcon" width="70" height="70"/>
         <image name="MenuIcon" width="25" height="25"/>
         <image name="MerchantIconDefault" width="80" height="80"/>
         <image name="Star-Unlight" width="24" height="28"/>

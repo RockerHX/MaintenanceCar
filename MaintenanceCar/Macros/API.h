@@ -68,7 +68,6 @@
 
 #define OperatADAPI                 @"/Special/ad"                          // 首页运营位API
 #define HomePageReservationAPI      @"/Reservation/latest"                  // 最新预约信息API
-#define HomePageSpecialAPI          @"/Special"                             // 首页第四个按钮数据API
 
 
 #pragma mark - V2
@@ -131,7 +130,6 @@
 
 #define OperatADAPIURL                  [V2APIURL stringByAppendingString:OperatADAPI]                // 首页运营位接口URL - 用于首页运营位数据
 #define HomePageReservationAPIURL       [V2APIURL stringByAppendingString:HomePageReservationAPI]     // 最新预约信息接口URL - 用于首页获取
-#define HomePageSpecialAPIURL           [V1APIURL stringByAppendingString:HomePageSpecialAPI]         // 首页第四个按钮数据接口URL
 
 
 #pragma mark - V2

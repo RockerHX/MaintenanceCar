@@ -7,15 +7,10 @@
 //
 
 #import "SCHomePageViewController.h"
-#import <AFNetworking/UIButton+AFNetworking.h>
-#import "SCHomePageDetailView.h"
-#import "SCAllDictionary.h"
-#import "SCOperationViewController.h"
 #import "SCMaintenanceViewController.h"
-#import "SCADView.h"
+#import "SCDiscoveryViewController.h"
+#import "SCOperationViewController.h"
 #import "SCWebViewController.h"
-#import "SCChangeCarDataViewController.h"
-#import "SCAddCarViewController.h"
 
 static NSString *HomePageNavControllerID = @"HomePageNavigationController";
 
@@ -24,9 +19,6 @@ static CGFloat OperationBarHeightOn6     = 340.0f;
 static CGFloat OperationBarHeightOn6Plus = 374.0f;
 static CGFloat ShowShopsBarHeightOn6     = 70.0f;
 static CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
-
-@interface SCHomePageViewController () <SCADViewDelegate, SCHomePageDetailViewDelegate>
-@end
 
 @implementation SCHomePageViewController
 
@@ -71,7 +63,6 @@ static CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
 
 #pragma mark - Config Methods
 - (void)initConfig {
-    [self startSpecialRequest];
 }
 
 - (void)viewConfig {
@@ -96,13 +87,6 @@ static CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
 
 - (IBAction)serviceButtonPressed:(UIButton *)button {
     switch (button.tag) {
-        case SCHomePageServiceButtonTypeRepair: {
-            SCOperationViewController *repairViewController = [SCOperationViewController instance];
-            repairViewController.title = @"维修";
-            [repairViewController setRequestParameter:@"product_tag" value:@"维修"];
-            [self.navigationController pushViewController:repairViewController animated:YES];
-            break;
-        }
         case SCHomePageServiceButtonTypeMaintance: {
             SCUserInfo *userInfo = [SCUserInfo share];
             if (userInfo.loginState)
@@ -118,38 +102,35 @@ static CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
             [self.navigationController pushViewController:washViewController animated:YES];
             break;
         }
-        case SCHomePageServiceButtonTypeOperation: {
-            SCSpecial *special = [SCAllDictionary share].special;
-            SCADView *adView = [[SCADView alloc] initWithDelegate:self imageURL:special.post_pic];
-            [adView show];
+        case SCHomePageServiceButtonTypeRepair: {
+            SCOperationViewController *repairViewController = [SCOperationViewController instance];
+            repairViewController.title = @"维修";
+            [repairViewController setRequestParameter:@"product_tag" value:@"维修"];
+            [self.navigationController pushViewController:repairViewController animated:YES];
+            break;
+        }
+        case SCHomePageServiceButtonTypeShowShops: {
+            SCDiscoveryViewController *discoveryViewController = [SCDiscoveryViewController instance];
+            [self.navigationController pushViewController:discoveryViewController animated:YES];
             break;
         }
     }
 }
 
 #pragma mark - Private Methods
-// 自定义数据请求方法(用于首页第四个按钮，预约以及筛选条件)，无参数
-- (void)startSpecialRequest {
-    [[SCAPIRequest manager] startHomePageSpecialAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess) {
-            SCSpecial *special = [[SCSpecial alloc] initWithDictionary:responseObject error:nil];
-        }
-    } failure:nil];
-}
-
-- (void)jumpToSpecialViewControllerWith:(SCSpecial *)special isOperate:(BOOL)isOperate {
-    if (special.html) {
-        SCWebViewController *webViewController = [SCWebViewController instance];
-        webViewController.title   = special.text;
-        webViewController.loadURL = special.url;
-        [self.navigationController pushViewController:webViewController animated:YES];
-    } else {
-        SCOperationViewController *operationViewController = [SCOperationViewController instance];
-        operationViewController.title = special.text;
-        [operationViewController setRequestParameter:special.parameter value:special.value];
-        [self.navigationController pushViewController:operationViewController animated:YES];
-    }
-}
+//- (void)jumpToSpecialViewControllerWith:(SCSpecial *)special isOperate:(BOOL)isOperate {
+//    if (special.html) {
+//        SCWebViewController *webViewController = [SCWebViewController instance];
+//        webViewController.title   = special.text;
+//        webViewController.loadURL = special.url;
+//        [self.navigationController pushViewController:webViewController animated:YES];
+//    } else {
+//        SCOperationViewController *operationViewController = [SCOperationViewController instance];
+//        operationViewController.title = special.text;
+//        [operationViewController setRequestParameter:special.parameter value:special.value];
+//        [self.navigationController pushViewController:operationViewController animated:YES];
+//    }
+//}
 
 #pragma mark - Alert View Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -159,25 +140,9 @@ static CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
     }
 }
 
-#pragma mark - SCADViewDelegate Methods
-- (void)shouldEnter {
-    [self jumpToSpecialViewControllerWith:[SCAllDictionary share].special isOperate:NO];
-}
-
 #pragma mark - SCHomePageDetailViewDelegate Methods
-- (void)shouldShowOperatAd:(SCSpecial *)special {
-    [self jumpToSpecialViewControllerWith:special isOperate:YES];
-}
-
-- (void)shouldAddCar {
-    UINavigationController *navigationControler = [SCAddCarViewController navigationInstance];
-    [self presentViewController:navigationControler animated:YES completion:nil];
-}
-
-- (void)shouldChangeCarData:(SCUserCar *)userCar {
-    SCChangeCarDataViewController *viewController = [SCChangeCarDataViewController instance];
-    viewController.car = userCar;
-    [self.navigationController pushViewController:viewController animated:YES];
-}
+//- (void)shouldShowOperatAd:(SCSpecial *)special {
+//    [self jumpToSpecialViewControllerWith:special isOperate:YES];
+//}
 
 @end

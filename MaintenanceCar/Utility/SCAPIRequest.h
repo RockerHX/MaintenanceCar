@@ -345,12 +345,6 @@ FOUNDATION_EXPORT NSString *const CocoaErrorJsonParseError;
                                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
-/**
- *  首页第四个按钮数据接口请求方法(API:/Special - GET)
- */
-- (void)startHomePageSpecialAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
 
 #pragma mark - V2 API
 #pragma mark - Shops API

@@ -10,10 +10,10 @@
 
 
 typedef NS_ENUM(NSUInteger, SCHomePageServiceButtonType) {
-    SCHomePageServiceButtonTypeRepair,
     SCHomePageServiceButtonTypeMaintance,
     SCHomePageServiceButtonTypeWash,
-    SCHomePageServiceButtonTypeOperation
+    SCHomePageServiceButtonTypeRepair,
+    SCHomePageServiceButtonTypeShowShops
 };
 
 @protocol SCHomePageViewControllerDelegate <NSObject>
@@ -24,17 +24,18 @@ typedef NS_ENUM(NSUInteger, SCHomePageServiceButtonType) {
 @end
 
 
-@class SCHomePageDetailView;
+@class SCLoopScrollView;
 
 @interface SCHomePageViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet SCHomePageDetailView *detailView;          // 首页详情View
+@property (weak, nonatomic) IBOutlet SCLoopScrollView *operationView;           // 首页运营位
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *operationBarHeight;    // 运营位高度约束
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *showShopsBarHeight;    // 查看商家栏高度约束
 
 @property (nonatomic, weak) id  <SCHomePageViewControllerDelegate>delegate;
 
 - (IBAction)menuButtonPressed;
+- (IBAction)serviceButtonPressed:(UIButton *)button;
 
 + (UINavigationController *)navigationInstance;
 + (instancetype)instance;

@@ -20,12 +20,6 @@
     self.filterView.state = SCFilterViewStateClose;
 }
 
-#pragma mark - Class Methods
-+ (NSString *)navgationRestorationIdentifier
-{
-    return @"DiscoveryNavigationController";
-}
-
 #pragma mark - Config Methods
 - (void)initConfig
 {

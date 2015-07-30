@@ -370,12 +370,6 @@ NSString *const CocoaErrorJsonParseError    = @"数据出错，请联系元景�
     [self requestGETMethodsWithAPI:HomePageReservationAPIURL parameters:parameters success:success failure:failure];
 }
 
-- (void)startHomePageSpecialAPIRequestSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    [self requestGETMethodsWithAPI:HomePageSpecialAPIURL parameters:nil success:success failure:failure];
-}
-
 
 #pragma mark - V2 API
 #pragma mark - Shops API
