@@ -16,7 +16,7 @@ typedef NS_ENUM(NSUInteger, SCOrderAlertType) {
     SCOrderAlertTypeAppraiseAlert
 };
 
-static NSString *OderNavControllerID = @"OrdersNavigationController";
+static NSString *const OderNavControllerID = @"OrdersNavigationController";
 
 @interface SCOrdersViewController () <SCOrderCellDelegate, SCAppraiseViewControllerDelegate, SCOrderDetailViewControllerDelegate>
 @end

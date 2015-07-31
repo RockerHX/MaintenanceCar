@@ -12,7 +12,7 @@
 #import "SCCouponDetailViewController.h"
 #import "SCWebViewController.h"
 
-static NSString *CouponNavControllerID = @"CouponsNavigationController";
+static NSString *const CouponNavControllerID = @"CouponsNavigationController";
 
 @implementation SCCouponsViewController
 {

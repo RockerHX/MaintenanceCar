@@ -12,13 +12,13 @@
 #import "SCOperationViewController.h"
 #import "SCWebViewController.h"
 
-static NSString *HomePageNavControllerID = @"HomePageNavigationController";
+static NSString *const HomePageNavControllerID = @"HomePageNavigationController";
 
-static CGFloat OperationBarHeightOn4S    = 250.0f;
-static CGFloat OperationBarHeightOn6     = 340.0f;
-static CGFloat OperationBarHeightOn6Plus = 374.0f;
-static CGFloat ShowShopsBarHeightOn6     = 70.0f;
-static CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
+static const CGFloat OperationBarHeightOn4S    = 250.0f;
+static const CGFloat OperationBarHeightOn6     = 340.0f;
+static const CGFloat OperationBarHeightOn6Plus = 374.0f;
+static const CGFloat ShowShopsBarHeightOn6     = 70.0f;
+static const CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
 
 @implementation SCHomePageViewController
 

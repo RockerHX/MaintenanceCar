@@ -12,15 +12,15 @@
 #import "MicroConstants.h"
 #import "SCAPIRequest.h"
 
-static NSString *kLoginKey = @"kLoginKey";
-static NSString *kUserIDKey = @"kUserIDKey";
-static NSString *kPhoneNumberKey = @"kPhoneNumberKey";
-static NSString *kUserTokenKey = @"kUserTokenKey";
-static NSString *kTokenRefreshDateKey = @"kTokenRefreshDateKey";
-static NSString *kOwnerNameKey = @"kOwnerNameKey";
-static NSString *kUserCarsKey = @"kUserCarsKey";
-static NSString *kAddAliasKey = @"kAddAliasKey";
-static NSString *kReceiveMessageKey = @"kReceiveMessageKey";
+static NSString *const kLoginKey = @"kLoginKey";
+static NSString *const kUserIDKey = @"kUserIDKey";
+static NSString *const kPhoneNumberKey = @"kPhoneNumberKey";
+static NSString *const kUserTokenKey = @"kUserTokenKey";
+static NSString *const kTokenRefreshDateKey = @"kTokenRefreshDateKey";
+static NSString *const kOwnerNameKey = @"kOwnerNameKey";
+static NSString *const kUserCarsKey = @"kUserCarsKey";
+static NSString *const kAddAliasKey = @"kAddAliasKey";
+static NSString *const kReceiveMessageKey = @"kReceiveMessageKey";
 
 typedef void(^BLOCK)(SCUserInfo *userInfo, BOOL finish);
 typedef void(^STATE_BLOCK)(SCLoginState state);

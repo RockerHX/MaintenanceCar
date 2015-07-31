@@ -10,17 +10,17 @@
 #import "SCFileManager.h"
 #import "SCUserInfo.h"
 
-static NSString *Prompt = @"请登录";
-static NSString *AddCarPrompt = @"点击添加车辆";
+static NSString *const Prompt = @"请登录";
+static NSString *const AddCarPrompt = @"点击添加车辆";
 
-static NSString *UserCenterItemsFileName = @"UserCenterData";
-static NSString *UserCenterItemsFileType = @"plist";
+static NSString *const UserCenterItemsFileName = @"UserCenterData";
+static NSString *const UserCenterItemsFileType = @"plist";
 
-static NSString *PlaceHolderHeaderImageName = @"UC-HeaderIcon";
-static NSString *AddCarIconImageName = @"UC-AddCarIcon";
+static NSString *const PlaceHolderHeaderImageName = @"UC-HeaderIcon";
+static NSString *const AddCarIconImageName = @"UC-AddCarIcon";
 
-static NSString *AddCarIconKey = @"Icon";
-static NSString *AddCarIconValue = @"Title";
+static NSString *const AddCarIconKey = @"Icon";
+static NSString *const AddCarIconValue = @"Title";
 
 
 @implementation SCUserCenterViewModel

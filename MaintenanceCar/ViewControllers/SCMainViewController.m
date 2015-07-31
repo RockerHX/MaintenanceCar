@@ -16,7 +16,7 @@
 #import "SCCouponsViewController.h"
 #import "SCSettingViewController.h"
 
-static NSString *MainNavControllerID = @"MainNavigationController";
+static NSString *const MainNavControllerID = @"MainNavigationController";
 
 @interface SCMainViewController () <SCHomePageViewControllerDelegate, SCOrdersViewControllerDelegate, SCCollectionsViewControllerDelegate, SCGroupTicketsViewControllerDelegate, SCCouponsViewControllerDelegate, SCSettingViewControllerDelegate>
 @end

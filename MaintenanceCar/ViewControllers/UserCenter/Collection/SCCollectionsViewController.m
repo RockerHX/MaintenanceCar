@@ -11,7 +11,7 @@
 #import "SCReservationViewController.h"
 #import "SCLocationManager.h"
 
-static NSString *CollectionNavControllerID = @"CollectionsNavigationController";
+static NSString *const CollectionNavControllerID = @"CollectionsNavigationController";
 
 @implementation SCCollectionsViewController
 

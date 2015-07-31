@@ -9,7 +9,7 @@
 #import "SCAboutViewController.h"
 #import "SCWebViewController.h"
 
-static NSString *kADURLKey = @"kADURLKey";
+static NSString *const kADURLKey = @"kADURLKey";
 
 @implementation SCAboutViewController
 

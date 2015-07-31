@@ -49,7 +49,7 @@
 
 @end
 
-static NSString *CellIdentifier = @"SCMoreMenuCell";
+static NSString *const CellIdentifier = @"SCMoreMenuCell";
 typedef void(^Block)(NSInteger selectedIndex);
 
 @implementation SCMoreMenu
