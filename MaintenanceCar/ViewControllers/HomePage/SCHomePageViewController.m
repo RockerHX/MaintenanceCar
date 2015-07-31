@@ -53,6 +53,11 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    _shouldShowNaivgationBar = YES;
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
@@ -106,28 +111,17 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
 }
 
 - (IBAction)serviceButtonPressed:(UIButton *)button {
-    [self popToSubViewControllerWithType:button.tag];
+    [self pushToSubViewControllerWithType:button.tag];
 }
 
 #pragma mark - Private Methods
-- (void)jumpToSpecialViewControllerWith:(SCOperation *)operation isOperate:(BOOL)isOperate {
-    if (operation.html) {
-        SCWebViewController *webViewController = [SCWebViewController instance];
-        webViewController.title   = operation.text;
-        webViewController.loadURL = operation.url;
-        [self.navigationController pushViewController:webViewController animated:YES];
-    } else {
-        SCOperationViewController *operationViewController = [SCOperationViewController instance];
-        operationViewController.title = operation.text;
-        [operationViewController setRequestParameter:operation.parameter value:operation.value];
-        [self.navigationController pushViewController:operationViewController animated:YES];
-    }
-}
-
+/**
+ *  添加顶部阴影方法
+ */
 - (void)addTopBarShadowLayer {
     if (!_topBarShadowLayer) {
         _topBarShadowLayer = [CAGradientLayer layer];
-        _topBarShadowLayer.frame = CGRectMake(0.0f, 0.0f, SCREEN_WIDTH, 20.0f);
+        _topBarShadowLayer.frame = CGRectMake(0.0f, 0.0f, SCREEN_WIDTH, 69.0f);
         [_topBarShadowLayer setStartPoint:CGPointMake(0.5f, 0.0f)];
         [_topBarShadowLayer setEndPoint:CGPointMake(0.5f, 1.0f)];
         _topBarShadowLayer.colors = @[(id)[UIColor colorWithWhite:0.1f alpha:0.5f].CGColor,
@@ -136,6 +130,9 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
     [self.view.layer addSublayer:_topBarShadowLayer];
 }
 
+/**
+ *  运营位数据请求方法
+ */
 - (void)startOperationADsReuqet
 {
     WEAK_SELF(weakSelf);
@@ -150,14 +147,16 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
                 }];
             }
         }
-        [weakSelf refreshOperationAD];
+        [weakSelf refreshOperationADs];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [weakSelf refreshOperationAD];
+        [weakSelf refreshOperationADs];
     }];
 }
 
-- (void)refreshOperationAD
-{
+/**
+ *  刷新运营位
+ */
+- (void)refreshOperationADs {
     NSMutableArray *images = [@[] mutableCopy];
     if (_oprationADs.count) {
         for (SCOperation *operation in _oprationADs) {
@@ -169,9 +168,28 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
     _operationView.images = images;
     [_operationView show:^(NSInteger index) {
         if (_oprationADs.count) {
-            [self jumpToSpecialViewControllerWith:_oprationADs[index] isOperate:YES];
+            [self pushToOperationViewControllerWith:_oprationADs[index]];
         }
     } finished:nil];
+}
+
+/**
+ *  跳转到运营位商家列表
+ *
+ *  @param operation 运营数据
+ */
+- (void)pushToOperationViewControllerWith:(SCOperation *)operation {
+    if (operation.html) {
+        SCWebViewController *webViewController = [SCWebViewController instance];
+        webViewController.title   = operation.text;
+        webViewController.loadURL = operation.url;
+        [self.navigationController pushViewController:webViewController animated:YES];
+    } else {
+        SCOperationViewController *operationViewController = [SCOperationViewController instance];
+        operationViewController.title = operation.text;
+        [operationViewController setRequestParameter:operation.parameter value:operation.value];
+        [self.navigationController pushViewController:operationViewController animated:YES];
+    }
 }
 
 /**
@@ -179,7 +197,7 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
  *
  *  @param type 点击服务按钮类型
  */
-- (void)popToSubViewControllerWithType:(SCHomePageServiceButtonType)type {
+- (void)pushToSubViewControllerWithType:(SCHomePageServiceButtonType)type {
     switch (type) {
         case SCHomePageServiceButtonTypeMaintenance: {
             SCUserInfo *userInfo = [SCUserInfo share];

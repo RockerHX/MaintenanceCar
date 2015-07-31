@@ -23,7 +23,6 @@ typedef NS_ENUM(NSUInteger, SCUserCenterMenuRow) {
 
 @optional
 - (void)willShowAddCarSence;
-- (void)didShowAddCarSence;
 - (void)shouldShowViewControllerOnRow:(SCUserCenterMenuRow)row;
 
 @end

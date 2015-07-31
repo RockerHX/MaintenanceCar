@@ -99,11 +99,7 @@ static CGFloat CellHeight = 44.0f;
                 [_delegate willShowAddCarSence];
             }
             UINavigationController *addCarNavigaitonController = [SCAddCarViewController navigationInstance];
-            [self presentViewController:addCarNavigaitonController animated:YES completion:^{
-                if (_delegate && [_delegate respondsToSelector:@selector(didShowAddCarSence)]) {
-                    [_delegate didShowAddCarSence];
-                }
-            }];
+            [self presentViewController:addCarNavigaitonController animated:YES completion:nil];
         } else {
         }
     } else {

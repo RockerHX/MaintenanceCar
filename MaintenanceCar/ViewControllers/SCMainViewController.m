@@ -105,9 +105,13 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
  *  收到登录通知，跳转到登录页面
  */
 - (void)shouldLogin {
+    WEAK_SELF(weakSelf);
+    [self setHomePageNavigationBarWillHidden:NO];
     UINavigationController *loginViewNavigationController = [SCLoginViewController navigationInstance];
     loginViewNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self presentViewController:loginViewNavigationController animated:YES completion:nil];
+    [self presentViewController:loginViewNavigationController animated:YES completion:^{
+        [weakSelf hideMenu];
+    }];
 }
 
 /**
@@ -147,18 +151,19 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
     [self.frostedViewController hideMenuViewController];
 }
 
+/**
+ *  设置首页在跳转之后是否需要显示导航栏
+ */
+- (void)setHomePageNavigationBarWillHidden:(BOOL)hidden {
+    UINavigationController *navController = [SCHomePageViewController navigationInstance];
+    SCHomePageViewController *homePageViewController = (SCHomePageViewController *)navController.topViewController;
+    homePageViewController.shouldShowNaivgationBar = hidden;
+}
+
 #pragma mark - SCUserCenterMenuViewController Delegate
 // 出现加车操作的适合，处理首页导航栏是否显示问题，避免出现页面跳转交互问题
 - (void)willShowAddCarSence {
-    UINavigationController *navController = [SCHomePageViewController navigationInstance];
-    SCHomePageViewController *homePageViewController = (SCHomePageViewController *)navController.topViewController;
-    homePageViewController.shouldShowNaivgationBar = NO;
-}
-
-- (void)didShowAddCarSence {
-    UINavigationController *navController = [SCHomePageViewController navigationInstance];
-    SCHomePageViewController *homePageViewController = (SCHomePageViewController *)navController.topViewController;
-    homePageViewController.shouldShowNaivgationBar = YES;
+    [self setHomePageNavigationBarWillHidden:NO];
 }
 
 // 处理个人中心相关选项点击跳转
@@ -209,7 +214,6 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
             [self showShoulLoginAlert];
         }
     }
-    [self hideMenu];
 }
 
 #pragma mark - Sub Content View Controller Delegate
