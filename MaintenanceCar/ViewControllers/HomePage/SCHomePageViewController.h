@@ -10,7 +10,7 @@
 
 
 typedef NS_ENUM(NSUInteger, SCHomePageServiceButtonType) {
-    SCHomePageServiceButtonTypeMaintance,
+    SCHomePageServiceButtonTypeMaintenance,
     SCHomePageServiceButtonTypeWash,
     SCHomePageServiceButtonTypeRepair,
     SCHomePageServiceButtonTypeShowShops
@@ -28,12 +28,16 @@ typedef NS_ENUM(NSUInteger, SCHomePageServiceButtonType) {
 
 @interface SCHomePageViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet SCLoopScrollView *operationView;           // 首页运营位
+@property (weak, nonatomic) IBOutlet   SCLoopScrollView *operationView;         // 首页运营位
+@property (weak, nonatomic) IBOutlet           UIButton *maintenanceButton;     // 保养服务按钮
+@property (weak, nonatomic) IBOutlet           UIButton *washButton;            // 洗车服务按钮
+@property (weak, nonatomic) IBOutlet           UIButton *repairButton;          // 修车服务按钮
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *operationBarHeight;    // 运营位高度约束
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *showShopsBarHeight;    // 查看商家栏高度约束
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *centerButtonWidth;     // 中间服务按钮宽度约束
 
 @property (nonatomic, weak)     id  <SCHomePageViewControllerDelegate>delegate;
-@property (nonatomic, assign) BOOL  shouldShowNaivgationBar;
+@property (nonatomic, assign) BOOL  shouldShowNaivgationBar;                    // 跳转下级视图控制器时是否显示导航栏
 
 - (IBAction)menuButtonPressed;
 - (IBAction)serviceButtonPressed:(UIButton *)button;

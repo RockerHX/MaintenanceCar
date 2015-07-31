@@ -19,6 +19,7 @@ static const CGFloat OperationBarHeightOn6     = 340.0f;
 static const CGFloat OperationBarHeightOn6Plus = 374.0f;
 static const CGFloat ShowShopsBarHeightOn6     = 70.0f;
 static const CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
+static const CGFloat ServiceButtonCornerRadius = 8.0f;
 
 @implementation SCHomePageViewController
 
@@ -69,6 +70,12 @@ static const CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
 }
 
 - (void)viewConfig {
+    // 三个服务按钮圆角处理
+    _maintenanceButton.layer.cornerRadius = ServiceButtonCornerRadius;
+    _washButton.layer.cornerRadius        = ServiceButtonCornerRadius;
+    _repairButton.layer.cornerRadius      = ServiceButtonCornerRadius;
+    
+    // 根据不同的屏幕尺寸调整首页布局
     if (IS_IPHONE_6Plus) {
         _operationBarHeight.constant = OperationBarHeightOn6Plus;
         _showShopsBarHeight.constant = ShowShopsBarHeightOn6Plus;
@@ -78,6 +85,7 @@ static const CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
     } else if (IS_IPHONE_4) {
         _operationBarHeight.constant = OperationBarHeightOn4S;
     }
+    _centerButtonWidth.constant = (SCREEN_WIDTH + ServiceButtonCornerRadius*2 - 20.0f)/3;
     [self updateViewConstraints];
 }
 
@@ -89,8 +97,32 @@ static const CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
 }
 
 - (IBAction)serviceButtonPressed:(UIButton *)button {
-    switch (button.tag) {
-        case SCHomePageServiceButtonTypeMaintance: {
+    [self popToSubViewControllerWithType:button.tag];
+}
+
+#pragma mark - Private Methods
+//- (void)jumpToSpecialViewControllerWith:(SCSpecial *)special isOperate:(BOOL)isOperate {
+//    if (special.html) {
+//        SCWebViewController *webViewController = [SCWebViewController instance];
+//        webViewController.title   = special.text;
+//        webViewController.loadURL = special.url;
+//        [self.navigationController pushViewController:webViewController animated:YES];
+//    } else {
+//        SCOperationViewController *operationViewController = [SCOperationViewController instance];
+//        operationViewController.title = special.text;
+//        [operationViewController setRequestParameter:special.parameter value:special.value];
+//        [self.navigationController pushViewController:operationViewController animated:YES];
+//    }
+//}
+
+/**
+ *  跳转到对应的服务列表
+ *
+ *  @param type 点击服务按钮类型
+ */
+- (void)popToSubViewControllerWithType:(SCHomePageServiceButtonType)type {
+    switch (type) {
+        case SCHomePageServiceButtonTypeMaintenance: {
             SCUserInfo *userInfo = [SCUserInfo share];
             if (userInfo.loginState)
                 [self.navigationController pushViewController:[SCMaintenanceViewController instance] animated:YES];
@@ -120,27 +152,11 @@ static const CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
     }
 }
 
-#pragma mark - Private Methods
-//- (void)jumpToSpecialViewControllerWith:(SCSpecial *)special isOperate:(BOOL)isOperate {
-//    if (special.html) {
-//        SCWebViewController *webViewController = [SCWebViewController instance];
-//        webViewController.title   = special.text;
-//        webViewController.loadURL = special.url;
-//        [self.navigationController pushViewController:webViewController animated:YES];
-//    } else {
-//        SCOperationViewController *operationViewController = [SCOperationViewController instance];
-//        operationViewController.title = special.text;
-//        [operationViewController setRequestParameter:special.parameter value:special.value];
-//        [self.navigationController pushViewController:operationViewController animated:YES];
-//    }
-//}
-
 #pragma mark - Alert View Delegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     // 用户选择是否登录
-    if (buttonIndex != alertView.cancelButtonIndex) {
-        [self checkShouldLogin];
-    }
+    if (buttonIndex == alertView.cancelButtonIndex) return;
+    [self checkShouldLogin];
 }
 
 #pragma mark - SCHomePageDetailViewDelegate Methods
