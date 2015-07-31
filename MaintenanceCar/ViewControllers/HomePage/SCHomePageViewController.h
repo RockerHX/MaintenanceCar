@@ -32,7 +32,8 @@ typedef NS_ENUM(NSUInteger, SCHomePageServiceButtonType) {
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *operationBarHeight;    // 运营位高度约束
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *showShopsBarHeight;    // 查看商家栏高度约束
 
-@property (nonatomic, weak) id  <SCHomePageViewControllerDelegate>delegate;
+@property (nonatomic, weak)     id  <SCHomePageViewControllerDelegate>delegate;
+@property (nonatomic, assign) BOOL  shouldShowNaivgationBar;
 
 - (IBAction)menuButtonPressed;
 - (IBAction)serviceButtonPressed:(UIButton *)button;

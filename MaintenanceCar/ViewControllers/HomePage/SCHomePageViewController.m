@@ -43,6 +43,7 @@ static const CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[首页]"];
     
+    if (!_shouldShowNaivgationBar) return;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
@@ -51,6 +52,7 @@ static const CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[首页]"];
     
+    if (!_shouldShowNaivgationBar) return;
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
@@ -63,6 +65,7 @@ static const CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
 
 #pragma mark - Config Methods
 - (void)initConfig {
+    _shouldShowNaivgationBar = YES;
 }
 
 - (void)viewConfig {

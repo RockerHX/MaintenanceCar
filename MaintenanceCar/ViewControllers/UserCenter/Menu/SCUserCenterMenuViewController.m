@@ -13,6 +13,7 @@
 #import "SCUserCenterAddCarCell.h"
 #import "SCUserCenterCell.h"
 #import "SCUserCenterViewModel.h"
+#import "SCAddCarViewController.h"
 
 static CGFloat CellHeight = 44.0f;
 
@@ -48,6 +49,10 @@ static CGFloat CellHeight = 44.0f;
     [_userView.header sd_setImageWithURL:_viewModel.headerURL forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:_viewModel.placeHolderHeader]];
     [_userView.loginPromptLabel setText:_viewModel.prompt];
     [_userCarView reloadData];
+}
+
+- (void)hideMenu {
+    [self.frostedViewController hideMenuViewController];
 }
 
 #pragma mark - Table View Data Source
@@ -86,8 +91,21 @@ static CGFloat CellHeight = 44.0f;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self hideMenu];
     if ([tableView isEqual:_userCarView]) {
-        
+        SCUserCenterMenuItem *item = _viewModel.userCarItems[indexPath.row];
+        if (item.last) {
+            if (_delegate && [_delegate respondsToSelector:@selector(willShowAddCarSence)]) {
+                [_delegate willShowAddCarSence];
+            }
+            UINavigationController *addCarNavigaitonController = [SCAddCarViewController navigationInstance];
+            [self presentViewController:addCarNavigaitonController animated:YES completion:^{
+                if (_delegate && [_delegate respondsToSelector:@selector(didShowAddCarSence)]) {
+                    [_delegate didShowAddCarSence];
+                }
+            }];
+        } else {
+        }
     } else {
         if (_delegate && [_delegate respondsToSelector:@selector(shouldShowViewControllerOnRow:)]) {
             [_delegate shouldShowViewControllerOnRow:indexPath.row];
@@ -102,7 +120,7 @@ static CGFloat CellHeight = 44.0f;
 
 #pragma mark - SCUserView Delegate
 - (void)shouldLogin {
-    [self.frostedViewController hideMenuViewController];
+    [self hideMenu];
     [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
 }
 

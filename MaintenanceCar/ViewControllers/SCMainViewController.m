@@ -47,10 +47,7 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
     [self userLog];
     
     // 监听登录通知，收到通知会触发页面跳转方法
-    [NOTIFICATION_CENTER addObserver:self
-                            selector:@selector(shouldLogin)
-                                name:kUserNeedLoginNotification
-                              object:nil];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(shouldLogin) name:kUserNeedLoginNotification object:nil];
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)]];
 }
 
@@ -113,6 +110,11 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
     [self presentViewController:loginViewNavigationController animated:YES completion:nil];
 }
 
+/**
+ *  添加显示视图控制器
+ *
+ *  @param viewController 需要显示的视图控制器
+ */
 - (void)showViewController:(UIViewController *)viewController {
     @try {
         // 添加子视图
@@ -126,6 +128,11 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
     }
 }
 
+/**
+ *  配置首页控制器(负责代理设置)
+ *
+ *  @return 首页的导航控制器
+ */
 - (UINavigationController *)configHomePage {
     UINavigationController *navController = [SCHomePageViewController navigationInstance];
     SCHomePageViewController *viewController = (SCHomePageViewController *)navController.topViewController;
@@ -133,43 +140,65 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
     return navController;
 }
 
+/**
+ *  关闭侧滑导航栏
+ */
+- (void)hideMenu {
+    [self.frostedViewController hideMenuViewController];
+}
+
 #pragma mark - SCUserCenterMenuViewController Delegate
+// 出现加车操作的适合，处理首页导航栏是否显示问题，避免出现页面跳转交互问题
+- (void)willShowAddCarSence {
+    UINavigationController *navController = [SCHomePageViewController navigationInstance];
+    SCHomePageViewController *homePageViewController = (SCHomePageViewController *)navController.topViewController;
+    homePageViewController.shouldShowNaivgationBar = NO;
+}
+
+- (void)didShowAddCarSence {
+    UINavigationController *navController = [SCHomePageViewController navigationInstance];
+    SCHomePageViewController *homePageViewController = (SCHomePageViewController *)navController.topViewController;
+    homePageViewController.shouldShowNaivgationBar = YES;
+}
+
+// 处理个人中心相关选项点击跳转
 - (void)shouldShowViewControllerOnRow:(SCUserCenterMenuRow)row {
     UINavigationController *navController = nil;
+    // 首页和设置页面不需要检查登陆，再次单独处理页面跳转
     if (row == SCUserCenterMenuRowHomePage) {
         navController = [self configHomePage];
         [self showViewController:navController];
     } else if (row == SCUserCenterMenuRowSetting) {
         navController = [SCSettingViewController navigationInstance];
-        SCSettingViewController *viewController = (SCSettingViewController *)navController.topViewController;
-        viewController.delegate = self;
+        SCSettingViewController *settingViewController = (SCSettingViewController *)navController.topViewController;
+        settingViewController.delegate = self;
         [self showViewController:navController];
     } else {
-        // 检查用户是否登录，在进行相应页面跳转
+        // 检查用户是否登录，再进行相应页面跳转
         if ([SCUserInfo share].loginState) {
             switch (row) {
                 case SCUserCenterMenuRowOrder: {
                     navController = [SCOrdersViewController navigationInstance];
-                    SCOrdersViewController *viewController = (SCOrdersViewController *)navController.topViewController;
-                    viewController.delegate = self;
+                    SCOrdersViewController *ordersViewController = (SCOrdersViewController *)navController.topViewController;
+                    ordersViewController.delegate = self;
                     break;
                 }
                 case SCUserCenterMenuRowCollection: {
                     navController = [SCCollectionsViewController navigationInstance];
-                    SCCollectionsViewController *viewController = (SCCollectionsViewController *)navController.topViewController;
-                    viewController.delegate = self;
+                    SCCollectionsViewController *collectionsViewController = (SCCollectionsViewController *)navController.topViewController;
+                    collectionsViewController.delegate = self;
                     break;
                 }
                 case SCUserCenterMenuRowGroupTicket: {
                     navController = [SCGroupTicketsViewController navigationInstance];
-                    SCGroupTicketsViewController *viewController = (SCGroupTicketsViewController *)navController.topViewController;
-                    viewController.delegate = self;
+                    SCGroupTicketsViewController *groupTicketsViewController = (SCGroupTicketsViewController *)navController.topViewController;
+                    groupTicketsViewController.delegate = self;
                     break;
                 }
                 case SCUserCenterMenuRowCoupon: {
                     navController = [SCCouponsViewController navigationInstance];
-                    SCCouponsViewController *viewController = (SCCouponsViewController *)navController.topViewController;
-                    viewController.delegate = self;
+                    SCCouponsViewController *couponsViewController = (SCCouponsViewController *)navController.topViewController;
+                    couponsViewController.delegate = self;
                     break;
                 }
                 default:
@@ -180,10 +209,10 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
             [self showShoulLoginAlert];
         }
     }
-    [self.frostedViewController hideMenuViewController];
+    [self hideMenu];
 }
 
-#pragma mark - Delegate
+#pragma mark - Sub Content View Controller Delegate
 - (void)shouldShowMenu {
     // Dismiss keyboard (optional)
     [self.view endEditing:YES];
