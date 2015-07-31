@@ -14,15 +14,15 @@
 #pragma mark - Setter And Getter Methods
 - (void)setFrame:(CGRect)frame
 {
-    frame.origin.x = frame.origin.x + POP_CELL_OFFSET;
-    frame.origin.y = frame.origin.y - CELL_OFFSET;
-    frame.size.width = frame.size.width - POP_CELL_OFFSET*2;
-    frame.size.height = frame.size.height + CELL_OFFSET;
+    frame.origin.x = frame.origin.x + PopCellOffset;
+    frame.origin.y = frame.origin.y - CellOffset;
+    frame.size.width = frame.size.width - PopCellOffset*2;
+    frame.size.height = frame.size.height + CellOffset;
     [super setFrame:frame];
 }
 
 #pragma mark - Draw Methods
-#define CurveOffsetPointX   POP_CELL_DISPLACEMENT*0.75
+#define CurveOffsetPointX   PopCellDisplacment*0.75
 - (void)drawRect:(CGRect)rect
 {
     CGFloat  width = rect.size.width;
@@ -30,9 +30,9 @@
     UIColor *color = [UIColor whiteColor];
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(ZERO_POINT, ZERO_POINT)];
-    [path addCurveToPoint:CGPointMake(POP_CELL_DISPLACEMENT, height) controlPoint1:CGPointMake(CurveOffsetPointX, height*0.25) controlPoint2:CGPointMake(POP_CELL_DISPLACEMENT/4, height)];
-    [path addLineToPoint:CGPointMake(width - POP_CELL_DISPLACEMENT, height)];
-    [path addCurveToPoint:CGPointMake(width, ZERO_POINT) controlPoint1:CGPointMake(width - POP_CELL_DISPLACEMENT/4, height) controlPoint2:CGPointMake(width - CurveOffsetPointX, height*0.25)];
+    [path addCurveToPoint:CGPointMake(PopCellDisplacment, height) controlPoint1:CGPointMake(CurveOffsetPointX, height*0.25) controlPoint2:CGPointMake(PopCellDisplacment/4, height)];
+    [path addLineToPoint:CGPointMake(width - PopCellDisplacment, height)];
+    [path addCurveToPoint:CGPointMake(width, ZERO_POINT) controlPoint1:CGPointMake(width - PopCellDisplacment/4, height) controlPoint2:CGPointMake(width - CurveOffsetPointX, height*0.25)];
     [color setStroke];
     [color setFill];
     [path fill];

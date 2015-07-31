@@ -11,6 +11,8 @@
 #import "SCDiscoveryViewController.h"
 #import "SCOperationViewController.h"
 #import "SCWebViewController.h"
+#import <SCLoopScrollView/SCLoopScrollView.h>
+#import "SCOperation.h"
 
 static NSString *const HomePageNavControllerID = @"HomePageNavigationController";
 
@@ -21,7 +23,10 @@ static const CGFloat ShowShopsBarHeightOn6     = 70.0f;
 static const CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
 static const CGFloat ServiceButtonCornerRadius = 8.0f;
 
-@implementation SCHomePageViewController
+@implementation SCHomePageViewController {
+    NSMutableArray *_oprationADs;
+    CAGradientLayer *_topBarShadowLayer;
+}
 
 #pragma mark - Init Methods
 + (UINavigationController *)navigationInstance {
@@ -67,9 +72,13 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
 #pragma mark - Config Methods
 - (void)initConfig {
     _shouldShowNaivgationBar = YES;
+    _oprationADs = @[].mutableCopy;
+    
+    [self startOperationADsReuqet];
 }
 
 - (void)viewConfig {
+    [self addTopBarShadowLayer];
     // 三个服务按钮圆角处理
     _maintenanceButton.layer.cornerRadius = ServiceButtonCornerRadius;
     _washButton.layer.cornerRadius        = ServiceButtonCornerRadius;
@@ -101,19 +110,69 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
 }
 
 #pragma mark - Private Methods
-//- (void)jumpToSpecialViewControllerWith:(SCSpecial *)special isOperate:(BOOL)isOperate {
-//    if (special.html) {
-//        SCWebViewController *webViewController = [SCWebViewController instance];
-//        webViewController.title   = special.text;
-//        webViewController.loadURL = special.url;
-//        [self.navigationController pushViewController:webViewController animated:YES];
-//    } else {
-//        SCOperationViewController *operationViewController = [SCOperationViewController instance];
-//        operationViewController.title = special.text;
-//        [operationViewController setRequestParameter:special.parameter value:special.value];
-//        [self.navigationController pushViewController:operationViewController animated:YES];
-//    }
-//}
+- (void)jumpToSpecialViewControllerWith:(SCOperation *)operation isOperate:(BOOL)isOperate {
+    if (operation.html) {
+        SCWebViewController *webViewController = [SCWebViewController instance];
+        webViewController.title   = operation.text;
+        webViewController.loadURL = operation.url;
+        [self.navigationController pushViewController:webViewController animated:YES];
+    } else {
+        SCOperationViewController *operationViewController = [SCOperationViewController instance];
+        operationViewController.title = operation.text;
+        [operationViewController setRequestParameter:operation.parameter value:operation.value];
+        [self.navigationController pushViewController:operationViewController animated:YES];
+    }
+}
+
+- (void)addTopBarShadowLayer {
+    if (!_topBarShadowLayer) {
+        _topBarShadowLayer = [CAGradientLayer layer];
+        _topBarShadowLayer.frame = CGRectMake(0.0f, 0.0f, SCREEN_WIDTH, 20.0f);
+        [_topBarShadowLayer setStartPoint:CGPointMake(0.5f, 0.0f)];
+        [_topBarShadowLayer setEndPoint:CGPointMake(0.5f, 1.0f)];
+        _topBarShadowLayer.colors = @[(id)[UIColor colorWithWhite:0.1f alpha:0.5f].CGColor,
+                                      (id)[UIColor clearColor].CGColor];
+    }
+    [self.view.layer addSublayer:_topBarShadowLayer];
+}
+
+- (void)startOperationADsReuqet
+{
+    WEAK_SELF(weakSelf);
+    [[SCAPIRequest manager] startGetOperatADAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        {
+            NSInteger statusCode = [responseObject[@"status_code"] integerValue];
+            if (SCAPIRequestErrorCodeNoError == statusCode) {
+                [responseObject[@"data"][@"ad"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    SCOperation *operation = [SCOperation objectWithKeyValues:obj];
+                    [_oprationADs addObject:operation];
+                }];
+            }
+        }
+        [weakSelf refreshOperationAD];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [weakSelf refreshOperationAD];
+    }];
+}
+
+- (void)refreshOperationAD
+{
+    NSMutableArray *images = [@[] mutableCopy];
+    if (_oprationADs.count) {
+        for (SCOperation *operation in _oprationADs) {
+            [images addObject:operation.pictureURL];
+        }
+    }
+    
+    _operationView.defaultImage = [UIImage imageNamed:@"MerchantImageDefault"];
+    _operationView.images = images;
+    [_operationView show:^(NSInteger index) {
+        if (_oprationADs.count) {
+            [self jumpToSpecialViewControllerWith:_oprationADs[index] isOperate:YES];
+        }
+    } finished:nil];
+}
 
 /**
  *  跳转到对应的服务列表
@@ -158,10 +217,5 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
     if (buttonIndex == alertView.cancelButtonIndex) return;
     [self checkShouldLogin];
 }
-
-#pragma mark - SCHomePageDetailViewDelegate Methods
-//- (void)shouldShowOperatAd:(SCSpecial *)special {
-//    [self jumpToSpecialViewControllerWith:special isOperate:YES];
-//}
 
 @end

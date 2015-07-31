@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SCDictionaryItem.h"
 #import "SCServiceItem.h"
-#import "SCSpecial.h"
+#import "SCOperation.h"
 
 typedef NS_ENUM(NSInteger, SCDictionaryType) {
     SCDictionaryTypeOrderType,                          // 订单类型
@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
 
 @property (nonatomic, strong, readonly) NSArray   *serviceItems;              // 服务项目
 
-@property (nonatomic, strong, readonly) SCSpecial    *special;                // 自定义数据
+@property (nonatomic, strong, readonly) SCOperation    *special;                // 自定义数据
 @property (nonatomic, strong, readonly) NSDictionary *colors;                 // 商家Flags颜色值
 @property (nonatomic, strong, readonly) NSDictionary *explains;               // 商家Flags名字
 @property (nonatomic, strong, readonly) NSDictionary *details;                // 商家Flags描述
