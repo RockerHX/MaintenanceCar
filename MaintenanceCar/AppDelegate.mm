@@ -58,15 +58,12 @@
     //set AppKey and AppSecret
     [UMessage startWithAppkey:UMengAPPKEY launchOptions:launchOptions];
     //register remoteNotification types
-    if (IS_IOS7)
-    {
+    if (IS_IOS7) {
         //register remoteNotification types (iOS 8.0以下)
         [UMessage registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
                                                      UIRemoteNotificationTypeSound|
                                                      UIRemoteNotificationTypeAlert];
-    }
-    else if (IS_IOS8)
-    {
+    } else if (IS_IOS8) {
         //register remoteNotification types （iOS 8.0及其以上版本）
         UIMutableUserNotificationAction *action1 = [[UIMutableUserNotificationAction alloc] init];
         action1.identifier = @"action1_identifier";
@@ -94,8 +91,7 @@
     [UMessage setLogEnabled:YES];
     
     SCUserInfo *userInfo = [SCUserInfo share];
-    if (!userInfo.addAliasSuccess && userInfo.loginState)
-    {
+    if (!userInfo.addAliasSuccess && userInfo.loginState) {
         [UMessage addAlias:userInfo.phoneNmber type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
             if ([responseObject[@"success"] isEqualToString:@"ok"])
                 [SCUserInfo share].addAliasSuccess = YES;
@@ -117,39 +113,32 @@
     return YES;
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application
-{
+- (void)applicationWillResignActive:(UIApplication *)application {
     [BMKMapView willBackGround];    //当应用即将后台时调用，停止一切调用opengl相关的操作
 }
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
     [BMKMapView didForeGround];     //当应用恢复前台状态时调用，回复地图的渲染和opengl相关的操作
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-{
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [UMessage registerDeviceToken:deviceToken];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-{
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [UMessage didReceiveRemoteNotification:userInfo];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
-{
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
     NSLog(@"%s:%@", __FUNCTION__, userInfo);
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     return  [WXApi handleOpenURL:url delegate:self];
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-{
-    if ([url.host isEqualToString:@"safepay"])
-    {
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    if ([url.host isEqualToString:@"safepay"]) {
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
             NSLog(@"result = %@", resultDic);
         }];
@@ -159,20 +148,16 @@
 }
 
 #pragma mark - Wei Xin Pay Delegate Methods
-- (void)onResp:(BaseResp *)resp
-{
-    if ([resp isKindOfClass:[PayResp class]])
-    {
+- (void)onResp:(BaseResp *)resp {
+    if ([resp isKindOfClass:[PayResp class]]) {
         PayResp *response = (PayResp *)resp;
         switch (response.errCode) {
-            case WXSuccess:
-            {
+            case WXSuccess: {
                 //服务器端查询支付通知或查询API返回的结果再提示成功
                 [NOTIFICATION_CENTER postNotificationName:kWeiXinPaySuccessNotification object:nil];
             }
                 break;
-            default:
-            {
+            default: {
                 [NOTIFICATION_CENTER postNotificationName:kWeiXinPayFailureNotification object:nil];
             }
                 break;

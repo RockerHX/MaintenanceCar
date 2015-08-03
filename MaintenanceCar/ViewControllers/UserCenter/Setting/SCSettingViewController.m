@@ -27,6 +27,7 @@
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[个人中心] - 设置"];
+    [self displayView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
