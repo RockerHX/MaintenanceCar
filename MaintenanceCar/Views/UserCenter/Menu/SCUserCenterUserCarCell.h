@@ -10,4 +10,6 @@
 
 @interface SCUserCenterUserCarCell : SCUserCenterCell
 
+- (void)displayCellWithItem:(SCUserCenterMenuItem *)item selected:(BOOL)selected;
+
 @end

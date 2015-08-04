@@ -12,11 +12,12 @@
 
 @implementation SCUserCenterCell
 
+#pragma mark - Init Methods
 - (void)awakeFromNib {
 }
 
 #pragma mark - Public Methods
-- (void)diplayCellWithItem:(SCUserCenterMenuItem *)item {
+- (void)displayCellWithItem:(SCUserCenterMenuItem *)item {
     if (item.localData) {
         [_icon setImage:[UIImage imageNamed:item.icon]];
     } else {

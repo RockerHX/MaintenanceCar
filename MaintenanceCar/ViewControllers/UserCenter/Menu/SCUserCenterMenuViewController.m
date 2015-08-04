@@ -71,7 +71,6 @@ static CGFloat CellHeight = 44.0f;
         case SCUserCenterItemSectionUserCars:
             rows = _viewModel.userCarItems.count;
             break;
-            
         case SCUserCenterItemSectionSelectedItems:
             rows = _viewModel.selectedItems.count;
             break;
@@ -91,10 +90,10 @@ static CGFloat CellHeight = 44.0f;
             } else {
                 cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterUserCarCell class])
                                                        forIndexPath:indexPath];
+                [(SCUserCenterUserCarCell *)cell displayCellWithItem:item selected:(_viewModel.carSelectedIndex == indexPath.row)];
             }
             break;
         }
-            
         case SCUserCenterItemSectionSelectedItems: {
             item = _viewModel.selectedItems[indexPath.row];
             cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterCell class])
@@ -102,7 +101,7 @@ static CGFloat CellHeight = 44.0f;
             break;
         }
     }
-    [cell diplayCellWithItem:item];
+    [cell displayCellWithItem:item];
     return cell;
 }
 
@@ -113,8 +112,6 @@ static CGFloat CellHeight = 44.0f;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self hideMenu];
-    
     switch (indexPath.section) {
         case SCUserCenterItemSectionUserCars: {
             SCUserCenterMenuItem *item = _viewModel.userCarItems[indexPath.row];
@@ -124,10 +121,13 @@ static CGFloat CellHeight = 44.0f;
                 }
                 UINavigationController *addCarNavigaitonController = [SCAddCarViewController navigationInstance];
                 [self presentViewController:addCarNavigaitonController animated:YES completion:nil];
+            } else {
+                [_viewModel recordUserCarSelected:indexPath.row];
+                [tableView reloadData];
+                return;
             }
             break;
         }
-            
         case SCUserCenterItemSectionSelectedItems: {
             if (_delegate && [_delegate respondsToSelector:@selector(shouldShowViewControllerOnRow:)]) {
                 [_delegate shouldShowViewControllerOnRow:indexPath.row];
@@ -135,6 +135,7 @@ static CGFloat CellHeight = 44.0f;
             break;
         }
     }
+    [self hideMenu];
 }
 
 #pragma mark - REFrostedViewController Delegate

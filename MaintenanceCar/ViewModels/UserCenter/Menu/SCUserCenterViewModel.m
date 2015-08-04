@@ -9,6 +9,7 @@
 #import "SCUserCenterViewModel.h"
 #import "SCFileManager.h"
 #import "SCUserInfo.h"
+#import "MicroConstants.h"
 
 static const NSInteger ItemSections = 2;
 
@@ -23,6 +24,8 @@ static NSString *const AddCarIconImageName = @"UC-AddCarIcon";
 
 static NSString *const AddCarIconKey = @"Icon";
 static NSString *const AddCarIconValue = @"Title";
+
+static NSString *const kUserCarSelectedKey = @"kUserCarSelectedKey";
 
 
 @implementation SCUserCenterViewModel
@@ -57,6 +60,10 @@ static NSString *const AddCarIconValue = @"Title";
 }
 
 #pragma mark - Setter And Getter
+- (NSInteger)carSelectedIndex {
+    return [[USER_DEFAULT objectForKey:kUserCarSelectedKey] integerValue];
+}
+
 - (NSString *)prompt {
     SCUserInfo *userInfo = [SCUserInfo share];
     return userInfo.loginState ? userInfo.phoneNmber : Prompt;
@@ -76,6 +83,10 @@ static NSString *const AddCarIconValue = @"Title";
         weakSelf.needRefresh = YES;
     }];
     
+}
+
+- (void)recordUserCarSelected:(NSInteger)index {
+    [USER_DEFAULT setValue:@(index) forKey:kUserCarSelectedKey];
 }
 
 #pragma mark - Private Methods

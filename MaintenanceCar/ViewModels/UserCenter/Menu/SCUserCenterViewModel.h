@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, SCUserCenterItemSection) {
 
 @property (nonatomic, assign)                BOOL  needRefresh;
 @property (nonatomic, assign, readonly) NSInteger  itemSections;
+@property (nonatomic, assign, readonly) NSInteger  carSelectedIndex;
 @property (nonatomic, strong, readonly)     NSURL *headerURL;
 @property (nonatomic, copy, readonly)    NSString *placeHolderHeader;
 @property (nonatomic, copy, readonly)    NSString *prompt;
@@ -25,6 +26,8 @@ typedef NS_ENUM(NSUInteger, SCUserCenterItemSection) {
 @property (nonatomic, copy, readonly)     NSArray *selectedItems;
 
 + (instancetype)instance;
+
 - (void)reloadCars;
+- (void)recordUserCarSelected:(NSInteger)index;
 
 @end

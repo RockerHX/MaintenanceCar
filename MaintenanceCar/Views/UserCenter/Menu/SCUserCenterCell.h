@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @class SCUserCenterMenuItem;
+
 @interface SCUserCenterCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *icon;
 @property (weak, nonatomic) IBOutlet     UILabel *titleLabel;
 
-- (void)diplayCellWithItem:(SCUserCenterMenuItem *)item;
+- (void)displayCellWithItem:(SCUserCenterMenuItem *)item;
 
 @end
