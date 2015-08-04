@@ -267,6 +267,9 @@
                                         <state key="normal" image="UC-HeaderIcon">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="headerTap" destination="EGb-fr-DBa" eventType="touchUpInside" id="aa1-1T-g2n"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请登录" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rrl-zZ-YtR">
                                         <rect key="frame" x="97" y="57.5" width="211" height="24"/>
@@ -285,6 +288,7 @@
                                     <constraint firstItem="1qr-LJ-asE" firstAttribute="leading" secondItem="EGb-fr-DBa" secondAttribute="leading" constant="5" id="wIN-4q-8Fn"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="delegate" destination="JUV-er-i0f" id="chq-3Z-J22"/>
                                     <outlet property="header" destination="1qr-LJ-asE" id="oac-Lj-fgy"/>
                                     <outlet property="loginPromptLabel" destination="Rrl-zZ-YtR" id="BB4-Uf-Dpz"/>
                                 </connections>

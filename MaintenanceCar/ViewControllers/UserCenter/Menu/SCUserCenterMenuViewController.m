@@ -66,7 +66,7 @@ static CGFloat CellHeight = 44.0f;
             break;
             
         case SCUserCenterItemSectionSelectedItems:
-            rows = _viewModel.userCarItems.count;
+            rows = _viewModel.selectedItems.count;
             break;
     }
     return rows;

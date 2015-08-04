@@ -15,6 +15,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    [self initConfig];
     [self viewConfig];
 }
 
@@ -25,6 +26,11 @@
 
 - (void)viewConfig {
     _header.layer.cornerRadius = _header.frame.size.width/2;
+}
+
+#pragma mark - Action
+- (IBAction)headerTap {
+    [self tap];
 }
 
 #pragma mark - Private Methods

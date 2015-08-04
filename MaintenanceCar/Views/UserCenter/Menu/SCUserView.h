@@ -24,4 +24,6 @@
 @property (weak, nonatomic) IBOutlet  UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet  UILabel *infoLabel;
 
+- (IBAction)headerTap;
+
 @end
