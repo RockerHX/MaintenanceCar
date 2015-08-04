@@ -25,5 +25,6 @@ typedef NS_ENUM(NSUInteger, SCUserCenterItemSection) {
 @property (nonatomic, copy, readonly)     NSArray *selectedItems;
 
 + (instancetype)instance;
+- (void)reloadCars;
 
 @end

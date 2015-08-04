@@ -6,8 +6,9 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "SCUserCenterMenuViewController.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import <SDWebImage/UIButton+WebCache.h>
+#import "SCUserCenterMenuViewController.h"
 #import "SCStoryBoardManager.h"
 #import "SCUserCenterUserCarCell.h"
 #import "SCUserCenterAddCarCell.h"
@@ -37,6 +38,12 @@ static CGFloat CellHeight = 44.0f;
 #pragma mark - Config Methods
 - (void)initConfig {
     _viewModel = [SCUserCenterViewModel instance];
+    [RACObserve([SCUserInfo share], loginState) subscribeNext:^(NSNumber *loginState) {
+        [_viewModel reloadCars];
+    }];
+    [RACObserve(_viewModel, needRefresh) subscribeNext:^(id x) {
+        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    }];
 }
 
 - (void)viewConfig {
