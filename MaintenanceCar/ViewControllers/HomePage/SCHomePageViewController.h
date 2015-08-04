@@ -20,6 +20,7 @@ typedef NS_ENUM(NSUInteger, SCHomePageServiceButtonType) {
 
 @optional
 - (void)shouldShowMenu;
+- (void)shouldSupportPanGesture:(BOOL)support;
 
 @end
 

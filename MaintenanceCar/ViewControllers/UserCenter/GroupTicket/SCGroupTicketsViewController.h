@@ -12,6 +12,7 @@
 
 @optional
 - (void)shouldShowMenu;
+- (void)shouldSupportPanGesture:(BOOL)support;
 
 @end
 

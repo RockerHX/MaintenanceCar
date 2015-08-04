@@ -43,12 +43,16 @@ static NSString *const OderNavControllerID = @"OrdersNavigationController";
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[个人中心] - 订单"];
+    
+    [self panGestureSupport:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[个人中心] - 订单"];
+    
+    [self panGestureSupport:NO];
 }
 
 - (void)viewDidLoad {
@@ -285,6 +289,12 @@ static NSString *const OderNavControllerID = @"OrdersNavigationController";
 - (void)displayRefreshFooter {
     if ([self dataList].count > 2) [self addRefreshFooter];
     else [self removeRefreshFooter];
+}
+
+- (void)panGestureSupport:(BOOL)support {
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldSupportPanGesture:)]) {
+        [_delegate shouldSupportPanGesture:support];
+    }
 }
 
 #pragma mark - SCNavigationTabDelegate Methods

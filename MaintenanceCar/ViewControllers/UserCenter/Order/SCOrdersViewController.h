@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger, SCOrdersReuqest) {
 
 @optional
 - (void)shouldShowMenu;
+- (void)shouldSupportPanGesture:(BOOL)support;
 
 @end
 

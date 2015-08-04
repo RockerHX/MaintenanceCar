@@ -40,12 +40,16 @@ static NSString *const CouponNavControllerID = @"CouponsNavigationController";
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[个人中心] - 优惠券"];
+    
+    [self panGestureSupport:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[个人中心] - 优惠券"];
+    
+    [self panGestureSupport:NO];
 }
 
 - (void)viewDidLoad {
@@ -205,6 +209,12 @@ static NSString *const CouponNavControllerID = @"CouponsNavigationController";
         [weakSelf hanleFailureResponseWtihOperation:operation];
         [weakSelf hideHUDOnViewController:weakSelf];
     }];
+}
+
+- (void)panGestureSupport:(BOOL)support {
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldSupportPanGesture:)]) {
+        [_delegate shouldSupportPanGesture:support];
+    }
 }
 
 @end

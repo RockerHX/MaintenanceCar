@@ -35,12 +35,16 @@ static NSString *const CollectionNavControllerID = @"CollectionsNavigationContro
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[个人中心] - 收藏"];
+    
+    [self panGestureSupport:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[个人中心] - 收藏"];
+    
+    [self panGestureSupport:NO];
 }
 
 - (void)viewDidLoad {
@@ -193,6 +197,12 @@ static NSString *const CollectionNavControllerID = @"CollectionsNavigationContro
         [weakSelf deleteFailureAtIndex:index];
         [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"删除失败，请检查网络！" delay:0.5f];
     }];
+}
+
+- (void)panGestureSupport:(BOOL)support {
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldSupportPanGesture:)]) {
+        [_delegate shouldSupportPanGesture:support];
+    }
 }
 
 #pragma mark - SCMerchantDetailViewControllerDelegate Methods

@@ -50,6 +50,7 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[首页]"];
     
+    [self panGestureSupport:YES];
     if (!_shouldShowNaivgationBar) return;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
@@ -64,6 +65,7 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[首页]"];
     
+    [self panGestureSupport:NO];
     if (!_shouldShowNaivgationBar) return;
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
@@ -234,6 +236,12 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
             [self.navigationController pushViewController:discoveryViewController animated:YES];
             break;
         }
+    }
+}
+
+- (void)panGestureSupport:(BOOL)support {
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldSupportPanGesture:)]) {
+        [_delegate shouldSupportPanGesture:support];
     }
 }
 

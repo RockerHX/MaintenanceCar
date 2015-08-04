@@ -21,7 +21,9 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
 @interface SCMainViewController () <SCHomePageViewControllerDelegate, SCOrdersViewControllerDelegate, SCCollectionsViewControllerDelegate, SCGroupTicketsViewControllerDelegate, SCCouponsViewControllerDelegate, SCSettingViewControllerDelegate>
 @end
 
-@implementation SCMainViewController
+@implementation SCMainViewController {
+    BOOL _canSupportPanGesture;
+}
 
 #pragma mark - Init Methods
 + (UINavigationController *)navigationInstance {
@@ -43,6 +45,7 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
 
 #pragma mark - Config Methods
 - (void)initConfig {
+    _canSupportPanGesture = YES;
     // 开启用户日志
     [self userLog];
     
@@ -57,13 +60,15 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
 }
 
 #pragma mark - Gesture Recognizer
-- (void)panGestureRecognized:(UIPanGestureRecognizer *)sender {
+- (void)panGestureRecognized:(UIPanGestureRecognizer *)pan {
     // Dismiss keyboard (optional)
     [self.view endEditing:YES];
     [self.frostedViewController.view endEditing:YES];
     
-    // Present the view controller
-    [self.frostedViewController panGestureRecognized:sender];
+    if (_canSupportPanGesture) {
+        // Present the view controller
+        [self.frostedViewController panGestureRecognized:pan];
+    }
 }
 
 #pragma mark - Private Methods
@@ -121,6 +126,7 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
  */
 - (void)showViewController:(UIViewController *)viewController {
     @try {
+        _canSupportPanGesture = YES;
         // 添加子视图
         [self addChildViewController:viewController];
         [self.view addSubview:viewController.view];
@@ -224,6 +230,10 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
     
     // Present the view controller
     [self.frostedViewController presentMenuViewController];
+}
+
+- (void)shouldSupportPanGesture:(BOOL)support {
+    _canSupportPanGesture = support;
 }
 
 @end

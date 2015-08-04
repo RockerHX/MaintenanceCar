@@ -27,6 +27,8 @@
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[个人中心] - 设置"];
+    
+    [self panGestureSupport:YES];
     [self displayView];
 }
 
@@ -34,6 +36,8 @@
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[个人中心] - 设置"];
+    
+    [self panGestureSupport:NO];
 }
 
 - (void)viewDidLoad {
@@ -97,6 +101,12 @@
         [self showHUDAlertToViewController:self text:@"您还未登录，无法接受推送消息" delay:0.5f];
     }
     userInfo.receiveMessage = sender.on;
+}
+
+- (void)panGestureSupport:(BOOL)support {
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldSupportPanGesture:)]) {
+        [_delegate shouldSupportPanGesture:support];
+    }
 }
 
 #pragma mark - MBProgressHUD Delegate

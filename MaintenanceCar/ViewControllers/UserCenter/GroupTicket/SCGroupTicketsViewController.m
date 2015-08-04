@@ -38,12 +38,16 @@ static NSString *const GroupTicketNavControllerID = @"GroupTicketsNavigationCont
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[个人中心] - 团购券"];
+    
+    [self panGestureSupport:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[个人中心] - 团购券"];
+    
+    [self panGestureSupport:NO];
 }
 
 - (void)viewDidLoad {
@@ -148,6 +152,12 @@ static NSString *const GroupTicketNavControllerID = @"GroupTicketsNavigationCont
         [weakSelf hanleFailureResponseWtihOperation:operation];
         [weakSelf endRefresh];
     }];
+}
+
+- (void)panGestureSupport:(BOOL)support {
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldSupportPanGesture:)]) {
+        [_delegate shouldSupportPanGesture:support];
+    }
 }
 
 #pragma mark - SCTicketCodeCellDelegate Methods
