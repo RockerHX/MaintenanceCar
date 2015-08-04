@@ -13,7 +13,7 @@
 static const NSInteger ItemSections = 2;
 
 static NSString *const Prompt = @"请登录";
-static NSString *const AddCarPrompt = @"点击添加车辆";
+static NSString *const AddCarPrompt = @"添加爱车";
 
 static NSString *const UserCenterItemsFileName = @"UserCenterData";
 static NSString *const UserCenterItemsFileType = @"plist";
