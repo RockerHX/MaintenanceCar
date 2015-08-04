@@ -8,15 +8,22 @@
 
 #import "SCUserCenterMenuItem.h"
 
+typedef NS_ENUM(NSUInteger, SCUserCenterItemSection) {
+    SCUserCenterItemSectionUserCars,
+    SCUserCenterItemSectionSelectedItems
+};
+
+
 @interface SCUserCenterViewModel : NSObject
 
-+ (instancetype)instance;
+@property (nonatomic, assign)                BOOL  needRefresh;
+@property (nonatomic, assign, readonly) NSInteger  itemSections;
+@property (nonatomic, strong, readonly)     NSURL *headerURL;
+@property (nonatomic, copy, readonly)    NSString *placeHolderHeader;
+@property (nonatomic, copy, readonly)    NSString *prompt;
+@property (nonatomic, copy, readonly)     NSArray *userCarItems;
+@property (nonatomic, copy, readonly)     NSArray *selectedItems;
 
-@property (nonatomic, assign)              BOOL  needRefresh;
-@property (nonatomic, strong, readonly)   NSURL *headerURL;
-@property (nonatomic, copy, readonly)  NSString *placeHolderHeader;
-@property (nonatomic, copy, readonly)  NSString *prompt;
-@property (nonatomic, strong, readonly) NSArray *userCarItems;
-@property (nonatomic, strong, readonly) NSArray *userCenterItems;
++ (instancetype)instance;
 
 @end

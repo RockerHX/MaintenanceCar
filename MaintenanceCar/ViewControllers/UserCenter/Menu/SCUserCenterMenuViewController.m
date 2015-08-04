@@ -40,15 +40,13 @@ static CGFloat CellHeight = 44.0f;
 }
 
 - (void)viewConfig {
-    _userCarHeightConstraint.constant = _viewModel.userCarItems.count * CellHeight;
-    [self updateViewConstraints];
 }
 
 #pragma mark - Private Methods
 - (void)reloadData {
     [_userView.header sd_setImageWithURL:_viewModel.headerURL forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:_viewModel.placeHolderHeader]];
     [_userView.loginPromptLabel setText:_viewModel.prompt];
-    [_userCarView reloadData];
+    [_tableView reloadData];
 }
 
 - (void)hideMenu {
@@ -56,29 +54,46 @@ static CGFloat CellHeight = 44.0f;
 }
 
 #pragma mark - Table View Data Source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return _viewModel.itemSections;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([tableView isEqual:_userCarView]) return _viewModel.userCarItems.count;
-    else if ([tableView isEqual:_userCenterView]) return _viewModel.userCenterItems.count;
-    else return 0;
+    NSInteger rows = 0;
+    switch (section) {
+        case SCUserCenterItemSectionUserCars:
+            rows = _viewModel.userCarItems.count;
+            break;
+            
+        case SCUserCenterItemSectionSelectedItems:
+            rows = _viewModel.userCarItems.count;
+            break;
+    }
+    return rows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SCUserCenterCell *cell = nil;
     SCUserCenterMenuItem *item = nil;
-    if ([tableView isEqual:_userCarView]) {
-        item = _viewModel.userCarItems[indexPath.row];
-        if (item.last) {
-            cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterAddCarCell class])
-                                                   forIndexPath:indexPath];
-        } else {
-            cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterUserCarCell class])
-                                                   forIndexPath:indexPath];
+    switch (indexPath.section) {
+        case SCUserCenterItemSectionUserCars: {
+            item = _viewModel.userCarItems[indexPath.row];
+            if (item.last) {
+                cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterAddCarCell class])
+                                                       forIndexPath:indexPath];
+            } else {
+                cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterUserCarCell class])
+                                                       forIndexPath:indexPath];
+            }
+            break;
         }
-    } else {
-        item = _viewModel.userCenterItems[indexPath.row];
-        cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterCell class])
-                                               forIndexPath:indexPath];
-        
+            
+        case SCUserCenterItemSectionSelectedItems: {
+            item = _viewModel.selectedItems[indexPath.row];
+            cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterCell class])
+                                                   forIndexPath:indexPath];
+            break;
+        }
     }
     [cell diplayCellWithItem:item];
     return cell;
@@ -92,19 +107,25 @@ static CGFloat CellHeight = 44.0f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self hideMenu];
-    if ([tableView isEqual:_userCarView]) {
-        SCUserCenterMenuItem *item = _viewModel.userCarItems[indexPath.row];
-        if (item.last) {
-            if (_delegate && [_delegate respondsToSelector:@selector(willShowAddCarSence)]) {
-                [_delegate willShowAddCarSence];
+    
+    switch (indexPath.section) {
+        case SCUserCenterItemSectionUserCars: {
+            SCUserCenterMenuItem *item = _viewModel.userCarItems[indexPath.row];
+            if (item.last) {
+                if (_delegate && [_delegate respondsToSelector:@selector(willShowAddCarSence)]) {
+                    [_delegate willShowAddCarSence];
+                }
+                UINavigationController *addCarNavigaitonController = [SCAddCarViewController navigationInstance];
+                [self presentViewController:addCarNavigaitonController animated:YES completion:nil];
             }
-            UINavigationController *addCarNavigaitonController = [SCAddCarViewController navigationInstance];
-            [self presentViewController:addCarNavigaitonController animated:YES completion:nil];
-        } else {
+            break;
         }
-    } else {
-        if (_delegate && [_delegate respondsToSelector:@selector(shouldShowViewControllerOnRow:)]) {
-            [_delegate shouldShowViewControllerOnRow:indexPath.row];
+            
+        case SCUserCenterItemSectionSelectedItems: {
+            if (_delegate && [_delegate respondsToSelector:@selector(shouldShowViewControllerOnRow:)]) {
+                [_delegate shouldShowViewControllerOnRow:indexPath.row];
+            }
+            break;
         }
     }
 }

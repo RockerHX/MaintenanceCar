@@ -10,6 +10,8 @@
 #import "SCFileManager.h"
 #import "SCUserInfo.h"
 
+static const NSInteger ItemSections = 2;
+
 static NSString *const Prompt = @"请登录";
 static NSString *const AddCarPrompt = @"点击添加车辆";
 
@@ -41,15 +43,17 @@ static NSString *const AddCarIconValue = @"Title";
 
 #pragma mark - Config Methods
 - (void)initConfig {
+    _itemSections = ItemSections;
     _placeHolderHeader = PlaceHolderHeaderImageName;
     [self reloadCars];
+    
     NSMutableArray *items = @[].mutableCopy;
     NSArray *userCenterItems = [self loadUserCenterItems];
     for (NSDictionary *dic in userCenterItems) {
         SCUserCenterMenuItem *item = [[SCUserCenterMenuItem alloc] initWithDictionary:dic localData:YES];
         [items addObject:item];
     }
-    _userCenterItems = [NSArray arrayWithArray:items];
+    _selectedItems = [NSArray arrayWithArray:items];
 }
 
 #pragma mark - Setter And Getter

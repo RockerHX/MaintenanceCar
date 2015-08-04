@@ -28,14 +28,12 @@ typedef NS_ENUM(NSUInteger, SCUserCenterMenuRow) {
 @end
 
 @class SCUserView;
+
 @interface SCUserCenterMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, REFrostedViewControllerDelegate, SCUserViewDelegate>
 
 @property (weak, nonatomic) IBOutlet          id  <SCUserCenterMenuViewControllerDelegate>delegate;
 @property (weak, nonatomic) IBOutlet  SCUserView *userView;
-@property (weak, nonatomic) IBOutlet UITableView *userCarView;
-@property (weak, nonatomic) IBOutlet UITableView *userCenterView;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *userCarHeightConstraint;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 + (instancetype)instance;
 
