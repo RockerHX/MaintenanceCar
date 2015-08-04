@@ -7,6 +7,7 @@
 //
 
 #import "SCHomePageViewController.h"
+#import "SCSearchViewController.h"
 #import "SCMaintenanceViewController.h"
 #import "SCDiscoveryViewController.h"
 #import "SCOperationViewController.h"
@@ -108,6 +109,13 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
     if (_delegate && [_delegate respondsToSelector:@selector(shouldShowMenu)]) {
         [_delegate shouldShowMenu];
     }
+}
+
+- (IBAction)searchButtonPressed {
+    _shouldShowNaivgationBar = NO;
+    UINavigationController *searchNavigationViewController = [SCSearchViewController navigationInstance];
+    searchNavigationViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:searchNavigationViewController animated:YES completion:nil];
 }
 
 - (IBAction)serviceButtonPressed:(UIButton *)button {

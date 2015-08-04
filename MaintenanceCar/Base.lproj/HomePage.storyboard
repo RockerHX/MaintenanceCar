@@ -194,13 +194,26 @@
                                     <constraint firstItem="Fxv-Qa-X9l" firstAttribute="height" secondItem="uEz-VX-QcC" secondAttribute="height" id="xVf-Qa-nLu"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SKK-gA-jUY">
+                                <rect key="frame" x="270" y="0.0" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="SKK-gA-jUY" secondAttribute="height" multiplier="1:1" id="dbV-5G-nTt"/>
+                                    <constraint firstAttribute="width" constant="40" id="lFf-6L-Jge"/>
+                                </constraints>
+                                <state key="normal" image="HP-SearchIcon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="searchButtonPressed" destination="5s2-Co-MNm" eventType="touchUpInside" id="5xB-84-7O2"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odf-aR-6ga">
                                 <rect key="frame" x="10" y="0.0" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="odf-aR-6ga" secondAttribute="height" multiplier="1:1" id="ech-IK-vwZ"/>
                                     <constraint firstAttribute="width" constant="40" id="r2f-2Q-MFm"/>
                                 </constraints>
-                                <state key="normal" image="MenuIcon">
+                                <state key="normal" image="HP-MenuIcon">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -212,11 +225,13 @@
                         <constraints>
                             <constraint firstItem="odf-aR-6ga" firstAttribute="leading" secondItem="N0w-qa-fLe" secondAttribute="leading" constant="10" id="3ez-XN-fGF"/>
                             <constraint firstItem="odf-aR-6ga" firstAttribute="top" secondItem="bAM-3c-QUP" secondAttribute="bottom" id="898-gC-5NB"/>
+                            <constraint firstItem="SKK-gA-jUY" firstAttribute="top" secondItem="bAM-3c-QUP" secondAttribute="bottom" id="E0r-1O-DEe"/>
                             <constraint firstItem="awd-ct-zv1" firstAttribute="leading" secondItem="N0w-qa-fLe" secondAttribute="leading" id="ZtI-Ko-3Id"/>
                             <constraint firstItem="Jf3-P1-UTM" firstAttribute="leading" secondItem="N0w-qa-fLe" secondAttribute="leading" id="ekO-G0-3Hn"/>
                             <constraint firstAttribute="trailing" secondItem="awd-ct-zv1" secondAttribute="trailing" id="fhh-x7-G4G"/>
                             <constraint firstItem="zE7-bY-Eel" firstAttribute="top" secondItem="Jf3-P1-UTM" secondAttribute="bottom" id="lJP-9l-2MK"/>
                             <constraint firstItem="awd-ct-zv1" firstAttribute="top" secondItem="N0w-qa-fLe" secondAttribute="top" id="lQS-Wk-FBU"/>
+                            <constraint firstAttribute="trailing" secondItem="SKK-gA-jUY" secondAttribute="trailing" constant="10" id="m8q-9C-mo4"/>
                             <constraint firstItem="Jf3-P1-UTM" firstAttribute="top" secondItem="awd-ct-zv1" secondAttribute="bottom" id="qDZ-oc-K3W"/>
                             <constraint firstAttribute="trailing" secondItem="Jf3-P1-UTM" secondAttribute="trailing" id="qHj-VB-BRt"/>
                         </constraints>
@@ -979,9 +994,10 @@
         <image name="DistanceIcon" width="15" height="15"/>
         <image name="HP-LocationIcon" width="25" height="25"/>
         <image name="HP-MaintanceIcon" width="70" height="70"/>
+        <image name="HP-MenuIcon" width="25" height="25"/>
         <image name="HP-RepairIcon" width="70" height="70"/>
+        <image name="HP-SearchIcon" width="25" height="25"/>
         <image name="HP-WashIcon" width="70" height="70"/>
-        <image name="MenuIcon" width="25" height="25"/>
         <image name="MerchantIconDefault" width="80" height="80"/>
         <image name="Star-Unlight" width="24" height="28"/>
     </resources>

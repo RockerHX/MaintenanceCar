@@ -40,6 +40,7 @@ typedef NS_ENUM(NSUInteger, SCHomePageServiceButtonType) {
 @property (nonatomic, assign) BOOL  shouldShowNaivgationBar;                    // 跳转下级视图控制器时是否显示导航栏
 
 - (IBAction)menuButtonPressed;
+- (IBAction)searchButtonPressed;
 - (IBAction)serviceButtonPressed:(UIButton *)button;
 
 + (UINavigationController *)navigationInstance;
