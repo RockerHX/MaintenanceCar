@@ -67,22 +67,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ouI-ZS-xV7">
                                         <rect key="frame" x="0.0" y="134" width="320" height="60"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HP-LocationIcon" translatesAutoresizingMaskIntoConstraints="NO" id="KVT-jz-o0O">
-                                                <rect key="frame" x="51" y="18" width="30" height="25"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="KVT-jz-o0O" secondAttribute="height" multiplier="48:41" id="9uw-ND-HPs"/>
-                                                    <constraint firstAttribute="width" constant="30" id="TEX-6f-Fac"/>
-                                                </constraints>
-                                            </imageView>
-                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17y-9d-zRj">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
-                                                <state key="normal">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="serviceButtonPressed:" destination="5s2-Co-MNm" eventType="touchUpInside" id="lcP-Qf-dEQ"/>
-                                                </connections>
-                                            </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="irP-Ue-zIR">
                                                 <rect key="frame" x="89" y="21" width="190.5" height="18"/>
                                                 <subviews>
@@ -119,6 +103,22 @@
                                                     <constraint firstAttribute="bottom" secondItem="tzy-B8-9uW" secondAttribute="bottom" id="orb-JB-o6c"/>
                                                 </constraints>
                                             </view>
+                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HP-LocationIcon" translatesAutoresizingMaskIntoConstraints="NO" id="KVT-jz-o0O">
+                                                <rect key="frame" x="51" y="18" width="30" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="KVT-jz-o0O" secondAttribute="height" multiplier="48:41" id="9uw-ND-HPs"/>
+                                                    <constraint firstAttribute="width" constant="30" id="TEX-6f-Fac"/>
+                                                </constraints>
+                                            </imageView>
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17y-9d-zRj">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                                                <state key="normal">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="serviceButtonPressed:" destination="5s2-Co-MNm" eventType="touchUpInside" id="lcP-Qf-dEQ"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.24313725490196078" green="0.60392156862745094" blue="0.79607843137254897" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
