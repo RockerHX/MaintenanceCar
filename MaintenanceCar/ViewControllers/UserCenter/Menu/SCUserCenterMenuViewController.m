@@ -96,7 +96,7 @@ static CGFloat CellHeight = 44.0f;
             } else {
                 cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterUserCarCell class])
                                                        forIndexPath:indexPath];
-                [(SCUserCenterUserCarCell *)cell displayCellWithItem:item selected:(_viewModel.carSelectedIndex == indexPath.row)];
+                [(SCUserCenterUserCarCell *)cell displayCellWithItem:item selected:[_viewModel.selectedUserCarID isEqualToString:item.userCar.userCarID]];
             }
             break;
         }

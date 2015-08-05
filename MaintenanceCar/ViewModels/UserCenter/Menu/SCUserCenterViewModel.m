@@ -60,8 +60,8 @@ static NSString *const kUserCarSelectedKey = @"kUserCarSelectedKey";
 }
 
 #pragma mark - Setter And Getter
-- (NSInteger)carSelectedIndex {
-    return [[USER_DEFAULT objectForKey:kUserCarSelectedKey] integerValue];
+- (NSString *)selectedUserCarID {
+    return [USER_DEFAULT objectForKey:kUserCarSelectedKey];
 }
 
 - (NSString *)prompt {
@@ -82,11 +82,11 @@ static NSString *const kUserCarSelectedKey = @"kUserCarSelectedKey";
         _userCarItems = [weakSelf appendAddCarItem:items];
         weakSelf.needRefresh = YES;
     }];
-    
 }
 
 - (void)recordUserCarSelected:(NSInteger)index {
-    [USER_DEFAULT setValue:@(index) forKey:kUserCarSelectedKey];
+    NSString *userCarID = ((SCUserCenterMenuItem *)_userCarItems[index]).userCar.userCarID;
+    [USER_DEFAULT setValue:userCarID forKey:kUserCarSelectedKey];
 }
 
 #pragma mark - Private Methods
