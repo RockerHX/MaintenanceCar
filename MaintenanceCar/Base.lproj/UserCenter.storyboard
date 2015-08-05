@@ -296,6 +296,39 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Pjv-2b-FSW">
                                 <rect key="frame" x="0.0" y="130" width="320" height="438"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="eqM-qf-cal">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的爱车（共" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kpv-oy-uxV">
+                                            <rect key="frame" x="15" y="1.5" width="108" height="21.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ia-OF-T0d">
+                                            <rect key="frame" x="125" y="1.5" width="10.5" height="21.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="辆）" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="buq-cy-pVg">
+                                            <rect key="frame" x="137.5" y="1.5" width="36" height="21.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.17254901959999999" green="0.48627450979999998" blue="0.72549019609999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstItem="buq-cy-pVg" firstAttribute="leading" secondItem="3Ia-OF-T0d" secondAttribute="trailing" constant="2" id="0Lb-i9-HCs"/>
+                                        <constraint firstAttribute="centerY" secondItem="Kpv-oy-uxV" secondAttribute="centerY" id="0sT-uW-e9b"/>
+                                        <constraint firstItem="Kpv-oy-uxV" firstAttribute="centerY" secondItem="buq-cy-pVg" secondAttribute="centerY" id="3cK-a2-zKr"/>
+                                        <constraint firstItem="3Ia-OF-T0d" firstAttribute="leading" secondItem="Kpv-oy-uxV" secondAttribute="trailing" constant="2" id="McF-oy-Lsc"/>
+                                        <constraint firstItem="Kpv-oy-uxV" firstAttribute="leading" secondItem="eqM-qf-cal" secondAttribute="leading" constant="15" id="nIU-l1-tjN"/>
+                                        <constraint firstItem="Kpv-oy-uxV" firstAttribute="centerY" secondItem="3Ia-OF-T0d" secondAttribute="centerY" id="o32-uU-UeS"/>
+                                    </constraints>
+                                </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SCUserCenterUserCarCell" id="gXA-b3-pf3" customClass="SCUserCenterUserCarCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -311,7 +344,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用户车辆" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MLv-Xo-Ifa">
-                                                    <rect key="frame" x="71" y="11" width="68" height="20.5"/>
+                                                    <rect key="frame" x="63" y="11" width="68" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -334,7 +367,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="dS5-tF-l3S" secondAttribute="bottom" constant="4" id="5C8-ya-Uhu"/>
                                                 <constraint firstAttribute="trailing" secondItem="dS5-tF-l3S" secondAttribute="trailing" constant="8" id="8VQ-qN-pYj"/>
                                                 <constraint firstAttribute="bottom" secondItem="prh-OG-yGa" secondAttribute="bottom" constant="4" id="I5M-ja-Yj5"/>
-                                                <constraint firstItem="MLv-Xo-Ifa" firstAttribute="leading" secondItem="prh-OG-yGa" secondAttribute="trailing" constant="20" id="cyA-fO-Jh6"/>
+                                                <constraint firstItem="MLv-Xo-Ifa" firstAttribute="leading" secondItem="prh-OG-yGa" secondAttribute="trailing" constant="12" id="cyA-fO-Jh6"/>
                                                 <constraint firstItem="prh-OG-yGa" firstAttribute="centerY" secondItem="MLv-Xo-Ifa" secondAttribute="centerY" id="nse-E4-dk2"/>
                                                 <constraint firstItem="prh-OG-yGa" firstAttribute="leading" secondItem="ppt-HE-WSE" secondAttribute="leading" constant="15" id="pD9-kK-I0g"/>
                                                 <constraint firstItem="prh-OG-yGa" firstAttribute="top" secondItem="ppt-HE-WSE" secondAttribute="top" constant="4" id="tyW-E9-Zcc"/>
@@ -360,7 +393,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击添加车辆" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L0O-uV-Ctg">
-                                                    <rect key="frame" x="71" y="11" width="102" height="20.5"/>
+                                                    <rect key="frame" x="63" y="11" width="102" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -369,7 +402,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="Tz4-eD-6GN" secondAttribute="bottom" constant="4" id="5h5-Tb-FGA"/>
                                                 <constraint firstItem="Tz4-eD-6GN" firstAttribute="top" secondItem="nJ1-4c-ZHE" secondAttribute="top" constant="4" id="WIU-Wu-koA"/>
-                                                <constraint firstItem="L0O-uV-Ctg" firstAttribute="leading" secondItem="Tz4-eD-6GN" secondAttribute="trailing" constant="20" id="cip-Ox-aNO"/>
+                                                <constraint firstItem="L0O-uV-Ctg" firstAttribute="leading" secondItem="Tz4-eD-6GN" secondAttribute="trailing" constant="12" id="cip-Ox-aNO"/>
                                                 <constraint firstItem="Tz4-eD-6GN" firstAttribute="leading" secondItem="nJ1-4c-ZHE" secondAttribute="leading" constant="15" id="e9M-IE-O9S"/>
                                                 <constraint firstItem="Tz4-eD-6GN" firstAttribute="centerY" secondItem="L0O-uV-Ctg" secondAttribute="centerY" id="j83-n9-Rwf"/>
                                             </constraints>
@@ -393,7 +426,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="首页" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1TO-NA-9qu">
-                                                    <rect key="frame" x="71" y="11" width="34" height="20.5"/>
+                                                    <rect key="frame" x="63" y="11" width="34" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -403,7 +436,7 @@
                                                 <constraint firstItem="xVT-OV-GvX" firstAttribute="leading" secondItem="sVX-qg-lNh" secondAttribute="leading" constant="15" id="5tM-wU-vP9"/>
                                                 <constraint firstItem="xVT-OV-GvX" firstAttribute="centerY" secondItem="1TO-NA-9qu" secondAttribute="centerY" id="eUG-Z8-1eo"/>
                                                 <constraint firstItem="xVT-OV-GvX" firstAttribute="top" secondItem="sVX-qg-lNh" secondAttribute="top" constant="4" id="kFA-Tx-65T"/>
-                                                <constraint firstItem="1TO-NA-9qu" firstAttribute="leading" secondItem="xVT-OV-GvX" secondAttribute="trailing" constant="20" id="w2R-SK-Z13"/>
+                                                <constraint firstItem="1TO-NA-9qu" firstAttribute="leading" secondItem="xVT-OV-GvX" secondAttribute="trailing" constant="12" id="w2R-SK-Z13"/>
                                                 <constraint firstAttribute="bottom" secondItem="xVT-OV-GvX" secondAttribute="bottom" constant="4" id="zsQ-rM-N9d"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -431,6 +464,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="carCountLabel" destination="3Ia-OF-T0d" id="igW-hr-zXj"/>
                         <outlet property="tableView" destination="Pjv-2b-FSW" id="gkw-mN-VqO"/>
                         <outlet property="userView" destination="EGb-fr-DBa" id="f5d-qX-FSE"/>
                     </connections>

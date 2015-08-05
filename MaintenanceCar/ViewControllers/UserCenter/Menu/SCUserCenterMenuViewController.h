@@ -33,6 +33,7 @@ typedef NS_ENUM(NSUInteger, SCUserCenterMenuRow) {
 
 @property (weak, nonatomic) IBOutlet          id  <SCUserCenterMenuViewControllerDelegate>delegate;
 @property (weak, nonatomic) IBOutlet  SCUserView *userView;
+@property (weak, nonatomic) IBOutlet     UILabel *carCountLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 + (instancetype)instance;
