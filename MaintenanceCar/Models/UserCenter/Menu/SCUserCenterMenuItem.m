@@ -14,7 +14,7 @@
 - (instancetype)initWithCar:(SCUserCar *)car {
     _userCar = car;
     NSDictionary *dic = @{@"Icon": car.iconURL,
-                         @"Title": car.modelName};
+                         @"Title": [car.brandName stringByAppendingString:car.modelName]};
     return [self initWithDictionary:dic localData:NO];
 }
 

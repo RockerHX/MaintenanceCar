@@ -93,6 +93,7 @@ static CGFloat CellHeight = 44.0f;
             if (item.last) {
                 cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterAddCarCell class])
                                                        forIndexPath:indexPath];
+                [cell displayCellWithItem:item];
             } else {
                 cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterUserCarCell class])
                                                        forIndexPath:indexPath];
@@ -104,10 +105,10 @@ static CGFloat CellHeight = 44.0f;
             item = _viewModel.selectedItems[indexPath.row];
             cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([SCUserCenterCell class])
                                                    forIndexPath:indexPath];
+            [cell displayCellWithItem:item];
             break;
         }
     }
-    [cell displayCellWithItem:item];
     return cell;
 }
 

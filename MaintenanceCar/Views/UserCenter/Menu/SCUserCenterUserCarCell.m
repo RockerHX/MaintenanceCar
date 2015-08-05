@@ -48,6 +48,9 @@
     [super displayCellWithItem:item];
     
     _userCarItem = item;
+    if (selected) {
+        self.titleLabel.text = [item.title stringByAppendingString:@"（默认）"];
+    }
     [self changeSelectedState:selected];
 }
 
