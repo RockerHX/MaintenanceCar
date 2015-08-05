@@ -7,6 +7,7 @@
 //
 
 #import "SCUserCenterUserCarCell.h"
+#import "MicroConstants.h"
 
 @implementation SCUserCenterUserCarCell {
     UIColor *_selectedColor;
@@ -23,7 +24,7 @@
 
 #pragma mark - Config Methods
 - (void)initConfig {
-    _selectedColor = [UIColor colorWithWhite:0.6f alpha:0.6f];
+    _selectedColor = UIColorWithRGBA(51.0f, 179.0f, 246.0f, 0.9f);
     _backgroundColor = self.backgroundColor;
 }
 
