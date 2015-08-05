@@ -8,7 +8,6 @@
 
 #import "SCViewControllerCategory.h"
 #import <REFrostedViewController/REFrostedViewController.h>
-#import "SCUserView.h"
 
 typedef NS_ENUM(NSUInteger, SCUserCenterMenuRow) {
     SCUserCenterMenuRowHomePage,
@@ -24,12 +23,13 @@ typedef NS_ENUM(NSUInteger, SCUserCenterMenuRow) {
 @optional
 - (void)willShowAddCarSence;
 - (void)shouldShowViewControllerOnRow:(SCUserCenterMenuRow)row;
+- (void)shouldShowCarDataViewController:(SCUserCar *)userCar;
 
 @end
 
 @class SCUserView;
 
-@interface SCUserCenterMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, REFrostedViewControllerDelegate, SCUserViewDelegate>
+@interface SCUserCenterMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, REFrostedViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet          id  <SCUserCenterMenuViewControllerDelegate>delegate;
 @property (weak, nonatomic) IBOutlet  SCUserView *userView;

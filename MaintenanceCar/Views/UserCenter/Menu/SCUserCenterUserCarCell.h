@@ -8,7 +8,21 @@
 
 #import "SCUserCenterCell.h"
 
+@class SCUserCar;
+
+@protocol SCUserCenterUserCarCellDelegate <NSObject>
+
+@optional
+- (void)shouldEditUserCarData:(SCUserCar *)userCar;
+
+@end
+
+
 @interface SCUserCenterUserCarCell : SCUserCenterCell
+
+@property (weak, nonatomic) IBOutlet id  <SCUserCenterUserCarCellDelegate>delegate;
+
+- (IBAction)editButtonPressed;
 
 - (void)displayCellWithItem:(SCUserCenterMenuItem *)item selected:(BOOL)selected;
 

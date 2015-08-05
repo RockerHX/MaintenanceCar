@@ -14,7 +14,8 @@
 @protocol SCChangeCarDataViewControllerDelegate <NSObject>
 
 @optional
-- (void)dataSaveSuccess;
+- (void)shouldShowMenu;
+- (void)userCarDataSaveSuccess:(UIViewController *)viewController;
 
 @end
 
@@ -28,11 +29,13 @@
 @property (nonatomic, weak)          id                   <SCChangeCarDataViewControllerDelegate>delegate;
 @property (nonatomic, strong)        SCUserCar            *car;
 
+- (IBAction)menuButtonPressed;
 - (IBAction)deleteCarButtonPressed;
 
 // 车辆登记日期按钮触发事件
 - (IBAction)buyCarDateButtonPressed;
 
++ (UINavigationController *)navigationInstance;
 + (instancetype)instance;
 
 @end

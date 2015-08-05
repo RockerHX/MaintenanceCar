@@ -343,7 +343,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="SCChangeCarDataViewController" hidesBottomBarWhenPushed="YES" id="v1g-t7-xn6" customClass="SCChangeCarDataViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" id="C7K-U8-jFW">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="Oad-fS-5kv" customClass="SCCarDriveHabitsView">
@@ -692,6 +692,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="修改车辆数据" id="IEM-s6-cDX">
+                        <barButtonItem key="leftBarButtonItem" id="Ok0-ML-YIE">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="g9e-e4-jDb">
+                                <rect key="frame" x="16" y="7" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="HP-MenuIcon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="menuButtonPressed" destination="v1g-t7-xn6" eventType="touchUpInside" id="KDK-gI-UFL"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="G4H-Mo-c8a">
                             <connections>
                                 <action selector="deleteCarButtonPressed" destination="v1g-t7-xn6" id="ZSd-QS-uQz"/>
@@ -707,7 +719,23 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GnF-fD-cwh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-317" y="49"/>
+            <point key="canvasLocation" x="-821" y="715"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="zi8-dh-gon">
+            <objects>
+                <navigationController storyboardIdentifier="ChangeCarDataNavigationController" id="ii7-uO-kF8" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="No5-fG-XQy">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="v1g-t7-xn6" kind="relationship" relationship="rootViewController" id="f3L-lp-nnQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GEa-yg-HeG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1249" y="715"/>
         </scene>
     </scenes>
     <resources>
@@ -716,6 +744,7 @@
         <image name="CarBrandIcon" width="80" height="80"/>
         <image name="CheckIcon" width="33" height="33"/>
         <image name="DateIcon" width="23" height="23"/>
+        <image name="HP-MenuIcon" width="25" height="25"/>
         <image name="UnCheckIcon" width="33" height="33"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

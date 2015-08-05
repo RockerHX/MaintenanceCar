@@ -7,9 +7,12 @@
 //
 
 #import "SCUserCenterUserCarCell.h"
+#import "SCUserCenterMenuItem.h"
 #import "MicroConstants.h"
 
 @implementation SCUserCenterUserCarCell {
+    SCUserCenterMenuItem *_userCarItem;
+    
     UIColor *_selectedColor;
     UIColor *_backgroundColor;
 }
@@ -33,9 +36,18 @@
     self.selectedBackgroundView.backgroundColor = _selectedColor;
 }
 
+#pragma mark - Action
+- (IBAction)editButtonPressed {
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldEditUserCarData:)]) {
+        [_delegate shouldEditUserCarData:_userCarItem.userCar];
+    }
+}
+
 #pragma mark - Public Methods
 - (void)displayCellWithItem:(SCUserCenterMenuItem *)item selected:(BOOL)selected {
     [super displayCellWithItem:item];
+    
+    _userCarItem = item;
     [self changeSelectedState:selected];
 }
 

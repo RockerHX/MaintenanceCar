@@ -15,10 +15,11 @@
 #import "SCGroupTicketsViewController.h"
 #import "SCCouponsViewController.h"
 #import "SCSettingViewController.h"
+#import "SCChangeCarDataViewController.h"
 
 static NSString *const MainNavControllerID = @"MainNavigationController";
 
-@interface SCMainViewController () <SCHomePageViewControllerDelegate, SCOrdersViewControllerDelegate, SCCollectionsViewControllerDelegate, SCGroupTicketsViewControllerDelegate, SCCouponsViewControllerDelegate, SCSettingViewControllerDelegate>
+@interface SCMainViewController () <SCHomePageViewControllerDelegate, SCOrdersViewControllerDelegate, SCCollectionsViewControllerDelegate, SCGroupTicketsViewControllerDelegate, SCCouponsViewControllerDelegate, SCSettingViewControllerDelegate, SCChangeCarDataViewControllerDelegate>
 @end
 
 @implementation SCMainViewController {
@@ -139,6 +140,37 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
 }
 
 /**
+ *  移除显示视图控制器
+ *
+ *  @param viewController 移除显示的视图控制器
+ */
+- (void)removeViewController:(UIViewController *)viewController animation:(BOOL)animation {
+    @try {
+        // 移除子视图
+        WEAK_SELF(weakSelf);
+        UIView *fromView = viewController.view;
+        UIView *toView = self.view.subviews[self.view.subviews.count-2];
+        if (animation) {
+            [UIView transitionFromView:fromView toView:toView duration:1.0f options:UIViewAnimationOptionTransitionCurlUp completion:^(BOOL finished) {
+                [weakSelf removeViewController:viewController];
+            }];
+        } else {
+            [self removeViewController:viewController];
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Main View Controller Remove Sub View Controller Error:%@", exception.reason);
+    }
+    @finally {
+    }
+}
+
+- (void)removeViewController:(UIViewController *)viewController {
+    [viewController removeFromParentViewController];
+    [viewController.view removeFromSuperview];
+}
+
+/**
  *  配置首页控制器(负责代理设置)
  *
  *  @return 首页的导航控制器
@@ -222,6 +254,14 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
     }
 }
 
+- (void)shouldShowCarDataViewController:(SCUserCar *)userCar {
+    UINavigationController *navController = [SCChangeCarDataViewController navigationInstance];
+    SCChangeCarDataViewController *changeCarDataViewController = (SCChangeCarDataViewController *)navController.topViewController;
+    changeCarDataViewController.delegate = self;
+    changeCarDataViewController.car = userCar;
+    [self showViewController:navController];
+}
+
 #pragma mark - Sub Content View Controller Delegate
 - (void)shouldShowMenu {
     // Dismiss keyboard (optional)
@@ -234,6 +274,11 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
 
 - (void)shouldSupportPanGesture:(BOOL)support {
     _canSupportPanGesture = support;
+}
+
+#pragma mark - SCChangeCarDataViewController Delegate
+- (void)userCarDataSaveSuccess:(UIViewController *)viewController {
+    [self removeViewController:viewController animation:YES];
 }
 
 @end

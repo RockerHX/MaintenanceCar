@@ -7,12 +7,12 @@
 //
 
 #import "SCUserCenterMenuItem.h"
-#import "SCUserCar.h"
 
 @implementation SCUserCenterMenuItem
 
 #pragma mark - Init Methods
 - (instancetype)initWithCar:(SCUserCar *)car {
+    _userCar = car;
     NSDictionary *dic = @{@"Icon": car.iconURL,
                          @"Title": car.modelName};
     return [self initWithDictionary:dic localData:NO];

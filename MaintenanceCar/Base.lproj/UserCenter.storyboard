@@ -310,14 +310,29 @@
                                                         <constraint firstAttribute="width" secondItem="prh-OG-yGa" secondAttribute="height" multiplier="1:1" id="fXW-4H-bxA"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="首页" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MLv-Xo-Ifa">
-                                                    <rect key="frame" x="71" y="11" width="34" height="20.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用户车辆" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MLv-Xo-Ifa">
+                                                    <rect key="frame" x="71" y="11" width="68" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dS5-tF-l3S">
+                                                    <rect key="frame" x="276" y="4" width="36" height="36"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="dS5-tF-l3S" secondAttribute="height" multiplier="1:1" id="b0c-pO-fCS"/>
+                                                    </constraints>
+                                                    <state key="normal" image="UC-EditIcon">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="editButtonPressed" destination="gXA-b3-pf3" eventType="touchUpInside" id="cTU-it-9RZ"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="dS5-tF-l3S" firstAttribute="top" secondItem="ppt-HE-WSE" secondAttribute="top" constant="4" id="3Px-u6-ZfD"/>
+                                                <constraint firstAttribute="bottom" secondItem="dS5-tF-l3S" secondAttribute="bottom" constant="4" id="5C8-ya-Uhu"/>
+                                                <constraint firstAttribute="trailing" secondItem="dS5-tF-l3S" secondAttribute="trailing" constant="8" id="8VQ-qN-pYj"/>
                                                 <constraint firstAttribute="bottom" secondItem="prh-OG-yGa" secondAttribute="bottom" constant="4" id="I5M-ja-Yj5"/>
                                                 <constraint firstItem="MLv-Xo-Ifa" firstAttribute="leading" secondItem="prh-OG-yGa" secondAttribute="trailing" constant="20" id="cyA-fO-Jh6"/>
                                                 <constraint firstItem="prh-OG-yGa" firstAttribute="centerY" secondItem="MLv-Xo-Ifa" secondAttribute="centerY" id="nse-E4-dk2"/>
@@ -327,6 +342,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.17254901959999999" green="0.48627450979999998" blue="0.72549019609999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <outlet property="delegate" destination="JUV-er-i0f" id="Z3P-Az-ldr"/>
                                             <outlet property="icon" destination="prh-OG-yGa" id="Q3I-ex-EUr"/>
                                             <outlet property="titleLabel" destination="MLv-Xo-Ifa" id="6oM-kF-U3B"/>
                                         </connections>
@@ -444,6 +460,7 @@
         <image name="HP-MenuIcon" width="25" height="25"/>
         <image name="LogoIcon" width="160" height="160"/>
         <image name="UC-AddCarIcon" width="30" height="30"/>
+        <image name="UC-EditIcon" width="12" height="12"/>
         <image name="UC-HeaderIcon" width="64" height="64"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

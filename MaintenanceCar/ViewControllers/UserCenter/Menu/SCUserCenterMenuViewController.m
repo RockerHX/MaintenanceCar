@@ -10,6 +10,7 @@
 #import <SDWebImage/UIButton+WebCache.h>
 #import "SCUserCenterMenuViewController.h"
 #import "SCStoryBoardManager.h"
+#import "SCUserView.h"
 #import "SCUserCenterUserCarCell.h"
 #import "SCUserCenterAddCarCell.h"
 #import "SCUserCenterCell.h"
@@ -18,9 +19,14 @@
 
 static CGFloat CellHeight = 44.0f;
 
-@implementation SCUserCenterMenuViewController {
+
+@interface SCUserCenterMenuViewController () <SCUserViewDelegate, SCUserCenterUserCarCellDelegate> {
     SCUserCenterViewModel *_viewModel;
 }
+
+@end
+
+@implementation SCUserCenterMenuViewController
 
 #pragma mark - Init Methods
 + (instancetype)instance {
@@ -147,6 +153,14 @@ static CGFloat CellHeight = 44.0f;
 - (void)shouldLogin {
     [self hideMenu];
     [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
+}
+
+#pragma mark - SCUserCenterUserCarCell Delegate
+- (void)shouldEditUserCarData:(SCUserCar *)userCar {
+    [self hideMenu];
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldShowCarDataViewController:)]) {
+        [_delegate shouldShowCarDataViewController:userCar];
+    }
 }
 
 @end
