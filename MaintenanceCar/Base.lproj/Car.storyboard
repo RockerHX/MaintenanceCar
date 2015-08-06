@@ -10,7 +10,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Z3A-Qd-wpl">
             <objects>
-                <navigationController storyboardIdentifier="SCAddCarViewNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uen-SK-0ZB" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AddCarViewNavigationController" id="uen-SK-0ZB" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="hKs-L1-EFA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -319,12 +319,12 @@
                     <navigationItem key="navigationItem" title="添加车辆" id="0F1-SG-eks">
                         <barButtonItem key="leftBarButtonItem" title="取消" id="rGI-6v-cFR">
                             <connections>
-                                <action selector="cancelButtonPressed:" destination="n0V-Rv-jPy" id="uwf-ZF-vWP"/>
+                                <action selector="cancelItemPressed" destination="n0V-Rv-jPy" id="kRQ-2Y-yVm"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="添加" id="U2a-un-MT3">
                             <connections>
-                                <action selector="addCarButtonPressed:" destination="n0V-Rv-jPy" id="Qnb-j3-tiZ"/>
+                                <action selector="addCarItemPressed" destination="n0V-Rv-jPy" id="IFS-ME-6Ch"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

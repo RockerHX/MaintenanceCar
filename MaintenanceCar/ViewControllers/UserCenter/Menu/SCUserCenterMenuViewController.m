@@ -20,7 +20,7 @@
 static CGFloat CellHeight = 44.0f;
 
 
-@interface SCUserCenterMenuViewController () <SCUserViewDelegate, SCUserCenterUserCarCellDelegate> {
+@interface SCUserCenterMenuViewController () <SCUserViewDelegate, SCUserCenterUserCarCellDelegate, SCAddCarViewControllerDelegate> {
     SCUserCenterViewModel *_viewModel;
 }
 
@@ -128,6 +128,8 @@ static CGFloat CellHeight = 44.0f;
                     [_delegate willShowAddCarSence];
                 }
                 UINavigationController *addCarNavigaitonController = [SCAddCarViewController navigationInstance];
+                SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarNavigaitonController.topViewController;
+                addCarViewController.delegate = self;
                 [self presentViewController:addCarNavigaitonController animated:YES completion:nil];
             } else {
                 [_viewModel recordUserCarSelected:indexPath.row];
@@ -163,6 +165,11 @@ static CGFloat CellHeight = 44.0f;
     if (_delegate && [_delegate respondsToSelector:@selector(shouldShowCarDataViewController:)]) {
         [_delegate shouldShowCarDataViewController:userCar];
     }
+}
+
+#pragma mark - SCAddCarViewController Delegate
+- (void)addCarSuccess:(SCCar *)car {
+    [_viewModel reloadCars];
 }
 
 @end
