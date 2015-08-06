@@ -63,7 +63,9 @@ static NSString *const kUserCarSelectedKey = @"kUserCarSelectedKey";
 
 #pragma mark - Setter And Getter
 - (NSString *)selectedUserCarID {
-    return [USER_DEFAULT objectForKey:kUserCarSelectedKey];
+    NSString *carID = [USER_DEFAULT objectForKey:kUserCarSelectedKey];
+    SCUserCenterMenuItem *firstItem = (_userCarItems.count > 1) ? [_userCarItems firstObject] : nil;
+    return carID ?: firstItem.userCar.userCarID;
 }
 
 - (NSString *)prompt {
