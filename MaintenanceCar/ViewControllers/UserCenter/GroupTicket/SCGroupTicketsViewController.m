@@ -11,7 +11,9 @@
 #import "SCGroupTicketDetailViewController.h"
 #import "SCReservationViewController.h"
 
+
 static NSString *const GroupTicketNavControllerID = @"GroupTicketsNavigationController";
+
 
 @interface SCGroupTicketsViewController () <SCGroupTicketCodeCellDelegate, SCReservationViewControllerDelegate>
 @end
