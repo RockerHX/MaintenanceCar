@@ -17,13 +17,13 @@
 #import "SCUserCenterViewModel.h"
 #import "SCAddCarViewController.h"
 
+
 static CGFloat CellHeight = 44.0f;
 
 
-@interface SCUserCenterMenuViewController () <SCUserViewDelegate, SCUserCenterUserCarCellDelegate, SCAddCarViewControllerDelegate> {
+@interface SCUserCenterMenuViewController () <SCUserViewDelegate, SCUserCenterUserCarCellDelegate> {
     SCUserCenterViewModel *_viewModel;
 }
-
 @end
 
 @implementation SCUserCenterMenuViewController
@@ -43,9 +43,13 @@ static CGFloat CellHeight = 44.0f;
 
 #pragma mark - Config Methods
 - (void)initConfig {
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(reloadUserCars) name:kUserCarsDataNeedReloadSuccessNotification object:nil];
+    
     _viewModel = [SCUserCenterViewModel instance];
+    @weakify(self);
     [RACObserve([SCUserInfo share], loginState) subscribeNext:^(NSNumber *loginState) {
-        [_viewModel reloadCars];
+        @strongify(self);
+        [self reloadUserCars];
     }];
     [RACObserve(_viewModel, needRefresh) subscribeNext:^(id x) {
         [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
@@ -65,6 +69,10 @@ static CGFloat CellHeight = 44.0f;
 
 - (void)hideMenu {
     [self.frostedViewController hideMenuViewController];
+}
+
+- (void)reloadUserCars {
+    [_viewModel reloadCars];
 }
 
 #pragma mark - Table View Data Source
@@ -128,8 +136,6 @@ static CGFloat CellHeight = 44.0f;
                     [_delegate willShowAddCarSence];
                 }
                 UINavigationController *addCarNavigaitonController = [SCAddCarViewController navigationInstance];
-                SCAddCarViewController *addCarViewController = (SCAddCarViewController *)addCarNavigaitonController.topViewController;
-                addCarViewController.delegate = self;
                 [self presentViewController:addCarNavigaitonController animated:YES completion:nil];
             } else {
                 [_viewModel recordUserCarSelected:indexPath.row];
@@ -165,11 +171,6 @@ static CGFloat CellHeight = 44.0f;
     if (_delegate && [_delegate respondsToSelector:@selector(shouldShowCarDataViewController:)]) {
         [_delegate shouldShowCarDataViewController:userCar];
     }
-}
-
-#pragma mark - SCAddCarViewController Delegate
-- (void)addCarSuccess:(SCCar *)car {
-    [_viewModel reloadCars];
 }
 
 @end

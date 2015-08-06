@@ -180,8 +180,9 @@ typedef NS_ENUM(NSInteger, SCContentViewSwitch) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess) {
             _car.userCarID = responseObject[@"user_car_id"];
             [NOTIFICATION_CENTER postNotificationName:kUserCarsDataNeedReloadSuccessNotification object:nil];
-            if ([_delegate respondsToSelector:@selector(addCarSuccess:)])
+            if (_delegate && [_delegate respondsToSelector:@selector(addCarSuccess:)]) {
                 [_delegate addCarSuccess:_car];
+            }
             [weakSelf showPromptHUDToView:weakSelf.view withText:@"添加成功！" delay:1.0f delegate:weakSelf];
         } else {
             [weakSelf showPromptHUDToView:weakSelf.view withText:@"添加失败，请重试！" delay:1.0f delegate:weakSelf];

@@ -30,6 +30,8 @@ typedef NS_ENUM(NSUInteger, SCHomePageServiceButtonType) {
 @interface SCHomePageViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet   SCLoopScrollView *operationView;         // 首页运营位
+@property (weak, nonatomic) IBOutlet           UIButton *menuButton;            // 侧滑导航菜单按钮
+@property (weak, nonatomic) IBOutlet           UIButton *searchButton;          // 搜索按钮
 @property (weak, nonatomic) IBOutlet           UIButton *maintenanceButton;     // 保养服务按钮
 @property (weak, nonatomic) IBOutlet           UIButton *washButton;            // 洗车服务按钮
 @property (weak, nonatomic) IBOutlet           UIButton *repairButton;          // 修车服务按钮

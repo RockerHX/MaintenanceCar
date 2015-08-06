@@ -15,6 +15,7 @@
 #import <SCLoopScrollView/SCLoopScrollView.h>
 #import "SCOperation.h"
 
+
 static NSString *const HomePageNavControllerID = @"HomePageNavigationController";
 
 static const CGFloat OperationBarHeightOn4S    = 250.0f;
@@ -23,6 +24,7 @@ static const CGFloat OperationBarHeightOn6Plus = 374.0f;
 static const CGFloat ShowShopsBarHeightOn6     = 70.0f;
 static const CGFloat ShowShopsBarHeightOn6Plus = 80.0f;
 static const CGFloat ServiceButtonCornerRadius = 8.0f;
+
 
 @implementation SCHomePageViewController {
     NSMutableArray *_oprationADs;
@@ -138,6 +140,8 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
                                       (id)[UIColor clearColor].CGColor];
     }
     [self.view.layer addSublayer:_topBarShadowLayer];
+    [self.view.layer insertSublayer:_menuButton.layer above:_topBarShadowLayer];
+    [self.view.layer insertSublayer:_searchButton.layer above:_topBarShadowLayer];
 }
 
 /**

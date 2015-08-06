@@ -153,7 +153,7 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self.navigationController];
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                 @"user_car_id": _car.userCarID};
+                             @"user_car_id": _car.userCarID};
     [[SCAPIRequest manager] startDeleteCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess) {
             [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
@@ -219,19 +219,19 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     switch (hud.tag) {
         case SCHUDTypeSaveData: {
-            if (_delegate && [_delegate respondsToSelector:@selector(userCarDataSaveSuccess:)])
+            if (_delegate && [_delegate respondsToSelector:@selector(userCarDataSaveSuccess:)]) {
                 [_delegate userCarDataSaveSuccess:self.navigationController];
-            // 保存成功，返回上一页
-            [self hideHUDOnViewController:self.navigationController];
-            [self.navigationController popViewControllerAnimated:YES];
+            }
             break;
         }
         case SCHUDTypeDeleteCar: {
-            [self hideHUDOnViewController:self.navigationController];
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            if (_delegate && [_delegate respondsToSelector:@selector(userCarDataDeleteSuccess:)]) {
+                [_delegate userCarDataDeleteSuccess:self.navigationController];
+            }
             break;
         }
     }
+    [self hideHUDOnViewController:self.navigationController];
 }
 
 #pragma mark - UIAlertViewDelegate Methods

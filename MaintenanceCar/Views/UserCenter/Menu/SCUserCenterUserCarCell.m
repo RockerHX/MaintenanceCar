@@ -49,7 +49,7 @@
     
     _userCarItem = item;
     if (selected) {
-        self.titleLabel.text = [item.title stringByAppendingString:@"（默认）"];
+        self.titleLabel.text = [item.title stringByAppendingString:@"(默认)"];
     }
     [self changeSelectedState:selected];
 }

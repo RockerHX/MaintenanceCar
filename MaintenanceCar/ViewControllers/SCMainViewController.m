@@ -17,7 +17,9 @@
 #import "SCSettingViewController.h"
 #import "SCChangeCarDataViewController.h"
 
+
 static NSString *const MainNavControllerID = @"MainNavigationController";
+
 
 @interface SCMainViewController () <SCHomePageViewControllerDelegate, SCOrdersViewControllerDelegate, SCCollectionsViewControllerDelegate, SCGroupTicketsViewControllerDelegate, SCCouponsViewControllerDelegate, SCSettingViewControllerDelegate, SCChangeCarDataViewControllerDelegate>
 @end
@@ -278,6 +280,10 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
 
 #pragma mark - SCChangeCarDataViewController Delegate
 - (void)userCarDataSaveSuccess:(UIViewController *)viewController {
+    [self removeViewController:viewController animation:YES];
+}
+
+- (void)userCarDataDeleteSuccess:(UIViewController *)viewController {
     [self removeViewController:viewController animation:YES];
 }
 

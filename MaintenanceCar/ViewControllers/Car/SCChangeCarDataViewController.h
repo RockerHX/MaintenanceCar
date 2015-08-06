@@ -16,6 +16,7 @@
 @optional
 - (void)shouldShowMenu;
 - (void)userCarDataSaveSuccess:(UIViewController *)viewController;
+- (void)userCarDataDeleteSuccess:(UIViewController *)viewController;
 
 @end
 
