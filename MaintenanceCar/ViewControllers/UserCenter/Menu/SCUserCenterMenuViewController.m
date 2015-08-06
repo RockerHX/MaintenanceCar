@@ -64,7 +64,7 @@ static CGFloat CellHeight = 44.0f;
     [_userView.header sd_setImageWithURL:_viewModel.headerURL forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:_viewModel.placeHolderHeader]];
     [_userView.loginPromptLabel setText:_viewModel.prompt];
     [_carAmountLabel setText:[@(_viewModel.userCarItems.count-1) stringValue]];
-    [_tableView setTableFooterView:[SCUserInfo share].loginState ? _carAmountPromptView : nil];
+    [_tableView setTableHeaderView:[SCUserInfo share].loginState ? _carAmountPromptView : nil];
     [_tableView reloadData];
 }
 
@@ -133,11 +133,15 @@ static CGFloat CellHeight = 44.0f;
         case SCUserCenterItemSectionUserCars: {
             SCUserCenterMenuItem *item = _viewModel.userCarItems[indexPath.row];
             if (item.last) {
-                if (_delegate && [_delegate respondsToSelector:@selector(willShowAddCarSence)]) {
-                    [_delegate willShowAddCarSence];
+                if ([SCUserInfo share].loginState) {
+                    if (_delegate && [_delegate respondsToSelector:@selector(willShowAddCarSence)]) {
+                        [_delegate willShowAddCarSence];
+                    }
+                    UINavigationController *addCarNavigaitonController = [SCAddCarViewController navigationInstance];
+                    [self presentViewController:addCarNavigaitonController animated:YES completion:nil];
+                } else {
+                    [self showShoulLoginAlert];
                 }
-                UINavigationController *addCarNavigaitonController = [SCAddCarViewController navigationInstance];
-                [self presentViewController:addCarNavigaitonController animated:YES completion:nil];
             } else {
                 [_viewModel recordUserCarSelected:indexPath.row];
                 [tableView reloadData];

@@ -48,6 +48,8 @@ static NSString *const kUserCarSelectedKey = @"kUserCarSelectedKey";
 - (void)initConfig {
     _itemSections = ItemSections;
     _placeHolderHeader = PlaceHolderHeaderImageName;
+    
+    _userCarItems = @[[self addcarItem]];
     [self reloadCars];
     
     NSMutableArray *items = @[].mutableCopy;
@@ -79,7 +81,8 @@ static NSString *const kUserCarSelectedKey = @"kUserCarSelectedKey";
             SCUserCenterMenuItem *item = [[SCUserCenterMenuItem alloc] initWithCar:car];
             [items addObject:item];
         }
-        _userCarItems = [weakSelf appendAddCarItem:items];
+        [items addObject:[weakSelf addcarItem]];
+        _userCarItems = [NSArray arrayWithArray:items];
         weakSelf.needRefresh = YES;
     }];
 }
@@ -94,22 +97,11 @@ static NSString *const kUserCarSelectedKey = @"kUserCarSelectedKey";
     return [NSArray arrayWithContentsOfFile:[NSFileManager pathForResource:UserCenterItemsFileName ofType:UserCenterItemsFileType]];
 }
 
-- (NSArray *)appendAddCarItem:(NSMutableArray *)items {
-    if ([SCUserInfo share].loginState) {
-        SCUserCenterMenuItem *item = [[SCUserCenterMenuItem alloc] initWithDictionary:@{AddCarIconKey: AddCarIconImageName, AddCarIconValue: AddCarPrompt}
-                                                                            localData:YES];
-        item.last = YES;
-        [items addObject:item];
-    } else {
-        [items enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            SCUserCenterMenuItem *item = obj;
-            if ([item.icon isEqualToString:AddCarIconImageName]) {
-                [items removeObject:item];
-                return;
-            }
-        }];
-    }
-    return [NSArray arrayWithArray:items];
+- (SCUserCenterMenuItem *)addcarItem {
+    SCUserCenterMenuItem *item = [[SCUserCenterMenuItem alloc] initWithDictionary:@{AddCarIconKey: AddCarIconImageName, AddCarIconValue: AddCarPrompt}
+                                                                        localData:YES];
+    item.last = YES;
+    return item;
 }
 
 @end
