@@ -17,21 +17,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zFD-Kd-Rfz" customClass="SCLoopScrollView">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8E4-Ub-BHL">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="zFD-Kd-Rfz" secondAttribute="trailing" id="IjT-Tb-ENI"/>
-                            <constraint firstItem="Mah-La-Lhh" firstAttribute="top" secondItem="zFD-Kd-Rfz" secondAttribute="bottom" id="Saz-rF-5iN"/>
-                            <constraint firstItem="zFD-Kd-Rfz" firstAttribute="leading" secondItem="9p2-d2-q2u" secondAttribute="leading" id="VdB-33-sdi"/>
-                            <constraint firstItem="zFD-Kd-Rfz" firstAttribute="top" secondItem="9p2-d2-q2u" secondAttribute="top" id="cuy-hS-zFd"/>
+                            <constraint firstAttribute="trailing" secondItem="8E4-Ub-BHL" secondAttribute="trailing" id="Ajt-lj-g0H"/>
+                            <constraint firstItem="8E4-Ub-BHL" firstAttribute="leading" secondItem="9p2-d2-q2u" secondAttribute="leading" id="Lec-XL-dhS"/>
+                            <constraint firstItem="Mah-La-Lhh" firstAttribute="top" secondItem="8E4-Ub-BHL" secondAttribute="bottom" id="bBy-wj-Lyo"/>
+                            <constraint firstItem="8E4-Ub-BHL" firstAttribute="top" secondItem="9p2-d2-q2u" secondAttribute="top" id="spD-LU-Pn8"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="guideView" destination="zFD-Kd-Rfz" id="YOu-Sa-Znu"/>
+                        <outlet property="guideView" destination="8E4-Ub-BHL" id="XSi-MG-wFL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JuI-nD-Wee" userLabel="First Responder" sceneMemberID="firstResponder"/>

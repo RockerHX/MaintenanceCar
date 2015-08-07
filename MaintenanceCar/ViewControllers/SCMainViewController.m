@@ -7,8 +7,9 @@
 //
 
 #import "SCMainViewController.h"
-#import "SCLoginViewController.h"
 #import <REFrostedViewController/REFrostedViewController.h>
+#import "SCGuideViewController.h"
+#import "SCLoginViewController.h"
 #import "SCHomePageViewController.h"
 #import "SCOrdersViewController.h"
 #import "SCCollectionsViewController.h"
@@ -18,10 +19,12 @@
 #import "SCChangeCarDataViewController.h"
 
 
+static NSString *const kGuideKey = @"kGuideKey";
+
 static NSString *const MainNavControllerID = @"MainNavigationController";
 
 
-@interface SCMainViewController () <SCHomePageViewControllerDelegate, SCOrdersViewControllerDelegate, SCCollectionsViewControllerDelegate, SCGroupTicketsViewControllerDelegate, SCCouponsViewControllerDelegate, SCSettingViewControllerDelegate, SCChangeCarDataViewControllerDelegate>
+@interface SCMainViewController () <SCGuideViewControllerDelegate, SCHomePageViewControllerDelegate, SCOrdersViewControllerDelegate, SCCollectionsViewControllerDelegate, SCGroupTicketsViewControllerDelegate, SCCouponsViewControllerDelegate, SCSettingViewControllerDelegate, SCChangeCarDataViewControllerDelegate>
 @end
 
 @implementation SCMainViewController {
@@ -59,8 +62,8 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
 }
 
 - (void)viewConfig {
-    // 添加首页视图
-    [self showViewController:[self configHomePage]];
+    // 第一次启动打开引导页
+    [self showGuide];
 }
 
 #pragma mark - Gesture Recognizer
@@ -121,6 +124,22 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
     [self presentViewController:loginViewNavigationController animated:YES completion:^{
         [weakSelf hideMenu];
     }];
+}
+
+- (void)showGuide {
+    if ([self firstLaunch]) {
+        SCGuideViewController *guideViewController = [SCGuideViewController instance];
+        guideViewController.delegate = self;
+        [self addChildViewController:guideViewController];
+        [self.view addSubview:guideViewController.view];
+    } else {
+        // 添加首页视图
+        [self showViewController:[self configHomePage]];
+    }
+}
+
+- (BOOL)firstLaunch {
+    return ![[USER_DEFAULT objectForKey:kGuideKey] boolValue];
 }
 
 /**
@@ -206,6 +225,14 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
 
 - (void)shouludShowGroupTicketReservation {
     [self shouldShowViewControllerOnRow:SCUserCenterMenuRowOrder];
+}
+
+#pragma mark - SCGuideViewController Delegate
+- (void)guideFinished {
+    [USER_DEFAULT setObject:@(YES) forKey:kGuideKey];
+    [USER_DEFAULT synchronize];
+    
+    [self shouldShowViewControllerOnRow:SCUserCenterMenuRowHomePage];
 }
 
 #pragma mark - SCUserCenterMenuViewController Delegate

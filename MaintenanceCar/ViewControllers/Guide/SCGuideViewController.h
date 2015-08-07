@@ -6,12 +6,21 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SCViewControllerCategory.h"
 
-@class SCLoopScrollView;
+@protocol SCGuideViewControllerDelegate <NSObject>
+
+@optional
+- (void)guideFinished;
+
+@end
 
 @interface SCGuideViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet SCLoopScrollView *guideView;
+@property (weak, nonatomic) IBOutlet UIScrollView *guideView;
+
+@property (nonatomic, weak) id  <SCGuideViewControllerDelegate>delegate;
+
++ (instancetype)instance;
 
 @end

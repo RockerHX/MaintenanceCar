@@ -29,6 +29,9 @@
     NSString *storyBoardName = nil;
     switch (name)
     {
+        case SCStoryBoardNameGuide:
+            storyBoardName = @"Guide";
+            break;
         case SCStoryBoardNameMain:
             storyBoardName = @"Main";
             break;
