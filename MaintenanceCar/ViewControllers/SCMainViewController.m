@@ -54,6 +54,7 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
     
     // 监听登录通知，收到通知会触发页面跳转方法
     [NOTIFICATION_CENTER addObserver:self selector:@selector(shouldLogin) name:kUserNeedLoginNotification object:nil];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(shouludShowGroupTicketReservation) name:kShowTicketReservationNotification object:nil];
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)]];
 }
 
@@ -133,6 +134,9 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
         // 添加子视图
         [self addChildViewController:viewController];
         [self.view addSubview:viewController.view];
+        UIView *fromView = self.view.subviews[self.view.subviews.count-2];
+        UIView *toView = viewController.view;
+        [UIView transitionFromView:fromView toView:toView duration:0.2f options:UIViewAnimationOptionTransitionCrossDissolve completion:nil];
     }
     @catch (NSException *exception) {
         NSLog(@"Main View Controller Add Sub View Controller Error:%@", exception.reason);
@@ -198,6 +202,10 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
     UINavigationController *navController = [SCHomePageViewController navigationInstance];
     SCHomePageViewController *homePageViewController = (SCHomePageViewController *)navController.topViewController;
     homePageViewController.shouldShowNaivgationBar = hidden;
+}
+
+- (void)shouludShowGroupTicketReservation {
+    [self shouldShowViewControllerOnRow:SCUserCenterMenuRowOrder];
 }
 
 #pragma mark - SCUserCenterMenuViewController Delegate

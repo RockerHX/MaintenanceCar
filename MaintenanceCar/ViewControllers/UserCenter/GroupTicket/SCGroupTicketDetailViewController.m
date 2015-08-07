@@ -271,7 +271,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (void)ticketShouldShowWithIndex:(NSInteger)index {
     [self.navigationController popToRootViewControllerAnimated:YES];
-    [NOTIFICATION_CENTER postNotificationName:kShowTicketNotification object:nil];
+    [NOTIFICATION_CENTER postNotificationName:kShowTicketReservationNotification object:nil];
 }
 
 #pragma mark - SCGroupProductMerchantCell Delegate Methods

@@ -19,7 +19,7 @@ NSString *const kUserNeedLoginNotification                 = @"kUserNeedLoginNot
 NSString *const kUserLoginSuccessNotification              = @"kUserLoginSuccessNotification";
 NSString *const kWeiXinPaySuccessNotification              = @"kWeiXinPaySuccessNotification";
 NSString *const kWeiXinPayFailureNotification              = @"kWeiXinPayFailureNotification";
-NSString *const kShowTicketNotification                    = @"kShowTicketNotification";
+NSString *const kShowTicketReservationNotification         = @"kShowTicketReservationNotification";
 
 #pragma mark - App Custom Constant
 NSString *const DisplayNameKey                             = @"DisplayName";
