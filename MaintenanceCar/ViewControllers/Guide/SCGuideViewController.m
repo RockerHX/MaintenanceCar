@@ -47,7 +47,7 @@
     UIView *lastGuideView = [guideView.subviews lastObject];
     lastGuideView.userInteractionEnabled = YES;
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH - 60.0f, 60.0f)];
-    button.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT - 100.0f);
+    button.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT - (IS_IPHONE_4 ? 50.0f : (IS_IPHONE_5 ? 80.0f : 100.0f)));
     button.showsTouchWhenHighlighted = YES;
     [button addTarget:self action:@selector(finishedButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [lastGuideView addSubview:button];
