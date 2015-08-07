@@ -231,6 +231,8 @@
 		A117A7341B60FE9900073D2D /* MaintenanceCar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A117A7301B60FE9900073D2D /* MaintenanceCar.xcdatamodeld */; };
 		A117A7361B61D9BB00073D2D /* UserCenterData.plist in Resources */ = {isa = PBXBuildFile; fileRef = A117A7351B61D9BB00073D2D /* UserCenterData.plist */; };
 		A15284961B5F8389005936DF /* SCRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A15284951B5F8389005936DF /* SCRootViewController.m */; };
+		A1B4DC631B749D3300404D13 /* Guide.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1B4DC611B749D3300404D13 /* Guide.storyboard */; };
+		A1B4DC671B749D8300404D13 /* SCGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B4DC661B749D8300404D13 /* SCGuideViewController.m */; };
 		A1D953F31B6B760900190BF9 /* SCDiscoveryCellConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A1D953F21B6B760900190BF9 /* SCDiscoveryCellConstants.m */; };
 /* End PBXBuildFile section */
 
@@ -660,6 +662,9 @@
 		A117A7351B61D9BB00073D2D /* UserCenterData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserCenterData.plist; sourceTree = "<group>"; };
 		A15284941B5F8389005936DF /* SCRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCRootViewController.h; sourceTree = "<group>"; };
 		A15284951B5F8389005936DF /* SCRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCRootViewController.m; sourceTree = "<group>"; };
+		A1B4DC621B749D3300404D13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Guide.storyboard; sourceTree = "<group>"; };
+		A1B4DC651B749D8300404D13 /* SCGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGuideViewController.h; sourceTree = "<group>"; };
+		A1B4DC661B749D8300404D13 /* SCGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGuideViewController.m; sourceTree = "<group>"; };
 		A1D953F21B6B760900190BF9 /* SCDiscoveryCellConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCDiscoveryCellConstants.m; sourceTree = "<group>"; };
 		E2AD02DF3987D2F961F0ADFB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1240,6 +1245,7 @@
 		4866F8DB1AACBD2D008E195C /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				A1B4DC641B749D6900404D13 /* Guide */,
 				4863544F1B53E26100DE43B2 /* Detail */,
 				483BA6381B31565A00B24C5F /* Loading */,
 				48DDB94D1B4CD18900CFD394 /* Search */,
@@ -1666,6 +1672,7 @@
 				486354001B539E1300DE43B2 /* Login */,
 				486353B81B536BAF00DE43B2 /* Pay */,
 				482B57E31A43CB7700E47962 /* Main.storyboard */,
+				A1B4DC611B749D3300404D13 /* Guide.storyboard */,
 			);
 			name = UI;
 			path = ..;
@@ -1960,6 +1967,15 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
+		A1B4DC641B749D6900404D13 /* Guide */ = {
+			isa = PBXGroup;
+			children = (
+				A1B4DC651B749D8300404D13 /* SCGuideViewController.h */,
+				A1B4DC661B749D8300404D13 /* SCGuideViewController.m */,
+			);
+			path = Guide;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2078,6 +2094,7 @@
 				48EBF5E31AC6AFE600892099 /* umeng_fb_audio_play_01@2x.png in Resources */,
 				48EBF5DE1AC6AFE600892099 /* ToolViewInputTextHL@2x.png in Resources */,
 				486354441B53BA9100DE43B2 /* HomePage.storyboard in Resources */,
+				A1B4DC631B749D3300404D13 /* Guide.storyboard in Resources */,
 				4863544E1B53DCEC00DE43B2 /* Detail.storyboard in Resources */,
 				48A349061B0B385B0068F8E2 /* SCReservatAlertView.xib in Resources */,
 				48EBF5DC1AC6AFE600892099 /* save@2x.png in Resources */,
@@ -2178,6 +2195,7 @@
 				4866F9A41AACBD89008E195C /* SCMapMerchantInfoView.m in Sources */,
 				4863540F1B539FE300DE43B2 /* SCSettingViewController.m in Sources */,
 				486353F81B539D2B00DE43B2 /* SCCollectionsViewController.m in Sources */,
+				A1B4DC671B749D8300404D13 /* SCGuideViewController.m in Sources */,
 				4896E3F11B10A85E00838EED /* SCOrderDetailPayCell.m in Sources */,
 				486353FC1B539DED00DE43B2 /* SCLoginViewController.m in Sources */,
 				4866F9B01AACBD89008E195C /* SCMerchantCell.m in Sources */,
@@ -2496,6 +2514,14 @@
 				48EBF5D61AC6AFE600892099 /* zh-Hans */,
 			);
 			name = UMFeedbackLocalizable.strings;
+			sourceTree = "<group>";
+		};
+		A1B4DC611B749D3300404D13 /* Guide.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A1B4DC621B749D3300404D13 /* Base */,
+			);
+			name = Guide.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
