@@ -98,7 +98,7 @@ NSString *const AliPayOrderApi              = @"/zhipay/custom";
 }
 
 + (NSString *)V2ApiURLWithApi:(NSString *)Api {
-    return [[DoMain stringByAppendingString:V1ApiPath] stringByAppendingString:Api];
+    return [[DoMain stringByAppendingString:V2ApiPath] stringByAppendingString:Api];
 }
 
 + (NSString *)imageURLWithImageName:(NSString *)imageName {
