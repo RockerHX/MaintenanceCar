@@ -143,7 +143,6 @@
 		487EEDD01B0C6EBF009D01BA /* UserCenter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 487EEDCE1B0C6EBF009D01BA /* UserCenter.storyboard */; };
 		488885931B141C690075DFDE /* SCNoValidCouponCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 488885921B141C690075DFDE /* SCNoValidCouponCell.m */; };
 		488885981B1710BC0075DFDE /* SCPayOderTicketCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 488885971B1710BC0075DFDE /* SCPayOderTicketCell.m */; };
-		48934F5D1A4CFE1700F29745 /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = 48934F5C1A4CFE1700F29745 /* server.cer */; };
 		4896E3CB1B109F9400838EED /* SCPayOrderCouponCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4896E3C21B109F9400838EED /* SCPayOrderCouponCell.m */; };
 		4896E3CC1B109F9400838EED /* SCPayOrderEnterCodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4896E3C41B109F9400838EED /* SCPayOrderEnterCodeCell.m */; };
 		4896E3CD1B109F9400838EED /* SCPayOrderGroupProductSummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4896E3C61B109F9400838EED /* SCPayOrderGroupProductSummaryCell.m */; };
@@ -233,6 +232,7 @@
 		A15284961B5F8389005936DF /* SCRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A15284951B5F8389005936DF /* SCRootViewController.m */; };
 		A1B4DC631B749D3300404D13 /* Guide.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1B4DC611B749D3300404D13 /* Guide.storyboard */; };
 		A1B4DC671B749D8300404D13 /* SCGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B4DC661B749D8300404D13 /* SCGuideViewController.m */; };
+		A1C5373E1B79F08100623EC4 /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = A1C5373D1B79F08100623EC4 /* server.cer */; };
 		A1D953F31B6B760900190BF9 /* SCDiscoveryCellConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A1D953F21B6B760900190BF9 /* SCDiscoveryCellConstants.m */; };
 /* End PBXBuildFile section */
 
@@ -512,7 +512,6 @@
 		488885921B141C690075DFDE /* SCNoValidCouponCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCNoValidCouponCell.m; sourceTree = "<group>"; };
 		488885961B1710BC0075DFDE /* SCPayOderTicketCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPayOderTicketCell.h; sourceTree = "<group>"; };
 		488885971B1710BC0075DFDE /* SCPayOderTicketCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPayOderTicketCell.m; sourceTree = "<group>"; };
-		48934F5C1A4CFE1700F29745 /* server.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = server.cer; sourceTree = "<group>"; };
 		4896E3C11B109F9400838EED /* SCPayOrderCouponCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPayOrderCouponCell.h; sourceTree = "<group>"; };
 		4896E3C21B109F9400838EED /* SCPayOrderCouponCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPayOrderCouponCell.m; sourceTree = "<group>"; };
 		4896E3C31B109F9400838EED /* SCPayOrderEnterCodeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPayOrderEnterCodeCell.h; sourceTree = "<group>"; };
@@ -665,6 +664,7 @@
 		A1B4DC621B749D3300404D13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Guide.storyboard; sourceTree = "<group>"; };
 		A1B4DC651B749D8300404D13 /* SCGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGuideViewController.h; sourceTree = "<group>"; };
 		A1B4DC661B749D8300404D13 /* SCGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGuideViewController.m; sourceTree = "<group>"; };
+		A1C5373D1B79F08100623EC4 /* server.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = server.cer; sourceTree = "<group>"; };
 		A1D953F21B6B760900190BF9 /* SCDiscoveryCellConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCDiscoveryCellConstants.m; sourceTree = "<group>"; };
 		E2AD02DF3987D2F961F0ADFB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1525,15 +1525,6 @@
 			path = ../Macros;
 			sourceTree = "<group>";
 		};
-		48934F5B1A4CFE1700F29745 /* ssl */ = {
-			isa = PBXGroup;
-			children = (
-				48934F5C1A4CFE1700F29745 /* server.cer */,
-			);
-			name = ssl;
-			path = ../ssl;
-			sourceTree = "<group>";
-		};
 		4896E3C01B109F9400838EED /* PayOrder */ = {
 			isa = PBXGroup;
 			children = (
@@ -1956,8 +1947,8 @@
 			isa = PBXGroup;
 			children = (
 				48A7C0191B1E0BDC0080A014 /* UI */,
+				A1C5373C1B79F08100623EC4 /* SSL */,
 				48738A561ACDA4A00028FC13 /* Macros */,
-				48934F5B1A4CFE1700F29745 /* ssl */,
 				482B57E81A43CB7700E47962 /* LaunchScreen.xib */,
 				A117A72E1B60FE9900073D2D /* FlagsKV.plist */,
 				A117A72F1B60FE9900073D2D /* Images.xcassets */,
@@ -1974,6 +1965,14 @@
 				A1B4DC661B749D8300404D13 /* SCGuideViewController.m */,
 			);
 			path = Guide;
+			sourceTree = "<group>";
+		};
+		A1C5373C1B79F08100623EC4 /* SSL */ = {
+			isa = PBXGroup;
+			children = (
+				A1C5373D1B79F08100623EC4 /* server.cer */,
+			);
+			path = SSL;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2083,8 +2082,8 @@
 				482B57E51A43CB7700E47962 /* Main.storyboard in Resources */,
 				48DDB94C1B4B840300CFD394 /* Search.storyboard in Resources */,
 				48EBF5E11AC6AFE600892099 /* umeng_fb_audio_dialog_cancel@2x.png in Resources */,
+				A1C5373E1B79F08100623EC4 /* server.cer in Resources */,
 				486354031B539E3100DE43B2 /* Login.storyboard in Resources */,
-				48934F5D1A4CFE1700F29745 /* server.cer in Resources */,
 				486354361B53B70500DE43B2 /* Comment.storyboard in Resources */,
 				48A349011B0B385B0068F8E2 /* SCDatePickerView.xib in Resources */,
 				A117A7361B61D9BB00073D2D /* UserCenterData.plist in Resources */,
