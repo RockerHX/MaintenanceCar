@@ -117,12 +117,12 @@ static NSString *const GroupTicketNavControllerID = @"GroupTicketsNavigationCont
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                    @"limit": @(SearchLimit),
                                   @"offset": @(self.offset)};
-    [[SCAPIRequest manager] startGroupTicketsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess) {
+    [[SCAppApiRequest manager] startGroupTicketsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
             switch (statusCode) {
-                case SCAPIRequestErrorCodeNoError: {
+                case SCAppApiRequestErrorCodeNoError: {
                     if (weakSelf.requestType == SCRequestRefreshTypeDropDown) {
                         [weakSelf clearListData];
                     }
@@ -139,7 +139,7 @@ static NSString *const GroupTicketNavControllerID = @"GroupTicketsNavigationCont
                 }
                     break;
                     
-                case SCAPIRequestErrorCodeListNotFoundMore: {
+                case SCAppApiRequestErrorCodeListNotFoundMore: {
                     [weakSelf addRefreshHeader];
                     [weakSelf removeRefreshFooter];
                 }

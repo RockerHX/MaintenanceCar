@@ -253,15 +253,15 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                                        @"price": _payResult.totalPrice,
                               @"is_group_order": (_groupProduct ? @"Y" : @"N"),
                                  @"sort_method": @"amount"};
-        [[SCAPIRequest manager] startValidCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[SCAppApiRequest manager] startValidCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [weakSelf hideHUDOnViewController:weakSelf.navigationController];
-            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+            if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
             {
                 NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
                 NSString *statusMessage = responseObject[@"status_message"];
                 switch (statusCode)
                 {
-                    case SCAPIRequestErrorCodeNoError:
+                    case SCAppApiRequestErrorCodeNoError:
                     {
                         [_payResult checkCouponCanUse];
                         [_coupons removeAllObjects];
@@ -294,7 +294,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
             [self showHUDOnViewController:self.navigationController];
             if (_orderDetail)
             {
-                [[SCAPIRequest manager] startWeiXinPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [[SCAppApiRequest manager] startWeiXinPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [weakSelf weiXinPayRequestSuccessWithOperation:operation];
                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     [weakSelf payFailureWithOperation:operation];
@@ -302,7 +302,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
             }
             else if (_groupProduct)
             {
-                [[SCAPIRequest manager] startWeiXinOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [[SCAppApiRequest manager] startWeiXinOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [weakSelf weiXinPayRequestSuccessWithOperation:operation];
                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     [weakSelf payFailureWithOperation:operation];
@@ -324,7 +324,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
         [self showHUDOnViewController:self.navigationController];
         if (_orderDetail)
         {
-            [[SCAPIRequest manager] startAliPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [[SCAppApiRequest manager] startAliPayOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 [weakSelf aliPayRequestSuccessWithOperation:operation];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 [weakSelf payFailureWithOperation:operation];
@@ -332,7 +332,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
         }
         else if (_groupProduct)
         {
-            [[SCAPIRequest manager] startAliOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [[SCAppApiRequest manager] startAliOrderAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 [weakSelf aliPayRequestSuccessWithOperation:operation];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 [weakSelf payFailureWithOperation:operation];
@@ -346,13 +346,13 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 - (void)weiXinPayRequestSuccessWithOperation:(AFHTTPRequestOperation *)operation
 {
     id responseObject = operation.responseObject;
-    if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+    if (operation.response.statusCode == SCApiRequestStatusCodePOSTSuccess)
     {
         NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
         NSString *statusMessage = responseObject[@"status_message"];
         switch (statusCode)
         {
-            case SCAPIRequestErrorCodeNoError:
+            case SCAppApiRequestErrorCodeNoError:
             {
                 NSDictionary *data = responseObject[@"data"];
                 BOOL zeroPay = [data[@"zero_pay"] boolValue];
@@ -374,13 +374,13 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 - (void)aliPayRequestSuccessWithOperation:(AFHTTPRequestOperation *)operation
 {
     id responseObject = operation.responseObject;
-    if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+    if (operation.response.statusCode == SCApiRequestStatusCodePOSTSuccess)
     {
         NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
         NSString *statusMessage = responseObject[@"status_message"];
         switch (statusCode)
         {
-            case SCAPIRequestErrorCodeNoError:
+            case SCAppApiRequestErrorCodeNoError:
             {
                 NSDictionary *data = responseObject[@"data"];
                 BOOL zeroPay = [data[@"zero_pay"] boolValue];
@@ -514,15 +514,15 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                 @"order_id": _payResult.outTradeNo};
-    [[SCAPIRequest manager] startOrderTicketsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startOrderTicketsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf.navigationController];
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
             switch (statusCode)
             {
-                case SCAPIRequestErrorCodeNoError:
+                case SCAppApiRequestErrorCodeNoError:
                 {
                     [self restoreInitState];
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {

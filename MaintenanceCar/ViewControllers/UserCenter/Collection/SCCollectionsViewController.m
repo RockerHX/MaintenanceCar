@@ -135,13 +135,13 @@ static NSString *const CollectionNavControllerID = @"CollectionsNavigationContro
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                    @"limit": @(SearchLimit),
                                   @"offset": @(self.offset)};
-    [[SCAPIRequest manager] startCollectionsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startCollectionsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf endRefresh];
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
             switch (statusCode) {
-                case SCAPIRequestErrorCodeNoError: {
+                case SCAppApiRequestErrorCodeNoError: {
                     NSArray *merchants = responseObject[@"data"];
                     if (weakSelf.requestType == SCRequestRefreshTypeDropDown) {
                         [weakSelf clearListData];
@@ -161,7 +161,7 @@ static NSString *const CollectionNavControllerID = @"CollectionsNavigationContro
                     break;
                 }
                     
-                case SCAPIRequestErrorCodeListNotFoundMore: {
+                case SCAppApiRequestErrorCodeListNotFoundMore: {
                     [weakSelf.tableView reloadData];
                     [weakSelf addRefreshHeader];
                     [weakSelf removeRefreshFooter];
@@ -185,9 +185,9 @@ static NSString *const CollectionNavControllerID = @"CollectionsNavigationContro
     WEAK_SELF(weakSelf);
     NSDictionary *paramters = @{@"company_id": ((SCMerchant *)_deleteDataCache).company_id,
                                    @"user_id": [SCUserInfo share].userID};
-    [[SCAPIRequest manager] startCancelCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startCancelCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // 根据返回结果进行相应提示
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
             [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"删除成功" delay:0.5f];
         } else {
             [weakSelf deleteFailureAtIndex:index];

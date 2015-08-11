@@ -7,7 +7,7 @@
 //
 
 #import "SCMerchantTableViewCell.h"
-#import "VersionConstants.h"
+#import "SCVersion.h"
 
 @implementation SCMerchantTableViewCell
 
@@ -18,9 +18,9 @@
     
     _reservationButton.layer.cornerRadius = 5.0f;
     
-    if (IS_IPHONE_5_PRIOR)
+    if ([SCVersion isIPhone5SPrior])
     {
-        if (IS_IOS8)
+        if ([SCVersion systemVersion] == SCSystemVersionIOS8)
             [self performSelector:@selector(viewConfig) withObject:nil afterDelay:0.1f];
         else
             [self viewConfig];

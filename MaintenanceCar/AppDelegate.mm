@@ -28,9 +28,9 @@
     // Override point for customization after application launch.
     
 #pragma mark 网络日志
-//    [[AFNetworkActivityLogger sharedLogger] startLogging];
-//    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
-
+    //    [[AFNetworkActivityLogger sharedLogger] startLogging];
+    //    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    
     // 设置导航条和电池条颜色
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UINavigationBar appearance] setBarTintColor:ThemeColor];
@@ -39,31 +39,33 @@
     // 设置导航条字体颜色
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: UIColorWithRGBA(245.0f, 245.0f, 245.0f, 1.0f),
-                                                                      NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0f]}];
+                                                           NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0f]}];
     
+    NSString *appVersion = [SCVersion appVersion];
 #pragma mark UMeng Analytics SDK
     // 启用[友盟反馈]
     [UMFeedback setAppkey:UMengAPPKEY];
     [UMOpus setAudioEnable:YES];
     // 设置版本号
-    [MobClick setAppVersion:APP_VERSION];
+    [MobClick setAppVersion:appVersion];
     [MobClick checkUpdate];                 // 集成友盟更新
     
     // 启动[友盟统计]，采用启动发送的方式 - BATCH
-//    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"AppStore:%@", APP_VERSION]];
+    //    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"AppStore:%@", appVersion]];
 #warning @"发布时更改测试统计"
-    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"TestVersion:%@", APP_VERSION]];
+    [MobClick startWithAppkey:UMengAPPKEY reportPolicy:BATCH channelId:[NSString stringWithFormat:@"TestVersion:%@", appVersion]];
     [MobClick setEncryptEnabled:YES];       // 日志加密
     
     //set AppKey and AppSecret
     [UMessage startWithAppkey:UMengAPPKEY launchOptions:launchOptions];
     //register remoteNotification types
-    if (IS_IOS7) {
+    SCSystemVersion systemVersion = [SCVersion systemVersion];
+    if (systemVersion == SCSystemVersionIOS7) {
         //register remoteNotification types (iOS 8.0以下)
         [UMessage registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
-                                                     UIRemoteNotificationTypeSound|
-                                                     UIRemoteNotificationTypeAlert];
-    } else if (IS_IOS8) {
+         UIRemoteNotificationTypeSound|
+         UIRemoteNotificationTypeAlert];
+    } else if (systemVersion == SCSystemVersionIOS8) {
         //register remoteNotification types （iOS 8.0及其以上版本）
         UIMutableUserNotificationAction *action1 = [[UIMutableUserNotificationAction alloc] init];
         action1.identifier = @"action1_identifier";
@@ -82,8 +84,8 @@
         [categorys setActions:@[action1,action2] forContext:(UIUserNotificationActionContextDefault)];
         
         UIUserNotificationSettings *userSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|
-                                                                                                UIUserNotificationTypeSound|
-                                                                                                UIUserNotificationTypeAlert
+                                                    UIUserNotificationTypeSound|
+                                                    UIUserNotificationTypeAlert
                                                                                      categories:[NSSet setWithObject:categorys]];
         [UMessage registerRemoteNotificationAndUserNotificationSettings:userSettings];
     }

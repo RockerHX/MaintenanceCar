@@ -55,20 +55,22 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 {
     CGFloat promptFontSize = ZERO_POINT;
     CGFloat subPromptFontSize = ZERO_POINT;
-    if (IS_IPHONE_6Plus)
-    {
-        promptFontSize = 20.0f;
-        subPromptFontSize = promptFontSize;
-    }
-    else if (IS_IPHONE_6)
-    {
-        promptFontSize = 20.0f;
-        subPromptFontSize = 18.0f;
-    }
-    else
-    {
-        promptFontSize = 18.0f;
-        subPromptFontSize = 15.0f;
+    switch ([SCVersion currentModel]) {
+        case SCDeviceModelTypeIphone6: {
+            promptFontSize = 20.0f;
+            subPromptFontSize = 18.0f;
+            break;
+        }
+        case SCDeviceModelTypeIphone6Plus: {
+            promptFontSize = 20.0f;
+            subPromptFontSize = promptFontSize;
+            break;
+        }
+        default: {
+            promptFontSize = 18.0f;
+            subPromptFontSize = 15.0f;
+            break;
+        }
     }
     _promptTitleLabel.font    = [UIFont systemFontOfSize:promptFontSize];
     _subPromptTitleLabel.font = [UIFont systemFontOfSize:subPromptFontSize];
@@ -83,9 +85,9 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
     [self showHUDOnViewController:self];
     NSDictionary *parameters = @{@"company_id": _companyID,
                                        @"type": _type};
-    [[SCAPIRequest manager] startGetReservationItemNumAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startGetReservationItemNumAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
             _dateItmes = responseObject;
             _dateKeys  = [[_dateItmes allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
@@ -106,20 +108,21 @@ typedef NS_ENUM(NSInteger, SCCollectionViewType){
 - (CGFloat)itemWidthWithInde:(NSInteger)index
 {
     CGFloat itemWidth = ZERO_POINT;
+    SCDeviceModelType deviceModel = [SCVersion currentModel];
     if (index)
     {
-        if (IS_IPHONE_6Plus)
+        if (deviceModel == SCDeviceModelTypeIphone6Plus)
             itemWidth = 54.0f;
-        else if (IS_IPHONE_6)
+        else if (deviceModel == SCDeviceModelTypeIphone6)
             itemWidth = 48.5f;
         else
             itemWidth = 41.0f;
     }
     else
     {
-        if (IS_IPHONE_6Plus)
+        if (deviceModel == SCDeviceModelTypeIphone6Plus)
             itemWidth = 38.0f;
-        else if (IS_IPHONE_6)
+        else if (deviceModel == SCDeviceModelTypeIphone6)
             itemWidth = 37.5f;
         else
             itemWidth = 35.0f;

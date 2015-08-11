@@ -8,7 +8,7 @@
 
 #import "SCCarModelFilterView.h"
 #import "UIConstants.h"
-#import "AppMicroConstants.h"
+#import "SCAppConstants.h"
 #import "SCFilter.h"
 #import "SCCarModelFilterReusableView.h"
 #import "SCCarModelFilterViewCell.h"

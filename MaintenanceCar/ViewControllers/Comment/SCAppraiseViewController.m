@@ -89,13 +89,13 @@
                              @"reserve_id": _order.reserveID,
                                    @"star": _starView.startValue,
                                  @"detail": _textView.text};
-    [[SCAPIRequest manager] startCommentAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startCommentAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
-        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+        if (operation.response.statusCode == SCApiRequestStatusCodePOSTSuccess)
         {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
-            if (statusCode == SCAPIRequestErrorCodeNoError)
+            if (statusCode == SCAppApiRequestErrorCodeNoError)
                 [weakSelf showHUDAlertToViewController:weakSelf.navigationController delegate:weakSelf text:statusMessage delay:0.5f];
             else if (![statusMessage isEqualToString:@"success"])
                 [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:statusMessage];

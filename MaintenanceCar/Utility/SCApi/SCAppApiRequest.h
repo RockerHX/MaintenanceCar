@@ -1,108 +1,36 @@
 //
-//  SCAPIRequest.h
+//  SCAppApiRequest.h
 //  MaintenanceCar
 //
-//  Created by ShiCang on 14/12/25.
-//  Copyright (c) 2014年 MaintenanceCar. All rights reserved.
+//  Created by Andy on 15/8/11.
+//  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <AFNetworking/AFNetworking.h>
-#import "API.h"
-#import "AppMicroConstants.h"
+#import "SCApiRequest.h"
+#import "SCApi.h"
 
-typedef NS_ENUM(NSInteger, SCAPIRequestStatusCode) {
-    SCAPIRequestStatusCodeGETSuccess     = 200,
-    SCAPIRequestStatusCodePOSTSuccess    = 201,
-    
-    SCAPIRequestStatusCodeBadRequest     = 400,
-    SCAPIRequestStatusCodeTokenError     = 403,
-    SCAPIRequestStatusCodeNotFound       = 404,
-    SCAPIRequestStatusCodeDataError      = 408,
-    
-    SCAPIRequestStatusCodeServerError    = 500
-};
 
-typedef NS_ENUM(NSInteger, SCAPIRequestErrorCode) {
-    SCAPIRequestErrorCodeNoError                   = 0,
+typedef NS_ENUM(NSInteger, SCAppApiRequestErrorCode) {
+    SCAppApiRequestErrorCodeNoError                   = 0,
+    // Json Parse
+    SCAppApiRequestErrorCodeJsonParseError            = 3840,
     // Login
-    SCAPIRequestErrorCodePhoneError                = 4001,
-    SCAPIRequestErrorCodeVerificationCodeSendError = 4002,
-    SCAPIRequestErrorCodeVerificationCodeError     = 4003,
-    SCAPIRequestErrorCodeThirdAuthorizeError       = 4004,
-    SCAPIRequestErrorCodeRefreshTokenError         = 4005,
+    SCAppApiRequestErrorCodePhoneError                = 4001,
+    SCAppApiRequestErrorCodeVerificationCodeSendError = 4002,
+    SCAppApiRequestErrorCodeVerificationCodeError     = 4003,
+    SCAppApiRequestErrorCodeThirdAuthorizeError       = 4004,
+    SCAppApiRequestErrorCodeRefreshTokenError         = 4005,
     // Reservation
-    SCAPIRequestErrorCodeReservationFailure        = 4006,
-    SCAPIRequestErrorCodeListNotFoundMore          = 4008,
+    SCAppApiRequestErrorCodeReservationFailure        = 4006,
+    SCAppApiRequestErrorCodeListNotFoundMore          = 4008,
     // Collection
-    SCAPIRequestErrorCodeCancelCollectionFailure   = 4012,
-    SCAPIRequestErrorCodeCollectionFailure         = 4013
+    SCAppApiRequestErrorCodeCancelCollectionFailure   = 4012,
+    SCAppApiRequestErrorCodeCollectionFailure         = 4013
 };
 
-typedef NS_ENUM(NSInteger, CocoaErrorCode) {
-    CocoaErrorCodeJsonParseError = 3840
-};
 
-FOUNDATION_EXPORT NSString *const CocoaErrorJsonParseError;
+@interface SCAppApiRequest : SCApiRequest
 
-@interface SCAPIRequest : AFHTTPRequestOperationManager
-
-@property (nonatomic, strong) NSString *doMain;       // URL域
-@property (nonatomic, strong) NSString *path;         // API路径
-@property (nonatomic, strong) NSString *api;          // 请求的API
-
-@property (nonatomic, strong) NSString *url;          // 完整的API链接地址(不带参数)
-
-/**
- *  初始化方法 - 通过url参数生成SCAPIRequest实例
- *
- *  @param url 需要请求的链接
- *
- *  @return    SCAPIRequest实例
- */
-- (instancetype)initWithURL:(NSString *)url;
-
-/**
- *  初始化方法 - 通过拼接参数doMain, path, api成请求URL来生成SCAPIRequest实例
- *
- *  @param doMain URL域
- *  @param path   API路径
- *  @param api    请求的API
- *
- *  @return       SCAPIRequest实例
- */
-- (instancetype)initWithDoMain:(NSString *)doMain
-                          path:(NSString *)path
-                           api:(NSString *)api;
-
-/**
- *  通用的GET请求方法
- *
- *  @param api        完整的API请求链接
- *  @param parameters 请求的参数集合
- *  @param uccess     请求成功的回调
- *  @param failure    请求失败的回调
- */
-- (void)requestGETMethodsWithAPI:(NSString *)api
-                      parameters:(NSDictionary *)parameters
-                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
-/**
- *  通用的POST请求方法
- *
- *  @param api        完整的API请求链接
- *  @param parameters 请求的参数集合
- *  @param uccess     请求成功的回调
- *  @param failure    请求失败的回调
- */
-- (void)requestPOSTMethodsWithAPI:(NSString *)api
-                       parameters:(NSDictionary *)parameters
-                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
-
-#pragma mark - V1 API
 #pragma mark - Merchant API
 /**
  *  商家列表接口请求方法(API:/company_search - GET)
@@ -151,8 +79,8 @@ FOUNDATION_EXPORT NSString *const CocoaErrorJsonParseError;
  *  团购券列表接口请求方法(API:/Group_ticket/all - GET)
  */
 - (void)startGroupTicketsAPIRequestWithParameters:(NSDictionary *)parameters
-                                            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+                                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  *  团购券退款接口请求方法(API:/wepay/refund - POST)
@@ -231,7 +159,7 @@ FOUNDATION_EXPORT NSString *const CocoaErrorJsonParseError;
  *  刷新Token接口请求方法(API:/User/refresh/ - POST)
  */
 - (void)startRefreshTokenAPIRequestWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+                                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - Reservation Reuqest
 /**
@@ -281,7 +209,7 @@ FOUNDATION_EXPORT NSString *const CocoaErrorJsonParseError;
  *  用户添加车辆接口请求方法(API:/Usercar - POST)
  */
 - (void)startAddCarAPIRequestWithParameters:(NSDictionary *)parameters
-                                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
@@ -337,7 +265,7 @@ FOUNDATION_EXPORT NSString *const CocoaErrorJsonParseError;
  *  首页运营位数据接口请求方法(API:/Special/ad - GET)
  */
 - (void)startGetOperatADAPIRequestWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+                                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 /**
  *  首页最新预约数据接口请求方法(API:/Reservation/latest - GET)
  */
@@ -345,8 +273,6 @@ FOUNDATION_EXPORT NSString *const CocoaErrorJsonParseError;
                                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
-
-#pragma mark - V2 API
 #pragma mark - Shops API
 /**
  *  商家列表接口请求方法(API:/company_search/company_product - GET)

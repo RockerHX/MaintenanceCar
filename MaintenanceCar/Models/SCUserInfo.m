@@ -10,7 +10,7 @@
 #import <UMengMessage/UMessage.h>
 #import <DateTools/DateTools.h>
 #import "MicroConstants.h"
-#import "SCAPIRequest.h"
+#import "SCAppApiRequest.h"
 
 static NSString *const kLoginKey = @"kLoginKey";
 static NSString *const kUserIDKey = @"kUserIDKey";
@@ -188,10 +188,10 @@ typedef void(^STATE_BLOCK)(SCLoginState state);
     if (self.loginState) {
         __weak typeof(self)weakSelf = self;
         NSDictionary *parameters = @{@"user_id": self.userID};
-        [[SCAPIRequest manager] startGetUserCarsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess) {
+        [[SCAppApiRequest manager] startGetUserCarsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
                 NSInteger statusCode = [responseObject[@"status_code"] integerValue];
-                if (statusCode == SCAPIRequestErrorCodeNoError) {
+                if (statusCode == SCAppApiRequestErrorCodeNoError) {
                     [weakSelf saveUserCarsWithData:responseObject[@"data"]];
                 } else {
                     if (_block) _block(weakSelf, NO);

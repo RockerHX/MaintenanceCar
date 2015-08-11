@@ -141,18 +141,18 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text,
                            @"time_expire": @(CodeExpire),
                                   @"mode": @(mode)};
-    [[SCAPIRequest manager] startGetVerificationCodeAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startGetVerificationCodeAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess) {
+        if (operation.response.statusCode == SCApiRequestStatusCodePOSTSuccess) {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
             switch (statusCode) {
-                case SCAPIRequestErrorCodeNoError: {
+                case SCAppApiRequestErrorCodeNoError: {
                     [weakSelf showHUDAlertToViewController:weakSelf tag:SCHUDModeSendVerificationCode text:statusMessage];
                     break;
                 }
-                case SCAPIRequestErrorCodePhoneError:
-                case SCAPIRequestErrorCodeVerificationCodeSendError: {
+                case SCAppApiRequestErrorCodePhoneError:
+                case SCAppApiRequestErrorCodeVerificationCodeSendError: {
                     [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
                     break;
                 }
@@ -165,7 +165,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
         if (message) {
             [weakSelf showHUDAlertToViewController:weakSelf text:message];
         } else {
-            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
+            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkingError];
         }
         [_verificationCodeLabel stop];
     }];
@@ -178,13 +178,13 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text,
                                   @"code": _verificationCodeTextField.text};
-    [[SCAPIRequest manager] startLoginAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startLoginAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
-        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess) {
+        if (operation.response.statusCode == SCApiRequestStatusCodePOSTSuccess) {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
             switch (statusCode) {
-                case SCAPIRequestErrorCodeNoError: {
+                case SCAppApiRequestErrorCodeNoError: {
                     [[SCUserInfo share] loginSuccessWithUserData:responseObject[@"data"]];
                     [UMessage addAlias:responseObject[@"phone"] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
                         if ([responseObject[@"success"] isEqualToString:@"ok"])
@@ -193,7 +193,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
                     [weakSelf showHUDAlertToViewController:weakSelf tag:SCHUDModeLogin text:statusMessage];
                     break;
                 }
-                case SCAPIRequestErrorCodeVerificationCodeError: {
+                case SCAppApiRequestErrorCodeVerificationCodeError: {
                     [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
                     break;
                 }
@@ -207,7 +207,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
         if (message) {
             [weakSelf showHUDAlertToViewController:weakSelf text:message];
         } else {
-            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkError];
+            [weakSelf showHUDAlertToViewController:weakSelf text:NetWorkingError];
         }
     }];
 }

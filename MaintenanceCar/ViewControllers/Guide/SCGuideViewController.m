@@ -30,7 +30,7 @@
 - (void)initConfig {
     NSMutableArray *images = @[].mutableCopy;
     for (NSInteger index = 1; index < 5; index ++) {
-        NSString *imageName = [NSString stringWithFormat:@"%@%zd", (IS_IPHONE_4 ? @"Guide4S0" : @"Guide0"), index];
+        NSString *imageName = [NSString stringWithFormat:@"%@%zd", (([SCVersion currentModel] == SCDeviceModelTypeIphone4_4S) ? @"Guide4S0" : @"Guide0"), index];
         UIImage *image = [UIImage imageNamed:imageName];
         [images addObject:image];
     }
@@ -44,10 +44,11 @@
         imageView.image = _images[index];
         [guideView addSubview:imageView];
     }
+    SCDeviceModelType deviceModel = [SCVersion currentModel];
     UIView *lastGuideView = [guideView.subviews lastObject];
     lastGuideView.userInteractionEnabled = YES;
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH - 60.0f, 60.0f)];
-    button.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT - (IS_IPHONE_4 ? 50.0f : (IS_IPHONE_5 ? 80.0f : 100.0f)));
+    button.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT - ((deviceModel == SCDeviceModelTypeIphone4_4S) ? 50.0f : ((deviceModel == SCDeviceModelTypeIphone5_5S) ? 80.0f : 100.0f)));
     button.showsTouchWhenHighlighted = YES;
     [button addTarget:self action:@selector(finishedButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [lastGuideView addSubview:button];

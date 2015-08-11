@@ -7,7 +7,6 @@
 //
 
 #import "SCMerchantSummaryCell.h"
-#import "VersionConstants.h"
 #import "UIConstants.h"
 #import "SCStarView.h"
 

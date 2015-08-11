@@ -9,12 +9,12 @@
 #import "SCMapMerchantInfoView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <HexColors/HexColors.h>
-#import "SCAPIRequest.h"
+#import "SCAppApiRequest.h"
 #import "SCStarView.h"
 #import "SCMerchant.h"
 #import "SCMerchantFlagCell.h"
 #import "SCAllDictionary.h"
-#import "API.h"
+#import "SCApi.h"
 
 @interface SCMapMerchantInfoView () <UICollectionViewDataSource>
 {

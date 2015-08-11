@@ -8,7 +8,7 @@
 
 #import "SCAllDictionary.h"
 #import "SCObjectCategory.h"
-#import "SCAPIRequest.h"
+#import "SCAppApiRequest.h"
 #import "SCUserCar.h"
 
 #define fColorExplainFileName           @"ColorExplain.dat"
@@ -41,8 +41,8 @@ static SCAllDictionary *allDictionary = nil;
     // 如果本地缓存的字典数据为空，从网络请求，并保存到本地，反之则生成字典数据对象做回调，并异步更新数据
     if (!localData)
     {
-        [[SCAPIRequest manager] startGetAllDictionaryAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        [[SCAppApiRequest manager] startGetAllDictionaryAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
             {
                 // 先处理数据，再保存，最后回调
                 [weakSelf saveData:responseObject fileName:fAllDictionaryFileName];
@@ -58,8 +58,8 @@ static SCAllDictionary *allDictionary = nil;
         // 先处理数据，再异步更新，最后回调
         NSArray *data = localData[[@(type) stringValue]];
         
-        [[SCAPIRequest manager] startGetAllDictionaryAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        [[SCAppApiRequest manager] startGetAllDictionaryAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
                 [weakSelf saveData:responseObject fileName:fAllDictionaryFileName];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         }];
@@ -76,8 +76,8 @@ static SCAllDictionary *allDictionary = nil;
     // 如果本地缓存的商家Flags数据为空，从网络请求，并保存到本地，反之则生成数据对象做回调，并异步更新数据
     if (!localData)
     {
-        [[SCAPIRequest manager] startFlagsColorAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        [[SCAppApiRequest manager] startFlagsColorAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
             {
                 // 先处理数据，再保存，最后回调
                 [weakSelf hanleMerchantFlagsData:responseObject];
@@ -93,7 +93,7 @@ static SCAllDictionary *allDictionary = nil;
         // 先处理数据，再异步更新，最后回调
         [weakSelf hanleMerchantFlagsData:localData];
         
-        [[SCAPIRequest manager] startFlagsColorAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[SCAppApiRequest manager] startFlagsColorAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
             [weakSelf saveData:responseObject fileName:fColorExplainFileName];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         }];

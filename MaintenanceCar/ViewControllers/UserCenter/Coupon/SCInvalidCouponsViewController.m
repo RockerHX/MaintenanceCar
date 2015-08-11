@@ -102,13 +102,13 @@
     [self showHUDOnViewController:self];
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID};
-    [[SCAPIRequest manager] startInvalidCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startInvalidCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
             switch (statusCode) {
-                case SCAPIRequestErrorCodeNoError: {
+                case SCAppApiRequestErrorCodeNoError: {
                     [_coupons removeAllObjects];
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                         SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];

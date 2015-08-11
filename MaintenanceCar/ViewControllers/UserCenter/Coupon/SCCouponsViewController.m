@@ -142,13 +142,13 @@ static NSString *const CouponNavControllerID = @"CouponsNavigationController";
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                              @"sort_method": @"time"};
-    [[SCAPIRequest manager] startValidCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startValidCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
             switch (statusCode) {
-                case SCAPIRequestErrorCodeNoError: {
+                case SCAppApiRequestErrorCodeNoError: {
                     [_coupons removeAllObjects];
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                         SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];
@@ -175,13 +175,13 @@ static NSString *const CouponNavControllerID = @"CouponsNavigationController";
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                     @"code": _codeField.text};
-    [[SCAPIRequest manager] startAddCouponAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startAddCouponAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
             switch (statusCode) {
-                case SCAPIRequestErrorCodeNoError: {
+                case SCAppApiRequestErrorCodeNoError: {
                     _codeField.text = @"";
                     [_coupons removeAllObjects];
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {

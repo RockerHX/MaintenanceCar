@@ -133,8 +133,8 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
                            @"buy_car_month": _car.buyCarMonth,
                             @"run_distance": _car.runDistance,
                                    @"habit": _car.habit};
-    [[SCAPIRequest manager] startUpdateUserCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess) {
+    [[SCAppApiRequest manager] startUpdateUserCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCApiRequestStatusCodePOSTSuccess) {
             [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
                 if (finish) {
                     [weakSelf showHUDAlertToViewController:weakSelf tag:SCHUDTypeSaveData text:@"保存成功！" delay:0.5f];
@@ -154,8 +154,8 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     [self showHUDOnViewController:self.navigationController];
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                              @"user_car_id": _car.userCarID};
-    [[SCAPIRequest manager] startDeleteCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess) {
+    [[SCAppApiRequest manager] startDeleteCarAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCApiRequestStatusCodePOSTSuccess) {
             [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {
                 if (finish) {
                     [weakSelf showHUDAlertToViewController:weakSelf tag:SCHUDTypeDeleteCar text:@"删除成功！" delay:0.5f];

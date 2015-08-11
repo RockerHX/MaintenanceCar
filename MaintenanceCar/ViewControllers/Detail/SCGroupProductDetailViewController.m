@@ -240,8 +240,8 @@
     
     WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"product_id": _price ? _price.product_id : _product.product_id};
-    [[SCAPIRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+    [[SCAppApiRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
             _detail = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
             

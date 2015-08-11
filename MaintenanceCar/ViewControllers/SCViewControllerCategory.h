@@ -10,7 +10,7 @@
 #import <Masonry/Masonry.h>
 #import <UITableView+FDTemplateLayoutCell/UITableView+FDTemplateLayoutCell.h>
 #import "AllMicroConstants.h"
-#import "SCAPIRequest.h"
+#import "SCAppApiRequest.h"
 #import "SCUserInfo.h"
 #import "SCStoryBoardManager.h"
 

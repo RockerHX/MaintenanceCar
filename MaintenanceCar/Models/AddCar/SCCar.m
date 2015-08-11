@@ -7,13 +7,13 @@
 //
 
 #import "SCCar.h"
-#import "API.h"
+#import "SCApi.h"
 
 @implementation SCCar
 
 + (instancetype)objectWithKeyValues:(id)keyValues {
     SCCar *car = [super objectWithKeyValues:keyValues];
-    car.iconURL = [ImageURL stringByAppendingString:[NSString stringWithFormat:@"%@.png", car.brandID]];
+    car.iconURL = [SCApi imageURLWithImageName:[NSString stringWithFormat:@"%@.png", car.brandID]];
     return car;
 }
 

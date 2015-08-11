@@ -75,14 +75,15 @@
 
 - (void)viewConfig
 {
-    if (IS_IPHONE_6Plus)
+    SCDeviceModelType deviceModel = [SCVersion currentModel];
+    if (deviceModel == SCDeviceModelTypeIphone6Plus)
     {
         _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 280.0f);
         _heightConstraint.constant = _heightConstraint.constant + 30.0f;
         [self.view needsUpdateConstraints];
         [self.view layoutIfNeeded];
     }
-    else if (IS_IPHONE_6)
+    else if (deviceModel == SCDeviceModelTypeIphone6)
     {
         _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 270.0f);
         _heightConstraint.constant = _heightConstraint.constant + 15.0f;
@@ -193,8 +194,8 @@
     WEAK_SELF(weakSelf);
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     NSDictionary *parameters = @{@"user_car_id": _currentCar.userCarID};
-    [[SCAPIRequest manager] startMaintenanceDataAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+    [[SCAppApiRequest manager] startMaintenanceDataAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
             NSArray *normalItems  = responseObject[@"normal"];
             NSArray *carefulItems = responseObject[@"careful"];
@@ -217,11 +218,11 @@
             [weakSelf startRecommendMerchantRequest];
         }
         else
-            [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:NetWorkError delay:0.5f];
+            [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:NetWorkingError delay:0.5f];
         [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
         [weakSelf.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:NetWorkError delay:0.5f];
+        [weakSelf showHUDAlertToViewController:weakSelf tag:Zero text:NetWorkingError delay:0.5f];
         [MBProgressHUD hideAllHUDsForView:weakSelf.navigationController.view animated:YES];
     }];
 }
@@ -258,8 +259,8 @@
                                 @"radius": @(SearchRadius).stringValue,
                               @"latitude": latitude,
                             @"longtitude": longitude};
-    [[SCAPIRequest manager] startMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+    [[SCAppApiRequest manager] startMerchantListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
             NSArray *list = [[responseObject objectForKey:@"result"] objectForKey:@"items"];
             // 遍历请求回来的商家数据，生成SCMerchant用于商家列表显示
@@ -404,7 +405,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return section ? 20.0f : (IS_IPHONE_6Plus ? 40.0f : (IS_IPHONE_6 ? 20.0f : 10.0f));
+    SCDeviceModelType deviceModel = [SCVersion currentModel];
+    return section ? 20.0f : ((deviceModel == SCDeviceModelTypeIphone6Plus) ? 40.0f : ((deviceModel == SCDeviceModelTypeIphone6) ? 20.0f : 10.0f));
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

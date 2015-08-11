@@ -18,7 +18,7 @@
 
 static NSString *const HomePageNavControllerID = @"HomePageNavigationController";
 
-static const CGFloat OperationBarHeightOn4S    = 250.0f;
+static const CGFloat OperationBarHeightOn4_4S  = 250.0f;
 static const CGFloat OperationBarHeightOn6     = 340.0f;
 static const CGFloat OperationBarHeightOn6Plus = 374.0f;
 static const CGFloat ShowShopsBarHeightOn6     = 70.0f;
@@ -95,14 +95,24 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
     _repairButton.layer.cornerRadius      = ServiceButtonCornerRadius;
     
     // 根据不同的屏幕尺寸调整首页布局
-    if (IS_IPHONE_6Plus) {
-        _operationBarHeight.constant = OperationBarHeightOn6Plus;
-        _showShopsBarHeight.constant = ShowShopsBarHeightOn6Plus;
-    } else if (IS_IPHONE_6) {
-        _operationBarHeight.constant = OperationBarHeightOn6;
-        _showShopsBarHeight.constant = ShowShopsBarHeightOn6;
-    } else if (IS_IPHONE_4) {
-        _operationBarHeight.constant = OperationBarHeightOn4S;
+    switch ([SCVersion currentModel]) {
+        case SCDeviceModelTypeIphone4_4S: {
+            _operationBarHeight.constant = OperationBarHeightOn4_4S;
+            break;
+        }
+        case SCDeviceModelTypeIphone6: {
+            _operationBarHeight.constant = OperationBarHeightOn6;
+            _showShopsBarHeight.constant = ShowShopsBarHeightOn6;
+            break;
+        }
+        case SCDeviceModelTypeIphone6Plus: {
+            _operationBarHeight.constant = OperationBarHeightOn6Plus;
+            _showShopsBarHeight.constant = ShowShopsBarHeightOn6Plus;
+            break;
+        }
+        default: {
+            break;
+        }
     }
     _centerButtonWidth.constant = (SCREEN_WIDTH + ServiceButtonCornerRadius*2 - 20.0f)/3;
     [self updateViewConstraints];
@@ -150,11 +160,11 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
 - (void)startOperationADsReuqet
 {
     WEAK_SELF(weakSelf);
-    [[SCAPIRequest manager] startGetOperatADAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+    [[SCAppApiRequest manager] startGetOperatADAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
             NSInteger statusCode = [responseObject[@"status_code"] integerValue];
-            if (SCAPIRequestErrorCodeNoError == statusCode) {
+            if (SCAppApiRequestErrorCodeNoError == statusCode) {
                 [responseObject[@"data"][@"ad"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                     SCOperation *operation = [SCOperation objectWithKeyValues:obj];
                     [_oprationADs addObject:operation];

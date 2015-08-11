@@ -90,23 +90,26 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
         NSString *osVersion = [UIDevice currentDevice].systemVersion;
         NSString *appVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
         NSDictionary *paramters = @{@"user_id": userInfo.userID,
-                                         @"os": os,
+                                    @"os": os,
                                     @"version": appVersion,
-                                 @"os_version": osVersion};
-        [[SCAPIRequest manager] startUserLogAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+                                    @"os_version": osVersion};
+        [[SCAppApiRequest manager] startUserLogAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCApiRequestStatusCodePOSTSuccess) {
                 NSLog(@"log_id:%@", responseObject[@"log_id"]);
-            else
+            } else {
                 NSLog(@"log error:%@", responseObject);
+            }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"log error:%@", error);
         }];
         
         if ([userInfo needRefreshToken]) {
-            [[SCAPIRequest manager] startRefreshTokenAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-                if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess) {
+            [[SCAppApiRequest manager] startRefreshTokenAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+                if (operation.response.statusCode == SCApiRequestStatusCodePOSTSuccess) {
                     NSInteger errorCode = [responseObject[@"status_code"] integerValue];
-                    if (!errorCode) [userInfo refreshTokenDate];
+                    if (!errorCode) {
+                        [userInfo refreshTokenDate];
+                    }
                 }
             } failure:nil];
         }

@@ -185,7 +185,7 @@ static NSString *const OderNavControllerID = @"OrdersNavigationController";
  */
 - (void)startProgressOrdersRequestWithParameters:(NSDictionary *)parameters {
     WEAK_SELF(weakSelf);
-    [[SCAPIRequest manager] startProgressOrdersAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startProgressOrdersAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf requestSuccessWithOperation:operation responseObject:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf requestFailureWithOperation:operation];
@@ -197,7 +197,7 @@ static NSString *const OderNavControllerID = @"OrdersNavigationController";
  */
 - (void)startFinishedOrdersRequestWithParameters:(NSDictionary *)parameters {
     WEAK_SELF(weakSelf);
-    [[SCAPIRequest manager] startFinishedOrdersAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startFinishedOrdersAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf requestSuccessWithOperation:operation responseObject:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf requestFailureWithOperation:operation];
@@ -206,11 +206,11 @@ static NSString *const OderNavControllerID = @"OrdersNavigationController";
 
 - (void)requestSuccessWithOperation:(AFHTTPRequestOperation *)operation responseObject:(id)responseObject {
     [self endRefresh];
-    if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess) {
+    if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
         NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
         NSString *statusMessage = responseObject[@"status_message"];
         switch (statusCode) {
-            case SCAPIRequestErrorCodeNoError: {
+            case SCAppApiRequestErrorCodeNoError: {
                 if (self.requestType == SCRequestRefreshTypeDropDown)
                     [self clearListData];
                 [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -236,7 +236,7 @@ static NSString *const OderNavControllerID = @"OrdersNavigationController";
                 break;
             }
                 
-            case SCAPIRequestErrorCodeListNotFoundMore: {
+            case SCAppApiRequestErrorCodeListNotFoundMore: {
                 [self.tableView reloadData];
                 [self addFooter];
                 [self addRefreshHeader];

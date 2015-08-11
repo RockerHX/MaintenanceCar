@@ -76,13 +76,13 @@
 {
     switch (response.statusCode)
     {
-        case SCAPIRequestErrorCodeNoError:
+        case SCAppApiRequestErrorCodeNoError:
             [self loadFinished];
             break;
-        case SCAPIRequestStatusCodeTokenError:
+        case SCApiRequestStatusCodeTokenError:
             [self showShoulReLoginAlert];
             break;
-        case SCAPIRequestErrorCodeListNotFoundMore:
+        case SCAppApiRequestErrorCodeListNotFoundMore:
             [self loadFinished];
             break;
         default:

@@ -62,7 +62,7 @@
     NSInteger shopsCount = self.shopList.shops.count;
     switch (response.statusCode)
     {
-        case SCAPIRequestErrorCodeNoError:
+        case SCAppApiRequestErrorCodeNoError:
         {
             if (shopsCount < SearchLimit)
                 [self removeRefreshFooter];
@@ -70,7 +70,7 @@
                 [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
         }
             break;
-        case SCAPIRequestErrorCodeListNotFoundMore:
+        case SCAppApiRequestErrorCodeListNotFoundMore:
             [self removeRefreshFooter];
             break;
     }

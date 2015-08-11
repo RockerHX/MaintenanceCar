@@ -176,8 +176,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (!section) {
-        if (IS_IPHONE_6) return 40.0f;
-        else if (IS_IPHONE_6Plus) return 60.0f;
+        SCDeviceModelType deviceModel = [SCVersion currentModel];
+        if (deviceModel == SCDeviceModelTypeIphone6) return 40.0f;
+        else if (deviceModel == SCDeviceModelTypeIphone6Plus) return 60.0f;
         else return ZERO_POINT;
     }
     if (section == 4 || section == 5) return ZERO_POINT;
@@ -228,8 +229,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"product_id": _ticket.product_id};
-    [[SCAPIRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess) {
+    [[SCAppApiRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
             _detail             = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
             _detail.company_id  = _ticket.company_id;
             _detail.name        = _ticket.company_name;
@@ -305,9 +306,9 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             [self showHUDOnViewController:self.navigationController];
             NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                                  @"group_ticket_id": _ticket.group_ticket_id};
-            [[SCAPIRequest manager] startGroupTicketRefundAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [[SCAppApiRequest manager] startGroupTicketRefundAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 [weakSelf hideHUDOnViewController:weakSelf.navigationController];
-                if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess) {
+                if (operation.response.statusCode == SCApiRequestStatusCodePOSTSuccess) {
                     weakSelf.tableView.tableFooterView = nil;
                     [weakSelf showHUDAlertToViewController:weakSelf.navigationController delegate:weakSelf text:@"退款成功" delay:0.5f];
                 }

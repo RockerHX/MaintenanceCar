@@ -9,9 +9,9 @@
 #ifndef MaintenanceCar_AllMicroConstants_h
 #define MaintenanceCar_AllMicroConstants_h
 
-#import "VersionConstants.h"
+#import "SCVersion.h"
 #import "UIConstants.h"
 #import "MicroConstants.h"
-#import "AppMicroConstants.h"
+#import "SCAppConstants.h"
 
 #endif

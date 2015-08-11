@@ -7,7 +7,7 @@
 //
 
 #import "SCOrderCell.h"
-#import "VersionConstants.h"
+#import "SCVersion.h"
 #import "SCStarView.h"
 
 @implementation SCOrderCell
@@ -16,7 +16,8 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    _nextStateDateLabel.preferredMaxLayoutWidth = IS_IPHONE_6Plus ? 120.0f : (IS_IPHONE_6 ? 100.0f : 80.0f);
+    SCDeviceModelType deviceModel = [SCVersion currentModel];
+    _nextStateDateLabel.preferredMaxLayoutWidth = (deviceModel == SCDeviceModelTypeIphone6Plus) ? 120.0f : ((deviceModel == SCDeviceModelTypeIphone6) ? 100.0f : 80.0f);
     self.merchantNameLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 50.0f;
 }
 

@@ -446,8 +446,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [MBProgressHUD showHUDAddedTo:_blankView animated:YES];
     NSDictionary *paramters = @{@"id": _merchant.company_id,
                            @"user_id": [SCUserInfo share].userID};
-    [[SCAPIRequest manager] startMerchantDetailAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+    [[SCAppApiRequest manager] startMerchantDetailAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
             _merchantDetail = [[SCMerchantDetail alloc] initWithDictionary:responseObject error:nil];
             [weakSelf displayMerchantDetail];
@@ -471,12 +471,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     NSDictionary *paramters = @{@"company_id": _merchantDetail.company_id,
                                    @"user_id": [SCUserInfo share].userID,
                                    @"type_id": @"1"};
-    [[SCAPIRequest manager] startMerchantCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startMerchantCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
         NSString *statusMessage = responseObject[@"status_message"];
         switch (statusCode)
         {
-            case SCAPIRequestErrorCodeCollectionFailure:
+            case SCAppApiRequestErrorCodeCollectionFailure:
                 _collectionItem.favorited = NO;
                 break;
         }
@@ -496,18 +496,18 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     WEAK_SELF(weakSelf);
     NSDictionary *paramters = @{@"company_id": _merchantDetail.company_id,
                                    @"user_id": [SCUserInfo share].userID};
-    [[SCAPIRequest manager] startCancelCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startCancelCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
         NSString *statusMessage = responseObject[@"status_message"];
         switch (statusCode)
         {
-            case SCAPIRequestErrorCodeNoError:
+            case SCAppApiRequestErrorCodeNoError:
             {
                 if (_delegate && [_delegate respondsToSelector:@selector(cancelCollectionSuccess)])
                     [_delegate cancelCollectionSuccess];
             }
                 break;
-            case SCAPIRequestErrorCodeCancelCollectionFailure:
+            case SCAppApiRequestErrorCodeCancelCollectionFailure:
                 _collectionItem.favorited = YES;
                 break;
         }

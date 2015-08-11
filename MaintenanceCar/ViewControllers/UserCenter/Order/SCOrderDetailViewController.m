@@ -177,14 +177,14 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
                               @"reserve_id": _reserveID};
-    [[SCAPIRequest manager] startOrderDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+    [[SCAppApiRequest manager] startOrderDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
             switch (statusCode)
             {
-                case SCAPIRequestErrorCodeNoError:
+                case SCAppApiRequestErrorCodeNoError:
                 {
                     _detail = [[SCOrderDetail alloc] initWithDictionary:responseObject[@"data"] error:nil];
                     [weakSelf displayDetailViewController];
@@ -238,15 +238,15 @@ typedef NS_ENUM(NSUInteger, SCOrderDetailMenuType) {
                              @"company_id": _detail.companyID,
                              @"reserve_id": _detail.reserveID,
                                  @"status": @"4"};
-    [[SCAPIRequest manager] startUpdateReservationAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startUpdateReservationAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf.navigationController];
-        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+        if (operation.response.statusCode == SCApiRequestStatusCodePOSTSuccess)
         {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
             switch (statusCode)
             {
-                case SCAPIRequestErrorCodeNoError:
+                case SCAppApiRequestErrorCodeNoError:
                 {
                     _needRefresh = YES;
                     [weakSelf.tableView.header beginRefreshing];

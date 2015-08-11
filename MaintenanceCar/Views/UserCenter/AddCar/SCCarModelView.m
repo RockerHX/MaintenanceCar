@@ -9,7 +9,7 @@
 #import "SCCarModelView.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "MicroConstants.h"
-#import "SCAPIRequest.h"
+#import "SCAppApiRequest.h"
 #import "SCCarBrand.h"
 #import "SCCarModel.h"
 #import "SCCar.h"
@@ -104,8 +104,8 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"brand_id": carBrand.brand_id,
                                 @"time_flag": @"0"};
-    [[SCAPIRequest manager] startUpdateCarModelAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+    [[SCAppApiRequest manager] startUpdateCarModelAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
             NSArray *models = responseObject[@"data"];
             for (NSDictionary *carData in models)
@@ -129,8 +129,8 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"model_id": carModel.model_id,
                                  @"time_flag": @"0"};
-    [[SCAPIRequest manager] startUpdateCarsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+    [[SCAppApiRequest manager] startUpdateCarsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
             NSDictionary *defaultCarData = @{@"car_id": @"",
                                            @"model_id": carModel.model_id,

@@ -102,14 +102,14 @@
     NSDictionary *parameters = @{@"company_id": _companyID,
                                       @"limit": @(SearchLimit),
                                      @"offset": @(self.offset)};
-    [[SCAPIRequest manager] startGetMerchantCommentListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+    [[SCAppApiRequest manager] startGetMerchantCommentListAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
             switch (statusCode)
             {
-                case SCAPIRequestErrorCodeNoError:
+                case SCAppApiRequestErrorCodeNoError:
                 {
                     if (weakSelf.requestType == SCRequestRefreshTypeDropDown)
                         [weakSelf clearListData];
@@ -126,7 +126,7 @@
                 }
                     break;
                     
-                case SCAPIRequestErrorCodeListNotFoundMore:
+                case SCAppApiRequestErrorCodeListNotFoundMore:
                 {
                     [weakSelf addRefreshHeader];
                     [weakSelf removeRefreshFooter];

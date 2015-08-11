@@ -129,13 +129,13 @@
     NSString *message = operation.responseObject[@"message"];
     if (message.length)
     {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeTokenError)
+        if (operation.response.statusCode == SCApiRequestStatusCodeTokenError)
             [self showShoulReLoginAlert];
         else
             [self showHUDAlertToViewController:self text:message];
     }
     else
-        [self showHUDAlertToViewController:self text:NetWorkError];
+        [self showHUDAlertToViewController:self text:NetWorkingError];
 }
 
 #pragma mark - Private Methods
@@ -193,9 +193,10 @@
 #pragma mark -
 - (void)reLayoutHeaderView
 {
-    if (IS_IPHONE_6)
+    SCDeviceModelType deviceModel = [SCVersion currentModel];
+    if (deviceModel == SCDeviceModelTypeIphone6)
         self.tableHeaderView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 281.25f);
-    else if (IS_IPHONE_6Plus)
+    else if (deviceModel == SCDeviceModelTypeIphone6Plus)
         self.tableHeaderView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 300.0f);
     [self.tableHeaderView needsUpdateConstraints];
     [self.tableHeaderView layoutIfNeeded];
@@ -203,9 +204,10 @@
 
 - (void)reLayoutFooterView
 {
-    if (IS_IPHONE_6)
+    SCDeviceModelType deviceModel = [SCVersion currentModel];
+    if (deviceModel == SCDeviceModelTypeIphone6)
         self.tableFooterView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 180.0f);
-    else if (IS_IPHONE_6Plus)
+    else if (deviceModel == SCDeviceModelTypeIphone6Plus)
         self.tableFooterView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 200.0f);
     [self.tableHeaderView needsUpdateConstraints];
     [self.tableHeaderView layoutIfNeeded];

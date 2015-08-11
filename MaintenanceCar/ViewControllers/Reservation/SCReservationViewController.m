@@ -164,13 +164,13 @@
                               @"product_id": (_groupTicket ? _groupTicket.product_id : (_quotedPrice ? _quotedPrice.product_id : @"")),
                          @"group_ticket_id": (_groupTicket ? _groupTicket.group_ticket_id : @""),
                                    @"price": (_quotedPrice ? _quotedPrice.final_price : @"")};
-    [[SCAPIRequest manager] startMerchantReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startMerchantReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
-        if (operation.response.statusCode == SCAPIRequestStatusCodePOSTSuccess)
+        if (operation.response.statusCode == SCApiRequestStatusCodePOSTSuccess)
         {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
-            if (statusCode == SCAPIRequestErrorCodeNoError)
+            if (statusCode == SCAppApiRequestErrorCodeNoError)
             {
                 if (_delegate && [_delegate respondsToSelector:@selector(reservationSuccess)])
                     [_delegate reservationSuccess];
@@ -200,7 +200,7 @@
     {
         NSString *displayDateString = @"今天(";
         _dateLabel.text = [[displayDateString stringByAppendingString:displayDate] stringByAppendingString:@")"];
-        if (IS_IPHONE_5_PRIOR)
+        if ([SCVersion isIPhone5SPrior])
             _dateLabel.font = [UIFont systemFontOfSize:16.0f];
     }
     else
