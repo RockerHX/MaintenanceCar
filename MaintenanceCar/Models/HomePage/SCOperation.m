@@ -12,7 +12,7 @@
 
 + (NSDictionary *)replacedKeyFromPropertyName {
     return @{@"pictureURL": @"pic_url",
-            @"postPicture": @"post_pic"};
+              @"needLogin": @"need_login"};
 }
 
 @end

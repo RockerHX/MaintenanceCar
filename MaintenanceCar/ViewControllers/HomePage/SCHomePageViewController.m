@@ -157,15 +157,14 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
 /**
  *  运营位数据请求方法
  */
-- (void)startOperationADsReuqet
-{
+- (void)startOperationADsReuqet {
     WEAK_SELF(weakSelf);
     [[SCAppApiRequest manager] startGetOperatADAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
             NSInteger statusCode = [responseObject[@"status_code"] integerValue];
             if (SCAppApiRequestErrorCodeNoError == statusCode) {
-                [responseObject[@"data"][@"ad"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                     SCOperation *operation = [SCOperation objectWithKeyValues:obj];
                     [_oprationADs addObject:operation];
                 }];

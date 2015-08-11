@@ -60,7 +60,7 @@ NSString *const AllDictionaryApi            = @"/Misc/dictAll";
 NSString *const FlagsColorExplainApi        = @"/Special/color_explain";
 NSString *const MerchantTagsApi             = @"/Cars/tags";
 
-NSString *const OperatADApi                 = @"/Special/ad";
+NSString *const OperatADApi                 = @"/Special/new_ad";
 NSString *const HomePageReservationApi      = @"/Reservation/latest";
 
 NSString *const ShopsApi                    = @"/company_search/company_product";

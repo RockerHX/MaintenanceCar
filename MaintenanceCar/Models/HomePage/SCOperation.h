@@ -10,12 +10,13 @@
 
 @interface SCOperation : NSObject
 
-@property (nonatomic, copy) NSString *pictureURL;        // 按钮图片地址连接
-@property (nonatomic, copy) NSString *text;              // 显示名称
-@property (nonatomic, copy) NSString *url;               // 网页地址
-@property (nonatomic, copy) NSString *postPicture;       // 展示图片地址
-@property (nonatomic, copy) NSString *parameter;
-@property (nonatomic, copy) NSString *value;
-@property (nonatomic, assign)   BOOL  html;              // 是否是网页
+@property (nonatomic, assign)      BOOL  html;              // 是否是网页
+@property (nonatomic, assign)      BOOL  needLogin;         // 是否需要登录
+@property (nonatomic, assign) NSInteger  gift;              // 活动参数
+@property (nonatomic, copy)    NSString *pictureURL;        // 按钮图片地址连接
+@property (nonatomic, copy)    NSString *text;              // 显示名称
+@property (nonatomic, copy)    NSString *url;               // 网页地址
+@property (nonatomic, copy)    NSString *parameter;         // 商家活动请求参数
+@property (nonatomic, copy)    NSString *value;             // 商家活动请求值
 
 @end
