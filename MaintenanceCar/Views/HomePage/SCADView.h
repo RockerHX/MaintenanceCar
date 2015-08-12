@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class SCADView;
+
 @protocol SCADViewDelegate <NSObject>
 
 @optional
+- (void)imageLoadCompleted:(SCADView *)adView;
 - (void)shouldEnter;
 
 @end

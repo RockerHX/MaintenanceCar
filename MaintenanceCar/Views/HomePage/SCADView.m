@@ -27,7 +27,9 @@
     
     __weak __typeof(self)weakSelf = self;
     [_imageView sd_setImageWithURL:[NSURL URLWithString:imageURL] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        [weakSelf show];
+        if (_delegate && [_delegate respondsToSelector:@selector(imageLoadCompleted:)]) {
+            [_delegate imageLoadCompleted:weakSelf];
+        }
     }];
     
     [self initConfig];
@@ -56,7 +58,7 @@
     if (_delegate && [_delegate respondsToSelector:@selector(shouldEnter)]) {
         [_delegate shouldEnter];
     }
-    [self removeFromSuperview];
+    [self removeADView];
 }
 
 - (void)removeADView {

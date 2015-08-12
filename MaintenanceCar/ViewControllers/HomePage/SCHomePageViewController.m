@@ -299,6 +299,10 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
 }
 
 #pragma mark - SCADView Delegate
+- (void)imageLoadCompleted:(SCADView *)adView {
+    [adView show];
+}
+
 - (void)shouldEnter {
     [self pushToSubViewControllerWithType:SCHomePageServiceButtonTypeShowShops];
 }
