@@ -27,7 +27,7 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
 
 
 @implementation SCHomePageViewController {
-    NSMutableArray *_oprationADs;
+    NSMutableArray  *_oprationADs;
     CAGradientLayer *_topBarShadowLayer;
 }
 
@@ -191,7 +191,12 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
     _operationView.images = images;
     [_operationView show:^(NSInteger index) {
         if (_oprationADs.count) {
-            [self pushToOperationViewControllerWith:_oprationADs[index]];
+            SCOperation *operation = _oprationADs[index];
+            if (operation.needLogin && (![SCUserInfo share].loginState)) {
+                [self showShoulLoginAlert];
+            } else {
+                [self pushToOperationViewControllerWith:_oprationADs[index]];
+            }
         }
     } finished:nil];
 }

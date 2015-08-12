@@ -48,6 +48,13 @@ typedef NS_ENUM(NSUInteger, SCViewControllerAlertType) {
 - (void)showShoulLoginAlert;
 
 /**
+ *  提示用户登录的警告框
+ *
+ *  @param title 提示标题
+ */
+- (void)showShoulLoginAlertWithTitle:(NSString *)title;
+
+/**
  *  提示用户需要重新登录
  */
 - (void)showShoulReLoginAlert;
