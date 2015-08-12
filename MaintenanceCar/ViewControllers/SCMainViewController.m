@@ -151,6 +151,7 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
  *  @param viewController 需要显示的视图控制器
  */
 - (void)showViewController:(UIViewController *)viewController {
+    [self setHomePageNavigationBarWillHidden:NO];
     @try {
         _canSupportPanGesture = YES;
         // 添加子视图
