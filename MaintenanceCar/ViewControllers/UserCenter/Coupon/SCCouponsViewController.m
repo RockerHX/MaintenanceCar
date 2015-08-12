@@ -14,8 +14,7 @@
 
 static NSString *const CouponNavControllerID = @"CouponsNavigationController";
 
-@implementation SCCouponsViewController
-{
+@implementation SCCouponsViewController {
     NSMutableArray *_coupons;
     SCCouponCell   *_couponCell;
 }
@@ -41,6 +40,7 @@ static NSString *const CouponNavControllerID = @"CouponsNavigationController";
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[个人中心] - 优惠券"];
     
+    [self startCouponsRequest];
     [self panGestureSupport:YES];
 }
 
