@@ -7,6 +7,7 @@
 //
 
 #import "SCViewControllerCategory.h"
+#import "SCADView.h"
 
 
 typedef NS_ENUM(NSUInteger, SCHomePageServiceButtonType) {
@@ -21,13 +22,14 @@ typedef NS_ENUM(NSUInteger, SCHomePageServiceButtonType) {
 @optional
 - (void)shouldShowMenu;
 - (void)shouldSupportPanGesture:(BOOL)support;
+- (void)operationPostionNeedLoginWithParameter:(NSString *)parameter;
 
 @end
 
 
 @class SCLoopScrollView;
 
-@interface SCHomePageViewController : UIViewController
+@interface SCHomePageViewController : UIViewController <SCADViewDelegate>
 
 @property (weak, nonatomic) IBOutlet   SCLoopScrollView *operationView;         // 首页运营位
 @property (weak, nonatomic) IBOutlet           UIButton *menuButton;            // 侧滑导航菜单按钮

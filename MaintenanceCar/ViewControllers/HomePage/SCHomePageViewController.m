@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 MaintenanceCar. All rights reserved.
 //
 
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "SCHomePageViewController.h"
 #import "SCSearchViewController.h"
 #import "SCMaintenanceViewController.h"
@@ -85,6 +86,13 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
     _oprationADs = @[].mutableCopy;
     
     [self startOperationADsReuqet];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(loginSuccess:) name:kUserLoginSuccessNotification object:nil];
+    
+    @weakify(self)
+    [RACObserve([SCUserInfo share], loginState) subscribeNext:^(NSNumber *loginState) {
+        @strongify(self)
+        [self refreshOperationADs];
+    }];
 }
 
 - (void)viewConfig {
@@ -183,7 +191,9 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
     NSMutableArray *images = [@[] mutableCopy];
     if (_oprationADs.count) {
         for (SCOperation *operation in _oprationADs) {
-            [images addObject:operation.pictureURL];
+            if (!(operation.needLogin && [SCUserInfo share].loginState)) {
+                [images addObject:operation.pictureURL];
+            }
         }
     }
     
@@ -193,9 +203,11 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
         if (_oprationADs.count) {
             SCOperation *operation = _oprationADs[index];
             if (operation.needLogin && (![SCUserInfo share].loginState)) {
-                [self showShoulLoginAlert];
+                if (_delegate && [_delegate respondsToSelector:@selector(operationPostionNeedLoginWithParameter:)]) {
+                    [_delegate operationPostionNeedLoginWithParameter:operation.gift];
+                }
             } else {
-                [self pushToOperationViewControllerWith:_oprationADs[index]];
+                [self pushToOperationViewControllerWith:operation];
             }
         }
     } finished:nil];
@@ -263,11 +275,32 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
     }
 }
 
-#pragma mark - Alert View Delegate Methods
+- (void)loginSuccess:(NSNotification *)notification {
+    NSString *gift = notification.object;
+    NSString *adImageURL = nil;
+    if (gift) {
+        for (SCOperation *operation in _oprationADs) {
+            if ([operation.gift isEqualToString:gift]) {
+                adImageURL = operation.giftImageULR;
+                break;
+            }
+        }
+    }
+    if (adImageURL) {
+        [SCADView showWithDelegate:self imageURL:adImageURL];
+    }
+}
+
+#pragma mark - Alert View Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     // 用户选择是否登录
     if (buttonIndex == alertView.cancelButtonIndex) return;
     [self checkShouldLogin];
+}
+
+#pragma mark - SCADView Delegate
+- (void)shouldEnter {
+    [self pushToSubViewControllerWithType:SCHomePageServiceButtonTypeShowShops];
 }
 
 @end

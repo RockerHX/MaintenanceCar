@@ -28,7 +28,9 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     SCDismissTypeCancel
 };
 
-@implementation SCLoginViewController
+@implementation SCLoginViewController {
+    BOOL _needShow; // 登录成功之后是否需要显示提示页
+}
 
 #pragma mark - Init Methods
 + (UINavigationController *)navigationInstance {
@@ -105,8 +107,8 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
         [self showHUDAlertToViewController:self text:@"请输入手机号噢亲！"];
     } else if (![_verificationCodeTextField.text length]) {
         [self showHUDAlertToViewController:self text:@"请输入验证码噢亲！"];
-    } else if ([_phoneNumberTextField.text isEqualToString:@"18683858856"]) {
-        NSDictionary *userData = @{@"now": @"2015-04-14 16:29:47",
+    } /*else if ([_phoneNumberTextField.text isEqualToString:@"18683858856"]) {
+        NSDictionary *userData = @{@"now": @"2015-07-14 16:29:47",
                                  @"phone": @"18683858856",
                                  @"token": @"89b275e41c486247131b92f627afff3c",
                                @"user_id": @"407"};
@@ -116,7 +118,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
                 [SCUserInfo share].addAliasSuccess = YES;
         }];
         [self showHUDAlertToViewController:self tag:SCHUDModeLogin text:@"登录成功"];
-    } else {
+    } */else {
         [self showHUDOnViewController:self];
         [self startLoginRequest];
     }
@@ -177,7 +179,8 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
 - (void)startLoginRequest {
     WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"phone": _phoneNumberTextField.text,
-                                  @"code": _verificationCodeTextField.text};
+                                  @"code": _verificationCodeTextField.text,
+                                  @"gift": _parameter ?: @""};
     [[SCAppApiRequest manager] startLoginAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
         if (operation.response.statusCode == SCApiRequestStatusCodePOSTSuccess) {
@@ -185,7 +188,9 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
             NSString *statusMessage = responseObject[@"status_message"];
             switch (statusCode) {
                 case SCAppApiRequestErrorCodeNoError: {
-                    [[SCUserInfo share] loginSuccessWithUserData:responseObject[@"data"]];
+                    NSDictionary *data = responseObject[@"data"];
+                    _needShow = [data[@"gift"][@"result"] boolValue];
+                    [[SCUserInfo share] loginSuccessWithUserData:data];
                     [UMessage addAlias:responseObject[@"phone"] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
                         if ([responseObject[@"success"] isEqualToString:@"ok"])
                             [SCUserInfo share].addAliasSuccess = YES;
@@ -198,9 +203,9 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
                     break;
                 }
             }
-        }
-        else
+        } else {
             [weakSelf showHUDAlertToViewController:weakSelf text:@"注册出错，请联系远景车联"];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf hideHUDOnViewController:weakSelf];
         NSString *message = operation.responseObject[@"message"];
@@ -221,7 +226,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
 // 返回进入[注册登录]页面之前的页面
 - (void)dismissController:(SCDismissType)type {
     if (type == SCDismissTypeLoginSuccess) {
-        [NOTIFICATION_CENTER postNotificationName:kUserLoginSuccessNotification object:nil];
+        [NOTIFICATION_CENTER postNotificationName:kUserLoginSuccessNotification object:(_parameter && _needShow) ? _parameter : nil];
     }
     [_verificationCodeLabel stop];           // 退出之前要记得关掉验证码倒计时，防止内存释放引起crash
     [self resignKeyBoard];

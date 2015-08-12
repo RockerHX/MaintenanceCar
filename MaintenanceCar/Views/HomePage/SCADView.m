@@ -15,13 +15,20 @@
 @implementation SCADView
 
 #pragma mark - Init Methods
-- (id)initWithDelegate:(id<SCADViewDelegate>)delegate imageURL:(NSString *)imageURL
-{
+#pragma clang diagnostic ignored "-Wunused-variable"
++ (void)showWithDelegate:(id<SCADViewDelegate>)delegate imageURL:(NSString *)imageURL {
+    SCADView *adView = [[SCADView alloc] initWithDelegate:delegate imageURL:imageURL];
+}
+
+- (instancetype)initWithDelegate:(id<SCADViewDelegate>)delegate imageURL:(NSString *)imageURL {
     self = [[[NSBundle mainBundle] loadNibNamed:@"SCADView" owner:self options:nil] firstObject];
     self.frame = APP_DELEGATE_INSTANCE.window.bounds;
     _delegate = delegate;
     
-    [_imageView sd_setImageWithURL:[NSURL URLWithString:imageURL]];
+    __weak __typeof(self)weakSelf = self;
+    [_imageView sd_setImageWithURL:[NSURL URLWithString:imageURL] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [weakSelf show];
+    }];
     
     [self initConfig];
     [self viewConfig];
@@ -30,55 +37,47 @@
 }
 
 #pragma mark - Action Methods
-- (IBAction)enterButtonPressed:(id)sender
-{
-    if (_delegate && [_delegate respondsToSelector:@selector(shouldEnter)])
-        [_delegate shouldEnter];
-    [self removeFromSuperview];
-}
-
-- (IBAction)cancelButtonPressed:(id)sender
-{
+- (IBAction)cancelButtonPressed {
     [self removeADView];
 }
 
 #pragma mark - Private Methods
-- (void)initConfig
-{
+- (void)initConfig {
     self.alpha = ZERO_POINT;
+    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap)]];
 }
 
-- (void)viewConfig
-{
-    _enterButton.layer.cornerRadius = 5.0f;
-    _imageView.transform            = CGAffineTransformMakeScale(0.75f, 0.75f);
-    _enterButton.transform          = CGAffineTransformMakeScale(0.75f, 0.75f);
-    _cancelButton.transform         = CGAffineTransformMakeScale(0.75f, 0.75f);
+- (void)viewConfig {
+    _imageView.transform = CGAffineTransformMakeScale(0.75f, 0.75f);
+    _cancelButton.transform = CGAffineTransformMakeScale(0.75f, 0.75f);
 }
 
-- (void)removeADView
-{
+- (void)tap {
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldEnter)]) {
+        [_delegate shouldEnter];
+    }
+    [self removeFromSuperview];
+}
+
+- (void)removeADView {
     WEAK_SELF(weakSelf);
     [UIView animateWithDuration:0.2f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        weakSelf.imageView.transform    = CGAffineTransformMakeScale(0.85f, 0.85f);
-        weakSelf.enterButton.transform  = CGAffineTransformMakeScale(0.85f, 0.85f);
+        weakSelf.imageView.transform = CGAffineTransformMakeScale(0.85f, 0.85f);
         weakSelf.cancelButton.transform = CGAffineTransformMakeScale(0.85f, 0.85f);
-        weakSelf.alpha                  = ZERO_POINT;
+        weakSelf.alpha = ZERO_POINT;
     } completion:^(BOOL finished) {
         [weakSelf removeFromSuperview];
     }];
 }
 
 #pragma mark - Public Methods
-- (void)show
-{
+- (void)show {
     [APP_DELEGATE_INSTANCE.window addSubview:self];
     
     WEAK_SELF(weakSelf);
     [UIView animateWithDuration:0.3f delay:ZERO_POINT options:UIViewAnimationOptionCurveEaseInOut animations:^{
         weakSelf.alpha = 1.0f;
         weakSelf.imageView.transform = CGAffineTransformIdentity;
-        weakSelf.enterButton.transform = CGAffineTransformIdentity;
         weakSelf.cancelButton.transform = CGAffineTransformIdentity;
     } completion:nil];
 }

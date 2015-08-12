@@ -120,15 +120,29 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
  *  收到登录通知，跳转到登录页面
  */
 - (void)shouldLogin {
+    [self shouldLoginWithParameter:nil];
+}
+
+/**
+ *  执行登录页跳转
+ *
+ *  @param parameter 登录参数
+ */
+- (void)shouldLoginWithParameter:(NSString *)parameter {
     WEAK_SELF(weakSelf);
     [self setHomePageNavigationBarWillHidden:NO];
     UINavigationController *loginViewNavigationController = [SCLoginViewController navigationInstance];
+    SCLoginViewController *loginViewController = (SCLoginViewController *)loginViewNavigationController.topViewController;
+    loginViewController.parameter = parameter;
     loginViewNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:loginViewNavigationController animated:YES completion:^{
         [weakSelf hideMenu];
     }];
 }
 
+/**
+ *  展示引导页
+ */
 - (void)showGuide {
     if ([self firstLaunch]) {
         SCGuideViewController *guideViewController = [SCGuideViewController instance];
@@ -141,6 +155,9 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
     }
 }
 
+/**
+ *  判断是否是第一次启动
+ */
 - (BOOL)firstLaunch {
     return ![[USER_DEFAULT objectForKey:kGuideKey] boolValue];
 }
@@ -315,6 +332,11 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
 
 - (void)shouldSupportPanGesture:(BOOL)support {
     _canSupportPanGesture = support;
+}
+
+#pragma mark - SCHomePageViewController Delegate
+- (void)operationPostionNeedLoginWithParameter:(NSString *)parameter {
+    [self shouldLoginWithParameter:parameter];
 }
 
 #pragma mark - SCChangeCarDataViewController Delegate

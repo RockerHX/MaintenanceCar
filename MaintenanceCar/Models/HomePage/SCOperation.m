@@ -11,8 +11,9 @@
 @implementation SCOperation
 
 + (NSDictionary *)replacedKeyFromPropertyName {
-    return @{@"pictureURL": @"pic_url",
-              @"needLogin": @"need_login"};
+    return @{@"giftImageULR": @"success",
+               @"pictureURL": @"pic_url",
+                @"needLogin": @"need_login"};
 }
 
 @end
