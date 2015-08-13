@@ -29,6 +29,7 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
 
 @implementation SCMainViewController {
     BOOL _canSupportPanGesture;
+    UIView *_preView;
 }
 
 #pragma mark - Init Methods
@@ -174,9 +175,11 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
         // 添加子视图
         [self addChildViewController:viewController];
         [self.view addSubview:viewController.view];
-        UIView *fromView = self.view.subviews[self.view.subviews.count-2];
+        UIView *fromView = self.view.subviews[self.view.subviews.count - 2];
         UIView *toView = viewController.view;
-        [UIView transitionFromView:fromView toView:toView duration:0.2f options:UIViewAnimationOptionTransitionCrossDissolve completion:nil];
+        [UIView transitionFromView:fromView toView:toView duration:0.2f options:UIViewAnimationOptionTransitionCrossDissolve completion:^(BOOL finished) {
+            _preView = fromView;
+        }];
     }
     @catch (NSException *exception) {
         NSLog(@"Main View Controller Add Sub View Controller Error:%@", exception.reason);
@@ -195,7 +198,7 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
         // 移除子视图
         WEAK_SELF(weakSelf);
         UIView *fromView = viewController.view;
-        UIView *toView = self.view.subviews[self.view.subviews.count-2];
+        UIView *toView = _preView;
         if (animation) {
             [UIView transitionFromView:fromView toView:toView duration:1.0f options:UIViewAnimationOptionTransitionCurlUp completion:^(BOOL finished) {
                 [weakSelf removeViewController:viewController];
@@ -212,8 +215,8 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
 }
 
 - (void)removeViewController:(UIViewController *)viewController {
-    [viewController removeFromParentViewController];
     [viewController.view removeFromSuperview];
+    [viewController removeFromParentViewController];
 }
 
 /**
