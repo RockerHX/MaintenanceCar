@@ -241,10 +241,11 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
     switch (type) {
         case SCHomePageServiceButtonTypeMaintenance: {
             SCUserInfo *userInfo = [SCUserInfo share];
-            if (userInfo.loginState)
+            if (userInfo.loginState) {
                 [self.navigationController pushViewController:[SCMaintenanceViewController instance] animated:YES];
-            else
+            } else {
                 [self showShoulLoginAlert];
+            }
             break;
         }
         case SCHomePageServiceButtonTypeWash: {

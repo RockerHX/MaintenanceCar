@@ -69,7 +69,7 @@
 + (SCDeviceModelType)currentModel {
     CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
     SCDeviceType deviceType = [self deviceType];
-    if ((deviceType == SCDeviceTypeIPhone) && (deviceType == SCDeviceTypeIPhoneSimulator)) {
+    if ((deviceType == SCDeviceTypeIPhone) || (deviceType == SCDeviceTypeIPhoneSimulator)) {
         if (fabs(screenHeight - 480.0f) < __DBL_EPSILON__) {
             return SCDeviceModelTypeIphone4_4S;
         } else if (fabs(screenHeight - 568.0f) < __DBL_EPSILON__) {
