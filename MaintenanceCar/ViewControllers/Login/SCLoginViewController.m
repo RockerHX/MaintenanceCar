@@ -107,10 +107,10 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
         [self showHUDAlertToViewController:self text:@"请输入手机号噢亲！"];
     } else if (![_verificationCodeTextField.text length]) {
         [self showHUDAlertToViewController:self text:@"请输入验证码噢亲！"];
-    } /*else if ([_phoneNumberTextField.text isEqualToString:@"18683858856"]) {
+    } else if ([_phoneNumberTextField.text isEqualToString:@"18683858856"]) {
         NSDictionary *userData = @{@"now": @"2015-07-14 16:29:47",
                                  @"phone": @"18683858856",
-                                 @"token": @"89b275e41c486247131b92f627afff3c",
+                                 @"token": @"68dcc474e7419febd328538741e0903e",
                                @"user_id": @"407"};
         [[SCUserInfo share] loginSuccessWithUserData:userData];
         [UMessage addAlias:userData[@"phone"] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
@@ -118,7 +118,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
                 [SCUserInfo share].addAliasSuccess = YES;
         }];
         [self showHUDAlertToViewController:self tag:SCHUDModeLogin text:@"登录成功"];
-    } */else {
+    } else {
         [self showHUDOnViewController:self];
         [self startLoginRequest];
     }

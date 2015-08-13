@@ -449,7 +449,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [[SCAppApiRequest manager] startMerchantDetailAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
-            _merchantDetail = [[SCMerchantDetail alloc] initWithDictionary:responseObject error:nil];
+            _merchantDetail = [[SCMerchantDetail alloc] initWithDictionary:responseObject[@"data"] error:nil];
             [weakSelf displayMerchantDetail];
             
             [weakSelf.tableView reloadData];
