@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *couponBgView;
 @property (weak, nonatomic) IBOutlet     UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet     UILabel *symbolLabel;
 @property (weak, nonatomic) IBOutlet     UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet     UILabel *promptLabel;
 @property (weak, nonatomic) IBOutlet     UILabel *validDateLabel;

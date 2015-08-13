@@ -111,7 +111,7 @@
                 case SCAppApiRequestErrorCodeNoError: {
                     [_coupons removeAllObjects];
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                        SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];
+                        SCCoupon *coupon = [SCCoupon objectWithKeyValues:obj];
                         [_coupons addObject:coupon];
                     }];
                     

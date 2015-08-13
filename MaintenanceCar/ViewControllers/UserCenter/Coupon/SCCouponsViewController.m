@@ -151,10 +151,9 @@ static NSString *const CouponNavControllerID = @"CouponsNavigationController";
                 case SCAppApiRequestErrorCodeNoError: {
                     [_coupons removeAllObjects];
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                        SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];
+                        SCCoupon *coupon = [SCCoupon objectWithKeyValues:obj];
                         [_coupons addObject:coupon];
                     }];
-                    
                     [weakSelf.tableView reloadData];
                 }
                     break;
@@ -185,7 +184,7 @@ static NSString *const CouponNavControllerID = @"CouponsNavigationController";
                     _codeField.text = @"";
                     [_coupons removeAllObjects];
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                        SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];
+                        SCCoupon *coupon = [SCCoupon objectWithKeyValues:obj];
                         [_coupons addObject:coupon];
                     }];
                     
