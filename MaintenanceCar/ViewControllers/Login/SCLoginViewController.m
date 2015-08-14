@@ -110,7 +110,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     } else if ([_phoneNumberTextField.text isEqualToString:@"18683858856"]) {
         NSDictionary *userData = @{@"now": @"2015-08-14 16:29:47",
                                  @"phone": @"18683858856",
-                                 @"token": @"68dcc474e7419febd328538741e0903e",
+                                 @"token": @"fe5e550895493fbf10b96908369b2781",
                                @"user_id": @"407"};
         [[SCUserInfo share] loginSuccessWithUserData:userData];
         [UMessage addAlias:userData[@"phone"] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
