@@ -27,6 +27,7 @@ typedef NS_ENUM(NSUInteger, SCUserCenterItemSection) {
 
 + (instancetype)instance;
 
+- (instancetype)reload;
 - (void)reloadCars;
 - (void)recordUserCarSelected:(NSInteger)index;
 

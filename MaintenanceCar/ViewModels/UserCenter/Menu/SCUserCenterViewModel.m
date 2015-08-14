@@ -74,6 +74,11 @@ static NSString *const kUserCarSelectedKey = @"kUserCarSelectedKey";
 }
 
 #pragma mark - Public Methods
+- (instancetype)reload {
+    _headerURL = [NSURL URLWithString:[SCUserInfo share].headURL];
+    return self;
+}
+
 - (void)reloadCars {
     __weak __typeof(self)weakSelf = self;
     [[SCUserInfo share] userCarsReuqest:^(SCUserInfo *userInfo, BOOL finish) {

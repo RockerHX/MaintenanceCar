@@ -26,6 +26,7 @@ typedef NS_ENUM(BOOL, SCLoginState) {
 @property (nonatomic, copy, readonly)  NSString *token;            // 用户令牌
 @property (nonatomic, copy, readonly)  NSString *serverDate;       // 服务器时间
 @property (nonatomic, copy, readonly)  NSString *ownerName;        // 车主名字
+@property (nonatomic, copy, readonly)  NSString *headURL;          // 车主头像
 @property (nonatomic, strong, readonly) NSArray *cars;             // 用户私家车集合
 @property (nonatomic, strong, readonly) NSArray *selectedItems;    // 已选保养项目
 

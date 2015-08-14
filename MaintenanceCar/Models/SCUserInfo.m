@@ -18,6 +18,7 @@ static NSString *const kPhoneNumberKey = @"kPhoneNumberKey";
 static NSString *const kUserTokenKey = @"kUserTokenKey";
 static NSString *const kTokenRefreshDateKey = @"kTokenRefreshDateKey";
 static NSString *const kOwnerNameKey = @"kOwnerNameKey";
+static NSString *const kHeaderURLKey = @"kHeaderURLKey";
 static NSString *const kUserCarsKey = @"kUserCarsKey";
 static NSString *const kAddAliasKey = @"kAddAliasKey";
 static NSString *const kReceiveMessageKey = @"kReceiveMessageKey";
@@ -68,6 +69,10 @@ typedef void(^STATE_BLOCK)(SCLoginState state);
 
 - (NSString *)ownerName {
     return self.loginState ? [USER_DEFAULT objectForKey:kOwnerNameKey] : @"";
+}
+
+- (NSString *)headURL {
+    return self.loginState ? [USER_DEFAULT objectForKey:kHeaderURLKey] : @"";
 }
 
 - (SCLoginState)loginState {
@@ -125,6 +130,7 @@ typedef void(^STATE_BLOCK)(SCLoginState state);
     [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"user_id"]] forKey:kUserIDKey];
     [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"phone"]] forKey:kPhoneNumberKey];
     [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"token"]] forKey:kUserTokenKey];
+    [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"head_img_url"]] forKey:kHeaderURLKey];
     [USER_DEFAULT setObject:[NSString stringWithFormat:@"%@", userData[@"now"]] forKey:kTokenRefreshDateKey];
     [USER_DEFAULT synchronize];
     

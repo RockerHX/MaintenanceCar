@@ -6,8 +6,10 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
+#import <SDWebImage/UIButton+WebCache.h>
 #import "SCUserView.h"
 #import "SCUserInfo.h"
+#import "SCUserCenterViewModel.h"
 
 @implementation SCUserView
 
@@ -25,12 +27,19 @@
 }
 
 - (void)viewConfig {
+    _header.clipsToBounds = YES;
     _header.layer.cornerRadius = _header.frame.size.width/2;
 }
 
 #pragma mark - Action
 - (IBAction)headerTap {
     [self tap];
+}
+
+#pragma mark - Public Methods
+- (void)refreshByViewModel:(SCUserCenterViewModel *)viewModel {
+    [_header sd_setImageWithURL:viewModel.headerURL forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:viewModel.placeHolderHeader]];
+    [_loginPromptLabel setText:viewModel.prompt];
 }
 
 #pragma mark - Private Methods

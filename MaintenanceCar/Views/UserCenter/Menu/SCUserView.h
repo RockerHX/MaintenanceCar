@@ -16,6 +16,8 @@
 
 @end
 
+@class SCUserCenterViewModel;
+
 @interface SCUserView : UIView
 
 @property (weak, nonatomic) IBOutlet       id  <SCUserViewDelegate>delegate;
@@ -25,5 +27,7 @@
 @property (weak, nonatomic) IBOutlet  UILabel *infoLabel;
 
 - (IBAction)headerTap;
+
+- (void)refreshByViewModel:(SCUserCenterViewModel *)viewModel;
 
 @end

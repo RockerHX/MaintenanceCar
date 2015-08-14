@@ -61,8 +61,7 @@ static CGFloat CellHeight = 44.0f;
 
 #pragma mark - Private Methods
 - (void)reloadData {
-    [_userView.header sd_setImageWithURL:_viewModel.headerURL forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:_viewModel.placeHolderHeader]];
-    [_userView.loginPromptLabel setText:_viewModel.prompt];
+    [_userView refreshByViewModel:[_viewModel reload]];
     [_carAmountLabel setText:[@(_viewModel.userCarItems.count-1) stringValue]];
     [_tableView setTableHeaderView:[SCUserInfo share].loginState ? _carAmountPromptView : nil];
     [_tableView reloadData];
