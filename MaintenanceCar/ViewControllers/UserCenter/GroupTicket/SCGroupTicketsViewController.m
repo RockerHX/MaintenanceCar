@@ -40,6 +40,10 @@ static NSString *const GroupTicketNavControllerID = @"GroupTicketsNavigationCont
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[个人中心] - 团购券"];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
     [self panGestureSupport:YES];
 }

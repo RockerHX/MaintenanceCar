@@ -173,12 +173,13 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
     @try {
         _canSupportPanGesture = YES;
         // 添加子视图
-        [self addChildViewController:viewController];
-        [self.view addSubview:viewController.view];
-        UIView *fromView = self.view.subviews[self.view.subviews.count - 2];
+        UIView *fromView = self.view.subviews[self.view.subviews.count - 1];
         UIView *toView = viewController.view;
+        WEAK_SELF(weakSelf);
         [UIView transitionFromView:fromView toView:toView duration:0.2f options:UIViewAnimationOptionTransitionCrossDissolve completion:^(BOOL finished) {
             _preView = fromView;
+            [weakSelf addChildViewController:viewController];
+            [weakSelf.view addSubview:viewController.view];
         }];
     }
     @catch (NSException *exception) {

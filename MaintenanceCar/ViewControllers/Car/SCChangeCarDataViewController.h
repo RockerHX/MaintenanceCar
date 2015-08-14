@@ -15,6 +15,7 @@
 
 @optional
 - (void)shouldShowMenu;
+- (void)shouldSupportPanGesture:(BOOL)support;
 - (void)userCarDataSaveSuccess:(UIViewController *)viewController;
 - (void)userCarDataDeleteSuccess:(UIViewController *)viewController;
 

@@ -28,8 +28,13 @@
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[个人中心] - 设置"];
     
-    [self panGestureSupport:YES];
     [self displayView];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self panGestureSupport:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

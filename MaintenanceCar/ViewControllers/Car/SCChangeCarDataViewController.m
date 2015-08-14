@@ -42,6 +42,25 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 }
 
 #pragma mark - View Controller Life Cycle
+- (void)viewWillAppear:(BOOL)animated {
+    // 用户行为统计，页面停留时间
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"[修改车辆数据]"];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self panGestureSupport:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    // 用户行为统计，页面停留时间
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"[修改车辆数据]"];
+    
+    [self panGestureSupport:NO];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -169,6 +188,12 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
         [weakSelf hideHUDOnViewController:weakSelf.navigationController];
         [weakSelf showHUDAlertToViewController:weakSelf.navigationController text:@"车辆删除失败，请重试！" delay:0.5f];
     }];
+}
+
+- (void)panGestureSupport:(BOOL)support {
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldSupportPanGesture:)]) {
+        [_delegate shouldSupportPanGesture:support];
+    }
 }
 
 #pragma mark - Text Field Delegate Methods

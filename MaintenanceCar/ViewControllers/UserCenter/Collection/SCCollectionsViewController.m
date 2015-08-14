@@ -35,6 +35,10 @@ static NSString *const CollectionNavControllerID = @"CollectionsNavigationContro
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[个人中心] - 收藏"];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
     [self panGestureSupport:YES];
 }

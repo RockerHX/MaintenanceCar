@@ -41,6 +41,11 @@ static NSString *const CouponNavControllerID = @"CouponsNavigationController";
     [MobClick beginLogPageView:@"[个人中心] - 优惠券"];
     
     [self startCouponsRequest];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
     [self panGestureSupport:YES];
 }
 
