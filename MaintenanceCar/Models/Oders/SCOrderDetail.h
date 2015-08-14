@@ -19,6 +19,7 @@
 
 @end
 
+
 @class SCCoupon;
 
 @interface SCOrderDetail : SCOrderBase

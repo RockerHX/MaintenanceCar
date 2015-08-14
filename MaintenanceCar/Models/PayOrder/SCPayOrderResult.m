@@ -15,8 +15,7 @@
 #define UN_SELECTED_CODE        @"0"
 
 #pragma mark - Init Methods
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self)
     {
@@ -27,53 +26,63 @@
 }
 
 #pragma mark - Setter And Getter Methods
-- (BOOL)priceConfirm
-{
+- (BOOL)priceConfirm {
     return _resultProductPrice ? YES : NO;
 }
 
-- (void)setCoupon:(SCCoupon *)coupon
-{
+- (void)setCoupon:(SCCoupon *)coupon {
     _coupon = coupon;
-    _resultDeductiblePrice = coupon.amount.doubleValue;
+    double amount = coupon.amount.doubleValue;
+    
+    switch (coupon.type) {
+        case SCCouponTypeFullCut: {
+            _resultDeductiblePrice = amount;
+            break;
+        }
+        case SCCouponTypeDiscount: {
+            _resultDeductiblePrice = amount * [self resultTotalPrice];
+            if (_resultDeductiblePrice > amount) {
+                
+            } else {
+                
+            }
+            break;
+        }
+        case SCCouponTypeFree: {
+            
+            break;
+        }
+    }
 }
 
-- (NSString *)couponCode
-{
+- (NSString *)couponCode {
     return _coupon ? _coupon.code : UN_SELECTED_CODE;
 }
 
-- (NSString *)totalPrice
-{
+- (NSString *)totalPrice {
     return [NSString stringWithFormat:@"%.2f", [self resultTotalPrice]];
 }
 
-- (NSString *)deductiblePrice
-{
+- (NSString *)deductiblePrice {
     return [NSString stringWithFormat:@"%.2f", _resultDeductiblePrice];
 }
 
-- (NSString *)payPrice
-{
+- (NSString *)payPrice {
     double payPrice = [self resultTotalPrice] - _resultDeductiblePrice;
     return [NSString stringWithFormat:@"%.2f", payPrice ? payPrice : 0];
 }
 
-- (NSString *)useCoupon
-{
+- (NSString *)useCoupon {
     return _resultDeductiblePrice ? @"Y" : @"N";
 }
 
 #pragma mark - Public Methods
-- (void)setResultProductPrice:(double)productPrice
-{
+- (void)setResultProductPrice:(double)productPrice {
     _resultProductPrice = productPrice;
 }
 
-- (BOOL)checkCouponCanUse
-{
-    if (self.totalPrice.doubleValue <= _coupon.needMin.doubleValue)
-    {
+- (BOOL)checkCouponCanUse {
+    if (self.totalPrice.doubleValue <= _coupon.needMin.doubleValue) {
         self.coupon = nil;
         return YES;
     }
@@ -81,8 +90,7 @@
 }
 
 #pragma mark - Private Methods
-- (double)resultTotalPrice
-{
+- (double)resultTotalPrice {
     return (_resultProductPrice * _purchaseCount);
 }
 

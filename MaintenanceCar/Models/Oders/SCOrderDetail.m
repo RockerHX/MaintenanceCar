@@ -8,18 +8,17 @@
 
 #import "SCOrderDetail.h"
 
-@implementation SCOrderDetailProgress
 
+@implementation SCOrderDetailProgress
 @end
+
 
 @implementation SCOrderDetail
 
 #pragma mark - Init Methods
-- (instancetype)initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err
-{
+- (instancetype)initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err{
     self = [super initWithDictionary:dict error:err];
-    if (self)
-    {
+    if (self){
         NSString *pricePrompt = [_price stringByAppendingString:@"元"];
         _pricePrompt = _isPay ? pricePrompt : ([_price doubleValue] ? pricePrompt : @"待确定");
     }
@@ -27,8 +26,7 @@
 }
 
 #pragma mark - Class Methods
-+ (JSONKeyMapper *)keyMapper
-{
++ (JSONKeyMapper *)keyMapper {
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:[self baseKeyMapper]];
     [dic addEntriesFromDictionary:@{@"create_time": @"orderDate",
                                     @"arrive_time": @"arriveDate",
