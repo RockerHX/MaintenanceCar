@@ -108,7 +108,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     } else if (![_verificationCodeTextField.text length]) {
         [self showHUDAlertToViewController:self text:@"请输入验证码噢亲！"];
     } else if ([_phoneNumberTextField.text isEqualToString:@"18683858856"]) {
-        NSDictionary *userData = @{@"now": @"2015-07-14 16:29:47",
+        NSDictionary *userData = @{@"now": @"2015-08-14 16:29:47",
                                  @"phone": @"18683858856",
                                  @"token": @"68dcc474e7419febd328538741e0903e",
                                @"user_id": @"407"};
