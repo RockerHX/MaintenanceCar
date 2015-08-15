@@ -221,7 +221,6 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                 NSString *statusMessage = responseObject[@"status_message"];
                 switch (statusCode) {
                     case SCAppApiRequestErrorCodeNoError: {
-                        [_payResult checkCouponCanUse];
                         [_coupons removeAllObjects];
                         [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                             SCCoupon *coupon = [SCCoupon objectWithKeyValues:obj];
@@ -497,6 +496,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 - (void)shouldEnterCouponCode {
     SCCouponsViewController *couponsViewController = [SCCouponsViewController instance];
     couponsViewController.delegate = self;
+    couponsViewController.payEnter = YES;
     [self.navigationController pushViewController:couponsViewController animated:YES];
 }
 

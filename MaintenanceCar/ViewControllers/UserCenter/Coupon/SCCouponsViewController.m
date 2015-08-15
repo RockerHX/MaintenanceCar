@@ -80,6 +80,14 @@ static NSString *const CouponNavControllerID = @"CouponsNavigationController";
     _enterCodeBGView.layer.shadowRadius = 1.0f;
 }
 
+#pragma mark - Setter And Getter
+- (void)setPayEnter:(BOOL)payEnter {
+    _payEnter = payEnter;
+    if (_payEnter) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"BackButtonIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(popToPreviousViewController)];
+    }
+}
+
 #pragma mark - Action
 - (IBAction)menuButtonPressed {
     if (_delegate && [_delegate respondsToSelector:@selector(shouldShowMenu)]) {
@@ -141,6 +149,10 @@ static NSString *const CouponNavControllerID = @"CouponsNavigationController";
 }
 
 #pragma mark - Private Methods
+- (void)popToPreviousViewController {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)startCouponsRequest {
     WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self];

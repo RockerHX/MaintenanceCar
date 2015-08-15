@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic, weak) id  <SCCouponsViewControllerDelegate>delegate;
+@property (nonatomic, assign) BOOL payEnter;
 
 - (IBAction)menuButtonPressed;
 - (IBAction)exchangeButtonPressed;

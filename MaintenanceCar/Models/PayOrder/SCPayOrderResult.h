@@ -15,8 +15,7 @@ typedef NS_ENUM(NSUInteger, SCPayOrderment) {
     SCPayOrdermentAliPay
 };
 
-@interface SCPayOrderResult : NSObject
-{
+@interface SCPayOrderResult : NSObject {
     double _resultProductPrice;
     double _resultDeductiblePrice;
 }
@@ -33,6 +32,5 @@ typedef NS_ENUM(NSUInteger, SCPayOrderment) {
 @property (nonatomic, strong, readonly) NSString *useCoupon;
 
 - (void)setResultProductPrice:(double)productPrice;
-- (BOOL)checkCouponCanUse;
 
 @end

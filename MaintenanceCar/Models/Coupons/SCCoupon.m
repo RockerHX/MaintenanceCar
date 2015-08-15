@@ -21,15 +21,16 @@
     switch (coupon.type) {
         case SCCouponTypeFullCut: {
             coupon.showSymbol = YES;
+            coupon.amountPrompt = coupon.amount;
             break;
         }
         case SCCouponTypeDiscount: {
             NSInteger discount = [coupon.amount doubleValue] * 10;
-            coupon.amount = [NSString stringWithFormat:@"%zd折", discount];
+            coupon.amountPrompt = [NSString stringWithFormat:@"%zd折", discount];
             break;
         }
         case SCCouponTypeFree: {
-            coupon.amount = @"免费";
+            coupon.amountPrompt = @"免费";
             break;
         }
     }
@@ -40,6 +41,7 @@
     return @{@"type": @"coupon_type",
                @"ID": @"coupon_id",
            @"prompt": @"description",
+        @"amountMax": @"amount_max",
           @"needMin": @"need_min",
         @"validDate": @"expiration"};
 }

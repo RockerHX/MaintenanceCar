@@ -29,7 +29,7 @@
 - (CGFloat)displayCellWithCoupon:(SCCoupon *)coupon {
     _titleLabel.text     = coupon.title;
     _symbolLabel.hidden  = !coupon.showSymbol;
-    _amountLabel.text    = coupon.amount;
+    _amountLabel.text    = coupon.amountPrompt;
     _promptLabel.text    = coupon.prompt;
     _validDateLabel.text = coupon.validDate;
     return [self layoutSizeFittingSize];
