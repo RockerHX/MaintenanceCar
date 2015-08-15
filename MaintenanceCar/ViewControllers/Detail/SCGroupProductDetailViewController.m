@@ -18,36 +18,33 @@
 #import "SCCommentsViewController.h"
 #import "SCReservationViewController.h"
 
-@interface SCGroupProductDetailViewController () <SCBuyGroupProductCellDelegate, SCGroupProductMerchantCellDelegate>
-{
+@interface SCGroupProductDetailViewController () <SCBuyGroupProductCellDelegate, SCGroupProductMerchantCellDelegate> {
     SCGroupProductDetail *_detail;
+    
+    SCBuyGroupProductCell *_productCell;
+    SCGroupProductMerchantCell *_merchantCell;
+    SCGroupProductDetailCell *_detailCell;
+    SCCommentCell *_commentCell;
 }
-@property (weak, nonatomic)      SCBuyGroupProductCell *productCell;
-@property (weak, nonatomic) SCGroupProductMerchantCell *merchantCell;
-@property (weak, nonatomic)   SCGroupProductDetailCell *detailCell;
-@property (weak, nonatomic)              SCCommentCell *commentCell;
 
 @end
 
 @implementation SCGroupProductDetailViewController
 
 #pragma mark - View Controller Life Cycle
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[团购] - 团购详情"];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[团购] - 团购详情"];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initConfig];
@@ -55,159 +52,137 @@
 }
 
 #pragma mark - Init Methods
-+ (instancetype)instance
-{
++ (instancetype)instance {
     return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameDetail];
 }
 
 #pragma mark - Config Methods
-- (void)initConfig
-{
+- (void)initConfig {
 }
 
-- (void)viewConfig
-{
+- (void)viewConfig {
     [self.tableView reLayoutHeaderView];
     [self startGroupProductDetailRequest];
 }
 
 #pragma mark - Table View Data Source Methods
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return _detail ? 5 : Zero;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _detail ? ((section == 4) ? _detail.comments.count : 1) : Zero;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = nil;
-    if (_detail)
-    {
-        switch (indexPath.section)
-        {
-            case 1:
-            {
+    if (_detail) {
+        switch (indexPath.section) {
+            case 1: {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell" forIndexPath:indexPath];
                 (((SCGroupProductMerchantCell *)cell)).delegate = self;
                 [(SCGroupProductMerchantCell *)cell displayCellWithDetial:_detail];
-            }
                 break;
-            case 2:
-            {
+            }
+            case 2: {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCGroupProductDetailCell" forIndexPath:indexPath];
                 [(SCGroupProductDetailCell *)cell displayCellWithDetail:_detail];
-            }
                 break;
-            case 3:
-            {
+            }
+            case 3: {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCShowMoreCell" forIndexPath:indexPath];
                 ((SCShowMoreCell *)cell).count = _detail.comments_num;
-            }
                 break;
-            case 4:
-            {
-                if (_detail.comments.count)
-                {
+            }
+            case 4: {
+                if (_detail.comments.count) {
                     cell = [tableView dequeueReusableCellWithIdentifier:@"SCCommentCell" forIndexPath:indexPath];
                     [(SCCommentCell *)cell displayCellWithComment:_detail.comments[indexPath.row]];
-                }
-                else
+                } else {
                     cell = [tableView dequeueReusableCellWithIdentifier:@"SCNoneCommentCell" forIndexPath:indexPath];
-            }
+                }
                 break;
-                
-            default:
-            {
+            }
+            default: {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCBuyGroupProductCell" forIndexPath:indexPath];
-                if (_price)
+                if (_price) {
                     [(SCBuyGroupProductCell *)cell displayCellWithPrice:_price];
-                else
+                } else {
                     [(SCBuyGroupProductCell *)cell displayCellWithDetail:_detail];
-            }
+                }
                 break;
+            }
         }
     }
-    
     return cell;
 }
 
 #pragma mark - Table View Delegate Methods
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat height = ZERO_POINT;
     CGFloat separatorHeight = 1.0f;
-    if (_detail)
-    {
-        switch (indexPath.section)
-        {
-            case 1:
-            {
-                if(!_merchantCell)
+    if (_detail) {
+        switch (indexPath.section) {
+            case 0: {
+                if(!_productCell) {
+                    _productCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCBuyGroupProductCell"];
+                }
+                if (_price) {
+                    [_productCell displayCellWithPrice:_price];
+                } else {
+                    [_productCell displayCellWithDetail:_detail];
+                }
+                height = [_productCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+                break;
+            }
+            case 1: {
+                if(!_merchantCell) {
                     _merchantCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductMerchantCell"];
+                }
                 [_merchantCell displayCellWithDetial:_detail];
                 height = [_merchantCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-            }
                 break;
-            case 2:
-            {
-                if(!_detailCell)
+            }
+            case 2: {
+                if(!_detailCell) {
                     _detailCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCGroupProductDetailCell"];
+                }
                 [_detailCell displayCellWithDetail:_detail];
                 height = [_detailCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-            }
                 break;
-            case 4:
-            {
-                if(!_commentCell)
+            }
+            case 4: {
+                if(!_commentCell) {
                     _commentCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCCommentCell"];
+                }
                 [_commentCell displayCellWithComment:_detail.comments[indexPath.row]];
                 height = [_commentCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-            }
                 break;
-            case 0:
-            {
-                if(!_productCell)
-                    _productCell = [self.tableView dequeueReusableCellWithIdentifier:@"SCBuyGroupProductCell"];
-                if (_price)
-                    [_productCell displayCellWithPrice:_price];
-                else
-                    [_productCell displayCellWithDetail:_detail];
-                height = [_productCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
             }
-                break;
-                
             default:
                 return 43.0f;
                 break;
         }
     }
-    
     return height + separatorHeight;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    if (section == 1 || section == 2)
-        return 30.0f;
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 1 || section == 2) return 30.0f;
     return ZERO_POINT;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSString *text  = @"";
-    switch (section)
-    {
-        case 1:
+    switch (section) {
+        case 1: {
             text = @"商家信息";
             break;
-        case 2:
+        }
+        case 2: {
             text = _price ? @"商品详情" : @"团购详情";
             break;
-            
+        }
         default:
             return nil;
             break;
@@ -221,12 +196,10 @@
     return view;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if ([cell isKindOfClass:[SCShowMoreCell class]])
-    {
+    if ([cell isKindOfClass:[SCShowMoreCell class]]) {
         SCCommentsViewController *commentListViewController = [SCCommentsViewController instance];
         commentListViewController.companyID = _detail.company_id;
         [self.navigationController pushViewController:commentListViewController animated:YES];
@@ -234,17 +207,13 @@
 }
 
 #pragma mark - Private Methods
-- (void)startGroupProductDetailRequest
-{
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
+- (void)startGroupProductDetailRequest {
     WEAK_SELF(weakSelf);
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSDictionary *parameters = @{@"product_id": _price ? _price.product_id : _product.product_id};
     [[SCAppApiRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
-        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
-        {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
             _detail = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
-            
             [weakSelf dispalyDetialView];
             [weakSelf.tableView reloadData];
         }
@@ -254,28 +223,24 @@
     }];
 }
 
-- (void)dispalyDetialView
-{
+- (void)dispalyDetialView {
     _merchanImagesView.defaultImage = [UIImage imageNamed:@"MerchantImageDefault"];
     _merchanImagesView.images = @[[NSString stringWithFormat:@"%@%@", MerchantImageDoMain, _detail.img1 ? _detail.img1 : [NSString stringWithFormat:@"%@_1.jpg", _detail.company_id]]];
     [_merchanImagesView show:nil finished:nil];
 }
 
 #pragma mark - SCGroupProductCellDelegate Methods
-- (void)shouldShowBuyProductView
-{
-    if ([SCUserInfo share].loginState)
-    {
+- (void)shouldShowBuyProductView {
+    if ([SCUserInfo share].loginState) {
         SCOrderPayViewController *payOrderViewController = [SCOrderPayViewController instance];
         payOrderViewController.groupProduct = _detail;
         [self.navigationController pushViewController:payOrderViewController animated:YES];
-    }
-    else
+    } else {
         [self showShoulLoginAlert];
+    }
 }
 
-- (void)shouldReserveProduct
-{
+- (void)shouldReserveProduct {
     // 跳转到预约页面
     [[SCUserInfo share] removeItems];
     SCReservationViewController *reservationViewController = [SCReservationViewController instance];
@@ -287,22 +252,17 @@
 }
 
 #pragma mark - SCGroupProductMerchantCell Delegate Methods
-- (void)shouldCallToMerchant
-{
-    if (_detail.telephone.length)
-    {
+- (void)shouldCallToMerchant {
+    if (_detail.telephone.length) {
         NSArray *phones = [_detail.telephone componentsSeparatedByString:@" "];
         UIAlertView *alertView = nil;
-        if (phones.count > 1)
-        {
+        if (phones.count > 1) {
             alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商家电话"
                                                    message:nil
                                                   delegate:self
                                          cancelButtonTitle:@"取消"
                                          otherButtonTitles:[phones firstObject], [phones lastObject], nil];
-        }
-        else
-        {
+        } else {
             alertView = [[UIAlertView alloc] initWithTitle:@"是否拨打商家电话"
                                                    message:nil
                                                   delegate:self
@@ -315,20 +275,18 @@
 }
 
 #pragma mark - Alert View Delegate Methods
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView.tag)
-    {
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag) {
         NSArray *phones = [_detail.telephone componentsSeparatedByString:@" "];
-        if (buttonIndex == 1)
+        if (buttonIndex == 1) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones firstObject]]]];
-        else if (buttonIndex == 2)
+        } else if (buttonIndex == 2) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", [phones lastObject]]]];
-    }
-    else
-    {
-        if (buttonIndex != alertView.cancelButtonIndex)
+        }
+    } else {
+        if (buttonIndex != alertView.cancelButtonIndex) {
             [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
+        }
     }
 }
 
