@@ -16,28 +16,29 @@
 @implementation SCOrderDetail
 
 #pragma mark - Init Methods
-- (instancetype)initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err{
-    self = [super initWithDictionary:dict error:err];
-    if (self){
-        NSString *pricePrompt = [_price stringByAppendingString:@"元"];
-        _pricePrompt = _isPay ? pricePrompt : ([_price doubleValue] ? pricePrompt : @"待确定");
-    }
-    return self;
++ (instancetype)objectWithKeyValues:(id)keyValues {
+    [SCOrderDetail setupObjectClassInArray:^NSDictionary *{
+        return @{@"processes": @"SCOrderDetailProgress"};
+    }];
+    SCOrderDetail *detail = [super objectWithKeyValues:keyValues];
+    NSString *pricePrompt = [detail.price stringByAppendingString:@"元"];
+    detail.pricePrompt = detail.isPay ? pricePrompt : ([detail.price doubleValue] ? pricePrompt : @"待确定");
+    return detail;
 }
 
 #pragma mark - Class Methods
-+ (JSONKeyMapper *)keyMapper {
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:[self baseKeyMapper]];
-    [dic addEntriesFromDictionary:@{@"create_time": @"orderDate",
-                                    @"arrive_time": @"arriveDate",
-                                   @"reserve_name": @"reserveUser",
-                                  @"reserve_phone": @"reservePhone",
-                                        @"content": @"remark",
-                                     @"can_cancel": @"canCancel",
-                                        @"can_pay": @"canPay",
-                                         @"is_pay": @"isPay",
-                                        @"process": @"processes"}];
-    return [[JSONKeyMapper alloc] initWithDictionary:dic];
++ (NSDictionary *)replacedKeyFromPropertyName {
+    NSMutableDictionary *propertyNames = [super replacedKeyFromPropertyName].mutableCopy;
+    [propertyNames addEntriesFromDictionary:@{@"orderDate": @"create_time",
+                                             @"arriveDate": @"arrive_time",
+                                            @"reserveUser": @"reserve_name",
+                                           @"reservePhone": @"reserve_phone",
+                                                 @"remark": @"content",
+                                              @"canCancel": @"can_cancel",
+                                                 @"canPay": @"can_pay",
+                                                  @"isPay": @"is_pay",
+                                              @"processes": @"process"}];
+    return [NSDictionary dictionaryWithDictionary:propertyNames];
 }
 
 @end

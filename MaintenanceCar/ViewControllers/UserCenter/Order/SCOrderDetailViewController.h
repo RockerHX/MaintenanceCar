@@ -17,8 +17,7 @@
 
 @class SCOrderDetail;
 
-@interface SCOrderDetailViewController : SCListViewController
-{
+@interface SCOrderDetailViewController : SCListViewController {
     BOOL          _needRefresh;
     SCOrderDetail *_detail;
 }

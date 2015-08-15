@@ -24,8 +24,7 @@ typedef NS_ENUM(NSInteger, SCOrdersReuqest) {
 @class SCOrder;
 @class SCOrderCell;
 
-@interface SCOrdersViewController : SCNavigationTableViewController <UITableViewDataSource, UITableViewDelegate>
-{
+@interface SCOrdersViewController : SCNavigationTableViewController <UITableViewDataSource, UITableViewDelegate> {
     SCOrder         *_order;
     SCOrderCell     *_orderCell;
     SCOrdersReuqest  _ordersRequest;

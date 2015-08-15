@@ -10,6 +10,7 @@
 
 @implementation SCCoupon
 
+#pragma mark - Init Methods
 + (instancetype)objectWithKeyValues:(id)keyValues {
     SCCoupon *coupon = [super objectWithKeyValues:keyValues];
     double amount = [coupon.amount doubleValue];
@@ -37,6 +38,7 @@
     return coupon;
 }
 
+#pragma mark - Class Methods
 + (NSDictionary *)replacedKeyFromPropertyName {
     return @{@"type": @"coupon_type",
                @"ID": @"coupon_id",

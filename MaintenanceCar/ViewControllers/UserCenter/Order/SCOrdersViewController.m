@@ -72,23 +72,27 @@ static NSString *const OderNavControllerID = @"OrdersNavigationController";
 #pragma mark - Setter And Getter Methods
 - (void)setOffset:(NSInteger)offset {
     switch (_ordersRequest) {
-        case SCOrdersReuqestProgress:
+        case SCOrdersReuqestProgress: {
             _progressOffset = offset;
             break;
-        case SCOrdersReuqestFinished:
+        }
+        case SCOrdersReuqestFinished: {
             _finishedOffset = offset;
             break;
+        }
     }
 }
 
 - (NSInteger)offset {
     switch (_ordersRequest) {
-        case SCOrdersReuqestProgress:
+        case SCOrdersReuqestProgress: {
             return _progressOffset;
             break;
-        case SCOrdersReuqestFinished:
+        }
+        case SCOrdersReuqestFinished: {
             return _finishedOffset;
             break;
+        }
     }
 }
 
@@ -218,20 +222,17 @@ static NSString *const OderNavControllerID = @"OrdersNavigationController";
                 if (self.requestType == SCRequestRefreshTypeDropDown)
                     [self clearListData];
                 [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    SCOrder *order = [[SCOrder alloc] initWithDictionary:obj error:nil];
+                    SCOrder *order = [SCOrder objectWithKeyValues:obj];
                     [[self dataList] addObject:order];
                 }];
                 
                 self.offset += SearchLimit;               // 偏移量请求参数递增
                 [self addRefreshHeader];
-                if ([self dataList].count)
-                {
+                if ([self dataList].count) {
                     self.tableView.hidden = NO;
                     self.promptView.hidden = YES;
                     [self displayRefreshFooter];
-                }
-                else
-                {
+                } else {
                     self.tableView.hidden = YES;
                     self.promptView.hidden = NO;
                     [self removeRefreshFooter];

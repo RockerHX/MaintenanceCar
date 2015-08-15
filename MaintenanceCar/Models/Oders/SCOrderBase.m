@@ -11,21 +11,17 @@
 @implementation SCOrderBase
 
 #pragma mark - Class Methods
-+ (BOOL)propertyIsOptional:(NSString*)propertyName {
-    return YES;
-}
-
-+ (NSDictionary *)baseKeyMapper; {
-    return @{@"reserve_id": @"reserveID",
-             @"company_id": @"companyID",
-         @"car_model_name": @"carModelName",
-              @"type_name": @"serviceName",
-           @"company_name": @"merchantName",
-      @"company_telephone": @"merchantTelphone"};
++ (NSDictionary *)replacedKeyFromPropertyName {
+    return @{@"reserveID": @"reserve_id",
+             @"companyID": @"company_id",
+          @"carModelName": @"car_model_name",
+           @"serviceName": @"type_name",
+          @"merchantName": @"company_name",
+      @"merchantTelphone": @"company_telephone"};
 }
 
 #pragma mark - Setter And Getter Methods
-- (NSString<Ignore> *)typeImageName {
+- (NSString *)typeImageName {
     NSString *imageName;
     NSInteger type = [_type integerValue];
     switch (type) {
