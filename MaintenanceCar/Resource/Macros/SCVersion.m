@@ -88,7 +88,7 @@
 + (BOOL)isIPhone5SPrior {
     CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
     SCDeviceType deviceType = [self deviceType];
-    if ((deviceType == SCDeviceTypeIPhone) && (deviceType == SCDeviceTypeIPhoneSimulator)) {
+    if ((deviceType == SCDeviceTypeIPhone) || (deviceType == SCDeviceTypeIPhoneSimulator)) {
         if ((fabs(screenHeight - 480.0f) < __DBL_EPSILON__) || (fabs(screenHeight - 568.0f) < __DBL_EPSILON__)) return YES;
     }
     return NO;

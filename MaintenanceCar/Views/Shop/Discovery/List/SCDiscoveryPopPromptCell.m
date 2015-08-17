@@ -12,8 +12,7 @@
 @implementation SCDiscoveryPopPromptCell
 
 #pragma mark - Setter And Getter Methods
-- (void)setFrame:(CGRect)frame
-{
+- (void)setFrame:(CGRect)frame {
     frame.origin.x = frame.origin.x + PopCellOffset;
     frame.origin.y = frame.origin.y - CellOffset;
     frame.size.width = frame.size.width - PopCellOffset*2;
@@ -23,8 +22,7 @@
 
 #pragma mark - Draw Methods
 #define CurveOffsetPointX   PopCellDisplacment*0.75
-- (void)drawRect:(CGRect)rect
-{
+- (void)drawRect:(CGRect)rect {
     CGFloat  width = rect.size.width;
     CGFloat  height = rect.size.height;
     UIColor *color = [UIColor whiteColor];
@@ -45,17 +43,13 @@
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithPrompt:(NSString *)prompt openUp:(BOOL)openUp canPop:(BOOL)canPop
-{
+- (void)displayCellWithPrompt:(NSString *)prompt openUp:(BOOL)openUp canPop:(BOOL)canPop {
     _promptLabel.text = prompt;
-    if (!canPop)
-    {
+    if (!canPop) {
         _arrowIcon.hidden = YES;
         _centerXConstraint.constant = Zero;
         return;
-    }
-    else
-    {
+    } else {
         _centerXConstraint.constant = 5.0f;
         _arrowIcon.hidden = NO;
     }
