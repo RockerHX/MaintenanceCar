@@ -21,8 +21,7 @@
 
 @end
 
-@interface SCOrderDetailSummaryCell : SCOrderBaseCell
-{
+@interface SCOrderDetailSummaryCell : SCOrderBaseCell {
     SCOrderDetail *_detail;
 }
 

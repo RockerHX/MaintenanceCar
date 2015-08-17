@@ -17,6 +17,7 @@
 #import "SCOrderPayViewController.h"
 #import "SCCommentsViewController.h"
 #import "SCReservationViewController.h"
+#import "SCMerchantDetailViewController.h"
 
 @interface SCGroupProductDetailViewController () <SCBuyGroupProductCellDelegate, SCGroupProductMerchantCellDelegate> {
     SCGroupProductDetail *_detail;
@@ -199,7 +200,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if ([cell isKindOfClass:[SCShowMoreCell class]]) {
+    if ([cell isKindOfClass:[SCGroupProductMerchantCell class]]) {
+        SCMerchantDetailViewController *merchantDetailViewController = [SCMerchantDetailViewController instance];
+        merchantDetailViewController.merchant = [[SCMerchant alloc] initWithMerchantName:_detail.name companyID:_detail.company_id];
+        merchantDetailViewController.canSelectedReserve = YES;
+        [self.navigationController pushViewController:merchantDetailViewController animated:YES];
+    } else if ([cell isKindOfClass:[SCShowMoreCell class]]) {
         SCCommentsViewController *commentListViewController = [SCCommentsViewController instance];
         commentListViewController.companyID = _detail.company_id;
         [self.navigationController pushViewController:commentListViewController animated:YES];
