@@ -25,7 +25,9 @@ typedef NS_ENUM(NSInteger, SCAppApiRequestErrorCode) {
     SCAppApiRequestErrorCodeListNotFoundMore          = 4008,
     // Collection
     SCAppApiRequestErrorCodeCancelCollectionFailure   = 4012,
-    SCAppApiRequestErrorCodeCollectionFailure         = 4013
+    SCAppApiRequestErrorCodeCollectionFailure         = 4013,
+    // Car
+    SCAppApiRequestErrorCodeUserHaveNotCars           = 4302
 };
 
 

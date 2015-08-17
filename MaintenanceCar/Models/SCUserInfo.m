@@ -171,7 +171,7 @@ typedef void(^STATE_BLOCK)(SCLoginState state);
     [USER_DEFAULT synchronize];
 }
 
-- (void)saveUserCarsWithData:(NSArray *)userCars {
+- (void)saveUserCars:(NSArray *)userCars {
     @try {
         [USER_DEFAULT setObject:userCars forKey:kUserCarsKey];
         [USER_DEFAULT synchronize];
@@ -183,6 +183,13 @@ typedef void(^STATE_BLOCK)(SCLoginState state);
         [self load];
         if (_block) _block(self, YES);
     }
+}
+
+- (void)clearUserCars:(NSArray *)userCars {
+    [USER_DEFAULT removeObjectForKey:kUserCarsKey];
+    [USER_DEFAULT synchronize];
+    [self load];
+    if (_block) _block(self, YES);
 }
 
 - (void)stateChange:(void(^)(SCLoginState state))block {
@@ -197,8 +204,11 @@ typedef void(^STATE_BLOCK)(SCLoginState state);
         [[SCAppApiRequest manager] startGetUserCarsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
                 NSInteger statusCode = [responseObject[@"status_code"] integerValue];
+                NSArray *userCars = responseObject[@"data"];
                 if (statusCode == SCAppApiRequestErrorCodeNoError) {
-                    [weakSelf saveUserCarsWithData:responseObject[@"data"]];
+                    [weakSelf saveUserCars:userCars];
+                } else if (statusCode == SCAppApiRequestErrorCodeUserHaveNotCars) {
+                    [weakSelf clearUserCars:userCars];
                 } else {
                     if (_block) _block(weakSelf, NO);
                 }
