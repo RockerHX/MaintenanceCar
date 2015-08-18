@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
-#import "JSONModel.h"
+#import <MJExtension/MJExtension.h>
 
 typedef NS_ENUM(NSInteger, SCGroupTicketState) {
     SCGroupTicketStateUnUse,
@@ -19,25 +19,26 @@ typedef NS_ENUM(NSInteger, SCGroupTicketState) {
     SCGroupTicketStateUnknown
 };
 
-@interface SCGroupTicket : JSONModel
+@interface SCGroupTicket : NSObject
 
-@property (nonatomic, strong) NSString <Optional>*group_ticket_id;
-@property (nonatomic, strong) NSString <Optional>*company_id;
-@property (nonatomic, strong) NSString <Optional>*code;
-@property (nonatomic, strong) NSString <Optional>*product_id;
-@property (nonatomic, strong) NSString <Optional>*limit_begin;
-@property (nonatomic, strong) NSString <Optional>*limit_end;
-@property (nonatomic, strong) NSString <Optional>*user_id;
-@property (nonatomic, strong) NSString <Optional>*type;
-@property (nonatomic, strong) NSString <Optional>*title;
-@property (nonatomic, strong) NSString <Optional>*sell_count;
-@property (nonatomic, strong) NSString <Optional>*status;
-@property (nonatomic, strong) NSString <Optional>*final_price;
-@property (nonatomic, strong) NSString <Optional>*total_price;
-@property (nonatomic, strong) NSString <Optional>*company_name;
-@property (nonatomic, strong) NSString <Optional>*now;
+@property (nonatomic, copy) NSString *ID;
+@property (nonatomic, copy) NSString *companyID;
+@property (nonatomic, copy) NSString *code;
+@property (nonatomic, copy) NSString *productID;
+@property (nonatomic, copy) NSString *limitBegin;
+@property (nonatomic, copy) NSString *limitEnd;
+@property (nonatomic, copy) NSString *userID;
+@property (nonatomic, copy) NSString *reserveID;
+@property (nonatomic, copy) NSString *type;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *sellCount;
+@property (nonatomic, copy) NSString *status;
+@property (nonatomic, copy) NSString *finalPrice;
+@property (nonatomic, copy) NSString *totalPrice;
+@property (nonatomic, copy) NSString *companyName;
+@property (nonatomic, copy) NSString *now;
 
-@property (nonatomic, assign, readonly) SCGroupTicketState state;
+@property (nonatomic, assign) SCGroupTicketState state;
 
 - (BOOL)expired;
 - (NSString *)expiredPrompt;

@@ -16,9 +16,9 @@
     [super displayCellWithTicket:ticket index:index];
     
     _productNameLabel.text  = [ticket.title stringByAppendingString:@":"];
-    _merchantNameLabel.text = ticket.company_name;
-    _ticketPriceLabel.text  = ticket.final_price;
-    _productPriceLabel.text = ticket.total_price;
+    _merchantNameLabel.text = ticket.companyName;
+    _ticketPriceLabel.text  = ticket.finalPrice;
+    _productPriceLabel.text = ticket.totalPrice;
     _ticketStateLabel.text  = [self codeStateWithTicket:ticket.state];
     
     _codeLine.hidden = ((ticket.state == SCGroupTicketStateUnUse) || (ticket.state == SCGroupTicketStateReserved));

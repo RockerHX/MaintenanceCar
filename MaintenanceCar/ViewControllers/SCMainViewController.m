@@ -58,7 +58,6 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
     
     // 监听登录通知，收到通知会触发页面跳转方法
     [NOTIFICATION_CENTER addObserver:self selector:@selector(shouldLogin) name:kUserNeedLoginNotification object:nil];
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(shouludShowGroupTicketReservation) name:kShowTicketReservationNotification object:nil];
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)]];
 }
 
@@ -250,10 +249,6 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
             break;
         }
     }
-}
-
-- (void)shouludShowGroupTicketReservation {
-    [self shouldShowViewControllerOnRow:SCUserCenterMenuRowOrder];
 }
 
 #pragma mark - SCGuideViewController Delegate

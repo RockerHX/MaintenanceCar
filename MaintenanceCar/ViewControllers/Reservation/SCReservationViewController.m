@@ -150,8 +150,8 @@
                                  @"content": _remarkTextField.text,
                                     @"time": _reservationDate,
                              @"user_car_id": _selectedCarID,
-                              @"product_id": (_groupTicket ? _groupTicket.product_id : (_quotedPrice ? _quotedPrice.product_id : @"")),
-                         @"group_ticket_id": (_groupTicket ? _groupTicket.group_ticket_id : @""),
+                              @"product_id": (_groupTicket ? _groupTicket.productID : (_quotedPrice ? _quotedPrice.product_id : @"")),
+                         @"group_ticket_id": (_groupTicket ? _groupTicket.ID : @""),
                                    @"price": (_quotedPrice ? _quotedPrice.final_price : @"")};
     [[SCAppApiRequest manager] startMerchantReservationAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];

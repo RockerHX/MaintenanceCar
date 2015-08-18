@@ -462,7 +462,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                 case SCAppApiRequestErrorCodeNoError: {
                     [self restoreInitState];
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                        SCGroupTicket *ticket = [[SCGroupTicket alloc] initWithDictionary:obj error:nil];
+                        SCGroupTicket *ticket = [SCGroupTicket objectWithKeyValues:obj];
                         [_tickets addObject:ticket];
                     }];
                     

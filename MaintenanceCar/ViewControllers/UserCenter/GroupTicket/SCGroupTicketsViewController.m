@@ -10,6 +10,7 @@
 #import "SCGroupTicketCell.h"
 #import "SCGroupTicketDetailViewController.h"
 #import "SCReservationViewController.h"
+#import "SCOrderDetailViewController.h"
 
 
 static NSString *const GroupTicketNavControllerID = @"GroupTicketsNavigationController";
@@ -132,7 +133,7 @@ static NSString *const GroupTicketNavControllerID = @"GroupTicketsNavigationCont
                     }
                     // 遍历请求回来的订单数据，生成SCGroupTicket用于团购券列表显示
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                        SCGroupTicket *ticket = [[SCGroupTicket alloc] initWithDictionary:obj error:nil];
+                        SCGroupTicket *ticket = [SCGroupTicket objectWithKeyValues:obj];
                         [_dataList addObject:ticket];
                     }];
                     
@@ -173,16 +174,17 @@ static NSString *const GroupTicketNavControllerID = @"GroupTicketsNavigationCont
     SCGroupTicket *ticket = _dataList[index];
     SCReservationViewController *reservationViewController = [SCReservationViewController instance];
     reservationViewController.delegate    = self;
-    reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:ticket.company_name
-                                                                           companyID:ticket.company_id];
+    reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:ticket.companyName
+                                                                           companyID:ticket.companyID];
     reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:ticket.type];
     reservationViewController.groupTicket = _dataList[index];
     [self.navigationController pushViewController:reservationViewController animated:YES];
 }
 
 - (void)ticketShouldShowWithIndex:(NSInteger)index {
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    [NOTIFICATION_CENTER postNotificationName:kShowTicketReservationNotification object:nil];
+    SCOrderDetailViewController *orderDetailViewController = [SCOrderDetailViewController instance];
+    orderDetailViewController.reserveID = ((SCGroupTicket *)_dataList[index]).reserveID;
+    [self.navigationController pushViewController:orderDetailViewController animated:YES];
 }
 
 #pragma mark - SCReservationViewControllerDelegate Methods

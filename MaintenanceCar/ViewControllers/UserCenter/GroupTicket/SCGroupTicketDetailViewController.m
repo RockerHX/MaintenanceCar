@@ -6,6 +6,8 @@
 //  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
 //
 
+#import <SCLoopScrollView/SCLoopScrollView.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "SCGroupTicketDetailViewController.h"
 #import "SCGroupProductDetail.h"
 #import "SCGroupTicketCodeCell.h"
@@ -17,8 +19,7 @@
 #import "SCOrderPayViewController.h"
 #import "SCCommentsViewController.h"
 #import "SCReservationViewController.h"
-#import <SCLoopScrollView/SCLoopScrollView.h>
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "SCOrderDetailViewController.h"
 
 typedef NS_ENUM(NSInteger, SCAlertType) {
     SCAlertTyperefund,
@@ -228,12 +229,12 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (void)startTicketDetailRequest {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     WEAK_SELF(weakSelf);
-    NSDictionary *parameters = @{@"product_id": _ticket.product_id};
+    NSDictionary *parameters = @{@"product_id": _ticket.productID};
     [[SCAppApiRequest manager] startMerchantGroupProductDetailAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject){
         if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
             _detail             = [[SCGroupProductDetail alloc] initWithDictionary:responseObject error:nil];
-            _detail.company_id  = _ticket.company_id;
-            _detail.name        = _ticket.company_name;
+            _detail.company_id  = _ticket.companyID;
+            _detail.name        = _ticket.companyName;
             
             [weakSelf dispalyDetialView];
             [weakSelf.tableView reloadData];
@@ -263,16 +264,17 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     [[SCUserInfo share] removeItems];
     SCReservationViewController *reservationViewController = [SCReservationViewController instance];
     reservationViewController.delegate    = self;
-    reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:_ticket.company_name
-                                                                           companyID:_ticket.company_id];
+    reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:_ticket.companyName
+                                                                           companyID:_ticket.companyID];
     reservationViewController.serviceItem = [[SCServiceItem alloc] initWithServiceID:_ticket.type];
     reservationViewController.groupTicket = _ticket;
     [self.navigationController pushViewController:reservationViewController animated:YES];
 }
 
 - (void)ticketShouldShowWithIndex:(NSInteger)index {
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    [NOTIFICATION_CENTER postNotificationName:kShowTicketReservationNotification object:nil];
+    SCOrderDetailViewController *orderDetailViewController = [SCOrderDetailViewController instance];
+    orderDetailViewController.reserveID = _ticket.reserveID;
+    [self.navigationController pushViewController:orderDetailViewController animated:YES];
 }
 
 #pragma mark - SCGroupProductMerchantCell Delegate Methods
@@ -305,7 +307,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             WEAK_SELF(weakSelf);
             [self showHUDOnViewController:self.navigationController];
             NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID,
-                                 @"group_ticket_id": _ticket.group_ticket_id};
+                                 @"group_ticket_id": _ticket.ID};
             [[SCAppApiRequest manager] startGroupTicketRefundAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 [weakSelf hideHUDOnViewController:weakSelf.navigationController];
                 if (operation.response.statusCode == SCApiRequestStatusCodePOSTSuccess) {
