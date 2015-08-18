@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *checkBoxButton;
 @property (weak, nonatomic) IBOutlet  UILabel *couponPromptLabel;
 
-- (IBAction)checkBoxButtonPressed:(UIButton *)sender;
+- (IBAction)checkBoxButtonPressed;
 
 - (void)displayCellWithCoupons:(NSArray *)coupons index:(NSInteger)index couponCode:(NSString *)couponCode;
 
@@ -27,5 +27,6 @@
 
 @required
 - (void)payOrderCouponCell:(SCPayOrderCouponCell *)cell;
+- (void)shouldAutoCheckCoupon:(SCCoupon *)coupon;
 
 @end

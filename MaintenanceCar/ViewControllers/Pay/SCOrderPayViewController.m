@@ -221,12 +221,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
                 NSString *statusMessage = responseObject[@"status_message"];
                 switch (statusCode) {
                     case SCAppApiRequestErrorCodeNoError: {
-                        [_coupons removeAllObjects];
-                        [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                            SCCoupon *coupon = [SCCoupon objectWithKeyValues:obj];
-                            [_coupons addObject:coupon];
-                        }];
-                        
+                        [weakSelf handleCoupons:responseObject[@"data"]];
                         [weakSelf.tableView reloadData];
                     }
                         break;
@@ -240,6 +235,19 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
             [weakSelf hideHUDOnViewController:weakSelf.navigationController];
         }];
     }
+}
+
+- (void)handleCoupons:(NSArray *)responseData {
+    [_coupons removeAllObjects];
+    __block SCCoupon *maxCoupon = nil;
+    [responseData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        SCCoupon *coupon = [SCCoupon objectWithKeyValues:obj];
+        [_coupons addObject:coupon];
+        if (coupon.amountMax.doubleValue > maxCoupon.amountMax.doubleValue) {
+            maxCoupon = coupon;
+        }
+    }];
+    maxCoupon.maxAmount = YES;
 }
 
 - (void)weiXinPayWithParameters:(NSDictionary *)parameters {
@@ -500,24 +508,27 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
     [self.navigationController pushViewController:couponsViewController animated:YES];
 }
 
-#pragma mark - SCPayOrderCouponCellDelegate Methods
+#pragma mark - SCPayOrderCouponCellDelegate
 - (void)payOrderCouponCell:(SCPayOrderCouponCell *)cell {
     if (_payResult.canPay) {
         SCCoupon *coupon = _coupons[cell.tag];
         if (_payResult.coupon && [coupon.code isEqualToString:_payResult.couponCode]) {
-            cell.checkBoxButton.selected = !cell.checkBoxButton.selected;
             _payResult.coupon = nil;
         } else {
-            cell.checkBoxButton.selected = !cell.checkBoxButton.selected;
             _payResult.coupon = _coupons[cell.tag];
         }
+        cell.checkBoxButton.selected = !cell.checkBoxButton.selected;
         [self.tableView reloadData];
     } else {
         cell.checkBoxButton.selected = NO;
     }
 }
 
-#pragma mark - SCPayOrderResultCellDelegate Methods
+- (void)shouldAutoCheckCoupon:(SCCoupon *)coupon {
+    _payResult.coupon = coupon;
+}
+
+#pragma mark - SCPayOrderResultCellDelegate
 - (void)shouldPayForOrderWithPayment:(SCPayOrderment)payment {
     if (_payResult.canPay && [_payResult.totalPrice doubleValue]) {
         SCUserInfo *userInfo = [SCUserInfo share];
@@ -551,7 +562,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
     }
 }
 
-#pragma mark - SCCouponsViewControllerDelegate Methods
+#pragma mark - SCCouponsViewControllerDelegate
 - (void)userAddCouponSuccess {
     [self startValidCouponsRequest];
 }

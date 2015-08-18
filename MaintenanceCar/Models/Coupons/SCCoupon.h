@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, SCCouponType) {
 
 @property (nonatomic, assign)         BOOL  current;
 @property (nonatomic, assign)         BOOL  showSymbol;
+@property (nonatomic, assign)         BOOL  maxAmount;
 @property (nonatomic, assign) SCCouponType  type;
 @property (nonatomic, copy)       NSString *ID;
 @property (nonatomic, copy)       NSString *code;

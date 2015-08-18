@@ -11,30 +11,27 @@
 @implementation SCPayOrderCouponCell
 
 #pragma mark - Init Methods
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
     [super awakeFromNib];
     _couponPromptLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 71.0f;
 }
 
-#pragma mark - Setter And Getter Methods
-- (void)setFrame:(CGRect)frame
-{
+#pragma mark - Setter And Getter
+- (void)setFrame:(CGRect)frame {
     frame.origin.y = frame.origin.y - 10.0f;
     frame.size.height = frame.size.height + 10.0f;
     [super setFrame:frame];
 }
 
 #pragma mark - Action Methods
-- (IBAction)checkBoxButtonPressed:(UIButton *)sender
-{
-    if (_delegate && [_delegate respondsToSelector:@selector(payOrderCouponCell:)])
+- (IBAction)checkBoxButtonPressed {
+    if (_delegate && [_delegate respondsToSelector:@selector(payOrderCouponCell:)]) {
         [_delegate payOrderCouponCell:self];
+    }
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithCoupons:(NSArray *)coupons index:(NSInteger)index couponCode:(NSString *)couponCode
-{
+- (void)displayCellWithCoupons:(NSArray *)coupons index:(NSInteger)index couponCode:(NSString *)couponCode {
     CGFloat width = SELF_WIDTH;
     CGFloat height = SELF_HEIGHT;
     UIBezierPath *path = [self shadowPathWithPoints:@[@[@(ZERO_POINT), @(-SHADOW_OFFSET*4)],
@@ -54,8 +51,15 @@
     self.tag = index;
     SCCoupon *coupon = coupons[index];
     _checkBoxButton.selected = [coupon.code isEqualToString:couponCode];
-    if (index == (coupons.count - 1))
+    if (index == (coupons.count - 1)) {
         self.layer.shadowPath = nil;
+    }
+    if (coupon.maxAmount) {
+        self.checkBoxButton.selected = YES;
+        if (_delegate && [_delegate respondsToSelector:@selector(shouldAutoCheckCoupon:)]) {
+            [_delegate shouldAutoCheckCoupon:coupon];
+        }
+    }
     
     _couponPromptLabel.text = [NSString stringWithFormat:@"%@（%@）", coupon.title, coupon.prompt];
 }
