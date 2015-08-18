@@ -53,7 +53,6 @@ static const CGFloat ServiceButtonCornerRadius = 8.0f;
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[首页]"];
     
-    if (!_shouldShowNaivgationBar) return;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
