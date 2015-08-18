@@ -110,8 +110,9 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     } else if ([_phoneNumberTextField.text isEqualToString:@"18683858856"]) {
         NSDictionary *userData = @{@"now": @"2015-08-14 16:29:47",
                                  @"phone": @"18683858856",
-                                 @"token": @"fe5e550895493fbf10b96908369b2781",
-                               @"user_id": @"407"};
+                                 @"token": @"cd457578e9d50aa13afedefc93263e55",
+                               @"user_id": @"407",
+                          @"head_img_url": @"http://wx.qlogo.cn/mmopen/SOFfuwiaD7Pblib8N7FPsicjiadiaH3jFIfTc3FHcz6VeetgWfYiaBkhZyXGHLFMCibaAutW6vgXs4E6tK6nNXqwsqDkJ8Ansk7k2MM/0"};
         [[SCUserInfo share] loginSuccessWithUserData:userData];
         [UMessage addAlias:userData[@"phone"] type:@"XiuYang-IOS" response:^(id responseObject, NSError *error) {
             if ([responseObject[@"success"] isEqualToString:@"ok"])

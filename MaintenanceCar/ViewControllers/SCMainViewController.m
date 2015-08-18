@@ -244,8 +244,12 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
  */
 - (void)setHomePageNavigationBarWillHidden:(BOOL)hidden {
     UINavigationController *navController = [SCHomePageViewController navigationInstance];
-    SCHomePageViewController *homePageViewController = (SCHomePageViewController *)navController.topViewController;
-    homePageViewController.shouldShowNaivgationBar = hidden;
+    for (UIViewController *viewController in navController.viewControllers) {
+        if ([viewController isKindOfClass:[SCHomePageViewController class]]) {
+            ((SCHomePageViewController *)viewController).shouldShowNaivgationBar = hidden;
+            break;
+        }
+    }
 }
 
 - (void)shouludShowGroupTicketReservation {
