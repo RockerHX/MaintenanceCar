@@ -52,7 +52,7 @@
     [super viewDidLoad];
     
     [self initConfig];
-    [self performSelector:@selector(viewConfig) withObject:nil afterDelay:0.1f];
+    [self viewConfig];
 }
 
 #pragma mark - Init Methods
@@ -72,19 +72,16 @@
     if (deviceModel == SCDeviceModelTypeIphone6Plus) {
         _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 280.0f);
         _heightConstraint.constant = _heightConstraint.constant + 30.0f;
-        [self.view needsUpdateConstraints];
-        [self.view layoutIfNeeded];
     } else if (deviceModel == SCDeviceModelTypeIphone6) {
         _headerView.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SCREEN_WIDTH, 270.0f);
         _heightConstraint.constant = _heightConstraint.constant + 15.0f;
-        [self.view needsUpdateConstraints];
-        [self.view layoutIfNeeded];
     } else {
         _buyCarLabel.font     = [UIFont systemFontOfSize:12.0f];
         _buyCarTimeLabel.font = [UIFont systemFontOfSize:13.0f];
         _driveCarLabel.font   = [UIFont systemFontOfSize:12.0f];
         _driveHabitLabel.font = [UIFont systemFontOfSize:13.0f];
     }
+    [self updateViewConstraints];
     
     NSArray *userCars = [SCUserInfo share].cars;
     if (userCars.count) {
