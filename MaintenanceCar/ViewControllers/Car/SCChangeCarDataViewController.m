@@ -94,6 +94,13 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     [self viewDisplay];
 }
 
+- (void)setShowBackButton:(BOOL)showBackButton {
+    _showBackButton = showBackButton;
+    if (showBackButton) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"BackButtonIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(popToPreviousViewController)];
+    }
+}
+
 #pragma mark - Action
 - (IBAction)menuButtonPressed {
     if (_delegate && [_delegate respondsToSelector:@selector(shouldShowMenu)]) {
@@ -196,6 +203,10 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
     }
 }
 
+- (void)popToPreviousViewController {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - Text Field Delegate Methods
 #define kMaxLength 6
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -244,8 +255,12 @@ typedef NS_ENUM(NSInteger, SCHUDType) {
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     switch (hud.tag) {
         case SCHUDTypeSaveData: {
-            if (_delegate && [_delegate respondsToSelector:@selector(userCarDataSaveSuccess:)]) {
-                [_delegate userCarDataSaveSuccess:self.navigationController];
+            if (_showBackButton) {
+                [self.navigationController popViewControllerAnimated:YES];
+            } else {
+                if (_delegate && [_delegate respondsToSelector:@selector(userCarDataSaveSuccess:)]) {
+                    [_delegate userCarDataSaveSuccess:self.navigationController];
+                }
             }
             break;
         }
