@@ -55,7 +55,7 @@
         self.layer.shadowPath = nil;
     }
     if (coupon.maxAmount) {
-        self.checkBoxButton.selected = YES;
+        _checkBoxButton.selected = YES;
         if (_delegate && [_delegate respondsToSelector:@selector(shouldAutoCheckCoupon:)]) {
             [_delegate shouldAutoCheckCoupon:coupon];
         }

@@ -526,6 +526,7 @@ typedef NS_ENUM(NSInteger, SCAliPayCode) {
 
 - (void)shouldAutoCheckCoupon:(SCCoupon *)coupon {
     _payResult.coupon = coupon;
+    coupon.maxAmount = NO;
 }
 
 #pragma mark - SCPayOrderResultCellDelegate
