@@ -174,12 +174,14 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
         // 添加子视图
         UIView *fromView = self.view.subviews[self.view.subviews.count - 1];
         UIView *toView = viewController.view;
-        WEAK_SELF(weakSelf);
-        [UIView transitionFromView:fromView toView:toView duration:0.2f options:UIViewAnimationOptionTransitionCrossDissolve completion:^(BOOL finished) {
-            _preView = fromView;
-            [weakSelf addChildViewController:viewController];
-            [weakSelf.view addSubview:viewController.view];
-        }];
+        if (![fromView isEqual:toView]) {
+            WEAK_SELF(weakSelf);
+            [UIView transitionFromView:fromView toView:toView duration:0.2f options:UIViewAnimationOptionTransitionCrossDissolve completion:^(BOOL finished) {
+                _preView = fromView;
+                [weakSelf addChildViewController:viewController];
+                [weakSelf.view addSubview:viewController.view];
+            }];
+        }
     }
     @catch (NSException *exception) {
         NSLog(@"Main View Controller Add Sub View Controller Error:%@", exception.reason);
