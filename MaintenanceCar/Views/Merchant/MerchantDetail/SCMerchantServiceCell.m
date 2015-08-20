@@ -8,7 +8,7 @@
 
 #import "SCMerchantServiceCell.h"
 #import "SCMerchantDetail.h"
-#import "VersionConstants.h"
+#import "SCVersion.h"
 #import "UIConstants.h"
 
 @implementation SCMerchantServiceCell
@@ -46,7 +46,7 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
     NSInteger count = [_serviceItems allKeys].count;
-    if (!IS_IPHONE_5_PRIOR)
+    if (![SCVersion isIPhone5SPrior])
     {
         if (count > 2)
             return (SCREEN_WIDTH - 60.0f - count * 55.0f)/(count - 1);

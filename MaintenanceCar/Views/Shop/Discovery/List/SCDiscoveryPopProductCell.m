@@ -21,10 +21,10 @@
 #pragma mark - Setter And Getter Methods
 - (void)setFrame:(CGRect)frame
 {
-    frame.origin.x = frame.origin.x + CELL_OFFSET;
-    frame.origin.y = frame.origin.y - CELL_OFFSET;
-    frame.size.width = frame.size.width - CELL_OFFSET*2;
-    frame.size.height = frame.size.height + CELL_OFFSET;
+    frame.origin.x = frame.origin.x + CellOffset;
+    frame.origin.y = frame.origin.y - CellOffset;
+    frame.size.width = frame.size.width - CellOffset*2;
+    frame.size.height = frame.size.height + CellOffset;
     [super setFrame:frame];
 }
 

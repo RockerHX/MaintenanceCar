@@ -9,7 +9,7 @@
 #import "SCCarModelView.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "MicroConstants.h"
-#import "SCAPIRequest.h"
+#import "SCAppApiRequest.h"
 #import "SCCarBrand.h"
 #import "SCCarModel.h"
 #import "SCCar.h"
@@ -104,8 +104,8 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"brand_id": carBrand.brand_id,
                                 @"time_flag": @"0"};
-    [[SCAPIRequest manager] startUpdateCarModelAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+    [[SCAppApiRequest manager] startUpdateCarModelAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
             NSArray *models = responseObject[@"data"];
             for (NSDictionary *carData in models)
@@ -129,23 +129,23 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     WEAK_SELF(weakSelf);
     NSDictionary *parameters = @{@"model_id": carModel.model_id,
                                  @"time_flag": @"0"};
-    [[SCAPIRequest manager] startUpdateCarsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+    [[SCAppApiRequest manager] startUpdateCarsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
             NSDictionary *defaultCarData = @{@"car_id": @"",
                                            @"model_id": carModel.model_id,
                                      @"car_full_model": @"我不清楚/其他",
                                          @"brand_name": _carBrand.brand_name,
                                          @"model_name": carModel.model_name};
-            SCCar *defaultCar = [[SCCar alloc] initWithDictionary:defaultCarData error:nil];
+            SCCar *defaultCar = [SCCar objectWithKeyValues:defaultCarData];
             [_cars addObject:defaultCar];
             
             NSArray *cars = responseObject[@"data"];
             for (NSDictionary *carData in cars)
             {
-                SCCar *car = [[SCCar alloc] initWithDictionary:carData error:nil];
-                car.brand_name = _carBrand.brand_name;
-                car.model_name = carModel.model_name;
+                SCCar *car = [SCCar objectWithKeyValues:carData];
+                car.brandName = _carBrand.brand_name;
+                car.modelName = carModel.model_name;
                 [_cars addObject:car];
             }
             [_rightTableView reloadData];
@@ -183,8 +183,8 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     {
         cell.backgroundColor = UIColorWithRGBA(240.0f, 240.0f, 240.0f, 1.0f);
         SCCar *car = _cars[indexPath.row];
-        cell.textLabel.text = car.car_full_model;
-        cell.detailTextLabel.text = car.up_time;
+        cell.textLabel.text = car.carFullModel;
+        cell.detailTextLabel.text = car.upTime;
     }
     return cell;
 }
@@ -207,7 +207,7 @@ typedef NS_ENUM(NSInteger, SCTableViewType) {
     {
         // 车辆型号被选择之后清返回给主控制器，用于用户添加车辆请求的数据
         SCCar *car = _cars[indexPath.row];
-        _carModelLabel.text = car.car_full_model;
+        _carModelLabel.text = car.carFullModel;
         
         if (_delegate && [_delegate respondsToSelector:@selector(carModelViewDidSelectedCar:)])
             [_delegate carModelViewDidSelectedCar:car];

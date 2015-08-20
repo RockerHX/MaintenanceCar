@@ -9,8 +9,8 @@
 #import "SCCarBrandView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIConstants.h"
-#import "API.h"
-#import "SCAPIRequest.h"
+#import "SCApi.h"
+#import "SCAppApiRequest.h"
 #import "SCCollectionReusableView.h"
 #import "SCCarBrandCollectionViewCell.h"
 #import "SCCarBrand.h"
@@ -81,7 +81,7 @@
     
     // Configure the cell...
     SCCarBrand *carBrand = ((NSArray *)_carBrands[_indexTitles[indexPath.section]])[indexPath.row];
-    [cell.carIcon sd_setImageWithURL:[NSURL URLWithString:[ImageURL stringByAppendingString:carBrand.img_name]]
+    [cell.carIcon sd_setImageWithURL:[NSURL URLWithString:[SCApi imageURLWithImageName:carBrand.img_name]]
                     placeholderImage:[UIImage imageNamed:@"CarBrandIcon"]];
     cell.carTitleLabel.text = carBrand.brand_name;
     

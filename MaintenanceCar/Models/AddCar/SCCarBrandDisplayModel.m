@@ -10,7 +10,7 @@
 #import "SCObjectCategory.h"
 #import "MicroConstants.h"
 #import "SCCarBrand.h"
-#import "SCAPIRequest.h"
+#import "SCAppApiRequest.h"
 
 #define fCarBrandsFileName              @"CarBrands.dat"
 #define kCarBrandDataTimeIntervalKey    @"kCarBrandDataTimeIntervalKey"
@@ -225,8 +225,8 @@ static SCCarBrandDisplayModel *displayModel = nil;
     {
         // 如果本地没有缓存，则用最初的时间戳请求汽车品牌数据，请求成功后先把数据缓存到本地，再进行数据结构重组，用于加车页面显示
         NSDictionary *parameters = @{@"time_flag": @"0"};
-        [[SCAPIRequest manager] startUpdateCarBrandAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        [[SCAppApiRequest manager] startUpdateCarBrandAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
             {
                 // 记录时间戳
                 NSString *date = responseObject[@"stamp"];
@@ -262,8 +262,8 @@ static SCCarBrandDisplayModel *displayModel = nil;
         
         // 用上一次请求到的时间戳进行异步请求，请求成功则更新缓存数据，反之不处理
         NSDictionary *parameters = @{@"time_flag": displayModel.dateTimeInterval};
-        [[SCAPIRequest manager] startUpdateCarBrandAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+        [[SCAppApiRequest manager] startUpdateCarBrandAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
             {
                 NSString *date = responseObject[@"stamp"];
                 displayModel.dateTimeInterval = date;

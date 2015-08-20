@@ -1,0 +1,19 @@
+//
+//  SCOperation.m
+//  MaintenanceCar
+//
+//  Created by ShiCang on 15/1/28.
+//  Copyright (c) 2015年 MaintenanceCar. All rights reserved.
+//
+
+#import "SCOperation.h"
+
+@implementation SCOperation
+
++ (NSDictionary *)replacedKeyFromPropertyName {
+    return @{@"giftImageULR": @"success",
+               @"pictureURL": @"pic_url",
+                @"needLogin": @"need_login"};
+}
+
+@end

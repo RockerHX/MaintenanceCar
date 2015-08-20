@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <scenes>
+        <!--Guide View Controller-->
+        <scene sceneID="YUp-5v-Ibc">
+            <objects>
+                <viewController storyboardIdentifier="SCGuideViewController" id="HpX-qY-8Rb" customClass="SCGuideViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="u8B-Ga-DiP"/>
+                        <viewControllerLayoutGuide type="bottom" id="Mah-La-Lhh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9p2-d2-q2u">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8E4-Ub-BHL">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="8E4-Ub-BHL" secondAttribute="trailing" id="Ajt-lj-g0H"/>
+                            <constraint firstItem="8E4-Ub-BHL" firstAttribute="leading" secondItem="9p2-d2-q2u" secondAttribute="leading" id="Lec-XL-dhS"/>
+                            <constraint firstItem="Mah-La-Lhh" firstAttribute="top" secondItem="8E4-Ub-BHL" secondAttribute="bottom" id="bBy-wj-Lyo"/>
+                            <constraint firstItem="8E4-Ub-BHL" firstAttribute="top" secondItem="9p2-d2-q2u" secondAttribute="top" id="spD-LU-Pn8"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="guideView" destination="8E4-Ub-BHL" id="XSi-MG-wFL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JuI-nD-Wee" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="122" y="363"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

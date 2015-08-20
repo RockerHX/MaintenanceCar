@@ -7,9 +7,10 @@
 #import <UIKit/UIKit.h>
 #import <UMengAnalytics-NO-IDFA/MobClick.h>
 #import <MBProgressHUD/MBProgressHUD.h>
+#import <Masonry/Masonry.h>
 #import <UITableView+FDTemplateLayoutCell/UITableView+FDTemplateLayoutCell.h>
 #import "AllMicroConstants.h"
-#import "SCAPIRequest.h"
+#import "SCAppApiRequest.h"
 #import "SCUserInfo.h"
 #import "SCStoryBoardManager.h"
 
@@ -45,6 +46,13 @@ typedef NS_ENUM(NSUInteger, SCViewControllerAlertType) {
  *  提示用户登录的警告框
  */
 - (void)showShoulLoginAlert;
+
+/**
+ *  提示用户登录的警告框
+ *
+ *  @param title 提示标题
+ */
+- (void)showShoulLoginAlertWithTitle:(NSString *)title;
 
 /**
  *  提示用户需要重新登录

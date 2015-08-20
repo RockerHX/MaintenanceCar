@@ -11,17 +11,16 @@
 @implementation SCOrder
 
 #pragma mark - Class Methods
-+ (JSONKeyMapper *)keyMapper
-{
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:[self baseKeyMapper]];
-    [dic addEntriesFromDictionary:@{@"previous_time": @"previousStateDate",
-                                    @"previous_name": @"previousStateName",
-                                     @"current_time": @"currentStateDate",
-                                     @"current_name": @"currentStateName",
-                                        @"next_time": @"nextStateDate",
-                                        @"next_name": @"nextStateName",
-                                      @"can_comment": @"canComment"}];
-    return [[JSONKeyMapper alloc] initWithDictionary:dic];
++ (NSDictionary *)replacedKeyFromPropertyName {
+    NSMutableDictionary *propertyNames = [super replacedKeyFromPropertyName].mutableCopy;
+    [propertyNames addEntriesFromDictionary:@{@"previousStateDate": @"previous_time",
+                                              @"previousStateName": @"previous_name",
+                                               @"currentStateDate": @"current_time",
+                                               @"currentStateName": @"current_name",
+                                                  @"nextStateDate": @"next_time",
+                                                  @"nextStateName": @"next_name",
+                                                     @"canComment": @"can_comment"}];
+    return [NSDictionary dictionaryWithDictionary:propertyNames];
 }
 
 @end

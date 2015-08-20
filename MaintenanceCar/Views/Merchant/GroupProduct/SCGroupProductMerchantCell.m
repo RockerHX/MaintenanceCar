@@ -14,23 +14,20 @@
 @implementation SCGroupProductMerchantCell
 
 #pragma mark - Init Methods
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
     CGFloat layoutWidth = SCREEN_WIDTH - 70.0f;
     _nameLabel.preferredMaxLayoutWidth = layoutWidth;
     _addressLabel.preferredMaxLayoutWidth = layoutWidth;
 }
 
 #pragma mark - Action Methods
-- (IBAction)callButtonPressed:(id)sender
-{
+- (IBAction)callButtonPressed:(id)sender {
     if (_delegate && [_delegate respondsToSelector:@selector(shouldCallToMerchant)])
         [_delegate shouldCallToMerchant];
 }
 
 #pragma mark - Public Methods
-- (void)displayCellWithDetial:(SCGroupProductDetail *)detail
-{
+- (void)displayCellWithDetial:(SCGroupProductDetail *)detail {
     _nameLabel.text = detail.name;
     _starView.value = detail.star;
     _distanceLabel.text = detail.distance;

@@ -14,8 +14,8 @@
 
 @implementation SCShopRepair
 
-+ (NSDictionary *)replacedKeyFromPropertyName
-{
+#pragma Class Methods
++ (NSDictionary *)replacedKeyFromPropertyName {
     return @{@"haveNot": @"have_not"};
 }
 
@@ -23,8 +23,8 @@
 
 @implementation SCShopProduct
 
-+ (NSDictionary *)replacedKeyFromPropertyName
-{
+#pragma Class Methods
++ (NSDictionary *)replacedKeyFromPropertyName {
     return @{@"ID": @"product_id",
         @"isGroup": @"is_group",
   @"discountPrice": @"final_price"};
@@ -34,15 +34,14 @@
 
 @implementation SCShop
 
-+ (NSDictionary *)replacedKeyFromPropertyName
-{
+#pragma Class Methods
++ (NSDictionary *)replacedKeyFromPropertyName {
     return @{@"canPay": @"can_pay",
                  @"ID": @"company_id",
            @"products": @"product"};
 }
 
-+ (NSDictionary *)objectClassInArray
-{
++ (NSDictionary *)objectClassInArray {
     return @{@"products": @"SCShopProduct"};
 }
 

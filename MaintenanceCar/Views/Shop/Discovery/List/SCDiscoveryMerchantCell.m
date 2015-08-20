@@ -9,7 +9,7 @@
 #import <Masonry/Masonry.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "SCDiscoveryMerchantCell.h"
-#import "VersionConstants.h"
+#import "SCVersion.h"
 #import "SCStarView.h"
 #import "SCDiscoveryMerchantServiceCell.h"
 #import "SCShopViewModel.h"
@@ -24,7 +24,7 @@
 {
     [super awakeFromNib];
     
-    if (IS_IPHONE_5_PRIOR)
+    if ([SCVersion isIPhone5SPrior])
     {
         [self narrowLabel:_starValueLabel how:2.0f];
         [self narrowLabel:_characteristicLabel how:1.0f];

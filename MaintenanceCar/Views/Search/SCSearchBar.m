@@ -10,6 +10,11 @@
 
 @implementation SCSearchBar
 
+#pragma mark - Init Methods
+- (void)awakeFromNib {
+    [_textField becomeFirstResponder];
+}
+
 #pragma mark - Draw Methods
 - (void)drawRect:(CGRect)rect
 {

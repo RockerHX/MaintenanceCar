@@ -7,7 +7,7 @@
 //
 
 #import "SCNavigationTab.h"
-#import "AppMicroConstants.h"
+#import "SCAppConstants.h"
 
 #define AnmationDuration        0.2f
 

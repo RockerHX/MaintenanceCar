@@ -9,12 +9,11 @@
 #import "SCReservatAlertView.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "UIConstants.h"
-#import "VersionConstants.h"
+#import "SCVersion.h"
 #import "SCAllDictionary.h"
 #import "SCReservationItemCell.h"
 
-@interface SCReservatAlertView ()
-{
+@interface SCReservatAlertView () {
     SCAlertAnimation _animation;
     NSMutableArray   *_itmes;
 }
@@ -28,8 +27,7 @@
 
 @implementation SCReservatAlertView
 
-- (id)initWithDelegate:(id<SCReservatAlertViewDelegate>)delegate animation:(SCAlertAnimation)anmation
-{
+- (id)initWithDelegate:(id<SCReservatAlertViewDelegate>)delegate animation:(SCAlertAnimation)anmation {
     self = [[[NSBundle mainBundle] loadNibNamed:@"SCReservatAlertView" owner:self options:nil] firstObject];
     self.frame = [UIApplication sharedApplication].keyWindow.bounds;
     _delegate = delegate;
@@ -44,16 +42,15 @@
 }
 
 #pragma mark - Private Methods
-- (void)initConfig
-{
-    if (IS_IPHONE_5_PRIOR)
+- (void)initConfig {
+    if ([SCVersion isIPhone5SPrior]) {
         _flowLayout.itemSize = CGSizeMake(90.0f, _flowLayout.itemSize.height);
-    else if (IS_IPHONE_6)
+    } else if ([SCVersion currentModel] == SCDeviceModelTypeIphone6) {
         _flowLayout.itemSize = CGSizeMake(120.0f, _flowLayout.itemSize.height);
+    }
 }
 
-- (void)viewConfig
-{
+- (void)viewConfig {
     _alertView.layer.cornerRadius = 10.0f;
     _titleView.layer.cornerRadius = _alertView.layer.cornerRadius;
     _alertView.layer.borderWidth  = 1.0f;
@@ -61,8 +58,7 @@
     [_collectionView registerNib:[UINib nibWithNibName:@"SCReservationItemCell" bundle:nil] forCellWithReuseIdentifier:@"SCReservationItemCell"];
 }
 
-- (void)removeAlertView
-{
+- (void)removeAlertView {
     __weak typeof(self) weakSelf = self;
     switch (_animation)
     {
@@ -113,7 +109,7 @@
                 weakSelf.alpha = 1.0f;
                 _alertView.hidden = NO;
                 _alertView.transform = CGAffineTransformMakeScale(1.15f, 1.15f);
-                if (IS_IOS7)
+                if ([SCVersion systemVersion] == SCSystemVersionIOS7)
                     _alertView.translatesAutoresizingMaskIntoConstraints = YES;
             } completion:nil];
         }

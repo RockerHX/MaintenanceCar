@@ -10,11 +10,11 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <HexColors/HexColors.h>
 #import "MicroConstants.h"
-#import "SCAPIRequest.h"
+#import "SCAppApiRequest.h"
 #import "SCStarView.h"
 #import "SCMerchantFlagCell.h"
 #import "SCAllDictionary.h"
-#import "API.h"
+#import "SCApi.h"
 
 @interface SCMerchantCell () <UICollectionViewDataSource>
 {

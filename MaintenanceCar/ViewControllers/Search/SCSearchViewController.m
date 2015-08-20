@@ -11,32 +11,31 @@
 #import "SCSearchBar.h"
 #import "SCSearchHistoryView.h"
 
-@interface SCSearchViewController () <SCSearchBarDelegate, SCSearchHistoryViewDelegate>
-{
+static NSString *const SearchNavViewController = @"SearchNavgationViewController";
+
+@interface SCSearchViewController () <SCSearchBarDelegate, SCSearchHistoryViewDelegate> {
     SCSearchHistory *_searchHistory;
 }
-
 @end
 
 @implementation SCSearchViewController
 
 #pragma mark - View Controller Life Cycle
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"[搜索]"];
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"[搜索]"];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initConfig];
@@ -44,19 +43,16 @@
 }
 
 #pragma mark - Init Methods
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
     self.title = @"搜索";
 }
 
-+ (UINavigationController *)navigationInstance
-{
-    return [SCStoryBoardManager navigaitonControllerWithIdentifier:@"SCSearchNavgationViewController" storyBoardName:SCStoryBoardNameSearch];
++ (UINavigationController *)navigationInstance {
+    return [SCStoryBoardManager navigaitonControllerWithIdentifier:SearchNavViewController storyBoardName:SCStoryBoardNameSearch];
 }
 
 #pragma mark - Config Methods
-- (void)initConfig
-{
+- (void)initConfig {
     _searchHistory = [[SCSearchHistory alloc] init];
     
     self.shopList = [[SCShopList alloc] init];
@@ -68,31 +64,26 @@
     }];
 }
 
-- (void)viewConfig
-{
+- (void)viewConfig {
     [super viewConfig];
-    
     _searchHistoryView.searchHistory = _searchHistory;
 }
 
 #pragma mark - Private Methods
-- (void)startSearch:(NSString *)search
-{
+- (void)startSearch:(NSString *)search {
     [_searchBar.textField resignFirstResponder];
     [self showLoading];
     [self.shopList loadShopsWithSearch:search];
 }
 
 #pragma mark - Public Methods
-- (void)showLoading
-{
+- (void)showLoading {
     [super showLoading];
     _searchSubView.hidden = YES;
 }
 
-#pragma mark - SCSearchBarDelegate Methods
-- (void)shouldBackReturn
-{
+#pragma mark - SCSearchBar Delegate
+- (void)shouldBackReturn {
     CATransition *transition = [CATransition animation];
     transition.type = kCATransitionFade;
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -101,21 +92,22 @@
     [self.navigationController dismissViewControllerAnimated:NO completion:nil];
 }
 
-- (void)shouldResearch
-{
+- (void)shouldResearch {
     _searchSubView.hidden = NO;
 }
 
-- (void)shouldSearchWithContent:(NSString *)content
-{
-    [_searchHistory addNewSearchHistory:content];
-    [_searchHistoryView refresh];
-    [self startSearch:content];
+- (void)shouldSearchWithContent:(NSString *)content {
+    if (content.length) {
+        [_searchHistory addNewSearchHistory:content];
+        [_searchHistoryView refresh];
+        [self startSearch:content];
+    } else {
+        [self showAlertWithMessage:@"请您先输入搜索内容！"];
+    }
 }
 
-#pragma mark - SCSearchHistoryViewDelegate Methods
-- (void)shouldSearchWithHistory:(NSString *)history
-{
+#pragma mark - SCSearchHistoryView Delegate
+- (void)shouldSearchWithHistory:(NSString *)history {
     [self startSearch:history];
 }
 

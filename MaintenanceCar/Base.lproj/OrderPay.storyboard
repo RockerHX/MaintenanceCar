@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -461,7 +461,7 @@
                                             </state>
                                             <state key="selected" image="CheckBoxIcon-Check"/>
                                             <connections>
-                                                <action selector="checkBoxButtonPressed:" destination="ROq-PC-0LX" eventType="touchUpInside" id="YFQ-pT-5Cl"/>
+                                                <action selector="checkBoxButtonPressed" destination="ROq-PC-0LX" eventType="touchUpInside" id="hud-7h-bfy"/>
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="满200元减50元（限保养业务）" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="269" translatesAutoresizingMaskIntoConstraints="NO" id="sBF-gK-uAE">
@@ -523,9 +523,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EU9-1Z-dDB">
-                                            <rect key="frame" x="15" y="102.5" width="125" height="34"/>
+                                            <rect key="frame" x="97.5" y="102.5" width="125" height="34"/>
                                             <color key="backgroundColor" red="0.19215686269999999" green="0.58823529409999997" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
+                                                <constraint firstAttribute="width" constant="125" id="OYi-1V-EcB"/>
                                                 <constraint firstAttribute="height" constant="34" id="WEU-gE-3Oh"/>
                                             </constraints>
                                             <state key="normal" title="微信支付">
@@ -587,7 +588,7 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vF4-Xs-dD9">
+                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vF4-Xs-dD9">
                                             <rect key="frame" x="180" y="103" width="125" height="34"/>
                                             <color key="backgroundColor" red="0.17254901959999999" green="0.48627450979999998" blue="0.72549019609999998" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                             <state key="normal" title="支付宝支付">
@@ -617,7 +618,7 @@
                                         <constraint firstItem="EU9-1Z-dDB" firstAttribute="centerY" secondItem="vF4-Xs-dD9" secondAttribute="centerY" id="PDn-3n-5t3"/>
                                         <constraint firstItem="cCC-hg-KSo" firstAttribute="centerY" secondItem="eOc-T8-wzB" secondAttribute="centerY" constant="1" id="ViK-u1-jeE"/>
                                         <constraint firstItem="9GK-bJ-YDc" firstAttribute="top" secondItem="N5Q-is-jcH" secondAttribute="bottom" constant="4" id="XGg-G1-t9o"/>
-                                        <constraint firstItem="vF4-Xs-dD9" firstAttribute="leading" secondItem="EU9-1Z-dDB" secondAttribute="trailing" constant="40" id="ZvC-D3-tz4"/>
+                                        <constraint firstAttribute="centerX" secondItem="EU9-1Z-dDB" secondAttribute="centerX" id="ZnH-Wn-gI0"/>
                                         <constraint firstItem="He9-o5-iRI" firstAttribute="trailing" secondItem="o4K-b4-GAm" secondAttribute="trailing" id="aMQ-sm-T1M"/>
                                         <constraint firstItem="zvL-Q3-jGL" firstAttribute="centerY" secondItem="5jU-wB-vyd" secondAttribute="centerY" id="aX0-db-v8V"/>
                                         <constraint firstItem="o4K-b4-GAm" firstAttribute="leading" secondItem="yQ6-lC-Ye9" secondAttribute="trailing" constant="2" id="bwZ-Oz-3gQ"/>
@@ -635,7 +636,6 @@
                                         <constraint firstItem="vF4-Xs-dD9" firstAttribute="trailing" secondItem="He9-o5-iRI" secondAttribute="trailing" id="qEw-ex-lp7"/>
                                         <constraint firstItem="NPb-dn-v3w" firstAttribute="centerY" secondItem="He9-o5-iRI" secondAttribute="centerY" id="qyO-Ll-jdl"/>
                                         <constraint firstItem="NPb-dn-v3w" firstAttribute="leading" secondItem="eEK-34-9vr" secondAttribute="trailing" constant="2" id="s7G-wj-XKr"/>
-                                        <constraint firstItem="N5Q-is-jcH" firstAttribute="leading" secondItem="EU9-1Z-dDB" secondAttribute="leading" id="wSk-SM-mQm"/>
                                         <constraint firstItem="N5Q-is-jcH" firstAttribute="leading" secondItem="wuc-Ef-1Gl" secondAttribute="leading" constant="15" id="yBA-r5-md2"/>
                                     </constraints>
                                 </tableViewCellContentView>

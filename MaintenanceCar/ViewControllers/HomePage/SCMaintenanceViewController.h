@@ -21,12 +21,12 @@
 @property (weak, nonatomic) IBOutlet         SCMileageView *labelView;
 @property (weak, nonatomic) IBOutlet SCMaintenanceTypeView *maintenanceTypeView;
 
-@property (weak, nonatomic) IBOutlet               UILabel *buyCarLabel;
-@property (weak, nonatomic) IBOutlet               UILabel *buyCarTimeLabel;
-@property (weak, nonatomic) IBOutlet               UILabel *driveCarLabel;
-@property (weak, nonatomic) IBOutlet               UILabel *driveHabitLabel;
-@property (weak, nonatomic) IBOutlet                UIView *headerView;
-@property (weak, nonatomic) IBOutlet                UIView *footerView;
+@property (weak, nonatomic) IBOutlet UILabel *buyCarLabel;
+@property (weak, nonatomic) IBOutlet UILabel *buyCarTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *driveCarLabel;
+@property (weak, nonatomic) IBOutlet UILabel *driveHabitLabel;
+@property (weak, nonatomic) IBOutlet  UIView *headerView;
+@property (weak, nonatomic) IBOutlet  UIView *footerView;
 
 + (instancetype)instance;
 

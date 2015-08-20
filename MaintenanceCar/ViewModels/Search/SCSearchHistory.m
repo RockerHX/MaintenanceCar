@@ -8,7 +8,7 @@
 
 #import "SCSearchHistory.h"
 
-static NSString *SearchHistoryFileName = @"SearchHistory";
+static NSString *const SearchHistoryFileName = @"SearchHistory";
 
 @implementation SCSearchHistory
 

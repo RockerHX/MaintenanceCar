@@ -7,27 +7,48 @@
 //
 
 #import "SCViewControllerCategory.h"
+#import "SCADView.h"
+
 
 typedef NS_ENUM(NSUInteger, SCHomePageServiceButtonType) {
-    SCHomePageServiceButtonTypeRepair,
-    SCHomePageServiceButtonTypeMaintance,
+    SCHomePageServiceButtonTypeMaintenance,
     SCHomePageServiceButtonTypeWash,
-    SCHomePageServiceButtonTypeOperation
+    SCHomePageServiceButtonTypeRepair,
+    SCHomePageServiceButtonTypeShowShops
 };
 
-@class SCHomePageDetailView;
+@protocol SCHomePageViewControllerDelegate <NSObject>
 
-@interface SCHomePageViewController : UIViewController
+@optional
+- (void)shouldShowMenu;
+- (void)shouldSupportPanGesture:(BOOL)support;
+- (void)operationPostionNeedLoginWithParameter:(NSString *)parameter;
 
-@property (weak, nonatomic) IBOutlet   NSLayoutConstraint *buttonWidthConstraint;   // 按钮宽约束
-@property (weak, nonatomic) IBOutlet SCHomePageDetailView *detailView;              // 首页详情View
-@property (weak, nonatomic) IBOutlet             UIButton *specialButton;           // 首页第四个按钮
-@property (weak, nonatomic) IBOutlet              UILabel *specialLabel;            // 首页第四个文字栏
+@end
 
-- (IBAction)locationItemPressed;
+
+@class SCLoopScrollView;
+
+@interface SCHomePageViewController : UIViewController <SCADViewDelegate>
+
+@property (weak, nonatomic) IBOutlet   SCLoopScrollView *operationView;         // 首页运营位
+@property (weak, nonatomic) IBOutlet           UIButton *menuButton;            // 侧滑导航菜单按钮
+@property (weak, nonatomic) IBOutlet           UIButton *searchButton;          // 搜索按钮
+@property (weak, nonatomic) IBOutlet           UIButton *maintenanceButton;     // 保养服务按钮
+@property (weak, nonatomic) IBOutlet           UIButton *washButton;            // 洗车服务按钮
+@property (weak, nonatomic) IBOutlet           UIButton *repairButton;          // 修车服务按钮
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *operationBarHeight;    // 运营位高度约束
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *showShopsBarHeight;    // 查看商家栏高度约束
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *centerButtonWidth;     // 中间服务按钮宽度约束
+
+@property (nonatomic, weak)     id  <SCHomePageViewControllerDelegate>delegate;
+@property (nonatomic, assign) BOOL  shouldShowNaivgationBar;                    // 跳转下级视图控制器时是否显示导航栏
+
+- (IBAction)menuButtonPressed;
+- (IBAction)searchButtonPressed;
 - (IBAction)serviceButtonPressed:(UIButton *)button;
 
++ (UINavigationController *)navigationInstance;
 + (instancetype)instance;
-+ (NSString *)navgationRestorationIdentifier;
 
 @end

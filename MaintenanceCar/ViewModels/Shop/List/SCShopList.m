@@ -7,9 +7,10 @@
 //
 
 #import "SCShopList.h"
-#import "SCAPIRequest.h"
+#import "SCAppApiRequest.h"
 #import "SCServerResponse.h"
 #import "SCLocationManager.h"
+#import "SCAppConstants.h"
 #import "SCUserInfo.h"
 
 @implementation SCShopList
@@ -102,7 +103,7 @@
     __weak typeof(self)weakSelf = self;
     if (_type == SCShopListTypeSearch)
     {
-        [[SCAPIRequest manager] startSearchShopsAPIRequestWithParameters:_parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[SCAppApiRequest manager] startSearchShopsAPIRequestWithParameters:_parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [weakSelf reuqeustSuccessWithOperation:operation];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [weakSelf reuqeustFailureWithOperation:operation error:error];
@@ -110,7 +111,7 @@
     }
     else
     {
-        [[SCAPIRequest manager] startShopsAPIRequestWithParameters:_parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[SCAppApiRequest manager] startShopsAPIRequestWithParameters:_parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [weakSelf reuqeustSuccessWithOperation:operation];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [weakSelf reuqeustFailureWithOperation:operation error:error];
@@ -121,12 +122,12 @@
 - (void)reuqeustSuccessWithOperation:(AFHTTPRequestOperation *)operation
 {
     id responseObject = operation.responseObject;
-    if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+    if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
     {
         [_serverResponse parseResponseObject:responseObject];
         if (_serverResponse.firstLoad)
             [self clearShops];
-        if (_serverResponse.statusCode == SCAPIRequestErrorCodeNoError)
+        if (_serverResponse.statusCode == SCAppApiRequestErrorCodeNoError)
         {
             [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 SCShop *shop = [SCShop objectWithKeyValues:obj];
@@ -141,11 +142,11 @@
 
 - (void)reuqeustFailureWithOperation:(AFHTTPRequestOperation *)operation error:(NSError *)error
 {
-    if (error.code == CocoaErrorCodeJsonParseError)
+    if (error.code == SCAppApiRequestErrorCodeJsonParseError)
     {
         _serverResponse = [[SCServerResponse alloc] init];
         _serverResponse.statusCode = error.code;
-        _serverResponse.prompt = CocoaErrorJsonParseError;
+        _serverResponse.prompt = JsonParseError;
     }
     else
         [_serverResponse parseResponseObject:operation.responseObject];
@@ -163,7 +164,7 @@
 {
     _type = SCShopListTypeNormal;
     [self setParameter:@"auto_get_car" value:@([SCUserInfo share].loginState)];
-    [self setParameter:@"uid" value:[SCUserInfo share].userID];
+    [self setParameter:@"user_id" value:[SCUserInfo share].userID];
     [self loadNewShops];
 }
 

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSUInteger, SCStoryBoardName) {
+    SCStoryBoardNameGuide,
     SCStoryBoardNameMain,
     SCStoryBoardNameHomePage,
     SCStoryBoardNameShops,

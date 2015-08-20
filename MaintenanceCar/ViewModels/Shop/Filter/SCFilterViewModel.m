@@ -7,7 +7,7 @@
 //
 
 #import "SCFilterViewModel.h"
-#import "SCAPIRequest.h"
+#import "SCAppApiRequest.h"
 #import "SCUserInfo.h"
 #import "MicroConstants.h"
 #import "SCServerResponse.h"
@@ -52,13 +52,13 @@ typedef void(^BLOCK)(SCFilterViewModel *viewModel, BOOL success);
 - (void)loadCompleted:(void(^)(SCFilterViewModel *viewModel, BOOL success))block
 {
     _block = block;
-    NSDictionary *parameters = @{@"uid": [SCUserInfo share].userID};
+    NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID};
     WEAK_SELF(weakSelf);
-    [[SCAPIRequest manager] startFilterCategoryAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
+    [[SCAppApiRequest manager] startFilterCategoryAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
         {
             NSInteger statusCode = [responseObject[@"status_code"] integerValue];
-            if (statusCode == SCAPIRequestErrorCodeNoError)
+            if (statusCode == SCAppApiRequestErrorCodeNoError)
                 _filter = [SCFilter objectWithKeyValues:responseObject[@"data"]];
             
             if (_block)

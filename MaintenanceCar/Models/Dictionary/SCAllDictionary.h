@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SCDictionaryItem.h"
 #import "SCServiceItem.h"
-#import "SCSpecial.h"
+#import "SCOperation.h"
 
 typedef NS_ENUM(NSInteger, SCDictionaryType) {
     SCDictionaryTypeOrderType,                          // 订单类型
@@ -31,14 +31,10 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
 
 @property (nonatomic, strong, readonly) NSArray   *serviceItems;              // 服务项目
 
-@property (nonatomic, strong, readonly) SCSpecial    *special;                // 自定义数据
+@property (nonatomic, strong, readonly) SCOperation    *special;                // 自定义数据
 @property (nonatomic, strong, readonly) NSDictionary *colors;                 // 商家Flags颜色值
 @property (nonatomic, strong, readonly) NSDictionary *explains;               // 商家Flags名字
 @property (nonatomic, strong, readonly) NSDictionary *details;                // 商家Flags描述
-
-@property (nonatomic, strong, readonly) NSArray *distanceConditions;          // 距离筛选条件集合
-@property (nonatomic, strong, readonly) NSArray *repairConditions;            // 品牌筛选条件集合
-@property (nonatomic, strong, readonly) NSArray *otherConditions;             // 业务筛选条件集合
 
 /**
  *  SCAllDictionary单例方法
@@ -63,26 +59,12 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
 - (void)requestColorsExplain:(void(^)(NSDictionary *colors, NSDictionary *explains, NSDictionary *details))finfish;
 
 /**
- *  处理主页第四个特殊按钮数据
- *
- *  @param special 特殊数据对象
- */
-- (void)replaceSpecialDataWith:(SCSpecial *)special;
-
-/**
  *  合成服务项目 - 用于预约提示，筛选条件
  *
  *  @param merchantItems 商家服务项目
  *  @param free          能否免费检测
  */
 - (void)generateServiceItemsWtihMerchantImtes:(NSDictionary *)merchantItems inspectFree:(BOOL)free;
-
-/**
- *  处理专修品牌 - 用于筛选条件
- *
- *  @param userCars 用户车辆集合
- */
-- (void)hanleRepairConditions:(NSArray *)userCars;
 
 /**
  *  获取商家Flag标签的图片文件名

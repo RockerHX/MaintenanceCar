@@ -21,8 +21,7 @@
 
 @end
 
-@interface SCReservationViewController : UITableViewController <UITextFieldDelegate>
-{
+@interface SCReservationViewController : UITableViewController <UITextFieldDelegate> {
     NSString *_reservationType;
     NSString *_selectedCarID;
     NSString *_reservationDate;

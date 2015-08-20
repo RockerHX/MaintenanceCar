@@ -7,49 +7,54 @@
 //
 
 #import "SCGroupTicket.h"
-#import "UIConstants.h"
 
 @implementation SCGroupTicket
 
-#pragma mark - Init Methods
-- (id)initWithDictionary:(NSDictionary *)dict error:(NSError *__autoreleasing *)err
-{
-    self = [super initWithDictionary:dict error:err];
-    if (self)
-    {
-        _state = [self ticketState];
-    }
-    return self;
+#pragma Class Methods
++ (instancetype)objectWithKeyValues:(id)keyValues {
+    SCGroupTicket *ticket = [super objectWithKeyValues:keyValues];
+    [ticket ticketState];
+    return ticket;
+}
+
++ (NSDictionary *)replacedKeyFromPropertyName {
+    return @{@"ID": @"group_ticket_id",
+      @"companyID": @"company_id",
+      @"productID": @"product_id",
+     @"limitBegin": @"limit_begin",
+       @"limitEnd": @"limit_end",
+         @"userID": @"user_id",
+      @"reserveID": @"reservation",
+      @"sellCount": @"sell_count",
+     @"finalPrice": @"final_price",
+     @"totalPrice": @"total_price",
+    @"companyName": @"company_name"};
 }
 
 #pragma mark - Public Methods
-- (BOOL)expired
-{
-    return ([self expiredInterval] < Zero);
+- (BOOL)expired {
+    return ([self expiredInterval] < 0);
 }
 
-- (NSString *)expiredPrompt
-{
+- (NSString *)expiredPrompt {
     NSTimeInterval expiredInterval = [self expiredInterval] / (60*60*24);
     
     return [self expired] ? @"": [NSString stringWithFormat:@"还有%@天过期", @((NSInteger)expiredInterval)];
 }
 
 #pragma mark - Private Methods
-- (NSTimeInterval)expiredInterval
-{
+- (NSTimeInterval)expiredInterval {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
-    NSDate *expiredDate = [formatter dateFromString:_limit_end];
+    NSDate *expiredDate = [formatter dateFromString:_limitEnd];
     NSDate *serviceDate = [formatter dateFromString:_now];
     NSTimeInterval expiredInterval = [expiredDate timeIntervalSinceDate:serviceDate];
     
     return expiredInterval;
 }
 
-- (SCGroupTicketState)ticketState
-{
+- (void)ticketState {
     SCGroupTicketState state;
     switch ([_status integerValue])
     {
@@ -79,7 +84,7 @@
             state = [self expired] ? SCGroupTicketStateExpired : SCGroupTicketStateUnknown;
             break;
     }
-    return state;
+    _state = state;
 }
 
 @end

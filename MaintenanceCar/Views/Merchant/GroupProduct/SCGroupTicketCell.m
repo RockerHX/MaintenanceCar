@@ -12,26 +12,23 @@
 @implementation SCGroupTicketCell
 
 #pragma mark - Public Methods
-- (void)displayCellWithTicket:(SCGroupTicket *)ticket index:(NSInteger)index
-{
+- (void)displayCellWithTicket:(SCGroupTicket *)ticket index:(NSInteger)index {
     [super displayCellWithTicket:ticket index:index];
     
     _productNameLabel.text  = [ticket.title stringByAppendingString:@":"];
-    _merchantNameLabel.text = ticket.company_name;
-    _ticketPriceLabel.text  = ticket.final_price;
-    _productPriceLabel.text = ticket.total_price;
+    _merchantNameLabel.text = ticket.companyName;
+    _ticketPriceLabel.text  = ticket.finalPrice;
+    _productPriceLabel.text = ticket.totalPrice;
     _ticketStateLabel.text  = [self codeStateWithTicket:ticket.state];
     
-    _codeLine.hidden = (ticket.state == SCGroupTicketStateUnUse);
+    _codeLine.hidden = ((ticket.state == SCGroupTicketStateUnUse) || (ticket.state == SCGroupTicketStateReserved));
     self.codeLabel.textColor = (ticket.state == SCGroupTicketStateUnUse) ? [UIColor orangeColor] : [UIColor lightGrayColor];
 }
 
 #pragma mark - Private Methods
-- (NSString *)codeStateWithTicket:(SCGroupTicketState)state
-{
+- (NSString *)codeStateWithTicket:(SCGroupTicketState)state {
     NSString *codeState;
-    switch (state)
-    {
+    switch (state) {
         case SCGroupTicketStateUnUse:
             codeState = @"未使用";
             break;

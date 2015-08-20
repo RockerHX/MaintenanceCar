@@ -11,29 +11,25 @@
 #import "SCCouponDetailViewController.h"
 #import "SCWebViewController.h"
 
-@implementation SCInvalidCouponsViewController
-{
+@implementation SCInvalidCouponsViewController {
     NSMutableArray *_coupons;
     SCCouponCell   *_couponCell;
 }
 
 #pragma mark - View Controller Life Cycle
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     // 用户行为统计，页面停留时间
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"[优惠券] - 已使用/过期"];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     // 用户行为统计，页面停留时间
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"[优惠券] - 已使用/过期"];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initConfig];
@@ -42,27 +38,23 @@
 }
 
 #pragma mark - Init Methods
-+ (instancetype)instance
-{
++ (instancetype)instance {
     return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameCoupon];
 }
 
 #pragma mark - Config Methods
-- (void)initConfig
-{
+- (void)initConfig {
     _coupons = [@[] mutableCopy];
 }
 
-- (void)viewConfig
-{
+- (void)viewConfig {
     _promptView.layer.shadowColor = [UIColor grayColor].CGColor;
     _promptView.layer.shadowOpacity = 1.0f;
     _promptView.layer.shadowRadius = 6.0f;
 }
 
 #pragma mark - Action Methods
-- (IBAction)ruleButtonPressed
-{
+- (IBAction)ruleButtonPressed {
     SCWebViewController *webViewController = [SCWebViewController instance];
     webViewController.title = @"优惠券使用规则";
     webViewController.loadURL = @"";
@@ -70,17 +62,13 @@
 }
 
 #pragma mark - Table View Data Source Methods
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _coupons.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SCCouponCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCell" forIndexPath:indexPath];
-    
-    if (_coupons.count)
-    {
+    if (_coupons.count) {
         cell.canNotUse = YES;
         [cell displayCellWithCoupon:_coupons[indexPath.row]];
     }
@@ -88,21 +76,18 @@
 }
 
 #pragma mark - Table View Delegate Methods
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat height = Zero;
-    if (_coupons.count)
-    {
-        if(!_couponCell)
+    if (_coupons.count) {
+        if(!_couponCell) {
             _couponCell = [tableView dequeueReusableCellWithIdentifier:@"SCCouponCell"];
+        }
         height = [_couponCell displayCellWithCoupon:_coupons[indexPath.row]];
     }
-    
     return height;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     SCCouponDetailViewController *couponDetailViewController = [SCCouponDetailViewController instance];
@@ -112,25 +97,21 @@
 }
 
 #pragma mark - Private Methods
-- (void)startInvalidCouponsRequest
-{
+- (void)startInvalidCouponsRequest {
     WEAK_SELF(weakSelf);
     [self showHUDOnViewController:self];
     // 配置请求参数
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID};
-    [[SCAPIRequest manager] startInvalidCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[SCAppApiRequest manager] startInvalidCouponsAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [weakSelf hideHUDOnViewController:weakSelf];
-        if (operation.response.statusCode == SCAPIRequestStatusCodeGETSuccess)
-        {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
             NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
             NSString *statusMessage = responseObject[@"status_message"];
-            switch (statusCode)
-            {
-                case SCAPIRequestErrorCodeNoError:
-                {
+            switch (statusCode) {
+                case SCAppApiRequestErrorCodeNoError: {
                     [_coupons removeAllObjects];
                     [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                        SCCoupon *coupon = [[SCCoupon alloc] initWithDictionary:obj error:nil];
+                        SCCoupon *coupon = [SCCoupon objectWithKeyValues:obj];
                         [_coupons addObject:coupon];
                     }];
                     
@@ -138,8 +119,9 @@
                 }
                     break;
             }
-            if (statusMessage.length)
+            if (statusMessage.length) {
                 [weakSelf showHUDAlertToViewController:weakSelf text:statusMessage];
+            }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf hanleFailureResponseWtihOperation:operation];

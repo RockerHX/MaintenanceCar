@@ -7,7 +7,7 @@
 //
 
 #import "SCVerificationCodeLabel.h"
-#import "AppMicroConstants.h"
+#import "SCAppConstants.h"
 
 typedef BOOL(^BLOCK)(SCVerificationType type);
 
