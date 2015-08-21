@@ -27,10 +27,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-#pragma mark 网络日志
+#pragma mark - 网络日志
     //    [[AFNetworkActivityLogger sharedLogger] startLogging];
     //    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
+#pragma mark - 导航栏配置
     // 设置导航条和电池条颜色
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UINavigationBar appearance] setBarTintColor:ThemeColor];
@@ -42,7 +43,7 @@
                                                            NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0f]}];
     
     NSString *appVersion = [SCVersion appVersion];
-#pragma mark UMeng Analytics SDK
+#pragma mark - UMeng Analytics SDK
     // 启用[友盟反馈]
     [UMFeedback setAppkey:UMengAPPKEY];
     [UMOpus setAudioEnable:YES];
@@ -115,6 +116,7 @@
     return YES;
 }
 
+#pragma mark - Application Delegate Methods
 - (void)applicationWillResignActive:(UIApplication *)application {
     [BMKMapView willBackGround];    //当应用即将后台时调用，停止一切调用opengl相关的操作
 }
