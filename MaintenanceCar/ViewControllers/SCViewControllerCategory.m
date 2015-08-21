@@ -68,6 +68,7 @@ SCLoginPath _path;
             
         default:
             [self showShoulLoginAlert];
+            return;
             break;
     }
     NSString *title = [NSString stringWithFormat:@"登录后即可%@，10秒钟极速登录", prompt];
