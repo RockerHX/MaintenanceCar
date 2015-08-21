@@ -55,6 +55,13 @@ typedef NS_ENUM(NSUInteger, SCViewControllerAlertType) {
 - (void)showShoulLoginAlertWithTitle:(NSString *)title;
 
 /**
+ *  根据登陆路径显示登陆提示
+ *
+ *  @param path 登陆路径
+ */
+- (void)showShoulLoginAlertWithPath:(SCLoginPath)path;
+
+/**
  *  提示用户需要重新登录
  */
 - (void)showShoulReLoginAlert;

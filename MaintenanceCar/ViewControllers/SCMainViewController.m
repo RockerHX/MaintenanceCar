@@ -20,7 +20,6 @@
 
 
 static NSString *const kGuideKey = @"kGuideKey";
-
 static NSString *const MainNavControllerID = @"MainNavigationController";
 
 
@@ -28,8 +27,10 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
 @end
 
 @implementation SCMainViewController {
-    BOOL _canSupportPanGesture;
-    UIView *_preView;
+    BOOL         _canSupportPanGesture;
+    SCLoginPath  _loginPath;
+    
+    UIView      *_preView;
 }
 
 #pragma mark - Init Methods
@@ -57,7 +58,7 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
     [self userLog];
     
     // 监听登录通知，收到通知会触发页面跳转方法
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(shouldLogin) name:kUserNeedLoginNotification object:nil];
+    [NOTIFICATION_CENTER addObserver:self selector:@selector(shouldLogin:) name:kUserNeedLoginNotification object:nil];
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)]];
 }
 
@@ -119,7 +120,9 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
 /**
  *  收到登录通知，跳转到登录页面
  */
-- (void)shouldLogin {
+- (void)shouldLogin:(NSNotification *)notification {
+    SCLoginPath path = [notification.object integerValue];
+    _loginPath = path;
     [self shouldLoginWithParameter:nil];
 }
 
@@ -312,7 +315,30 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
             }
             [self showViewController:navController];
         } else {
-            [self showShoulLoginAlert];
+            SCLoginPath path = SCLoginPathDefault;
+            switch (row) {
+                case SCUserCenterMenuRowOrder: {
+                    path = SCLoginPathOrder;
+                    break;
+                }
+                case SCUserCenterMenuRowCollection: {
+                    path = SCLoginPathCollection;
+                    break;
+                }
+                case SCUserCenterMenuRowGroupTicket: {
+                    path = SCLoginPathGroupTicket;
+                    break;
+                }
+                case SCUserCenterMenuRowCoupon: {
+                    path = SCLoginPathCoupon;
+                    break;
+                }
+                default: {
+                    path = SCLoginPathDefault;
+                    break;
+                }
+            }
+            [self showShoulLoginAlertWithPath:path];
         }
     }
 }

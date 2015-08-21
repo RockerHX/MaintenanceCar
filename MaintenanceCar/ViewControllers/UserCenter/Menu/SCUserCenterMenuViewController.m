@@ -75,6 +75,11 @@ static CGFloat CellHeight = 44.0f;
     [_viewModel reloadCars];
 }
 
+- (void)notificationLogin:(SCLoginPath)path {
+    [self hideMenu];
+    [self showShoulLoginAlertWithPath:path];
+}
+
 #pragma mark - Table View Data Source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return _viewModel.itemSections;
@@ -139,7 +144,7 @@ static CGFloat CellHeight = 44.0f;
                     UINavigationController *addCarNavigaitonController = [SCAddCarViewController navigationInstance];
                     [self presentViewController:addCarNavigaitonController animated:YES completion:nil];
                 } else {
-                    [self showShoulLoginAlert];
+                    [self notificationLogin:SCLoginPathAddCar];
                 }
             } else {
                 [_viewModel recordUserCarSelected:indexPath.row];
@@ -165,8 +170,7 @@ static CGFloat CellHeight = 44.0f;
 
 #pragma mark - SCUserView Delegate
 - (void)shouldLogin {
-    [self hideMenu];
-    [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
+    [self notificationLogin:SCLoginPathDefault];
 }
 
 #pragma mark - SCUserCenterUserCarCell Delegate

@@ -14,6 +14,15 @@ typedef NS_ENUM(BOOL, SCLoginState) {
     SCLoginStateLogout = NO
 };
 
+typedef NS_ENUM(NSUInteger, SCLoginPath) {
+    SCLoginPathDefault,
+    SCLoginPathAddCar,
+    SCLoginPathOrder,
+    SCLoginPathCollection,
+    SCLoginPathGroupTicket,
+    SCLoginPathCoupon
+};
+
 // 用户数据Model
 @interface SCUserInfo : NSObject
 

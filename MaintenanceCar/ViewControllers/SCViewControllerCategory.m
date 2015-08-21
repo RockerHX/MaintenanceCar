@@ -8,6 +8,8 @@
 
 #define HUDDelay        0.5f
 
+SCLoginPath _path;
+
 @implementation UIViewController (SCViewController)
 
 #pragma mark - Public Methods
@@ -36,12 +38,46 @@
                     delegate:self
                          tag:SCViewControllerAlertTypeNeedLogin
            cancelButtonTitle:@"取消"
-            otherButtonTitle:@"登录"];
+            otherButtonTitle:@"好的"];
+}
+
+- (void)showShoulLoginAlertWithPath:(SCLoginPath)path {
+    _path = path;
+    NSString *prompt = nil;
+    switch (path) {
+        case SCLoginPathAddCar: {
+            prompt = @"添加车辆";
+            break;
+        }
+        case SCLoginPathOrder: {
+            prompt = @"查看订单";
+            break;
+        }
+        case SCLoginPathCollection: {
+            prompt = @"查看收藏";
+            break;
+        }
+        case SCLoginPathGroupTicket: {
+            prompt = @"查看团购券";
+            break;
+        }
+        case SCLoginPathCoupon: {
+            prompt = @"查看优惠券";
+            break;
+        }
+            
+        default:
+            [self showShoulLoginAlert];
+            break;
+    }
+    NSString *title = [NSString stringWithFormat:@"登录后即可%@，10秒钟极速登录", prompt];
+    [self showShoulLoginAlertWithTitle:title];
 }
 
 - (void)checkShouldLogin {
-    if (![SCUserInfo share].loginState)
-        [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:nil];
+    if (![SCUserInfo share].loginState) {
+        [NOTIFICATION_CENTER postNotificationName:kUserNeedLoginNotification object:@(_path)];
+    }
 }
 
 - (void)showAlertWithTitle:(NSString *)title
@@ -158,9 +194,10 @@
 {
     if (buttonIndex != alertView.cancelButtonIndex) {
         switch (alertView.tag) {
-            case SCViewControllerAlertTypeNeedLogin:
+            case SCViewControllerAlertTypeNeedLogin: {
                 [self checkShouldLogin];
                 break;
+            }
         }
     }
 }
