@@ -233,7 +233,7 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     [self resignKeyBoard];
     
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        if (_delegate && [_delegate respondsToSelector:@selector(loginSuccess)]) {
+        if ((type == SCDismissTypeLoginSuccess) && _delegate && [_delegate respondsToSelector:@selector(loginSuccess)]) {
             [_delegate loginSuccess];
         }
     }];
