@@ -231,7 +231,12 @@ typedef NS_ENUM(NSInteger, SCDismissType) {
     }
     [_verificationCodeLabel stop];           // 退出之前要记得关掉验证码倒计时，防止内存释放引起crash
     [self resignKeyBoard];
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        if (_delegate && [_delegate respondsToSelector:@selector(loginSuccess)]) {
+            [_delegate loginSuccess];
+        }
+    }];
 }
 
 #pragma mark - MBProgressHUDDelegate Methods

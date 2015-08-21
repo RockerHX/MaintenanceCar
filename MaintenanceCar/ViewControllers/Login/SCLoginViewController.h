@@ -8,6 +8,13 @@
 
 #import "SCViewControllerCategory.h"
 
+@protocol SCLoginViewControllerDelegate <NSObject>
+
+@optional
+- (void)loginSuccess;
+
+@end
+
 @class SCVerificationCodeLabel;
 
 @interface SCLoginViewController : UIViewController <UITextFieldDelegate>
@@ -19,6 +26,7 @@
 
 @property (weak, nonatomic) IBOutlet SCVerificationCodeLabel *verificationCodeLabel;         // 获取验证码View
 
+@property (nonatomic, weak)       id  <SCLoginViewControllerDelegate>delegate;
 @property (nonatomic, copy) NSString *parameter;
 
 // [登录]按钮触发事件

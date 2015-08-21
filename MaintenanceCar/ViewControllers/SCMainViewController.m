@@ -17,13 +17,14 @@
 #import "SCCouponsViewController.h"
 #import "SCSettingViewController.h"
 #import "SCChangeCarDataViewController.h"
+#import "SCAddCarViewController.h"
 
 
 static NSString *const kGuideKey = @"kGuideKey";
 static NSString *const MainNavControllerID = @"MainNavigationController";
 
 
-@interface SCMainViewController () <SCGuideViewControllerDelegate, SCHomePageViewControllerDelegate, SCOrdersViewControllerDelegate, SCCollectionsViewControllerDelegate, SCGroupTicketsViewControllerDelegate, SCCouponsViewControllerDelegate, SCSettingViewControllerDelegate, SCChangeCarDataViewControllerDelegate>
+@interface SCMainViewController () <SCLoginViewControllerDelegate, SCGuideViewControllerDelegate, SCHomePageViewControllerDelegate, SCOrdersViewControllerDelegate, SCCollectionsViewControllerDelegate, SCGroupTicketsViewControllerDelegate, SCCouponsViewControllerDelegate, SCSettingViewControllerDelegate, SCChangeCarDataViewControllerDelegate>
 @end
 
 @implementation SCMainViewController {
@@ -136,6 +137,7 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
     [self setHomePageNavigationBarWillHidden:NO];
     UINavigationController *loginViewNavigationController = [SCLoginViewController navigationInstance];
     SCLoginViewController *loginViewController = (SCLoginViewController *)loginViewNavigationController.topViewController;
+    loginViewController.delegate = self;
     loginViewController.parameter = parameter;
     loginViewNavigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:loginViewNavigationController animated:YES completion:^{
@@ -254,6 +256,38 @@ static NSString *const MainNavControllerID = @"MainNavigationController";
             break;
         }
     }
+}
+
+#pragma mark - SCLoginViewController Delegate
+- (void)loginSuccess {
+    switch (_loginPath) {
+        case SCLoginPathAddCar: {
+            [self setHomePageNavigationBarWillHidden:NO];
+            UINavigationController *addCarNavigaitonController = [SCAddCarViewController navigationInstance];
+            [self presentViewController:addCarNavigaitonController animated:YES completion:nil];
+            break;
+        }
+        case SCLoginPathOrder: {
+            [self shouldShowViewControllerOnRow:SCUserCenterMenuRowOrder];
+            break;
+        }
+        case SCLoginPathCollection: {
+            [self shouldShowViewControllerOnRow:SCUserCenterMenuRowCollection];
+            break;
+        }
+        case SCLoginPathGroupTicket: {
+            [self shouldShowViewControllerOnRow:SCUserCenterMenuRowGroupTicket];
+            break;
+        }
+        case SCLoginPathCoupon: {
+            [self shouldShowViewControllerOnRow:SCUserCenterMenuRowCoupon];
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+    _loginPath = SCLoginPathDefault;
 }
 
 #pragma mark - SCGuideViewController Delegate
