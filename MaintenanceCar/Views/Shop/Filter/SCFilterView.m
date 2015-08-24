@@ -15,8 +15,7 @@
 
 typedef void(^BLOCK)(NSString *param, NSString *value);
 
-@interface SCFilterView () <SCListFilterViewDelegate, SCSubListFilterViewDelegate, SCCarModelFilterViewDelegate>
-{
+@interface SCFilterView () <SCListFilterViewDelegate, SCSubListFilterViewDelegate, SCCarModelFilterViewDelegate> {
     BLOCK _block;
     BOOL  _canSelected;
     
@@ -28,57 +27,51 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
 @implementation SCFilterView
 
 #pragma mark - Init Methods
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
     [super awakeFromNib];
     
     [self initConfig];
 }
 
 #pragma mark - Config Methods
-- (void)initConfig
-{
+- (void)initConfig {
     _canSelected = YES;
 }
 
 #pragma mark - Action Methods
-- (IBAction)filterButtonPressed:(UIButton *)button
-{
-    if (!((_state == SCFilterViewStateOpen) && (_selectedButton.tag == button.tag)))
-    {
+- (IBAction)filterButtonPressed:(UIButton *)button {
+    if (!((_state == SCFilterViewStateOpen) && (_selectedButton.tag == button.tag))) {
         _selectedButton = button;
         [_filterViewModel changeCategory:button.tag];
         [self popUp];
         [self reload];
-    }
-    else
+    } else {
         [self packUp];
+    }
 }
 
 #pragma mark - Setter And Getter Methods
-- (void)setState:(SCFilterViewState)state
-{
+- (void)setState:(SCFilterViewState)state {
     _state = state;
-    switch (state)
-    {
-        case SCFilterViewStateOpen:
+    switch (state) {
+        case SCFilterViewStateOpen: {
             [self popUp];
             break;
-        case SCFilterViewStateClose:
+        }
+        case SCFilterViewStateClose: {
             [self packUp];
             break;
+        }
     }
 }
 
 #pragma mark - Touch Event Methods
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [self packUp];
 }
 
 #pragma mark - Private Methods
-- (void)packUp
-{
+- (void)packUp {
     _canSelected = NO;
     _bottomBarHeightConstraint.constant = Zero;
     _contentHeightConstraint.constant = Zero;
@@ -97,10 +90,8 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
     }];
 }
 
-- (void)popUp
-{
-    if (_canSelected)
-    {
+- (void)popUp {
+    if (_canSelected) {
         _canSelected = NO;
         _heightConstraint.constant = SCREEN_HEIGHT;
         _contentHeightConstraint.constant = _filterViewModel.contentHeight;
@@ -115,19 +106,14 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
     }
 }
 
-- (void)reload
-{
-    if (_filterViewModel)
-    {
-        if ([_filterViewModel.category isKindOfClass:[SCCarModelFilterCategory class]])
-        {
+- (void)reload {
+    if (_filterViewModel) {
+        if ([_filterViewModel.category isKindOfClass:[SCCarModelFilterCategory class]]) {
             _carModelView.category = _filterViewModel.filter.carModelCategory;
             [_carModelView show];
             _listFilterView.hidden = YES;
             _subListFilterView.hidden = YES;
-        }
-        else
-        {
+        } else {
             SCFilterCategory *category = _filterViewModel.category;
             BOOL haveSubItems = category.haveSubItems;
             
@@ -135,32 +121,29 @@ typedef void(^BLOCK)(NSString *param, NSString *value);
             _listFilterView.hidden = haveSubItems;
             _subListFilterView.hidden = !haveSubItems;
             
-            if (haveSubItems)
+            if (haveSubItems) {
                 _subListFilterView.category = category;
-            else
+            } else {
                 _listFilterView.category = category;
+            }
         }
     }
 }
 
 #pragma mark - Public Methods
-- (void)restore
-{
+- (void)restore {
     [_seviceFilterButton setTitle:@"服务" forState:UIControlStateNormal];
     [_regionFilterButton setTitle:@"区域" forState:UIControlStateNormal];
     [_sortFilterButton setTitle:@"排序" forState:UIControlStateNormal];
 }
 
-- (void)filterCompleted:(void(^)(NSString *param, NSString *value))block
-{
+- (void)filterCompleted:(void(^)(NSString *param, NSString *value))block {
     _block = block;
 }
 
 #pragma mark - SCCarModelFilterViewDelegate Methods
-- (void)selectedCompletedWithTitle:(NSString *)title parameter:(NSString *)parameter value:(NSString *)value
-{
-    if (_block)
-    {
+- (void)selectedCompletedWithTitle:(NSString *)title parameter:(NSString *)parameter value:(NSString *)value {
+    if (_block) {
         [_selectedButton setTitle:title forState:UIControlStateNormal];
         _block(parameter, value);
     }

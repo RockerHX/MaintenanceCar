@@ -14,14 +14,12 @@
 
 typedef void(^BLOCK)(SCFilterViewModel *viewModel, BOOL success);
 
-@implementation SCFilterViewModel
-{
+@implementation SCFilterViewModel {
     BLOCK _block;
 }
 
 #pragma mark - Setter And Getter Methods
-- (CGFloat)contentHeight
-{
+- (CGFloat)contentHeight {
     if (_type == SCFilterTypeCarModel)
         return (120.0f + _filter.carModelCategory.myCarsViewHeight + _filter.carModelCategory.otherCarsViewHeight);
     else
@@ -29,44 +27,46 @@ typedef void(^BLOCK)(SCFilterViewModel *viewModel, BOOL success);
 }
 
 #pragma mark - Public Methods
-- (void)changeCategory:(SCFilterType)type
-{
+- (void)changeCategory:(SCFilterType)type {
     _type = type;
-    switch (type)
-    {
-        case SCFilterTypeService:
+    switch (type) {
+        case SCFilterTypeService: {
             _category = _filter.serviceCategory;
             break;
-        case SCFilterTypeRegion:
+        }
+        case SCFilterTypeRegion: {
             _category = _filter.regionCategory;
             break;
-        case SCFilterTypeSort:
+        }
+        case SCFilterTypeSort: {
             _category = _filter.sortCategory;
             break;
-        case SCFilterTypeCarModel:
+        }
+        case SCFilterTypeCarModel: {
             _category = _filter.carModelCategory;
             break;
+        }
     }
 }
 
-- (void)loadCompleted:(void(^)(SCFilterViewModel *viewModel, BOOL success))block
-{
+- (void)loadCompleted:(void(^)(SCFilterViewModel *viewModel, BOOL success))block {
     _block = block;
     NSDictionary *parameters = @{@"user_id": [SCUserInfo share].userID};
     WEAK_SELF(weakSelf);
     [[SCAppApiRequest manager] startFilterCategoryAPIRequestWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
-        {
+        if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
             NSInteger statusCode = [responseObject[@"status_code"] integerValue];
-            if (statusCode == SCAppApiRequestErrorCodeNoError)
+            if (statusCode == SCAppApiRequestErrorCodeNoError) {
                 _filter = [SCFilter objectWithKeyValues:responseObject[@"data"]];
-            
-            if (_block)
+            }
+            if (_block) {
                 _block(weakSelf, YES);
+            }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if (_block)
+        if (_block) {
             _block(nil, NO);
+        }
     }];
 }
 

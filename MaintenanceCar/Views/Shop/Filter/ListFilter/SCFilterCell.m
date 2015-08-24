@@ -12,13 +12,11 @@
 
 @implementation SCFilterCell
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     _titleLabel.font = selected ? [UIFont boldSystemFontOfSize:20.0f] : [UIFont systemFontOfSize:17.0f];
 }
 
-- (void)displayWithCategory:(SCFilterCategory *)category atIndex:(NSInteger)index
-{
+- (void)displayWithCategory:(SCFilterCategory *)category atIndex:(NSInteger)index {
     NSArray *items = category.items;
     SCFilterCategoryItem *item = items[index];
     _titleLabel.text = item.title;

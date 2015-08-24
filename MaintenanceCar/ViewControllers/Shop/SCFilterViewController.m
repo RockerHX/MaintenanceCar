@@ -12,8 +12,7 @@
 @implementation SCFilterViewController
 
 #pragma mark - Config Methods
-- (void)initConfig
-{
+- (void)initConfig {
     [super initConfig];
     _filterViewModel = [[SCFilterViewModel alloc] init];
     
@@ -24,8 +23,7 @@
     }];
 }
 
-- (void)viewConfig
-{
+- (void)viewConfig {
     [super viewConfig];
     
     WEAK_SELF(weakSelf);
@@ -38,14 +36,13 @@
 }
 
 #pragma mark - Private Methods
-- (void)loadFilterData
-{
+- (void)loadFilterData {
     [_filterView restore];
-    if (_filterViewModel)
-    {
+    if (_filterViewModel) {
         [_filterViewModel loadCompleted:^(SCFilterViewModel *viewModel, BOOL success) {
-            if (success)
+            if (success) {
                 _filterView.filterViewModel = viewModel;
+            }
         }];
     }
 }

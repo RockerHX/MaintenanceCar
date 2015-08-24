@@ -14,11 +14,9 @@ static int popMax = 2;
 @implementation SCShopViewModel
 
 #pragma mark - Init Methods
-- (instancetype)initWithShop:(SCShop *)shop
-{
+- (instancetype)initWithShop:(SCShop *)shop {
     self = [super init];
-    if (self)
-    {
+    if (self) {
         _shop = shop;
         [self initConfig];
         [self propertyConfig];
@@ -32,8 +30,7 @@ static int popMax = 2;
 {
 }
 
-- (void)propertyConfig
-{
+- (void)propertyConfig {
     _star = [_shop.star stringByAppendingString:@"分"];
     _distance = [[SCLocationManager share] distanceWithLatitude:_shop.latitude longitude:_shop.longtitude];
     _repairTypeImageName = _shop.repair.type ? @"ShopZhuanTagIcon" : @"ShopZongTagIcon";
@@ -42,22 +39,20 @@ static int popMax = 2;
 }
 
 #pragma mark - Private Methods
-- (void)handleRepairPrompt
-{
+- (void)handleRepairPrompt {
     _repairPrompt = _shop.repair.type ? @"" : @"主修：";
     NSArray *brands = _shop.repair.haveNot;
-    if (!brands.count)
-    {
+    if (!brands.count) {
         _repairPrompt = _shop.repair.type ? @"专修" : @"综合维修";
         return;
     }
     NSInteger count = brands.count;
-    for (NSUInteger index = 0; index < count; index++)
+    for (NSUInteger index = 0; index < count; index++) {
         _repairPrompt = [_repairPrompt stringByAppendingString:((index == (count - 1)) ? brands[index] : [NSString stringWithFormat:@"%@、", brands[index]])];
+    }
 }
 
-- (void)hanldeFlags
-{
+- (void)hanldeFlags {
     NSMutableArray *flags = @[].mutableCopy;
     @try {
         [_shop.flags enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -77,23 +72,19 @@ static int popMax = 2;
     }
 }
 
-- (void)hanleDataSource
-{
+- (void)hanleDataSource {
     NSInteger productCount      = _shop.products.count;
     NSArray *products           = _shop.products;
     NSMutableArray *dataSource  = @[].mutableCopy;
     
     __weak typeof(self)weakSelf = self;
     [dataSource addObject:weakSelf];
-    if (productCount > popMax)
-    {
+    if (productCount > popMax) {
         _canOpen = YES;
         [dataSource addObject:products[0]];
         [dataSource addObject:products[1]];
         [dataSource addObject:[NSString stringWithFormat:@"查看全部%zd款", productCount]];
-    }
-    else
-    {
+    } else {
         [products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [dataSource addObject:products[idx]];
         }];
@@ -104,34 +95,31 @@ static int popMax = 2;
 }
 
 #pragma mark - Public Methods
-- (void)operateProductsMenu:(void(^)(BOOL shouldReload, BOOL close))block
-{
-    if (_canOpen)
-    {
+- (void)operateProductsMenu:(void(^)(BOOL shouldReload, BOOL close))block {
+    if (_canOpen) {
         BOOL close                 = NO;
         NSInteger productCount     = _shop.products.count;
         NSArray *products          = _shop.products;
         NSMutableArray *dataSource = [NSMutableArray arrayWithArray:_dataSource];
         [dataSource removeLastObject];
-        if (_productsOpen)
-        {
-            for (NSInteger index = productCount; index > popMax; --index)
+        if (_productsOpen) {
+            for (NSInteger index = productCount; index > popMax; --index) {
                 [dataSource removeObjectAtIndex:index];
+            }
             [dataSource addObject:[NSString stringWithFormat:@"查看全部%zd款", productCount]];
             close = YES;
-        }
-        else
-        {
-            for (NSInteger index = popMax; index < productCount; index++)
+        } else {
+            for (NSInteger index = popMax; index < productCount; index++) {
                 [dataSource addObject:products[index]];
+            }
             [dataSource addObject:@"收起"];
         }
         _productsOpen = !_productsOpen;
         _dataSource = [NSArray arrayWithArray:dataSource];
         block(YES, close);
-    }
-    else
+    } else {
         block(NO, NO);
+    }
 }
 
 @end

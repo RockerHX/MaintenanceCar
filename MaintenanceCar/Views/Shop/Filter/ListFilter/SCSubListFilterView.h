@@ -17,8 +17,7 @@
 
 @class SCFilterCategory;
 
-@interface SCSubListFilterView : UIView <UITableViewDataSource, UITableViewDelegate>
-{
+@interface SCSubListFilterView : UIView <UITableViewDataSource, UITableViewDelegate> {
     NSInteger _mainFilterIndex;
     
     NSArray  *_mainItems;

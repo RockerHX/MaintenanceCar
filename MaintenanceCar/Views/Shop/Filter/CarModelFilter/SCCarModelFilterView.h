@@ -16,8 +16,7 @@
 
 @class SCCarModelFilterCategory;
 
-@interface SCCarModelFilterView : UIView <UICollectionViewDataSource, UICollectionViewDelegate>
-{
+@interface SCCarModelFilterView : UIView <UICollectionViewDataSource, UICollectionViewDelegate> {
     NSIndexPath *_indexPath;
 }
 

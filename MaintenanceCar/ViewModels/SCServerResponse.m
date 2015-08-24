@@ -11,19 +11,16 @@
 @implementation SCServerResponse
 
 #pragma mark - Init Methods
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
-    if (self)
-    {
+    if (self) {
         _statusCode = -1;
     }
     return self;
 }
 
 #pragma mark - Public Methods
-- (void)parseResponseObject:(id)responseObject
-{
+- (void)parseResponseObject:(id)responseObject {
     _statusCode = [responseObject[@"status_code"] integerValue];
     _prompt = responseObject[@"status_message"];
 }

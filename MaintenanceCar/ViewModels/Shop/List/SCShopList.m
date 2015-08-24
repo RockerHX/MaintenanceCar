@@ -13,26 +13,22 @@
 #import "SCAppConstants.h"
 #import "SCUserInfo.h"
 
-@implementation SCShopList
-{
+@implementation SCShopList {
     NSInteger _page;
     NSMutableArray *_shops;
 }
 
 #pragma mark - Init Methods
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
-    if (self)
-    {
+    if (self) {
         [self initConfig];
     }
     return self;
 }
 
 #pragma mark - Config Methods
-- (void)initConfig
-{
+- (void)initConfig {
     _shops = @[].mutableCopy;
     _parameters = @{@"limit": @(SearchLimit),
                    @"offset": @(_page * SearchLimit),
@@ -41,19 +37,16 @@
 }
 
 #pragma mark - Setter And Getter Methods
-- (NSArray *)shops
-{
+- (NSArray *)shops {
     return [NSArray arrayWithArray:_shops];
 }
 
 #pragma mark - Public Methods
-- (void)setParameter:(id)parameter value:(id)value
-{
+- (void)setParameter:(id)parameter value:(id)value {
     [_parameters setValue:value forKey:parameter];
 }
 
-- (void)addParameters:(NSDictionary *)parameters
-{
+- (void)addParameters:(NSDictionary *)parameters {
     NSArray *keys = [parameters allKeys];
     [keys enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [_parameters setValue:parameters[@"obj"] forKey:obj];
@@ -61,31 +54,26 @@
 }
 
 #pragma mark - Private Methods
-- (void)clearShops
-{
+- (void)clearShops {
     [_shops removeAllObjects];
 }
 
-- (void)updateOffsetParameterWithPage:(NSInteger)page
-{
+- (void)updateOffsetParameterWithPage:(NSInteger)page {
     _page = page;
     [_parameters setValue:@(page * SearchLimit) forKey:@"offset"];
 }
 
-- (void)locationCompletedWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
-{
+- (void)locationCompletedWithLatitude:(NSString *)latitude longitude:(NSString *)longitude {
     [self addParametersWithLatitude:latitude longitude:longitude];
     [self requestShops];
 }
 
-- (void)addParametersWithLatitude:(NSString *)latitude longitude:(NSString *)longitude
-{
+- (void)addParametersWithLatitude:(NSString *)latitude longitude:(NSString *)longitude {
     [_parameters setValue:latitude forKey:@"latitude"];
     [_parameters setValue:longitude forKey:@"longtitude"];
 }
 
-- (void)loadNewShops
-{
+- (void)loadNewShops {
     _serverResponse.firstLoad = YES;
     [self updateOffsetParameterWithPage:0];
     
@@ -98,19 +86,15 @@
     }];
 }
 
-- (void)requestShops
-{
+- (void)requestShops {
     __weak typeof(self)weakSelf = self;
-    if (_type == SCShopListTypeSearch)
-    {
+    if (_type == SCShopListTypeSearch) {
         [[SCAppApiRequest manager] startSearchShopsAPIRequestWithParameters:_parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [weakSelf reuqeustSuccessWithOperation:operation];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [weakSelf reuqeustFailureWithOperation:operation error:error];
         }];
-    }
-    else
-    {
+    } else {
         [[SCAppApiRequest manager] startShopsAPIRequestWithParameters:_parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [weakSelf reuqeustSuccessWithOperation:operation];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -119,16 +103,14 @@
     }
 }
 
-- (void)reuqeustSuccessWithOperation:(AFHTTPRequestOperation *)operation
-{
+- (void)reuqeustSuccessWithOperation:(AFHTTPRequestOperation *)operation {
     id responseObject = operation.responseObject;
-    if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
-    {
+    if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
         [_serverResponse parseResponseObject:responseObject];
-        if (_serverResponse.firstLoad)
+        if (_serverResponse.firstLoad) {
             [self clearShops];
-        if (_serverResponse.statusCode == SCAppApiRequestErrorCodeNoError)
-        {
+        }
+        if (_serverResponse.statusCode == SCAppApiRequestErrorCodeNoError) {
             [responseObject[@"data"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 SCShop *shop = [SCShop objectWithKeyValues:obj];
                 SCShopViewModel *shopViewModel = [[SCShopViewModel alloc] initWithShop:shop];
@@ -140,43 +122,37 @@
     }
 }
 
-- (void)reuqeustFailureWithOperation:(AFHTTPRequestOperation *)operation error:(NSError *)error
-{
-    if (error.code == SCAppApiRequestErrorCodeJsonParseError)
-    {
+- (void)reuqeustFailureWithOperation:(AFHTTPRequestOperation *)operation error:(NSError *)error {
+    if (error.code == SCAppApiRequestErrorCodeJsonParseError) {
         _serverResponse = [[SCServerResponse alloc] init];
         _serverResponse.statusCode = error.code;
         _serverResponse.prompt = JsonParseError;
-    }
-    else
+    } else {
         [_serverResponse parseResponseObject:operation.responseObject];
+    }
     self.loaded = YES;
 }
 
 #pragma mark - Public Methods
-- (void)reloadShops
-{
+- (void)reloadShops {
     [self initConfig];
     [self loadShops];
 }
 
-- (void)loadShops
-{
+- (void)loadShops {
     _type = SCShopListTypeNormal;
     [self setParameter:@"auto_get_car" value:@([SCUserInfo share].loginState)];
     [self setParameter:@"user_id" value:[SCUserInfo share].userID];
     [self loadNewShops];
 }
 
-- (void)loadShopsWithSearch:(NSString *)search
-{
+- (void)loadShopsWithSearch:(NSString *)search {
     _type = SCShopListTypeSearch;
     [self setParameter:@"field" value:search];
     [self loadNewShops];
 }
 
-- (void)loadMoreShops
-{
+- (void)loadMoreShops {
     _serverResponse.firstLoad = NO;
     [self updateOffsetParameterWithPage:_page];
     [self requestShops];

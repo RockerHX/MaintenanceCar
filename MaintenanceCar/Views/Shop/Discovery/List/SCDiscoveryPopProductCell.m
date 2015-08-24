@@ -13,14 +13,12 @@
 @implementation SCDiscoveryPopProductCell
 
 #pragma mark - Init Methods
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
     [super awakeFromNib];
 }
 
 #pragma mark - Setter And Getter Methods
-- (void)setFrame:(CGRect)frame
-{
+- (void)setFrame:(CGRect)frame {
     frame.origin.x = frame.origin.x + CellOffset;
     frame.origin.y = frame.origin.y - CellOffset;
     frame.size.width = frame.size.width - CellOffset*2;
@@ -29,8 +27,7 @@
 }
 
 #pragma mark - Draw Methods
-- (void)drawRect:(CGRect)rect
-{
+- (void)drawRect:(CGRect)rect {
     self.layer.shadowColor = [UIColor colorWithWhite:0.8f alpha:0.9f].CGColor;
     self.layer.shadowOffset = CGSizeMake(SHADOW_OFFSET, SHADOW_OFFSET);
     self.layer.shadowOpacity = 1.0f;
@@ -39,10 +36,9 @@
 
 #pragma mark - Public Methods
 static int firstRow = 1;
-- (void)displayCellWithProduct:(SCShopProduct *)product index:(NSInteger)index
-{
-    CGFloat  width                = SELF_WIDTH;
-    CGFloat  height               = SELF_HEIGHT;
+- (void)displayCellWithProduct:(SCShopProduct *)product index:(NSInteger)index {
+    CGFloat  width  = SELF_WIDTH;
+    CGFloat  height = SELF_HEIGHT;
     
     NSArray *cellShadowPathPoints = @[@[@(ZERO_POINT), @(ZERO_POINT)],
                                       @[@(ZERO_POINT), @(height)],
@@ -54,8 +50,7 @@ static int firstRow = 1;
                                       @[@(SHADOW_OFFSET*2), @(SHADOW_OFFSET*6)]];;
     self.layer.shadowPath = [self shadowPathWithPoints:cellShadowPathPoints].CGPath;
     
-    if (!_shadowLayer)
-    {
+    if (!_shadowLayer) {
         _shadowLayer = [CAGradientLayer layer];
         _shadowLayer.frame = CGRectMake(ZERO_POINT, ZERO_POINT, SELF_WIDTH, SHADOW_OFFSET*10);
         _shadowLayer.startPoint = CGPointMake(SHADOW_OFFSET, ZERO_POINT);
@@ -64,12 +59,11 @@ static int firstRow = 1;
                                 (id)self.backgroundColor.CGColor];
         _shadowLayer.locations = @[@(0.1f)];
     }
-    if (index == firstRow)
-    {
+    if (index == firstRow) {
         [self.layer addSublayer:_shadowLayer];
-    }
-    else
+    } else {
         [_shadowLayer removeFromSuperlayer];
+    }
     
     _icon.hidden = !product.isGroup;
     _productNameLabel.text = product.title;

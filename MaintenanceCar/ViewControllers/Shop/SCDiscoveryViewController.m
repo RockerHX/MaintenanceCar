@@ -13,16 +13,14 @@
 @implementation SCDiscoveryViewController
 
 #pragma mark - View Controller Life Cycle
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     self.filterView.state = SCFilterViewStateClose;
 }
 
 #pragma mark - Config Methods
-- (void)initConfig
-{
+- (void)initConfig {
     [super initConfig];
     
     @weakify(self)
@@ -33,8 +31,7 @@
 }
 
 #pragma mark - Action Methods
-- (IBAction)searchButtonItemPressed
-{
+- (IBAction)searchButtonItemPressed {
     UINavigationController *searchNavigationViewController = [SCSearchViewController navigationInstance];
     searchNavigationViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:searchNavigationViewController animated:YES completion:nil];

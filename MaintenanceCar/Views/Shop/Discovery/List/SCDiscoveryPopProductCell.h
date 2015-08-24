@@ -10,8 +10,7 @@
 
 @class SCShopProduct;
 
-@interface SCDiscoveryPopProductCell : SCTableViewCell
-{
+@interface SCDiscoveryPopProductCell : SCTableViewCell {
     NSArray *_firstCellShadowPathPoints;
     NSArray *_otherCellShadowPathPoints;
     
