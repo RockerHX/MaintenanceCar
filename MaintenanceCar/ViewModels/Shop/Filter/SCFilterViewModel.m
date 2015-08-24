@@ -20,10 +20,11 @@ typedef void(^BLOCK)(SCFilterViewModel *viewModel, BOOL success);
 
 #pragma mark - Setter And Getter Methods
 - (CGFloat)contentHeight {
-    if (_type == SCFilterTypeCarModel)
+    if (_type == SCFilterTypeCarModel) {
         return (120.0f + _filter.carModelCategory.myCarsViewHeight + _filter.carModelCategory.otherCarsViewHeight);
-    else
+    } else {
         return ((_category.maxCount > 4) ? contentHeight : (_category.maxCount*44.0f + bottomBarHeight));
+    }
 }
 
 #pragma mark - Public Methods

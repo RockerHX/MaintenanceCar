@@ -36,6 +36,7 @@ typedef NS_ENUM(NSUInteger, SCLoginPath) {
 @property (nonatomic, copy, readonly)  NSString *serverDate;       // 服务器时间
 @property (nonatomic, copy, readonly)  NSString *ownerName;        // 车主名字
 @property (nonatomic, copy, readonly)  NSString *headURL;          // 车主头像
+@property (nonatomic, copy, readonly)  NSString *selectedUserCarID;// 车主默认车辆
 @property (nonatomic, strong, readonly) NSArray *cars;             // 用户私家车集合
 @property (nonatomic, strong, readonly) NSArray *selectedItems;    // 已选保养项目
 
@@ -73,5 +74,7 @@ typedef NS_ENUM(NSUInteger, SCLoginPath) {
 - (void)addMaintenanceItem:(NSString *)item;
 - (void)removeItem:(NSString *)item;
 - (void)removeItems;
+
+- (void)recordSelectedUserCarID:(NSString *)userCarID;
 
 @end

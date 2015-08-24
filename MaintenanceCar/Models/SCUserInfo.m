@@ -22,6 +22,7 @@ static NSString *const kHeaderURLKey = @"kHeaderURLKey";
 static NSString *const kUserCarsKey = @"kUserCarsKey";
 static NSString *const kAddAliasKey = @"kAddAliasKey";
 static NSString *const kReceiveMessageKey = @"kReceiveMessageKey";
+static NSString *const kUserCarSelectedKey = @"kUserCarSelectedKey";
 
 typedef void(^BLOCK)(SCUserInfo *userInfo, BOOL finish);
 typedef void(^STATE_BLOCK)(SCLoginState state);
@@ -106,6 +107,11 @@ typedef void(^STATE_BLOCK)(SCLoginState state);
 
 - (NSArray *)cars {
     return self.loginState ? _userCars : nil;
+}
+
+- (NSString *)selectedUserCarID {
+    NSString *carID = [USER_DEFAULT objectForKey:kUserCarSelectedKey];
+    return carID ?: nil;
 }
 
 - (void)canReceiveMessage:(BOOL)can {
@@ -252,6 +258,10 @@ typedef void(^STATE_BLOCK)(SCLoginState state);
 
 - (void)removeItems {
     [_selectedItems removeAllObjects];
+}
+
+- (void)recordSelectedUserCarID:(NSString *)userCarID {
+    [USER_DEFAULT setValue:userCarID forKey:kUserCarSelectedKey];
 }
 
 #pragma mark - Private Methods

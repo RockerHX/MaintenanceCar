@@ -25,8 +25,6 @@ static NSString *const AddCarIconImageName = @"UC-AddCarIcon";
 static NSString *const AddCarIconKey = @"Icon";
 static NSString *const AddCarIconValue = @"Title";
 
-static NSString *const kUserCarSelectedKey = @"kUserCarSelectedKey";
-
 
 @implementation SCUserCenterViewModel
 
@@ -63,7 +61,7 @@ static NSString *const kUserCarSelectedKey = @"kUserCarSelectedKey";
 
 #pragma mark - Setter And Getter
 - (NSString *)selectedUserCarID {
-    NSString *carID = [USER_DEFAULT objectForKey:kUserCarSelectedKey];
+    NSString *carID = [SCUserInfo share].selectedUserCarID;
     SCUserCenterMenuItem *firstItem = (_userCarItems.count > 1) ? [_userCarItems firstObject] : nil;
     return carID ?: firstItem.userCar.userCarID;
 }
@@ -96,7 +94,7 @@ static NSString *const kUserCarSelectedKey = @"kUserCarSelectedKey";
 
 - (void)recordUserCarSelected:(NSInteger)index {
     NSString *userCarID = ((SCUserCenterMenuItem *)_userCarItems[index]).userCar.userCarID;
-    [USER_DEFAULT setValue:userCarID forKey:kUserCarSelectedKey];
+    [[SCUserInfo share] recordSelectedUserCarID:userCarID];
 }
 
 #pragma mark - Private Methods
