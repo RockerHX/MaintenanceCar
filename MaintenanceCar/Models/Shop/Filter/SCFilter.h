@@ -18,6 +18,13 @@
 
 @end
 
+@interface SCFilterCategoryCarItem : SCFilterCategoryItem
+
+@property (nonatomic, copy)  NSString *userCarID;
+
+@end
+
+
 @interface SCFilterCategory : NSObject
 
 @property (nonatomic, assign)      BOOL  haveSubItems;
@@ -37,6 +44,7 @@
 @property (nonatomic, strong) NSArray *otherCars;
 
 @end
+
 
 @interface SCFilter : NSObject
 

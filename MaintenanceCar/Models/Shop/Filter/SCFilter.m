@@ -10,48 +10,51 @@
 
 @implementation SCFilterCategoryItem
 
-+ (NSDictionary *)replacedKeyFromPropertyName
-{
++ (NSDictionary *)replacedKeyFromPropertyName {
     return @{@"filterTitle": @"filter_title",
                 @"subItems": @"sub_items"};
 }
 
-+ (NSDictionary *)objectClassInArray
-{
++ (NSDictionary *)objectClassInArray {
     return @{@"subItems": @"SCFilterCategoryItem"};
 }
 
 @end
 
+@implementation SCFilterCategoryCarItem
+
++ (NSDictionary *)replacedKeyFromPropertyName {
+    NSMutableDictionary *properties = [super replacedKeyFromPropertyName].mutableCopy;
+    [properties addEntriesFromDictionary:@{@"userCarID": @"user_car_id"}];
+    return [NSDictionary dictionaryWithDictionary:properties];
+}
+
+@end
+
+
 @implementation SCFilterCategory
 
-+ (NSDictionary *)objectClassInArray
-{
++ (NSDictionary *)objectClassInArray {
     return @{@"items": @"SCFilterCategoryItem"};
 }
 
-- (instancetype)setKeyValues:(id)keyValues context:(NSManagedObjectContext *)context error:(NSError *__autoreleasing *)error
-{
+- (instancetype)setKeyValues:(id)keyValues context:(NSManagedObjectContext *)context error:(NSError *__autoreleasing *)error {
     [super setKeyValues:keyValues context:context error:error];
     [self config];
     return self;
 }
 
-- (void)config
-{
+- (void)config {
     BOOL have = NO;
-    for (SCFilterCategoryItem *item in _items)
-    {
-        if (item.subItems.count)
-        {
+    for (SCFilterCategoryItem *item in _items) {
+        if (item.subItems.count) {
             have = YES;
             break;
         }
     }
     _haveSubItems = have;
     NSInteger max = 0;
-    for (SCFilterCategoryItem *item in _items)
-    {
+    for (SCFilterCategoryItem *item in _items) {
         NSInteger count = item.subItems.count;
         max = (count > max) ? count : max;
     }
@@ -63,20 +66,17 @@
 
 @implementation SCCarModelFilterCategory
 
-+ (NSDictionary *)replacedKeyFromPropertyName
-{
++ (NSDictionary *)replacedKeyFromPropertyName {
     return @{@"myCars": @"my_cars",
           @"otherCars": @"other_cars"};
 }
 
-+ (NSDictionary *)objectClassInArray
-{
-    return @{@"myCars": @"SCFilterCategoryItem",
-          @"otherCars": @"SCFilterCategoryItem"};
++ (NSDictionary *)objectClassInArray {
+    return @{@"myCars": @"SCFilterCategoryCarItem",
+          @"otherCars": @"SCFilterCategoryCarItem"};
 }
 
-- (instancetype)setKeyValues:(id)keyValues context:(NSManagedObjectContext *)context error:(NSError *__autoreleasing *)error
-{
+- (instancetype)setKeyValues:(id)keyValues context:(NSManagedObjectContext *)context error:(NSError *__autoreleasing *)error {
     [super setKeyValues:keyValues context:context error:error];
     [self config];
     return self;
@@ -85,8 +85,7 @@
 static double LastRowHeight = 45.0f;
 static double RowHeight = 40.0f;
 static double MaxHeight = 85.0f;
-- (void)config
-{
+- (void)config {
     double height = 20.0f;
     NSInteger count = _myCars.count;
     NSInteger section = count / 3;
@@ -106,8 +105,7 @@ static double MaxHeight = 85.0f;
 
 @implementation SCFilter
 
-+ (NSDictionary *)replacedKeyFromPropertyName
-{
++ (NSDictionary *)replacedKeyFromPropertyName {
     return @{@"serviceCategory": @"service",
               @"regionCategory": @"region",
             @"carModelCategory": @"car_model",

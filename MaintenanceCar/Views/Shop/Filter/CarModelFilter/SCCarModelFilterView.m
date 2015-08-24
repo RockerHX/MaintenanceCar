@@ -87,7 +87,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    SCFilterCategoryItem *item  = nil;
+    SCFilterCategoryCarItem *item  = nil;
     SCCarModelFilterViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SCCarModelFilterViewCell class]) forIndexPath:indexPath];
     cell.backgroundColor = ((indexPath.section == _indexPath.section) && (indexPath.row == _indexPath.row)) ? ThemeColor : [UIColor lightGrayColor];
     switch (indexPath.section) {
@@ -117,7 +117,7 @@
     _indexPath = indexPath;
     [collectionView reloadData];
     
-    SCFilterCategoryItem *item  = nil;
+    SCFilterCategoryCarItem *item  = nil;
     switch (indexPath.section) {
         case 0: {
             item = _category.myCars[indexPath.row];
