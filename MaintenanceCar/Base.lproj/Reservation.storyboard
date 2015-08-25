@@ -211,7 +211,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="90s-UM-iHx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1231" y="-594"/>
+            <point key="canvasLocation" x="1610" y="-590"/>
         </scene>
         <!--预约-->
         <scene sceneID="T9v-jr-4VK">
@@ -290,6 +290,9 @@
                                                             <color key="titleColor" red="0.72941176470000002" green="0.72941176470000002" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="userCarButtonPressed" destination="HGU-kT-05c" eventType="touchUpInside" id="GpW-kS-LsR"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -385,6 +388,9 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <segue destination="uU3-2D-cDg" kind="push" id="nPr-YX-zfc"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -432,7 +438,7 @@
                         <outlet property="merchantNameLabel" destination="2tG-ON-teb" id="xyX-R9-rUo"/>
                         <outlet property="ownerNameTextField" destination="74a-GU-B8E" id="clW-WT-bko"/>
                         <outlet property="ownerPhoneNumberTextField" destination="epc-hv-gYr" id="NZ3-iw-SER"/>
-                        <outlet property="remarkTextField" destination="xH7-rx-JS0" id="fpH-ud-KUF"/>
+                        <outlet property="remarkTextView" destination="xH7-rx-JS0" id="b9e-N6-kuV"/>
                         <outlet property="selectDateButton" destination="sco-bl-8Zo" id="0qZ-i1-d3s"/>
                         <outlet property="userCarButton" destination="msF-oa-eLt" id="Ptp-Pe-BVr"/>
                     </connections>
@@ -810,7 +816,50 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Umt-Un-tx2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="798" y="-594"/>
+            <point key="canvasLocation" x="1249" y="-590"/>
+        </scene>
+        <!--预约时间-->
+        <scene sceneID="Ykk-5V-k2x">
+            <objects>
+                <tableViewController id="uU3-2D-cDg" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Kl4-5H-fOp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections>
+                            <tableViewSection id="GJY-ZX-0Li">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="lXU-QU-Poe">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lXU-QU-Poe" id="LXn-dF-fhA">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="o5W-cm-tqF">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="o5W-cm-tqF" id="qHZ-9m-cJz">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="lin-9L-4Wv">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lin-9L-4Wv" id="66u-Gk-9fT">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="uU3-2D-cDg" id="533-xy-GuZ"/>
+                            <outlet property="delegate" destination="uU3-2D-cDg" id="y9v-al-yd7"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="预约时间" id="3Di-0b-6p2"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A7a-VN-0gu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="818" y="-590"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

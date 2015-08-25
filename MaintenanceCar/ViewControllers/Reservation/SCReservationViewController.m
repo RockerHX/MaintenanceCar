@@ -39,13 +39,13 @@
     [self viewConfig];
 }
 
+- (void)dealloc {
+    [NOTIFICATION_CENTER removeObserver:self name:kUserCarsDataNeedReloadSuccessNotification object:nil];
+}
+
 #pragma mark - Init Methods
 + (instancetype)instance {
     return [SCStoryBoardManager viewControllerWithClass:self storyBoardName:SCStoryBoardNameReservation];
-}
-
-- (void)dealloc {
-    [NOTIFICATION_CENTER removeObserver:self name:kUserCarsDataNeedReloadSuccessNotification object:nil];
 }
 
 #pragma mark - Config Methods
@@ -57,48 +57,66 @@
 }
 
 - (void)viewConfig {
-    _selectDateButton.layer.cornerRadius    = 5.0f;
-    _ownerNameTextField.leftViewMode        = UITextFieldViewModeAlways;
-    _ownerNameTextField.leftView            = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
-    _ownerNameTextField.text                = [SCUserInfo share].ownerName;
-    _ownerPhoneNumberTextField.leftViewMode = UITextFieldViewModeAlways;
-    _ownerPhoneNumberTextField.leftView     = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
-    _ownerPhoneNumberTextField.text         = [SCUserInfo share].phoneNmber;
-    _remarkTextField.placeholderText        = @"您有什么需求请在此写下，我们会尽力满足！";
+    [self configOwnerNameTextField];
+    [self configPhoneNumberTextField];
+    [self configUserCarButton];
+    [self configRemarkTextView];
+    [self configSelectedButton];
     
     [self refreshProjectLabel];
     
+}
+
+- (void)configOwnerNameTextField {
+    _ownerNameTextField.layer.cornerRadius = 5.0f;
+    _ownerNameTextField.layer.borderWidth  = 1.0f;
+    _ownerNameTextField.layer.borderColor  = [UIColor lightGrayColor].CGColor;
+    _ownerNameTextField.leftViewMode       = UITextFieldViewModeAlways;
+    _ownerNameTextField.leftView           = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
+    _ownerNameTextField.text               = [SCUserInfo share].ownerName;
+}
+
+- (void)configPhoneNumberTextField {
+    _ownerPhoneNumberTextField.layer.cornerRadius = 5.0f;
+    _ownerPhoneNumberTextField.layer.borderWidth  = 1.0f;
+    _ownerPhoneNumberTextField.layer.borderColor  = [UIColor lightGrayColor].CGColor;
+    _ownerPhoneNumberTextField.leftViewMode       = UITextFieldViewModeAlways;
+    _ownerPhoneNumberTextField.leftView           = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
+    _ownerPhoneNumberTextField.text               = [SCUserInfo share].phoneNmber;
+}
+
+- (void)configUserCarButton {
+    _userCarButton.layer.cornerRadius = 5.0f;
+    _userCarButton.layer.borderWidth  = 1.0f;
+    _userCarButton.layer.borderColor  = [UIColor lightGrayColor].CGColor;
+}
+
+- (void)configRemarkTextView {
+    _remarkTextView.placeholderText    = @"您有什么需求请在此写下，我们会尽力满足！";
+    _remarkTextView.layer.cornerRadius = 5.0f;
+    _remarkTextView.layer.borderWidth  = 1.0f;
+    _remarkTextView.layer.borderColor  = [UIColor lightGrayColor].CGColor;
+    
     NSArray *items = [SCUserInfo share].selectedItems;
     for (NSString *item in items) {
-        if (_remarkTextField.text.length) {
-            _remarkTextField.text = [_remarkTextField.text stringByAppendingString:[NSString stringWithFormat:@",%@", item]];
+        if (_remarkTextView.text.length) {
+            _remarkTextView.text = [_remarkTextView.text stringByAppendingString:[NSString stringWithFormat:@",%@", item]];
         } else {
-            _remarkTextField.text = item;
+            _remarkTextView.text = item;
         }
     }
 }
 
-#pragma mark - Navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    SCReservationDateViewController *reservationDataViewController = segue.destinationViewController;
-    reservationDataViewController.delegate  = self;
-    reservationDataViewController.companyID = _merchant.company_id;
-    reservationDataViewController.type      = _reservationType;
+- (void)configSelectedButton {
+    _selectDateButton.layer.cornerRadius = 5.0f;
 }
 
-#pragma mark - Table View Delegate Methods
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self closeAllKeyboard];
-    // 点击[项目][日期][时间]栏触发选择动画
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    SCPickerView *pickerView = nil;
-    if (indexPath.row == 3) {
-        pickerView = [[SCPickerView alloc] initWithItems:nil type:SCPickerTypeCar delegate:self];
-    } else if ((indexPath.row == 4) && _canChange) {
-        pickerView = [[SCPickerView alloc] initWithItems:nil type:SCPickerTypeService delegate:self];
-    }
-    [pickerView show];
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    SCReservationDateViewController *reservationDataViewController = segue.destinationViewController;
+//    reservationDataViewController.delegate  = self;
+//    reservationDataViewController.companyID = _merchant.company_id;
+//    reservationDataViewController.type      = _reservationType;
 }
 
 #pragma mark - Button Action Methods
@@ -112,6 +130,13 @@
     }
 }
 
+- (IBAction)userCarButtonPressed {
+    [self closeAllKeyboard];
+    
+    SCPickerView *pickerView = [[SCPickerView alloc] initWithItems:nil type:SCPickerTypeCar delegate:self];
+    [pickerView show];
+}
+
 #pragma mark - Private Methods
 - (void)refresh {
     [[SCUserInfo share] userCarsReuqest:nil];
@@ -121,7 +146,7 @@
     // 关闭所有键盘
     [_ownerNameTextField resignFirstResponder];
     [_ownerPhoneNumberTextField resignFirstResponder];
-    [_remarkTextField resignFirstResponder];
+    [_remarkTextView resignFirstResponder];
 }
 
 - (void)refreshProjectLabel {
@@ -144,7 +169,7 @@
                                     @"type": _reservationType,
                             @"reserve_name": _ownerNameTextField.text,
                            @"reserve_phone": _ownerPhoneNumberTextField.text,
-                                 @"content": _remarkTextField.text,
+                                 @"content": _remarkTextView.text,
                                     @"time": _reservationDate,
                              @"user_car_id": _selectedCarID,
                               @"product_id": (_groupTicket ? _groupTicket.productID : (_quotedPrice ? _quotedPrice.product_id : @"")),
@@ -243,7 +268,8 @@
             } else {
                 SCUserCar *car = item;
                 _selectedCarID = car.userCarID;
-//                _carLabel.text = [car.brandName stringByAppendingString:car.modelName];
+                [_userCarButton setTitle:[car.brandName stringByAppendingString:car.modelName] forState:UIControlStateNormal];
+                [_userCarButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             }
             break;
         }
