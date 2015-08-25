@@ -50,10 +50,6 @@
 
 #pragma mark - Config Methods
 - (void)initConfig {
-    // 开启cell高度预估，自动适配cell高度
-    self.tableView.estimatedRowHeight = 60.0f;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
-    
     // 设置商家名称显示
     _selectedCarID = @"";
     _merchantNameLabel.text = _merchant.name;
@@ -61,7 +57,7 @@
 }
 
 - (void)viewConfig {
-    _reservationButton.layer.cornerRadius   = 5.0f;
+    _selectDateButton.layer.cornerRadius    = 5.0f;
     _ownerNameTextField.leftViewMode        = UITextFieldViewModeAlways;
     _ownerNameTextField.leftView            = [[UIView alloc] initWithFrame:CGRectMake(ZERO_POINT, ZERO_POINT, 5.0f, 1.0f)];
     _ownerNameTextField.text                = [SCUserInfo share].ownerName;
@@ -106,13 +102,14 @@
 }
 
 #pragma mark - Button Action Methods
-- (IBAction)reservationButtonPressed:(UIButton *)sender {
+- (IBAction)selectDateButtonPressed {
     [self closeAllKeyboard];
     // 检查是否登录，已登录进行预约请求，反之则弹出登录提示框跳转到登录页面
-    if (![SCUserInfo share].loginState)
+    if (![SCUserInfo share].loginState) {
         [self showShoulLoginAlert];
-    else if ([self checkeParamterIntegrity])
+    } else if ([self checkeParamterIntegrity]) {
         [self startMerchantReservationRequest];
+    }
 }
 
 #pragma mark - Private Methods
@@ -129,14 +126,14 @@
 
 - (void)refreshProjectLabel {
     _reservationType    = _serviceItem.service_id;
-    _categoryLabel.text = _serviceItem.service_name;
-    _itemLabel.text     = _serviceItem.service_name;
-    if (_groupTicket) {
-        _itemLabel.text = _groupTicket.title;
-    }
-    if (_quotedPrice) {
-        _itemLabel.text = _quotedPrice.title;
-    }
+//    _categoryLabel.text = _serviceItem.service_name;
+//    _itemLabel.text     = _serviceItem.service_name;
+//    if (_groupTicket) {
+//        _itemLabel.text = _groupTicket.title;
+//    }
+//    if (_quotedPrice) {
+//        _itemLabel.text = _quotedPrice.title;
+//    }
 }
 
 - (void)startMerchantReservationRequest {
@@ -183,15 +180,15 @@
     NSDate *currentDate = [formatter dateFromString:[formatter stringFromDate:[NSDate date]]];
     selectedDate = [formatter dateFromString:[formatter stringFromDate:selectedDate]];
     
-    if ([selectedDate compare:currentDate] == NSOrderedSame) {
-        NSString *displayDateString = @"今天(";
-        _dateLabel.text = [[displayDateString stringByAppendingString:displayDate] stringByAppendingString:@")"];
-        if ([SCVersion isIPhone5SPrior]) {
-            _dateLabel.font = [UIFont systemFontOfSize:16.0f];
-        }
-    } else {
-        _dateLabel.text = displayDate;
-    }
+//    if ([selectedDate compare:currentDate] == NSOrderedSame) {
+//        NSString *displayDateString = @"今天(";
+//        _dateLabel.text = [[displayDateString stringByAppendingString:displayDate] stringByAppendingString:@")"];
+//        if ([SCVersion isIPhone5SPrior]) {
+//            _dateLabel.font = [UIFont systemFontOfSize:16.0f];
+//        }
+//    } else {
+//        _dateLabel.text = displayDate;
+//    }
 }
 
 - (BOOL)checkeParamterIntegrity {
@@ -246,14 +243,14 @@
             } else {
                 SCUserCar *car = item;
                 _selectedCarID = car.userCarID;
-                _carLabel.text = [car.brandName stringByAppendingString:car.modelName];
+//                _carLabel.text = [car.brandName stringByAppendingString:car.modelName];
             }
             break;
         }
         case SCPickerTypeService: {
             SCServiceItem *serviceItem = item;
             _reservationType           = serviceItem.service_id;
-            _categoryLabel.text        = serviceItem.service_name;
+//            _categoryLabel.text        = serviceItem.service_name;
             break;
         }
         default:
@@ -270,7 +267,7 @@
 #pragma mark - SCAddCarViewController Delegate Methods
 - (void)addCarSuccess:(SCCar *)car {
     _selectedCarID = car.userCarID;
-    _carLabel.text = [car.brandName stringByAppendingString:car.modelName];
+//    _carLabel.text = [car.brandName stringByAppendingString:car.modelName];
 }
 
 @end

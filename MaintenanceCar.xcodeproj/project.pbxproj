@@ -229,6 +229,7 @@
 		A15284961B5F8389005936DF /* SCRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A15284951B5F8389005936DF /* SCRootViewController.m */; };
 		A1B4DC631B749D3300404D13 /* Guide.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1B4DC611B749D3300404D13 /* Guide.storyboard */; };
 		A1B4DC671B749D8300404D13 /* SCGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B4DC661B749D8300404D13 /* SCGuideViewController.m */; };
+		A1C31F2E1B8C6A1B001D5678 /* SCReservationViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C31F2D1B8C6A1B001D5678 /* SCReservationViewModel.m */; };
 		A1C5373E1B79F08100623EC4 /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = A1C5373D1B79F08100623EC4 /* server.cer */; };
 		A1C537461B79F77F00623EC4 /* SCApi.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C537411B79F77F00623EC4 /* SCApi.m */; };
 		A1C537471B79F77F00623EC4 /* SCApiRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C537431B79F77F00623EC4 /* SCApiRequest.m */; };
@@ -653,6 +654,8 @@
 		A1B4DC621B749D3300404D13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Guide.storyboard; sourceTree = "<group>"; };
 		A1B4DC651B749D8300404D13 /* SCGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGuideViewController.h; sourceTree = "<group>"; };
 		A1B4DC661B749D8300404D13 /* SCGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCGuideViewController.m; sourceTree = "<group>"; };
+		A1C31F2C1B8C6A1B001D5678 /* SCReservationViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCReservationViewModel.h; sourceTree = "<group>"; };
+		A1C31F2D1B8C6A1B001D5678 /* SCReservationViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCReservationViewModel.m; sourceTree = "<group>"; };
 		A1C5373D1B79F08100623EC4 /* server.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = server.cer; sourceTree = "<group>"; };
 		A1C537401B79F77F00623EC4 /* SCApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCApi.h; sourceTree = "<group>"; };
 		A1C537411B79F77F00623EC4 /* SCApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCApi.m; sourceTree = "<group>"; };
@@ -1713,6 +1716,7 @@
 		48EA0AA91B26D97D00575FA7 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				A1C31F2B1B8C6A03001D5678 /* Reservation */,
 				486354631B56587F00DE43B2 /* Shop */,
 				48DDB9631B4F7A7100CFD394 /* Search */,
 				A117A7231B60F61400073D2D /* UserCenter */,
@@ -1948,6 +1952,15 @@
 				A1B4DC661B749D8300404D13 /* SCGuideViewController.m */,
 			);
 			path = Guide;
+			sourceTree = "<group>";
+		};
+		A1C31F2B1B8C6A03001D5678 /* Reservation */ = {
+			isa = PBXGroup;
+			children = (
+				A1C31F2C1B8C6A1B001D5678 /* SCReservationViewModel.h */,
+				A1C31F2D1B8C6A1B001D5678 /* SCReservationViewModel.m */,
+			);
+			path = Reservation;
 			sourceTree = "<group>";
 		};
 		A1C5373C1B79F08100623EC4 /* SSL */ = {
@@ -2220,6 +2233,7 @@
 				4869679C1AD6A63900C3F7A6 /* SCMerchantSummary.m in Sources */,
 				4866F99A1AACBD89008E195C /* SCADView.m in Sources */,
 				4866F9B41AACBD89008E195C /* SCMerchantTableViewCell.m in Sources */,
+				A1C31F2E1B8C6A1B001D5678 /* SCReservationViewModel.m in Sources */,
 				4866F9B21AACBD89008E195C /* SCMerchantFlagCell.m in Sources */,
 				48720E0B1AE4F9CD002D435F /* SCNavigationTab.m in Sources */,
 				4869679F1AD6BBB800C3F7A6 /* SCMerchantGroup.m in Sources */,
