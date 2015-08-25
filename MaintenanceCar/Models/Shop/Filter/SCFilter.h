@@ -48,9 +48,9 @@
 
 @interface SCFilter : NSObject
 
-@property (nonatomic, strong) SCFilterCategory         *serviceCategory;
-@property (nonatomic, strong) SCFilterCategory         *regionCategory;
-@property (nonatomic, strong) SCFilterCategory         *sortCategory;
+@property (nonatomic, strong)         SCFilterCategory *serviceCategory;
+@property (nonatomic, strong)         SCFilterCategory *regionCategory;
+@property (nonatomic, strong)         SCFilterCategory *sortCategory;
 @property (nonatomic, strong) SCCarModelFilterCategory *carModelCategory;
 
 @end

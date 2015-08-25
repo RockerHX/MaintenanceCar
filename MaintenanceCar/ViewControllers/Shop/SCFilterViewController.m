@@ -28,10 +28,9 @@
     
     WEAK_SELF(weakSelf);
     [_filterView filterCompleted:^(NSString *param, NSString *value) {
-        [weakSelf resetRequestState];
-        [weakSelf showLoading];
-        [weakSelf.shopList.parameters setValue:value forKey:param];
-        [weakSelf.shopList loadShops];
+        if (param && value) {
+            [weakSelf reloadShopListWithRequestParamrter:param value:value];
+        }
     }];
 }
 
@@ -39,12 +38,36 @@
 - (void)loadFilterData {
     [_filterView restore];
     if (_filterViewModel) {
+        WEAK_SELF(weakSelf);
         [_filterViewModel loadCompleted:^(SCFilterViewModel *viewModel, BOOL success) {
             if (success) {
                 _filterView.filterViewModel = viewModel;
+                __block SCFilterCategoryCarItem *selectedItem = nil;
+                NSString *selectedUserCarID = [SCUserInfo share].selectedUserCarID;
+                [viewModel.filter.carModelCategory.myCars enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    SCFilterCategoryCarItem *item = obj;
+                    if ([item.userCarID isEqualToString:selectedUserCarID]) {
+                        selectedItem = item;
+                        return;
+                    }
+                }];
+                if (selectedItem) {
+                    NSString *param = viewModel.filter.carModelCategory.program;
+                    NSString *value = selectedItem.value;
+                    if (param && value) {
+                        [weakSelf reloadShopListWithRequestParamrter:param value:value];
+                    }
+                }
             }
         }];
     }
+}
+
+- (void)reloadShopListWithRequestParamrter:(NSString *)param value:(NSString *)value {
+    [self resetRequestState];
+    [self showLoading];
+    [self.shopList.parameters setValue:value forKey:param];
+    [self.shopList loadShops];
 }
 
 @end

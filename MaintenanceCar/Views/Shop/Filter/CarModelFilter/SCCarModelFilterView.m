@@ -37,6 +37,12 @@
     _collectionView.scrollsToTop = NO;
 }
 
+#pragma mark - Setter And Getter
+- (void)setCategory:(SCCarModelFilterCategory *)category {
+    _category = category;
+    [self refreshSelectedIndexPath:[SCUserInfo share].selectedUserCarID];
+}
+
 #pragma mark - Public Methods
 - (void)show {
     self.hidden = NO;
@@ -50,10 +56,22 @@
 #pragma mark - Private Methods
 - (void)changeSelectedIndexWithLoginState:(SCLoginState)state {
     if (state) {
-        _indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self refreshSelectedIndexPath:[SCUserInfo share].selectedUserCarID];
     } else {
         _indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
     }
+}
+
+- (void)refreshSelectedIndexPath:(NSString *)userCarID {
+    __block NSUInteger index = 0;
+    [_category.myCars enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        SCFilterCategoryCarItem *item = obj;
+        if ([item.userCarID isEqualToString:userCarID]) {
+            index = idx;
+            return;
+        }
+    }];
+    _indexPath = [NSIndexPath indexPathForRow:index inSection:0];
 }
 
 #pragma mark - Collection View Data Source Methods

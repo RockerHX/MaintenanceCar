@@ -9,14 +9,12 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "SCTableViewController.h"
 
-@implementation SCTableViewController
-{
+@implementation SCTableViewController {
     NSMutableDictionary *_requestParameters;
 }
 
 #pragma mark - View Controller Life Cycle
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     // 初始化设置
@@ -25,12 +23,12 @@
 }
 
 #pragma mark - Public Methods
-- (void)initConfig
-{
+- (void)initConfig {
     _hasRreshHeader = YES;
     _shopList = [[SCShopList alloc] init];
-    if (_requestParameters)
+    if (_requestParameters) {
         [_shopList addParameters:_requestParameters];
+    }
     
     @weakify(self)
     [RACObserve(_shopList, loaded) subscribeNext:^(NSNumber *loaded) {
@@ -41,51 +39,45 @@
     [_shopList loadShops];
 }
 
-- (void)viewConfig
-{
+- (void)viewConfig {
     _tableView.scrollsToTop = YES;
     _tableView.tableFooterView = [[UIView alloc] init];         // 为tableview添加空白尾部，以免没有数据显示时有很多条纹
     
     // 为tableview添加下拉响应式控件和触发方法
-    if (_hasRreshHeader)
+    if (_hasRreshHeader) {
         [self addRefreshHeader];
+    }
     [self addFooter];
 }
 
-- (void)resetRequestState
-{
+- (void)resetRequestState {
     _refreshType = SCTableViewRefreshTypeDropDown;
 }
 
-- (void)startDropDownRefreshReuqest
-{
+- (void)startDropDownRefreshReuqest {
     _refreshType = SCTableViewRefreshTypeDropDown;
     [self removeRefreshFooter];
 }
 
-- (void)startPullUpRefreshRequest
-{
+- (void)startPullUpRefreshRequest {
     _refreshType = SCTableViewRefreshTypePullUp;
     [self removeRefreshHeader];
 }
 
-- (void)endRefresh
-{
-    if (_refreshType == SCTableViewRefreshTypeDropDown)
-    {
+- (void)endRefresh {
+    if (_refreshType == SCTableViewRefreshTypeDropDown) {
         [self.tableView.header endRefreshing];
         [self addRefreshFooter];
-    }
-    else
-    {
+    } else {
         [self.tableView.footer endRefreshing];
         [self addRefreshHeader];
     }
 }
 
 - (void)addRefreshHeader {
-    if (!self.tableView.header)
+    if (!self.tableView.header) {
         [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(startDropDownRefreshReuqest)];
+    }
 }
 
 - (void)removeRefreshHeader {
@@ -93,8 +85,9 @@
 }
 
 - (void)addRefreshFooter {
-    if (!self.tableView.footer)
+    if (!self.tableView.footer) {
         [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(startPullUpRefreshRequest)];
+    }
 }
 
 - (void)removeRefreshFooter {
@@ -112,8 +105,12 @@
 }
 
 - (void)setRequestParameter:(NSString *)parameter value:(NSString *)value {
-    if (!_requestParameters) _requestParameters = @{}.mutableCopy;
-    if (parameter && value) [_requestParameters setValue:value forKey:parameter];
+    if (!_requestParameters) {
+        _requestParameters = @{}.mutableCopy;
+    }
+    if (parameter && value) {
+        [_requestParameters setValue:value forKey:parameter];
+    }
 }
 
 @end
