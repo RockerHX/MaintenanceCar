@@ -12,19 +12,16 @@
 @implementation SCQuotedPriceGroup
 
 #pragma mark - Init Methods
-- (instancetype)initWithMerchantDetail:(SCMerchantDetail *)detail
-{
+- (instancetype)initWithMerchantDetail:(SCMerchantDetail *)detail {
     self = [super initWithMerchantDetail:detail];
-    if (self)
-    {
-        self.productsCache = detail.normal_products;
+    if (self) {
+        self.productsCache = detail.normalProducts;
     }
     return self;
 }
 
 #pragma mark - Setter And Getter
-- (NSString *)headerTitle
-{
+- (NSString *)headerTitle {
     return @"业务及报价";
 }
 

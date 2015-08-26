@@ -49,7 +49,6 @@
         }
             break;
         case SCPickerTypeService:
-            _pickerItmes = [SCAllDictionary share].serviceItems;
             break;
             
         default:

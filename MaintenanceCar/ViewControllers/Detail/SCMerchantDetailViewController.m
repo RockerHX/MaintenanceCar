@@ -21,7 +21,6 @@
 #import "SCCommentCell.h"
 #import "SCCollectionItem.h"
 #import "SCReservationViewController.h"
-#import "SCReservatAlertView.h"
 #import "SCMapViewController.h"
 #import "SCAllDictionary.h"
 #import "SCGroupProductDetailViewController.h"
@@ -34,7 +33,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
     SCAlertTypeReuqestCall
 };
 
-@interface SCMerchantDetailViewController () <SCReservatAlertViewDelegate, SCMerchantSummaryCellDelegate, SCMerchantDetailFlagCellDelegate, SCQuotedPriceCellDelegate> {
+@interface SCMerchantDetailViewController () <SCMerchantSummaryCellDelegate, SCMerchantDetailFlagCellDelegate, SCQuotedPriceCellDelegate> {
     UIView *_blankView;
     
     SCMerchantSummaryCell *_summaryCellCell;
@@ -148,7 +147,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             }
         } else if ([dataClass isKindOfClass:[SCCommentMore class]]) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"SCShowMoreCell" forIndexPath:indexPath];
-            ((SCShowMoreCell *)cell).count = _merchantDetail.comments_num;
+            ((SCShowMoreCell *)cell).count = _merchantDetail.commentsCount;
         } else if ([dataClass isKindOfClass:[SCCommentGroup class]]) {
             if (_merchantDetail.comments.count) {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"SCCommentCell" forIndexPath:indexPath];
@@ -227,7 +226,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
         {
             SCQuotedPrice *price = _merchantDetail.quotedPriceGroup.products[indexPath.row];
             price.merchantName   = _merchantDetail.name;
-            price.companyID      = _merchantDetail.company_id;
+            price.companyID      = _merchantDetail.companyID;
             SCGroupProductDetailViewController *viewController = [SCGroupProductDetailViewController instance];
             viewController.title = @"商品详情";
             viewController.price = price;
@@ -243,7 +242,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
             [self cellSelectedWithIndexPath:indexPath];
         } else if ([cell isKindOfClass:[SCShowMoreCell class]]) {
             SCCommentsViewController *commentListViewController = [SCCommentsViewController instance];
-            commentListViewController.companyID = _merchantDetail.company_id;
+            commentListViewController.companyID = _merchantDetail.companyID;
             [self.navigationController pushViewController:commentListViewController animated:YES];
         }
     }
@@ -372,7 +371,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
                            @"user_id": [SCUserInfo share].userID};
     [[SCAppApiRequest manager] startMerchantDetailAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
-            _merchantDetail = [[SCMerchantDetail alloc] initWithDictionary:responseObject[@"data"] error:nil];
+            _merchantDetail = [SCMerchantDetail objectWithKeyValues:responseObject[@"data"]];
             [weakSelf displayMerchantDetail];
             
             [weakSelf.tableView reloadData];
@@ -390,7 +389,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
  */
 - (void)startCollectionMerchantRequest {
     WEAK_SELF(weakSelf);
-    NSDictionary *paramters = @{@"company_id": _merchantDetail.company_id,
+    NSDictionary *paramters = @{@"company_id": _merchantDetail.companyID,
                                    @"user_id": [SCUserInfo share].userID,
                                    @"type_id": @"1"};
     [[SCAppApiRequest manager] startMerchantCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -416,7 +415,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
  */
 - (void)startCancelCollectionMerchantRequest {
     WEAK_SELF(weakSelf);
-    NSDictionary *paramters = @{@"company_id": _merchantDetail.company_id,
+    NSDictionary *paramters = @{@"company_id": _merchantDetail.companyID,
                                    @"user_id": [SCUserInfo share].userID};
     [[SCAppApiRequest manager] startCancelCollectionAPIRequestWithParameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSInteger statusCode    = [responseObject[@"status_code"] integerValue];
@@ -457,7 +456,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (void)pushToReservationViewControllerWithServiceItem:(SCServiceItem *)serviceItem canChange:(BOOL)canChange price:(SCQuotedPrice *)price {
     // 跳转到预约页面
     SCReservationViewController *reservationViewController = [SCReservationViewController instance];
-    reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:_merchantDetail.name companyID:_merchantDetail.company_id];
+    reservationViewController.merchant    = [[SCMerchant alloc] initWithMerchantName:_merchantDetail.name companyID:_merchantDetail.companyID];
     reservationViewController.serviceItem = serviceItem;
     reservationViewController.canChange   = canChange;
     reservationViewController.quotedPrice = price;
@@ -497,8 +496,8 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 #pragma mark - SCMerchantSummaryCellDelegate Methods
 - (void)shouldNormalReservation {
     if (_canSelectedReserve) {
-        SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
-        [reservatAlertView show];
+//        SCReservatAlertView *reservatAlertView = [[SCReservatAlertView alloc] initWithDelegate:self animation:SCAlertAnimationEnlarge];
+//        [reservatAlertView show];
     } else {
         [[SCUserInfo share] removeItems];
         [self pushToReservationViewControllerWithServiceItem:[[SCServiceItem alloc] initWithServiceID:_type] canChange:YES price:nil];
@@ -514,7 +513,7 @@ typedef NS_ENUM(NSInteger, SCAlertType) {
 - (void)shouldSpecialReservationWithIndex:(NSInteger)index {
     SCQuotedPrice *price = _merchantDetail.quotedPriceGroup.products[index];
     price.merchantName   = _merchantDetail.name;
-    price.companyID      = _merchantDetail.company_id;
+    price.companyID      = _merchantDetail.companyID;
     
     [self pushToReservationViewControllerWithServiceItem:[[SCServiceItem alloc] initWithServiceID:price.type] canChange:NO price:price];
 }

@@ -16,14 +16,12 @@
 
 static SCAllDictionary *allDictionary = nil;
 
-@implementation SCAllDictionary
-{
+@implementation SCAllDictionary {
     SCDictionaryType _type;
 }
 
 #pragma mark - Init Methods
-+ (instancetype)share
-{
++ (instancetype)share {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         allDictionary = [[SCAllDictionary alloc] init];
@@ -32,18 +30,15 @@ static SCAllDictionary *allDictionary = nil;
 }
 
 #pragma mark - Public Methods
-- (void)requestWithType:(SCDictionaryType)type finfish:(void(^)(NSArray *items))finfish
-{
+- (void)requestWithType:(SCDictionaryType)type finfish:(void(^)(NSArray *items))finfish {
     _type = type;                                                                           // 缓存外部需要的字典类型
     NSDictionary *localData = [self readLocalDataWithFileName:fAllDictionaryFileName];      // 获取本地字典数据
     
     __weak typeof(self)weakSelf = self;
     // 如果本地缓存的字典数据为空，从网络请求，并保存到本地，反之则生成字典数据对象做回调，并异步更新数据
-    if (!localData)
-    {
+    if (!localData) {
         [[SCAppApiRequest manager] startGetAllDictionaryAPIRequestWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
-            {
+            if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess) {
                 // 先处理数据，再保存，最后回调
                 [weakSelf saveData:responseObject fileName:fAllDictionaryFileName];
                 NSArray *data = responseObject[[@(type) stringValue]];
@@ -52,9 +47,7 @@ static SCAllDictionary *allDictionary = nil;
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [self handleDateWithData:nil finfish:finfish];
         }];
-    }
-    else
-    {
+    } else {
         // 先处理数据，再异步更新，最后回调
         NSArray *data = localData[[@(type) stringValue]];
         
@@ -68,14 +61,12 @@ static SCAllDictionary *allDictionary = nil;
     }
 }
 
-- (void)requestColorsExplain:(void(^)(NSDictionary *colors, NSDictionary *explains, NSDictionary *details))finfish
-{
+- (void)requestColorsExplain:(void(^)(NSDictionary *colors, NSDictionary *explains, NSDictionary *details))finfish {
     NSDictionary *localData = [self readLocalDataWithFileName:fColorExplainFileName];      // 获取颜色值本地缓存数据
     
     __weak typeof(self)weakSelf = self;
     // 如果本地缓存的商家Flags数据为空，从网络请求，并保存到本地，反之则生成数据对象做回调，并异步更新数据
-    if (!localData)
-    {
+    if (!localData) {
         [[SCAppApiRequest manager] startFlagsColorAPIRequestSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (operation.response.statusCode == SCApiRequestStatusCodeGETSuccess)
             {
@@ -87,9 +78,7 @@ static SCAllDictionary *allDictionary = nil;
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             finfish(nil, nil, nil);
         }];
-    }
-    else
-    {
+    } else {
         // 先处理数据，再异步更新，最后回调
         [weakSelf hanleMerchantFlagsData:localData];
         
@@ -102,30 +91,7 @@ static SCAllDictionary *allDictionary = nil;
     }
 }
 
-- (void)generateServiceItemsWtihMerchantImtes:(NSDictionary *)merchantItems inspectFree:(BOOL)free;
-{
-    // 先分别取出服务项目
-    NSArray *washItmes        = merchantItems[@"1"];
-    NSArray *maintenanceItmes = merchantItems[@"2"];
-    NSArray *repairItems      = merchantItems[@"3"];
-    
-    // 生成一个空的可变数组，根据服务项目的有无动态添加数据
-    NSMutableArray *items = [@[] mutableCopy];
-    if (washItmes.count)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"1"]];
-    if (maintenanceItmes.count)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"2"]];
-    if (repairItems.count)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"3"]];
-    
-    // 最后动态添加服务器获取到的第四个按钮数据
-    if (_special && free)
-        [items addObject:[[SCServiceItem alloc] initWithServiceID:@"5"]];
-    _serviceItems = items;
-}
-
-- (NSString *)imageNameOfFlag:(NSString *)flag
-{
+- (NSString *)imageNameOfFlag:(NSString *)flag {
     NSDictionary *data = [NSDictionary dictionaryWithContentsOfFile:[NSFileManager pathForResource:@"FlagsKV" ofType:@"plist"]];
     return data[flag];
 }
@@ -138,13 +104,10 @@ static SCAllDictionary *allDictionary = nil;
  *
  *  @return 字典数据对象集合
  */
-- (NSArray *)getItemsWithData:(NSArray *)data
-{
-    if (data)
-    {
+- (NSArray *)getItemsWithData:(NSArray *)data {
+    if (data) {
         NSMutableArray *items = [@[] mutableCopy];
-        for (NSDictionary *dic in data)
-        {
+        for (NSDictionary *dic in data) {
             SCDictionaryItem *item = [[SCDictionaryItem alloc] initWithDictionary:dic error:nil];
             [items addObject:item];
         }
@@ -159,47 +122,38 @@ static SCAllDictionary *allDictionary = nil;
  *  @param data    字典数据集合
  *  @param finfish 数据处理后的回调block - items参数为对应请求字典类型的数据对象集合
  */
-- (void)handleDateWithData:(NSArray *)data finfish:(void(^)(NSArray *data))finfish
-{
-    switch (_type)
-    {
-        case SCDictionaryTypeOrderType:
-        {
+- (void)handleDateWithData:(NSArray *)data finfish:(void(^)(NSArray *data))finfish {
+    switch (_type) {
+        case SCDictionaryTypeOrderType: {
             _orderTypeItems = [self getItemsWithData:data];
             finfish(_orderTypeItems);
-        }
             break;
-        case SCDictionaryTypeReservationType:
-        {
+        }
+        case SCDictionaryTypeReservationType: {
             _reservationTypeItems = [self getItemsWithData:data];
             finfish(_reservationTypeItems);
-        }
             break;
-        case SCDictionaryTypeQuestionType:
-        {
+        }
+        case SCDictionaryTypeQuestionType: {
             _questionTypeItems = [self getItemsWithData:data];
             finfish(_questionTypeItems);
-        }
             break;
-        case SCDictionaryTypeReservationStatus:
-        {
+        }
+        case SCDictionaryTypeReservationStatus: {
             _reservationStatusItems = [self getItemsWithData:data];
             finfish(_reservationStatusItems);
-        }
             break;
-        case SCDictionaryTypeOrderStatus:
-        {
+        }
+        case SCDictionaryTypeOrderStatus: {
             _orderStatusItems = [self getItemsWithData:data];
             finfish(_orderStatusItems);
-        }
             break;
-            
-        case SCDictionaryTypeDriveHabit:
-        {
+        }
+        case SCDictionaryTypeDriveHabit: {
             _driveHabitItems = [self getItemsWithData:data];
             finfish(_driveHabitItems);
-        }
             break;
+        }
     }
 }
 
@@ -208,8 +162,7 @@ static SCAllDictionary *allDictionary = nil;
  *
  *  @param data 商家Flags数据
  */
-- (void)hanleMerchantFlagsData:(NSDictionary *)data
-{
+- (void)hanleMerchantFlagsData:(NSDictionary *)data {
     _colors   = data[@"color"];
     _explains = data[@"explain"];
     _details  = data[@"detail"];

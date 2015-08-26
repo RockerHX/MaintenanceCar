@@ -56,7 +56,7 @@
 
         SCMerchantInfoItem *timeItem      = [[SCMerchantInfoItem alloc] init];
         timeItem.imageName                = @"merchantTimeIcon";
-        timeItem.text                     = [NSString stringWithFormat:@"%@ - %@", [detail.time_open substringWithRange:(NSRange){0, 5}], [detail.time_closed substringWithRange:(NSRange){0, 5}]];
+        timeItem.text                     = [NSString stringWithFormat:@"%@ - %@", [detail.timeOpen substringWithRange:(NSRange){0, 5}], [detail.timeClosed substringWithRange:(NSRange){0, 5}]];
 
         SCMerchantInfoItem *serviceItem   = [[SCMerchantInfoItem alloc] init];
         serviceItem.imageName             = @"MerchantIntroduceIcon";

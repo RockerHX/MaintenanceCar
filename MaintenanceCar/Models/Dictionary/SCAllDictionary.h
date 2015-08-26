@@ -29,9 +29,7 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
 @property (nonatomic, strong, readonly) NSArray *orderStatusItems;            // 订单状态字典
 @property (nonatomic, strong, readonly) NSArray *driveHabitItems;             // 驾驶习惯字典
 
-@property (nonatomic, strong, readonly) NSArray   *serviceItems;              // 服务项目
-
-@property (nonatomic, strong, readonly) SCOperation    *special;                // 自定义数据
+@property (nonatomic, strong, readonly)  SCOperation *special;                // 自定义数据
 @property (nonatomic, strong, readonly) NSDictionary *colors;                 // 商家Flags颜色值
 @property (nonatomic, strong, readonly) NSDictionary *explains;               // 商家Flags名字
 @property (nonatomic, strong, readonly) NSDictionary *details;                // 商家Flags描述
@@ -57,14 +55,6 @@ typedef NS_ENUM(NSInteger, SCDictionaryType) {
  *  @param finfish 数据处理后的回调block - colors:商家Flags颜色值, explain:商家Flags名字, detail:商家Flags描述
  */
 - (void)requestColorsExplain:(void(^)(NSDictionary *colors, NSDictionary *explains, NSDictionary *details))finfish;
-
-/**
- *  合成服务项目 - 用于预约提示，筛选条件
- *
- *  @param merchantItems 商家服务项目
- *  @param free          能否免费检测
- */
-- (void)generateServiceItemsWtihMerchantImtes:(NSDictionary *)merchantItems inspectFree:(BOOL)free;
 
 /**
  *  获取商家Flag标签的图片文件名

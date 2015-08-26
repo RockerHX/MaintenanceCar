@@ -11,8 +11,9 @@
 #import "SCServiceItem.h"
 #import "SCGroupTicket.h"
 
-@class SCTextView;
 @class SCQuotedPrice;
+@class SCTextView;
+@class SCReservationItemView;
 
 @protocol SCReservationViewControllerDelegate <NSObject>
 
@@ -27,12 +28,13 @@
     NSString *_reservationDate;
 }
 
-@property (weak, nonatomic) IBOutlet     UILabel *merchantNameLabel;            // 商家名称栏
-@property (weak, nonatomic) IBOutlet UITextField *ownerNameTextField;           // 车主姓名输入栏
-@property (weak, nonatomic) IBOutlet UITextField *ownerPhoneNumberTextField;    // 车主电话输入栏
-@property (weak, nonatomic) IBOutlet    UIButton *userCarButton;                // 用户车辆栏
-@property (weak, nonatomic) IBOutlet  SCTextView *remarkTextView;               // 其他需求输入栏
-@property (weak, nonatomic) IBOutlet    UIButton *selectDateButton;             // 选择时间按钮
+@property (weak, nonatomic) IBOutlet               UILabel *merchantNameLabel;            // 商家名称栏
+@property (weak, nonatomic) IBOutlet           UITextField *ownerNameTextField;           // 车主姓名输入栏
+@property (weak, nonatomic) IBOutlet           UITextField *ownerPhoneNumberTextField;    // 车主电话输入栏
+@property (weak, nonatomic) IBOutlet              UIButton *userCarButton;                // 用户车辆栏
+@property (weak, nonatomic) IBOutlet SCReservationItemView *itemView;                     // 项目选择栏
+@property (weak, nonatomic) IBOutlet            SCTextView *remarkTextView;               // 其他需求输入栏
+@property (weak, nonatomic) IBOutlet              UIButton *selectDateButton;             // 选择时间按钮
 
 @property (nonatomic, weak)              id  <SCReservationViewControllerDelegate>delegate;
 @property (nonatomic, strong)    SCMerchant *merchant;                  // 商家信息
