@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -14,6 +14,7 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="sRT-F5-dr4">
                     <rect key="frame" x="180" y="80" width="120" height="120"/>
+                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="120" id="0I6-Ty-C0h"/>
                         <constraint firstAttribute="width" secondItem="sRT-F5-dr4" secondAttribute="height" multiplier="1:1" id="Wpb-3x-shc"/>
@@ -21,6 +22,7 @@
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BottomPic" translatesAutoresizingMaskIntoConstraints="NO" id="OP2-7S-3ht">
                     <rect key="frame" x="89" y="374" width="302" height="76"/>
+                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="302" id="CoC-ws-pDh"/>
                         <constraint firstAttribute="height" constant="76" id="n7t-dI-GD8"/>
@@ -28,6 +30,7 @@
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iF-MF-RQp">
                     <rect key="frame" x="200" y="204" width="80" height="30"/>
+                    <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title="修养·车生活">
                         <color key="titleColor" red="0.25490196078431371" green="0.55686274509803924" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
@@ -35,6 +38,7 @@
                     </state>
                 </button>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="sRT-F5-dr4" firstAttribute="centerX" secondItem="0iF-MF-RQp" secondAttribute="centerX" id="LU6-d7-STb"/>

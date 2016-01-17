@@ -39,8 +39,8 @@
     
     // 设置导航条字体颜色
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: UIColorWithRGBA(245.0f, 245.0f, 245.0f, 1.0f),
-                                                           NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0f]}];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorWithRGBA(245.0f, 245.0f, 245.0f, 1.0f),
+                                                           NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0f]}];
     
     NSString *appVersion = [SCVersion appVersion];
 #pragma mark - UMeng Analytics SDK

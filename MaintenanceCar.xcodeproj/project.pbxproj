@@ -2034,7 +2034,7 @@
 		482B57CB1A43CB7700E47962 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = MaintenanceCar;
 				TargetAttributes = {
 					482B57D21A43CB7700E47962 = {
@@ -2559,6 +2559,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2669,6 +2670,7 @@
 					"-framework",
 					"\"UIKit\"",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.YJCL.XiuYang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "a7ebf63d-83ac-402e-b1cb-a451b6b35066";
 				SWIFT_OBJC_BRIDGING_HEADER = "MaintenanceCar/ViewControllers/Merchant/GroupProduct/MaintenanceCar-Bridging-Header.h";
@@ -2731,6 +2733,7 @@
 					"-framework",
 					"\"UIKit\"",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.YJCL.XiuYang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7d27efdd-39d9-4e66-813e-5cdae396ed32";
 				SWIFT_OBJC_BRIDGING_HEADER = "MaintenanceCar/ViewControllers/Merchant/GroupProduct/MaintenanceCar-Bridging-Header.h";
@@ -2752,6 +2755,7 @@
 				);
 				INFOPLIST_FILE = MaintenanceCarTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.LianYinTest.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MaintenanceCar.app/MaintenanceCar";
 			};
@@ -2767,6 +2771,7 @@
 				);
 				INFOPLIST_FILE = MaintenanceCarTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.LianYinTest.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MaintenanceCar.app/MaintenanceCar";
 			};
